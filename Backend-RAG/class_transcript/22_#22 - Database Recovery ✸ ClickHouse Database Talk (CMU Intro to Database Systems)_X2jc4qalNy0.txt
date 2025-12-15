@@ -1,0 +1,2152 @@
+[00:00:00] [music]
+[00:00:06] [music] I'm still
+[00:00:08] associ
+[00:00:12] [music]
+[00:00:17] [music]
+[00:00:26] let's get started. Round of applause for
+[00:00:27] DJ Cash. Thank you again. I would
+[00:00:29] compliment how great of a DJ you are,
+[00:00:31] but there's a lot to cover today. So, we
+[00:00:33] got to jump right into it. So, he's
+[00:00:34] great. This is great. Let's go. All
+[00:00:36] right. Uh again, project four, the
+[00:00:38] recitation. Uh the video is available on
+[00:00:42] um actually I think that 280 is wrong.
+[00:00:44] It's I posted it this morning. Uh but
+[00:00:46] the recitation was last night. Slides
+[00:00:47] are available. The video is available.
+[00:00:49] Homework five is due this this Sunday
+[00:00:51] coming up. And then again, the final
+[00:00:52] exam will be on December 11th. And
+[00:00:54] there's one more homework after this.
+[00:00:55] Okay. [snorts] All right. So
+[00:01:00] remember last class we were talking
+[00:01:01] about um [snorts] we the first lecture
+[00:01:04] of of how we're going to handle logging
+[00:01:06] and recovery in our database system. And
+[00:01:09] obviously the reason why we need to do
+[00:01:10] this is because if we write some data we
+[00:01:13] tell the outside world your transaction
+[00:01:15] is committed no matter what happens we
+[00:01:17] don't want to lose that data. So we
+[00:01:19] crash if if the OS crashes the data
+[00:01:21] system crashes the hardware crashes
+[00:01:22] whatever we need to come back and
+[00:01:24] restore those changes. And then recall
+[00:01:26] from last class I said that every
+[00:01:28] recovery protocol you're going to have
+[00:01:29] in a database system is going to have
+[00:01:31] two parts. The [snorts] first part is
+[00:01:33] what we talked about last class was all
+[00:01:36] the things you do during normal
+[00:01:37] operations to ensure that when there's a
+[00:01:40] crash later on that you can recover. So
+[00:01:42] we talked about how we're going to
+[00:01:43] maintain this write ahead log uh in most
+[00:01:46] systems that we're just going to record
+[00:01:47] all the things that we're doing in all
+[00:01:50] the changes that transactions are making
+[00:01:51] as as they go along. So then now today's
+[00:01:54] class is the second part where we start
+[00:01:56] talking about oop sorry we're start
+[00:01:58] talking about okay after now there's a
+[00:02:01] crash we the system comes back online
+[00:02:03] and we're going to look at all the data
+[00:02:05] we we recorded for ourselves during the
+[00:02:07] normal operation to try to reconstruct
+[00:02:09] the database to be what it was at the
+[00:02:11] state of the at the moment that it
+[00:02:13] crashed. But of course we can't resume
+[00:02:15] any crash transactions. We need to make
+[00:02:17] sure that we clean all those guys up and
+[00:02:19] roll back any of their changes. So so we
+[00:02:21] don't have any torn rights or partial
+[00:02:22] transactions. So again it's going to
+[00:02:23] look we want to restore the database
+[00:02:25] basically to the state it was at the
+[00:02:26] moment of the crash. Okay. [snorts]
+[00:02:30] So again with write ahead log uh in our
+[00:02:33] buffer pool it is a steal no force
+[00:02:35] policy. Steal means that we're allowed
+[00:02:37] to evict dirty pages before the
+[00:02:40] transactions that modified those pages
+[00:02:43] uh are committed. And then no force says
+[00:02:45] we're not required to flush all the
+[00:02:48] dirty pages for transactions at the
+[00:02:50] moment that that they commit. Right? And
+[00:02:52] since transactions may abort or fail
+[00:02:54] during normal operations, again, we we
+[00:02:56] make sure we we can roll back those
+[00:02:57] changes and sure that everything's
+[00:02:59] atomic, right? So we're basically trying
+[00:03:01] to deal with the state of the world like
+[00:03:02] that. So say in in we're running some
+[00:03:04] transactions, all of a sudden there's a
+[00:03:05] crash. The top guy T1 has committed. We
+[00:03:08] make sure we keep its changes. T2 did
+[00:03:10] not commit and aborted. Make sure roll
+[00:03:12] back its changes. And then T3
+[00:03:15] uh didn't complete before the crash and
+[00:03:17] therefore we make sure it doesn't it
+[00:03:19] none of its changes uh survive after the
+[00:03:22] crash. Okay. So again last class was
+[00:03:26] about okay what are we going to put in
+[00:03:27] the write ahead log uh the undo and redo
+[00:03:29] records so that we can recover after
+[00:03:30] crash. And then we quickly talked about
+[00:03:33] uh a sort of naive checkpointing scheme
+[00:03:35] at the end of the class so that we don't
+[00:03:37] have to replay the entire log. But we
+[00:03:39] said that had a bunch of problems and
+[00:03:40] that's what we're going to fix today.
+[00:03:42] So now the protocol we're going to learn
+[00:03:45] about today is called ARIES the
+[00:03:47] algorithms for recovery and isolation
+[00:03:49] explaining semantics like it's so
+[00:03:50] important it has its own Wikipedia
+[00:03:52] article about it and this was a this is
+[00:03:56] work developed at IBM research um as
+[00:03:58] part of the DB2 project um so this is
+[00:04:01] you know building a relational systems
+[00:04:03] not not IMS stuff um and this is
+[00:04:06] basically the gold standard of how you
+[00:04:08] would how you want to implement a
+[00:04:11] transaction actual recovery or sorry a
+[00:04:12] recovery protocol in your database
+[00:04:14] system to ensure that you don't you
+[00:04:16] don't lose any changes. So there was
+[00:04:18] obviously you know this paper came out
+[00:04:20] like '92 uh there people have been doing
+[00:04:22] database recovery protocols for a while.
+[00:04:24] One of the key differences that we'll
+[00:04:26] see in Aries is that it's going to be
+[00:04:28] overly careful to make sure we don't
+[00:04:30] lose anything. Right? I'd rather do I'd
+[00:04:32] rather make sure I'm super careful and
+[00:04:33] then slowly peel back some of the pieces
+[00:04:35] to make it faster. But I want to make
+[00:04:37] sure I don't lose anything first. And
+[00:04:39] we'll see as we go along there's the the
+[00:04:41] the Aries protocol has it three phases.
+[00:04:43] The the analyze or analysis, the redo
+[00:04:46] and the undo. And what differs from what
+[00:04:49] Aries does from what other data systems
+[00:04:51] were doing prior to this paper is that
+[00:04:53] sometimes they were doing the redo first
+[00:04:54] and sometimes they were doing the undo
+[00:04:56] first. But this thing is going to be
+[00:04:57] super careful and make sure that you do
+[00:04:59] the redo first by the undo and then once
+[00:05:01] you finish that last phase then you say
+[00:05:03] that now the Davis is fully returned
+[00:05:05] back to the correct state and you can
+[00:05:06] start running transactions uh again. So
+[00:05:10] again, I've said this many times before,
+[00:05:12] I'm going to go through what Aries does,
+[00:05:14] but the the exact implementation from
+[00:05:16] different data systems is going to vary
+[00:05:17] slightly, but the three-phase piece and
+[00:05:19] the CLR stuff we'll talk about in a
+[00:05:21] second. That's the key the key ideas
+[00:05:23] that everyone should be doing to ensure
+[00:05:25] that that everything's recoverable. The
+[00:05:27] paper is beautiful. It's 70 pages. It's
+[00:05:29] not an easy read. Uh and there's a bunch
+[00:05:32] of things that they're going to cover
+[00:05:33] that we're not going to cover like how
+[00:05:35] do you handle uh different isolation
+[00:05:37] levels for transactions running at the
+[00:05:38] same time. We're going to keep our lives
+[00:05:39] simple and soon we're running everything
+[00:05:41] in uh restrict uh structure 2PL so we
+[00:05:44] get serializable transactions.
+[00:05:47] All right. So there's three main ideas
+[00:05:49] for Aries. The first one we've already
+[00:05:51] covered is that we're going to maintain
+[00:05:52] a righthead log during normal operations
+[00:05:55] where we record all the changes that
+[00:05:56] transactions make to objects in our
+[00:05:58] database. But we're gonna have to record
+[00:06:00] them to the log first before we apply
+[00:06:03] the changes to the to the actual
+[00:06:05] objects. And then we said last class
+[00:06:07] that we have to make sure that the log
+[00:06:10] records that correspond to changes that
+[00:06:11] to to objects, those things have to be
+[00:06:14] written to disk before the modified
+[00:06:16] objects or the dirty pages before
+[00:06:17] they're allowed to be written to disk.
+[00:06:20] Right? So we can't write the dirty page
+[00:06:21] and then later on write write the log
+[00:06:23] record because we crash come back. The
+[00:06:25] log record may not made it out. And now
+[00:06:26] we have a page that made a change and we
+[00:06:28] don't know what changed it or how it got
+[00:06:30] changed. [snorts]
+[00:06:33] The next idea that we're going to do is
+[00:06:34] that we're going to be repeat our
+[00:06:36] history during the redo phase uh upon
+[00:06:40] recovery. So that means that we're going
+[00:06:42] to look at our write ahead log look at
+[00:06:43] all the changes transactions made during
+[00:06:45] the normal operation and we're going to
+[00:06:47] just redo everything. Even if some of
+[00:06:50] those changes actually made it out to
+[00:06:51] disk, we're going to be again super
+[00:06:53] cautious and we're going to say, I'm
+[00:06:54] going to make sure you really got this
+[00:06:56] and we're go ahead and apply those
+[00:06:57] changes.
+[00:07:00] And then the last piece is that when we
+[00:07:03] start undoing the effects of
+[00:07:04] transaction, undoing operations of
+[00:07:06] transactions, right? Because they got
+[00:07:08] aborted or they they got crashed, they
+[00:07:10] crashed before the system uh so they
+[00:07:12] didn't commit before the system crashed.
+[00:07:14] We're now actually going to maintain
+[00:07:15] additional redhead log records that
+[00:07:17] correspond to the reversal operations
+[00:07:20] that we're going to do as part of the
+[00:07:21] undo step.
+[00:07:23] Basically, you got a log record for
+[00:07:24] anytime you make a change and then if a
+[00:07:26] transaction aborts, you can roll it
+[00:07:27] back. Now, I'm going to have log records
+[00:07:28] to reverse those changes
+[00:07:31] because I again I want to know exactly
+[00:07:33] what what's happening in in in my my
+[00:07:35] data system on my pages and so I want to
+[00:07:37] record everything that I do.
+[00:07:40] Okay.
+[00:07:42] [snorts]
+[00:07:43] So we'll start off talking about uh the
+[00:07:45] log sequence numbers, how we're going to
+[00:07:47] start keeping track of the order of
+[00:07:48] these operations that that transactions
+[00:07:50] are doing. Uh and then we'll talk about
+[00:07:52] how we do a normal commit and abort
+[00:07:54] during regular runtime. Then we'll build
+[00:07:57] a or design a better checkpointing
+[00:07:59] algorithm uh called fuzzy checkpoints
+[00:08:01] where we don't have to block all the
+[00:08:02] transactions while we're running in the
+[00:08:04] in the system. Uh and then we'll do our
+[00:08:07] uh we'll put it all together and finish
+[00:08:09] up with Aries. Um, and then we had the
+[00:08:11] Click House guys giving our talk with us
+[00:08:13] today. Uh, and so we'll we'll cut over
+[00:08:16] to that at the end. And if we run out of
+[00:08:18] time, we're not getting full areas. We
+[00:08:19] can pick up on that uh on Monday, next
+[00:08:22] week. Okay. And [snorts] again, during
+[00:08:24] this discussion, today's lecture, I'm
+[00:08:26] going to be very conservative and very
+[00:08:27] careful about how our recovery scheme is
+[00:08:28] going to be implemented. Uh, and that
+[00:08:30] means we're going to end up writing a
+[00:08:31] bunch of redundant information. But
+[00:08:33] that's okay because again, we don't we
+[00:08:35] don't want to lose anything. uh and
+[00:08:36] there's some optimizations we talk about
+[00:08:37] at the end where you can start again
+[00:08:39] tweaking some of this to maybe not do
+[00:08:40] everything as so uh with so much
+[00:08:42] verbosity as as again the the textbook
+[00:08:46] as Aries paper describes it but a cap
+[00:08:48] symbol war ignored in the beginning
+[00:08:50] [snorts]
+[00:08:52] all right so the first thing we need to
+[00:08:53] do is extend our redhead log record uh
+[00:08:57] uh the log objects records we had talked
+[00:08:59] about last time start including some
+[00:09:00] additional information and when I showed
+[00:09:03] the log records before I'm you know kind
+[00:09:04] of appending them in sequential order uh
+[00:09:07] and I was only showing like one or two
+[00:09:08] transactions running at a time. But now
+[00:09:10] if you have maybe hundreds or thousands
+[00:09:11] of transactions running at the same
+[00:09:12] time, you kind of want to know what the
+[00:09:15] true order these operations are apply
+[00:09:17] getting applied, especially if they're
+[00:09:18] happening to different pages at the same
+[00:09:20] time. So now every log record is going
+[00:09:23] to now record and be provided a globally
+[00:09:27] unique monotonically increasing log
+[00:09:29] sequence number. You can think of this a
+[00:09:31] little bit like the time stamp we talked
+[00:09:32] about with transactions uh in OC where
+[00:09:36] every you know the transactions are
+[00:09:38] assigned these globally unique time
+[00:09:39] stamps. Every log record can be assigned
+[00:09:41] a globally unique log sequence sequence
+[00:09:42] number and this is going to represent
+[00:09:44] the physical order in which the changes
+[00:09:47] are applied to pages.
+[00:09:49] The logical order is the time stamp
+[00:09:51] stuff up above. So we're still running
+[00:09:52] two-phase locking or OC or whatever you
+[00:09:54] want up above in in the rest of the
+[00:09:56] system. But now when I actually write
+[00:09:57] log records to disk, this log sequence
+[00:10:00] number is going to correspond the
+[00:10:01] physical order in which those things
+[00:10:02] actually occur.
+[00:10:05] And now other parts of the system need
+[00:10:07] to need need to be aware of these log
+[00:10:08] sequence numbers because it's going to
+[00:10:09] determine when they're allowed to do
+[00:10:11] certain things with with pages.
+[00:10:15] So again, we'll have the log sequence
+[00:10:16] number just that gets increase every
+[00:10:18] time we make a new record. But now in
+[00:10:21] every page in our database, whether it's
+[00:10:23] an index page or a table page, doesn't
+[00:10:25] matter what it is, it's going to have
+[00:10:27] this page lsn record that's going to
+[00:10:30] keep track of the most recent log record
+[00:10:33] that modified the contents of that page.
+[00:10:38] Right? So again, every thing in the
+[00:10:40] header, every data page, now we're going
+[00:10:41] to have this page LSM, and some of them
+[00:10:43] are going to point to log records that
+[00:10:45] are on disk. some of them going to put
+[00:10:47] into log records that are still in
+[00:10:48] memory in in our log buffer.
+[00:10:51] [snorts]
+[00:10:52] And then now there's a global LSN called
+[00:10:54] the flush LSN. The data system keeps
+[00:10:57] track of what's the uh what is the the
+[00:11:00] largest log sequence number for a log
+[00:11:02] record that's been flushed to disk.
+[00:11:04] Right? So it's basically the dividing
+[00:11:05] point the demarcation line and where
+[00:11:08] where disk the disk buffer stops and
+[00:11:10] where the the the inmemory buffer
+[00:11:12] continues.
+[00:11:14] And so again, as I said before, now we
+[00:11:17] talked about how like we need to make
+[00:11:18] sure that the log record for a for that
+[00:11:22] modified a page and made it dirty that
+[00:11:24] make sure that that gets written to disk
+[00:11:25] before we uh we can write the dirty page
+[00:11:28] to disk. These LSN are how we're going
+[00:11:30] to be able to do this now. So now in
+[00:11:32] your buffer pool manager, in your
+[00:11:33] eviction uh in your eviction algorithm,
+[00:11:36] it has to be aware of what's my flush
+[00:11:37] LSN. And now as you start examining
+[00:11:40] pages to determine whether they can be
+[00:11:42] evicted or not, you go look at the page
+[00:11:44] LSN in the header and you see whether
+[00:11:46] it's less than or equal to the flush
+[00:11:48] LSN. If it is, then you know that the
+[00:11:51] log record for that that modified that
+[00:11:53] page last is out on disk. If it's if the
+[00:11:55] page LSN is greater than this, then you
+[00:11:57] know there's some log record hanging out
+[00:11:58] in DRAM and therefore you can't flush
+[00:12:00] that page.
+[00:12:02] So now you do a bunch of things like all
+[00:12:04] right well I want I really want to my
+[00:12:06] eviction policy says I really want to
+[00:12:07] flush this page but my log record for it
+[00:12:11] is still in memory. So you could have
+[00:12:13] your buffer pool then decide, oh go
+[00:12:14] flush the log buffer, right? Doing that
+[00:12:16] whatever the group commit stuff. Make
+[00:12:18] that happen earlier than than it
+[00:12:19] normally would. And then when that comes
+[00:12:21] back with an acknowledgement, then you
+[00:12:22] can go flush you can flush out the page
+[00:12:24] and vict.
+[00:12:26] [snorts]
+[00:12:28] So these LSN are going to show up in a
+[00:12:30] bunch of different places. We talked
+[00:12:31] about the page LSN and the flush LSN,
+[00:12:34] right? Flush LSN hangs out in memory,
+[00:12:35] tells you the last LSN of the log log
+[00:12:37] record on disk. page LSN is the the the
+[00:12:40] latest LSN that last modified a page.
+[00:12:45] But every single page, we're also going
+[00:12:46] to keep track of the a wreck LSN, which
+[00:12:50] is going to be the oldest update that
+[00:12:52] that that modified this page since that
+[00:12:55] that page was last flushed to disk.
+[00:12:59] And you don't actually have to store
+[00:13:00] this in the the page itself. We're going
+[00:13:02] to store have some two separate data
+[00:13:04] structures we'll cover in a second
+[00:13:05] called the dirty page table and the
+[00:13:06] active transaction table. So rather in
+[00:13:08] the ra unlike the page lsn where you in
+[00:13:10] the header of the page you put the you
+[00:13:12] put the l the the lsn that modified it
+[00:13:15] last the wreck lsn just hangs out in
+[00:13:18] memory and it's going to correspond to
+[00:13:19] the lsn that last modified the first
+[00:13:22] modified the page since it was last
+[00:13:24] flushed written to disk. [snorts]
+[00:13:27] The last lsn is for for every
+[00:13:29] transaction is keep track of the the
+[00:13:31] latest uh the most recent log record for
+[00:13:34] any transaction that's actually running
+[00:13:35] in our system. Right? Right? So if it
+[00:13:37] aborts, we know how to jump to the last
+[00:13:39] LSN and start working our way backwards,
+[00:13:40] undo its changes. And then a special one
+[00:13:43] called the master record will be a
+[00:13:45] another global LSN that's going to keep
+[00:13:47] track of the beginning point of the last
+[00:13:50] checkpoint that successfully completed
+[00:13:52] in our write a log. Remember we said we
+[00:13:54] take when we take a checkpoint, we have
+[00:13:55] to write a log record says I'm taking a
+[00:13:57] checkpoint. So the the master record to
+[00:13:59] keep track of when that last checkpoint
+[00:14:01] that completed successfully when that
+[00:14:03] started where to go find that in the
+[00:14:04] log.
+[00:14:08] All right. So now we go back to our our
+[00:14:10] example we had before. We have we have
+[00:14:12] now a red head log hangs out in memory.
+[00:14:13] We have a buffer. We're bringing in
+[00:14:15] pages. And then now we see that in our
+[00:14:17] redhead log we're including these lsns,
+[00:14:20] right? That is monotonically increasing
+[00:14:22] by one every time we get a new log
+[00:14:23] record. And then we have now in our
+[00:14:26] pages uh for for you know for data pages
+[00:14:29] we have a page LSN right and they can be
+[00:14:31] different from inmemory versus on disk
+[00:14:33] right so whenever gets written out then
+[00:14:34] the obviously the own disc one gets gets
+[00:14:36] updated
+[00:14:38] then you have this flush LSN that's just
+[00:14:40] going to correspond to what's the last
+[00:14:41] LSN that made it out to disk and that
+[00:14:44] may exist in in your in your buffer pool
+[00:14:47] in memory or not sorry in may in the the
+[00:14:49] the log buffer that's in memory may it
+[00:14:52] may still be in there But I don't care
+[00:14:54] about that. I just care about like, you
+[00:14:55] know, I'm pointing basically the the
+[00:14:56] last entry I have on my log on disk. I
+[00:15:00] have my master record that's going to
+[00:15:02] hang out in disk too. Again, that's just
+[00:15:03] going to point to the the the starting
+[00:15:06] point of the last checkpoint that I took
+[00:15:08] because I'm going to use that as a way
+[00:15:09] to jump into the log and figure out what
+[00:15:10] was going on at the time at the crash.
+[00:15:15] So, if my page lsn points to something
+[00:15:17] that's on disk, can I flush it?
+[00:15:22] Say, say I I need to modify I modify
+[00:15:24] this page. I want I want to write out
+[00:15:26] the disk. My page Alison points to
+[00:15:28] something on the log. Can I flush it?
+[00:15:30] Yes, because I know the log record that
+[00:15:31] corresponds to that change made out the
+[00:15:33] disk, right? So, it's safe safe to flush
+[00:15:36] this. But now, if my page lsn points to
+[00:15:39] something that's still in memory, right?
+[00:15:41] And I know that that LSN is greater than
+[00:15:45] my flush LSN, then I know it's not safe
+[00:15:47] to flush this because the log record for
+[00:15:49] it hasn't made it out. So the these LSN
+[00:15:52] are simple simple watermarks for us to
+[00:15:53] determine what's on disk, what's in
+[00:15:55] memory for both pages and for for log
+[00:15:58] records,
+[00:16:03] right? So I've already said this, right?
+[00:16:05] Every log record has an LSN and then
+[00:16:07] every time we we we're going to modify a
+[00:16:09] page, we're going to create the log
+[00:16:12] record, get an LSN that corresponds to
+[00:16:15] the change we're making to the page.
+[00:16:16] Then now in when we go modify the page
+[00:16:19] we also go update the page ln that sits
+[00:16:21] in the header and we have that we have
+[00:16:22] the right latch on the page. So we can
+[00:16:24] go ahead and do that. Then every single
+[00:16:26] time we we flush out the right head log
+[00:16:29] e in that group commit process or you
+[00:16:31] know when the log buffer gets full then
+[00:16:33] we update the flush lsn determine what
+[00:16:35] where the the end point is for the log
+[00:16:38] on disk.
+[00:16:43] All right. All right. So, no during
+[00:16:45] normal execution, it's basically all the
+[00:16:47] stuff that I I just talked about, right?
+[00:16:48] Like transaction makes changes and we
+[00:16:51] want to record those changes in our in
+[00:16:54] in our write ahead log before we go
+[00:16:56] apply the changes to uh the pages
+[00:16:58] themselves. So to simplify our
+[00:17:00] discussion today, the assumptions we're
+[00:17:01] going to make is that we're going to
+[00:17:02] assume that all our log records fit in a
+[00:17:05] single page, right? Yes, you can have
+[00:17:07] you can have you can have tupils that
+[00:17:09] are larger than a single page like you
+[00:17:10] know four kilobytes, eight kilobytes,
+[00:17:12] but then you know obviously what do you
+[00:17:13] do if the log record expands that you
+[00:17:15] know you just have a a sequence number
+[00:17:17] within the the the page or segment
+[00:17:20] number. So I would say my log record is
+[00:17:23] my log record is too big to sit sit in a
+[00:17:25] single page then I would have sort of
+[00:17:26] the first half log record say I'm
+[00:17:28] segment number one one of two and then
+[00:17:30] the next log record say I'm segment two
+[00:17:31] of two. you would know if you only had
+[00:17:32] the first one, not the second one. You
+[00:17:34] don't have the full log record. And
+[00:17:35] obviously, you don't update anything to
+[00:17:37] say things successfully flush it till
+[00:17:39] both of those segments make it out. But
+[00:17:41] we can ignore that for now. We assume
+[00:17:43] that all our disc rights are going to
+[00:17:44] be, you know, 4 kilobyte atomic rights,
+[00:17:47] right? If things are spam multiple
+[00:17:49] pages, you know, it just just wait for
+[00:17:51] the extra flush to make sure
+[00:17:52] everything's made it out before you tell
+[00:17:53] the outside where you've committed.
+[00:17:55] We're going to assume that the day
+[00:17:56] system is going to be single version
+[00:17:57] running strong strict 2PL. So that means
+[00:18:00] that we won't worry about weird
+[00:18:01] interleings of transactions upon replay
+[00:18:04] and and because we're using redhead log,
+[00:18:06] we have to use steel no force. We assume
+[00:18:08] we're going to do physical log scheme,
+[00:18:09] physical loging or physiological
+[00:18:11] logging. We're not going to do the
+[00:18:12] logical logging where you just have the
+[00:18:13] SQL query in the log record where
+[00:18:15] basically have the diff of the changes
+[00:18:16] we're making to pages. And then I'm not
+[00:18:19] going to talk about how you update the
+[00:18:21] pages for indexes part of these changes.
+[00:18:23] It works the same way as you would for
+[00:18:25] regular table pages. But to keep it
+[00:18:26] simple, we're just updating single
+[00:18:28] objects and we'll do physical physical
+[00:18:29] logging. [snorts]
+[00:18:32] All right. So when a transaction goes
+[00:18:34] commit, the data system again going to
+[00:18:36] write the commit message to the log
+[00:18:38] buffer uh in memory and then it can can
+[00:18:42] then flush that log buffer out to disk
+[00:18:46] either right away or part of the group
+[00:18:47] commit with you know waiting a little
+[00:18:48] bit to get batched together. And then
+[00:18:50] once we know that the commit is
+[00:18:52] successful,
+[00:18:54] we can tell the outside world that your
+[00:18:55] transaction has successfully committed.
+[00:18:57] But then now we're also going to
+[00:18:58] introduce a new log record called
+[00:19:00] transaction end that we can append to
+[00:19:03] our inmemory log buffer. And this is
+[00:19:05] being used to represent to the system to
+[00:19:08] keep track of the fact that this
+[00:19:09] transaction has successfully committed
+[00:19:11] and there's nothing else we ever need to
+[00:19:13] do for it ever again.
+[00:19:15] So it's in this case here since the
+[00:19:17] transaction is normally committing. I
+[00:19:19] commit and then then I can put the
+[00:19:21] transaction end message once I know
+[00:19:22] things are successfully flushed
+[00:19:24] and I don't need to maintain any
+[00:19:26] additional metadata for it uh about it
+[00:19:28] later on. This will make more sense when
+[00:19:30] we do recovery and we see in this case
+[00:19:31] why why we need this transaction end for
+[00:19:33] abort when we do aborts but for commit
+[00:19:35] it's pretty pretty straightforward
+[00:19:37] and this transaction end message does
+[00:19:39] not need to be flushed immediately. We
+[00:19:41] can put that in a log buffer and then
+[00:19:43] eventually it'll get written out and
+[00:19:44] that's fine. There's no problems.
+[00:19:49] So it looks like this, right? So again,
+[00:19:50] we have our transaction begin. That's
+[00:19:52] fine. We put a log buffer there. Then
+[00:19:54] this transaction does a bunch of
+[00:19:56] updates. We update we update uh we
+[00:19:59] [clears throat] go ahead and create the
+[00:20:00] log records. We update the pages in
+[00:20:02] memory. Then upon commit, we got to make
+[00:20:04] sure we flush this out to disk, right?
+[00:20:06] That's fine. Once that's been updated,
+[00:20:08] uh we can update the flush LSN to now
+[00:20:10] point to uh this latest log record here.
+[00:20:13] We can tell the outside world that our
+[00:20:15] transaction has committed, right? That's
+[00:20:17] all fine. And then at some later point
+[00:20:19] soon after this, we'll say, "All right,
+[00:20:22] we don't need this transaction anymore.
+[00:20:23] We'll put a transaction end message in
+[00:20:24] it in in the log." And then that'll
+[00:20:26] eventually get written out.
+[00:20:30] One additional option you can do, you
+[00:20:31] can say, well, I keep track of my
+[00:20:32] flushed LSN, so I know that at some
+[00:20:34] point I don't need to keep this log
+[00:20:36] buffer around. And so again, I can just
+[00:20:39] do the the swapping mechanism if I have
+[00:20:40] two buffers or three buffers. But I
+[00:20:42] essentially I'm just trimming out what I
+[00:20:44] have in memory because I know I don't
+[00:20:45] need to access these log anymore.
+[00:20:48] Okay. [snorts]
+[00:20:51] All right. So this is pretty
+[00:20:52] straightforward. The aborts one is where
+[00:20:53] we have to add additional things. So now
+[00:20:55] when a transaction aborts it's basically
+[00:20:58] going to be a like an undo operation
+[00:21:02] during like dur normal execution when we
+[00:21:03] abort it's going to basically be doing
+[00:21:05] the same steps that we would do during
+[00:21:06] recovery. Just now we're just doing this
+[00:21:08] part of the the regular uh execution
+[00:21:10] process.
+[00:21:12] So, we need to add one additional field
+[00:21:13] to our log records called the previous
+[00:21:15] LSM. And we don't need this for
+[00:21:17] correctness reasons. We're going to need
+[00:21:18] this for for performance reasons. It's
+[00:21:20] going to allow us to basically maintain
+[00:21:22] a link list of the log records that
+[00:21:25] correspond to a single transaction. So,
+[00:21:26] I can jump to the the the last log
+[00:21:28] record for a transaction and then follow
+[00:21:30] this previous LSN to to jump to the
+[00:21:33] different log records for that
+[00:21:35] transaction,
+[00:21:36] right? And in corresponding order.
+[00:21:38] Again, for PowerPoint, I'm only showing
+[00:21:40] like one or two transactions at a time.
+[00:21:41] Think of like a thousand transactions a
+[00:21:43] second. I want to quickly navigate and
+[00:21:44] get all the log records I need for for a
+[00:21:47] for a transaction.
+[00:21:50] Another thing to point out too is that
+[00:21:51] the the
+[00:21:54] while we're doing this, while
+[00:21:55] transactions are running and then we end
+[00:21:57] up boarding, need to roll them back,
+[00:21:58] we're still technically doing all the
+[00:22:00] concurren concurrent rual stuff we
+[00:22:01] talked about before. So, if I'm doing
+[00:22:03] 2PL, I don't lease the locks soon as the
+[00:22:06] transaction tells me I abort because I
+[00:22:08] still need to go modify the records I've
+[00:22:10] already modified when I thought I was
+[00:22:12] going to still commit. So, I hold the
+[00:22:14] locks and all those things I'm going to
+[00:22:16] reverse back on. And only when I go
+[00:22:18] ahead and actually finish the roll back,
+[00:22:20] finish finish the undo process, then I
+[00:22:23] go ahead and release the locks.
+[00:22:25] This ensures that like someone else
+[00:22:27] doesn't write to something and I try to
+[00:22:29] roll back my change or try to put it
+[00:22:30] back to the value it was before I
+[00:22:32] started running and I end up blowing
+[00:22:34] away you know that other transactions
+[00:22:36] right all the same stuff we talked about
+[00:22:38] before with 2PL [snorts]
+[00:22:41] all right so coming back here now now we
+[00:22:43] have again in our head of our log
+[00:22:44] records we have the lsn that's always
+[00:22:46] going up in time and the previous lsn
+[00:22:48] just corresponds to the the the previous
+[00:22:49] one in the case of the top one where
+[00:22:52] we're beginning transaction four there
+[00:22:54] isn't a previous lsn for the begin
+[00:22:56] message. So it's just null or nil.
+[00:22:59] [snorts]
+[00:23:00] So transaction is run makes these
+[00:23:02] changes then it goes ahead and gets an
+[00:23:04] abort and again this could occur because
+[00:23:06] either the the application said abort
+[00:23:07] this transaction or our contio protocol
+[00:23:09] said abort this transaction we don't
+[00:23:11] know we don't care and now the question
+[00:23:14] is what do we do in this middle step
+[00:23:15] here before we can put that transaction
+[00:23:17] end message for for T4 what do we need
+[00:23:20] to do to roll back those changes
+[00:23:24] What's that?
+[00:23:26] >> Following class. But like and do what?
+[00:23:30] [clears throat]
+[00:23:35] >> I heard heard somebody said it. Yes.
+[00:23:38] >> Process.
+[00:23:39] >> Process the undo. Yes. But we're talking
+[00:23:43] about the logging here. We got to record
+[00:23:44] what we do. So undo is going to be the
+[00:23:47] same thing as as normal operation. We
+[00:23:49] want to record what we're undoing
+[00:23:53] so that if we crash when we try to undo
+[00:23:56] this, we can we know what we undid and
+[00:23:57] we can make sure we still undo it.
+[00:24:01] And so we're in a new log record type
+[00:24:04] called compensation log records or CLRs.
+[00:24:06] And it's basically it's the same thing
+[00:24:08] as as the update operation we do nor
+[00:24:10] normal execution, but it's just it's
+[00:24:12] just the reversal of it, right? We're
+[00:24:15] just taking the before and after value
+[00:24:16] and just swapping it over, right?
+[00:24:20] And then when we do this for normal
+[00:24:22] execution, when we're undoing
+[00:24:24] transactions, we don't have to wait
+[00:24:26] until those un these CL CLRs that
+[00:24:29] reverse the changes, they don't need to
+[00:24:31] be flushed to disk immediately when the
+[00:24:33] transaction when when we complete the
+[00:24:35] undo process because actually soon as
+[00:24:37] the transaction says it gets aborted,
+[00:24:39] like either because they say abort or we
+[00:24:41] tell it's going to abort, we immediately
+[00:24:43] come back to the application say your
+[00:24:45] transaction has been aborted. We don't
+[00:24:47] need to wait to flush anything.
+[00:24:49] Right? Because we're not making any
+[00:24:51] guarantees other than make sure that we
+[00:24:52] reverse all these changes which which
+[00:24:54] we'll do.
+[00:24:56] [snorts]
+[00:25:00] >> The question is if the machine crashes
+[00:25:02] before the roll back completes, what do
+[00:25:03] we do? Roll it back. We'll get there in
+[00:25:05] a second. That's that's the last step of
+[00:25:07] Aries.
+[00:25:09] [snorts]
+[00:25:10] All right. We're running out of space on
+[00:25:11] PowerPoint. So now I'm going to put this
+[00:25:12] in tabular form. Right? So now we have
+[00:25:15] think of like every row in this table
+[00:25:16] corresponds to a log record. They have
+[00:25:18] an LSN, a previous LSN, transaction ID
+[00:25:20] that that of the of the transaction
+[00:25:22] making the change, the log record type,
+[00:25:24] what object they're modifying, the
+[00:25:26] before and after value, and this undo
+[00:25:28] next LSN thing if if we need to roll
+[00:25:30] things back. [snorts]
+[00:25:32] So this is the same setup we had before.
+[00:25:34] T1 made some changes. Now it aborts. So
+[00:25:37] soon as we get the abort message, we
+[00:25:39] tell the outside world the transaction
+[00:25:40] is finished. It's aborted. But then now
+[00:25:42] we got to start undoing the changes. So
+[00:25:44] this is why having the previous LSN for
+[00:25:46] transactions makes this easier because I
+[00:25:48] see the abort message. I know the
+[00:25:49] previous LSN for this transaction was
+[00:25:51] 003. So I can quickly jump up to find
+[00:25:53] that log record and and roll it back. So
+[00:25:57] I see the update message at LSN3.
+[00:26:00] So I'm going to create a CLR for this
+[00:26:02] that says I'm going to reverse the
+[00:26:04] change that that happened up above in
+[00:26:06] this previous LSN.
+[00:26:08] So, I'm going to have the same object
+[00:26:10] that I modified, but then I have now
+[00:26:12] basically the reverse of the before and
+[00:26:14] after value. So, I can swap it back to
+[00:26:16] what it should have been before the
+[00:26:18] transaction made any changes.
+[00:26:21] And then my undo next LSN again is just
+[00:26:23] a a helper to say here's the next LSN
+[00:26:26] that I need you need to roll back uh
+[00:26:29] after this one. So then jump up jump up
+[00:26:31] there and then I'll do the same thing
+[00:26:33] create another LSN or CLR for it uh
+[00:26:36] that's going to corresponds to this
+[00:26:38] change here and I'm just reversing the
+[00:26:40] values back.
+[00:26:43] Then I get the undo next LSN. I see that
+[00:26:46] it's the begin message and at this point
+[00:26:47] I know I'm done. I reversed all the
+[00:26:50] changes I needed for this transaction.
+[00:26:52] So now this is where I put the
+[00:26:53] transaction end message for the suborded
+[00:26:56] transaction.
+[00:26:57] So for committed transactions there
+[00:26:59] there's nothing in between commit and
+[00:27:00] end. In aborted transactions it's all
+[00:27:02] the CLRs making sure that you reverse
+[00:27:04] all the changes that it made during
+[00:27:06] during normal operations before it
+[00:27:07] aborted.
+[00:27:08] >> Yes.
+[00:27:14] >> The question the question is for
+[00:27:15] committed transactions can I immediately
+[00:27:17] write the transaction end after the
+[00:27:19] commit? Yes.
+[00:27:23] Durome operation? Yes. Recovery maybe
+[00:27:25] stick. We'll see in a second. You may it
+[00:27:27] has to stick around maybe a little
+[00:27:28] longer.
+[00:27:29] [snorts]
+[00:27:32] Any other questions?
+[00:27:37] All right. Good. So far so good. All
+[00:27:39] right. So, so far this is pretty
+[00:27:40] straightforward. And so the abort
+[00:27:42] algorithm is basically I said before we
+[00:27:44] first write the abort message in the
+[00:27:45] write ahead log. We can tell the outside
+[00:27:47] world that transactions have been
+[00:27:47] aborted at that point. Um and then we're
+[00:27:50] going to analyze the transactions
+[00:27:52] operations updates made in reverse order
+[00:27:55] and apply them uh apply the reversal and
+[00:27:58] them going back in time. So take the the
+[00:28:01] latest log record that they they they
+[00:28:02] they established to do an update reverse
+[00:28:05] that and then do the next one until I
+[00:28:07] hit the begin and then I know I'm done
+[00:28:08] and I can write the transaction end
+[00:28:10] message. At that point I can release all
+[00:28:11] the locks for my transaction because
+[00:28:13] I've updated all the records that I
+[00:28:15] wanted to update and then I'm done.
+[00:28:18] Again, a simple optimization you could
+[00:28:19] do in this case here. Um,
+[00:28:23] it's, you know, this is example where in
+[00:28:26] two-phase locking, you could start
+[00:28:27] releasing locks early. If you know that
+[00:28:29] you're never going to update the same
+[00:28:30] object again multiple times to undo
+[00:28:33] changes during the undo process, you can
+[00:28:35] release the lock for that object at the
+[00:28:36] moment you get, you know, as you apply
+[00:28:38] the update, right? But, but you have to
+[00:28:40] you have to if you scan all the redhead
+[00:28:42] login and know all the objects you're
+[00:28:43] going to modify ahead of time, you can
+[00:28:44] do that. If you don't do that, then then
+[00:28:46] you can't because you don't know whether
+[00:28:47] it's going to you have to do multiple
+[00:28:49] undos.
+[00:28:52] The other thing to point out too is like
+[00:28:53] we never gonna we're never going to undo
+[00:28:55] a CLR. We're never going to undo an
+[00:28:57] undo. Doesn't make any sense, right?
+[00:29:00] Because again, we're trying to undo
+[00:29:01] something that happened to our
+[00:29:02] execution. So, we don't need to make
+[00:29:04] CLRs for our CLRs when we do uh when we
+[00:29:08] do recovery, right? Once it's there, we
+[00:29:11] know that we can always replay it. Re
+[00:29:13] reapply it over and over again.
+[00:29:19] >> Say it again.
+[00:29:22] >> Question. Why do we need the before and
+[00:29:24] after value for the CLRs?
+[00:29:26] Again, we're being overpantic here,
+[00:29:28] right? Like you could say, I know, going
+[00:29:31] back here, you could you could just say
+[00:29:32] I know I need to reverse
+[00:29:35] this change here. go look at it and say
+[00:29:37] it was it was 3040. I don't need to
+[00:29:40] record that it was 4030.
+[00:29:43] But again, just be we're being overly
+[00:29:44] >> verbose.
+[00:29:46] [snorts]
+[00:29:54] >> All right. So he's he's basically
+[00:29:55] saying, can I start caching things?
+[00:29:57] Let's not do any that's a do any
+[00:29:59] optimizations. Let's make sure it's
+[00:30:00] correct first. In databases, you want to
+[00:30:02] make sure it's correct first, then you
+[00:30:03] then you make it faster. But yes that
+[00:30:06] you could start doing things like that.
+[00:30:07] Yes. So in terms of achieving
+[00:30:08] correctness, I'm going to wrap [snorts]
+[00:30:10] my mind around why do we need this whole
+[00:30:12] CLR project at all like if we didn't
+[00:30:14] have the workflow didn't have
+[00:30:18] isn't it true that like we just leave
+[00:30:20] the head as like there will never be a
+[00:30:24] commit entry then we know that the
+[00:30:29] >> so so the statement is uh
+[00:30:33] why do I need why do I need to maintain
+[00:30:34] the CLRs? Shouldn't it be enough for me
+[00:30:36] to go just look at what the changes with
+[00:30:38] what the changes that were made up in
+[00:30:40] regular update transaction or update
+[00:30:42] records and just reverse them?
+[00:30:45] >> Like like aborting and crashing is the
+[00:30:46] same
+[00:30:47] >> statement is aborting and crashing is
+[00:30:49] the same thing. Yeah. Later on we'll see
+[00:30:51] this is like the key idea but we're
+[00:30:54] going to do this is that there's not
+[00:30:55] going to be any log records that say has
+[00:30:57] this page been flushed to disk. So we
+[00:31:01] don't know when we come back and crash
+[00:31:03] which of these changes actually made it
+[00:31:04] out to disk yet.
+[00:31:06] >> Sometimes we can, sometimes we don't.
+[00:31:08] >> Yeah. But are we supposed [snorts] to be
+[00:31:10] able to look at the previous transaction
+[00:31:12] for let's say a like in any case isn't
+[00:31:15] it true that we need to be able to look
+[00:31:16] at what we put in a like yesterday and
+[00:31:20] that
+[00:31:22] >> statement is isn't true that I need to
+[00:31:24] be able to look at a log record from
+[00:31:27] yesterday and know what went into it so
+[00:31:29] I can then reverse it.
+[00:31:32] >> Yes. But to to do that correctly I got
+[00:31:35] to reverse all the changes. The
+[00:31:37] checkpoints are basically trying to
+[00:31:39] freeze the state of the of the the
+[00:31:40] buffer pool, write all these dirty
+[00:31:42] pages. But then the problem is the way
+[00:31:43] I'm going to do checkpoints is that I'm
+[00:31:45] not going to stop everybody from
+[00:31:47] updating things while I'm doing it. So I
+[00:31:48] so it's be this weird I could be in this
+[00:31:50] weird state where some dirty page has
+[00:31:53] been written to disk and some pages
+[00:31:54] haven't been. Uh and I've been modifying
+[00:31:57] things while the checkpoint is
+[00:31:58] occurring. So I don't know what exactly
+[00:32:00] the state of the world is. At the moment
+[00:32:02] I got a checkpoint. So all these undos
+[00:32:04] and these CLRs and the regular record
+[00:32:06] allows me to reverse things back to the
+[00:32:08] correct state [snorts]
+[00:32:11] there. Are there some optimizations you
+[00:32:13] could do? Yes. Uh
+[00:32:16] but again for recovery stuff you want to
+[00:32:18] be super super careful.
+[00:32:21] >> So this I I said in the beginning this
+[00:32:22] is overly ver verbose
+[00:32:25] but let's let's start with this. So
+[00:32:27] Postgress is even more verbose than
+[00:32:28] this. Postgress we're getting ourselves.
+[00:32:30] Postgress will be after the first after
+[00:32:33] you take a checkpoint the first time a
+[00:32:36] transaction modifies a page they write
+[00:32:38] the whole page out to the write ahead
+[00:32:40] log then write the log record that
+[00:32:42] modified that page because again you you
+[00:32:45] want to be super careful that like if
+[00:32:47] things get corrupted you you can always
+[00:32:48] come back and get get back to the
+[00:32:50] correct state. So we're getting extra
+[00:32:51] redundancy through these CLRs but it's
+[00:32:53] also going to make sure that like if we
+[00:32:54] crash during recovery we know we what we
+[00:32:56] actually made what we actually modified.
+[00:33:00] So like you two guys every every year
+[00:33:02] people are said why are we doing this?
+[00:33:03] It seems so so wasteful. You're correct
+[00:33:05] but like for to be super careful we're
+[00:33:08] going to do all of this and there's
+[00:33:09] optimization you obviously can do
+[00:33:10] afterwards.
+[00:33:15] Okay. [snorts]
+[00:33:17] All right. So I think we've we covered
+[00:33:18] all this. All right. So at this point
+[00:33:19] now we can get to start to understand
+[00:33:21] why we have all these CLRs and
+[00:33:22] additional things. So now we're talking
+[00:33:25] about how we're going to do fuzzy
+[00:33:26] checkpoints. the
+[00:33:29] again the the as a reminder the reason
+[00:33:30] why we had to do new checkpoints is that
+[00:33:32] the log's going to grow forever assuming
+[00:33:34] you have transactions running all the
+[00:33:35] time and when I crash and come back I
+[00:33:38] don't want have to replay five years
+[00:33:39] worth of log the to put my data back in
+[00:33:42] the correct state I want to be able to
+[00:33:44] to sort of go back to a certain like go
+[00:33:47] back a little bit in my right ahead log
+[00:33:49] and use that as a starting point for me
+[00:33:50] to say let me reconstruct the state of
+[00:33:52] the database at that point in time
+[00:33:53] rather than the beginning of time so
+[00:33:56] this be a mechanis doesn't allow us
+[00:33:57] allow us to sort of speed up the the um
+[00:34:01] the recovery time.
+[00:34:04] So the last class we talked about a
+[00:34:08] simple protocol where we basically stop
+[00:34:10] the world when we want to take a
+[00:34:12] checkpoint like stop queries from
+[00:34:14] running, queries from modifying things,
+[00:34:16] stop any new queries from starting any
+[00:34:17] any new transactions, wait until all any
+[00:34:20] actual transactions that are still
+[00:34:21] running could finish execution, right?
+[00:34:24] which could, you know, could take days
+[00:34:25] or hours and that that that sucks. But
+[00:34:27] then once we know there's no active
+[00:34:29] transactions, then we take whatever's in
+[00:34:31] our buffer pool, write that out to disk,
+[00:34:34] and we know that's been flushed, and
+[00:34:35] then we add a a we can add a a
+[00:34:37] checkpoint entry into our log. So now if
+[00:34:39] we crash, come back, we go look at that
+[00:34:42] checkpoint record, we know that all
+[00:34:44] there's no inflight transactions at that
+[00:34:46] moment at the checkpoint and the
+[00:34:47] database is a consistent snapshot,
+[00:34:50] [snorts] right?
+[00:34:52] So it makes recovery super easy because
+[00:34:53] again I don't have to look at the log
+[00:34:54] and look for transactions that might
+[00:34:56] have been running while I took the
+[00:34:56] checkpoint. I waited it till they all
+[00:34:58] finished and then I don't have any weird
+[00:35:00] torn right situations. So recovery is
+[00:35:03] easy but obviously this is super slow
+[00:35:04] because you have to pause everything
+[00:35:05] while you take a checkpoint.
+[00:35:08] So a slightly better one is not wait for
+[00:35:11] transactions to finish but you just
+[00:35:13] pause them from executing whatever they
+[00:35:15] were executing
+[00:35:17] right and then you write out your dirty
+[00:35:18] pages. Uh and then once that's done then
+[00:35:20] then you can allow transactions start
+[00:35:21] running again right but this this has
+[00:35:24] problems too. So say I have three pages
+[00:35:26] in my database uh I my buffer pool I
+[00:35:29] have one one worker thread wants to do
+[00:35:31] checkpoints one worker thread is running
+[00:35:32] transactions. So say the transaction
+[00:35:34] it's going to modify two pages it's
+[00:35:35] going to modify page one and three. So
+[00:35:37] it first modifies page three. Then the
+[00:35:39] checkpoint starts and the checkpoint's
+[00:35:42] going to pause any transaction that
+[00:35:44] that's that's running from any running
+[00:35:45] anything else, right? It could be either
+[00:35:47] your inflight query or just preventing
+[00:35:50] them from running another query. Then
+[00:35:52] now the checkpoint is going to basically
+[00:35:53] do a special scan on all my pages in my
+[00:35:55] buffer pool and write those out to disk.
+[00:35:57] Right? So I have page one, page two, and
+[00:35:59] then the modified page three that
+[00:36:01] transaction modified. Then the
+[00:36:03] checkpoint completes, the transaction
+[00:36:05] wakes up again, and now it modifies page
+[00:36:07] one.
+[00:36:09] But I don't have a consistent snapshot
+[00:36:12] of of those pages in my buffer. I'll
+[00:36:15] have I'll I'll have half the changes
+[00:36:17] that transaction one made.
+[00:36:21] So I still have to go look around more
+[00:36:22] in the write log to figure out what was
+[00:36:24] this transaction doing at the time I was
+[00:36:26] taking the checkpoint. So I make sure
+[00:36:27] that I got I can try to reconstruct the
+[00:36:30] database and get that make sure I get
+[00:36:31] that page one of there because the
+[00:36:32] transaction may let may later commit and
+[00:36:35] we tell the outside where the
+[00:36:36] transactions committed but I'm missing
+[00:36:37] that up its update in the page.
+[00:36:43] So what we're going to start doing now
+[00:36:44] is now we're going to add additional
+[00:36:45] metadata to our write ahead log to keep
+[00:36:49] track of when we take the checkpoints
+[00:36:51] when the checkpoint's going to start and
+[00:36:52] when when it's going to finish. And then
+[00:36:55] we're going to record what were the
+[00:36:56] transactions that were running at the
+[00:36:58] moment that the checkpoint started and
+[00:37:00] what pages were dirty in in our buffer
+[00:37:03] pool at the moment the checkpoint
+[00:37:04] started.
+[00:37:07] So that's le is going to give us more
+[00:37:09] idea about what's going on in the state
+[00:37:10] of the system
+[00:37:12] at the moment that we we started taking
+[00:37:14] a checklist. We'll know whether these
+[00:37:15] changes actually made it out to disk or
+[00:37:17] not. [snorts]
+[00:37:19] So the AT or transaction table is pretty
+[00:37:21] straightforward. Every transaction that
+[00:37:23] exists will have a transaction ID,
+[00:37:24] right? Similar to the active transaction
+[00:37:26] table we talked about when we try to do
+[00:37:28] OCC or MPCC. We need to keep track of
+[00:37:30] what transactions are running this
+[00:37:31] running at the same time. So it's it's
+[00:37:33] basically the same table. Then we'll
+[00:37:35] have the status of the transactions
+[00:37:37] mode, what what phase it's in, right? It
+[00:37:40] can either be running because it's still
+[00:37:41] actively going going on. Uh it's in
+[00:37:44] committing process. Uh and then
+[00:37:47] candidate for undo means that we think
+[00:37:49] we're going to have to undo this. It may
+[00:37:50] change later on that it turns out this
+[00:37:52] transaction does commit and we can
+[00:37:54] change its status. But when we do
+[00:37:56] recovery, we assume everyone's going to
+[00:37:57] get rolled back until we we learn
+[00:37:58] otherwise.
+[00:38:00] [snorts]
+[00:38:01] So we can remove a transaction from the
+[00:38:02] AT once we see it transaction end
+[00:38:05] message, right? Either because it got
+[00:38:07] committed or boarded and rolled back
+[00:38:09] because at that point we know that there
+[00:38:11] isn't going to be any more changes
+[00:38:12] coming from this transaction and we
+[00:38:14] don't need to maintain additional state
+[00:38:15] for it.
+[00:38:19] So when we do this recovery process,
+[00:38:20] we're again we're going to look at the
+[00:38:22] uh we can look at the actual transaction
+[00:38:24] table and and say well these
+[00:38:26] transactions are running at the time I
+[00:38:27] took the checkpoint but I I don't know
+[00:38:29] yet whether they're going to commit or
+[00:38:30] not. So I'm going assume everyone's
+[00:38:31] going to abort and then later on as I
+[00:38:32] scan the log I might find a commit
+[00:38:34] message and I go ahead and change it
+[00:38:35] status. [snorts]
+[00:38:38] The dirty page table is going to be
+[00:38:40] another separate data structure where
+[00:38:42] we're going to cord all the pages that
+[00:38:44] were in our buffer pool that were marked
+[00:38:46] dirty uh that were not flushed to disk
+[00:38:49] yet at the moment that the checkpoint
+[00:38:50] started.
+[00:38:52] And this is where we're going to record
+[00:38:54] the ls the wreck lsn to say here's the
+[00:38:57] newest log record sorry here's the
+[00:38:59] oldest log record that modified this p
+[00:39:02] this page and made it dirty since the
+[00:39:04] last time that page was written out to
+[00:39:06] disk. So page LSN is the newest log
+[00:39:09] record that modified the page and rec
+[00:39:10] LSN is the oldest log record that since
+[00:39:13] the page was brought into memory or
+[00:39:16] since it was last written in a disk.
+[00:39:18] Right? [snorts] So this dirty page table
+[00:39:21] is going to keep track of all the pages
+[00:39:22] that are buffable at the moment the
+[00:39:23] checkpoint started that that were that
+[00:39:25] are dirty.
+[00:39:28] All right. So now in this case here we
+[00:39:30] we have our checkpoint starts. Uh and in
+[00:39:33] this case here we have the the when a
+[00:39:35] checkpoint starts we keep track of the
+[00:39:37] the AT. So we we know that there's a
+[00:39:39] transaction T2 uh that's still running.
+[00:39:42] T1 got transaction end before the
+[00:39:44] checkpoint started. So it's not in our
+[00:39:45] in our active transaction table. And
+[00:39:47] then there's this uh there's a log
+[00:39:49] record up above that corresponds to
+[00:39:52] modification on page 22 from transaction
+[00:39:54] T2. And that was that was that's hanging
+[00:39:57] in our buff pool that's still dirty.
+[00:40:00] Then later on we take another
+[00:40:01] checkpoint, right? And now we have
+[00:40:04] transaction T2 and T3, right? Because T2
+[00:40:07] committed before our checkpoint started,
+[00:40:09] but we haven't seen a transaction end
+[00:40:10] message yet. So it's still technically
+[00:40:13] alive. Um, and then T3 started after the
+[00:40:16] last checkpoint. So that that goes in
+[00:40:18] our actual transaction table. And then
+[00:40:19] we have in our dirty page table, we have
+[00:40:21] the two modifications here uh from the
+[00:40:24] you know from from T2 and T3.
+[00:40:27] >> [snorts]
+[00:40:28] >> P1P.
+[00:40:29] >> The question is why isn't P11 in the
+[00:40:31] DPT? It got written out to disk, right?
+[00:40:34] There's no log record said page got
+[00:40:36] written out of disk. The only
+[00:40:37] information we have is is whether it
+[00:40:38] shows up in the dirty page table.
+[00:40:44] So, this is better because now we at
+[00:40:46] least have some additional metadata
+[00:40:48] about what's going on in our system uh
+[00:40:50] at the moment of the crash. But we're
+[00:40:52] still taking blocking checkpoints. So
+[00:40:54] every you know every time I'm taking a
+[00:40:56] checkpoint here and the two log records
+[00:40:57] here I'm stopping every all the
+[00:40:59] transactions from running take a
+[00:41:01] checkpoint and at least now I I know
+[00:41:03] that if a if a transaction modified a uh
+[00:41:08] pages I would at least keep track of
+[00:41:09] like was it dirty before or after I took
+[00:41:11] the checkpoint yes or no but I'm still
+[00:41:13] blocking all my transactions.
+[00:41:18] So what everyone does instead is what
+[00:41:19] are called fuzzy checkpoints. And this
+[00:41:22] is now where it's it's fuzzy because
+[00:41:23] it's it's
+[00:41:25] allowed to write out pages that
+[00:41:29] uh that you want to write all the pages
+[00:41:31] that were dirty since the the moment the
+[00:41:32] checkpoint starts. But those dirty pages
+[00:41:36] might contain changes that from log
+[00:41:38] records that came in after the
+[00:41:40] checkpoint started. And there may be
+[00:41:42] changes that occur to pages that I don't
+[00:41:44] write out my checkpoint because they
+[00:41:45] were modified after the checkpoint
+[00:41:47] started as well. But I just I missed it.
+[00:41:51] Right. But the the DBT and ATT is going
+[00:41:53] to give me enough metadata to go look in
+[00:41:54] the log around, snoop around and figure
+[00:41:56] out what was actually going on to figure
+[00:41:57] out, you know, find out the things that
+[00:41:59] I I may have missed.
+[00:42:02] So now instead of just having a single
+[00:42:04] checkpoint, you know, record in my log
+[00:42:06] that says here's the checkpoint started
+[00:42:08] and and I block everyone. Now I'm going
+[00:42:09] to have a begin and end. And that's
+[00:42:11] going to correspond to the point in
+[00:42:13] time, right? denoted by the log sequence
+[00:42:15] numbers because that's basically
+[00:42:16] representing physical time of when the
+[00:42:19] checkpoint was occurring. And I'm going
+[00:42:22] to record the the the what the dbt and
+[00:42:25] the AT were at the moment the checkpoint
+[00:42:27] started. But I end up writing it out to
+[00:42:29] the commit end message checkpoint end
+[00:42:31] message as a way as to to simplify
+[00:42:34] things so I can I can find things more
+[00:42:36] easily later on. [snorts]
+[00:42:40] All right. So in this case here, assume
+[00:42:42] now we're going to that transaction uh
+[00:42:45] Davis is going to flush page P11 before
+[00:42:47] the checkpoint starts here, right? So
+[00:42:52] then now when I when the checkpoint
+[00:42:53] finishes, I'll have the AT from when I
+[00:42:56] started. So transaction T2 uh was
+[00:42:58] running when the checkpoint started at
+[00:43:00] 007. T1 got a transaction end at 006. So
+[00:43:04] it's not an actual transaction table.
+[00:43:06] And then there's my my dirty page table
+[00:43:08] that begin up there. My dirty page table
+[00:43:11] corresponds to this update here that got
+[00:43:13] occurred that was dirty before I took
+[00:43:15] the the the checkpoint and then I may
+[00:43:17] have uh written it out with that change
+[00:43:20] or may have a change from another
+[00:43:21] transaction that made a change before
+[00:43:23] the checkpoint ended or uh or I made it
+[00:43:26] written out and then someone updated and
+[00:43:28] that that page is that that update's
+[00:43:30] still in memory too. So sort of three
+[00:43:32] states that a page could be in. [snorts]
+[00:43:36] And then now once the the the checkpoint
+[00:43:39] completes and I flush the checkpoint end
+[00:43:41] message I then update the master record
+[00:43:44] for the database and say here's the LSN
+[00:43:47] of the last checkpoint that I took. So
+[00:43:50] in the case here 010
+[00:43:52] when I complete that checkpoint I write
+[00:43:54] my master record 007 because that's the
+[00:43:56] checkpoint began up above. Then when
+[00:43:57] this checkpoint ends down here at 0115,
+[00:44:00] I write my master record that the
+[00:44:02] checkpoint start at last successful
+[00:44:03] checkpoint was 013.
+[00:44:05] And then when I crash, come back when I
+[00:44:06] see you in a second. We're going to use
+[00:44:08] that to jump to this this uh checkpoint
+[00:44:11] begin.
+[00:44:17] All right. So now Aries with with our
+[00:44:19] with our fuzzy checkpoints and these in
+[00:44:20] these CLRs and the log records, we now
+[00:44:23] get new recovery.
+[00:44:26] So going to be three phases. The first
+[00:44:28] phase we're going do and we're going to
+[00:44:29] analyze the the the redhead log starting
+[00:44:32] at where the master record points to. So
+[00:44:34] the la the beginning of the last
+[00:44:35] successful checkpoint and we're going to
+[00:44:37] scan forward in time to the end of the
+[00:44:39] log on disk and look at all the the log
+[00:44:42] records we see and try to figure out
+[00:44:44] what what transactions are going to
+[00:44:46] survive, what transactions need to get
+[00:44:47] rolled back and try to and what pages
+[00:44:50] may have may or may not have been
+[00:44:51] written to disk assess during this
+[00:44:53] process.
+[00:44:55] Then after the anal an analysis phase,
+[00:44:57] then we do redo where now we're going to
+[00:44:59] jump back to another point in the log
+[00:45:01] where we determine here's the starting
+[00:45:03] point of an active transaction or
+[00:45:04] transaction that was active when a
+[00:45:05] checkpoint started. And we're going to
+[00:45:08] scan through and make sure we redo all
+[00:45:10] its changes. And then now we go back and
+[00:45:13] undo all the changes transactions that
+[00:45:16] should have not be should not survive
+[00:45:18] after the crash and go ahead and reverse
+[00:45:20] them.
+[00:45:22] So we're essentially taking three passes
+[00:45:23] over the log, but in every pass we may
+[00:45:26] be jumping farther and farther back in
+[00:45:27] the log based on the information we
+[00:45:29] collect during the the analysis and redo
+[00:45:31] process.
+[00:45:35] Another way to look at that visually
+[00:45:37] again we say this in our right log and
+[00:45:38] we crash here at down below. So when I
+[00:45:41] come back in the analysis phase, I'm
+[00:45:42] going to use the master record to figure
+[00:45:43] out what's the starting point of the
+[00:45:45] last checkpoint. And so I'll scan from
+[00:45:47] that point down and look at what all the
+[00:45:49] what all the transactions are doing
+[00:45:50] after after that checkpoint started.
+[00:45:54] Then now based on my AT it's going to
+[00:45:57] determine here's the transactions that
+[00:45:59] that I know about in my log and I need
+[00:46:02] to make sure I redo all their changes.
+[00:46:05] Even if they're going to get aborted
+[00:46:07] later on, I'm still going to redo them.
+[00:46:10] So in this case here, I go look at the
+[00:46:12] and I go look at my log in the redo
+[00:46:14] phase. I find the smallest wreck LSN in
+[00:46:16] my dirty page table after analysis. So,
+[00:46:18] this is going to be what's the what's
+[00:46:20] the the earliest
+[00:46:23] LSN that corresponds to a log record
+[00:46:25] that modified a page that was not that
+[00:46:29] that was dirty before I started my
+[00:46:30] checkpoint.
+[00:46:32] So, I want to I'm going to go back and
+[00:46:34] make sure I reapply all is changes from
+[00:46:36] here down below.
+[00:46:38] And then now in the analysis phase, I'm
+[00:46:40] going to jump to the oldest log record
+[00:46:43] of any active transaction that that that
+[00:46:46] was still alive at the moment that I
+[00:46:47] crashed. Jump back to that point in time
+[00:46:51] and then scan through and undo all those
+[00:46:53] transactions that should be aborted and
+[00:46:55] rolled back.
+[00:46:58] And during this redo process, we end up
+[00:47:01] we may end up uh so I go like this. uh
+[00:47:03] we may end up reapplying
+[00:47:06] uh the the the the CLR records to make
+[00:47:09] sure we we reverse things, but that's
+[00:47:11] okay because that's again that's going
+[00:47:13] to put us back to the correct state we
+[00:47:14] want to be in.
+[00:47:20] All right, so analysis phase as I've
+[00:47:21] already said you can scan for from the
+[00:47:22] beginning of the last successor
+[00:47:23] checkpoint to the end of log. you're
+[00:47:25] basically reconstructing the the AT uh
+[00:47:29] going forward in time. If you as you're
+[00:47:32] scanning along in the analysis phase, if
+[00:47:34] you find a transaction end message, you
+[00:47:36] know that there's not going to be
+[00:47:37] anything else from that transaction. So,
+[00:47:39] you can go ahead and remove it from the
+[00:47:40] AT because it's successfully committed
+[00:47:43] for all other log records. Uh if the
+[00:47:45] transaction is not in the AT, then you
+[00:47:47] go ahead and add it. But you said it's
+[00:47:49] undo status or it's its execution status
+[00:47:52] to be candidate for undo because again
+[00:47:54] you're scanning forward in time. So you
+[00:47:57] you you haven't seen a commit or abort
+[00:47:59] message for the transaction. So you just
+[00:48:01] assume that it's going to abort. But
+[00:48:03] then when you see the commit message for
+[00:48:05] a transaction, then you update its
+[00:48:06] status in in the AT to say it's it's
+[00:48:09] it's allowed to commit.
+[00:48:11] [snorts] As we go scan along too, we
+[00:48:13] also want to populate the the DBT. So if
+[00:48:16] we find a page that's not uh that's
+[00:48:19] being referenced that's not in our DPT
+[00:48:21] as we scan along then we know it's been
+[00:48:23] modified since our last checkpoint and
+[00:48:25] therefore we want to make sure that it
+[00:48:27] exists in there and we just set its recn
+[00:48:29] uh to be whatever the LSN that that
+[00:48:31] modified it because we know it didn't
+[00:48:33] exist in the buffer pool at least in a
+[00:48:36] modified form
+[00:48:38] if uh at you know at the moment that we
+[00:48:40] see the log message because otherwise we
+[00:48:41] would have seen it in the DPT.
+[00:48:46] So now at the end of the analysis phase,
+[00:48:48] the AT is going to tell us what are all
+[00:48:50] the transactions that were active at the
+[00:48:51] time of the crash and therefore we need
+[00:48:53] to roll them back. And the DPT is going
+[00:48:55] to tell us all the pages that might have
+[00:48:58] been that were modified but may not have
+[00:49:00] been written out to disk. And you don't
+[00:49:03] know whether they've been mod whether
+[00:49:05] the change got written out to disk
+[00:49:06] unless you go read them. So the DPT is
+[00:49:09] telling you what you got to go check.
+[00:49:11] Let's
+[00:49:14] look example like this. So say that our
+[00:49:16] transaction uh sorry system begins a
+[00:49:19] checkpoint at 0 1 0. So at this point
+[00:49:22] here we don't we don't have anything in
+[00:49:23] our AT or DBT uh at least initially but
+[00:49:26] we know that all all the transactions
+[00:49:28] that are running in our system and all
+[00:49:29] the uh all the log records sorry all the
+[00:49:34] the pages that are sitting in our buffer
+[00:49:35] pool but as at this point here we don't
+[00:49:37] record that in the begin message.
+[00:49:40] Then later on at at 020, we see this
+[00:49:44] transaction uh t96 is making an update
+[00:49:47] to a to an object a in page 33.
+[00:49:52] And again, assuming that if this thing
+[00:49:54] got was in our in our log message, then
+[00:49:57] you know it modified the page, but we
+[00:49:59] don't know whether that page was flushed
+[00:50:01] out to disk as part of the checkpoint
+[00:50:03] like the checkpoint got to it first or
+[00:50:05] we modified it after the the checkpoint
+[00:50:07] read out that page. So, we put a log
+[00:50:09] record in that says here's here's or
+[00:50:12] an entry in our AT says here's this
+[00:50:14] transaction T96 that we now know about,
+[00:50:17] right? Because we didn't we didn't see
+[00:50:18] the begin for before the checkpoint
+[00:50:19] started. So, that the the begin message
+[00:50:21] for this transaction is up above before
+[00:50:23] the checkpoint began. But since that we
+[00:50:25] don't know what's going to happen to it
+[00:50:26] at this point as we in our analysis, we
+[00:50:28] think it's going to we we assume it's
+[00:50:29] going to get rolled back and aborted.
+[00:50:30] So, it's undo candidate. And we keep
+[00:50:33] track of the page that it modified
+[00:50:35] during this, right? Okay. And the recent
+[00:50:37] corresponds to the one that modified it.
+[00:50:40] Then now we get to our transaction end.
+[00:50:42] And at this point here, now we have in
+[00:50:43] our AT. We have a T96 T97. So there's
+[00:50:47] another transaction T97 up above that
+[00:50:49] did a bunch of other stuff before
+[00:50:51] transaction began. And we haven't seen
+[00:50:52] it yet in any log messages after the
+[00:50:54] transaction at the checkpoint started.
+[00:50:56] So we now know about it. And I'm going
+[00:50:59] to assume that's going to abort. And we
+[00:51:01] also know about there's there was uh was
+[00:51:04] a page 20 that was dirty in our buffer
+[00:51:06] pool that the checkpoint would have at
+[00:51:08] least uh we know it would would have
+[00:51:10] been written out if the checkpoint
+[00:51:12] completed.
+[00:51:14] Then we see the log record that for T96
+[00:51:16] that committed. So we update its status
+[00:51:18] in the AT that's allowed to commit.
+[00:51:21] And then we now see the transaction end
+[00:51:22] message for T96. So we can go ahead and
+[00:51:25] go ahead and remove it.
+[00:51:27] So, at this point at the end, we know
+[00:51:29] that there's a transaction T97 that did
+[00:51:32] something up above that we're going to
+[00:51:33] need to roll back, but we don't have the
+[00:51:35] log. We don't have the log records for
+[00:51:36] it. So, we have to go find those. And we
+[00:51:38] know that there's page 33 and page 20
+[00:51:41] where they there was changes made to
+[00:51:42] them that may have not made it out to
+[00:51:44] disk. Yes.
+[00:51:51] >> The question is why does not why does
+[00:51:52] the TPT not have P33 at at 030? Yeah,
+[00:51:56] >> because it it was not dirty at the
+[00:51:58] moment the checkpoint started. So the
+[00:52:00] DBT at record what was the state of the
+[00:52:02] of of the world at the time the
+[00:52:04] checkpoint started.
+[00:52:05] >> I see
+[00:52:07] >> and they put they put it in trans they
+[00:52:09] put it in the transaction end part not
+[00:52:10] the beginning.
+[00:52:14] [snorts]
+[00:52:18] All right. So now now after the analysis
+[00:52:19] phase we have we have our ATT or DPT and
+[00:52:22] now we know what transactions we need to
+[00:52:25] reapply changes to and what transactions
+[00:52:27] are going to get aborted and therefore
+[00:52:29] we need need to start undoing those
+[00:52:31] changes um and
+[00:52:35] sorry and and sorry we don't we're not
+[00:52:37] going to undo anything yet. We're going
+[00:52:38] to apply always the all our changes but
+[00:52:41] if there were a board of transactions
+[00:52:42] and we see the CLRs in the log as we're
+[00:52:45] scanning through we're going to reapply
+[00:52:46] them as well. And then in the second
+[00:52:48] phase, we're going to go back and un
+[00:52:50] undo stuff. But for now, we're just
+[00:52:51] we're just going to reapply whatever we
+[00:52:52] see in the log. We're not going to
+[00:52:54] create new log log new log entries.
+[00:52:55] We're just add we're just re-executing
+[00:52:58] what we have. [snorts]
+[00:53:01] So, we're going to scan forward from the
+[00:53:02] log uh log at the at the smallest rec
+[00:53:06] LSN in the TBT because that's going to
+[00:53:08] correspond to the log record that
+[00:53:11] modified a page uh that was dirty at the
+[00:53:15] moment the checkpoint started. So we
+[00:53:16] know that's going to be farther back in
+[00:53:18] time than anything that got modified,
+[00:53:20] you know, while the checkpoint was
+[00:53:22] running.
+[00:53:24] And then anytime we need to reverse or
+[00:53:26] undo a transaction because we know it's
+[00:53:28] what it status should be because we've
+[00:53:29] scanned to the end of the log. We know
+[00:53:30] whether it's going to any transaction to
+[00:53:32] commit or not. So we we have to undo any
+[00:53:34] changes. That's when we go ahead and
+[00:53:36] apply the CLRs.
+[00:53:38] Um
+[00:53:43] I'm getting ahead of myself. That's
+[00:53:44] undo. For redo, as I scan through, if I
+[00:53:48] find a a a log record that updates a
+[00:53:50] page or a CLR, I need to determine
+[00:53:53] whether I should bring that page back
+[00:53:55] into memory and go apply it. And so now
+[00:53:58] you can start looking about what's in my
+[00:54:00] dirty page table and understanding how
+[00:54:02] these log sequence numbers are going to
+[00:54:04] determine whether I've already applied
+[00:54:05] this change or not based on what I see
+[00:54:08] when I bring the page back in into into
+[00:54:10] memory.
+[00:54:12] So if we see an update record or a CLR
+[00:54:15] that we need need to re reapply. If that
+[00:54:18] page is not in our dirty page table then
+[00:54:20] we know that the change for it for that
+[00:54:22] particular uh page that p that page when
+[00:54:27] was modified was written out the disk
+[00:54:30] before we crashed and therefore we don't
+[00:54:32] need to bring it back in memory and
+[00:54:33] reapply our change. If it is in our
+[00:54:36] dirty page table, then we need to check
+[00:54:39] to see whether that the the last log
+[00:54:42] record, the rec LSN, the earliest log
+[00:54:44] record that modified that page since it
+[00:54:46] was last flushed to disk. If that comes
+[00:54:50] before the LSN that I'm looking at right
+[00:54:52] now, then I know that whatever my change
+[00:54:55] was, that got applied uh to that to that
+[00:54:59] log record or that that the log record
+[00:55:01] I'm looking at, that got applied since
+[00:55:02] the page was written out. So I don't
+[00:55:04] need to reapply it.
+[00:55:07] But if the the law of record I'm trying
+[00:55:09] to apply if its LSN is
+[00:55:14] greater than the page LSN then I know
+[00:55:18] that my transaction that that I'm trying
+[00:55:19] to re redo made some change that
+[00:55:23] modified the page and that that record
+[00:55:25] was not those changes were not written
+[00:55:27] out to disk because the page lsn what's
+[00:55:29] the what's the last log record that
+[00:55:32] modified this page when that page was
+[00:55:34] written to disk. So my recre LSN if my
+[00:55:36] LSN comes later in time I know that this
+[00:55:39] page got modified flush to disk and then
+[00:55:42] I try to update it and my update didn't
+[00:55:44] make actually make it out to disk.
+[00:55:47] The challenge though in order for me to
+[00:55:48] figure that out I got to go out to disk
+[00:55:51] bring that page back in and go check its
+[00:55:52] page LSN because I'm not recording that
+[00:55:55] in my my dirty page table in my
+[00:55:57] checkpoints. I'm only recording the the
+[00:55:59] wreck LSN. only recording the the the
+[00:56:03] oldest log record that modified the page
+[00:56:07] since it was last since it was last
+[00:56:08] flushed to disk.
+[00:56:12] So for the first two here, you can just
+[00:56:14] check on the dirty page table without
+[00:56:16] actually looking the page and figure out
+[00:56:17] whether you need to reapply this. For
+[00:56:18] the last one, you have to go bring the
+[00:56:20] page in and look at what what the page
+[00:56:22] ln is set to.
+[00:56:27] So to redo any action, we we just
+[00:56:29] reapply the update uh and then set the
+[00:56:31] page LSN to whatever the LSN that we're
+[00:56:33] modifying uh that we we applied. We
+[00:56:36] don't do additional logging and we don't
+[00:56:37] need to make sure we flush anything
+[00:56:38] during this recovery process because
+[00:56:40] that would be unnecessarily slow, right?
+[00:56:43] We're not running other transactions.
+[00:56:45] We're just trying to redo things. So why
+[00:56:46] bother flushing things and make sure
+[00:56:47] things committed?
+[00:56:49] And then now once we reach the the the
+[00:56:52] end of the read phase any any any
+[00:56:55] transaction that successfully committed
+[00:56:57] or we end up uh so any transaction that
+[00:57:00] successfully committed then we can put
+[00:57:01] the transaction end message but we may
+[00:57:04] still have transactions we need to
+[00:57:05] reverse their changes on right and
+[00:57:07] that's what we're going to do in the
+[00:57:08] second phase because we have to we this
+[00:57:10] is we're going to generate additional
+[00:57:11] CLRs.
+[00:57:16] All right. So now in the undo phase,
+[00:57:18] this is where we know all the
+[00:57:20] transactions that successfully committed
+[00:57:22] or or did not commit at the time the the
+[00:57:24] the crash occurred. We've gone through
+[00:57:27] the analysis phase. We figured out what
+[00:57:28] every what everything is. We've done the
+[00:57:30] redo where we've reapplied every
+[00:57:31] everybody's changes. And then now we
+[00:57:34] need to go back and undo the changes for
+[00:57:36] transactions that should not be allowed
+[00:57:37] to commit or don't don't commit. So if
+[00:57:40] any transaction that's still in our AT
+[00:57:42] with this undo status at the end of the
+[00:57:44] redo phase, we now need to go back in
+[00:57:46] reverse order uh and apply the changes
+[00:57:48] as if it was an abort during normal
+[00:57:50] execution operations.
+[00:57:54] Right?
+[00:57:56] And we're going to use this uh the the
+[00:57:59] the last lsn the to undo things allow us
+[00:58:02] to quickly jump back in the right head
+[00:58:04] log jump over things we don't need to
+[00:58:06] look at again. just jump to the the
+[00:58:08] transaction uh the the the a transaction
+[00:58:12] that we're aborting undoing. We can jump
+[00:58:14] to its log records and quickly find them
+[00:58:15] and and roll them back. And every time
+[00:58:17] we we we're going to reverse a change,
+[00:58:19] undo a change, we're going to create a
+[00:58:21] new CLR.
+[00:58:24] All right, so let's look a full end
+[00:58:25] example here. So we have a transaction
+[00:58:27] starts at checkpoint at at at 010,
+[00:58:31] sorry, 011. Checkpoint ends at 012.
+[00:58:34] There's a T1 at 013. it makes a change
+[00:58:36] to page P5. Uh T2 makes a change to P3.
+[00:58:40] T1 then calls an abort. So to roll that
+[00:58:43] back again, we have our CLR records for
+[00:58:45] this, right? We go ahead and reverse the
+[00:58:47] changes. Once we know all the changes
+[00:58:50] for T1 are done, uh then we can put the
+[00:58:52] transaction end message in, right? And
+[00:58:54] then PS LSN allows to quickly jump
+[00:58:56] through and find everything we want
+[00:58:57] without having to, you know, look at
+[00:58:59] everything one individually.
+[00:59:02] Then now say T3 does another change,
+[00:59:04] right? T2 now shows up, makes a change.
+[00:59:08] Um, and then we crash.
+[00:59:11] So now we're going to go through the the
+[00:59:12] three phases. So we're going to come
+[00:59:14] back and use the master record to figure
+[00:59:18] out where the the starting point of the
+[00:59:19] last successful checkpoint was. So
+[00:59:21] that's going to be up here. And then
+[00:59:23] when we now look at the checkpoint end
+[00:59:24] message, assume inside of it that record
+[00:59:26] is going to have the the AT and the the
+[00:59:30] DPT.
+[00:59:32] So that's going to tell us that we know
+[00:59:33] about transaction T1, T2, T3. Uh, and we
+[00:59:36] know since we don't know what's going to
+[00:59:37] happen to them at this point, we assume
+[00:59:39] that it's their status are undue
+[00:59:41] candidates. And then there's a dirty
+[00:59:42] page P1 that has some modification from
+[00:59:44] a transaction that made a change up
+[00:59:46] above at at LSN 001.
+[00:59:50] So now when I scan through in my uh to
+[00:59:53] from that from the checkpoint end to the
+[00:59:55] end, right, I would see that I saw that
+[00:59:58] there's two more pages that got modified
+[01:00:00] since then and they they may not have
+[01:00:03] made it out to disk. I don't know. And
+[01:00:05] then now T1 I saw a transaction end
+[01:00:07] message for. So I don't need to keep
+[01:00:09] track of it anymore because I know it's
+[01:00:10] going to successfully uh commit.
+[01:00:13] So then now I have these last lsns for
+[01:00:17] my for for these T2 and T3 here. I'm
+[01:00:20] going to know where I need to start.
+[01:00:22] My starting point is to be able to roll
+[01:00:24] that roll them back. [snorts]
+[01:00:27] So same now I I I do my um
+[01:00:32] I do my redo. I go through and re
+[01:00:35] reapply everything, right? And then now
+[01:00:38] at this point I want to start reversing
+[01:00:39] the two transactions that don't
+[01:00:41] successfully commit. So, I'm going to
+[01:00:42] start with T2 because that's the first
+[01:00:44] one uh that I had the the most recent
+[01:00:47] log message right before the crash. So,
+[01:00:48] I'm going to put a CLR for to reverse
+[01:00:50] its change. And then my undo next
+[01:00:52] pointer just points to the next thing I
+[01:00:53] have to undo. And then now I know the
+[01:00:55] next thing I need to do is reverse this
+[01:00:57] change at for T3. And again, assuming
+[01:00:59] that this undo next is some begin
+[01:01:01] message for this transaction that's up
+[01:01:02] above us in the log that we're not
+[01:01:04] showing here.
+[01:01:06] At this point here, I know I don't have
+[01:01:07] any more changes I have for T3. So
+[01:01:10] again, if I want to be super cautious,
+[01:01:11] I'll flush the red ahead log and flush
+[01:01:12] all the new pages to disk. And then that
+[01:01:15] way again, I I'm I'm sureing that all my
+[01:01:17] changes are made out there. But yet, you
+[01:01:19] don't have to do this. And I just update
+[01:01:21] my flush LSN to keep track of that these
+[01:01:23] are the changes that that I made. And
+[01:01:25] the reason why I want to do this, if I
+[01:01:27] crash come back during this recovery
+[01:01:28] process, uh I can look at the the the
+[01:01:32] page LSN and recognize that my change
+[01:01:34] actually made it out the the disc when I
+[01:01:36] reverse this transaction. So therefore I
+[01:01:38] don't have to reapply the changes later
+[01:01:39] on.
+[01:01:41] But let's say now during recovery I
+[01:01:43] crash again. Worst case scenario.
+[01:01:47] So now when I come back the second time
+[01:01:49] after I do my analysis I'm going to see
+[01:01:51] that the only thing I have sitting
+[01:01:53] around is this T3 that I still need or
+[01:01:55] sorry T2 that I still need need to roll
+[01:01:57] back on. Right? So I'll just add my CLR
+[01:02:00] to reverse its change. See that there's
+[01:02:02] some undo next point of something else.
+[01:02:04] And at this point here, I I know I've
+[01:02:06] there's nothing else for me to reverse
+[01:02:07] with the T2. So I can go ahead and put
+[01:02:09] my transaction end message in. And then
+[01:02:11] now this point the database is fully
+[01:02:13] recovered. I can tell the outside world
+[01:02:15] that we're accepting new queries and new
+[01:02:16] transactions.
+[01:02:22] >> Yes.
+[01:02:25] >> Question is what if you crash in the
+[01:02:26] middle of abort? Well, we just did that,
+[01:02:28] right? So I'm I'm I'm aborting T2 and
+[01:02:31] T3. T3 gets aborted. I put transaction
+[01:02:33] N. But before I can put the transaction
+[01:02:36] reverse the last change for T2, I crash.
+[01:02:42] >> What do you mean partial CLR?
+[01:02:51] >> That's this. That's what I'm doing right
+[01:02:52] here. Right. T2. I when I go for it, T2
+[01:02:56] has still one more thing to abort.
+[01:02:58] Before I get there, I crash. I come back
+[01:03:02] and I I when I scan when I scan
+[01:03:04] everything, I see T2 is still hanging
+[01:03:06] out there. I have to roll it back. But
+[01:03:08] then when I go through and redo, I would
+[01:03:11] reapply the CLR change. Make sure I
+[01:03:13] reverse its change. Then recognize I
+[01:03:15] still have to there's this thing points
+[01:03:17] to undo next uh 014. So when I come
+[01:03:20] back, I need to put a CLR for 014.
+[01:03:27] So no many times I I keep upboarding and
+[01:03:29] come back I I'm going to redo the
+[01:03:31] changes until I get to the transaction
+[01:03:32] end
+[01:03:38] other questions.
+[01:03:44] All right. Well, we can finish up
+[01:03:47] quickly then. Okay. So what do I do if I
+[01:03:50] crash on recovery in the analysis phase?
+[01:03:51] Nothing, right? you just come back and
+[01:03:53] do the analysis phase over again because
+[01:03:55] that that's a read only operation. If I
+[01:03:58] crash during the redo again, I do
+[01:03:59] nothing. I because all I'm doing is just
+[01:04:02] pendantically reapplying the changes
+[01:04:04] over again. I may be overwriting the
+[01:04:06] same change over and over again, but
+[01:04:08] that's okay. I'm guaranteed to end up
+[01:04:09] with the same database state. So just if
+[01:04:12] I crash during redo, I just do it all
+[01:04:14] over again.
+[01:04:17] to make things go faster during redo.
+[01:04:19] Again, I assume that my changes are not
+[01:04:20] that I'm not going to crash during the
+[01:04:22] the redo process. So, I don't do those
+[01:04:24] those flushes every single time I see a
+[01:04:25] transaction end. I just eventually get
+[01:04:28] get to them later on. And and this what
+[01:04:29] most systems will do. The original Aries
+[01:04:32] paper was again super careful. They
+[01:04:33] would flush at almost every every time a
+[01:04:35] transaction ended even though you don't
+[01:04:37] need to.
+[01:04:38] And then to make the undos faster,
+[01:04:41] there is a research paper that basically
+[01:04:43] says you don't apply the changes. it in
+[01:04:47] the undo phase, you just record that
+[01:04:48] there's things you want to undo in pages
+[01:04:51] and it's kind of like the mod log we saw
+[01:04:53] in the case of like the B apps tree or
+[01:04:55] like my SQL compression scheme. You keep
+[01:04:57] a little mod log and says here's the
+[01:04:58] things I need to reverse back on this
+[01:04:59] page and then upon reading that page or
+[01:05:02] trying to do something that page then I
+[01:05:03] go ahead and apply them. And the idea is
+[01:05:05] there is that rather than waiting for me
+[01:05:07] to do the entire undo process, I just
+[01:05:11] ceue up those changes immediately start
+[01:05:14] executing other transactions that so
+[01:05:15] they can go ahead and read and do
+[01:05:16] whatever they want and eventually one of
+[01:05:18] them bunch of them will touch the pages
+[01:05:20] that have pending undo records I need to
+[01:05:22] apply and only then I go ahead and apply
+[01:05:24] them.
+[01:05:27] And of course, the last one, you can
+[01:05:28] always rewrite your application. Try to
+[01:05:29] undo try to avoid long running
+[01:05:31] transactions, but that's easier setting
+[01:05:32] it up. All right, so I'm rushing to this
+[01:05:34] end. I can pick up where we left off. Uh
+[01:05:37] I pick up on this again and do a a quick
+[01:05:40] um review next class, but the main
+[01:05:43] things to remember about areas is that
+[01:05:44] we're using steel no force doing fuzzy
+[01:05:46] checkpoints. Allow us to take snapshots
+[01:05:48] of pages while transactions are still
+[01:05:50] running. We can still redo everything
+[01:05:52] starting at the the earliest data page.
+[01:05:54] We're never going to uh and
+[01:05:57] We make sure that when transactions get
+[01:05:59] aborted, we're going to apply CLRs, make
+[01:06:00] sure we undo all the changes and that no
+[01:06:02] matter what, no matter times we restart,
+[01:06:04] those changes always get correctly
+[01:06:06] reversed. And the log sequence numbers
+[01:06:08] are this way to record the physical
+[01:06:09] ordering of the changes uh as they
+[01:06:12] should be correctly applied.
+[01:06:15] So at this point in the semester, you
+[01:06:18] know how to build now a safe and correct
+[01:06:20] single node database system. Congrats.
+[01:06:23] May not be, you know, the first pass may
+[01:06:24] not be a good one, but you know how to
+[01:06:25] build one.
+[01:06:26] Next class we'll talk about how do I
+[01:06:27] make it distributed because this is when
+[01:06:29] everything gets much harder. Okay.
+[01:06:32] All right. So let's switch over to the
+[01:06:34] guest speaker.
+[01:06:36] >> Um hi everyone again. Um and thanks for
+[01:06:39] having me on. Uh I'm Robert. I work at
+[01:06:41] Click House and I saw that you had
+[01:06:45] Benjamin from Firebolt speaking here two
+[01:06:47] weeks ago in class. So I guess that
+[01:06:49] makes me the second German to present
+[01:06:52] this semester. And it's actually um
+[01:06:55] quite interesting. Firebolt started as a
+[01:06:58] fork of uh clickous's open source
+[01:07:00] codebase and as far as I know they are
+[01:07:03] still using the same file format as
+[01:07:04] click house. So we must obviously have
+[01:07:08] done something right with the file
+[01:07:09] format and I thought I could talk a
+[01:07:11] little bit about um data organization
+[01:07:14] and indices in click house and how that
+[01:07:16] powers fast analytics.
+[01:07:19] Uh first of all what is click house
+[01:07:21] actually? So, Clickhouse is an open
+[01:07:23] source column oriented distributed
+[01:07:25] analytics database. The code is open
+[01:07:27] source since 10 years and um ClickHose
+[01:07:29] is really popular. Um I um took a look
+[01:07:33] and there there are now almost 45,000 on
+[01:07:36] GitHub and on the right you see some uh
+[01:07:39] some of the analytics database in our
+[01:07:42] space. The code is written in C++ and
+[01:07:44] the database runs on pretty much
+[01:07:46] anything from a Raspberry Pi to powerful
+[01:07:48] servers in clusters with hundreds of
+[01:07:50] nodes.
+[01:07:52] Um, Click House is a column store and
+[01:07:54] people typically use it to filter and
+[01:07:57] aggregate billions and trillions of
+[01:07:59] rows. Our storage layers also optimize
+[01:08:02] for appends which basically means that
+[01:08:04] uh inserts are super fast and updates
+[01:08:06] and deletes do work but they tend to be
+[01:08:09] a bit slower but I say we made a few
+[01:08:11] optimizations for that recently as well.
+[01:08:13] Now um append only workloads that might
+[01:08:16] sound a bit strange but there are
+[01:08:18] actually lots of use cases where the
+[01:08:20] data is continuously inserted but only
+[01:08:23] rarely or never modified.
+[01:08:26] These use cases are typically around
+[01:08:28] events, log files, time series,
+[01:08:30] financial data and so on.
+[01:08:33] Okay. Um this slide shows how click
+[01:08:36] house stores tables. So you see on the
+[01:08:39] left side a bunch of insert operations
+[01:08:41] and each insert uh basically creates a
+[01:08:44] file on disk. The term that we use
+[01:08:46] internally is part but in the end it's a
+[01:08:49] file plus some metadata. And it might
+[01:08:52] even be uh too obvious here but when you
+[01:08:55] insert the data right you you don't need
+[01:08:58] to synchronize with existing parts or
+[01:09:00] global data structures. You don't need
+[01:09:01] to do index lookups to check uniqueness.
+[01:09:04] the performance of your inserts is only
+[01:09:06] limited by the performance of your disk.
+[01:09:09] The other thing that's um the other
+[01:09:12] important thing is that the rows in each
+[01:09:14] part are sorted or clustered by the
+[01:09:17] primary key columns of the table. The
+[01:09:19] user defines the primary key columns up
+[01:09:22] front. So keep that in mind for a
+[01:09:24] second.
+[01:09:25] You also see a box labeled buffer on the
+[01:09:28] left side and that's our asynchronous
+[01:09:30] insert mode which basically buffers the
+[01:09:33] rows from multiple inserts before the
+[01:09:34] part is then um flushed to disk. Okay.
+[01:09:38] Now as more data comes in the parts of
+[01:09:40] course start to accumulate. So click
+[01:09:42] house has a compaction chop that runs in
+[01:09:44] the background and it continuously
+[01:09:46] merges multiple parts into bigger parts
+[01:09:49] and remember the parts are sorted right.
+[01:09:51] This means the compaction chop can use a
+[01:09:54] Kway merge sort algorithm to combine the
+[01:09:56] the parts and that's that's fairly
+[01:09:58] efficient.
+[01:10:00] So you may noticed that all of this is
+[01:10:03] uh quite similar to a classical LSM
+[01:10:05] tree. The difference is that the parts
+[01:10:08] in click house are all equal. So they
+[01:10:10] are not organized in a tree or on a
+[01:10:12] hierarchy.
+[01:10:14] >> This is quite nice for our use case
+[01:10:16] because of two reasons. uh first the
+[01:10:19] scan can parallelize over all the parts.
+[01:10:22] So there is no implicit chronological
+[01:10:26] ordering between the parts that would
+[01:10:28] somehow restrict concurrency. And the
+[01:10:31] second reason is that the merge is also
+[01:10:34] not bound to certain uh LSM tree levels.
+[01:10:37] Um so it can freely pick any parts uh
+[01:10:40] anywhere to merge.
+[01:10:42] I'll also say that updates and leads
+[01:10:44] become a bit more tricky in this overall
+[01:10:47] design. So, we cannot use tombstones,
+[01:10:49] but that's fine for us since we don't
+[01:10:51] expect to have a lot of updates and
+[01:10:52] deletes anyways.
+[01:10:55] Okay. Now, um let's zoom into one of
+[01:10:58] these mysterious parts. This slide shows
+[01:11:01] a table with web access statistics. So,
+[01:11:04] you have um a user from a certain region
+[01:11:07] who accesses a certain website, right?
+[01:11:09] And we collect all of this information
+[01:11:11] in a table. So the data in this part
+[01:11:14] consists of only a few seconds but there
+[01:11:16] are nevertheless many thousands of rows
+[01:11:18] here. The user defined the event time
+[01:11:22] column as the primary key for the table.
+[01:11:24] And like I mentioned before, this means
+[01:11:26] that click house sorts the rows in the
+[01:11:29] part by event time. Um from a database
+[01:11:32] perspective, sorting is really nice, but
+[01:11:34] we'll need an even smaller granularity
+[01:11:37] or data access granularity to make the
+[01:11:39] scans sufficient. So what click house
+[01:11:42] does is that it splits each part further
+[01:11:44] into so-called granules. Um and every
+[01:11:47] krenol has 8,192
+[01:11:50] rows. You can see that on the left side.
+[01:11:53] So there is quo zero in blue, granle one
+[01:11:56] in pink and so on. Um grano and click
+[01:12:00] house is the smallest unit that our scan
+[01:12:03] operator can load from disk. Now the
+[01:12:06] question is of course how does all of
+[01:12:07] this help with scans? The key concept is
+[01:12:10] to prune data as aggressively as
+[01:12:12] possible. So you want your select
+[01:12:14] queries to skip most of the data because
+[01:12:16] every bite that you don't read makes
+[01:12:18] your query faster, right? So let's make
+[01:12:21] an example. You see a simple select
+[01:12:24] query with a filter on event time at the
+[01:12:26] bottom of the slide. And this query
+[01:12:29] could in theory do a binary search on
+[01:12:31] the events time column to find the right
+[01:12:33] granules. Now, a binary search will have
+[01:12:37] a logarithmic number of disk accesses.
+[01:12:41] That sounds nice, but it's still not
+[01:12:43] fast enough, especially when you try to
+[01:12:46] do that on top of object storage, which
+[01:12:48] has latencies of multiples multiple tens
+[01:12:52] of um milliseconds. So, click will do
+[01:12:55] something smarter. it will create a
+[01:12:57] small index structure on top of the
+[01:12:59] primary key columns which contain the
+[01:13:02] first row of each granle and you can see
+[01:13:05] that in the yellow box on the slide. Uh
+[01:13:08] we say that this uh index is a sparse
+[01:13:11] index because it points only to every
+[01:13:14] 8,192
+[01:13:16] row and not to every row. And this this
+[01:13:20] index is also tiny compared to the rest
+[01:13:22] of the table. For example, you need only
+[01:13:24] 1,000 entries and then you can index
+[01:13:26] already over 8 million rows. So actually
+[01:13:29] the index is so small that we load it
+[01:13:32] and pin it in memory.
+[01:13:35] So now our select query will do the
+[01:13:38] binary search on the sparse index and
+[01:13:40] that that will find the right grren and
+[01:13:42] then it will load the grrenels from disk
+[01:13:45] and uh finally filter them because they
+[01:13:47] could still contain a mix of matching
+[01:13:49] and non-matching rows. So that's what we
+[01:13:51] call pruning with primary key indices.
+[01:13:54] There are two more pruning techniques in
+[01:13:55] click house and I'll mention them only
+[01:13:57] briefly. Projections are the second
+[01:14:00] pruning technique. So you can think of a
+[01:14:02] projection as a permutation of a table.
+[01:14:04] It contains exactly the same rows as the
+[01:14:06] original table, but it's sorted by a
+[01:14:08] different primary key. So if your
+[01:14:11] workload has a lot of queries with
+[01:14:13] filters on columns different than the
+[01:14:16] original primary key columns, then you
+[01:14:18] want to create a projection. The cool
+[01:14:21] thing is that the projections in click
+[01:14:24] house are implemented at the part level.
+[01:14:27] So basically every part can have an
+[01:14:29] arbitrary number of projections and the
+[01:14:31] optimizer will pick the most beneficial
+[01:14:34] one for every query.
+[01:14:36] Projections can help a lot with query
+[01:14:38] performance, but their biggest problem
+[01:14:40] is the storage footprint. So you can
+[01:14:42] easily double or triple the the memory
+[01:14:45] consumption of the table.
+[01:14:47] So what is even more popular with our
+[01:14:49] customers are skipping indices and the
+[01:14:51] idea here is to annotate the granules
+[01:14:54] with small amounts of metadata. The scan
+[01:14:57] can then check if no rows or if all the
+[01:15:00] rows in in the in a block or in the in
+[01:15:02] the granules match the predicate and it
+[01:15:04] can potentially skip the entire block.
+[01:15:07] Click house has different uh types of
+[01:15:09] skipping indices. For example, minmax
+[01:15:11] indices um the unique block values and
+[01:15:13] bloom filters. Each type has different
+[01:15:16] trade-offs, but generally speaking,
+[01:15:18] skipping indices are a lot more
+[01:15:19] lightweight than projections, but
+[01:15:21] they're also hard to tune because they
+[01:15:24] they make assumptions about the data
+[01:15:25] distribution.
+[01:15:28] There is a lot more to say about
+[01:15:30] pickals, of course, but I hope I could
+[01:15:31] give you at least an idea how data
+[01:15:33] pruning works in our database. If you
+[01:15:35] have any more questions, feel free to
+[01:15:37] drop me an email and thanks for your
+[01:15:39] attention.
+[01:15:40] All right,
+[01:15:41] >> any quick questions for Robert before
+[01:15:42] letting go?
+[01:15:44] Yes.
+[01:15:45] >> Are there any plans to make joints
+[01:15:47] faster? Because I feel like join primary
+[01:15:50] bottleneck for primary build on
+[01:15:51] trickles.
+[01:15:54] >> Go for it. Yes,
+[01:15:56] >> we're working on it and we implemented
+[01:15:57] join reordering recently and we are now
+[01:16:00] adding tons more optimizations for
+[01:16:02] joints. Yeah. What the primary
+[01:16:05] bottleneck has stopped you so far change
+[01:16:07] now
+[01:16:11] join
+[01:16:12] >> the question is what's what was the main
+[01:16:14] bottleneck for joins and click house
+[01:16:16] that you guys have been fixing in in
+[01:16:18] recent recent weeks or months.
+[01:16:19] >> Oh no there was no particular
+[01:16:22] bottleneck. It's just, you know, um,
+[01:16:24] historically most of our users, um, use
+[01:16:27] denomormalized tables, right? So
+[01:16:29] everything's one single huge fact table
+[01:16:32] and then you don't need joints. That's
+[01:16:33] that's that was the only reason.
+[01:16:36] >> Yes.
+[01:16:38] Click house is an amazingly engineered
+[01:16:39] system. It's like I same category as
+[01:16:42] like the the Umbra system or yellow
+[01:16:44] brick like the amount of engineering
+[01:16:46] they've done uh in Click House is is
+[01:16:49] amazing. when when I think Yandex first
+[01:16:52] announced it in 2016, I thought it was
+[01:16:54] fake. I thought it was vaporware because
+[01:16:56] like it didn't ex I never heard about
+[01:16:57] before 2016 or 2015 and then they listed
+[01:17:00] all these features. I was like there's
+[01:17:02] no way somebody wrote all in a year but
+[01:17:04] like they've been working on it for a
+[01:17:06] long time just publicly came out about
+[01:17:08] that and the again the amount of
+[01:17:09] engineering these guys do to make this
+[01:17:11] work is is phenomenal. It's amazing. So
+[01:17:13] again, thank you, Robert.
+[01:17:17] [music]
+[01:17:22] [music]
+[01:17:27] >> [music]
+[01:17:29] >> over
+[01:17:35] [music]
+[01:17:37] the fortune. Get the fortune
+[01:17:39] fame maintain flow with the
+[01:17:43] grain. Get the fortune
+[01:17:45] [music]
+[01:17:46] maintain flow with the gra.
+[01:17:51] >> [music]

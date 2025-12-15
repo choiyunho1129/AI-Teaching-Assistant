@@ -1,0 +1,2042 @@
+[00:00:00] [Music]
+[00:00:06] I'm still
+[00:00:08] ass.
+[00:00:11] [Music]
+[00:00:25] >> All right, let's get started.
+[00:00:28] All right, give it up for DBH Cash
+[00:00:29] again.
+[00:00:30] [Music]
+[00:00:32] >> Awesome. Uh, all right. So, quick
+[00:00:35] reminder, I'm going to be gone next
+[00:00:36] week. I'm going to London to see your
+[00:00:38] boy, uh, Pace Rick.
+[00:00:40] >> Oh, my man.
+[00:00:41] >> Yes. So, I'm so no class next week uh in
+[00:00:45] person. I'll record it while I'm remote
+[00:00:46] and post on YouTube uh and I'll say hi
+[00:00:48] to your your friend, whatever.
+[00:00:50] >> Uh, so all right. And then project zero,
+[00:00:52] that one out on Monday. That'll be due
+[00:00:54] on September 7th. Homework one will be
+[00:00:56] released later today and that'll be also
+[00:00:58] be due on the same date. So again,
+[00:00:59] project zero is the C++ project to prove
+[00:01:01] that you know C++ and you can you can
+[00:01:03] debug multi-threaded code. Uh so please
+[00:01:06] go you know start that sooner rather
+[00:01:07] than later because you'll set up your
+[00:01:08] dev dev environment and make sure
+[00:01:10] everything's working. All right. So last
+[00:01:12] class we were a bit rushed but we talked
+[00:01:13] about how the relational model was the
+[00:01:16] superior data model uh for databases and
+[00:01:18] it pretty much is the fundamental way
+[00:01:20] you would represent any you know any
+[00:01:22] major application database or data uh in
+[00:01:25] in a system and then we also talked
+[00:01:27] about how relational algebra will be is
+[00:01:28] the building blocks for us to uh
+[00:01:31] manipulate and query data in a
+[00:01:34] relational model database in a
+[00:01:35] relational database system and so
+[00:01:37] today's class is really about sort of we
+[00:01:40] won't go we We're going to go back and
+[00:01:42] look at relation algebra again. Now
+[00:01:44] we'll talk about SQL which is in a
+[00:01:45] higher form of a query language than
+[00:01:47] what relational algebra is. But then
+[00:01:49] when we start actually talking about how
+[00:01:50] to implement the system itself and and
+[00:01:52] actually execute the queries uh that
+[00:01:54] we'll talk about today that's when
+[00:01:56] relational algebra will come back and
+[00:01:57] sort of fitting okay now you see how
+[00:01:59] these these are the building blocks for
+[00:02:00] building the system. Okay. All right. So
+[00:02:03] so uh let's go back to the 70s um and
+[00:02:07] the very beginning of of SQL. So as I
+[00:02:09] said when Ted Cod wrote the original
+[00:02:11] paper on the relational model in 1969
+[00:02:13] 1970 it was just the relational model
+[00:02:16] and relational algebra he didn't go into
+[00:02:18] anything in details about the
+[00:02:19] implementation of the system that could
+[00:02:21] could run a relational model and he
+[00:02:22] didn't say anything about what the query
+[00:02:24] language should be. Um, and so the other
+[00:02:28] people at IBM picked up the paper and
+[00:02:30] said, "Hey, this is actually a really
+[00:02:31] good idea." Even though IBM was making a
+[00:02:34] ton of early money on a non relational
+[00:02:36] model system called IMS. And so they
+[00:02:39] decided to start building a prototype in
+[00:02:41] England. Uh, and the guys that invented
+[00:02:44] SQL first developed a query language
+[00:02:46] called Square.
+[00:02:48] uh and it's it's considered what is is
+[00:02:51] considered to be the first relational
+[00:02:52] query language but nobody actually uses
+[00:02:53] it because the syntax is pretty esoteric
+[00:02:56] and you there actually wasn't a keyboard
+[00:02:57] or any application to let you write code
+[00:02:59] in it. You write things in this vertical
+[00:03:02] uh in this vertical manner. This is the
+[00:03:04] classic example of getting like the
+[00:03:05] average sales salary of employees in a
+[00:03:07] department. Right? So again so so this
+[00:03:10] was square. Nobody actually did this. uh
+[00:03:13] they threw it away and then the a bunch
+[00:03:15] of the people that were working in in
+[00:03:16] England they moved to uh San Jose in
+[00:03:18] California at IBM research and they
+[00:03:20] started building the so the first
+[00:03:23] prototype or the second prototype IBM uh
+[00:03:26] or for building a relational data system
+[00:03:28] called system R it's very influential a
+[00:03:30] lot of seminal work came out of this
+[00:03:31] we'll see many times throughout the
+[00:03:33] entire semester where I'll say like hey
+[00:03:34] this is a kind of cool idea and here's a
+[00:03:36] bunch of new systems in the modern era
+[00:03:37] that actually implement it well it turns
+[00:03:39] out IBM invented a bunch of that crap in
+[00:03:41] the 1970s
+[00:03:42] Right. And so uh they first developed a
+[00:03:46] query language called SQL spelled out s
+[00:03:48] u s eql in 1972 and this was chamberlain
+[00:03:52] and boyce uh and originally stood for
+[00:03:54] structured English query language. Uh
+[00:03:56] but then when IBM later then released a
+[00:03:58] commercial product based on relational
+[00:04:00] model and SQL in the 1980s. Uh then they
+[00:04:03] got sued because there was some other
+[00:04:05] some other system or some other language
+[00:04:06] out there was already using SQL and they
+[00:04:09] changed it to be SQL. Right? So
+[00:04:11] sometimes you'll see people refer to
+[00:04:12] like MySQL as MySQL. Uh but a lot of the
+[00:04:15] older guys uh back in the 70s around the
+[00:04:18] 80s refer to it as SQL because that was
+[00:04:20] the the original name. So IBM released
+[00:04:24] uh they never released system R. They
+[00:04:26] then later released other commercial
+[00:04:28] systems like system 38. That's not
+[00:04:30] really around anymore. SQLDS is is
+[00:04:32] around but it's kind of in maintenance
+[00:04:34] mode. But DB2 in 1983 was the big one
+[00:04:37] that IBM put out and that's still out
+[00:04:38] today. I guarantee if you run any
+[00:04:40] transaction online to some website, some
+[00:04:42] bank you're you're running on uh it's
+[00:04:45] chances are very likely some banker
+[00:04:47] using uh DB2, right? There's other uh
+[00:04:50] commercial systems the 1970s. The first
+[00:04:52] one was probably Oracle which was
+[00:04:56] founded by Larry Ellison. If you don't
+[00:04:58] know him, he's the third richest person
+[00:04:59] in the world. He owns a Hawaiian island.
+[00:05:02] Uh all paid for by databases. Again,
+[00:05:04] this is why this class is important. All
+[00:05:06] right. So SQL uh was originally again
+[00:05:09] this proposal from IBM but again IBM was
+[00:05:11] the juggernaut of of computing back in
+[00:05:14] the 1960s7s and 80s. So whatever IBM did
+[00:05:17] that's what they said you know everyone
+[00:05:18] said okay that's the the standard. The
+[00:05:20] Oracle guys lucked out because they
+[00:05:22] basically copied what IBM was doing the
+[00:05:24] Berkeley guys that built ingress they
+[00:05:26] had their own querying language called
+[00:05:28] Quell. Uh but then when IBM put out DB2
+[00:05:30] SQL was became the de facto standard. um
+[00:05:33] it became a anti-standard in 1986 uh
+[00:05:36] within the United States and then an
+[00:05:38] international standard in 1987 and then
+[00:05:40] they've changed it to be the structured
+[00:05:42] query language for SQL. So even though
+[00:05:44] SQL is old, I just told you SQL was
+[00:05:46] invented in 197273,
+[00:05:50] uh it's not a dead dead language, right?
+[00:05:52] It's actively being used everywhere. I
+[00:05:54] keep telling you while you know
+[00:05:56] throughout the entire semester knowing
+[00:05:57] SQL and writing SQL is super important
+[00:05:59] and they put out new versions of it all
+[00:06:00] the time. The latest one came out in
+[00:06:02] March 2023 uh where they added a bunch
+[00:06:05] of new features like property graph
+[00:06:06] queries uh and multi-dimensional arrays.
+[00:06:09] You ever heard of systems like Neo4j,
+[00:06:11] Dgraph, there's a bunch of other these
+[00:06:13] graph databases. Now you can do all that
+[00:06:15] SQL. So the great thing about SQL is
+[00:06:17] like it evolves over time and as
+[00:06:19] applications change uh and what people
+[00:06:23] want to do with data changes. SQL uh
+[00:06:25] gets added. They add new features to SQL
+[00:06:28] to to adopt to the times. And the
+[00:06:31] challenge is going to be, and we'll see
+[00:06:32] this throughout this lecture here, is
+[00:06:34] that the SQL standard is going to say
+[00:06:35] one thing, but nobody's actually going
+[00:06:37] to implement it exactly. Every single
+[00:06:39] data system is going to have their own
+[00:06:40] quirks, their own little extra stuff
+[00:06:41] that sprinkle in. Sometimes they're
+[00:06:43] ahead of the standard and they try to
+[00:06:44] get whatever their version of a feature
+[00:06:46] is into the standard. And sometimes they
+[00:06:48] the standard comes out and then they add
+[00:06:50] it later on, but they still take their
+[00:06:51] own uh liberties, if you will, with it.
+[00:06:55] And we'll see what some of the biggest
+[00:06:56] offenders are are today in our demos. So
+[00:06:59] if you have a data system today and you
+[00:07:01] say you're going to support SQL the bare
+[00:07:03] minimum you need to have say I I have a
+[00:07:05] SQL database is what was defined in the
+[00:07:07] SQL 92 standard. So this is your select
+[00:07:09] insert update deletes uh your create
+[00:07:12] tables create indexes the the
+[00:07:13] transactions the very basically you need
+[00:07:15] to say you know SQL and I have SQL is
+[00:07:18] that you follow the SQL 92 standard but
+[00:07:20] today's class we'll go a little bit talk
+[00:07:22] about the newer stuff. Um and so people
+[00:07:25] come along every 10 years and say SQL is
+[00:07:27] a terrible language. It's not great.
+[00:07:29] Certainly has its uh rough spots. Uh but
+[00:07:32] every attempt to try to replace it in
+[00:07:34] the last 50 60 years has failed. So
+[00:07:37] right now we're in the phase where all
+[00:07:38] the AI guys are saying, "Oh yeah, SQL's
+[00:07:41] going to die. You use LMS for
+[00:07:42] everything." Yada yada yada. Um so this
+[00:07:44] is the guy working on a system called
+[00:07:45] Vespa. He's basically saying natural
+[00:07:47] language and replace SQL. Um, this guy's
+[00:07:50] like a crypto bro and he's trying to
+[00:07:51] sell some uh uh some video demo or some
+[00:07:55] video uh like code academy thing, right?
+[00:07:58] Where you can use chat dbt to replace
+[00:07:59] everything with SQL. Um, so I'm not here
+[00:08:02] to say that SQL is not going to be uh
+[00:08:05] replaced in my lifetime. It it may be,
+[00:08:08] but it's very unlikely. It was here
+[00:08:10] before you're born. It'll be here after
+[00:08:11] we die. Um, so it's not going to go
+[00:08:13] away. But the
+[00:08:16] would you be the when you sit down are
+[00:08:18] you going to immediately write SQL in
+[00:08:19] many cases oftentimes? No. Right. Yes.
+[00:08:26] >> The question is what is what would
+[00:08:27] replace SQL?
+[00:08:29] I don't know. So we actually we uh we
+[00:08:33] did a seminar series last semester. We
+[00:08:35] had all the people that are trying to
+[00:08:36] replace SQL talk about how that would
+[00:08:37] replace SQL. The closest one that I
+[00:08:40] think could not replace SQL but extend
+[00:08:42] it is actually Google's PIP SQL syntax.
+[00:08:45] And I can give a little demo of that in
+[00:08:47] a second.
+[00:08:48] >> What's that? You read Google?
+[00:08:50] >> Yeah. So So that thing's
+[00:08:52] >> Oh, you wrote it. Okay. Yes. So there
+[00:08:53] you go. So that's probably the closest
+[00:08:54] thing, but it's still fundamentally it's
+[00:08:56] it's a an enhancement to SQL.
+[00:09:01] >> What's that?
+[00:09:03] >> Question. What keeps it going? Again,
+[00:09:05] going back to this, it evolves, right?
+[00:09:07] Like here's all the different versions
+[00:09:09] like say 15 years ago what was the hot
+[00:09:12] database MongoDB because of web 2.0 0
+[00:09:14] whatever the buzz word was at the time
+[00:09:16] you were storing everything as JSON well
+[00:09:17] the SQL standard now add support for
+[00:09:19] JSON
+[00:09:21] 30 years ago 20 years ago XML was the
+[00:09:23] hot thing well SQL sports XML
+[00:09:26] >> the statement is is the flexibility of
+[00:09:28] the SQL
+[00:09:31] SQL will provide you a basic building
+[00:09:33] block that you can then add more
+[00:09:34] advanced features and do additional
+[00:09:36] things right um now again I mentioned
+[00:09:39] like are they doing things is it is it
+[00:09:41] perfect no one of the biggest complaints
+[00:09:43] is that the select clause clause becomes
+[00:09:44] comes before the from clause, right?
+[00:09:47] Well, in the original proposal from IBM
+[00:09:49] in the 1970s, the from clause came first
+[00:09:52] then the select. But then they did a
+[00:09:54] user study at the University of Arizon
+[00:09:56] State University and all the students
+[00:09:58] whatever they tested said, "Oh, we like
+[00:10:00] the we like the select before the from
+[00:10:02] and that's why that's the way it's been
+[00:10:03] for 50 60 years because of those people,
+[00:10:05] right?
+[00:10:07] We'll we'll see some data systems we we
+[00:10:09] can play up we can play around with u
+[00:10:12] and see how you can change things and
+[00:10:13] sometimes you don't always have to have
+[00:10:15] in that order but in general you do. All
+[00:10:16] right. So again I like I've said many
+[00:10:19] many public statements before that like
+[00:10:22] uh SQL is is is the most important uh
+[00:10:24] programming language you need need to
+[00:10:25] learn as a student. Uh because again no
+[00:10:27] matter whether you're actually building
+[00:10:28] a database system or just using one the
+[00:10:31] rest of your life you're going to come
+[00:10:32] across SQL. And maybe the LLMs can
+[00:10:34] provide you a first draft of of a query
+[00:10:37] language. Maybe it'll end up being like
+[00:10:39] assembly where there's the high level
+[00:10:41] things you can write and then that gets
+[00:10:43] transpiled down to SQL which is what a
+[00:10:45] lot of replacements of SQL are trying to
+[00:10:47] do. Um but everybody has to learn SQL.
+[00:10:50] It's very very important. And so to give
+[00:10:52] you how uh an example how serious I am
+[00:10:54] about learning SQL uh the audio up here.
+[00:10:58] >> Oh, there's no audio. That sucks. Um,
+[00:11:01] well, this is my 5-year-old biological
+[00:11:03] daughter. Uh, and every morning we wake
+[00:11:06] up at 7:00 a.m. and she has to write
+[00:11:08] sequel uh before she can have breakfast.
+[00:11:10] >> Um, is that considered child abuse?
+[00:11:14] >> Um,
+[00:11:17] going to love me more since I wrote.
+[00:11:19] >> I tell her mom loves her more when she
+[00:11:21] writes SQL and it works. Okay. Um,
+[00:11:26] all right. So, what what does the
+[00:11:27] relational language give it? What is SQL
+[00:11:28] going to give us? There'll be sort of
+[00:11:30] three basic components. The DML, DDL,
+[00:11:32] and DCL. DML is the data manipulation
+[00:11:34] language. When you write a select
+[00:11:35] statement or update, insert, update,
+[00:11:37] deletes. Those are all going to be DMLs.
+[00:11:39] The DDL will be the definition of like a
+[00:11:42] table, an index or a view. Uh, and the
+[00:11:44] DCL will be like a like controlling
+[00:11:46] who's allowed to see what data or what
+[00:11:48] counts and so forth. There's other
+[00:11:50] things we'll cover later in the semester
+[00:11:51] like transactions, like how to call
+[00:11:53] begin transaction and roll back and
+[00:11:54] things and things like that, but we
+[00:11:56] we'll we'll we'll worry about that
+[00:11:57] later. One important thing we we got to
+[00:12:00] understand also too is that although the
+[00:12:02] relational model is based on sets,
+[00:12:05] right? We looked at unions and and
+[00:12:07] intersections that that was basic set
+[00:12:08] theory. SQL is going to bas be based on
+[00:12:11] bags. So sets are unordered collections
+[00:12:13] of data where you don't have duplicates.
+[00:12:16] Bags are unordered collections of data
+[00:12:19] where you do have duplicates. Right?
+[00:12:20] Lists are uh lists would be a order
+[00:12:24] collection that has has a defined order.
+[00:12:26] Bags and sets do not. So that means that
+[00:12:29] if if the in SQL they're going to make
+[00:12:32] this choice to allow duplicates because
+[00:12:34] it requires extra work to remove the
+[00:12:36] duplicates and so if you really want to
+[00:12:38] remove them you have to add extra maybe
+[00:12:40] you know keywords like distinct and
+[00:12:42] other things to remove the things that
+[00:12:43] you don't want. So by default we'll have
+[00:12:45] duplicates uh and most of the times it's
+[00:12:48] it's not a problem but if you do care
+[00:12:49] about get remove duplicates there's SQL
+[00:12:51] allow you to do this. All right. So,
+[00:12:54] we're going to do a quick crash course
+[00:12:55] on on the sort of the basics of SQL, but
+[00:12:57] I want to cover the things that are that
+[00:12:59] are that are on the more modern in the
+[00:13:02] um uh in the in the spec and we'll look
+[00:13:05] at some examples of what how real
+[00:13:06] systems actually run these things. And
+[00:13:08] then uh for today, we actually have one
+[00:13:09] of our first flash talks for uh for the
+[00:13:11] semester. So, the the guys from DBT are
+[00:13:14] going to come give a talk about their
+[00:13:15] system. Who here has ever heard of DBT
+[00:13:17] or used DBT before?
+[00:13:20] One. Okay. It is one of the most widely
+[00:13:23] used database tools in in the world
+[00:13:24] today. Uh it's basically if you're a
+[00:13:27] data scientist or doing any major data
+[00:13:29] analysis, chances are they're running on
+[00:13:31] dbt, right? It's it's pretty
+[00:13:33] significant. And guess what? It's just
+[00:13:36] just based on SQL. SQL with templates,
+[00:13:38] right? So they'll show you uh they'll
+[00:13:40] talk about what what they're doing over
+[00:13:41] there and then they'll come again uh
+[00:13:45] come give a pitch for recruiting uh
+[00:13:46] later in the semester. like one of our
+[00:13:48] best students from 445 last year. She's
+[00:13:50] there right now. All right. So today's
+[00:13:52] class, the example database we're going
+[00:13:54] to use uh will be just a really simple
+[00:13:57] representation of a university, right?
+[00:13:59] There's a student table, there's an uh
+[00:14:01] course table and then student takes
+[00:14:03] students take those courses and and they
+[00:14:04] get grades, right? So we'll just use
+[00:14:06] this as a running example throughout uh
+[00:14:08] throughout today's class.
+[00:14:11] All right. So the very first thing we
+[00:14:12] can want to do is aggregations, right?
+[00:14:15] I'm assuming everyone here has seen SQL
+[00:14:16] before. Of course, you know how to do
+[00:14:17] basic selects, inserts, update, deletes,
+[00:14:19] right? We don't need to cover those
+[00:14:20] things. But now we want to start
+[00:14:22] extrapolating new data or new
+[00:14:23] information from the data we've already
+[00:14:25] collected and put it into our database.
+[00:14:27] So aggregations are the basic form of
+[00:14:29] how to do this. The idea is that you're
+[00:14:32] going to take multiple tupils or
+[00:14:34] multiple values across multiple tupils
+[00:14:36] and we can uh coales them into a single
+[00:14:39] scalar value that computes some
+[00:14:41] aggregate function like an average minax
+[00:14:44] uh the count. Um so other uh other
+[00:14:47] systems support things like standard
+[00:14:49] deviations or geometric means the basic
+[00:14:51] idea is you're collapsing down multiple
+[00:14:52] values and producing a single output.
+[00:14:55] Right?
+[00:14:57] So the aggregation function can pretty
+[00:14:59] much be used uh only in the output list
+[00:15:02] or projection list of a SQL query. Not
+[00:15:04] always the case because of nested
+[00:15:05] queries, but for now we we can ignore
+[00:15:06] that. And so you can do really basic
+[00:15:08] things like you can say uh count the
+[00:15:10] number of students that have an at CS
+[00:15:12] login, right? And then in our in our
+[00:15:15] projection output list here, we see we
+[00:15:17] have a a count function that's computing
+[00:15:20] just again every for every student that
+[00:15:22] matches that predicate. I think of then
+[00:15:24] the the the filter from from last class.
+[00:15:26] My projection output is is going to
+[00:15:28] maintain a running tally of the number
+[00:15:30] of two students that it counts.
+[00:15:32] But notice I have count with the login
+[00:15:35] field in there. Does that make any
+[00:15:36] sense? Does that sound right? Well, what
+[00:15:39] does it mean to be counting login?
+[00:15:42] Well, it turns out for some functions
+[00:15:43] like count that doesn't actually matter
+[00:15:44] what you put in there. I can do count
+[00:15:46] star produces the same answer. I can do
+[00:15:48] count one produces the same answer. You
+[00:15:51] can put count one plus+ one like
+[00:15:53] whatever. Okay, because in the end of
+[00:15:55] the day all it's really doing is just
+[00:15:56] counting the number of tools that get
+[00:15:57] matched here. Right? So that that's a
+[00:16:00] basic aggregation.
+[00:16:02] If we try to do things like uh
+[00:16:05] have multiple attributes in our
+[00:16:07] projection list in addition to an
+[00:16:09] aggregation, we can have some problems.
+[00:16:12] Right? So in this query here, we're
+[00:16:13] trying to get the average GPA of a
+[00:16:14] students enrolled in each course. And
+[00:16:16] obviously now we want to include the
+[00:16:17] course ID, right? Right? Because we want
+[00:16:19] to know what what course the average is
+[00:16:20] being computed for, right?
+[00:16:24] But is this correct?
+[00:16:26] Shaking his head. No. Why?
+[00:16:29] >> Well, he says it's group by that that'll
+[00:16:30] be the answer. How to fix it? But like
+[00:16:32] what does it mean to compute the average
+[00:16:34] GPA of all the tupils, but then spit out
+[00:16:37] some kind of course ID, right?
+[00:16:41] >> What's that?
+[00:16:44] >> Statement is there isn't a canonical one
+[00:16:46] that should be part of the output.
+[00:16:47] Correct. Right? So, this is invalid.
+[00:16:50] Most database systems will throw an
+[00:16:52] error uh and say you can't do this. SQL
+[00:16:54] light will let you do this. My SQL used
+[00:16:56] to let you do it. Doesn't let you do it
+[00:16:57] anymore. Um and so the way to get around
+[00:17:01] this would be you just put uh you can
+[00:17:03] put it any value in there. This is
+[00:17:05] something new that SQL added and it
+[00:17:07] produces some output. Is this correct? I
+[00:17:10] don't know. But like from the database
+[00:17:12] systems perspective, you told it what
+[00:17:13] you wanted and it computed it for you,
+[00:17:16] right?
+[00:17:19] Uh
+[00:17:21] so he brought up the way to solve this
+[00:17:23] is do group eyes. So group eye is a way
+[00:17:26] to uh partition or cluster the data as
+[00:17:31] we're scanning along so that when we
+[00:17:33] comput our aggregation the aggregation
+[00:17:35] will be will be derived from each group
+[00:17:38] each cluster. So again the query is I
+[00:17:40] want to get the average GPA for each
+[00:17:42] course. So I I add my group by clause
+[00:17:45] with the course ID and then say this
+[00:17:47] this is my original table. Now when I uh
+[00:17:49] scan through I can I can look at the
+[00:17:51] course ID and basically keep track of
+[00:17:54] you know where the boundaries of these
+[00:17:55] are. And then when I compute my
+[00:17:57] aggregation I know to compute the
+[00:17:59] average per per group.
+[00:18:02] I didn't say how implemented this right.
+[00:18:04] The data system is doing this for us.
+[00:18:06] You could either build a hash table. You
+[00:18:08] could actually sort things first, then
+[00:18:09] do the group by. We'll cover how to do
+[00:18:11] that later in the semester. But at this
+[00:18:12] point in in the class, just trying to
+[00:18:14] say like, hey, look, I I can I can group
+[00:18:16] things up and the JS will figure out how
+[00:18:18] to how to make sure I produce the right
+[00:18:20] calculation.
+[00:18:24] Right?
+[00:18:26] You can go more sophisticated with group
+[00:18:28] buys with what are called grouping sets.
+[00:18:30] There's also thing called rollups and
+[00:18:31] and cubes. We we don't have to worry
+[00:18:33] about that. But say you want to do
+[00:18:35] something like I want to compute
+[00:18:36] multiple aggregations
+[00:18:38] uh on my data but I want to be able to
+[00:18:41] do this in a single query. Now I can do
+[00:18:43] the union operator that we saw last
+[00:18:45] class. I can add that to SQL and do a
+[00:18:46] bunch of separate queries and mash
+[00:18:48] things all together. Um but if I can
+[00:18:51] tell the data system that like this is
+[00:18:52] exactly what I want uh and kind of put
+[00:18:54] everything together in a single package
+[00:18:57] or a single query then although we said
+[00:19:00] it's just be declarative and we don't
+[00:19:01] have to tell the data system what
+[00:19:02] actually we how to actually execute the
+[00:19:05] query we can be nice to it and actually
+[00:19:07] produce queries for it that it has a
+[00:19:09] better time reasoning about and
+[00:19:11] crunching on. So you have group eye and
+[00:19:13] then you specify that you have a
+[00:19:14] grouping set and then now within my
+[00:19:17] grouping set clause I can specify the
+[00:19:20] separate group eyes that I want and each
+[00:19:22] of these will be executed as if they
+[00:19:24] were a separate query but in really
+[00:19:25] what's happening is it's scanning
+[00:19:26] through the data once and computing this
+[00:19:28] answer for you and sort of mashing
+[00:19:29] everything together all at the end.
+[00:19:31] Right? So the first group I say group
+[00:19:33] everything by the course and the grade
+[00:19:35] then group everything by just the the
+[00:19:37] course name and then get give me the
+[00:19:39] overall number uh for the total. So this
+[00:19:41] is trying to count the number of
+[00:19:42] students in in each course by each
+[00:19:45] course and by each grade uh by each
+[00:19:47] course and by total across all students.
+[00:19:51] >> What about what? Sorry.
+[00:19:55] >> Okay. Yeah. Okay. All right. So again,
+[00:19:58] just think of like and these are like
+[00:20:00] groups or clusters. So here's the red
+[00:20:02] one, right? There's the blue one. Here
+[00:20:04] the bottom and then the the overall
+[00:20:06] total is at the top. And then for the
+[00:20:08] cases where the the output doesn't have
+[00:20:11] the the column that's being grouped on,
+[00:20:14] they'll put a null there.
+[00:20:16] It's kind of funky, but again, the one
+[00:20:19] reoccurring theme we'll see with queries
+[00:20:20] is that we want to reduce the amount of
+[00:20:22] back and forth between we have this the
+[00:20:23] database server and the application. So
+[00:20:25] we can give as much information all in
+[00:20:26] one one single query, give it to the
+[00:20:28] database system. It can ideally do a
+[00:20:31] better job at running this more
+[00:20:32] efficiently than it would from multiple
+[00:20:34] round round trips.
+[00:20:38] Is this clear?
+[00:20:42] All right. Let's say I want to do some
+[00:20:43] additional filtering after I've done my
+[00:20:44] aggregation with the group by. Well, SQL
+[00:20:46] supports that with the having clause,
+[00:20:49] right? And the basic idea is that I want
+[00:20:51] to be able to filter things out based on
+[00:20:53] whatever is being computed as as the as
+[00:20:55] part of the aggregation, right? So in
+[00:20:57] this case here on my wear clause I want
+[00:20:58] to get filter out all the the the the
+[00:21:01] students are sort all all the courses uh
+[00:21:04] where the average GPA is greater than uh
+[00:21:07] or less than 3.9. So I want to get the
+[00:21:09] ones that are 3.9. But what am I trying
+[00:21:11] to do here? I'm trying to reference
+[00:21:13] average GPA but that's being produced as
+[00:21:15] the output in my projection list for my
+[00:21:16] select statement. So at this point again
+[00:21:19] think of like the data is actually
+[00:21:20] executing this. You're scanning through
+[00:21:22] the data. You're trying to apply some
+[00:21:23] filter. you don't have this average
+[00:21:26] computed yet. So, how do you know
+[00:21:27] whether to throw away a record or not?
+[00:21:30] So, you can't do this. Instead, you want
+[00:21:32] to do this through a having clause. But
+[00:21:35] now, I can put what my filter should be
+[00:21:37] at the bottom.
+[00:21:39] Now, in some database systems, they're
+[00:21:40] really strict about what's down here in
+[00:21:42] the in the having clause. Right? Again,
+[00:21:44] I have an alias for the average GPA. I'm
+[00:21:46] calling average GPA. AVG GPA. In cell
+[00:21:50] systems, you can't do that either
+[00:21:52] because it doesn't know about what the
+[00:21:53] alias up above is at its point as it's
+[00:21:55] scanning. And I sort of said SQL is not
+[00:21:58] supposed to be about thinking about how
+[00:22:00] things are actually going to be executed
+[00:22:01] in like what what order of the
+[00:22:03] operations, but in some cases it it
+[00:22:05] actually is that case or some cases it
+[00:22:07] it is that way. So some systems won't
+[00:22:10] let you do this and instead you have to
+[00:22:11] repeat the actual average the
+[00:22:13] aggregation you want at the bottom here.
+[00:22:16] I post requires this. Yes.
+[00:22:18] >> So the
+[00:22:20] from where clause is.
+[00:22:23] >> The statement is uh the from where
+[00:22:26] clause is effectively a join. Uh oh,
+[00:22:29] sorry. Yeah, sorry. Um, yeah. So, right
+[00:22:31] here I have from enrolled as E, comma,
+[00:22:34] student as s.
+[00:22:37] >> Yes. So,
+[00:22:41] >> no, let's not talk about teacher
+[00:22:43] product. So in this in this syntax here
+[00:22:45] because I didn't explicitly say join. Uh
+[00:22:49] this is like the old way of writing it
+[00:22:51] without the explicit join. Don't do what
+[00:22:53] I did here. You should always include
+[00:22:55] join. Uh but you the database will be
+[00:22:58] smart enough to recognize that I have my
+[00:23:00] eid E. SID equals S. SID. So it would
+[00:23:03] know okay well this is from this table
+[00:23:05] here. This is from that table there. I
+[00:23:07] got a join. And it's an interjoin. It'll
+[00:23:09] it'll it'll do that before the cartisian
+[00:23:11] product ideally. Yes.
+[00:23:14] [Music]
+[00:23:24] >> All right. So this question is I have
+[00:23:25] the average aggregation in both the
+[00:23:27] having and the select output. Is the
+[00:23:29] system going to be stupid enough to run
+[00:23:30] both of them? Hopefully no.
+[00:23:33] Uh but there's no guarantee but ideally
+[00:23:37] yes. Like most systems will be smart
+[00:23:38] enough know not to do that. Just for
+[00:23:41] whatever reason some systems don't let
+[00:23:42] you reference the alias things up above
+[00:23:47] other questions.
+[00:23:51] Okay. Right. And it produces the output
+[00:23:53] like this. All right. So that's the
+[00:23:55] basic for aggregations. Um
+[00:23:59] and again with some slight nuances about
+[00:24:01] what the having clause looks like and
+[00:24:03] what the grouping sets may look like. Uh
+[00:24:05] in general most data systems will
+[00:24:06] support all the things I just showed you
+[00:24:08] here today. Right.
+[00:24:10] Next we'll talk about different things
+[00:24:12] you can do starting different data
+[00:24:13] types. We'll start with strings that
+[00:24:15] should be mostly the same across
+[00:24:16] different data systems. Then we'll come
+[00:24:17] into dates and times and that's when it
+[00:24:19] all falls apart, right? And the although
+[00:24:24] the first homework for you guys will be
+[00:24:25] based on ductb that's really because
+[00:24:27] it's a great system and it runs on every
+[00:24:29] single laptop or every single machine
+[00:24:30] you have. It still runs on the the
+[00:24:32] Android machines. Uh even though they're
+[00:24:33] running an old version of yubuntu here,
+[00:24:35] right? Uh there isn't another other than
+[00:24:37] the SQL light there isn't another system
+[00:24:38] we could give you that could run
+[00:24:40] everywhere. Um the
+[00:24:43] but I'm not trying to say like okay
+[00:24:45] you're learning duct DB SQL syntax. It's
+[00:24:48] really I care about do you understand
+[00:24:49] what you can possibly do with SQL at a
+[00:24:51] high level because when you go out in
+[00:24:53] the real world or use different data
+[00:24:54] systems again all these nuances that
+[00:24:56] we'll talk about here they're going to
+[00:24:57] be every system going be have their own
+[00:24:58] little quirks and be slightly different.
+[00:25:00] So if you understand the fundamentals of
+[00:25:01] SQL then you can take that and go
+[00:25:03] understand how to uh you know uh apply
+[00:25:06] that knowledge to to different data
+[00:25:08] systems. I would say it is uh easier to
+[00:25:11] take a SQL dialect um from one system
+[00:25:16] and and apply it to another. Now it's
+[00:25:18] not going to be a one to one like it's
+[00:25:19] not going to be I'm not trying to say
+[00:25:20] you take SQL and just like do search and
+[00:25:23] replace and magically runs on the next
+[00:25:25] system. There's a lot of people who
+[00:25:27] spend a lot of money trying to convert
+[00:25:28] from from one system to another. I'm
+[00:25:30] just trying to say that like it would
+[00:25:31] not take you a a a lot of time to get up
+[00:25:34] to speed pretty quickly with a new
+[00:25:36] system. Like going from Python to Rust,
+[00:25:38] that's a major lift. Going from my SQL
+[00:25:41] to Postgress, again, mentally less so.
+[00:25:45] Okay.
+[00:25:46] All right. So, there's string data
+[00:25:48] types. Of course, uh the SQL standard
+[00:25:51] says that any string you store in a
+[00:25:52] database will be case sensitive. uh and
+[00:25:55] you can represent them or you you the
+[00:25:57] constants of them as single quoted
+[00:25:59] strings. Most systems follow that. My
+[00:26:02] SQL is going to be the the the the dark
+[00:26:05] horse here. Um where they're going to be
+[00:26:07] case insensitive for whatever reason. Uh
+[00:26:10] and they're going to support both single
+[00:26:11] and and and double. So let's see what
+[00:26:14] what this what happens when you do this.
+[00:26:20] Can we all read that or should I make
+[00:26:21] the screen uh
+[00:26:26] is that better?
+[00:26:28] It's too dark. All right. Wow.
+[00:26:31] All right. Let me log in with my laptop
+[00:26:33] here. Um
+[00:26:38] because it's a pain to type on the
+[00:26:40] surface here. All right. So, I said that
+[00:26:43] strings were were uppercase. Sorry. In
+[00:26:45] in the SQL standard strings are case
+[00:26:48] sensitive and uh you represent them with
+[00:26:51] uh with single quotes. So this is
+[00:26:53] Postgress.
+[00:26:54] So I can do select star
+[00:26:58] until my lost connection. Awesome. There
+[00:27:00] we go.
+[00:27:05] So look up the student table
+[00:27:14] where uh name equals RZA,
+[00:27:21] right? Nothing shows up.
+[00:27:25] Make sure I have capital. See, so that
+[00:27:27] doesn't work because it has to be a
+[00:27:29] capital A, right?
+[00:27:33] Why is this going so slow? Sorry.
+[00:27:37] You know it is. I think I'm up uploading
+[00:27:39] your your videos from last time. Let me
+[00:27:42] get rid of that. Sorry.
+[00:27:44] Much better. All right. So, if we now
+[00:27:47] try this in my SQL,
+[00:27:55] right, that works. But I can also do
+[00:27:57] this,
+[00:28:00] >> right? That seems that seems kind of
+[00:28:03] weird,
+[00:28:05] right? I can also use double quotes
+[00:28:14] and that works. If I go try this the
+[00:28:16] exact same query on other systems, it
+[00:28:19] should not work. So this is Postgress.
+[00:28:22] Sorry,
+[00:28:28] doesn't work. Okay, I do that.
+[00:28:33] Right? In Postgress, the double quotes
+[00:28:36] is is meant to represent a uh an escape
+[00:28:39] like name of a column or table. But if I
+[00:28:41] have a table with a space in it, I can
+[00:28:43] use double quotes to get to take care of
+[00:28:45] that. Over on my SQ or sorry, SQL light
+[00:28:48] now doesn't like it is case sensitive,
+[00:28:53] but it lets me do the the the double
+[00:28:55] quotes in duct DB.
+[00:29:01] um it's case sensitive
+[00:29:05] here it's complaining it's because it's
+[00:29:06] looking for the name of the column so I
+[00:29:08] have to escape it with single quotes and
+[00:29:12] then
+[00:29:13] it is case sensitive we'll come back to
+[00:29:16] click house and firebolt and and SQL
+[00:29:18] server in a second but again just trying
+[00:29:19] to show you that like a basic thing like
+[00:29:21] hey strings they're they're going to be
+[00:29:23] different
+[00:29:26] so uh there's basic string oper
+[00:29:28] operations. There's uh like if you want
+[00:29:31] to do wild card matches on the string,
+[00:29:33] SQL standard specifies a uh the like
+[00:29:36] clause and then it doesn't follow maybe
+[00:29:39] the general uh more common you know
+[00:29:42] regular expression syntax you might have
+[00:29:43] seen before with like stars and dots and
+[00:29:45] so forth. Uh the percent sign is meant
+[00:29:48] meant me meant to represent any
+[00:29:50] substring including empty strings and
+[00:29:52] then if you want to put a match a single
+[00:29:53] character you do underscore. So this is
+[00:29:56] trying to get all of the students uh
+[00:29:58] that are enrolled in 15 followed by a
+[00:30:00] wild card all the 15 courses and you you
+[00:30:03] would use the like clause for that. If
+[00:30:05] you're not if this is case sensitive you
+[00:30:06] want to be case insensitive you would
+[00:30:08] use I like. Yes.
+[00:30:14] >> His statement is are the field names and
+[00:30:16] table names always case sensitive in SQL
+[00:30:20] depends on implementation. Postgress
+[00:30:22] will automatically lowercase any table
+[00:30:24] name you give it. Other systems don't do
+[00:30:26] that.
+[00:30:28] I have no idea what what the SQL
+[00:30:29] standard sets right.
+[00:30:34] >> What's that?
+[00:30:38] >> David is if you use uh in post if you
+[00:30:40] use double quotes to name a column does
+[00:30:42] that um will that give you escaped? I
+[00:30:45] don't know. Let's find out.
+[00:30:48] Create
+[00:30:50] table.
+[00:30:53] Sorry. create table you want to use xxx
+[00:30:59] like that
+[00:31:00] with int field
+[00:31:03] um
+[00:31:06] yeah all right so postgress took it uh
+[00:31:08] and and maintain it so what if I can I
+[00:31:10] do this can I do select star from
+[00:31:14] uh Wi-Fi
+[00:31:17] sorry
+[00:31:22] select star from xxx.
+[00:31:26] Yeah, I didn't know about that.
+[00:31:28] Yeah. So his point by default unless
+[00:31:30] unless you quote it in postgress you you
+[00:31:33] will not get uh
+[00:31:36] you you will not get the uh case
+[00:31:37] sensitivity.
+[00:31:40] All right. Um
+[00:31:44] right so again if you want regular
+[00:31:46] expressions the SQL standard specifies
+[00:31:48] some this clause called operator called
+[00:31:50] similar to post supports this uh duct DB
+[00:31:53] supports this many other systems do not
+[00:31:55] instead they have their own regular
+[00:31:56] expression syntax um again a good
+[00:32:00] example where SQL SQL standard says one
+[00:32:01] thing systems implement other things
+[00:32:05] there's a bunch of built-in uh string
+[00:32:07] functions you can do to manipulate
+[00:32:09] strings that's one of effect like
+[00:32:10] substring, lowerase, uppercase and so
+[00:32:12] forth, right? Uh and most systems have
+[00:32:16] the same implementation of these these
+[00:32:18] functions roughly provide the same same
+[00:32:20] semantics. Um
+[00:32:23] to something really basic like
+[00:32:24] concatenating string. This is where
+[00:32:26] things go wrong as well, right? The SQL
+[00:32:29] standard says specifies that you have a
+[00:32:31] double uh double bar to say I want to
+[00:32:33] concatenate two things. Uh in SQL
+[00:32:36] server, it's the plus operator. Um, and
+[00:32:39] then in my SQL, I should test this get
+[00:32:41] more recently in the newer versions, but
+[00:32:43] they don't have either either one. You
+[00:32:45] have to run a explicit concat function,
+[00:32:48] right?
+[00:32:50] Again, this is uh this is painful. It's
+[00:32:54] annoying, but it's not it's not the end
+[00:32:55] of the world, right? You you can easily
+[00:32:58] navigate this from going from one system
+[00:32:59] to the next.
+[00:33:02] But let's talk about dates and times,
+[00:33:03] right? Obviously, we in our database.
+[00:33:06] Yes. Question.
+[00:33:18] Yes. So question is when I say most
+[00:33:19] systems don't don't do support it or
+[00:33:22] don't support it do not
+[00:33:24] >> do not support its
+[00:33:28] >> uh
+[00:33:30] so the SQL 92 would give you like the
+[00:33:32] basic select select insert update
+[00:33:35] deletes the things we're talking about
+[00:33:37] today and like
+[00:33:39] they're
+[00:33:41] so far everything we're talking today is
+[00:33:42] back in the SQL 92 standard and so
+[00:33:44] they're they they they're off slightly
+[00:33:46] on this one thing there's no system in
+[00:33:48] the world that I'm aware of that
+[00:33:50] implements exactly the SQL 92 standard
+[00:33:52] as as as written. They're always going
+[00:33:54] to be slightly off. My SQL used to be
+[00:33:57] the worst offender. They've gotten
+[00:33:58] better in in the last 10 years. So
+[00:34:09] that standard
+[00:34:14] >> his statement is um when I say the SQL
+[00:34:17] 23 standard came out who actually
+[00:34:19] supports that again nobody. So property
+[00:34:22] graph queries the only system I know
+[00:34:24] that supports that is Oracle because
+[00:34:25] Oracle was pushing to get that in there.
+[00:34:27] I'm pretty sure Postgress doesn't
+[00:34:28] support it. DuctTb doesn't support it
+[00:34:29] right. uh the other commercial vendors,
+[00:34:32] same thing. It's not to say they won't,
+[00:34:34] just they haven't got to it yet. But
+[00:34:35] it's like, will they implement it
+[00:34:37] exactly as written? Probably not because
+[00:34:39] for whatever reason, right? Again, my
+[00:34:42] SQL used had all sorts of weird stuff.
+[00:34:44] And then we had the guy that invented my
+[00:34:45] SQL gave a talk with us um was it was
+[00:34:48] last semester and I asked him at the
+[00:34:50] beginning of the talk, it's not
+[00:34:50] recorded, like hey, what's up? Why do
+[00:34:53] you do all this? Right. And he's like,
+[00:34:55] because we just did it was the 90s. I
+[00:34:58] don't know. This is what he said.
+[00:35:00] Right? It's it's oftentimes it's many
+[00:35:02] times it's like some guy sitting there
+[00:35:04] like, "Oh, I'll do it this way." And
+[00:35:05] then everyone's like, "All right, good."
+[00:35:08] Right? We'll see this when we talk about
+[00:35:09] lateral joins. Uh lateral joins was in
+[00:35:11] the standard. My understanding is the
+[00:35:13] Microsoft guys didn't know it existed
+[00:35:15] and they made their own called cross
+[00:35:16] apply. It has basically the same
+[00:35:18] semantics as lateral joins, but they
+[00:35:19] don't call it lateral joint. They call
+[00:35:20] it crossly.
+[00:35:22] Right?
+[00:35:24] Again, there's so many implementations
+[00:35:25] out there, nobody actually follows it.
+[00:35:28] All right, dates, times. This is where
+[00:35:30] it gets rough. So, uh, the SQL center
+[00:35:34] specifies a basic date and time type.
+[00:35:37] Uh, I think it also has, uh, times with
+[00:35:41] time zones, right? By default, you get
+[00:35:43] whatever the time zone is on the on the
+[00:35:44] data system where it's running when when
+[00:35:46] you insert a record. Uh, if you're
+[00:35:48] lucky, maybe UTC is a time zone always.
+[00:35:50] Not always, not always the case. Um, if
+[00:35:52] you explicitly want to know what the
+[00:35:53] time zone is, you want to store that in
+[00:35:55] the type with it. But again, not every
+[00:35:58] system will support that. This is my
+[00:36:00] favorite demo to game every year. Uh
+[00:36:01] we're do something which seems like we
+[00:36:03] should be really simple to do. We're
+[00:36:05] going to compute the number of days from
+[00:36:07] today, August 27th, 2025 to the
+[00:36:12] beginning of the year, January 1st,
+[00:36:14] 2025.
+[00:36:15] Right? It seems pretty pretty simple,
+[00:36:18] but as we'll see, every system is gonna
+[00:36:20] do something slightly different. How to
+[00:36:22] get that answer?
+[00:36:25] All right. So in um
+[00:36:30] you see all right so we need to get
+[00:36:32] dates. All right. So how do we get the
+[00:36:33] current date? Well in the SQL standard
+[00:36:36] there's a now function and that'll give
+[00:36:38] you out the the current current year as
+[00:36:41] a time stamp right or the the full time
+[00:36:43] stamp. So we go along now to our
+[00:36:45] different system. This is my SQL. My SQL
+[00:36:48] has it. That's great. Go to SQLite.
+[00:36:51] SQLite doesn't have it. Okay. Let's go
+[00:36:53] to duck DB. Duct DB follows the grammar
+[00:36:56] from Postgress. Like they literally have
+[00:36:57] the like a copy of the Postgress grammar
+[00:36:59] and they're using that. So a lot of
+[00:37:01] times what what Postgress has Duck DB
+[00:37:03] will have. Let's go over to Click House.
+[00:37:06] Uh Clickhouse has it. That's good. Let's
+[00:37:08] go to Firebolt.
+[00:37:11] Firebolt's got that. So that's good. Um
+[00:37:14] and then last one is SQL Server.
+[00:37:17] uh for reasons of the 1980s I don't
+[00:37:19] fully understand you have to write go
+[00:37:23] after every query um because once they
+[00:37:25] do like a batch right this is where this
+[00:37:28] one client other clients uh there's
+[00:37:30] other clients that they don't have to do
+[00:37:31] this for the one that Microsoft gives
+[00:37:32] you you always have to write go all
+[00:37:34] right so they complain they don't have
+[00:37:35] now all right well there's another way
+[00:37:38] to do this in this SQL standard I think
+[00:37:40] you can also get a um you can get
+[00:37:44] something called current time stamp All
+[00:37:46] right.
+[00:37:49] So this is Postgress except Postgress
+[00:37:51] doesn't have it.
+[00:37:53] They don't have the function
+[00:37:56] but they have the keyword.
+[00:37:58] Let's go to my SQL.
+[00:38:02] Sorry.
+[00:38:07] They have the function.
+[00:38:09] They have the keyword. Let's go to
+[00:38:11] SQLite.
+[00:38:13] SQLite doesn't have the function but it
+[00:38:16] has the keyword.
+[00:38:18] Duct DB is going to have the doesn't
+[00:38:20] have the function but it has the keyword
+[00:38:22] just like Postgress. Click house
+[00:38:25] has the function
+[00:38:28] does not have the keyword.
+[00:38:31] Firebolt has the function
+[00:38:38] has the function does not have the
+[00:38:39] keyword. And then uh SQL server
+[00:38:44] I got to write go uh does not have the
+[00:38:48] function
+[00:38:50] but it has the keyword.
+[00:38:53] All right. Well that kind of sucks
+[00:38:54] because like again nobody has the same
+[00:38:56] thing. Um
+[00:38:58] so this turned out to be really easy to
+[00:39:01] do in Postgress in a bunch of systems.
+[00:39:03] So what I can do is
+[00:39:06] uh take the date as a string. So 2025 uh
+[00:39:11] uh on the 27th and then cast the
+[00:39:13] beginning of the year cast these as
+[00:39:15] dates and just subtract them
+[00:39:18] and make it 238
+[00:39:21] which is actually correct.
+[00:39:23] So what am I doing here? This cast
+[00:39:25] function is taking the string and I'm
+[00:39:26] telling it I want to cast this data this
+[00:39:29] this constant string I'm giving you cast
+[00:39:31] it as a date. For whatever reason you
+[00:39:33] got to put as oh you can't even see
+[00:39:35] that. Sorry. Um,
+[00:39:37] please say something next time.
+[00:39:40] >> Make sure this looks good. All right,
+[00:39:42] there we go.
+[00:39:44] >> And probably it's going to be
+[00:39:47] make sure I get over here.
+[00:39:51] Okay, there we go. All right, so again,
+[00:39:53] I take the string, I call this cast
+[00:39:54] function, I say I want as a date, right?
+[00:39:57] So that's fine. Uh what I like about in
+[00:40:01] one example of an idiom in Postgress
+[00:40:03] that I like a lot is that instead of
+[00:40:06] calling that cast function, I can put
+[00:40:08] two colons at the end of any any piece
+[00:40:10] of data and I tell the data type I want
+[00:40:12] to cast into it. Right? So that's nice.
+[00:40:15] So I I can cast my strings to a date. So
+[00:40:16] that works great. So let's pop over now
+[00:40:19] to try to do the same thing in uh in my
+[00:40:22] SQL.
+[00:40:27] I get this
+[00:40:29] 726
+[00:40:31] again just as a refresh your brain it's
+[00:40:33] there's no there's not 726 days in a
+[00:40:35] year uh it's 2338 days since the
+[00:40:38] beginning
+[00:40:40] so what is this number
+[00:40:45] I didn't know either some rando in
+[00:40:47] YouTube in the YouTube comment of all
+[00:40:49] places posted what it was and like oh he
+[00:40:51] was right um so what this is this is the
+[00:40:55] first number seven is the current month
+[00:40:57] of August 8 subtracting the uh January
+[00:41:01] one you get seven. Then you get the same
+[00:41:04] thing for the the number of days. So
+[00:41:05] what's happening here is that my SQL is
+[00:41:08] casting the date as an unsigned integer
+[00:41:11] like this. We're just mashing together
+[00:41:14] the year, the month, the day. Uh and so
+[00:41:17] it's really computing
+[00:41:19] this,
+[00:41:22] right? That sucks. There's your 726.
+[00:41:27] So, uh,
+[00:41:30] turns out there's actually a date diff
+[00:41:32] function in, uh, my SQL where I can
+[00:41:35] easily get back 23 238 days. Okay. Well,
+[00:41:38] let's go back to SQL server or sorry, to
+[00:41:40] Postgress.
+[00:41:42] And of course, they don't have it
+[00:41:43] either, right? All right. So, let's see
+[00:41:46] how to do this in um
+[00:41:50] in SQL Server. We'll come back to the
+[00:41:51] other ones. SQL Server you can cast
+[00:41:54] things as a date. Got to write go,
+[00:41:56] right? And I get a date like that. And
+[00:41:58] then they actually have the date diff
+[00:42:01] function.
+[00:42:04] Here I go. And I get 238. But notice now
+[00:42:06] I have this new thing here. I have this
+[00:42:07] get date,
+[00:42:12] right? Where that's that's kind that's
+[00:42:14] different. Didn't see that before. So
+[00:42:16] let's see whether anybody has that.
+[00:42:20] My SQL doesn't have it.
+[00:42:23] doesn't have it. Right? So, you see
+[00:42:24] where I'm getting at. All right. So,
+[00:42:26] let's try this now in um in Clickhouse
+[00:42:32] actually to prove that this works in um
+[00:42:35] prove it works in ductb and um in
+[00:42:38] firebolt. So, let's go to ductb.
+[00:42:41] I can do it the postgress way. Boom. I
+[00:42:43] get the right answer. I can do this in
+[00:42:45] firebolt. I do it the postgress way. I
+[00:42:48] get the right answer. All right. Right.
+[00:42:49] So fireballd and postgress are are doing
+[00:42:52] the same thing. So that's good. If you
+[00:42:54] go back to our boy click house. So we
+[00:42:57] try this
+[00:42:58] before that produc that produced the
+[00:43:00] right answer. That worked out pretty
+[00:43:01] well. Um
+[00:43:04] chatbt
+[00:43:05] gave me this
+[00:43:09] right but it's complaining that it
+[00:43:11] doesn't know about this today function.
+[00:43:14] Okay. Well I've never seen that before.
+[00:43:15] I said it was now. What is today?
+[00:43:19] Uh, they don't have it.
+[00:43:21] Does my SQL have it?
+[00:43:26] Nope.
+[00:43:27] All right. Well, the documentation of
+[00:43:29] ClickUp says they have it, but
+[00:43:34] it's actually case sensitive. It's
+[00:43:35] lowercase today. Then you get that.
+[00:43:39] Right.
+[00:43:41] >> Right. Exactly. So before I think we did
+[00:43:43] now, right?
+[00:43:46] That's uppercase. Okay. Can I go now?
+[00:43:51] Yeah. So now can do uppercase lower case
+[00:43:54] but today cannot. Awesome.
+[00:43:57] All right. Last one. SQLite.
+[00:44:00] So they don't have date diff. Uh so if I
+[00:44:05] try to do it the
+[00:44:08] if I try to do it the postgress way,
+[00:44:12] I get zero. That's not good. Um,
+[00:44:17] so I actually came up with the same
+[00:44:19] answer that chatbt came up with where
+[00:44:22] you convert the
+[00:44:24] uh the timestamps into the Julian
+[00:44:27] calendar which is the number of days
+[00:44:30] since 452 BC or whatever like when I
+[00:44:34] mean Julian Caesar converted everyone to
+[00:44:36] Julian calendar in like 45 BC uh of what
+[00:44:40] the dating goes back uh even farther
+[00:44:43] right so you can do something like
+[00:44:45] and you get 238, but but it's a decimal.
+[00:44:48] Um, so if you cast it as a
+[00:44:54] you cast it as an integer,
+[00:44:57] you get 238. Another way to do this
+[00:45:00] would be to convert this to the Unix
+[00:45:02] epoch.
+[00:45:05] If you know what that is, right? It's
+[00:45:06] the number of seconds since the the dawn
+[00:45:08] of Unix was like January 1st, 1970. So
+[00:45:12] you can convert it to that. convert the
+[00:45:14] the current time stamp to that number of
+[00:45:17] seconds that to the beginning of the
+[00:45:19] year to the time stamps divided by 60
+[00:45:21] days or 60 seconds by 60 minutes times
+[00:45:24] 24 hours and why is it integer because
+[00:45:28] uh
+[00:45:31] because it's doing some kind of casting
+[00:45:34] >> yeah which is that I don't I don't want
+[00:45:37] to get the type conversion because this
+[00:45:38] is a CMU and people get really uptight
+[00:45:40] about it but yeah that's another problem
+[00:45:43] All right. So the main take away from
+[00:45:45] all this is like a really simple thing
+[00:45:46] like let's calculate dates and think
+[00:45:49] things go wrong.
+[00:45:51] All right. So um let me skip through
+[00:45:54] output control or get through this real
+[00:45:55] quickly. You can do order by if again
+[00:45:58] SQL or rational model is unordered. If
+[00:45:59] you care about order you can add order
+[00:46:00] by clause. Uh since the relational model
+[00:46:04] is or SQL is also um it's unordered and
+[00:46:08] uh if you care about the order, you'd
+[00:46:09] add order by. Sometimes you maybe don't
+[00:46:11] want all the results. You can add a
+[00:46:13] limit clause or a fetch offset clause
+[00:46:16] where you basically say I only want the
+[00:46:18] first five rows or first uh 10 rows and
+[00:46:20] you can even offset it and then you can
+[00:46:22] specify what to deal with when you have
+[00:46:24] ties or two if two tupils have should be
+[00:46:26] part of the same output. What do you do?
+[00:46:28] The shorthand way is do to use a limit
+[00:46:30] clause. Uh that's not in the SQL
+[00:46:32] standard but many systems support that
+[00:46:34] at least the duct DB and postgress do.
+[00:46:36] my SQL and then SQL server has their own
+[00:46:39] syntax of saying top 10 uh in the front.
+[00:46:44] Uh right so J long here so the
+[00:46:49] as I said many times what you want to be
+[00:46:50] able to do is put have a single SQL
+[00:46:52] query produce all the answer without
+[00:46:53] having to go back for the application.
+[00:46:54] So
+[00:46:56] you can you can take the output of a SQL
+[00:46:58] query and put it into an actual a table
+[00:47:00] or a temp table and then do additional
+[00:47:02] queries on that. So in the SQL standard
+[00:47:05] you say select with the into clause and
+[00:47:07] then where it says course ids that's the
+[00:47:10] name of the table I'm I'm going to
+[00:47:11] insert into uh in postgress you can
+[00:47:13] actually specify that it's a temporary
+[00:47:14] table so that when you close the client
+[00:47:16] the table gets blown away um but that's
+[00:47:19] that's not in standard in all systems.
+[00:47:22] All right so let's jump into the more
+[00:47:23] challenging things uh in the last half
+[00:47:25] an hour. So nested queries CTE and um
+[00:47:29] and window functions. So many times
+[00:47:33] you're going to find yourself not be
+[00:47:34] able to express what you want to compute
+[00:47:37] within a single select statement and you
+[00:47:40] actually maybe use multiple select
+[00:47:42] statements and as I said you could write
+[00:47:43] with your inate result out to a temp
+[00:47:45] table but often times you may want to do
+[00:47:47] a select inside of your inside of an
+[00:47:50] existing select and so these are called
+[00:47:52] inner queries or nested queries and they
+[00:47:54] can appear pretty much anywhere in a SQL
+[00:47:56] statement. So I can do something really
+[00:47:58] simple like this where I have a select
+[00:48:00] statement what we'll call the outer
+[00:48:01] query uh the top part here and then
+[00:48:04] inside my wear clause now I have another
+[00:48:06] select statement called the inner query
+[00:48:08] where I'm computing some answer that can
+[00:48:10] then be used or or leveraged in the in
+[00:48:12] the outer query.
+[00:48:15] Right? So this is an example putting in
+[00:48:17] the wear clause. You can put it in the
+[00:48:18] projection output. You can put it in the
+[00:48:20] from clause. I think some systems let
+[00:48:22] you put it in like the group by clause
+[00:48:24] the having clause which is not a good
+[00:48:25] idea but you could do that.
+[00:48:27] And so we're not going to talk about how
+[00:48:29] to actually implement this or execute
+[00:48:30] this efficiently just yet. But it's
+[00:48:32] obviously most the dumbest thing to do
+[00:48:33] would be treat this as like two nested
+[00:48:35] for loops where say in the top one here
+[00:48:37] I'm for every single student I'm going
+[00:48:39] to then run that inner query in its
+[00:48:42] entirety for you know to try to find a
+[00:48:44] match. My SQL used to do that. Most
+[00:48:47] systems when they first doing start
+[00:48:48] doing SQ queries they do that. And
+[00:48:50] obviously that's very inefficient
+[00:48:51] because the answer is not going to
+[00:48:52] change from one tupole on the outer on
+[00:48:54] the outer query to the next.
+[00:48:56] So we'll talk about this later um after
+[00:48:59] the midterm but ideally what you want to
+[00:49:01] be able to do is rewrite that query into
+[00:49:02] a join because data systems know how to
+[00:49:04] execute joins very efficiently and so
+[00:49:07] you can take a if you have a nested
+[00:49:08] query like that if you can convert it to
+[00:49:09] a join it'll run much faster but not
+[00:49:11] every system can do that post is
+[00:49:13] actually very bad at it
+[00:49:17] >> the question the statement is there
+[00:49:18] might be some cases where the subquery
+[00:49:20] is actually faster
+[00:49:22] um
+[00:49:26] So this is getting the we but like you
+[00:49:29] can imagine something like a computing
+[00:49:31] aggregation like a a max ID if I could
+[00:49:33] run that once cache the result and reuse
+[00:49:36] that then yeah that that would be fast
+[00:49:38] but you but you almost never want to run
+[00:49:40] I don't think you ever want to run the
+[00:49:41] inner query over and over again it's
+[00:49:43] like stupid
+[00:49:48] question is what what system is actually
+[00:49:50] good at converting these things there's
+[00:49:52] a system called out of uh Germany called
+[00:49:54] Umbra. It's been written by one of the
+[00:49:56] the the best database system researchers
+[00:49:59] in the world. Uh and he has a new paper
+[00:50:02] that came out this year. He can handle
+[00:50:03] basically any any nested query he can
+[00:50:05] rewrite.
+[00:50:09] >> Statement is well making more mainstream
+[00:50:11] systems. So DuckDB does an earlier
+[00:50:13] version of what he did uh because they
+[00:50:16] just copied what he did because it was
+[00:50:17] in the papers, right? Uh, but one of my
+[00:50:20] PJ students here came up with a came up
+[00:50:23] with a a nested query that actually
+[00:50:24] broke break ductb and broke this other
+[00:50:27] system.
+[00:50:29] >> It it won't work correctly. It it it it
+[00:50:31] runs out of memory because it blows up.
+[00:50:33] Uh because just think of like you just
+[00:50:36] you're just generating a bunch of
+[00:50:37] results and the the balloons up. You run
+[00:50:39] out of memory. So the newer version of
+[00:50:41] this German system called Umbra which is
+[00:50:43] now commercialized as Cedar DB that
+[00:50:45] system actually supports it. This all I
+[00:50:48] have to cut on the video. I can't see
+[00:50:49] this. Yes, we buried the bodies and the
+[00:50:51] cops never said anything. Um, that's the
+[00:50:54] way it is. All right.
+[00:50:56] All right. So, uh, nested query. So,
+[00:50:59] let's see. We want to get the student
+[00:51:00] the names of the students that are in
+[00:51:01] 445, right? And so, when you start doing
+[00:51:04] homework one, you got to think about how
+[00:51:05] you're going to construct these things.
+[00:51:06] With nested queries, you want to sort of
+[00:51:07] maybe start with the outer query first
+[00:51:09] and figure out what you what what you
+[00:51:11] want the final output to be. And then
+[00:51:13] oftentimes I'll just write maybe in like
+[00:51:15] natural language what the inner inner
+[00:51:16] query should be and I figure out how to
+[00:51:18] sort of you know what that how to
+[00:51:20] rewrite that integrated fit into what I
+[00:51:22] want in the outer query. So if I want to
+[00:51:24] get all the names of the students that
+[00:51:25] are in 445 I know I want to do select
+[00:51:27] name from student with some kind of wear
+[00:51:29] clause and my wear clause is going to
+[00:51:31] say something like get this get the list
+[00:51:32] of the people the set of people that are
+[00:51:34] taking 445. So my inner query would look
+[00:51:36] something like this. But now I need to
+[00:51:38] mash the two together. And so this is
+[00:51:40] where I can add things like an in clause
+[00:51:43] or other other u other operators in my
+[00:51:46] expressions to specify what I how I want
+[00:51:49] to link together the inner query with
+[00:51:51] the outer query. So in this case here
+[00:51:53] I'm saying where SID is in and then some
+[00:51:56] some nest query here. So this is doing
+[00:51:59] set membership. I'll match on my outer
+[00:52:02] uh my outer tables query or the outer
+[00:52:05] query any record that has an SID that is
+[00:52:07] in my set that is produced by the inner
+[00:52:09] query. And so his point he was saying
+[00:52:12] before sometimes it's more efficient to
+[00:52:14] run the the nested query in without
+[00:52:17] doing a join. And obviously in this one
+[00:52:19] it's pretty obvious that you want to you
+[00:52:20] want to run that query once the inner
+[00:52:22] query and be able to reuse the result
+[00:52:23] over and over again. And a join would
+[00:52:26] basically do that for you.
+[00:52:28] So notice also here too that like I'm
+[00:52:30] now I'm referencing the the student ID
+[00:52:32] in the inner query that's going to get
+[00:52:33] bound to the enroll table inside the
+[00:52:35] inner query and then the student ID is
+[00:52:37] getting bound to the one on the outside.
+[00:52:39] There are things like correlated
+[00:52:40] subqueries where you can then you can
+[00:52:43] match things on the inside with the
+[00:52:44] outside but we don't have to worry about
+[00:52:46] that just yet.
+[00:52:48] All right. So you can do the bunch of
+[00:52:50] different uh operators to specify what
+[00:52:52] the matching should be. My example I did
+[00:52:54] before was was in is equipment to equals
+[00:52:57] any but you can say like all have to
+[00:53:00] match uh at least one has to match or
+[00:53:02] none has to match right you can do a
+[00:53:04] bunch of uh these kind of operations
+[00:53:07] all right the more complicated things
+[00:53:09] let's find the student record that has
+[00:53:10] the highest ID that is enrolled in at
+[00:53:11] least one course right so the outer
+[00:53:14] query I know I'm going to want to say I
+[00:53:15] want the student ID and their name and
+[00:53:17] then the inner query is be something
+[00:53:18] like is the highest enrolled student ID
+[00:53:20] so my inner query could be like this
+[00:53:22] right uh I want to get the max student
+[00:53:24] ID if I'm enrolled and I want to match
+[00:53:26] that with the student on on the outer
+[00:53:27] query right and I just instead of
+[00:53:31] writing in equals any or equals all I'll
+[00:53:34] just put in the end call clause like
+[00:53:35] this this is one way to do this right
+[00:53:38] you could do this with uh sorting the
+[00:53:41] table and then fetching fetching the
+[00:53:42] first row that would be the max I can
+[00:53:44] put the the the max query the
+[00:53:46] aggregation inside the join clause right
+[00:53:49] there's a bunch of different ways that
+[00:53:51] you can write you write queries
+[00:53:53] uh to produce the correct answer. I'm
+[00:53:55] not saying one way is better than
+[00:53:56] another. It's going to depend highly on
+[00:53:58] what the system can actually support and
+[00:53:59] run. In theory, SQL and it shouldn't
+[00:54:03] matter, but oftentimes it does for your
+[00:54:06] for homework one. You're running on Doug
+[00:54:07] DDB on your local machine. It there
+[00:54:09] won't be a huge difference performance
+[00:54:11] rewriting different things. At least
+[00:54:13] there shouldn't be.
+[00:54:15] All right, looks one more example. Find
+[00:54:17] all the courses that have at least have
+[00:54:19] no students enrolled in it. My auto
+[00:54:21] query should be select select all the
+[00:54:22] courses and where I want to match where
+[00:54:24] there isn't a tupole for that course in
+[00:54:27] the enroll table. So I can do something
+[00:54:29] really simple like this. I can say
+[00:54:30] select star from enrolled where course
+[00:54:32] ID uh where the course ID and when the
+[00:54:35] old table matches the course ID from the
+[00:54:38] uh course table on the on the outside
+[00:54:39] here. And then notice how this inner one
+[00:54:41] here is being bound to the one on the on
+[00:54:43] the outside.
+[00:54:46] Right? So this is called a correlated
+[00:54:48] subquery where the the the result being
+[00:54:51] computed on the inside depends on
+[00:54:53] whatever tool you're looking at on the
+[00:54:54] outside and many systems can't do that
+[00:54:59] can't convert that into joins but now
+[00:55:01] SQL server duct DB and and this German
+[00:55:04] system CDB and Umbra can't
+[00:55:08] all right so when you do homework one
+[00:55:10] sometimes it'll be obvious that you want
+[00:55:12] to use a CTE which we'll cover in a
+[00:55:13] second sometimes you want to do a nested
+[00:55:16] query
+[00:55:16] But in general
+[00:55:19] uh in general it's up to preference.
+[00:55:23] We'll see CTS in a second.
+[00:55:26] Lateral joins are a special kind of uh
+[00:55:28] join where it allows a query that's
+[00:55:31] technically at the same level uh of
+[00:55:34] nesting within within one query to
+[00:55:36] reference data in another query at the
+[00:55:39] same level.
+[00:55:41] So what do I mean by that? So think
+[00:55:43] think of it like it's two for loops
+[00:55:45] where the I can now have a a previous
+[00:55:48] executed query within my same sort of
+[00:55:51] outer query be referenced by queries
+[00:55:53] that came after it. So I said before
+[00:55:55] that in SQL that ideally in a
+[00:55:57] declarative language you don't you don't
+[00:55:58] want to specify what the order of the
+[00:56:00] operations should be but in something
+[00:56:01] like a lateral join you do have to
+[00:56:03] specify it because you have to know like
+[00:56:05] this thing has to get computed for this
+[00:56:06] other one gets computed.
+[00:56:08] So this is a really toy example. Select
+[00:56:10] star from a derived table where I have
+[00:56:13] select one as x. So this is making a
+[00:56:15] synthetic virtual table uh that has one
+[00:56:18] one tuple with one value of one. And
+[00:56:21] then now in my lateral operator and in
+[00:56:23] this second query here I'm now allowed
+[00:56:25] to reference up the the the nested query
+[00:56:28] that came before it.
+[00:56:30] And it's roughly equivalent to producing
+[00:56:32] the output of this this Python code like
+[00:56:34] this.
+[00:56:38] I'm seeing a lot of confused faces.
+[00:56:39] Let's look at another example.
+[00:56:42] So I want to calculate the number of
+[00:56:43] students that enrolled in each course
+[00:56:45] and get their average GPA and I want to
+[00:56:47] sort them based on the the enrollment
+[00:56:49] count in descending order. So the outer
+[00:56:52] query again is going to be select star
+[00:56:54] from course get when all the tupils that
+[00:56:56] are all the the attributes for anybody
+[00:56:59] within a course or any course tupil. The
+[00:57:02] first lateral query is going to be for
+[00:57:04] each course compute the number of
+[00:57:06] enrolled students and then the second
+[00:57:08] lateral query be for each course now
+[00:57:10] comput the average GPA of the enrolled
+[00:57:12] students.
+[00:57:15] So it would look roughly like this.
+[00:57:18] So in some cases some um in some
+[00:57:22] versions of SQL you have to specify that
+[00:57:23] it's a it's a lateral join explicitly
+[00:57:25] with a with like a join operator. In
+[00:57:27] this case here in Postgress, you can
+[00:57:28] just say I have a lateral and then you
+[00:57:30] have a nested query and and then that
+[00:57:31] can do whatever wants to. So the first
+[00:57:34] one here again we're computing the um
+[00:57:37] the we're counting the number of
+[00:57:38] students that that are enrolled in each
+[00:57:40] given course. Right? So in this case
+[00:57:42] here the the course ID I'm referencing
+[00:57:44] is going to come from the the the outer
+[00:57:47] query.
+[00:57:49] The second one down here where I'm
+[00:57:50] computing the average GPA for every
+[00:57:52] student that are enrolled in the course.
+[00:57:54] Again, same thing here. Now, this course
+[00:57:56] ID, it can is can come from this outer
+[00:57:58] one here, or it could come from the one
+[00:58:01] in the middle. It doesn't matter.
+[00:58:02] They're actually both semantically
+[00:58:03] correct. They would both produce the
+[00:58:05] same result,
+[00:58:08] right? And you would get something like
+[00:58:09] this. And I would sort again by by the
+[00:58:11] count in ascending order.
+[00:58:15] All right, let me give a quick show you
+[00:58:17] quickly what what this looks like. So,
+[00:58:19] duct DB, my SQL, Postgress, and Fireball
+[00:58:22] are all going to produce the the same
+[00:58:24] result.
+[00:58:25] um for lateral joints which is nice.
+[00:58:30] >> Sorry, say it again.
+[00:58:34] >> Uh for that statement, could you could
+[00:58:36] you do that with a normal join uh for
+[00:58:38] that example? Yes. Actually, in the sake
+[00:58:40] of time, let me let me get through CTE
+[00:58:43] and we can because we we have the the
+[00:58:45] caller the speaker today and I can I can
+[00:58:48] always show what this looks like
+[00:58:49] afterwards.
+[00:58:50] All right, CTE, a comment table
+[00:58:52] expressions. This is a newer construct
+[00:58:53] in SQL. Think of this as like instead of
+[00:58:56] having a separate two separate select
+[00:58:58] statements, one want one to create a a
+[00:58:59] temp table and then another to query
+[00:59:01] that temp table. I can create a temp
+[00:59:03] table within my query that then gets
+[00:59:06] populated and materialized and then it
+[00:59:07] gets thrown away when the query is over.
+[00:59:11] Right? So the way this is specified, I
+[00:59:14] have my whiff clause at the top. I give
+[00:59:16] a name of my CTE or sort of the name of
+[00:59:18] the table. whatever the columns are
+[00:59:21] going to be as the output. Notice I I
+[00:59:22] don't have to put the types because it's
+[00:59:24] it's going to derive the types based on
+[00:59:25] whatever is inside of the the the as
+[00:59:28] clause here. And then now down below
+[00:59:31] after the the closing parenthesis, I can
+[00:59:33] then reference that CTE as if it was a
+[00:59:38] uh like a real table. It was think like
+[00:59:41] a macro or like like I can take whatever
+[00:59:44] is in that with clause and inject that
+[00:59:47] as a as a nested query here.
+[00:59:49] parameterize it.
+[00:59:50] >> See, can you say his question is can you
+[00:59:52] parameterize it? What do you mean by
+[00:59:53] that?
+[00:59:58] >> Oh,
+[01:00:01] >> yeah. So, the statement is uh statement
+[01:00:03] is can you can you pass in a value that
+[01:00:06] causes the the
+[01:00:13] >> I don't I don't think you can
+[01:00:15] >> uh
+[01:00:20] We can take this offline. There is
+[01:00:21] research where you can take a arbitrary
+[01:00:24] uh procedural code like Python or or
+[01:00:27] whatever you know Pascal people write
+[01:00:30] these store procedures or functions in
+[01:00:32] like this language called PL/SQL.
+[01:00:34] There's ways to convert automatically
+[01:00:35] convert procedural code into uh into CTE
+[01:00:40] which they do. It does look like this.
+[01:00:41] But now you're actually maintaining a
+[01:00:43] state table what the input is to do to
+[01:00:45] to basically mimic the same thing. That
+[01:00:48] that is not you don't need to know that
+[01:00:50] for this. Okay.
+[01:00:52] All right. So quick example. Uh now I'm
+[01:00:55] going to find the student record with
+[01:00:56] the highest ID enrolled at least one
+[01:00:58] course. You saw this before. Instead of
+[01:00:59] doing a Nessa query, I now have my my
+[01:01:02] CTE where I can do a join against it. uh
+[01:01:05] and so the data center could be smart
+[01:01:06] enough to know compute the CTE once and
+[01:01:08] then fill in the value and use that uh
+[01:01:11] later on.
+[01:01:15] It's nicer syntax than using nested
+[01:01:18] queries because you sort of declare them
+[01:01:20] up front and then you can reference them
+[01:01:22] down below whereas nested queries you
+[01:01:24] kind of like they're embedded and makes
+[01:01:26] makes the the SQL quite large.
+[01:01:29] queries
+[01:01:32] in
+[01:01:32] >> this statement is yes nested queries
+[01:01:34] cannot reference in line things correct
+[01:01:36] yes
+[01:01:37] >> but sometimes this is okay
+[01:01:41] all right the last thing I want to cover
+[01:01:42] is window functions
+[01:01:45] so the
+[01:01:47] in all the aggregations and things
+[01:01:49] things we talked about before you can't
+[01:01:50] easily
+[01:01:52] keep track of like uh how things are
+[01:01:55] being processed the order that you're
+[01:01:57] looking at them So you can't compute
+[01:01:59] things that that require a notion of
+[01:02:01] bordering because again SQL is
+[01:02:02] unordered. But sometimes you want to do
+[01:02:04] things like a moving average like think
+[01:02:06] of like a time series data data set
+[01:02:09] where I'm having different time stamps
+[01:02:11] different times throughout the day. I'm
+[01:02:13] recording the temperature. So I want to
+[01:02:15] say what was the moving average of the
+[01:02:17] temperature at this given time or stock
+[01:02:19] price would be another good example of
+[01:02:20] this. But with window functions, you can
+[01:02:23] now do this um and now generate uh
+[01:02:28] multiple aggregation outputs as you scan
+[01:02:31] along logically scan along the data uh
+[01:02:35] in in in your SQL query. So it's sort of
+[01:02:38] like an aggregation but you're not
+[01:02:39] grouping them into produce a single
+[01:02:40] output. You could have multiple outputs
+[01:02:42] for every for every single tuple. So the
+[01:02:44] way this works you specify in your
+[01:02:46] projection list you have a function name
+[01:02:48] and it'll have basic aggregation
+[01:02:50] functions and additional functions that
+[01:02:51] are specific for uh window functions and
+[01:02:54] then you have this over clause to
+[01:02:56] specify how you want to split things up
+[01:02:58] or slice things up as as you go along.
+[01:03:01] So the aggregations could be anything we
+[01:03:03] talked about before like again if I want
+[01:03:04] to comput the moving average the min max
+[01:03:06] the count of of some some window as as I
+[01:03:09] scan and then the special functions are
+[01:03:11] row number and rank. So row number would
+[01:03:14] be like what offset you are in the in in
+[01:03:17] a group as you slice it up and the rank
+[01:03:19] is would be the position according to
+[01:03:21] some sort order.
+[01:03:23] Right? So my query is select star from
+[01:03:26] from the enroll table and I'm going to
+[01:03:29] compute the row number without doing any
+[01:03:31] um without doing any slicing or any
+[01:03:33] group eyes. And so now you would see
+[01:03:35] that uh I I'm I'm introducing this new
+[01:03:39] column here called row number that keeps
+[01:03:41] track of where the where that tupil is
+[01:03:43] position is within that group of the
+[01:03:46] window.
+[01:03:49] If I want to again do something like a
+[01:03:50] group by they have a partition by
+[01:03:52] keyword. So now I'm going I'm going to
+[01:03:54] compute the uh get the course ID and the
+[01:03:57] student ID for everyone enrolled in in a
+[01:03:59] course. And I want to know what the row
+[01:04:00] number is as as I partition them by the
+[01:04:02] course ID, right? And so again, just
+[01:04:05] like the group by clause, row things up
+[01:04:07] into groups when I produce my output.
+[01:04:08] Same thing here. Now you can see the row
+[01:04:10] number gets reset back to one every time
+[01:04:13] I enter a new partition or enter a new
+[01:04:15] group.
+[01:04:17] I can sort things within my group as
+[01:04:19] well, right? So I can in the over
+[01:04:21] clause, I can specify an order by and
+[01:04:23] then um the second time I'll I'll have
+[01:04:26] to go this I'll pass over this.
+[01:04:29] you can do more complicated things in
+[01:04:30] there.
+[01:04:32] All right, so to finish up again, SQL's
+[01:04:36] very important. It's not going away.
+[01:04:37] There's this survey the the E does every
+[01:04:40] year about what what students say are
+[01:04:41] the most important languages they need
+[01:04:43] to learn. Uh SQL is always now number
+[01:04:46] one. Python's number two. Uh number
+[01:04:48] three is Java.
+[01:04:50] Right? So again, as I said, for the rest
+[01:04:54] of your life, you're going to come
+[01:04:55] across SQL and it's really important to
+[01:04:57] at least know the basics of it. So
+[01:04:59] homework one and this class right here
+[01:05:00] today will be provide you the foundation
+[01:05:02] you can then expand upon in in your
+[01:05:04] further careers.
+[01:05:07] All right, so homework one is going out
+[01:05:09] today. Uh again doing basic data
+[01:05:11] analysis using ductb you submit you can
+[01:05:13] run everything locally in test and then
+[01:05:15] you submit to grayscope and your output
+[01:05:16] has to match whatever the expected
+[01:05:18] output is uh on grayscope. Okay.
+[01:05:22] Should you use an LLM?
+[01:05:25] Yes. Try it. See how far you can get.
+[01:05:30] But you need to understand what what the
+[01:05:32] thing is actually spitting out because
+[01:05:33] there might be an exam might ask you
+[01:05:35] some basic SQL questions. Okay.
+[01:05:38] All right. So, so again, next class uh I
+[01:05:42] won't be here. We'll be in London. So,
+[01:05:43] we'll be there's no Monday's a holiday.
+[01:05:45] So, do no cost for anybody. and then
+[01:05:47] Wednesday we'll post on um
+[01:05:50] we'll post on on YouTube. Okay. So, new
+[01:05:54] classroom. So, this is Drew. He's at
+[01:05:56] DBT. And as I said before, this is the
+[01:06:00] arguably the one of the most important
+[01:06:03] applications in the the data space right
+[01:06:05] now. Uh it's widely used everywhere. Um
+[01:06:09] and it's it's it's super important. All
+[01:06:11] right. So, Drew, sorry for being late.
+[01:06:13] Sorry for the technical mess up. The
+[01:06:14] floor is yours. Go for it.
+[01:06:17] Great, Andy. Thanks for having me on.
+[01:06:19] Um, I appreciate the kind words. My
+[01:06:20] name's Drew Bannon, one of the
+[01:06:22] co-founders at DBT Labs. Uh, we do make
+[01:06:24] a product called DBT. DBT is definitely
+[01:06:28] not a database, definitely not a data
+[01:06:29] warehouse. Uh, but we help companies use
+[01:06:32] their data warehouses and make sense of
+[01:06:34] the data, you know, in in the database.
+[01:06:36] Um, I think I've got about 10 minutes
+[01:06:38] with you today. So this is a sort of
+[01:06:40] modified version of an onboarding
+[01:06:42] session that I do for no employees just
+[01:06:44] talking about what DUT is and why it
+[01:06:45] matters and how it fits into a broader
+[01:06:48] ecosystem. Uh so I got an app and
+[01:06:49] pencil. Let's let's sketch it out. Um so
+[01:06:52] this is the setup that you'll see in a
+[01:06:54] lot of modern data oriented companies.
+[01:06:57] They've got data coming from data
+[01:06:59] sources. These are transactional
+[01:07:00] databases like Postgress, MySQL. They've
+[01:07:02] got advertising data and payments data,
+[01:07:05] finance, telemetry, sales, customer
+[01:07:07] support, you name it. what they want to
+[01:07:09] do is extract and load all this data
+[01:07:11] into a centralized place data warehouse
+[01:07:13] or data lake. And so practically what
+[01:07:15] happens is they've got these extracted
+[01:07:17] load processes that are creating, you
+[01:07:20] know, hundreds or thousands of tables
+[01:07:23] loaded by different teams and different
+[01:07:24] departments. Sometimes duplicated,
+[01:07:26] sometimes stale, but you just get a
+[01:07:28] bunch of tables in a data warehouse.
+[01:07:31] On the other side of the data warehouse,
+[01:07:33] we have the consumers. So there's BI and
+[01:07:35] data science dashboards or notebooks or
+[01:07:38] scripts that are quering these tables.
+[01:07:40] You've got your ML and AI use cases.
+[01:07:44] pulling from maybe the broth data
+[01:07:46] directly and they've got operational
+[01:07:48] stuff like wanting to send emails to
+[01:07:50] people who left, you know, items in the
+[01:07:52] shopping cart uh on an e-commerce
+[01:07:54] website. So that's qu some more tables,
+[01:07:56] too. And so the net result is that
+[01:07:57] there's a giant mess here. There's no
+[01:08:00] semblance of data lineage, meaning that
+[01:08:02] you can't actually see where the data is
+[01:08:04] coming from that's powering this BI
+[01:08:05] report, right? You just have to trust
+[01:08:07] that it works and and usually it's wrong
+[01:08:09] in some way. Um, there's no
+[01:08:11] documentation. So, it's hard to find
+[01:08:12] things like data assets that already
+[01:08:14] exist. It's hard to reuse someone else's
+[01:08:16] work. You frequently have to rebuild
+[01:08:17] things from scratch. Um, there's no
+[01:08:20] semblance of a deployment process here.
+[01:08:22] You just edit stuff in prod. You edit
+[01:08:24] the dashboard in prod. You change the
+[01:08:26] tables in prod and hope you don't break
+[01:08:27] anything for anyone. There's no sense of
+[01:08:30] QA, which means things are broken all
+[01:08:32] the time. Quality assurance.
+[01:08:34] And fundamentally, you get duplicated
+[01:08:36] business logic for each of your
+[01:08:37] different use cases or dashboards. And
+[01:08:39] so here we're kind of you know imagine
+[01:08:42] recalculating what it means to be a
+[01:08:43] customer a 100 times over that leads to
+[01:08:46] inconsistencies and and
+[01:08:49] so the um alternative approach here is
+[01:08:52] the one that we take with DBT and the
+[01:08:54] big idea is you know as before we want
+[01:08:56] to load extract and load data into a
+[01:08:58] data warehouse. Uh but this time we'll
+[01:09:00] draw this imaginary line down the middle
+[01:09:02] of the database. Let's say the left hand
+[01:09:04] side is for raw data and that's where we
+[01:09:06] oops extract and load you know our raw
+[01:09:10] tables loaded from our data sources and
+[01:09:14] then we have these blue pipelines here
+[01:09:15] that I drew. So this is actually what
+[01:09:18] dbt does. It takes your raw data sets
+[01:09:20] and helps you create derived data sets
+[01:09:22] that are you know enriched or apply your
+[01:09:25] business logic to the raw data. The net
+[01:09:27] result is that you get these higher
+[01:09:29] levels of abstraction and these tables
+[01:09:31] that you can query and um
+[01:09:35] basically the data set you expose to the
+[01:09:37] business represents sort of the
+[01:09:38] terminology that folks in the business
+[01:09:40] use and not the raw data coming out of
+[01:09:42] Salesforce or coming out of you know
+[01:09:44] Postgress. So it's a sort of translation
+[01:09:46] or transformation layer. The benefit of
+[01:09:49] doing it with DBT is that you can source
+[01:09:52] control your business logic as SQL code.
+[01:09:55] You can visualize your data lineage so
+[01:09:57] you can see how data flows from raw
+[01:09:59] tables through data models into
+[01:10:01] dashboards.
+[01:10:03] You can use an actual CI process so you
+[01:10:05] can develop code in depth and not in
+[01:10:07] prod.
+[01:10:09] And um you can find out that your game
+[01:10:11] is broken before the CEO hears about it,
+[01:10:13] which is always uh the better time to
+[01:10:15] find out that your D's broken. And
+[01:10:17] finally, you know, you can reuse assets.
+[01:10:19] Um we built this transform table. Other
+[01:10:22] other colleagues across the business can
+[01:10:23] build on top of it. we can amplify each
+[01:10:25] other's impact.
+[01:10:27] So I want to show you what this looks
+[01:10:28] like a little bit in dbt. The big idea
+[01:10:30] here is that you know we're looking at a
+[01:10:32] dbt model called stage GitHub stars in
+[01:10:35] in this case GitHub. We first controlled
+[01:10:36] it in GitHub. And so stage GitHub stars
+[01:10:39] is the name of our table here. STG it's
+[01:10:42] like a staging model. This is like going
+[01:10:44] from your raw data to kind of one layer
+[01:10:47] of preparation. You can rename some
+[01:10:49] columns for clarity. Uh filter out
+[01:10:51] invalid or delete no record and things
+[01:10:53] like that. soft deleted reference and
+[01:10:55] then fundamentally our model code is um
+[01:10:58] just SQL. So it's select star from you
+[01:11:01] know some source and then we've got a
+[01:11:03] little window function action here to uh
+[01:11:06] dduplicate records by you know the first
+[01:11:09] first start update. Um the only
+[01:11:12] difference between this and pure SQL is
+[01:11:13] that DBT has a built-in templating
+[01:11:15] language called Ginga and this allows us
+[01:11:17] to do pretty cool things and
+[01:11:19] specifically it allows us to represent
+[01:11:21] edges between different nodes in a
+[01:11:23] dependency graph. So here we're saying
+[01:11:25] stage GitHub stars oops uh stage GitHub
+[01:11:28] stars depends on the raw source GitHub
+[01:11:31] star hazers in our case loaded by
+[01:11:33] Fiverr.
+[01:11:35] Uh so that's one but you can also do
+[01:11:36] things like write for loops and iterate
+[01:11:38] over tables and union a bunch of tables
+[01:11:40] together with divergent schemas. Uh
+[01:11:42] there's really a lot a lot you can do
+[01:11:44] with this template language but
+[01:11:45] fundamentally what we're doing here is
+[01:11:46] defining this logic in SQL that gets
+[01:11:49] version control.
+[01:11:52] The net is that you get a sort of
+[01:11:54] dependency graph that looks like this in
+[01:11:55] dbt. So here's just a sample of an
+[01:11:58] overall like much bigger dbt dependency
+[01:12:01] graph. And every single one of these
+[01:12:03] nodes is either a data source, you know,
+[01:12:05] in this case these are sources, or it's
+[01:12:07] a sort of intermediate transformation
+[01:12:09] like we see here. So this is us breaking
+[01:12:12] a lot of business logic into smaller
+[01:12:14] pieces kind of like you would with
+[01:12:15] functions, you know, in and um in
+[01:12:18] another programming language. But each
+[01:12:20] of these nodes in the graph is itself a
+[01:12:22] table. And so there's some really cool
+[01:12:24] stuff you can do with dbt like testing
+[01:12:26] your data sets or documenting your data
+[01:12:28] sets. Um so we can create assertions
+[01:12:30] that say you know the invoice ID of this
+[01:12:33] table should always be unique and not
+[01:12:34] null or something like that. And now we
+[01:12:36] can find out if our assumptions about
+[01:12:38] the data set uh don't hold you know
+[01:12:40] again before this does. Finally we
+[01:12:44] output a sort of dimensional model here.
+[01:12:46] This is dim strike customers and that's
+[01:12:48] what we want to actually expose to the
+[01:12:50] BI tools or data analysts in the company
+[01:12:52] who are quering these data sets and
+[01:12:54] trying to answer questions about
+[01:12:55] business. And I can guarantee you it is
+[01:12:58] a much nicer experience for that person
+[01:13:00] to query this table that has all the
+[01:13:02] information that they need flooded from
+[01:13:04] 40 different source tables than it would
+[01:13:06] be to go query those source tables
+[01:13:07] directly. Um because we did all this
+[01:13:09] hard work kind of along the way to uh
+[01:13:13] translate from the raw data sets into
+[01:13:16] sort of the language of business.
+[01:13:19] That was the uh
+[01:13:22] six or seven minute answer to what
+[01:13:24] exactly is dbt. Uh, if you take anything
+[01:13:26] away, it's transform data into data
+[01:13:28] warehouse and do it like a software
+[01:13:31] engineer would write code.
+[01:13:33] >> Okay, awesome. Any questions for Drew?
+[01:13:35] >> Drew?
+[01:13:36] >> Yes. Yes.
+[01:13:38] >> Uh, yeah. So, you mentioned that you
+[01:13:40] write your uh data pipelines in SQL. Do
+[01:13:43] you have like a an efficient execution
+[01:13:46] engine that can run this efficiently
+[01:13:49] over like big amounts of data?
+[01:13:50] >> The question is true. Um um your you
+[01:13:53] mentioned that people find these dags
+[01:13:55] through SQL.
+[01:13:56] >> Do you guys have an execution engine
+[01:13:57] that can efficiently execute execute
+[01:14:00] >> a great question we do and it's called
+[01:14:02] Snowflake or data bricks or bigquery or
+[01:14:04] red shift or uh so on and so on. So dbt
+[01:14:07] again is not a a data warehouse itself.
+[01:14:10] What we do is we run queries on the
+[01:14:12] customer's data warehouse. Um, which
+[01:14:14] which for us I think the the biggest
+[01:14:16] four are Snowflake, Red Shift, BigQuery,
+[01:14:18] Diverse. Um, and so our customers really
+[01:14:22] like that because they did all this work
+[01:14:24] to get their data into their data
+[01:14:26] warehouse. It's in their like single
+[01:14:27] source of truth. They want the data to
+[01:14:29] stay there. So they like that DBT will
+[01:14:31] connect to their Snowflake account,
+[01:14:33] their BigQuery project and uh run the
+[01:14:35] queries on the data, you know, in in C2
+[01:14:37] where it lives. A large percentage of
+[01:14:41] all queries that run on like Snowflake,
+[01:14:43] BigQuery, and so comes from DBT.
+[01:14:47] >> It's it's massive.
+[01:14:53] >> David is it's it's like a data lineage
+[01:14:55] marketplace tool. Drew, if you want
+[01:15:00] >> Well, what I would say is so we can do
+[01:15:01] two things and maybe this diagram is
+[01:15:03] confusing, but actually DBT's job is to
+[01:15:05] create these
+[01:15:08] uh tables. They can be two of these
+[01:15:09] nodes. It's a table or or a view could
+[01:15:11] be a view. So, DBT actually creates
+[01:15:13] these based on the the version control
+[01:15:15] definition in your DBT project. Uh but
+[01:15:18] we can also visualize it for you so that
+[01:15:19] you can trace, you know, where does the
+[01:15:21] data come from that that ultimately
+[01:15:23] lands in the thin strike customers
+[01:15:25] table. Well, you can trace it all the
+[01:15:26] way back to these data sources and some
+[01:15:28] other stuff over here that's not shown.
+[01:15:29] Uh, but DBT's primary job is to actually
+[01:15:32] build those data sets in dependency
+[01:15:34] order. We just so happen to also
+[01:15:35] visualize it for you as like debugging
+[01:15:38] or or data catalog. Cool.
+[01:15:41] >> All right. Awesome. Let's thank Drew.
+[01:15:45] >> No, no, no. Go for it. Go for it.
+[01:15:48] >> Uh, yeah. The if you were to look at a
+[01:15:50] typical DBG model, basically uh I showed
+[01:15:53] this before earlier. What we'll do is
+[01:15:55] wrap your select statement in, you know,
+[01:15:58] create table as blah blah blah. And so
+[01:16:01] this is how we like push down the
+[01:16:03] execution to the logic. The user's job
+[01:16:05] is to define the business logic in a SQL
+[01:16:07] select statement. DBT's job is to
+[01:16:09] materialize that logic as tables of the
+[01:16:12] user, incrementally update tables,
+[01:16:13] things like that. Um, so that's how
+[01:16:15] that's how this all fits together.
+[01:16:17] >> All right. So you may not all realize
+[01:16:19] the the significance of what DBT is
+[01:16:21] because you don't you don't have any
+[01:16:22] data, right?
+[01:16:24] At some point in your life, you're going
+[01:16:25] to have a bunch of Python scripts try to
+[01:16:27] mash this, right? And then you realize
+[01:16:29] this is terrible. How are you ever going
+[01:16:30] to maintain this? This is the problem
+[01:16:32] that DBT solves, right? That's why I
+[01:16:34] keep saying it's a big deal. It's widely
+[01:16:36] used because it is a way to declare
+[01:16:38] here's my pipeline for my for my data
+[01:16:39] projects, whereas before was just like a
+[01:16:42] bunch of random stuff people would have
+[01:16:43] in GitHub. Okay. All right. Let's thank
+[01:16:45] Drew.
+[01:16:46] [Music]
+[01:16:47] [Applause]
+[01:16:50] >> All right. Thanks, man. I appreciate it.
+[01:16:51] All right. Again, Monday is the holiday,
+[01:16:53] no classes, and then Wednesday I'm in
+[01:16:55] London. Uh, that'll be on YouTube. And
+[01:16:57] then please get started on Project Zero
+[01:16:58] and the homework. Okay. Thank you. Hit
+[01:17:01] it.
+[01:17:06] [Music]
+[01:17:17] over
+[01:17:21] [Music]
+[01:17:25] the fortune. Get the
+[01:17:28] maintain flow with the grain. Get the
+[01:17:32] fame. Maintain flow with
+[01:17:35] the grain.

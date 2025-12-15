@@ -1,0 +1,2383 @@
+[00:00:06] I'm still
+[00:00:08] associ
+[00:00:28] lost brother or something. got to deal
+[00:00:30] with uh who wants his money or whatever
+[00:00:32] his problem. Um so all right, lot to
+[00:00:35] cover today uh and next class um because
+[00:00:38] we're trying to wrap up the end of the
+[00:00:39] semester. But before we jump into the
+[00:00:41] course material again for you guys in
+[00:00:43] the course
+[00:00:45] uh project 4 be due on September 7th.
+[00:00:48] That link there will take you to the
+[00:00:49] recitation from last week with the
+[00:00:50] slides and all that. Homework six will
+[00:00:52] go out later today. Uh and that'll be
+[00:00:55] due on the same date on December 7th.
+[00:00:57] Um, and the final exam is December 11th.
+[00:01:00] I'll post the on pata this week. I'll
+[00:01:02] post the final exam study guide along
+[00:01:05] with the practice uh the practice exam.
+[00:01:08] Um, again, please don't make travel
+[00:01:10] plans before this date because we won't
+[00:01:11] be able to reschedule you. And then if
+[00:01:13] you're, as I said last class, we'll be
+[00:01:15] teaching 445 645 again next semester.
+[00:01:18] Um, if you're really if you love the
+[00:01:19] class and can't get enough of it, please
+[00:01:21] sign up to be a TA TA. If you hate
+[00:01:23] bustop and think it's the worst code
+[00:01:24] you've ever seen in your life, uh then
+[00:01:26] also sign up for a TA because we want
+[00:01:27] your opinion on how to fix things. Okay,
+[00:01:30] any questions about any of these? Yes.
+[00:01:36] >> Uh the question is how many cheat how
+[00:01:37] many pages for the cheat sheet for the
+[00:01:38] final exam? It' be the same as the
+[00:01:39] midterm.
+[00:01:41] The final exam will cover basically from
+[00:01:43] the midterm until next class next.
+[00:01:47] It's it's these questions it's
+[00:01:48] cumulative not in the sense of like am I
+[00:01:51] going to ask you uh like specific
+[00:01:54] questions of like buffer pool stuff that
+[00:01:55] we covered during the midterm but like
+[00:01:57] you got to know what SQL is you got to
+[00:01:59] know what relational algebra is because
+[00:02:00] you you know you like that's the
+[00:02:02] background you need to understand all
+[00:02:03] these other things but the emphasis will
+[00:02:05] be on things that came after the midterm
+[00:02:09] other questions
+[00:02:13] and then it's it's a three-hour the slot
+[00:02:15] is three hours but it'll be the same uh
+[00:02:18] it'd be roughly the same length as it
+[00:02:19] would have been on the midterm that so
+[00:02:21] that you can complete it in an hour and
+[00:02:22] 20 minutes. But if you want to take the
+[00:02:23] full three hours, go for it. Okay.
+[00:02:27] All right. Database talks we have coming
+[00:02:29] up. Uh today after class we have uh a
+[00:02:31] guy in the UK building a system called
+[00:02:33] XTDB. Uh this is a time series database
+[00:02:37] system. uh we haven't really talked
+[00:02:38] about time series too much but it's
+[00:02:39] basically think of like you you keeping
+[00:02:43] track of time as a first class concept
+[00:02:45] on on tupils inside your database system
+[00:02:47] and I think what's cool that they can do
+[00:02:48] is they can do multi-dimensional time uh
+[00:02:51] so he'll cover that then uh a week from
+[00:02:54] now we'll have the guys from Snowflake
+[00:02:56] building this thing called Apache
+[00:02:57] Polaris
+[00:02:58] it's the catalog it's a open source
+[00:03:01] reimplementation of the Apache iceberg
+[00:03:03] catalog again the background was
+[00:03:06] snowflake tried to iceberg for $600
+[00:03:08] million. Data bricks caught wind of that
+[00:03:11] and came in and blew them out and paying
+[00:03:12] for a billion dollars for the iceberg
+[00:03:14] team. It was a company had 40 people had
+[00:03:16] some revenue but not you know $1 billion
+[00:03:19] worth of revenue. Uh and they got bought
+[00:03:21] by data bricks and then so snowflake
+[00:03:23] made their own open source version
+[00:03:24] called Polaris. But again it's not to
+[00:03:25] say snowflake is not is incompatible
+[00:03:27] with iceberg just they didn't they
+[00:03:29] weren't able to buy the iceberg people.
+[00:03:31] And then we've had an addendum to the
+[00:03:33] schedule for the seminar series this
+[00:03:34] semester. Uh there's an Apache project
+[00:03:36] called Flu. Uh I actually don't know
+[00:03:38] what this does. Uh but they sent me a
+[00:03:40] lot of emails begging to give a talk. So
+[00:03:43] we'll we'll figure out what they're
+[00:03:44] going to do. Um I've never heard of it
+[00:03:46] prior to them reaching out to me and
+[00:03:47] that I've never run across anybody using
+[00:03:49] it. Okay. All right. And that'll be the
+[00:03:52] flu talk will be the last talk uh for
+[00:03:53] the semester and then we'll kick off the
+[00:03:54] se seminar series uh in in the spring.
+[00:03:57] Again, even if you graduate and leave,
+[00:03:59] you know, leaving CMU, if you still want
+[00:04:01] to be involved and watch these videos on
+[00:04:03] Zoom, please join us. A lot of my former
+[00:04:04] students show up on these things.
+[00:04:07] All right, so here here's where we're at
+[00:04:08] for the semester. What we've
+[00:04:10] accomplished so far. As I said at the
+[00:04:12] end of last class, we now know how to
+[00:04:13] build a single node database system,
+[00:04:16] right? You know how to make it
+[00:04:17] transactional, how to make it uh, you
+[00:04:19] know, fault tolerant. We know how to run
+[00:04:20] queries on it, do some query planning
+[00:04:22] for the the SQL queries that show up.
+[00:04:24] And so now this class and next class is
+[00:04:26] to now discuss at a high level what
+[00:04:29] distributed database systems look like.
+[00:04:31] And again the the databases themselves
+[00:04:34] are are are hard to understand and and
+[00:04:36] build correctly. Uh and distributed
+[00:04:38] databases just make this all even
+[00:04:39] harder. So that's why we do single node
+[00:04:41] stuff first get the fundamentals down
+[00:04:43] and then we can understand uh how to
+[00:04:45] make things distributed. Right? And the
+[00:04:47] it's the basic the same architecture
+[00:04:48] we've been talking about just now it's
+[00:04:50] split across uh mult two or more nodes.
+[00:04:53] And the questions we're going to talk
+[00:04:54] about today and next class is how we're
+[00:04:56] actually going to be communicating
+[00:04:58] across these nodes. whether we're going
+[00:04:59] from the top down or we're coming from
+[00:05:01] the bottom up or actually something more
+[00:05:03] in the middle uh where we're
+[00:05:04] coordinating across like the buffer
+[00:05:05] pools for example, right? So all the
+[00:05:09] things that we talked about throughout
+[00:05:10] the entire semester like how to run
+[00:05:12] queries fast, how to to make sure that
+[00:05:14] if you crash and come back you don't
+[00:05:16] lose any data, all that is still
+[00:05:17] applicable here. It's just now we're
+[00:05:19] talking about how to do this across
+[00:05:20] multiple uh multiple machines. Okay.
+[00:05:25] Then also recall we had the discussion
+[00:05:27] when we talked about parallel query
+[00:05:28] execution on a single node. We made the
+[00:05:31] distinction between parallel database
+[00:05:32] systems and uh distributed database
+[00:05:35] systems right and I said in a parallel
+[00:05:36] data system it's think of that like a
+[00:05:38] single machine could have you know
+[00:05:40] multiple cores or multiple CPU sockets
+[00:05:42] and the the communication between these
+[00:05:46] different workers in our database would
+[00:05:48] be very fast and assumed to be reliable
+[00:05:51] right like you know we can send messages
+[00:05:53] over an IPC from one process or one
+[00:05:55] thread to the next and it's guaranteed
+[00:05:57] to show up right if it doesn't show up
+[00:05:59] then our CPU is melting down we have
+[00:06:00] other problems.
+[00:06:02] So now for distributed data systems now
+[00:06:04] we can't ignore some of the things we
+[00:06:06] could ignore in parallel data systems
+[00:06:07] for example we can't assume that
+[00:06:09] communicating between the nodes is going
+[00:06:10] to be fast right because I might have to
+[00:06:12] go around the other side of the planet
+[00:06:14] and now you're you're limited by the
+[00:06:16] speed of light and that can take you
+[00:06:18] know 100 300 milliseconds worst case
+[00:06:22] scenario up in the tens of seconds or
+[00:06:23] even minutes if things get lost and
+[00:06:25] things recovered in weird ways
+[00:06:28] and so not only is communication between
+[00:06:30] the workers going to be much slower
+[00:06:33] orders of magnitude slower. It's also
+[00:06:35] potentially unreliable,
+[00:06:37] meaning we could send a message from one
+[00:06:39] node to the next and that message may
+[00:06:41] not show up
+[00:06:43] because the never network never got
+[00:06:45] severed, the packet got dropped,
+[00:06:46] whatever,
+[00:06:48] right? or in in some cases and this is
+[00:06:51] sometimes common too is that I send my
+[00:06:53] message to the other worker or to the
+[00:06:55] other node and it's running you know go
+[00:06:59] or java what pick pick your favorite
+[00:07:01] memory managed environment and then the
+[00:07:03] garbage collector kicks in like in the
+[00:07:04] JVM it can like if you have a huge heap
+[00:07:06] the JVM can block or sorry the garbage
+[00:07:08] collector can block block all execution
+[00:07:10] for like I don't know 10 30 seconds
+[00:07:12] worst case scenario so now it looks like
+[00:07:15] that node is not doesn't doesn't exist
+[00:07:16] anymore but it's just waiting need to
+[00:07:18] clean some stuff up before I can process
+[00:07:20] your message. So now how do you how do
+[00:07:22] you actually want to handle that? So if
+[00:07:24] you take a distributed systems course,
+[00:07:25] they talk a lot about consensus uh
+[00:07:27] consensus protocols, right? Paxus, raph,
+[00:07:30] things like that. All that is be
+[00:07:31] applicable here. We we'll build up to
+[00:07:34] that. We first understand what the
+[00:07:35] architecture of our data system is going
+[00:07:36] to look like and then we'll apply these
+[00:07:38] different techniques to layer on top of
+[00:07:40] them and make these things more reliable
+[00:07:42] and fault tolerant.
+[00:07:44] Right? So this is what I've already said
+[00:07:46] before, right? Just because we're going
+[00:07:48] multi-node doesn't mean we can throw
+[00:07:50] away the entire textbook or everything
+[00:07:51] we talked about this entire semester.
+[00:07:53] All the things we talked about uh so far
+[00:07:56] are matter in this world as well. It's
+[00:07:58] just everything's more complicated now
+[00:08:00] because we're dealing with multiple
+[00:08:02] hardware or multiple machines
+[00:08:04] potentially running in different data
+[00:08:05] centers and in some cases with disparate
+[00:08:07] hardware resources like my node over in
+[00:08:10] that other data center there might have
+[00:08:11] fewer cores than I do. So now I got to
+[00:08:13] take consider that in my how I do my
+[00:08:15] query optimization, my planning, how I'm
+[00:08:17] going to maybe run my conversio
+[00:08:18] protocol, what transaction should run
+[00:08:20] where, all that we have to we have to
+[00:08:21] deal with.
+[00:08:24] So there's some high level design
+[00:08:26] decisions we're going to cover for the
+[00:08:27] next two lectures of how to build a
+[00:08:29] distributed data system. The first is
+[00:08:31] going to be like how does an application
+[00:08:33] find the data,
+[00:08:35] right? What if now my database can be
+[00:08:37] split across multiple nodes or managed
+[00:08:39] by multiple nodes who does the
+[00:08:41] application actually talk to right it
+[00:08:42] was simple when it was you know one node
+[00:08:44] I just connect to it through whatever
+[00:08:46] the communication protocol the network
+[00:08:48] protocol that the that the the data
+[00:08:50] center exposed to me I know my data is
+[00:08:52] going to be there but now if my data is
+[00:08:54] split across multiple machines how do I
+[00:08:56] go and find it and where do I send the
+[00:08:57] actual queries to to to it then we're
+[00:09:01] talk about how we want to divide the
+[00:09:02] resources of the database system across
+[00:09:05] these different uh workers or nodes,
+[00:09:07] right? How do we split things up on a
+[00:09:09] per table basis or we do something more
+[00:09:11] fine grain? And again, and then how does
+[00:09:13] the application know that I split things
+[00:09:15] up a certain way, if at all, to go find
+[00:09:17] the data that needs to run the query?
+[00:09:20] And then when a query shows up on one of
+[00:09:22] these workers in our distributed system,
+[00:09:25] how are they going to execute that
+[00:09:26] query? Especially if the data that that
+[00:09:29] the query needs to access isn't on the
+[00:09:30] machine that my query is actually
+[00:09:32] running. Do I send do I do I send the
+[00:09:35] you know the the query to where the data
+[00:09:37] is located or do I pull the data to
+[00:09:39] where where I'm located my query's
+[00:09:40] executing and run things there
+[00:09:43] and then of course again as I sort of
+[00:09:44] said in in the world of distributed
+[00:09:46] systems this matters a lot and we you
+[00:09:48] know the distributed system is basically
+[00:09:49] a database system that that at the end
+[00:09:51] of the day so how to make sure that we
+[00:09:53] we guarantee consistency and correctness
+[00:09:56] across our entire uh database system so
+[00:09:59] that the application doesn't deal with
+[00:10:01] any of the anomalies and issues that
+[00:10:02] we've talked about before and in some
+[00:10:04] systems they're just going to say throw
+[00:10:06] caution to the wind and say well you
+[00:10:07] know doing guaranteeing consistency and
+[00:10:09] correctness is hard so we're not going
+[00:10:10] to really do it we're not we're not
+[00:10:12] going to do it immediately and then you
+[00:10:15] know what are the implications of that
+[00:10:16] in your application
+[00:10:19] okay
+[00:10:20] so for today's lecture it's going to be
+[00:10:22] sort of a hodgepodge of ideas of
+[00:10:24] building up the basics of a you know
+[00:10:27] what a distributed data system is going
+[00:10:28] to look like for us and then next class
+[00:10:31] we'll go in more detail how we're going
+[00:10:32] to do distributed control and we're how
+[00:10:34] we're going to run uh distributed OLAP
+[00:10:36] queries. So distributed analytical
+[00:10:37] queries or how do we do joins across
+[00:10:39] multiple nodes for example. Okay. So
+[00:10:41] first talk about what the high level
+[00:10:43] system architectures could look like.
+[00:10:44] Then we'll talk about how to split up
+[00:10:45] the data and our partitioning schemes.
+[00:10:47] Then we'll talk about replication. How
+[00:10:48] to make sure that if we have multiple
+[00:10:50] copies of data we need for fault
+[00:10:52] tolerance. How to make sure that those
+[00:10:53] are going to be in sync. And then then
+[00:10:55] we'll segue into how to do transactions
+[00:10:57] across these things. Right?
+[00:11:00] Again, another key difference about
+[00:11:02] distributed databases and parallel
+[00:11:03] databases is that parallel databases,
+[00:11:05] you're adding more resources to get
+[00:11:06] better performance. In a distributed
+[00:11:08] database system, we want to do that as
+[00:11:11] well. We want to add more resources to
+[00:11:12] get better performance. But in
+[00:11:13] sometimes, you also want to add more
+[00:11:14] resources so we get better fault
+[00:11:16] tolerance or availability. So if one
+[00:11:18] node goes down, right, this the
+[00:11:21] application can still keep running and
+[00:11:23] query query the database,
+[00:11:26] right? Again, if it's a parallel running
+[00:11:28] on a single box, that's kind of hard to
+[00:11:29] do.
+[00:11:31] All right. So the first thing we're
+[00:11:32] going to discuss is what the system
+[00:11:33] architecture is going to look like. And
+[00:11:35] this is going to specify or or this is
+[00:11:37] going to determine how the resources
+[00:11:39] that are available to us uh in in you
+[00:11:43] know on a machine on a computing machine
+[00:11:45] how they're going to be accessed and
+[00:11:47] maintained by the database system and
+[00:11:50] then how these resources are are going
+[00:11:51] to communicate with each other right and
+[00:11:54] you sort of think like the CPU is
+[00:11:56] obviously the the central central
+[00:11:58] process unit but it's like it's the the
+[00:12:00] computational unit on a single node in
+[00:12:03] our system But it has to have memory. It
+[00:12:05] has to have disk. The question is where
+[00:12:07] is the disk and where's the memory
+[00:12:09] amongst other nodes in in the system.
+[00:12:13] So this terminology goes back to the
+[00:12:15] 1980s. It's it's the definition of these
+[00:12:16] categories of what these databases look
+[00:12:18] like. So without you knowing it,
+[00:12:20] everything we've talked about this
+[00:12:21] semester so far is called a shared
+[00:12:23] everything system. And the idea is that
+[00:12:25] on a single node, it has the CPU and the
+[00:12:28] CPU can talk to its own memory and can
+[00:12:29] talk to its own disk. Right? Everything
+[00:12:31] is encapsulated on on a single box.
+[00:12:35] A shared nothing system is where there
+[00:12:38] is individual nodes that each have their
+[00:12:40] own CPU, their own local memory and
+[00:12:42] their own local disk. And the only way
+[00:12:44] they can communicate with other nodes in
+[00:12:46] a distributed system is through some
+[00:12:48] highle network up above. So basically
+[00:12:51] the the CPU on one node can't read into
+[00:12:54] the memory or disk of another node
+[00:12:56] directly. It has to send a message that
+[00:12:59] the CPU then processes on the other node
+[00:13:01] and say, "Hey, I want this block of data
+[00:13:02] or I want you to do this for me." And
+[00:13:04] gets get back gets back the result. And
+[00:13:06] this network most often is going to be
+[00:13:09] TCP IP. There are some systems where
+[00:13:11] they can do UDP. Uh some systems can do
+[00:13:14] more fancy things with like Melanox,
+[00:13:16] RDMA, but in general like assume that
+[00:13:19] you're just, you know, opening up TCP
+[00:13:21] sockets and sending messages back and
+[00:13:23] forth. Another
+[00:13:26] architecture is called shared disk. And
+[00:13:28] this is where every node is going to
+[00:13:30] have its own again its own CPU and own
+[00:13:31] memory. But the database the primary
+[00:13:34] resting location of the database is now
+[00:13:36] going to be on some global disk that all
+[00:13:40] the nodes can can read and write to.
+[00:13:45] Right? Right. So now if I want to send a
+[00:13:46] message to another node, you know, you
+[00:13:48] you still would do TCP blah blah blah,
+[00:13:50] but if I want to read data, I could, you
+[00:13:52] know, on another node, I don't have to
+[00:13:54] go to over TCP IP to communicate with
+[00:13:57] other nodes. I go directly down to the
+[00:13:58] disk uh and and go and get it.
+[00:14:04] And then this one is theoretical. Uh
+[00:14:06] it's in it's in the academic literature,
+[00:14:07] but I'm not aware of any system that
+[00:14:09] actually does this outside of like the
+[00:14:10] high performance computing world, like
+[00:14:11] scientific stuff. It's called shared
+[00:14:13] memory. Basically every every node only
+[00:14:15] has a stateless CPU and then the memory
+[00:14:18] and the the disk is shared across all
+[00:14:20] the different uh different nodes.
+[00:14:28] >> The yeah this question is isn't a shared
+[00:14:29] everything system fundamentally a shared
+[00:14:31] memory system.
+[00:14:34] Yeah. So just think about have multiple
+[00:14:36] nodes right? If I have multiple of these
+[00:14:39] shared everything, then I'm essentially
+[00:14:41] shared nothing because again the CPU
+[00:14:43] can't read and write to the disk or
+[00:14:45] memory on the other nodes without going
+[00:14:46] through the network at the top.
+[00:14:50] >> The question is shared everything
+[00:14:51] fundamentally single machine. Yes.
+[00:14:58] >> The question is are we treating shared
+[00:14:59] discs having multiple disc meaning like
+[00:15:01] I'm showing one but it can have more.
+[00:15:03] Yeah, we'll get there. Yes. But it looks
+[00:15:05] logically as one disk that everyone can
+[00:15:07] read and write to.
+[00:15:09] >> S3. Yes. They are correct. We're getting
+[00:15:12] there. S3 would be shared disc.
+[00:15:20] >> The question is is for share nothing is
+[00:15:22] the network. What? Sorry.
+[00:15:30] uh for for ingress
+[00:15:32] >> for us like
+[00:15:35] >> uh for like for data coming in
+[00:15:38] >> well no no so like if I if a query we
+[00:15:40] haven't talked about like what we're
+[00:15:42] communicating with say a query shows up
+[00:15:44] on one of these nodes right this middle
+[00:15:46] node here and that query needs to read
+[00:15:47] data on this other node it's got to
+[00:15:49] can't go reach into that other node into
+[00:15:51] a disk directly or it memory and go read
+[00:15:53] stuff. It's got to send a message that
+[00:15:55] the CPU then process and says, "Oh, they
+[00:15:57] want this data. Let me send it back over
+[00:15:58] to you."
+[00:16:03] So shared everything is most common
+[00:16:05] because most people build a single node
+[00:16:07] data system first, right? For shared
+[00:16:09] nothing, this was the way you would
+[00:16:11] build a distributed database going back
+[00:16:12] to the 1980s. like the guy in the man of
+[00:16:15] Postgress uh Mike Stobreaker wrote a
+[00:16:17] paper in 86
+[00:16:20] sort of touting the advantage of shared
+[00:16:21] nothing systems and this is how people
+[00:16:23] built basically shared nothing systems
+[00:16:24] for 20 30 years. Uh it it is the
+[00:16:28] popularity is on the decline now because
+[00:16:29] of the cloud things like S3 and other
+[00:16:32] distributed architectures like most of
+[00:16:34] the the the newer systems today are are
+[00:16:36] going to be shared disk. Yes.
+[00:16:40] >> Question is spanner shared nothing or
+[00:16:41] shared disc. Spanner is shared nothing
+[00:16:43] but it reads and writes from Borg
+[00:16:46] like the shed file system. So like the
+[00:16:49] lines get blurred, right? All right.
+[00:16:51] This last one here, this as far as I
+[00:16:53] know, nobody does this. So we're not
+[00:16:54] spend any time on it. All right. So
+[00:16:56] share nothing. Share nothing and again
+[00:16:58] is every single node has its own local
+[00:17:01] disk and own local memory. And then
+[00:17:04] anytime you need to communicate with
+[00:17:05] other node, you got again got to send a
+[00:17:06] message over that network. So again, you
+[00:17:08] can't just go reach down into the into
+[00:17:11] the other node and get the data you
+[00:17:12] want, right? So this is going to get the
+[00:17:15] best performance you can have in a
+[00:17:16] distributed data system because every
+[00:17:18] node can process the data that that it
+[00:17:21] just has. Uh and it's it's it's going to
+[00:17:25] be the most efficient way to access
+[00:17:26] things, right? Because I don't have to
+[00:17:28] go reach in other nodes, go get the data
+[00:17:29] that I need. I can go process everything
+[00:17:31] I I need locally,
+[00:17:33] right? The challenge is going to be and
+[00:17:36] this is why in the cloud world the
+[00:17:37] shared disc is more popular is that this
+[00:17:40] can be harder to scale out. If I want to
+[00:17:42] add new nodes I can't just say you have
+[00:17:45] new nodes now point to the the same
+[00:17:47] shared disc. I actually get to
+[00:17:48] physically move data
+[00:17:51] and we'll see we'll see an an example in
+[00:17:53] a second. Right, next slide. Right, so
+[00:17:55] that's why again this is going to get
+[00:17:57] the best performance. But if I have to
+[00:17:58] start adding and dropping nodes, right,
+[00:18:01] either because I want to scale up and
+[00:18:02] add more machine or scale out and add
+[00:18:04] add more machines or because a node goes
+[00:18:06] down and got to recover from it, then
+[00:18:08] this is probably problematic. So again,
+[00:18:10] there's a lot of systems in the space uh
+[00:18:13] you know, I can't say anyone is more
+[00:18:15] popular than others, but like this is
+[00:18:16] basically how people build. People say
+[00:18:18] they have a distributed data system from
+[00:18:20] the 80s or 90s or mid-200s, it's going
+[00:18:22] to be shared nothing.
+[00:18:24] All right. So, here's what it looks
+[00:18:25] like. So, you have the application
+[00:18:27] server and then it can communicate to
+[00:18:29] some kind of catalog metadata uh thing,
+[00:18:31] right? And again, this could be just
+[00:18:32] another node in in a system, could be a
+[00:18:35] centralized node. We'll get to that
+[00:18:36] architecture in a second, but the case
+[00:18:38] this is going to say here's how here's
+[00:18:39] how to go find the data you're looking
+[00:18:40] for.
+[00:18:42] And then say we we want to run a query
+[00:18:43] get or get ID equals 200. So we would
+[00:18:46] each node would have again a partition
+[00:18:49] or a different subset of the the total
+[00:18:52] table or the the total amount of data in
+[00:18:54] our database. For now assume we only
+[00:18:55] have one table and it it has ids from
+[00:18:57] from one to 300. So if I want to again I
+[00:19:01] send my I know I want to get access ID
+[00:19:03] equals 200. I know this node is
+[00:19:05] maintaining this data. So I send my
+[00:19:06] query to that node and it can process it
+[00:19:08] and return the result. No problem there.
+[00:19:10] Right? But then the challenge is going
+[00:19:12] to be if I want to start doing things
+[00:19:13] like I want to get ID equals 100 and ID
+[00:19:15] equals 200 in the same query and I send
+[00:19:18] or sorry and I send the query to the
+[00:19:19] first node here the the the different
+[00:19:21] nodes are aware of the topology of the
+[00:19:24] of the database of the partitioning
+[00:19:26] scheme that's defined in the catalog
+[00:19:28] again we'll cover that in a second. So
+[00:19:29] it knows that that the top node doesn't
+[00:19:32] have ID equals to 200. So it has to send
+[00:19:34] a message down here to say I need ID
+[00:19:37] equals 200 and it could either
+[00:19:41] tell the node down below run this query
+[00:19:43] or this portion of the query give me ID
+[00:19:44] 200 and give give me back the result or
+[00:19:47] it could actually just send the the
+[00:19:48] actual data itself up and then let the
+[00:19:51] node at the top process the data.
+[00:19:54] Right
+[00:19:56] now the chin the challenge I was saying
+[00:19:57] is that this is going to get great
+[00:19:58] performance if all your queries are only
+[00:20:01] accessing data that's on each individual
+[00:20:03] node. Um but when I want to scale out
+[00:20:06] meaning I want to add a new machine then
+[00:20:07] the problem is that now I have to move
+[00:20:09] data around. So if I add a new node in
+[00:20:11] the middle here I got to know take half
+[00:20:13] the data that I had in the node at the
+[00:20:15] bottom half data that had a node at the
+[00:20:16] top and move copy that into the the
+[00:20:19] middle one here. And then you update the
+[00:20:22] catalog service and say here's the data
+[00:20:23] is moved around so anybody comes looking
+[00:20:25] for that data we'll find it. Yes.
+[00:20:30] >> So the question is would the application
+[00:20:31] server know the data ranges? Ideally no
+[00:20:34] some systems yes but ideally no. Again
+[00:20:36] if you think about in in SQL
+[00:20:39] the the
+[00:20:42] same query that I could write on on a
+[00:20:44] database that runs on a single box that
+[00:20:46] same query should still work in a
+[00:20:47] distributed database system. like I
+[00:20:49] should be I have completely transparent
+[00:20:50] to me how the data is moving around
+[00:20:52] right so my example beginning it connect
+[00:20:54] to the application server some system
+[00:20:56] will do that you can go to the
+[00:20:57] application server say where's my data
+[00:20:58] going to be and other systems you could
+[00:21:00] just send it to any one of these nodes
+[00:21:02] and they know where the data is because
+[00:21:05] it's in the catalog and the catalog is
+[00:21:06] just another database we haven't really
+[00:21:08] talked about cataloges too much but like
+[00:21:10] you have your data like the the user
+[00:21:12] data the application data and then you
+[00:21:14] have this metadata catalog that keeps
+[00:21:15] track of like here's the tables I have
+[00:21:17] here's the schemas that they I have the
+[00:21:18] columns, I have the constraints. Well,
+[00:21:20] now you can also start putting things
+[00:21:21] like here's the partitioning scheme or
+[00:21:22] here's my layout of my data, my topology
+[00:21:24] of my network. And then you want the
+[00:21:26] same sort of transactional guarantees
+[00:21:27] you want for regular application data,
+[00:21:29] you want that to be in your catalog data
+[00:21:31] too.
+[00:21:39] >> Question is
+[00:21:41] the question is how how should I
+[00:21:43] maintain indexes in this right? So in
+[00:21:46] some cases like where ID equals you know
+[00:21:48] this this range here each each node in
+[00:21:51] this environment would have an index
+[00:21:53] just for the the data that they have and
+[00:21:55] again if if all my queries are like get
+[00:21:58] ID equals 200 get equals 100 I can look
+[00:22:01] at the SQL query figure out what data it
+[00:22:02] actually needs send the data to that
+[00:22:04] node and that node can then do its own
+[00:22:06] lookup in its own slice of the index
+[00:22:08] right so each node has a has a has a
+[00:22:10] portion of the total index there's also
+[00:22:13] the case where you may have secondary
+[00:22:14] indexes
+[00:22:15] where you may have things that don't
+[00:22:17] that don't that don't align up with how
+[00:22:19] you're splitting up the data and that
+[00:22:20] you got to put either on a one node that
+[00:22:22] everyone goes to and talks to or you
+[00:22:24] replicated across all nodes.
+[00:22:34] The question is if I in if I insert
+[00:22:37] something and it has to
+[00:22:47] >> because like this node is full.
+[00:22:49] >> We'll cover that in a second. This how
+[00:22:51] we handle partitioning. We'll talk about
+[00:22:52] that second. Um
+[00:22:55] uh
+[00:22:58] depending on the partitioning scheme
+[00:22:59] depending on your criteria whether you
+[00:23:01] know when you actually want to move data
+[00:23:04] you know you make that decision when you
+[00:23:06] want to do that and then depending on
+[00:23:07] the partitioning scheme like consistent
+[00:23:09] hashing or rende hashing like some some
+[00:23:12] nodes make it some schemes make it very
+[00:23:14] easy to move data around this is just
+[00:23:15] like a toy example this I'm doing range
+[00:23:17] partitioning here but I would say what
+[00:23:19] you're what you're talking about is
+[00:23:21] actually what MongoDB did in early days
+[00:23:23] sort of what part of the reason MongoDB
+[00:23:25] got popular in like early 2010s was they
+[00:23:29] had this capability auto sharding. So
+[00:23:30] they had the ability to do exactly as
+[00:23:32] you were saying like oh my too full or
+[00:23:34] all the queries going here they could
+[00:23:35] split off a chunk of it and rebalance
+[00:23:37] things automatically but it was a total
+[00:23:39] hack because they didn't guarantee that
+[00:23:42] the catalog was in sync with the data
+[00:23:43] got moved. So you may have two copies of
+[00:23:46] the data on two nodes or two partitions
+[00:23:48] and two two different queries might see
+[00:23:50] might update the same thing and get
+[00:23:51] incorrect result like or they took a
+[00:23:53] lock on entire database and then move
+[00:23:54] things around. That's another way to
+[00:23:56] handle it. Yes.
+[00:23:59] >> Why doesn't
+[00:24:05] the question is so for this query here
+[00:24:08] ID equals 100 and ID equals 200. It's
+[00:24:10] one say it's one query right select star
+[00:24:11] from where ID in 100 200. So your
+[00:24:14] question is why didn't the why didn't
+[00:24:17] the note at the top send the query down
+[00:24:19] here or what? Sorry
+[00:24:22] tool back to
+[00:24:25] >> oh the question is why didn't the uh
+[00:24:28] good good point why didn't this node
+[00:24:30] here send the ID equals 200 result sub
+[00:24:33] result back to the application server
+[00:24:35] because like the think of how the
+[00:24:37] application server communicates with the
+[00:24:39] data server. It sends say this is one
+[00:24:41] query right select star not two two gets
+[00:24:44] right they send one select query to one
+[00:24:47] node and then the call and response
+[00:24:50] protocol of JDBC ODBC is that I'm going
+[00:24:52] to get one result back with the all the
+[00:24:55] answer all the tuples I want for my
+[00:24:56] query the the applications aren't
+[00:24:58] written such that you can send one query
+[00:25:00] and now get two things back right is not
+[00:25:03] how people write these code and in the
+[00:25:05] same way that like I mean you can
+[00:25:06] imagine you could change the API to do
+[00:25:08] that but like the like on the client
+[00:25:12] drivers to support this but like it's
+[00:25:14] the thing I was saying before like this
+[00:25:15] if I write the same query and runs on a
+[00:25:17] single node it should behave I should
+[00:25:19] get back the roughly approximately the
+[00:25:22] same result I would if it's even across
+[00:25:24] multiple nodes
+[00:25:30] >> the database itself should be treated as
+[00:25:34] yeah like that's the point of SQL SQL
+[00:25:36] you don't know how the data is being
+[00:25:37] split up so I just My SQL query gets
+[00:25:40] sent to the server and the server then
+[00:25:41] decides how to farm it out across the
+[00:25:43] different nodes and then the application
+[00:25:44] should know shouldn't care.
+[00:25:46] >> Question is so
+[00:25:55] master
+[00:25:57] >> the question is should I think of these
+[00:25:58] nodes as being all homogeneous or would
+[00:26:01] there be a master or primary node? Not
+[00:26:04] yet. for this example. Just the key
+[00:26:07] thing about these examples trying to
+[00:26:08] show is that like every node has a slice
+[00:26:11] of the database and the other node at
+[00:26:13] the top can't just go down and go look
+[00:26:15] at it. It has to send messages.
+[00:26:21] >> Let me keep going and then come up. All
+[00:26:23] right.
+[00:26:25] Right. So again, if I add a new node, I
+[00:26:26] got to move things around. All right. So
+[00:26:28] share disk and the idea here is that the
+[00:26:31] every every every node in my system is
+[00:26:33] going to have its own local CPU own
+[00:26:35] local memory. They are gonna have local
+[00:26:37] disk too like directly attached store
+[00:26:39] like an SSD. Uh but that can be that's
+[00:26:43] only really used for caching like my
+[00:26:44] memory full gets full I want to spill to
+[00:26:46] that. But the primary storage location
+[00:26:47] of the database is going to be down on
+[00:26:48] this shared disk infrastructure down
+[00:26:51] below. And as as they pointed out oh is
+[00:26:54] this S3? Yes. So this is going to be
+[00:26:56] like some distributed file system or
+[00:26:58] kind of distributed object store like
+[00:26:59] Amazon S3 or Azure blob store their GCS
+[00:27:04] cloud comput storage right Google right
+[00:27:07] the basic idea is that it's this this
+[00:27:10] single logical device where all the
+[00:27:12] nodes can read read and write to right
+[00:27:15] and that's considered the primary
+[00:27:16] resting database uh the resting location
+[00:27:17] of of the database right so when people
+[00:27:20] talk about data lakes or serverless
+[00:27:22] systems right it looks a lot like this
+[00:27:24] and And most of the the newer data
+[00:27:27] systems, distributed data systems built
+[00:27:28] in the last 10 years, especially for
+[00:27:30] analytical workloads like the the
+[00:27:33] snowflakes, the data bricks, the the
+[00:27:36] fireballs, yellow bricks and all those
+[00:27:37] guys, all of them are going to be look
+[00:27:38] look a lot like this, right? So now the
+[00:27:42] architecture is is basically same as
+[00:27:43] before, but now we have this shared
+[00:27:45] storage thing on the back and query
+[00:27:47] shows up. In this case here, we're
+[00:27:49] ignoring the fact how do we find where
+[00:27:51] the node I want to communicate with is
+[00:27:53] assuming it's been told through this
+[00:27:54] through the catalog service or some
+[00:27:55] front end.
+[00:27:57] And now that this query wants to get
+[00:27:58] again ID equal 101, it goes to the
+[00:28:01] catalog and say it says who's
+[00:28:02] responsible for this? Where do I go find
+[00:28:04] this data? Now I can make a a request
+[00:28:06] for a page or a block or a file whatever
+[00:28:09] from the the the distributed file system
+[00:28:12] and it goes then makes a copy of that
+[00:28:14] and brings it back into its memory. So
+[00:28:15] same here I get 102 I know it's on page
+[00:28:17] XYZ. So I go to my storage device and go
+[00:28:19] go and get it right and then now again
+[00:28:23] when I add a new new node in my
+[00:28:25] distributed system unlike before in
+[00:28:27] shared nothing where I had to copy data
+[00:28:28] around now I I only have to do a logical
+[00:28:31] assignment in the catalog to say this
+[00:28:34] new node is now responsible for data
+[00:28:37] found within some range or some some
+[00:28:39] partition. So I don't have to move any
+[00:28:41] data when I add this new node. It's just
+[00:28:42] now all the other nodes need to be aware
+[00:28:44] that this node in the middle now is
+[00:28:45] responsible for Q101 whereas before the
+[00:28:47] one at the top was yes
+[00:28:56] >> question is do we need to have different
+[00:28:57] nodes be responsible for different
+[00:28:58] ranges can't just be any node can handle
+[00:29:01] any any possible data if we'll get in a
+[00:29:04] second if you start doing updates to
+[00:29:06] that data how do you know if I update if
+[00:29:09] you know how do I know if I update on
+[00:29:11] this node
+[00:29:12] who has a copy of that data and make
+[00:29:14] sure that they see it
+[00:29:17] because again when it was all in a
+[00:29:18] single box if I update something it's
+[00:29:19] like the global data is everyone sees
+[00:29:21] but if this bottom guy here updates key
+[00:29:23] 102 but then the nodes at the top have a
+[00:29:26] copy of key 102 as well how do I make
+[00:29:28] sure that they get notified that they
+[00:29:29] have the latest version
+[00:29:32] >> what's that
+[00:29:34] >> locking on what
+[00:29:39] Yes.
+[00:29:41] >> Yes.
+[00:29:42] >> Yes. Where's the lock?
+[00:29:48] >> Everywhere.
+[00:29:49] >> Everywhere.
+[00:29:50] >> So that means like for if I want to lock
+[00:29:52] one thing, I got to broadcast to
+[00:29:53] everyone. I hold the lock for it.
+[00:29:56] >> Is that a good idea?
+[00:30:01] >> Okay. Can it be can be a primary node or
+[00:30:03] master node? Yes. We'll get there in a
+[00:30:04] second.
+[00:30:06] Well, this is the exact same I was just
+[00:30:08] saying. So, say I now update page 101,
+[00:30:10] right? I then write to the page here,
+[00:30:12] but now I got to notify potentially
+[00:30:14] everyone else to say if you have a copy
+[00:30:16] of page ABC, I've updated 101 in this
+[00:30:20] way, right? And so that anytime that
+[00:30:23] they go read this data, they would know
+[00:30:25] that uh they have to go, you know, fetch
+[00:30:27] the latest version either either from
+[00:30:28] the node that's responsible for it or
+[00:30:30] from the shared disk. Again, we'll cover
+[00:30:32] how we do that in a second. The other
+[00:30:33] great thing about sh sh sh sh sh sh sh
+[00:30:34] sh sh sh sh sh sh sh sh sh sh sh sh sh
+[00:30:34] share disc dis ar ar ar ar ar ar ar ar
+[00:30:35] ar ar ar ar ar ar ar ar ar ar ar
+[00:30:35] architechures too and again this is why
+[00:30:36] they they they they're so prominent now
+[00:30:38] in the cloud uh is that this storage is
+[00:30:41] basically infinite
+[00:30:43] meaning if I want to add additional
+[00:30:44] capacity that's trivial to do in S3
+[00:30:46] because I just I give Amazon more money
+[00:30:48] and I get I get more space like your
+[00:30:50] your credit card will run out of money
+[00:30:52] before Amazon runs out of storage space
+[00:30:54] for you right and then if I add more
+[00:30:56] capacity I don't have to move things
+[00:30:58] around or take even take nodes offline
+[00:31:00] in the same way that I would have in a
+[00:31:02] shared share nothing system. I want to
+[00:31:04] add new disc or share nothing. I got to
+[00:31:06] you know add go physically add that into
+[00:31:08] the box itself.
+[00:31:18] >> The question is why does why is the
+[00:31:20] performance in a shared disc
+[00:31:20] architecture worse than a shared nothing
+[00:31:23] architecture? Because I got to
+[00:31:24] communicate with some other device to
+[00:31:26] get the get the data that I need.
+[00:31:31] And for OLTP, the way you get around
+[00:31:33] that, you just have every node cache it,
+[00:31:36] right? But then you still have to care
+[00:31:38] about like if I update things, like I
+[00:31:40] have to still make it back out here.
+[00:31:46] >> Question is, yeah, is the slowdown due
+[00:31:47] to the the the overhead of the network
+[00:31:49] IO for updating disc? Yes.
+[00:31:53] Also, again, if I if I if I have a
+[00:31:55] transaction, we're not there yet. If I
+[00:31:56] have a transaction that touches multiple
+[00:31:57] nodes and I go say commit, I got to get
+[00:32:00] everyone to agree that now it's okay to
+[00:32:01] commit this. So now I'm sending you a
+[00:32:03] message. I got to wait for you to come
+[00:32:04] back and acknowledge that you got my
+[00:32:05] commit message. Like that that becomes
+[00:32:07] problematic as well. But that's going to
+[00:32:08] happen in share nothing or shared disk
+[00:32:10] as well, right? Shared disc
+[00:32:11] specifically, it's going to have the
+[00:32:12] overhead of of communicating to disk
+[00:32:14] somewhere else.
+[00:32:19] All right. So we sort of been talking
+[00:32:22] about this concept as well like how
+[00:32:23] we're actually now going to execute
+[00:32:24] queries either whether it's share disk
+[00:32:26] or share nothing right and has to do
+[00:32:29] with when I when a query shows up and on
+[00:32:33] a node and I recognize that the data I
+[00:32:36] need on that node for this particular
+[00:32:37] query isn't local to me
+[00:32:41] either because it's not in my local
+[00:32:42] cache or or I it's not my local disc
+[00:32:45] because I'm responsible for it. it's on
+[00:32:46] some other node or the the shared disk
+[00:32:49] architecture right some some remote
+[00:32:51] storage device how am I going to
+[00:32:53] actually how do I decide whether I want
+[00:32:55] to pull the data to me and so I can run
+[00:32:57] my query or do I push my query or the
+[00:32:59] portion of the query I want to execute
+[00:33:01] to where the data is actually residing
+[00:33:04] so the two approaches again push it's
+[00:33:06] push versus pull so pushing the query to
+[00:33:08] the data means that I I can carve off
+[00:33:11] either the entire take the entire query
+[00:33:13] or a portion of the query and send it to
+[00:33:15] whatever the the data is being located
+[00:33:17] and assuming I have compute capacity or
+[00:33:20] some computing resource like something I
+[00:33:22] can execute things on the where the data
+[00:33:25] is being located I can then run the you
+[00:33:28] know the portion of the query that I
+[00:33:29] need on that remote storage and then
+[00:33:32] have it send back to me the result of
+[00:33:35] that that computation
+[00:33:38] pulling the data of the query means that
+[00:33:40] I'm going to the data is at some other
+[00:33:42] location I'm basically going to copy the
+[00:33:43] bytes out directly to where my node is
+[00:33:47] over the network. So that then I can run
+[00:33:50] run it as if I had the data local to me
+[00:33:52] already.
+[00:33:54] Again, these are not mutually exclusive
+[00:33:57] and the lines get blurry because the the
+[00:34:01] in some of these systems the storage
+[00:34:04] layer can actually do some computation.
+[00:34:07] So just taking S3 for example, S3
+[00:34:10] although they've it's not deprecated but
+[00:34:12] if you sign up for a new account today
+[00:34:13] you can't get this but if you have an
+[00:34:15] existing account with AWS as of last
+[00:34:17] year you can get this but they have a
+[00:34:19] they have a um they have a feature
+[00:34:21] called S3 select where you can send a
+[00:34:24] request to S3 and say go get this data
+[00:34:27] for me but then you also tag along a SQL
+[00:34:30] query that then does some processing on
+[00:34:32] the on the node where the data is
+[00:34:34] actually being stored and then they send
+[00:34:35] back to you the the the the subset of
+[00:34:38] the result. So you can use it for
+[00:34:39] filtering. You obviously can't do joins
+[00:34:40] or more complex computation, but you can
+[00:34:43] push down predicates to S3 so that now
+[00:34:46] you pay less egress cost of the network
+[00:34:48] transfer cost going from S3 to your your
+[00:34:50] storage device. Yes.
+[00:34:53] >> Question is why do they deprecate it? I
+[00:34:55] don't know.
+[00:34:56] >> A bad idea.
+[00:34:57] >> Do I think it's a bad question? Do I
+[00:34:59] think it's a bad idea? Do I think it's a
+[00:35:01] bad business idea or do I think it's a
+[00:35:02] bad database idea? database.
+[00:35:04] >> I think it's a bad database idea because
+[00:35:06] this is super useful. But I don't know
+[00:35:07] many systems actually use it. But it
+[00:35:10] makes sense, right? If I have, you know,
+[00:35:12] a bunch of I have a one pabyte of data
+[00:35:14] on S3
+[00:35:16] and I don't want to have to transfer all
+[00:35:19] that to me if I can do some push down
+[00:35:21] some predicates. Now again, you can't
+[00:35:22] how do you say this?
+[00:35:24] >> Your database performance is out of your
+[00:35:27] control. The question is the issue is
+[00:35:29] now that the the a core component of
+[00:35:32] your database is now outside your
+[00:35:33] control. Yes,
+[00:35:37] but like this is and I know I made a big
+[00:35:39] deal saying like don't trust the OS. The
+[00:35:41] OS is going to ruin our lives and now
+[00:35:42] I'm saying go trust Amazon to do
+[00:35:44] something right. So
+[00:35:48] it depends on depends what you're trying
+[00:35:49] to do. Uh for some things yes or some
+[00:35:52] things no. This might be a good idea,
+[00:35:53] right? For simple things maybe it's
+[00:35:55] okay. But like and assuming you can
+[00:35:57] paralyze it enough like assuming you can
+[00:35:58] you can have enough concurrent requests
+[00:36:00] to different S3 buckets and they can all
+[00:36:02] do the the the processing parallel
+[00:36:05] right. So now I can take my single box
+[00:36:06] that has maybe like you know 20 cores
+[00:36:09] but if I have a thousand outstanding
+[00:36:10] request S3 I don't think they let you do
+[00:36:12] that but like I could have all them run
+[00:36:14] as if there was a thousand cores doing
+[00:36:15] filtering at the same time. Now, you pay
+[00:36:17] for that, right? And it might be cheaper
+[00:36:20] to do the processing yourself, but then
+[00:36:22] you got to account for like the cost of
+[00:36:23] moving the pediby of data out of S3 to
+[00:36:25] to you. But then you can cache that in
+[00:36:28] the local SSD, but now you got to pay
+[00:36:30] for that to caching. You know, I mean,
+[00:36:31] there's like there's trade-offs to all
+[00:36:32] these things.
+[00:36:35] >> Good question. It's a one time assuming
+[00:36:37] that you doesn't get evicted because you
+[00:36:39] you brought something else in, right?
+[00:36:41] All the bufferable stuff we talked about
+[00:36:42] before still matters.
+[00:36:45] >> Yes. But is there a way to like do it
+[00:36:48] yourself by like having some objects?
+[00:36:54] >> The question is without the without
+[00:36:57] doing this S3 select, is there a way to
+[00:36:59] get this achieve this on on in the data
+[00:37:01] center side uh where you don't have to
+[00:37:04] maybe pull the entire buckets in. Yes.
+[00:37:06] So you so it's all the same stuff we
+[00:37:07] talked about before like just because
+[00:37:09] it's running on S3 doesn't change like
+[00:37:11] that we care about indexes, we care
+[00:37:12] about filters, the zone map stuff. like
+[00:37:14] if I have enough metadata up in my my
+[00:37:17] database system about what's in my S3
+[00:37:20] buckets, I can make more precise
+[00:37:23] decisions on what data I'm actually
+[00:37:24] feeding in. Absolutely. Yes.
+[00:37:28] But like you, you know, someone has to
+[00:37:29] write that logic and that'll be in the
+[00:37:30] data center and assumes that you even
+[00:37:32] have that metadata to begin with. If you
+[00:37:33] have, if someone's putting down parket
+[00:37:35] files in buckets you never seen before,
+[00:37:37] you don't have any metadata until you go
+[00:37:38] actually read it. But then you go read
+[00:37:40] the footer and that that'll give you the
+[00:37:41] metadata that way. So then you read less
+[00:37:43] and decide whether you need to read the
+[00:37:44] rest of the file.
+[00:37:47] >> What's that?
+[00:37:49] >> You got to read the footer and bring it
+[00:37:50] bring it into the data server side. But
+[00:37:51] that footer is going to be I don't know
+[00:37:53] a megabyte if that.
+[00:37:56] But again all the same stuff we talked
+[00:37:57] about before like I want to do predicate
+[00:37:59] push down projection push down. Uh I
+[00:38:01] want to use zone maps and other filters
+[00:38:03] to decide what's the bare minimum data I
+[00:38:05] need to read. Just because it's S3
+[00:38:07] versus a local dicks on the same same
+[00:38:08] box that all the same principles apply.
+[00:38:12] Now it's just harder.
+[00:38:16] Um, right. So, so in the case Microsoft,
+[00:38:19] they have, you know, not as not as
+[00:38:21] sophisticated as S3, but it's basically
+[00:38:23] same idea, right?
+[00:38:26] All right. So, pushing query the data.
+[00:38:27] The idea here is that uh I if I say I
+[00:38:31] know that I want to run this query here
+[00:38:33] and the data I need for that query is
+[00:38:35] down below. Rather than moving all the
+[00:38:37] data up to compute this join up into the
+[00:38:40] node at the top,
+[00:38:42] I'll send down a plan fragment and say,
+[00:38:44] "Hey, I want to do this join in on RNS.
+[00:38:46] I know you have the data in the range
+[00:38:47] between 101 and 200. Compute the local
+[00:38:50] join on this node down here and then
+[00:38:52] send me up now the result of the join or
+[00:38:55] at least the partial result of the join
+[00:38:56] and then I I can combine together the
+[00:38:58] result in in the node at the top.
+[00:39:01] Now again I'm showing this in a in a
+[00:39:04] shared nothing architecture but the same
+[00:39:06] concept applies in in a shared disc
+[00:39:08] architecture. It's just more more
+[00:39:10] readily apparent that you could do it
+[00:39:12] this way.
+[00:39:15] In a shared disc system the the idea is
+[00:39:19] that the nodes are responsible for again
+[00:39:22] for for for managing some logical
+[00:39:24] portion of the data right but the final
+[00:39:27] physical resting place of that data is
+[00:39:28] going to be out on the on the disk. So
+[00:39:30] this in this case here, assuming there's
+[00:39:32] nothing in our local caches, this query
+[00:39:34] shows up and I want to do the same join
+[00:39:36] I was doing before, but the node at the
+[00:39:38] top is say I know the node at the bottom
+[00:39:40] is responsible for for data within this
+[00:39:42] range. So rather than me computing the
+[00:39:44] pulling from the the shared disc,
+[00:39:45] computing the joint at the top, I'm
+[00:39:46] going to send my plan fragment down to
+[00:39:48] the bottom guy, tell them to compute the
+[00:39:50] the the partial result for the join, it
+[00:39:52] knows how to go out to the shared disc,
+[00:39:54] the shared storage, and get all the data
+[00:39:56] it needs. bring bring that copy back
+[00:39:57] into its its you know local cache. Then
+[00:40:01] the bottom guy here computes the port
+[00:40:02] part of the join that it's responsible
+[00:40:03] for. Sends the result up to the node at
+[00:40:05] the top and the node over the top then
+[00:40:07] can either you know union the results
+[00:40:10] together and puts the final result or
+[00:40:11] there's additional things it wants to do
+[00:40:12] as part of the query. It knows how to
+[00:40:14] then further process them as as needed.
+[00:40:18] So again another key distinction here in
+[00:40:20] in a shared disc with the shared nothing
+[00:40:21] architecture in in a shared disk
+[00:40:24] architecture I'm showing the same
+[00:40:26] partitioning ranges that we had in
+[00:40:28] shared nothing but again this is a
+[00:40:29] logical partitioning so the final
+[00:40:32] resting the data is going to always be
+[00:40:33] on shared disk we're saying that for
+[00:40:35] this point in time this node at the
+[00:40:37] bottom is responsible for the data
+[00:40:38] within this range. So if an update comes
+[00:40:41] along, we know that it has to go to this
+[00:40:43] node here because that'll be again the
+[00:40:45] primary or the master, whatever you want
+[00:40:47] to call it. That's where it the change
+[00:40:48] has to apply applied first and then this
+[00:40:50] node is responsible for them making sure
+[00:40:52] that things get propagated to the other
+[00:40:54] nodes in in the cluster or the system.
+[00:40:58] >> Yes,
+[00:41:04] >> server.
+[00:41:05] >> Boom. Next slide. Okay. How are we set
+[00:41:08] to partition things? Right. So again we
+[00:41:10] want to split the database across
+[00:41:11] multiple resources either disk or nodes
+[00:41:13] or or processes right uh in my examples
+[00:41:18] here I'm showing we're partitioning on
+[00:41:20] keys within the table right like this
+[00:41:23] sort of fine grain partitioning we're
+[00:41:24] trying to say I'm going to pick one one
+[00:41:26] or more columns in my tables and that's
+[00:41:28] going to be the partitioning key and
+[00:41:30] I'll I'll use whatever the the
+[00:41:32] partitioning mechanism I'm going to have
+[00:41:34] to then decide what partition it's going
+[00:41:35] to get assigned to doesn't have to be
+[00:41:38] that fine grain can be more coarse grain
+[00:41:40] like in in yellow brick and snowflake
+[00:41:43] they partition on them files a bunch of
+[00:41:45] you know parquet files sitting in S3 and
+[00:41:47] they're going to say which node is going
+[00:41:48] to be responsible for them
+[00:41:51] right and the idea is that if I
+[00:41:54] partition my database across these
+[00:41:55] different disjoint subsets or not
+[00:41:57] they're not always disjoint but they
+[00:41:58] usually are then I just write my query
+[00:42:02] against that data there's something
+[00:42:05] that's coordinating figuring out where
+[00:42:06] the data is all being located it knows
+[00:42:08] how to send the plan fragments
+[00:42:09] to those nodes that are responsible for
+[00:42:11] those partitions to compute some portion
+[00:42:13] of the query and then I know how to
+[00:42:14] combine the results back together to
+[00:42:16] produce the the final result.
+[00:42:19] And in the case of shared nothing, it's
+[00:42:21] going to be physically partitioned like
+[00:42:22] the data itself the the the final
+[00:42:24] resting place or the primary search
+[00:42:25] location of the data is going to be
+[00:42:27] within the partition running on a single
+[00:42:28] node or in the case of shared disc.
+[00:42:31] logical partitioning in that we're we're
+[00:42:33] saying that the the there's some node in
+[00:42:36] our in our system is is responsible for
+[00:42:39] that partition of data but the final
+[00:42:41] resting place has to be back on on
+[00:42:43] shared disc you sort of think of like in
+[00:42:45] a shared disc architecture the the the
+[00:42:47] nodes themselves are stateless meaning
+[00:42:49] if one of those guys gets killed and
+[00:42:50] crashes come back and crashes I don't
+[00:42:53] lose any data because the shared disc is
+[00:42:56] the final resting place for it and I
+[00:42:58] know that's always going to be there
+[00:43:00] long as My credit card still works with
+[00:43:01] Amazon.
+[00:43:03] >> Yes.
+[00:43:03] >> So the entire semester we talked about
+[00:43:06] database
+[00:43:08] built for the DMS and now that we're
+[00:43:11] talking about SH you keep mentioning. So
+[00:43:13] like what use?
+[00:43:15] >> All right. So question is uh during the
+[00:43:17] entire semester I keep saying uh oh
+[00:43:20] we're going to have a you know here's
+[00:43:21] the file layout and within that there's
+[00:43:23] pages and the pages have these slotted
+[00:43:24] page architecture right or the the LSM
+[00:43:26] stuff and now I keep mentioning parquet.
+[00:43:28] Why do I mention that in the context of
+[00:43:29] distributed databases? So, parquet files
+[00:43:32] are just a open source columnar file
+[00:43:35] format that are very common in
+[00:43:38] distributed
+[00:43:39] uh shared disk OLAP systems, right? And
+[00:43:43] the what parquet allows you to do is
+[00:43:45] like you can have one application create
+[00:43:47] a bunch of data and just write it to S3
+[00:43:49] without going through the database
+[00:43:51] server and then the data server then can
+[00:43:52] can run queries on it. Right? So, it's
+[00:43:55] just it's a file format and it's very
+[00:43:56] common. we use this in in a shared disc
+[00:43:59] cloud system like lakehouse system
+[00:44:01] doesn't have to be and everything I've
+[00:44:03] seen what I'm saying so far is I'm not
+[00:44:05] defining what's actually in these the
+[00:44:07] the data I'm storing in the shared disc
+[00:44:09] or even on the in the share nothing
+[00:44:10] system I'm just mentioning parka is is
+[00:44:13] is an example what people do in the
+[00:44:14] cloud systems but it's still going to be
+[00:44:16] you know at the high level it's still
+[00:44:18] going to be all the stuff we talked
+[00:44:18] about the entire semester like it's be a
+[00:44:20] pack layout or be a slide of pages or
+[00:44:22] lsm right
+[00:44:24] >> but isn't it true that
+[00:44:27] your data will always
+[00:44:33] >> So question is why saving is it's not
+[00:44:36] true that that like the the files are
+[00:44:38] always going to come from an outside
+[00:44:39] application yes most of the data will
+[00:44:40] come through into the data server as
+[00:44:42] inserts especially in OTP we're just
+[00:44:44] going to write that write that in that
+[00:44:46] doesn't change
+[00:44:46] >> I'm just surprised that we're suddenly
+[00:44:48] okay like some random old standard open
+[00:44:53] source
+[00:44:55] >> parquet
+[00:44:55] >> yeah I wouldn't say part is random. It's
+[00:44:57] used everywhere
+[00:44:59] >> and old. I mean it's I mean
+[00:45:02] >> is it isn't it true that our own file
+[00:45:04] format
+[00:45:06] will always be better
+[00:45:09] >> uh the question wait the file format for
+[00:45:11] for like in this class.
+[00:45:13] >> Yeah.
+[00:45:14] >> Question is is it
+[00:45:15] >> mean in general for that?
+[00:45:18] >> Yeah. So his statement is is it not tr
+[00:45:21] is it not true that a customized file
+[00:45:25] format will be better than a general
+[00:45:27] purpose open- source file format um
+[00:45:32] for it depends on on it's a copout
+[00:45:35] depends on the workload depends on the
+[00:45:37] data depends on the where the heart
+[00:45:39] where the environment you're actually
+[00:45:41] running your data system right so
+[00:45:44] >> what's that
+[00:45:48] >> yeah So we'll get we'll get this.
+[00:45:50] There's a philosophical discussion to be
+[00:45:51] had about where to spend your energy
+[00:45:54] when you're building a new database
+[00:45:55] system. So Snowflake famously decided
+[00:45:58] we're not going to go shared nothing.
+[00:45:59] We're going to be shared disc. I'll get
+[00:46:00] your answer by the file for in a second.
+[00:46:02] But Snowflake said, "We're not gonna we
+[00:46:04] don't want to be shared nothing because
+[00:46:06] if I'm shared nothing, then I gotta
+[00:46:09] build the the basically a distributed I
+[00:46:11] got to make sure that like my storage is
+[00:46:13] is is fault tolerant in sync and keep
+[00:46:16] these things, you know, synchronized and
+[00:46:17] things like that." And they decided
+[00:46:19] they're not going to do that. They said,
+[00:46:21] "We're going to build everything off of
+[00:46:22] S3
+[00:46:24] and just, you know, put caching in front
+[00:46:26] of that on these stateless nodes so that
+[00:46:27] we can run, you know, hide the latency
+[00:46:29] cost of doing this." And then the the
+[00:46:31] thought was let's spend all our energy
+[00:46:33] snowflakes energy on engineering time on
+[00:46:35] making this thing as fast as possible
+[00:46:38] and then we'll put caching in front of
+[00:46:39] that to hide this latency and then as
+[00:46:41] Amazon makes this better we we'll get
+[00:46:44] that you know get that benefit for free.
+[00:46:46] So that was one of that was one of the
+[00:46:48] smart things that they did in the early
+[00:46:49] days. Now again that kind of goes
+[00:46:50] against what I said before like we want
+[00:46:52] to control everything but for
+[00:46:54] distributed OLAP it's kind of you know
+[00:46:56] it's it's it's okay to do that.
+[00:47:00] Because again it's if if I'm a startup
+[00:47:02] it's one less thing I have to build.
+[00:47:03] Amazon's going to put a bunch of
+[00:47:04] engineers making this work really great
+[00:47:06] for all TP maybe less so because I
+[00:47:08] really came out like performance latency
+[00:47:10] stuff.
+[00:47:12] All right. So now your question about
+[00:47:13] the file format thing right. So
+[00:47:18] if I could like how to say this database
+[00:47:21] systems are usually trying to be this
+[00:47:22] general purpose uh software that can
+[00:47:26] accommodate as many application
+[00:47:27] scenarios as possible and hardware you
+[00:47:30] know discrepancies or different hardware
+[00:47:32] characteristics and different operating
+[00:47:33] environments right so it is true that if
+[00:47:38] I have an application that that
+[00:47:41] that I I could build a datab server that
+[00:47:43] could sol serve one application. I can
+[00:47:46] build a, you know, a optimized
+[00:47:48] customized version of everything we've
+[00:47:50] talked about the entire semester and
+[00:47:52] make that one application run as fast as
+[00:47:54] possible. Absolutely. Yes, you could do
+[00:47:55] that. If you're trying to make a general
+[00:47:56] purpose though, that's actually not
+[00:47:58] feasible. So now you got to make
+[00:47:59] decisions of what's the sort of what's
+[00:48:01] the lowest common denominator I would
+[00:48:03] need to be able to support a larger
+[00:48:04] application so that I can sell my
+[00:48:06] database system and then not have, you
+[00:48:09] know, huge performance bottlenecks. So
+[00:48:12] you said parket is all parquet came out
+[00:48:14] in 2011 20 2013 right so it's 12 years
+[00:48:18] old now uh at the time that was
+[00:48:20] considered a state-of-the-art file
+[00:48:22] format because everyone was storing
+[00:48:24] things in JSON or CSVs right so you're
+[00:48:28] beating those but then now are there
+[00:48:30] better compression protocols and more
+[00:48:32] advanced ways of accessing uh columnar
+[00:48:34] data yes and parquet has not really kept
+[00:48:36] up with that and that's why there's like
+[00:48:37] vortex and all these other file formats
+[00:48:39] that are coming along but again
+[00:48:41] I'm I'm only bringing that up to say in
+[00:48:43] a in the cloud uh and distributed data
+[00:48:46] systems for for analytical workloads
+[00:48:49] often times what's going to be in the
+[00:48:50] storage layer is going to be bunch of
+[00:48:52] parket files and can you build better
+[00:48:54] ones? Yes. And the spiral guys and
+[00:48:56] others are trying to do that.
+[00:48:59] Okay.
+[00:49:02] All right. So partitioning.
+[00:49:04] All right. So there's so one basic way
+[00:49:07] to do partitioning uh is to do
+[00:49:10] table partitioning meaning like I'll put
+[00:49:13] one have one node be responsible for one
+[00:49:15] table and another node be responsible
+[00:49:17] for another table and I literally split
+[00:49:19] up that coarse grain and you do you can
+[00:49:21] more coarse grain like I have one node
+[00:49:22] be responsible for a database this
+[00:49:24] database and one node responsible for
+[00:49:25] that database of course if not I need to
+[00:49:27] access data across multiple tables and
+[00:49:29] across multiple databases if I'm doing
+[00:49:31] this naive scheme it becomes problematic
+[00:49:33] but in some scenarios This works out
+[00:49:34] just fine. So again, same idea. This has
+[00:49:37] two tables, one and two. I'm literally
+[00:49:39] going to take all the data from the
+[00:49:40] first table, put in one node here, all
+[00:49:43] the data in the second table, put it on
+[00:49:45] another node here. As long as my query
+[00:49:46] is only access data with one table, then
+[00:49:50] I'm I'm happy. I'm great.
+[00:49:52] Right? Of course, now if my table
+[00:49:54] doesn't fit on the single partition,
+[00:49:56] then this becomes problematic and I got
+[00:49:57] to do something else.
+[00:50:00] So
+[00:50:02] I've I've come across this actually with
+[00:50:04] uh people using where um they had
+[00:50:08] the the regular database where most of
+[00:50:10] the application data was was partitioned
+[00:50:11] in the way we'll talk about next slide.
+[00:50:13] Um but then they had one table was
+[00:50:15] basically a log for the application.
+[00:50:17] They only inserted into it and they
+[00:50:18] never read it. So they wanted to put
+[00:50:21] that table or collection in in
+[00:50:23] parlance on a single partition or single
+[00:50:25] node by itself because this is just
+[00:50:27] inserted and make that run as fast as
+[00:50:29] possible and didn't interfere with any
+[00:50:30] other uh updates on any other nodes.
+[00:50:35] So this is not that common but some
+[00:50:37] system some systems that do let you do
+[00:50:38] this and in some cases we'll see this
+[00:50:41] when we talk about OLAP queries next
+[00:50:42] class uh instead of just putting you
+[00:50:45] know you you put the entire table at at
+[00:50:47] a node but you you'll make a replica of
+[00:50:49] it on every every node because it's like
+[00:50:51] something really small like a zip code
+[00:50:52] table. There's only like 35,000 records
+[00:50:54] that's not that big and I I make a copy
+[00:50:56] of that on every single node. So anytime
+[00:50:58] a query wants to run it always has can
+[00:50:59] be the local copy of that table.
+[00:51:04] The question is, doesn't that introduce
+[00:51:06] also the cost of updates every time?
+[00:51:08] Yeah, but like for some cases that those
+[00:51:10] tables aren't updated that often. The
+[00:51:12] the the postal service updates the zip
+[00:51:14] code table four times a year, right?
+[00:51:16] Like it's not that often.
+[00:51:21] All right. So, what is most common and
+[00:51:22] what people normally think about in uh
+[00:51:25] in distributed is doing what's called
+[00:51:26] horizontal partitioning. And in the
+[00:51:28] NoSQL guys, they'll call this sharding.
+[00:51:30] It's basically the same thing. And then
+[00:51:33] we're going to split the we'll show an
+[00:51:35] example of doing sort of fine grain uh
+[00:51:37] horizontal partitioning where within one
+[00:51:39] table we're going to look at some uh
+[00:51:42] partitioning column or columns and we're
+[00:51:44] going to use that to decide how we're
+[00:51:45] going to split things up. And the goal
+[00:51:47] here is we want to split the data up in
+[00:51:51] according to some other a bunch of
+[00:51:52] objectives like make sure every every
+[00:51:54] node has the same amount of data. Make
+[00:51:57] sure that every node is going to run the
+[00:51:58] same amount of queries. Right? You may
+[00:52:01] have one node that have a small amount
+[00:52:02] of data, but it gets all the queries in.
+[00:52:03] So therefore, you don't you don't want
+[00:52:04] to put more data on it because that'll
+[00:52:06] slow down uh that'll over sort of
+[00:52:08] overwhelm it.
+[00:52:10] So the the two most common schemes that
+[00:52:12] do horizontal partitioning is to do uh
+[00:52:14] hash partitioning and range
+[00:52:15] partitioning. Range partitioning we've
+[00:52:17] already seen, right? I I just took like
+[00:52:19] discrete subsets of of r of values uh
+[00:52:23] that are continuous ranges within my my
+[00:52:25] keyspace of a column and I'm just
+[00:52:27] assigning those to to different nodes.
+[00:52:29] And how you come up with the the optimal
+[00:52:31] ranges, you know, depends on what you're
+[00:52:33] trying to, you know, uh what your
+[00:52:35] objective function is. Predicate
+[00:52:37] partitioning uh horizontal partitioning
+[00:52:39] is is not that common. The basic idea is
+[00:52:41] that you just define where clauses to
+[00:52:43] say, you know, where name equals Andy
+[00:52:46] and age equals 1 2 3 that goes to this
+[00:52:48] node and then where a name equals Andy
+[00:52:50] and age equals 456 that goes to another
+[00:52:53] node. Right? basically defining the wear
+[00:52:54] clauses how to split data up and then
+[00:52:57] roundroin partitioning is just assigning
+[00:52:59] one you know some tupless or files or
+[00:53:03] data to you know one node in a
+[00:53:04] roundrobin fashion but like I said
+[00:53:07] hashing and and range partition is more
+[00:53:09] more common so say this is our table
+[00:53:11] again we have four columns here uh and
+[00:53:14] we're going to pick one of them as the
+[00:53:16] partitioning key right it could be
+[00:53:18] multiple ones could usually it's the
+[00:53:21] primary key but it doesn't always have
+[00:53:22] to be Right? And then now if we're doing
+[00:53:25] hash partitioning, what we're going to
+[00:53:26] do is for every single tupil, we're
+[00:53:29] going to take whatever the value is for
+[00:53:30] that partitioning column, partitioning
+[00:53:32] key, and we're going to hash it mod by
+[00:53:34] the number of partitions we have in our
+[00:53:36] system, in this case, four. And then
+[00:53:39] that's going to determine how we're
+[00:53:40] going to assign the data from these
+[00:53:42] different tupils to to these different
+[00:53:44] partitions,
+[00:53:46] right? And if most my queries or if my
+[00:53:51] queries just have the partition key in
+[00:53:54] the wear clause, then this is going to
+[00:53:55] be fantastic for me because I can just
+[00:53:57] look at the catalog and say, well, I
+[00:53:59] know uh I I know what the key I know
+[00:54:02] what the key I know the value being used
+[00:54:04] as a for the partition key, look at my
+[00:54:06] wear clause. I hash it in the same way I
+[00:54:08] did for when I move the data in the
+[00:54:10] beginning. And that's going to tell me
+[00:54:11] which node has the data that I'm looking
+[00:54:13] for.
+[00:54:18] So for shared disk right basic idea
+[00:54:21] looks like this right I want to get ID
+[00:54:22] equals one assuming I've done you know
+[00:54:24] some amount of partitioning um and it
+[00:54:27] knows that it can can get data from the
+[00:54:29] different nodes that that it needs right
+[00:54:31] in this case here if if I had to get
+[00:54:32] multiple keys and one of those keys
+[00:54:34] aren't in my node that I need then I
+[00:54:36] know I need to go communicate with the
+[00:54:37] guy at the top either to send the query
+[00:54:39] that I that I want it to run for me or
+[00:54:41] pull the data down that I need to then
+[00:54:43] run things locally.
+[00:54:45] And again this is logical partitioning
+[00:54:46] because again the final resting place of
+[00:54:48] the data is out here on the shared disk.
+[00:54:53] Share nothing again the final resting
+[00:54:55] place of the data is actually on the
+[00:54:56] nodes themselves. So depending on the
+[00:54:58] queries I'm executing uh I know how to
+[00:55:00] route the things that go get the data
+[00:55:01] that I need. We've already covered this.
+[00:55:06] All right. In the case of hash
+[00:55:07] partitioning what's one key problem with
+[00:55:10] this approach?
+[00:55:16] All right. So the question is any other
+[00:55:17] query that doesn't have the partition
+[00:55:18] key has to get broadcast to everyone.
+[00:55:20] Yes. Or even if I have the partitioning
+[00:55:23] key but I do a range query then that's
+[00:55:26] going to break me as well because like
+[00:55:27] now I you know if it's between partition
+[00:55:30] key between one and a th00and uh I may
+[00:55:34] not have you know a continuous range but
+[00:55:38] then again I so I don't know what the
+[00:55:39] data is actually going to be located but
+[00:55:40] I'm just hashing things.
+[00:55:43] So this doesn't work again if it's very
+[00:55:45] fine grain and you're doing things that
+[00:55:47] aren't exactly the the quality predicate
+[00:55:48] I need for my my lookup. What's another
+[00:55:52] problem with this?
+[00:55:54] >> Change.
+[00:55:55] >> Boom. Another another partition shows
+[00:55:57] up, another node shows up or another one
+[00:55:59] of these partition dies, right? And then
+[00:56:02] now before when I was taking the hash
+[00:56:04] and modding my uh four, now I got to go
+[00:56:07] through and mod by five. And now the
+[00:56:10] location of the data may change because
+[00:56:13] what it get mapp what partition it gets
+[00:56:15] mapped to has has changed.
+[00:56:19] Right?
+[00:56:20] So again range partitioning is going to
+[00:56:22] have the same problem because if I add a
+[00:56:24] new node then I I have to start
+[00:56:25] shuffling ranges around and it may not
+[00:56:28] be isolated to just you know moving data
+[00:56:30] from from a single single partition.
+[00:56:35] >> Yes.
+[00:56:36] stable.
+[00:56:37] >> Can you use stable partitioning? Next
+[00:56:39] slide.
+[00:56:41] All right. So, there's two ways to get
+[00:56:43] around this problem. And the first be
+[00:56:45] would be consistent hashing. Uh, which
+[00:56:47] was the hot thing 10 years ago or so.
+[00:56:50] Uh, and then the uh the next one would
+[00:56:54] be Rond hashing. And consistent hashing
+[00:56:56] is a subset of Rond hashing, but
+[00:56:58] consistent hashing is is it's neat. Uh,
+[00:57:01] it was pretty cool when it came out.
+[00:57:03] Like there's a when Amazon created
+[00:57:05] Dynamo DB in the 2000s, they put a paper
+[00:57:07] out and said we're using kisses and
+[00:57:08] hashing because there was an MIT paper
+[00:57:10] from 99 or 2000 that talked about this
+[00:57:13] for in a in a project called CORD. Uh
+[00:57:16] and so a lot of these distributed
+[00:57:17] databases, the the the NoSQL guys, the
+[00:57:19] share nothing systems that came out, you
+[00:57:22] know, around 2010 or so, they're all
+[00:57:25] using this technique. Actually, show of
+[00:57:26] hands, who here has heard of consistent
+[00:57:27] hashing before? Uh less than half. Okay,
+[00:57:31] so the basic idea is that the the the
+[00:57:34] key range is going to be a circle from 0
+[00:57:36] to one. And the idea is that when I hash
+[00:57:40] something, it's going to tell me where
+[00:57:42] I'm going to land on the circle and then
+[00:57:44] I just move forward along the circle
+[00:57:46] until I find the next node going in a
+[00:57:48] clockwise fashion. And that's or the
+[00:57:49] next partition and that's going to turn
+[00:57:50] determine where the data I'm looking for
+[00:57:52] can be found or where the data I want to
+[00:57:54] insert should should be located. So say
+[00:57:56] we had three partitions P1, P2, P3 and
+[00:57:59] then now I want to hash P1 and I hash it
+[00:58:02] and then I you know then make it between
+[00:58:05] the the value range 0 and one. So I'm
+[00:58:07] going to land somewhere in the circle
+[00:58:09] and then now I know I just need to scan
+[00:58:10] forward in clockwise fashion and
+[00:58:12] whatever partition I find along the ring
+[00:58:14] of the circle at that point is where my
+[00:58:16] data should be located. Same thing if I
+[00:58:19] hash key two over here, I land at some
+[00:58:21] point in the circle and then I have to
+[00:58:23] again scan up and try to find my my my
+[00:58:26] next next partition.
+[00:58:28] So you sort of think the gap here
+[00:58:29] between the the two partitions along the
+[00:58:31] circle this corresponds to the data that
+[00:58:34] they're responsible for. So so P1 is
+[00:58:36] responsible for everything going
+[00:58:38] backwards up to P3. P3 is everything
+[00:58:40] responsible going backwards to P2 and so
+[00:58:42] forth, right? All right. So how does
+[00:58:46] this solve this this partitioning thing
+[00:58:48] that we talked about or when I add a new
+[00:58:49] partition? Well, say I add a new
+[00:58:51] partition P4 down here. Then I know that
+[00:58:54] the only thing I need to move is the
+[00:58:57] data that P3 was managing when I cut its
+[00:59:00] part of the circle in half. And so all
+[00:59:02] the data now from P4 to P2, that needs
+[00:59:05] to get moved out of P3 and go now to P4.
+[00:59:08] And everybody else on on the circle
+[00:59:09] doesn't get affected by this.
+[00:59:14] Likewise, I I add P5 up here. Same
+[00:59:16] thing. I split it and move the data
+[00:59:17] around. And I keep doing it like this.
+[00:59:22] So then the data structure you're going
+[00:59:24] to use, I think they use a red black
+[00:59:25] tree or something. You need a data
+[00:59:27] structure that everyone keeps
+[00:59:28] coordinated to keep track of like here's
+[00:59:30] where here's what the current ring looks
+[00:59:31] like and here's the partitions that are
+[00:59:33] available to you when you do these
+[00:59:34] lookups.
+[00:59:36] >> Yes. So this will not require each
+[00:59:42] >> the question is in this example here
+[00:59:46] this is not required that the partitions
+[00:59:48] are equally distributed the data. Yeah.
+[00:59:51] So the way you get around that one is
+[00:59:52] that you have virtual partitions where
+[00:59:55] you know that like multiple partitions
+[00:59:56] along the ring will be assigned to a
+[00:59:58] single node and if you have enough of
+[00:59:59] those then then assuming you're not
+[01:00:02] terribly skewed right you know assume
+[01:00:04] that your partition key isn't just a
+[01:00:06] value one everyone has the same value
+[01:00:07] then you know things will be distributed
+[01:00:08] enough enough for you
+[01:00:13] all right so another thing that they can
+[01:00:14] do and we'll talk about replication in a
+[01:00:16] second is that I can now use the ring to
+[01:00:19] help keep track of uh where data should
+[01:00:22] be replicated to. So say I want a
+[01:00:24] certain data into uh into my to my my
+[01:00:28] database. When I first hash it, it's
+[01:00:30] going to land it, tell me it go it goes
+[01:00:31] into P1, but then I follow along the
+[01:00:34] ring and say I want to replicate this
+[01:00:35] three times, right? I have three copies
+[01:00:38] of the data. Let's talk about how we
+[01:00:39] handle that in a second. So I know that
+[01:00:41] the the primary location of the data
+[01:00:43] should be in P1. I'm also going to make
+[01:00:44] a copy into P6 and P2 because they're
+[01:00:47] now the the next keys I see in or the
+[01:00:49] next partitions I see along the ring.
+[01:00:52] And then now when I want to do a lookup,
+[01:00:55] right, I look for, you know, looking for
+[01:00:56] key one, it hashes, lands at this point
+[01:00:58] in the ring. And I know I can either
+[01:01:00] look at any of these three copies of the
+[01:01:02] data of these different partitions to
+[01:01:04] find the thing that that I'm looking
+[01:01:05] for.
+[01:01:10] And we'll talk about how you know how in
+[01:01:12] sync these things are going to be in the
+[01:01:13] NoSQL world. When I do a write into P1,
+[01:01:17] it's not going to immediately get
+[01:01:18] propagated to P6 or P2. And then now I
+[01:01:21] get into like inconsistent issues which
+[01:01:22] goes back to asset stuff. We we were
+[01:01:24] talking about a few more lectures. We'll
+[01:01:25] we'll cover that in a second. So as I
+[01:01:28] said, Amazon used this approach in
+[01:01:29] Dynamo DB. Uh but then that was in the
+[01:01:33] the paper they put out. In the later
+[01:01:35] follow-up paper they put out, you know,
+[01:01:37] four or five years ago, they they they
+[01:01:39] announced they they weren't using this,
+[01:01:40] but
+[01:01:42] consistent hashing is used in a lot of
+[01:01:43] systems. Snowflake is going to use this
+[01:01:45] to assign uh files to workers or or data
+[01:01:48] partitions to workers. Um Couchbase uses
+[01:01:51] this internally. Cassandra uses this for
+[01:01:53] again for distributing things across the
+[01:01:55] key. React was a startup out of Boston
+[01:01:58] um that was was a was a distributed key
+[01:02:02] value store and they they they went
+[01:02:04] under I 10 years ago. You can see in the
+[01:02:06] logo u right here you can kind of see
+[01:02:08] what it's a you can see the ring and
+[01:02:10] then they had the the the fan out of the
+[01:02:12] the partitions being replicated along
+[01:02:14] that ring. So their logo was indicating
+[01:02:16] they were using consistent hashing.
+[01:02:19] So I think consistent hashing was
+[01:02:21] invented at MIT in 9798.
+[01:02:24] Uh but a year before that there was
+[01:02:26] another paper came out on a technique
+[01:02:28] called rendevous hashing and I think the
+[01:02:30] the theory shows that the consistent
+[01:02:31] hashing is a specialized subset of a
+[01:02:34] rendevous hashing. The basic idea here
+[01:02:36] is that for every single key we we want
+[01:02:39] to hash or we want to we want to assign
+[01:02:41] to a partition in our database, we're
+[01:02:43] going to generate multiple uh hashes for
+[01:02:47] it where for each hash we're going to
+[01:02:49] append like the the partition ID or the
+[01:02:51] the node identifier of the different
+[01:02:54] nodes we have in our cluster and then
+[01:02:56] we're going to choose the one that
+[01:02:57] choose the the assigned the key to a
+[01:03:00] partition for for the one that has the
+[01:03:02] highest hash value.
+[01:03:04] So say again here's our data we want to
+[01:03:06] hash we want to use the this this column
+[01:03:08] here as the partition key. So what we're
+[01:03:10] going to do is take the f take the key
+[01:03:12] here and we're going to hash it. Uh but
+[01:03:14] we're going to concatenate the the the
+[01:03:16] key value in this case a along with some
+[01:03:19] representation of the node or the
+[01:03:21] partition identifier like like think of
+[01:03:23] just like you're literally smashing the
+[01:03:25] bytes together and then you're hashing
+[01:03:26] it and you're going to get a bunch of
+[01:03:28] hash values come out of that. And then
+[01:03:31] now what you're going to do for all the
+[01:03:32] other keys, you're just going to choose
+[01:03:34] whatever the one uh the whatever the
+[01:03:38] hash value that has is the highest one.
+[01:03:40] And that tells you what node, what
+[01:03:42] partition the key should be assigned to.
+[01:03:46] And so now if I add a new key, I just do
+[01:03:48] the same thing, right? And I end up
+[01:03:50] with, you know, a rank order like this.
+[01:03:52] And that determines where it goes. And
+[01:03:55] then again, the problem we're trying to
+[01:03:56] solve is if I add if I add or remove
+[01:03:58] partitions or nodes in my in my my
+[01:04:00] system, I don't want to have to move
+[01:04:02] everything around. So the way that
+[01:04:03] basically works, if I add another node,
+[01:04:05] then I just do all the hashing again.
+[01:04:08] And it may be the case that some of the
+[01:04:10] data will get moved, but some of the
+[01:04:12] data will still be the same because it's
+[01:04:13] going to be based on the ranking of the
+[01:04:15] hash values uh when I run this. So in
+[01:04:18] the case here of D going back here
+[01:04:20] before I added node four it was on
+[01:04:22] assign node two but when now when I hash
+[01:04:25] D with node four it turns out node four
+[01:04:28] is the is the highest rank hash value.
+[01:04:30] So then I only have to move key D to to
+[01:04:33] that new partition.
+[01:04:40] So this is gonna be faster lookups
+[01:04:42] because it's it's it's login to go find
+[01:04:43] the data you want. Whereas in in kiss
+[01:04:45] and hashing it's I think it's login. I'm
+[01:04:48] sorry it's it's n whereas this is login.
+[01:04:52] Okay.
+[01:04:55] So so the next thing we need to talk
+[01:04:56] about is how we're going to make
+[01:04:58] multiple copies of data and either the
+[01:05:01] entire tables the the individual records
+[01:05:03] or files it doesn't matter what it is.
+[01:05:05] how we're going to make copies of that
+[01:05:07] data and put it across multiple nodes so
+[01:05:10] that again if if one of those nodes
+[01:05:12] crashes we don't have to stop the world
+[01:05:15] we don't take the whole system down
+[01:05:16] waiting for that that node to recover we
+[01:05:18] we can keep up keep up and running so
+[01:05:21] most data systems in the world that are
+[01:05:23] be distributed databases meaning running
+[01:05:24] on on more one or more machine or two or
+[01:05:26] more machines are going to be doing
+[01:05:28] basic replication
+[01:05:30] so it'll still be a shared everything
+[01:05:32] box running on on a single node but then
+[01:05:34] they'll do replication to propagate the
+[01:05:36] changes on that that one node to another
+[01:05:38] node or multiple nodes so that if that
+[01:05:41] the main node primary node goes down I
+[01:05:43] can just recover promote the the
+[01:05:46] replicas to become the new primary. So
+[01:05:48] everything we're talking here is still
+[01:05:49] going to uh will be applicable to
+[01:05:51] whether you're doing partition databases
+[01:05:52] or nonpartition databases whether it's
+[01:05:54] share nothing or share disk right you
+[01:05:56] still want to do all these things. So
+[01:05:58] the first question is what's the
+[01:05:59] configuration of this replica
+[01:06:00] replication scheme going to look like?
+[01:06:02] How are we going to then propagate
+[01:06:03] changes from one node to another node?
+[01:06:07] Uh when should those changes get applied
+[01:06:09] and how are transactions or queries
+[01:06:13] updating that data and then for me
+[01:06:16] determine how to propagate those
+[01:06:17] changes.
+[01:06:19] So let me go through each of these.
+[01:06:21] Right.
+[01:06:23] So the first question is again for any
+[01:06:26] piece of data
+[01:06:28] who is responsible for it. Uh and where
+[01:06:33] could multiple copies of that piece of
+[01:06:34] data exist?
+[01:06:37] And so primary replica is the most
+[01:06:39] common one where for any single object
+[01:06:41] in our database there'll be some some
+[01:06:43] node or partition is now considered the
+[01:06:45] primary location of it. Again whether
+[01:06:47] it's on shared disc or share nothing it
+[01:06:49] doesn't matter. It knows that any write
+[01:06:51] or any modification I want to make to
+[01:06:53] that object has to go to that primary
+[01:06:56] node and then the the that primary node
+[01:07:00] is responsible for propagating those
+[01:07:01] changes to that object to any replica
+[01:07:04] that's following falling along behind
+[01:07:06] it. And then when if and when the
+[01:07:09] primary goes down then we run what's
+[01:07:11] called leader election where we
+[01:07:13] determine what's going to be the new
+[01:07:14] primary for for any any object. And this
+[01:07:17] get this basically looks like a
+[01:07:19] transaction as we had before. Think we
+[01:07:20] have a table that says for any any node
+[01:07:22] any object here's here's here's the the
+[01:07:25] primary node responsible for it. So I
+[01:07:26] just run a transaction on that decide
+[01:07:28] how to update that atomically decide to
+[01:07:30] promote a new new primary. And then this
+[01:07:32] is where paxos and raft come in to do
+[01:07:34] that kind of thing for two-based commit.
+[01:07:38] Another choice that's less common is to
+[01:07:40] do multi- primary where this is an
+[01:07:42] object can exist at any location in our
+[01:07:45] distributed system and therefore it can
+[01:07:48] be updated by any one of these nodes and
+[01:07:50] then I got to resolve any conflicts I
+[01:07:52] have if two nodes update the same
+[01:07:53] object. How do I decide which which you
+[01:07:56] know which uh which of these you know
+[01:07:59] which which should be the latest version
+[01:08:00] that successfully commit.
+[01:08:03] So I said primary replica is the most
+[01:08:05] common one right people running you know
+[01:08:07] Postgress in in enterprise settings most
+[01:08:10] Postgress instances are running on a
+[01:08:11] single box and they'll be doing
+[01:08:13] something like this so all the reads and
+[01:08:15] writes can go to the primary and then
+[01:08:17] when transactions commit or as changes
+[01:08:19] are being applied the updates get
+[01:08:20] propagated to the replicas right and in
+[01:08:24] some systems you can actually then run
+[01:08:25] readonly queries on the replicas right
+[01:08:28] if you know your your queries aren't
+[01:08:29] going to update any data you can you can
+[01:08:31] hand them off to the read replicas And
+[01:08:34] that way you don't interfere with
+[01:08:35] anything on the primary because you want
+[01:08:36] you want the p the rights to go as fast
+[01:08:37] as possible. So you want to offload them
+[01:08:39] from the primary if you can. But again
+[01:08:41] depending on how you're propagating
+[01:08:42] updates we'll talk about in a second the
+[01:08:44] the the reads on the replicas might be
+[01:08:46] reading stale data. And again for some
+[01:08:48] applications that might be okay.
+[01:08:51] What's less common is to do multi
+[01:08:53] primary and this is where reads and
+[01:08:55] writes can go to any node on any object.
+[01:08:59] Uh and then now the nodes are
+[01:09:01] responsible for communicating and
+[01:09:02] coordinating with each other or through
+[01:09:04] a centralized coordinator to determine
+[01:09:07] what should be which right should
+[01:09:08] succeed and which rights should not
+[01:09:10] succeed and if one thing gets written at
+[01:09:12] the bottom you know that it wants to get
+[01:09:13] propagated to the top or likewise the
+[01:09:16] other way. Yes.
+[01:09:21] >> Yes.
+[01:09:24] >> The question is uh I said in primary
+[01:09:27] replica you want to do leader election.
+[01:09:28] Why would you ever want to change what
+[01:09:29] the primary is? This node catches on
+[01:09:31] fire, goes down, crashes. Which one is
+[01:09:34] now the new primary, right? And then now
+[01:09:36] you got, say this node goes down, the
+[01:09:38] two replica say they're both going to be
+[01:09:39] the primary. Well, you only want one of
+[01:09:42] them to win. So you need leader election
+[01:09:44] for that. Yes.
+[01:09:53] The question is in uh in a multi primary
+[01:09:56] what's an example you would want one
+[01:09:58] right to succeed on one node and not the
+[01:10:00] other. Say you're trying to guarantee
+[01:10:02] ordering of transactions
+[01:10:04] uh serializable and you and I write to
+[01:10:07] the same thing at the same time
+[01:10:09] only one of them should should succeed
+[01:10:12] or say we write to two things at the
+[01:10:13] same time. You write two things I write
+[01:10:15] two things. So as you see all my rights
+[01:10:17] or all your rights and not a mix of the
+[01:10:19] two. So one of those transactions has to
+[01:10:21] fail.
+[01:10:24] And that's going to be the two-based
+[01:10:26] locking or OCC all the stuff we talked
+[01:10:27] about before.
+[01:10:29] >> Yes.
+[01:10:33] >> The question is should you use something
+[01:10:35] like multipos? Yes. Next class. Right.
+[01:10:41] >> What's that?
+[01:10:43] The question is where if I'm doing GPL
+[01:10:45] where I store the locks few more slides.
+[01:10:47] All right. So let's let me let me switch
+[01:10:51] case safety. Let's talk about the
+[01:10:52] propagation scheme and then I'll I'll
+[01:10:54] get to your question. All right. K
+[01:10:57] safety says basically how many replicas
+[01:10:59] do I have to have in order to stay up?
+[01:11:00] So if I have three copies of the data
+[01:11:03] and my K safety factor is is is is uh is
+[01:11:08] one meaning like I need to have at least
+[01:11:10] one copy of the data live. So if two
+[01:11:12] nodes go down rather than me still
+[01:11:14] taking updates to update the database I
+[01:11:16] say I'm not in a safe mode right now I'm
+[01:11:18] going to stop the system don't take any
+[01:11:20] new updates because I don't want to make
+[01:11:22] changes to my node and then have that
+[01:11:24] node go down and end up losing them. So,
+[01:11:26] so you can have you can specify how many
+[01:11:28] machines need to be up or how many
+[01:11:29] copies of data you need to have in order
+[01:11:31] for the systems to stay online.
+[01:11:35] All right. So, if we update data on on
+[01:11:37] on on a node whether it's multi- primary
+[01:11:40] or um or primary replica and again in a
+[01:11:44] multi primary world you still can have
+[01:11:45] replicas right every primary can have
+[01:11:47] its own bunch of replicas it keeps in
+[01:11:48] sync as well. They're not they're not
+[01:11:50] mutually exclusive. Now the question is
+[01:11:52] if I
+[01:11:54] if I update something on on the primary
+[01:11:59] should I wait until the replicas
+[01:12:01] acknowledge that they got those rights
+[01:12:03] before I tell the outside world that
+[01:12:05] your transaction has succeeded or your
+[01:12:06] update has succeeded.
+[01:12:09] So if you're going to wait this is
+[01:12:10] called synchronous uh you know syn
+[01:12:13] synchronous propagation or syn and
+[01:12:15] strong consistency.
+[01:12:17] The idea is that I my transaction did a
+[01:12:19] bunch of updates on this node here.
+[01:12:20] That's the primary and it has a replica
+[01:12:22] behind it. I'm going to propagate those
+[01:12:23] changes to the replica. I'm going to
+[01:12:25] tell it to flush and I have to wait
+[01:12:27] until the replica comes back and says,
+[01:12:29] "Yes, I got your changes and they're
+[01:12:31] durable on disk. I flush them on disk."
+[01:12:34] And so the primary has to wait. And then
+[01:12:36] once it finishes, it sends the
+[01:12:39] acknowledgement says the thing you asked
+[01:12:40] me to write to disk, I wrote to disk
+[01:12:41] successfully. And then then and only
+[01:12:43] then do you tell the outside world your
+[01:12:45] transaction has committed. And if you
+[01:12:47] have multiple replicas in different
+[01:12:48] locations, they all if you want things
+[01:12:50] to be, you know, very right very right
+[01:12:51] very right very right very right very
+[01:12:51] right very right very right very right
+[01:12:51] very right very right very right very
+[01:12:51] right very right very right very right
+[01:12:51] very right very right very right very
+[01:12:51] right very right uh strong consistency
+[01:12:53] they all have to agree that this
+[01:12:54] transaction is committing we'll talk
+[01:12:56] about how we're going to do that next
+[01:12:57] class before you tell the outside world
+[01:12:59] you committed and that way if the
+[01:13:01] primary goes down uh or you know that
+[01:13:05] that the changes haven't been applied to
+[01:13:07] the replica
+[01:13:10] yes
+[01:13:12] >> question is this two-based commit
+[01:13:13] two-based commit is one way to do this
+[01:13:15] yes the key idea is I'm waiting for
+[01:13:17] everyone to come back and say, "Yep, I
+[01:13:18] got what you wanted." And before you
+[01:13:20] tell the outside world, you committed.
+[01:13:22] Asynchronous would be I the outside
+[01:13:26] world tells me I want to commit. I can
+[01:13:28] send the message to the to the replica
+[01:13:30] and say, "Hey, I got this change. Go
+[01:13:31] ahead and commit the change for me." But
+[01:13:33] I'm not going to wait for it to come
+[01:13:34] back. I'm going to immediately tell you,
+[01:13:35] say, "Yep, I got your change." Right?
+[01:13:38] And then eventually this thing will
+[01:13:39] flush. Of course, now there's there's a
+[01:13:41] there's a brief window where like if
+[01:13:43] this thing crashes and maybe this thing
+[01:13:45] crashes, but I've already told you your
+[01:13:47] transaction committed, then I come back
+[01:13:48] and it's gone,
+[01:13:51] right? Because maybe maybe I wrote to
+[01:13:53] the log on this guy here, right? And it
+[01:13:56] say it's a share nothing system. The log
+[01:13:57] is on the local box, but that n that
+[01:13:59] node gets nuked. The log is gone and now
+[01:14:04] your change, you know, didn't actually
+[01:14:05] get propagated to everyone else. And you
+[01:14:06] go try to read it and it's not there
+[01:14:07] anymore.
+[01:14:10] So the the NoSQL guys were all about
+[01:14:12] this thing because they said, "Oh, we
+[01:14:13] don't want to wait for transactions to
+[01:14:14] commit." They didn't have really notion
+[01:14:16] of transactions. Whereas if you care
+[01:14:18] about, you know, really care about not
+[01:14:19] losing data, you want to do the thing at
+[01:14:20] the top.
+[01:14:22] You can play games about things like I'm
+[01:14:24] showing only, you know, one primary, one
+[01:14:26] replica, you could say, well, I have one
+[01:14:27] primary and and three replicas. As long
+[01:14:30] as two of my replicas come back and say
+[01:14:32] they got my change, then I'm not going
+[01:14:33] to wait for the third one.
+[01:14:36] Right? You you could do that and try to
+[01:14:37] try to you know reduce the time amount
+[01:14:40] of time you have to wait.
+[01:14:44] So okay
+[01:14:47] um
+[01:14:50] I propagation timing just basically says
+[01:14:53] when do you actually uh send the the
+[01:14:56] going back here when do you actually
+[01:14:57] send the changes from the primary to the
+[01:14:59] replica. So you could do this
+[01:15:01] continuously. So every single time you
+[01:15:02] do an update in the middle of a
+[01:15:03] transaction, you propagate that change
+[01:15:04] to the other node. Uh and then and then
+[01:15:09] that way when you go to commit, it's
+[01:15:11] basically applied all the changes and
+[01:15:12] just sending the commit message. Or if
+[01:15:14] you do it upon commit, you basically
+[01:15:15] stage all the updates on the primary and
+[01:15:17] then only when that you get commit
+[01:15:18] message from the from the application,
+[01:15:21] then you send all the updates you want
+[01:15:22] to have applied to the to the replicas
+[01:15:24] along with commit message. You have to
+[01:15:26] wait longer for them to apply the
+[01:15:28] changes and come back to you. But the
+[01:15:29] idea here is that you don't have to ask
+[01:15:31] them to abort and roll anything back.
+[01:15:34] Most systems do the top one and and not
+[01:15:36] the bottom one. All right. So I'll come
+[01:15:39] back next class and I'll talk about
+[01:15:40] active active versus active passive. Um
+[01:15:42] but I want to talk about a bunch of
+[01:15:44] these things that been coming up like
+[01:15:45] okay well what's the what's the
+[01:15:47] architecture of the distributed system?
+[01:15:49] Who's talking to what? Is there
+[01:15:50] something in in the you know is there a
+[01:15:52] centralized piece that can coordinate
+[01:15:53] all everything that we want to do? And
+[01:15:55] then this will segue into distributed
+[01:15:56] control next class. So if all our
+[01:16:00] transactions need to update only data on
+[01:16:01] a single box that's easy to do, right?
+[01:16:04] Every box can just run its own you know
+[01:16:06] local uh you know local currency
+[01:16:07] control. It doesn't need to coordinate
+[01:16:08] with anybody else right ignoring replica
+[01:16:10] stuff. It just applies all the changes
+[01:16:12] and commits and done. It's when I have
+[01:16:13] to start touching data across multiple
+[01:16:15] nodes especially if I have replicas and
+[01:16:17] I want to make sure those guys are all
+[01:16:19] agreeing that we're committing
+[01:16:20] transactions together then I need a
+[01:16:22] mechanism to coordinate all that right
+[01:16:25] and there's two approaches. One is to
+[01:16:26] use a centralized coordinator. Think of
+[01:16:28] this like like a global traffic cop that
+[01:16:30] has a complete understanding of all the
+[01:16:32] transactions that are running in my
+[01:16:33] system at any given time and it's where
+[01:16:36] I can store my locks if I want to in
+[01:16:37] that in that centralized location or it
+[01:16:39] can be completely decentralized and have
+[01:16:41] the nodes themselves decide how they're
+[01:16:43] going to you know choose when to commit.
+[01:16:45] Now you still can do a leader election
+[01:16:47] in a decentralized architecture because
+[01:16:49] one node has to say this is what we want
+[01:16:51] to do. uh but there isn't going to be a
+[01:16:53] complete global view of all the
+[01:16:55] transactions running in the system.
+[01:16:58] So the in a centralized architecture uh
+[01:17:02] you have this sort of coordinator
+[01:17:03] sitting on the side and say my query
+[01:17:06] wants my transaction wants to show up
+[01:17:07] and want data on these these three
+[01:17:09] partitions. So I'm first going to send
+[01:17:11] my lock request for the data I want to
+[01:17:13] access and this can either done because
+[01:17:15] I'm sending the query and this thing
+[01:17:16] knows how to parse that query and break
+[01:17:18] it up or you can say explicitly I want
+[01:17:20] to lock data at these partitions with
+[01:17:21] these within these ranges or these
+[01:17:23] values or something right there's some
+[01:17:25] lock request to a coordinator up above
+[01:17:27] and then now this is maintaining this
+[01:17:29] lock information sends back the
+[01:17:30] acknowledgement to the application that
+[01:17:32] you got this you you you acquired these
+[01:17:33] locks that you wanted and then now the
+[01:17:35] application can send whatever queries it
+[01:17:37] wants to the partition to do whatever it
+[01:17:38] needed.
+[01:17:40] And then now when it's going to commit,
+[01:17:42] it has to go to the coordinator and
+[01:17:43] says, "Hey, I want to commit my
+[01:17:45] transaction. Here's what I did." The
+[01:17:47] coordinator is then responsible for
+[01:17:48] communicating with the other partitions
+[01:17:49] and say, "Hey, this transaction made
+[01:17:51] some changes on you. Is it safe to
+[01:17:53] commit this?" Again, they're all running
+[01:17:55] their own local concurrent protocol to
+[01:17:57] decide what what's allowed to commit or
+[01:17:58] not. And then if they send back the
+[01:18:00] acknowledgement that you know that that
+[01:18:02] this transaction is allowed to commit
+[01:18:04] then only then the coordinator can send
+[01:18:05] back the response to the application
+[01:18:07] that said you've allowed you're allowed
+[01:18:08] to commit.
+[01:18:11] So this is how people built distributed
+[01:18:13] databases back in the the 80s or 90s. Uh
+[01:18:17] there was a bunch of products uh they're
+[01:18:19] called in the old days they were called
+[01:18:21] TP monitor or they still are called TP
+[01:18:23] monitors but it stood for in the old
+[01:18:25] days they stole for telecom processing
+[01:18:27] monitor and then over time the acronym
+[01:18:29] just got changed to be transaction
+[01:18:30] processing monitor but it's basically a
+[01:18:32] centralized coordinator that knows how
+[01:18:33] to run distributed transactions across
+[01:18:35] multiple multiple nodes and then there
+[01:18:37] was a in the 90s there was a an effort
+[01:18:40] to standardize the protocol in which you
+[01:18:42] can have a TP monitor communicate with
+[01:18:45] the different different coordinator uh
+[01:18:46] different partitions. These things
+[01:18:48] called uh
+[01:18:50] uh XA open XA or something. Yeah, open
+[01:18:53] XA. It was like a transaction protocol
+[01:18:54] that says basically do 2PL uh
+[01:18:57] coordination across different devices or
+[01:18:59] different different systems. You could
+[01:19:00] have your TV monitor the coordinate at
+[01:19:03] the top communicate with an Oracle
+[01:19:04] database and a times 10 database or or a
+[01:19:06] non-stop SQL database and knew how to do
+[01:19:08] distributed transactions across them and
+[01:19:10] everyone was still running their own
+[01:19:11] local thing.
+[01:19:13] BEA was another famous one that got
+[01:19:15] bought by Oracle. Uh the I know the
+[01:19:18] founder of BEA the dude is amazing. He's
+[01:19:20] holistic. He wrote one of the first
+[01:19:21] database systems on Solaris in the 1980s
+[01:19:24] at Sun. Uh Transarch was founded by
+[01:19:26] actually came out of the the Andrew file
+[01:19:28] system project here at CMU, the Andrew
+[01:19:30] the Andrew project, right? And this was
+[01:19:32] founded by uh Jeff Epinger in the
+[01:19:34] software engineering department um and
+[01:19:36] got bought by IBM. I don't think it's
+[01:19:38] still around. And then omit is a um is a
+[01:19:42] TP monitor for running transactions on
+[01:19:44] HBAS and other systems.
+[01:19:47] This is not that common. What is more
+[01:19:49] common is using a middleware approach.
+[01:19:50] It's basically the same thing. It's just
+[01:19:52] now all the queries go to this
+[01:19:53] centralized thing directly. And this is
+[01:19:56] responsible for routing all the queries
+[01:19:58] and maintaining the lock table and
+[01:19:59] sending all the requests to the
+[01:20:00] different nodes as as needed. Uh so it
+[01:20:03] looks like a single database server
+[01:20:05] instance into the application server but
+[01:20:07] behind the scenes it's coordinating
+[01:20:08] across this different different nodes
+[01:20:10] right this is what Google did back in
+[01:20:13] the day uh when they sharted out my my
+[01:20:15] SQL before spanner they basically did
+[01:20:17] the same thing this is what this is also
+[01:20:19] what uh Facebook does still today right
+[01:20:21] Facebook runs the largest my SQL cluster
+[01:20:24] and it's basically using a middleware
+[01:20:25] approach to look like a single logical
+[01:20:26] database
+[01:20:28] all right last slide uh decentraliz
+[01:20:31] coordinator basically the idea is that
+[01:20:32] you go can start a transaction request
+[01:20:34] to any node. Somehow there's a later
+[01:20:36] election decide that this node is going
+[01:20:38] to be responsible for coordinating
+[01:20:39] everything. The application can then
+[01:20:41] send send requests either to individual
+[01:20:43] nodes or even or even go to the leader
+[01:20:45] and let the leader route things for you.
+[01:20:46] But when it comes time to commit, the
+[01:20:48] leader is responsible for for
+[01:20:49] interacting with the other partitions
+[01:20:51] that are involved in this transaction
+[01:20:52] and saying is this transaction allowed
+[01:20:54] to commit? Yes or no?
+[01:20:58] and we'll talk about next class how how
+[01:21:00] we're actually going to run this.
+[01:21:03] All right. So, I'm going to skip
+[01:21:04] federated data system next class
+[01:21:07] basically it's the middleware approach
+[01:21:09] but like the idea is that instead of
+[01:21:11] having all the nodes on your on on the
+[01:21:13] that you're talking to be the same like
+[01:21:16] same database system like it's my SQL
+[01:21:18] just different you know different copies
+[01:21:20] of it or different instances running
+[01:21:21] different nodes. I can have a in a
+[01:21:23] federated database, I can have a single
+[01:21:26] uh view into uh through this middleware
+[01:21:29] that then knows how to take a single
+[01:21:30] query and send the the the request to
+[01:21:33] whatever database server you want to
+[01:21:34] connect this to. So it looks like you
+[01:21:36] your database or MySQL database or
+[01:21:37] Postgress database all looks like a
+[01:21:38] single database system. Uh but
+[01:21:40] underneath but this middleware is hiding
+[01:21:42] all that from you. These are not that
+[01:21:44] common. They don't work very well. Uh
+[01:21:46] but this is an idea that's been around
+[01:21:48] uh for a while. And this is you know
+[01:21:50] this goes back to the 1990s. All right.
+[01:21:52] So, let me just quickly talk about this
+[01:21:54] and this will take us to the next class.
+[01:21:57] So, say now I want to run transaction
+[01:21:59] that want talk data across two different
+[01:22:01] nodes or different partitions. Things
+[01:22:02] are easy if they're only touching one
+[01:22:04] thing at a time. But as soon as I have
+[01:22:05] to start touching data that is at
+[01:22:07] different nodes, then this becomes
+[01:22:09] problematic because now we have to do
+[01:22:11] either two-phase locking or OC, whatever
+[01:22:13] we talked about before. And now I have
+[01:22:15] to worry about deadlocks and all the
+[01:22:16] things we talked about on a single node.
+[01:22:18] I got to make this work in a distributed
+[01:22:19] environment. And if they're in the same
+[01:22:21] rack, then yeah, communication be kind
+[01:22:22] of fast. But if I'm running across a
+[01:22:24] wide area network across, you know, wide
+[01:22:26] geog geographical regions like US East,
+[01:22:28] US West in AWS, then this is this is
+[01:22:32] hard. So that's what we'll come off next
+[01:22:34] class. We'll talk about how we actually,
+[01:22:36] you know, how we do distributed OTP
+[01:22:37] systems and distributed OLA systems to
+[01:22:39] do joins across different nodes. Uh but
+[01:22:41] this everything we talk about today is
+[01:22:42] the foundation of building a initial
+[01:22:44] distributed native system.
+[01:22:46] Okay, any questions in the back? Yes.
+[01:22:52] >> Say it again.
+[01:22:56] >> Is there any existing implementation of
+[01:22:58] federal database? So, Trino or Presto
+[01:23:00] will kind of give you this now with with
+[01:23:02] using connectors. Uh, Postgress farm
+[01:23:05] data wrappers are essentially kind of
+[01:23:06] doing the same thing now too, right? The
+[01:23:09] problem is the what you want to do is
+[01:23:11] you you is a query shows up and then
+[01:23:13] whatever the middleware system they
+[01:23:15] would know oh you want to touch data at
+[01:23:17] this database system and you have to
+[01:23:19] then carve off whatever part of the
+[01:23:20] query that that needs to run in that
+[01:23:22] system and try to push down predicates
+[01:23:24] projections try to send down a query
+[01:23:26] request that's specialized to that
+[01:23:28] whatever the target data system to do
+[01:23:30] often times they can't do that and it's
+[01:23:31] usually like a select star query to suck
+[01:23:33] all the data up that that's the big
+[01:23:35] challenge there right because you end up
+[01:23:37] building the lowest common denominator
+[01:23:38] for a wide variety of systems you would
+[01:23:40] support. Okay, in the back. Yes.
+[01:23:48] >> Question. Aren't parallel datas same as
+[01:23:50] shared databases? Yes. Um and you could
+[01:23:53] argue also too that like a parallel
+[01:23:55] database where you're like a NAS or a
+[01:23:58] storage attack network like is that the
+[01:24:00] same thing? Sort of. Yes. But like we'll
+[01:24:03] say next class you can actually have
+[01:24:04] different architectures where like the
+[01:24:05] right ahead log gets distributed to the
+[01:24:07] shared disc and you still then
+[01:24:09] coordinate across across them. It's
+[01:24:10] slightly different but at a high level
+[01:24:12] yes like if I have a single box that has
+[01:24:15] like 20 CPU sockets in it is that the
+[01:24:18] same thing as a sha database at a high
+[01:24:20] level yes. But some architecture
+[01:24:22] decisions you make can be different.
+[01:24:24] Okay. All right guys have a good
+[01:24:26] holiday. See you on Monday next week.
+[01:24:31] Money clips acquaint
+[01:24:56] flow with the brain. Get the fortune
+[01:24:59] Maintain a straight flow
+[01:25:02] with the drink.

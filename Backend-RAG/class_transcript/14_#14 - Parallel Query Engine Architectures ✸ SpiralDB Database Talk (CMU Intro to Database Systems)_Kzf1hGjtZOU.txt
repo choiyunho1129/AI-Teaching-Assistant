@@ -1,0 +1,2190 @@
+[00:00:00] [Music]
+[00:00:06] I'm still
+[00:00:08] ass.
+[00:00:11] [Music]
+[00:00:24] >> It was a good way to start the class,
+[00:00:25] right? Just kind of like the music died
+[00:00:27] out. All right, but a round of applause
+[00:00:28] for DJ Cash. Thank you so much. Uh a lot
+[00:00:31] to cover plus we have a uh speaker
+[00:00:33] today. So let's just jump right into
+[00:00:36] this. Um right so today we're going to
+[00:00:38] talk about the the second half of the
+[00:00:40] material on on query execution. Um so
+[00:00:44] we'll pick up where we left off last
+[00:00:45] class but for you guys in the class
+[00:00:47] again things to cover uh project 2 you
+[00:00:49] can do this Sunday coming up. The
+[00:00:51] recitation link is available there. And
+[00:00:53] then the special office hours will be
+[00:00:55] this Saturday at um at 3:00 in in Gates
+[00:00:59] building. The midterm uh you can come
+[00:01:01] after class at 4:00 and come to my come
+[00:01:03] to my office hours and check out your
+[00:01:05] grade and look at the solution. Homework
+[00:01:07] four will be released today and that'll
+[00:01:08] be due on Sunday, November 2nd. And then
+[00:01:11] project three will also be released
+[00:01:12] today and that'll be due on November
+[00:01:14] 16th. And then we'll announce the
+[00:01:15] recitation for that project. Uh it'll be
+[00:01:17] sometime next week. Okay.
+[00:01:20] Um, I had a
+[00:01:22] animation that blew it up. Let me fix it
+[00:01:24] for you real quickly. Um,
+[00:01:28] so there was a major outage in the
+[00:01:31] internet on Mon or Monday in class. Um,
+[00:01:36] everybody hear what what caused it?
+[00:01:39] >> Dynamo DB. Exactly right. The database
+[00:01:41] went down and that broke a bunch of
+[00:01:43] stuff. Right now, the database itself
+[00:01:44] didn't go down. Just DNS getting to it
+[00:01:46] uh went down. But again, just I want to
+[00:01:48] emphasize how important databases are
+[00:01:50] and why this class is important because
+[00:01:52] you know it's it's the backbone for
+[00:01:54] pretty much everything uh you know any
+[00:01:57] any modern application any modern system
+[00:01:59] and end of the day there's going to be a
+[00:02:00] database and if that goes down then
+[00:02:02] you're you're you're screwed. So one
+[00:02:04] database goes down and that takes down
+[00:02:06] basically half the internet. So that
+[00:02:07] that's pretty wild and so we'll cover
+[00:02:10] DynamoB and DB is a distributed key
+[00:02:12] value store distributed document store
+[00:02:15] uh that uses consistent hashing. We'll
+[00:02:17] we'll cover that later in in the
+[00:02:18] semester. Um it's a very influential
+[00:02:20] system. All right. So last class we were
+[00:02:23] talking about query execution and we
+[00:02:25] were talking about uh that there's these
+[00:02:28] operators in our query plan that we can
+[00:02:30] that all h all implement the same API uh
+[00:02:34] whether it's like the get next or the
+[00:02:36] the way they're going to be passing
+[00:02:37] tupils between each other that allows us
+[00:02:39] to compose query plans and best any
+[00:02:40] possible query plan could have because
+[00:02:42] we can change the order of of any of
+[00:02:45] these operators and the the data will
+[00:02:47] still flow through them correctly. Now
+[00:02:48] if you change the order of operators it
+[00:02:50] may produce incorrect query the results
+[00:02:52] might be wrong but that's that's a
+[00:02:53] separate issue we'll cover next class
+[00:02:54] but it's really again I I have these
+[00:02:56] implementation operators uh implications
+[00:02:58] for these different operators and I can
+[00:02:59] move them around and I end up with a
+[00:03:01] query plan that produces a final result
+[00:03:03] at the top that we send back to the
+[00:03:05] application.
+[00:03:07] So there was a brief question last class
+[00:03:09] about uh you know what what if I have
+[00:03:13] multiple threads or workers processing
+[00:03:16] the query at the same time and I and I
+[00:03:17] sort of punted on that and say that's
+[00:03:18] not what we want to talk about just yet
+[00:03:20] because you don't basically want to
+[00:03:21] understand how we execute queries at a
+[00:03:23] high level. So that's what today's class
+[00:03:25] is about. Today's class is say how do I
+[00:03:26] take one of these query plans and now
+[00:03:28] break it up across multiple workers so
+[00:03:31] that I can run things in parallel. And
+[00:03:32] this all that also then segue us segue
+[00:03:35] for us into at the end of the semester
+[00:03:37] when we talk about distributed queries
+[00:03:38] right running across multiple machines.
+[00:03:40] Today we're talk about running on a
+[00:03:41] single machine but the same techniques
+[00:03:43] and same concepts same ideas what we're
+[00:03:45] going to do today for doing parallel
+[00:03:46] execution on a single box will uh will
+[00:03:50] still apply when we go when we start
+[00:03:51] scaling out across multiple machines.
+[00:03:54] So the the basic idea of parallel query
+[00:03:57] execution is that we're going to have
+[00:03:58] our database uh will be the physical
+[00:04:01] database itself will be split across
+[00:04:02] multiple resources. I'm not really
+[00:04:04] defining what a resource is yet. Could
+[00:04:05] be physical machines, could be different
+[00:04:07] discs, it could be different regions of
+[00:04:09] memory uh running on a single box,
+[00:04:12] right? But it doesn't matter just just
+[00:04:14] yet. And so the idea is that we want to
+[00:04:17] be able to handle databases that are too
+[00:04:19] big for a single CPU core or a single
+[00:04:22] disk or a single uh region of memory or
+[00:04:24] single machine, right? And we want to be
+[00:04:26] able to scale things out uh and scale
+[00:04:28] things up so that we can get better
+[00:04:30] performance and in some cases uh we'll
+[00:04:33] get better fault tolerance redundancy
+[00:04:34] because now the data is replicated ac
+[00:04:36] across multiple machines or multiple
+[00:04:38] discs and so if one of those machines
+[00:04:39] goes down then we have a backup. Of
+[00:04:42] course, if you're if you treat like you
+[00:04:44] know your your the critical
+[00:04:45] infrastructure is running off DynamoDeb
+[00:04:47] and Dynamo DB goes down then you know
+[00:04:49] you could have redundant systems outside
+[00:04:52] of AWS to avoid that problem but uh most
+[00:04:54] people don't do that because it's
+[00:04:55] expensive and it's hard right but the
+[00:04:58] key thing to understand and this is go
+[00:05:00] back to what we talked about at the
+[00:05:01] beginning of the semester when we talked
+[00:05:02] about SQL being this declarative
+[00:05:04] language where I'm not defining exactly
+[00:05:06] how I want to physically execute my
+[00:05:08] query. The great thing about having a
+[00:05:10] declared link SQL is that the same query
+[00:05:13] that I would write running for for a
+[00:05:15] database running on a single machine or
+[00:05:17] single disk or single CPU whatever that
+[00:05:20] same query in theory should work if I
+[00:05:23] then scale it up across multiple cores
+[00:05:25] multiple CPUs or across multiple discs
+[00:05:26] or multiple machines right we don't have
+[00:05:29] to define like send data here send data
+[00:05:31] there right in our in our in our in our
+[00:05:33] query plan or sorry in our query the
+[00:05:35] query plan that we generated from our
+[00:05:37] SQL query will define those steps for
+[00:05:39] for us. So it abstracts it all away and
+[00:05:41] we still get the the benefit of of
+[00:05:43] improving the system. So a very common
+[00:05:45] setup is going to be like you as a
+[00:05:47] developer when you're building your
+[00:05:48] application you'll have your little test
+[00:05:49] database maybe running SQL light or
+[00:05:51] postgress locally on your laptop but
+[00:05:53] then when you want to run on and you you
+[00:05:55] would write SQL queries against that and
+[00:05:57] ideally what you want to have is when
+[00:05:58] you then push your code into production
+[00:06:01] now the database may be this you know
+[00:06:02] behemoth distributed system or running
+[00:06:05] on a much larger machine than your
+[00:06:06] laptop and my same SQL query will still
+[00:06:08] work in that in the production
+[00:06:10] environment right because again from our
+[00:06:13] perspective when we're writing SQL
+[00:06:14] queries and the application is writing
+[00:06:15] SQL queries it sees a single logical
+[00:06:18] database doesn't know that it may be
+[00:06:19] physically broken up into um into
+[00:06:22] different pieces.
+[00:06:24] So the thing we want to talk about
+[00:06:26] today, today's class we really focus on
+[00:06:28] what I call a parallel database where
+[00:06:30] this is where these resources that we
+[00:06:32] have again where there's computational
+[00:06:33] resources, memory or or storage that
+[00:06:36] they're going to be physically close to
+[00:06:37] each other. And for for today's class,
+[00:06:39] just assume it's running on the same
+[00:06:41] machine, the same box, the same unit in
+[00:06:43] a rack, right? And so that means that
+[00:06:45] the communication between our different
+[00:06:46] resources is going to be really really
+[00:06:48] fast like reading things from memory or
+[00:06:50] reading things from uh from different
+[00:06:53] discs that are on the same PCI Express
+[00:06:54] bus or whatever, right? And that this
+[00:06:57] this communication be fast and it's
+[00:06:59] going to be reliable and cheap for us to
+[00:07:00] do. And so reliable means like if I go
+[00:07:03] try to read something from disk, unless
+[00:07:04] the you know the the disc is burning
+[00:07:06] down and there's, you know, it's on fire
+[00:07:08] and I can't do anything, right? I I when
+[00:07:10] I send a message or try to get something
+[00:07:11] data, I'd expect to get that data back,
+[00:07:15] right? In a distributed system, this
+[00:07:18] will again, we'll cover this at the end
+[00:07:19] of the semester, but this will be when
+[00:07:20] the resources in our in our in our
+[00:07:23] database system are not assumed to be
+[00:07:25] physically close to each other like
+[00:07:27] different racks in the same data center,
+[00:07:28] different availability availability
+[00:07:30] zones or regions or different data
+[00:07:31] centers in different parts of the the
+[00:07:33] country or different parts of the world.
+[00:07:34] Worst case scenario, data centers
+[00:07:36] running in space, right? Right? That was
+[00:07:38] Nibidia's announcement yesterday or
+[00:07:39] today. StarCloud, they want to put GPUs
+[00:07:41] up in space now. Right? So now the
+[00:07:43] latency between sending, you know,
+[00:07:44] sending between different machines,
+[00:07:46] one's in space and one's on on back here
+[00:07:48] on Earth, right? That's going to be
+[00:07:49] super high. And it's not guaranteed be,
+[00:07:51] you know, to be reliable. And so in our
+[00:07:53] database system, we're going to have to
+[00:07:54] account for the fact that this, you
+[00:07:56] know, anything any message we send or
+[00:07:57] data we try to retrieve may not actually
+[00:08:00] arrive or show up. And therefore, our
+[00:08:02] system has to account for that. In
+[00:08:03] today's class, we're not going to worry
+[00:08:04] about that. we're going to assume that
+[00:08:05] we can read and write to our different
+[00:08:07] workers and they're they're guaranteed
+[00:08:10] to get that message, right? It just it
+[00:08:12] makes our lives a lot easier.
+[00:08:15] All right, so beginning we're going to
+[00:08:16] talk about different process models,
+[00:08:17] right? These are will be the way you you
+[00:08:19] sort of architect the system itself to
+[00:08:21] have different workers and run in
+[00:08:23] parallel. Uh then we'll talk about the
+[00:08:25] different types of parallelism you could
+[00:08:26] have within a query plan or cross query
+[00:08:28] plans. And then we'll finish up talking
+[00:08:30] about um how to get parallelism with IO.
+[00:08:33] We saw a little bit of this in in
+[00:08:34] project one when you built sort of
+[00:08:36] asynchronous buffer pool or the the disk
+[00:08:38] manager, but we can see how now we can
+[00:08:40] paralyze this even further. And then
+[00:08:42] we'll finish up with a uh a flash talk
+[00:08:44] from the spyrob guy who's going to talk
+[00:08:46] about the vortex file format. The same
+[00:08:48] speaker that gave a seminar talk with us
+[00:08:50] last semester. But if you didn't or
+[00:08:51] sorry last week if you missed that, this
+[00:08:53] will be a condensed version of that.
+[00:08:54] Okay.
+[00:08:57] All right. All right. So, as I said, the
+[00:08:59] process model is going to be the
+[00:09:01] essentially the the definition of the
+[00:09:03] way in which we've built our our
+[00:09:05] database system to allow for concurrent
+[00:09:08] requests or current operations or
+[00:09:10] concurrent queries across multiple
+[00:09:12] workers. And the worker is going to be
+[00:09:15] this computational unit of our database
+[00:09:18] system that is is going to be able to
+[00:09:19] execute tasks on behalf of sort of the
+[00:09:22] higher level manager of the system. uh
+[00:09:24] and they know how to do whatever it is
+[00:09:26] that that request is is is being asked
+[00:09:28] for and then return results to whoever
+[00:09:29] asked for it. So you can just think of
+[00:09:31] this like it's a bunch of workers that
+[00:09:33] could execute queries for you. But the
+[00:09:34] workers also could be doing internal
+[00:09:35] maintenance tasks that are in sort of
+[00:09:38] run in the background to maintain
+[00:09:40] whatever it is you need in the system,
+[00:09:42] right? We saw this before we talked
+[00:09:43] about the log structure mer log
+[00:09:44] structure storage, right? We said there
+[00:09:46] was this compaction thread or compaction
+[00:09:47] thing that then runs in the background
+[00:09:49] and starts coalesing up the SS SS tables
+[00:09:52] and combining them to new ones, right?
+[00:09:53] that that would be a background worker,
+[00:09:55] but it's still still the worker is still
+[00:09:58] um you know is still a computational
+[00:10:00] unit that the data system has to reason
+[00:10:02] about and understand when it wants to
+[00:10:04] start scheduling tasks. But for this
+[00:10:06] class, we'll just assume that we're
+[00:10:07] going to be executing queries with
+[00:10:09] workers.
+[00:10:10] And the reason why I'm saying workers
+[00:10:12] and and not saying threads, although
+[00:10:13] sometimes I'll I'll slip up and say
+[00:10:15] threads, right, is because there's
+[00:10:17] different implementations of these
+[00:10:18] process models that can have different
+[00:10:20] computational units for for workers.
+[00:10:23] Right. The two most common ones is have
+[00:10:25] one worker per process like an OS
+[00:10:27] process and one worker per thread. Um
+[00:10:30] most systems are going to the most
+[00:10:31] modern systems are going to implement
+[00:10:32] the second one not the first one but
+[00:10:34] we'll see why people did the first one.
+[00:10:36] uh Postgress does the first one and then
+[00:10:38] it's not exactly a process model but
+[00:10:39] it's sort of a it is a design decision
+[00:10:42] or designed approach for building a data
+[00:10:44] system is do what's called an embedded
+[00:10:45] system where now the data system is not
+[00:10:48] responsible for getting workers from
+[00:10:52] like the OS or whatever the application
+[00:10:54] that's going to be invoking the data
+[00:10:55] system hands off the workers to the uh
+[00:10:58] to the system to run right so this
+[00:11:01] middle one here is most common the
+[00:11:03] second one the sorry the third one it
+[00:11:04] will be for we'll say like in SQL light
+[00:11:06] or embedded database systems we'll talk
+[00:11:08] about and this top one is is mostly for
+[00:11:10] like the older systems the enterprise
+[00:11:12] systems for historical reasons do this
+[00:11:14] but again we'll go each of these one by
+[00:11:15] one
+[00:11:18] so the first one first process model
+[00:11:19] approach is called process per worker
+[00:11:21] and the basically is that for every
+[00:11:24] single worker that I have in my system
+[00:11:27] it's going to be its own standalone OS
+[00:11:29] process like I got to call fork on the
+[00:11:31] OS or or on Ze whatever it is to start a
+[00:11:33] new process and that's going have its
+[00:11:35] own address base for its its code, own
+[00:11:38] address space for memory
+[00:11:41] and it's going to rely on a an operating
+[00:11:44] system uh constructs like you know like
+[00:11:47] fork to then dispatch the the you know
+[00:11:51] these different workers and then can
+[00:11:53] some cases also be responsible for
+[00:11:54] scheduling them because I don't have
+[00:11:56] sort of fine grain control what my
+[00:11:57] workers are or what my workers are going
+[00:11:59] to execute or not. The OS is going to
+[00:12:00] handle that because it just sees a bunch
+[00:12:01] of processes and runs it for you.
+[00:12:05] You can play games about like going to
+[00:12:06] sleep and things like that, but it's
+[00:12:07] that's a bit more work. So the a basic
+[00:12:10] idea is that your your the application
+[00:12:12] doesn't know that there's a bunch of
+[00:12:14] workers processes. It just communicates
+[00:12:16] with whatever this front-end dispatcher
+[00:12:17] is, right? In Postgress, this is called
+[00:12:19] the postmaster. If you ever if you're
+[00:12:21] running Postgress on your laptop, you'll
+[00:12:22] see a bunch of processes. One be called
+[00:12:23] the postmaster. That's the front-end
+[00:12:25] thing that everyone connects to when you
+[00:12:27] want to connect to the database system,
+[00:12:29] right? And then the dispatcher says,
+[00:12:31] "Okay, well, I have a new connection
+[00:12:32] coming in." they want to execute some
+[00:12:34] queries. Let me pick one of my workers
+[00:12:36] and my my process pool that I'm that I
+[00:12:38] know about. I hand back that information
+[00:12:40] to the application say here's a you know
+[00:12:42] here's an IP address or a port number
+[00:12:44] for some worker you can go talk to and
+[00:12:46] then now the application reconnects to
+[00:12:48] the worker and it can send SQL commands
+[00:12:51] and and have that worker execute things
+[00:12:53] things for you and the workers can still
+[00:12:56] communicate through with each other when
+[00:12:58] we talk about different types of
+[00:12:59] parallelism in a second. Um but they had
+[00:13:02] to do this through the through either
+[00:13:04] shared memory or worst case scenario IPC
+[00:13:07] or interprocess communication things
+[00:13:09] like pipes and signals to send data
+[00:13:11] between or communicate between them. In
+[00:13:13] the case of Postgress, they use shared
+[00:13:15] memory. Uh different systems do
+[00:13:17] different things, right? So this is how
+[00:13:20] people built parallel database systems
+[00:13:22] in the old days like like the 80s and in
+[00:13:24] the 90s. And we're take I guess why they
+[00:13:27] did this instead of threads.
+[00:13:31] All right. In Linux now, when you when
+[00:13:33] you create a thread, you spawn a thread,
+[00:13:34] what are you actually calling?
+[00:13:37] What do you get like Pthread create?
+[00:13:39] Right. Right. What is what does the P
+[00:13:41] and P thread mean? Pix, right? So the
+[00:13:44] Pix API in for Unix and Linux that's
+[00:13:48] been standardized for for threads
+[00:13:50] probably late 90s right mid 90s right
+[00:13:53] before some of you guys were even born.
+[00:13:55] prior to that all the different versions
+[00:13:58] of Unix that were out there right like
+[00:14:00] you know before Linux was was the
+[00:14:02] dominant one but there was you know was
+[00:14:04] BSD there was there was HOX there's AIX
+[00:14:07] there was Solaris all these different um
+[00:14:10] unices had their own threading packages
+[00:14:14] and so the it had slightly different
+[00:14:16] APIs or different different semantics of
+[00:14:17] what it means to have a thread so and if
+[00:14:20] you wanted to support multi-threading on
+[00:14:22] different Unixes you had to basically
+[00:14:24] rewrite your threaduler and thread
+[00:14:25] implementation across all the different
+[00:14:28] libraries and they made the code less
+[00:14:29] portable. Whereas Pix had basically
+[00:14:32] fork, close, wait, join, like they had
+[00:14:34] basic commands to fork processes. So
+[00:14:36] therefore all the data systems in the
+[00:14:38] from the 70s, mostly the 80s and like
+[00:14:41] early 90s, they're all going to be doing
+[00:14:43] this approach because at least that was
+[00:14:45] standardized across different different
+[00:14:46] systems. If you ever looked at the
+[00:14:48] Postgress code, the Postgress code has a
+[00:14:49] bunch of pound if you know pound defines
+[00:14:51] or if defafs based on what version of of
+[00:14:54] Unix you're running on and they make
+[00:14:56] different calls for uh you know
+[00:14:58] different OS commands but the end of the
+[00:15:00] day an OS process on Linux is basically
+[00:15:02] perform the same way it does on AIX. So
+[00:15:05] you can have basically the same
+[00:15:06] semantics across all these things. So
+[00:15:08] any system that's a fork of Postgress uh
+[00:15:10] which I I'm trying to think if there's
+[00:15:12] anybody has done this. No, pretty much
+[00:15:14] anybody that that that is is a system
+[00:15:15] today that's a fork of Postgress is
+[00:15:17] gonna be using this because Postgress
+[00:15:19] uses this and it'll be a major rewrite
+[00:15:21] to to strip out the threading stuff and
+[00:15:23] replace it with sorry strip out the
+[00:15:25] process stuff and replace it with
+[00:15:26] threading.
+[00:15:29] All right, the modern approach is to do
+[00:15:31] as one expect today using using uh a
+[00:15:34] single process with multiple threads.
+[00:15:36] Right? So just calling spawning Pthread
+[00:15:38] or whatever the Windows 32 create thread
+[00:15:40] is, right? And now all your all your
+[00:15:44] your worker threads are running in the
+[00:15:45] same address space. It's easy for them
+[00:15:47] to communicate with each other because
+[00:15:48] it's all just they're in they you know
+[00:15:50] they can rewrite memory to each other.
+[00:15:52] You still have to use latching all the
+[00:15:53] stuff we talked about before because
+[00:15:54] there's shared data structures and you
+[00:15:56] don't want the different threads
+[00:15:57] breaking, you know, causing problems
+[00:15:58] with each other. But the basic setup is
+[00:16:00] still the same, right? The application
+[00:16:02] sends something to a dispatcher and
+[00:16:03] either the dispatcher can just forward
+[00:16:05] the request directly to these worker
+[00:16:07] threads or in some cases to remove the
+[00:16:09] bottleneck of having to go through a
+[00:16:11] centralized dispatcher. You can still do
+[00:16:12] the same thing we did before where
+[00:16:14] having the dispatcher sends back to the
+[00:16:16] application, hey, here's a port number
+[00:16:18] where you can communicate to a worker
+[00:16:19] that's dedicated to you to run queries
+[00:16:21] queries for you and then the application
+[00:16:23] just reconnects and and does that. But
+[00:16:25] the key thing is like all the
+[00:16:26] dispatcher, the worker threads, all this
+[00:16:28] is running in the same same process.
+[00:16:37] So your question is when I say uh that
+[00:16:39] it's using it own scheduling that you're
+[00:16:41] not you could be using a thread pool and
+[00:16:42] not calling predate.
+[00:16:47] >> Yeah. Statement is would I be calling
+[00:16:49] predate every every time a new command
+[00:16:51] comes in? No. You would have a thread
+[00:16:52] pool but then you can still now you
+[00:16:55] still can do this on a process level.
+[00:16:56] it's a little bit more difficult but
+[00:16:57] like and most the process the process
+[00:17:00] model systems don't do their own
+[00:17:01] scheduling now but I have my own threads
+[00:17:03] I could do like my own non-premptive
+[00:17:05] threading and have have them yield and
+[00:17:07] go back to a thread schedule to decide
+[00:17:08] what to run next basically using co-
+[00:17:10] routines uh you could have you know it's
+[00:17:13] easier to to pause a thread right and
+[00:17:16] then versus like pausing a process it's
+[00:17:18] more heavyweight right it's just it's
+[00:17:20] more it's a more lightweight it's more
+[00:17:22] lightweight and easier to have complete
+[00:17:24] control over what the threads are than
+[00:17:26] you you would in the process model. Now,
+[00:17:28] you can do it with process, sure, but
+[00:17:29] it's just it's it's more machinery
+[00:17:31] because you're kind of fighting the OS.
+[00:17:35] >> Yes.
+[00:17:45] this lecture today we're assuming Davis
+[00:17:47] is the data system is on one node right
+[00:17:51] so again we're jumping ahead but in a
+[00:17:53] distributed system you could still have
+[00:17:56] you know either process per worker or or
+[00:17:58] thread per worker but now every node is
+[00:18:00] is running their own you know set of
+[00:18:02] threads set of workers right for our
+[00:18:05] purposes here you know this is just some
+[00:18:06] some disk file whatever it's all the
+[00:18:09] same
+[00:18:10] >> it's not
+[00:18:13] >> it's not mean
+[00:18:22] We'll get there. But basically saying,
+[00:18:24] am I saying this is a parallel database
+[00:18:25] because I have a bunch of worker
+[00:18:26] threads?
+[00:18:28] Uh, yes, but we don't we I haven't
+[00:18:31] defined what the worker threads are
+[00:18:33] doing for per query. I'm just showing
+[00:18:34] lines coming in like are they all
+[00:18:36] executing the same query or is it one
+[00:18:38] query per thread? Right? Like well few
+[00:18:41] more slides we'll get there.
+[00:18:44] So Oracle started off doing the process
+[00:18:47] per model process model process per
+[00:18:49] worker back in the 80s or 70s when they
+[00:18:51] started and then in 2014 they switched
+[00:18:53] over to now by default they'll run with
+[00:18:56] um with with multi-threading right and
+[00:18:59] again every newer system today would use
+[00:19:01] this approach is because the the
+[00:19:02] threading libraries are so standardized
+[00:19:04] and everyone's running with Linux anyway
+[00:19:06] so everything works
+[00:19:09] all right so this is not exactly a
+[00:19:11] process model where you have these
+[00:19:13] thinking about in terms of like um
+[00:19:16] threads versus processes. This is just a
+[00:19:19] different approach but is very common um
+[00:19:21] where the the database system is not
+[00:19:23] responsible for calling you know pthread
+[00:19:25] create or forking a process the any
+[00:19:29] computational unit or computational
+[00:19:31] worker has to be given to it from an
+[00:19:33] application that's going to embed the
+[00:19:34] database system right so I know like if
+[00:19:38] you ever play with like SQLite duct DB
+[00:19:40] like when you when you like open up a
+[00:19:42] duct you call the ductb from the command
+[00:19:44] line and opens up a ductb database like
+[00:19:47] the duct DB command line that is the
+[00:19:49] application right and then it's making
+[00:19:52] calls to the library to do things in a
+[00:19:53] data system but like in the case of
+[00:19:55] something like SQLite I would embed the
+[00:19:56] SQL library in in my application now the
+[00:19:59] application is going to have its own
+[00:20:00] threads to do whatever it wants to do
+[00:20:02] right think of like a web server where
+[00:20:05] you know requests are coming in but the
+[00:20:07] database server is not on a separate
+[00:20:08] machine it's just running as a SQLite
+[00:20:11] program in the same address space as the
+[00:20:15] as the application So when requests come
+[00:20:18] along the application has you know one
+[00:20:20] its own thread or worker saying I want
+[00:20:22] to read this data from the database and
+[00:20:24] then it makes a request to the database
+[00:20:27] then that's a library call where now
+[00:20:29] that thread is going into the SQL light
+[00:20:31] library or whatever the embedded data
+[00:20:32] system you're using library and then
+[00:20:34] that is the worker that's going to then
+[00:20:36] read and write data from from the
+[00:20:38] database itself and then when it produc
+[00:20:40] when it gets a result it then gives back
+[00:20:43] you know the the sort of the thread goes
+[00:20:45] back up the stack back to the uh to to
+[00:20:48] to the application calling it and now
+[00:20:51] the data center doesn't have a notion of
+[00:20:52] a worker doesn't have a bunch of pool of
+[00:20:53] workers that it can call upon right it
+[00:20:56] only is given workers when the
+[00:20:57] application goes inside of it
+[00:21:00] right Berkeley DB was one of the first
+[00:21:02] systems to do this that obviously came
+[00:21:04] out of UC Berkeley and Oracle bought
+[00:21:06] that in the 2000 2006 but like Rox DB uh
+[00:21:10] level DB all these other systems on the
+[00:21:12] side here they essentially work the same
+[00:21:13] way where they don't have their own
+[00:21:14] notion of of of threads or workers. They
+[00:21:18] can only be given workers when when the
+[00:21:20] application calls inside of it. Now,
+[00:21:22] case of in ductb, you can tell it to
+[00:21:23] spawn its own threads as well, but like
+[00:21:25] that's that's um you know, so it's not
+[00:21:28] exactly in in this like in the way I'm
+[00:21:31] describing here. But this is what
+[00:21:33] basically see how SQLite works. Like
+[00:21:34] SQLite doesn't have background workers.
+[00:21:36] The only workers it has is the ones that
+[00:21:37] the application uses when it invokes
+[00:21:39] SQLite libraries.
+[00:21:43] All right. So the one of the things
+[00:21:44] we're going to be sort of briefly talk
+[00:21:46] about too is how do we going to schedule
+[00:21:47] these things? Again, we haven't quite
+[00:21:49] got into what the the parallelism looks
+[00:21:50] like. But basically the if I have a
+[00:21:54] bunch of workers, the data has to decide
+[00:21:56] where where should they, you know, any
+[00:21:58] any request worker some task to run uh
+[00:22:00] when should they run it and how they're
+[00:22:02] going to actually going to execute it.
+[00:22:04] Um, so things like if a query shows up
+[00:22:07] and I could run use multiple workers to
+[00:22:09] execute that query, it has to decide
+[00:22:11] what is that degree of parallelism, how
+[00:22:13] many workers do I want to use for that?
+[00:22:15] And and these decisions it'll make way
+[00:22:17] based on how many queries are running at
+[00:22:18] the same time, where's the data, how
+[00:22:20] slow is the disc go get that data,
+[00:22:22] right? And so there's a bunch of these
+[00:22:24] things the data systems uh can figure
+[00:22:25] out. And this is why you don't want the
+[00:22:26] OS to try to schedule anything for you
+[00:22:28] because since the data system knows what
+[00:22:30] the query is or the tasks are that it
+[00:22:32] has to execute. It knows what resources
+[00:22:34] are available to it. It's always again
+[00:22:36] in a better decision to decide what
+[00:22:38] should actually do to schedule these
+[00:22:39] things. Um and then we should never rely
+[00:22:42] on the OS to do any of this. the the
+[00:22:46] high-end expensive enterprise systems.
+[00:22:47] So the Oracles, the SQL servers, the
+[00:22:49] DB2s, they will do all of that stuff
+[00:22:52] above and be very sophisticated with
+[00:22:53] scheduling things like Postgress just
+[00:22:55] you know just just lets the OS take the
+[00:22:57] wheel and let lets the OS schedule
+[00:22:59] everything for you. MySQL doesn't do uh
+[00:23:01] parallelism in the way that we'll talk
+[00:23:03] about in a second like they pretty much
+[00:23:05] again let the OS do do everything.
+[00:23:10] All right. So the advantage of using uh
+[00:23:13] a the multi-thread architecture that's
+[00:23:15] the second approach should be pretty
+[00:23:16] obvious right that's the modern way to
+[00:23:18] build uh build concurrent or parallel
+[00:23:21] applications right there's less overhead
+[00:23:23] of having multiple threads versus
+[00:23:25] multiple processes um you know you don't
+[00:23:28] have to manage this shared memory like
+[00:23:30] which is again relying on OS primitive
+[00:23:31] to to communicate or share share data
+[00:23:34] across the different uh uh the different
+[00:23:36] workers now the of course the downside
+[00:23:40] is if one of those workers hits a seg
+[00:23:42] fault or does something it shouldn't be
+[00:23:43] doing and it crashes in a multi-threaded
+[00:23:45] application that takes down all the
+[00:23:47] threads takes takes down the entire
+[00:23:48] process. So that in theory could make
+[00:23:50] your data system more brittle or more
+[00:23:52] susceptible to failure because if one
+[00:23:54] thread goes down that takes everyone
+[00:23:55] down whereas like a postgress if one
+[00:23:57] process goes down who cares the
+[00:23:58] postmaster just forks another one and
+[00:24:00] and picks up where it left off. So you
+[00:24:02] obviously like you don't write bugs in
+[00:24:04] your data system so you don't crash but
+[00:24:05] like that's easier said than done right
+[00:24:07] there's pros and cons to this but most
+[00:24:09] systems are going to choose the multi
+[00:24:10] thread architecture because the
+[00:24:12] engineering overhead the burden is much
+[00:24:13] less and the performance is is a lot
+[00:24:16] more right and unless you're a fork of
+[00:24:18] Postgress or a fork of Reddus which all
+[00:24:20] they're using a single process or the
+[00:24:22] process model most systems in the last
+[00:24:24] 25 years will be using uh using threads
+[00:24:30] >> say it Is it invisible to use?
+[00:24:32] >> His question is, is it inadvisable to
+[00:24:33] use both? Um,
+[00:24:36] I think there's talk in Postgress where
+[00:24:38] you can now have threads per process. I
+[00:24:40] don't know what they're using it for.
+[00:24:42] Um,
+[00:24:44] in for for Yeah,
+[00:24:47] I would say I would say yes, it's
+[00:24:48] advisable to do both, right? I mean, you
+[00:24:50] could have like the you could do some
+[00:24:52] decoupling where you would have like the
+[00:24:55] the dispatcher could be a separate
+[00:24:56] process and then the and then there's
+[00:24:58] another process that has all the workers
+[00:25:00] inside the same thing. I mean there
+[00:25:01] there's some systems kind of could do
+[00:25:03] that but like you what that gives you is
+[00:25:05] the ability to now move where the the
+[00:25:07] front end dispatcher runs. You could
+[00:25:08] actually put that on another machine now
+[00:25:10] and have a separate you know the the
+[00:25:12] workers all together on another machine.
+[00:25:14] Different systems do different things in
+[00:25:15] general for single node systems. No
+[00:25:17] one's going to mix it. they're always
+[00:25:18] going to do the the the thread per
+[00:25:20] worker.
+[00:25:25] All right. So now let's get into what
+[00:25:27] sort of he was alluding about like okay
+[00:25:29] what does this mean to actually
+[00:25:30] executing queries and so there's going
+[00:25:31] to be different types of parallelism we
+[00:25:33] have to uh we're going to we're going to
+[00:25:36] talk about that going to have different
+[00:25:37] trade-offs and different performance uh
+[00:25:40] characteristics. Um and most of the
+[00:25:43] systems that when you think about uh
+[00:25:45] most systems will do always do this
+[00:25:47] first approach. Um the second one is be
+[00:25:50] harder because be different levels of
+[00:25:51] intraquery parallelism. But when people
+[00:25:53] say I have a parallel database they
+[00:25:54] usually think of of this of the second
+[00:25:56] one but the first one still is is a
+[00:25:58] valid category for query parallelism or
+[00:26:00] sorry for yeah for query parallelism.
+[00:26:02] Right. So the idea is that the data
+[00:26:05] center is going to execute these
+[00:26:06] multiple workers so at the same time. So
+[00:26:08] we can execute multiple tasks at the
+[00:26:10] same time because we want to be able to
+[00:26:11] improve the the the performance of the
+[00:26:13] system or improve its utilization of the
+[00:26:15] hardware that's available to us. Right?
+[00:26:17] Most modern CPUs, right? Pretty much all
+[00:26:19] modern CPUs at the server level or even
+[00:26:21] your laptops, we're going to have
+[00:26:22] multiple cores. Like every laptop
+[00:26:24] basically has what, eight cores per CPU
+[00:26:26] on the the higherend AMD boxes, you now
+[00:26:29] have, you know, hundreds of cores. Um so
+[00:26:32] we want to take take to be able to take
+[00:26:34] advantage of all that, right? And all
+[00:26:36] the approaches that we'll talk about
+[00:26:37] today are still like from this point
+[00:26:39] forward. It doesn't actually matter
+[00:26:41] whether we're doing process per worker
+[00:26:42] or thread per worker. Again, the high
+[00:26:44] level concepts are still the same. The
+[00:26:45] way we're going to paralyze things and
+[00:26:47] coales results uh at the right point in
+[00:26:50] the query plan, all these still work no
+[00:26:52] matter what process model you're using
+[00:26:54] or even even if you're running on
+[00:26:55] multiple machines, right?
+[00:26:58] All right. So, we're going to talk about
+[00:26:59] interquery parallelism and then we'll
+[00:27:01] talk about again more detailed intricate
+[00:27:02] parallelism. Interquery parallelism is
+[00:27:04] is pretty obvious. It basically says if
+[00:27:07] I have multiple workers, I could take
+[00:27:08] multiple requests for queries and I can
+[00:27:10] execute those queries in in parallel,
+[00:27:14] right? Meaning like one worker could
+[00:27:16] execute query one, another worker could
+[00:27:18] execute query two, right? And they they
+[00:27:20] don't need to communicate. They don't
+[00:27:21] need to interfere with each other,
+[00:27:22] right? For scheduling wise to do this
+[00:27:25] again, most systems are going to use a
+[00:27:26] really simple scheduler policy. First
+[00:27:28] come, first serve. Like whenever cruise
+[00:27:29] shows up first, I'll start running that
+[00:27:31] right away. things get a little more
+[00:27:32] complicated when you start doing
+[00:27:33] transactions and concurrent which we'll
+[00:27:35] cover in a few weeks. But you can start
+[00:27:37] scheduling things based on uh you know
+[00:27:40] if you're in a transaction how much work
+[00:27:41] how many queries have they executed
+[00:27:42] before you before this new query and
+[00:27:44] maybe that gets a higher priority or
+[00:27:46] lower priority based on whatever policy
+[00:27:47] you're using. So if every query you're
+[00:27:50] executing is single sorry is is um is
+[00:27:54] readon then this is really easy to do
+[00:27:56] because you don't have to worry about
+[00:27:59] uh you know coordinating between the
+[00:28:01] different queries. You still want to
+[00:28:03] maybe do latching on on your internal
+[00:28:05] data structures because you don't want
+[00:28:06] queries to to break things or interfere
+[00:28:09] with each other. But in general read
+[00:28:10] only databases are the easiest way to
+[00:28:11] easiest thing to implement because the
+[00:28:13] coordination level is is amount of
+[00:28:15] coordination you have to do is pretty
+[00:28:17] minimal. Like once the queries start
+[00:28:18] running, you don't have to worry about
+[00:28:20] them sending data back and forth between
+[00:28:21] each other or understanding what one
+[00:28:23] query is doing versus another query is
+[00:28:25] doing. And then if you now want to make
+[00:28:28] sure that like I can get parallelism by
+[00:28:30] like or reduce the amount of wasted IO,
+[00:28:33] the bufferable manager can do all the
+[00:28:34] scan sharing or all the the the all the
+[00:28:37] other the cursor sharing techniques we
+[00:28:38] talked about before because that's kind
+[00:28:40] of the central point that everyone's
+[00:28:41] communicating with. But again, that's
+[00:28:42] that's we already covered how to how to
+[00:28:45] do that. If queries have updated at the
+[00:28:48] same time, now you got to worry about
+[00:28:49] like who writes what and when who can
+[00:28:50] read whatever's been written. That we'll
+[00:28:52] cover in in two weeks. We'll pick that
+[00:28:55] up on on lecture 17. We'll spend two
+[00:28:57] weeks discussing how how to handle this.
+[00:28:59] Uh starting then I would say also too
+[00:29:02] that just because a database system can
+[00:29:05] execute multiple queries in parallel at
+[00:29:07] the same time doesn't mean necessarily
+[00:29:08] that each query itself will also run in
+[00:29:10] parallel with within itself. Like so my
+[00:29:13] SQL will be a interquery parallelism
+[00:29:15] system like it can take multiple query
+[00:29:17] requests and run each of those at the
+[00:29:19] same time but for each individual query
+[00:29:21] request that's always going to only
+[00:29:23] going to run on on one worker. So if I
+[00:29:26] if I run one query in my SQL and I have
+[00:29:28] a thousand cores at the end of the day
+[00:29:29] it's still going to run on one core.
+[00:29:33] So that type of parallelism is called
+[00:29:34] intraquery parallelism.
+[00:29:36] And these aren't mutually exclusive. I
+[00:29:38] can have an interquer inter I can have
+[00:29:40] my data system support interquery
+[00:29:42] parallelism then also supports
+[00:29:43] intraquery parallelism. So postgress can
+[00:29:46] do this. Post can m run multiple queries
+[00:29:47] at the same time and each of those
+[00:29:49] queries can run on multiple workers at
+[00:29:51] the same time
+[00:29:54] right. So if you remember like the
+[00:29:56] producer consumer model, right? You have
+[00:29:58] you have basically in uh in a query plan
+[00:30:01] you're you're you have different workers
+[00:30:04] different actually in different parts of
+[00:30:05] the query plan producing results that
+[00:30:07] that it's pushing up or moving up to the
+[00:30:09] query plan and then depending on how I
+[00:30:11] break things up in my pipelines, I could
+[00:30:13] have different workers consuming those
+[00:30:15] results and maybe running those in
+[00:30:17] parallel or waiting for all the results
+[00:30:19] to be finished before I can go off and
+[00:30:21] execute the next pipeline. Right? But
+[00:30:22] the high idea is going to be still the
+[00:30:24] same. is still going to be this producer
+[00:30:25] consumer approach.
+[00:30:27] So the first type of parallelism we'll
+[00:30:29] talk about is intraoperator paralism. So
+[00:30:31] this will be horizontal parallelism. So
+[00:30:33] so allowing different workers to execute
+[00:30:35] the same pipeline or different portions
+[00:30:37] of the pipeline at the same time or
+[00:30:40] sorry same pipeline but different
+[00:30:41] segments of the data or different inputs
+[00:30:43] at the same time and that's super
+[00:30:45] common. uh the other type of parallelism
+[00:30:47] called interoperative parallelism where
+[00:30:49] I could have different workers execute
+[00:30:51] different portions of of of the query
+[00:30:53] plan simultaneously at the same time and
+[00:30:56] that's less common because obviously if
+[00:30:58] you have pipelines I can't maybe execute
+[00:30:59] something at the top before something at
+[00:31:01] the bottom finishes so it doesn't make
+[00:31:02] sense to have something up above
+[00:31:04] spinning and waiting for results that
+[00:31:05] haven't that are never going to arrive
+[00:31:06] yet so they're going to be parallel
+[00:31:09] versions of pretty much every operator
+[00:31:10] that are out that's out there and
+[00:31:12] basically all the algorithms that we
+[00:31:13] talked about so far in the semester you
+[00:31:14] can easily or not easily You can
+[00:31:16] paralyze them in some ways by using that
+[00:31:18] divide and conquer approach that we
+[00:31:19] talked about before that allow you to
+[00:31:21] split the the input up for your
+[00:31:24] algorithm into different segments or
+[00:31:26] different buckets or whatever how we
+[00:31:28] defined it before. And now instead of
+[00:31:29] having one worker go through each bucket
+[00:31:31] or each partition one at a time, you
+[00:31:34] have multiple workers each handle a
+[00:31:36] different partition at the same time.
+[00:31:38] So we go to that back to that that
+[00:31:40] parallel hash join the grace hash join
+[00:31:42] we talked about before the partition
+[00:31:43] hash join where we do sort of one pass
+[00:31:45] through the data and build you know and
+[00:31:48] hash the data and build up these these
+[00:31:50] sort of levels in our hash tables or
+[00:31:52] different segments but instead of having
+[00:31:54] again one worker handle each of these
+[00:31:56] levels once I sort of do my first pass
+[00:31:58] which I can do also do in parallel we'll
+[00:31:59] see that in a second but now when I want
+[00:32:01] to do my join I have one worker be
+[00:32:03] responsible for level one worker sorry
+[00:32:06] level zero one worker responsible for
+[00:32:07] level one and so forth. And because I
+[00:32:10] know I've partitioned my data by doing
+[00:32:12] the hashing step first, I don't have to
+[00:32:14] communicate between different workers to
+[00:32:16] do this.
+[00:32:18] Right? Now, you could do this either by
+[00:32:20] having a one giant hash table or you
+[00:32:22] could partition have so individual hash
+[00:32:24] tables. It doesn't matter. The high
+[00:32:25] level concept is still the same.
+[00:32:30] All right. So, we'll go through what
+[00:32:31] interoperator parallelism is. It's the
+[00:32:32] horizontal one. uh and then the
+[00:32:35] interoperative parallelism that have
+[00:32:36] different portions running at the same
+[00:32:38] time that's vertical and then the
+[00:32:39] textbook talks about this thing called
+[00:32:40] bushy parallelism uh they make it sound
+[00:32:42] like its own separate thing but it it's
+[00:32:44] just the combination of the two of them
+[00:32:45] at that's the same time right so the
+[00:32:49] first one is the most common one anybody
+[00:32:51] anytime someone says they have a
+[00:32:52] parallel data system they're they're
+[00:32:54] nine times out of 10 or 99 times out of
+[00:32:56] 100 they're doing the first one the
+[00:32:58] horizontal parallelism and then the
+[00:33:00] second one is less common we'll look at
+[00:33:01] it briefly and then the bushy
+[00:33:03] parallelism that's in again the
+[00:33:04] enterprise high-end systems that cost
+[00:33:06] millions of dollars like a SQL server,
+[00:33:08] like DB2 and like Oracle. But the top
+[00:33:11] one, the horizontal one is the most
+[00:33:12] common one. And again, because SQL is
+[00:33:16] declarative, I don't have to specify in
+[00:33:18] my query which one of these I want,
+[00:33:21] right? The Davidson just figures it out
+[00:33:22] based on the hardware has available to
+[00:33:24] do it, what your query actually wants to
+[00:33:25] do. It can decide which which of these
+[00:33:27] approaches it wants to use.
+[00:33:32] All right. So the most common one is
+[00:33:33] horizontal parallelism or intraoperate
+[00:33:35] parallelism. And the idea is that I'm
+[00:33:38] going to take my my my data that I'm
+[00:33:40] processing and I'm going to break it up
+[00:33:42] into disjoint subsets right either by
+[00:33:46] just saying you know you read this page
+[00:33:48] these pages I'll read these pages or
+[00:33:50] doing something more explicit like
+[00:33:52] dividing it based on values and columns.
+[00:33:55] It doesn't matter. And then now the the
+[00:33:58] the operators are going to be have
+[00:34:00] different independent
+[00:34:02] uh imple or instantiations of them that
+[00:34:05] can each run on a different worker that
+[00:34:07] are going to be processing the data that
+[00:34:09] they're assigned to uh for the inputs
+[00:34:12] you know again a disjoint subset of the
+[00:34:13] data and then they're going to be
+[00:34:15] crunching on that producing results that
+[00:34:17] I then move up into the query plan. But
+[00:34:20] then at some point I need to make sure
+[00:34:21] that I've processed all the data from
+[00:34:23] these different uh pipelines or
+[00:34:25] instantiations of the pipelines or the
+[00:34:27] different workers. And so now I want to
+[00:34:29] introduce a a barrier operator that says
+[00:34:33] don't proceed in my query plan until I
+[00:34:36] get all the results from everybody below
+[00:34:37] me that I'm expecting to produce results
+[00:34:39] for me. So this is be called uh in
+[00:34:42] databases called the exchange operator.
+[00:34:44] And it's basically you know there's no
+[00:34:45] notion of this. So there's no mapping of
+[00:34:47] this to the relational model or
+[00:34:48] relational algebra. This is something
+[00:34:49] we're going to do in introduce in our
+[00:34:51] implementation to allow us to do this
+[00:34:54] achieve this parallelism. Again, just
+[00:34:56] think of like a barrier where it it it
+[00:34:59] blocks the the output uh or sending a
+[00:35:03] signal to up above to say you can start
+[00:35:05] processing the data. I' I've finished
+[00:35:08] until it gets all the results expects to
+[00:35:10] get from its children operators.
+[00:35:13] So uh if you're familiar like in in
+[00:35:16] programming languages I think they call
+[00:35:17] this like a merge operator or a gather
+[00:35:20] right or scatter gather this basically
+[00:35:22] the same idea right post calls these
+[00:35:24] gather gather merge and you're just
+[00:35:26] combining the the different results from
+[00:35:27] the from the child operators and
+[00:35:29] producing them as as a final result that
+[00:35:31] go that goes up above
+[00:35:33] >> yes
+[00:35:34] >> I'm just curious why does it need to be
+[00:35:36] a barrier because I would think in some
+[00:35:37] cases like you can gather like partial
+[00:35:40] results and just send them up like why
+[00:35:42] do you need The question is why do I why
+[00:35:44] does it have to be a barrier where I
+[00:35:45] block things in isn't it in some cases
+[00:35:48] where I can send partial results up? Uh
+[00:35:50] yeah, but again think of like the
+[00:35:52] pipeline breaker. There's some places
+[00:35:53] where I can't I can't proceed until I
+[00:35:55] get all the results. In that case you
+[00:35:57] wouldn't you wouldn't use the exchange
+[00:35:58] operator.
+[00:36:03] >> Let's keep going sometimes.
+[00:36:06] >> Sometimes you can sometimes you can't.
+[00:36:08] So is an issue that this is not power
+[00:36:11] >> um
+[00:36:13] yeah so
+[00:36:16] yeah he's correct that there are some
+[00:36:18] cases where I don't have to block until
+[00:36:21] I get all the results you can send some
+[00:36:23] results out for simplicity assume what
+[00:36:25] we're blocking here for assuming this is
+[00:36:26] a pipeline breaker then I'll show
+[00:36:28] different versions of exchange operators
+[00:36:30] that don't have to do do what you're
+[00:36:31] saying start starting with the basic one
+[00:36:33] it blocks but then we we'll relax
+[00:36:38] All right. So here's our query we want
+[00:36:39] to do. We want to join A and B, right?
+[00:36:41] And we have a a filter on the some some
+[00:36:44] value that's for each of these tables. I
+[00:36:46] do a join and then I have a projection
+[00:36:48] at the top, right? So say I want to do
+[00:36:50] the processing of this on table A first.
+[00:36:53] So I've partitioned table A into three
+[00:36:55] disjoint sub subsets. Now it could again
+[00:36:57] be page based or rangebased, could be
+[00:36:59] based on the value because I've hashed
+[00:37:01] whatever my joint key is. It doesn't
+[00:37:02] matter. I'm going to assign those three
+[00:37:04] subsets of A to my my three workers,
+[00:37:08] right? And each of them are going to run
+[00:37:11] basically up the pipeline that I have
+[00:37:14] and run in parallel because they're
+[00:37:15] processing different portions of the
+[00:37:16] table. They don't need to communicate
+[00:37:18] with each other. So they can run
+[00:37:19] independently of of of the others. So
+[00:37:22] each they're all going to do the the
+[00:37:24] filter and then now they're all going to
+[00:37:26] do the sort of the this side of the hash
+[00:37:28] join to build the hash table, right? And
+[00:37:32] so now I have an exchange operator
+[00:37:34] uh where up above that says this
+[00:37:37] pipeline or these this portion of the
+[00:37:39] query plan is not finished until all
+[00:37:42] three of my workers down below me come
+[00:37:44] up and tell me that they're done. So
+[00:37:47] maybe it should be a black line for
+[00:37:49] control and some data like so I'm not
+[00:37:50] really moving data for this case here
+[00:37:52] into my exchange operator because this
+[00:37:54] build hash table thing is kind of assume
+[00:37:56] there's some hash table that it's a
+[00:37:57] global hash table they're all updating
+[00:37:59] but my exchange operator needs to know
+[00:38:01] that they're all done processing their
+[00:38:03] portion of table A before I can proceed
+[00:38:06] with the next you know the next part of
+[00:38:07] the query plan right so they're all
+[00:38:09] generating data for this hash table here
+[00:38:11] and then now uh once I know this is done
+[00:38:14] I can then schedule uh three other
+[00:38:17] workers or three of the same workers
+[00:38:18] just now running different portions of
+[00:38:20] the query plan. Now they're processing
+[00:38:21] table B which I've broken up into three
+[00:38:23] three subsets as well and do the same
+[00:38:25] thing. They're they're going to do a
+[00:38:26] filter in parallel and then now they're
+[00:38:28] going to do the probe of the hash table
+[00:38:30] in parallel. Again, it's a single hash
+[00:38:33] table. They're all reading into and and
+[00:38:35] looking for results. And then if any
+[00:38:37] matches, they then do the projection.
+[00:38:39] But then above that, I have another
+[00:38:41] exchange operator that says I'm not I
+[00:38:43] can't produce the final result for this
+[00:38:46] query until I know that my three workers
+[00:38:49] down below me running these, you know,
+[00:38:51] these portions of the pipeline that
+[00:38:53] they've all finished processing the data
+[00:38:54] that they have.
+[00:38:57] So going back to his point here, these
+[00:38:58] exchange operators are blocking because
+[00:39:00] I can't I don't want to start doing the
+[00:39:03] the probe and the hash table here on on
+[00:39:06] the the probe side for table B until I
+[00:39:09] know that all three workers that were
+[00:39:11] were building hash table have completed
+[00:39:13] because I don't want to get a false
+[00:39:14] negative. I don't want to probe into the
+[00:39:16] hash table looking for a match but the
+[00:39:18] worker that is responsible for putting
+[00:39:20] that my match into the hash table hasn't
+[00:39:22] completed yet. So in this case here that
+[00:39:24] again the the the exchange operator is
+[00:39:26] is blocking is a barrier. It doesn't
+[00:39:28] necessarily have have to do that
+[00:39:32] right and then the the I'm not showing
+[00:39:34] here but there's some metadata in my
+[00:39:35] query plan that keeps track of these
+[00:39:37] pipelines and keep track of of these
+[00:39:38] dependencies and would know I want to
+[00:39:40] schedule the workers that process table
+[00:39:42] A uh segments first before I jump to
+[00:39:45] anything on table B.
+[00:39:49] So this is again this is the most basic
+[00:39:51] simple sorry the most most common and
+[00:39:53] most basic type of of exchange operator
+[00:39:56] I it's doing a gather and it's combining
+[00:39:59] results for multiple workers and
+[00:40:01] producing as as a single output stream
+[00:40:03] and again depending on whether or not I
+[00:40:05] I I'm allowed to process the data at the
+[00:40:08] same time or not whether it's a blocking
+[00:40:10] exchange or it's uh it's just producing
+[00:40:13] a single exchange again depends on what
+[00:40:15] the operator is actually doing below me.
+[00:40:17] um and the data system would would know
+[00:40:19] how to do that.
+[00:40:20] Another type of exchange operator is to
+[00:40:22] do what's called distribute and and for
+[00:40:24] this here I'm using the SQL servers
+[00:40:26] terminology for this. uh different data
+[00:40:29] systems might call it might different
+[00:40:30] things but all the high level ideas are
+[00:40:31] still the same with a distributed
+[00:40:33] exchange operator is that I'm taking a
+[00:40:35] single input stream from some some
+[00:40:37] operator down below me which again I
+[00:40:38] don't care what it is below me just I
+[00:40:40] know that I'm getting tupils up from
+[00:40:42] from below and passing them up and then
+[00:40:44] now I'm going to redistribute uh or
+[00:40:46] repartition that data across different
+[00:40:48] operators that I can run in parallel at
+[00:40:50] the same time different workers
+[00:40:52] and the last one is uh called
+[00:40:54] repartition and that's just a
+[00:40:55] combination of of the the the top one
+[00:40:58] and and the middle one where I could
+[00:41:00] take multiple input streams from
+[00:41:02] different operators down below me and
+[00:41:04] then I'm gonna produce multiple output
+[00:41:05] streams, but it doesn't need to be a
+[00:41:08] onetoone correspondence between the
+[00:41:09] number streams coming in and the number
+[00:41:10] streams coming out. Like I may decide
+[00:41:12] that I have a lot I want to use a lot of
+[00:41:14] parallelism because I have a lot of data
+[00:41:16] down below me, but then up above I maybe
+[00:41:18] want to only run on two workers. So I'll
+[00:41:21] coales the three streams into two two
+[00:41:23] output streams and only have two workers
+[00:41:25] run them in in parallel,
+[00:41:28] right? Because you know the coordination
+[00:41:29] cost or sending data between different
+[00:41:30] nodes is not for free. Uh and so there's
+[00:41:33] a trade-off between how much parallelism
+[00:41:34] I have versus how much communication
+[00:41:36] cost I'm going to pay to to send data
+[00:41:38] around. So some data systems like
+[00:41:41] Google's BigQuery or Dremel, it's the
+[00:41:43] same system. Um they'll always do this
+[00:41:46] for every single pipeline, every single
+[00:41:48] stage query execution. And this allows
+[00:41:50] them to get to to basically on the fly
+[00:41:53] decide do I want to scale up or scale
+[00:41:54] down the number of nodes I'm going to
+[00:41:56] use to process my query. Again, that's
+[00:41:58] distributed databases. We'll cover that
+[00:41:59] later. Uh but you can do the same thing
+[00:42:02] on a single node thing and saying I I I
+[00:42:04] want to run this portion of my query
+[00:42:06] plan with with 10 workers. But then
+[00:42:08] since I'm doing a bunch of filters and
+[00:42:09] and and whittling down how much data I
+[00:42:12] have at at this at this exchange
+[00:42:14] operator here, I only want to have two
+[00:42:16] output streams because I only want two
+[00:42:17] workers to process the remaining
+[00:42:19] results.
+[00:42:24] Is this clear? And again to his point is
+[00:42:27] it does it need to be a barrier or not?
+[00:42:28] depends on what the what the operator is
+[00:42:31] doing uh up above and below like
+[00:42:35] depending on whether you need to see all
+[00:42:36] the results or you can start seeing the
+[00:42:37] results as they arrive.
+[00:42:40] If you can start processing the results
+[00:42:42] as they arrive, this allows you to do
+[00:42:43] what's called interoperative parallelism
+[00:42:45] with vertical parallelism where I'm
+[00:42:48] going to have different operations in my
+[00:42:50] query plan actually execute at the same
+[00:42:53] time. uh
+[00:42:56] that would allow me to basically was
+[00:42:57] again pipeline data between them without
+[00:42:59] having to materialize results or stage
+[00:43:01] them for for transfer from one upper to
+[00:43:03] the next. Um and you typically see this
+[00:43:06] in in what are called streaming systems,
+[00:43:08] streaming database systems where it
+[00:43:10] isn't like I have a a table that's a
+[00:43:13] fixed size and I run my query and I
+[00:43:15] produce whatever the result is at that
+[00:43:16] moment that I run the query. In a
+[00:43:19] streaming system, it's like a continuous
+[00:43:21] updates, continuous insert stream of new
+[00:43:23] data coming in. And I want to run this
+[00:43:25] query forever continuously.
+[00:43:28] And it can then produce results, you
+[00:43:30] know, on on a on a schedule like every 5
+[00:43:32] seconds produce a new result, whatever
+[00:43:33] it's seen before. Or if there's some
+[00:43:35] trigger mechanism say uh if I see data
+[00:43:39] that, you know, we see a stock price
+[00:43:40] that goes above $100, then output a
+[00:43:43] result. Like there's a bunch of
+[00:43:44] mechanisms you can do to produce
+[00:43:47] results. and think of like there's this
+[00:43:49] data always coming in and I want to be
+[00:43:51] able to run these things in parallel
+[00:43:53] because I I don't have to wait for maybe
+[00:43:57] all the data to show up because it's
+[00:43:58] it's it's it'll go to infinity, right?
+[00:44:01] It'll just the new data is going to come
+[00:44:02] in forever,
+[00:44:05] right? So let's look at sort of contrive
+[00:44:07] example here. So say now I'm doing the
+[00:44:08] same join I had before, but now I have
+[00:44:10] this UDF or function I'm calling on the
+[00:44:14] data. I think of like, you know, hashing
+[00:44:15] of a hash of a hash some real expensive
+[00:44:17] operation that I'm doing for my for my
+[00:44:19] data. And so if if what I want to be
+[00:44:22] able to do is not wait for get all the
+[00:44:25] results of this join to finish before I
+[00:44:28] start calling that UDF because that's
+[00:44:30] going to be expensive and I want to put
+[00:44:31] that on a separate worker to have that
+[00:44:32] run in parallel, right? So I'll have one
+[00:44:35] worker responsible for doing the join
+[00:44:36] and then it's going to sort of emit
+[00:44:38] tupils out as it finds matches and then
+[00:44:41] that's just going to pass it up to now
+[00:44:43] to my second worker that's going to just
+[00:44:45] continually read this input stream
+[00:44:46] incoming and then compute the whatever
+[00:44:48] that UDF or the function call is and
+[00:44:50] produce output that way. So now I could
+[00:44:53] have this this thread just sort of rip
+[00:44:55] through do the join and then immediately
+[00:44:56] hand off the result to some other thread
+[00:44:58] that's going to rip through and you know
+[00:45:00] compute whatever the hashing function
+[00:45:02] that I want to compute. And then of
+[00:45:04] course now if at some point if if it
+[00:45:06] completes the incoming uh it's processed
+[00:45:09] all the tupils that it's seen so far but
+[00:45:11] the bottom guy is still running it just
+[00:45:13] blocks and waits for the second guy the
+[00:45:16] bottom guy to notify him that there's no
+[00:45:17] result for you.
+[00:45:20] This is the pipeline.
+[00:45:21] >> This is the pipeline. Yes.
+[00:45:25] >> But like in theory, you know, you could
+[00:45:26] have like the I'm just trying to say
+[00:45:29] like the the the function call the
+[00:45:31] projection could be inside this thing
+[00:45:33] here, but I want to be able to separate
+[00:45:35] them. But again, it doesn't come for
+[00:45:37] free. I got to communicate and send data
+[00:45:39] up. I got to copy data. So it's it's
+[00:45:42] more expensive to do than just fusing
+[00:45:45] everything all together inside the for
+[00:45:46] loop. But I can I can by breaking it up
+[00:45:49] I allow I allow to get suffocate
+[00:45:51] parallelism that way.
+[00:45:56] Okay. So the last one is bushy
+[00:45:57] parallelism. And as I said this is just
+[00:45:59] you know a combination of interoper
+[00:46:01] inter intra and interoperative
+[00:46:03] parallelism. Um where you have different
+[00:46:06] workers going to be running on different
+[00:46:07] portions of the data at the same time
+[00:46:08] and different workers be running
+[00:46:10] different segments of the of the query
+[00:46:13] plan at the same time. So this is a
+[00:46:15] contrived example uh like I'm doing a a
+[00:46:18] cartisian product or cross join between
+[00:46:20] four tables A B C and D but I could have
+[00:46:23] the the the bottom part here doing a
+[00:46:25] join and that can just run in separate
+[00:46:27] workers and that just can crunching
+[00:46:29] through and computing results and then
+[00:46:30] as they get output I could have another
+[00:46:32] set of workers doing the building the
+[00:46:34] hash tables and then doing the joins and
+[00:46:37] all these can can can run in parallel to
+[00:46:39] produce my final result again. So I'm
+[00:46:41] getting the going back here. This is the
+[00:46:44] this bottom portion here is the intra
+[00:46:46] operator parallelism. So within uh
+[00:46:49] within my query plan I'm having
+[00:46:50] different portions operate on the same
+[00:46:52] thing and I each of these ones I could I
+[00:46:53] could fork out multiple times and then
+[00:46:55] within the same query plan I can me also
+[00:46:57] scale up the the number of workers that
+[00:46:59] are different running at the same time
+[00:47:00] for different parts of the query plan.
+[00:47:02] So that's the the vertical parallelism
+[00:47:11] will merge BCD and then it will
+[00:47:14] >> the question is like is this sorry this
+[00:47:16] is doing you know this is doing
+[00:47:18] cartigian products like take join of AB
+[00:47:21] it's going to produce all combinations
+[00:47:22] of A and B uh and this take all
+[00:47:26] combinations of C and D and now you
+[00:47:27] produce all combinations all together.
+[00:47:29] >> Is this the is it Is this an optimized
+[00:47:33] or is this exactly what?
+[00:47:35] >> The question is like is this an
+[00:47:36] optimized
+[00:47:37] >> binary operations?
+[00:47:39] >> Like is this an optimal query plan? It
+[00:47:43] depends on the data, right? It may be
+[00:47:45] better to join A followed by followed by
+[00:47:48] joining C and then followed by joining
+[00:47:49] D. This is called a bushy join. We'll
+[00:47:52] see this next class. Like in some cases
+[00:47:54] it may actually this some system
+[00:47:56] sometimes this is better. Most systems
+[00:47:59] will actually not give you a query plan
+[00:48:00] that looks like this. They'll give you
+[00:48:02] like left deep joint. So I'll join A,
+[00:48:04] take the output of that, join C, then
+[00:48:06] join D. Right? Because the the
+[00:48:08] computational complexity of searching
+[00:48:10] for this plan is super high. So people
+[00:48:13] don't do it.
+[00:48:15] See the camera wants to wants to look at
+[00:48:18] him, not me. See if that works. Okay.
+[00:48:21] All right. Other questions?
+[00:48:26] All right. So
+[00:48:28] we know how to use multiple workers now
+[00:48:29] execute per queries in parallel, right?
+[00:48:32] Uh and this is great if we have a lot of
+[00:48:34] CPU resources and we're CPUbound,
+[00:48:37] but oftent times we're not going to be
+[00:48:38] CPU bound. What's going to be the
+[00:48:39] slowest thing? Disk. Now in the modern
+[00:48:42] era, discs have gotten really really
+[00:48:44] fast uh in the last 5 years. Uh so many
+[00:48:47] times CPU is going to be the bottleneck
+[00:48:49] for us. But uh depending on where our
+[00:48:52] data is actually being stored, if it's
+[00:48:53] on S3, right, some remote storage,
+[00:48:55] that's always going to be way slower
+[00:48:56] than anything we can do on the CPU side,
+[00:48:58] right? So just because we have multiple
+[00:49:02] workers, uh we may still not get the
+[00:49:05] parallelism and then performance
+[00:49:06] improvement we want because the end of
+[00:49:08] the day we're reading writing pages from
+[00:49:10] disk and that's going to be super slow.
+[00:49:12] So this is where IO parallelism comes
+[00:49:13] in. And the idea is that we want to
+[00:49:15] split our our database or databases
+[00:49:17] plural uh across multiple storage
+[00:49:20] devices so that we can we can sort of
+[00:49:22] get the the benefit of uh of improved
+[00:49:26] bandwidth to disk because we're reading
+[00:49:28] from from multiple devices, right? So
+[00:49:30] there different bunch of ways we can do
+[00:49:32] this, right? We can have multiple discs
+[00:49:34] per database. So again, it looks like a
+[00:49:36] single logical database but it's split
+[00:49:37] across multiple physical discs. We can
+[00:49:39] do one one database per disk, one table
+[00:49:42] per disk, right? or we can take a single
+[00:49:44] single table and split across multiple
+[00:49:46] discs. All right. The the high-end
+[00:49:50] systems will allow you have complete
+[00:49:52] control over all these different
+[00:49:53] factors. Like in Oracle, you can specify
+[00:49:55] exactly like the location of data uh for
+[00:49:58] tables. Uh you can specify where you
+[00:50:00] want the write ahead log is, which we
+[00:50:01] haven't covered yet, but that's
+[00:50:02] basically think of the log recovery log.
+[00:50:03] I can put that on one one disk and put
+[00:50:05] the database itself, the actual tables
+[00:50:08] themselves on another disc. So I get the
+[00:50:09] parallelism that way. Progress to
+[00:50:11] control this a little bit with what they
+[00:50:12] call table spaces. But often times the
+[00:50:15] the the the
+[00:50:17] I won't say the lower end systems but
+[00:50:18] systems like my SQL for example they
+[00:50:19] don't have a notion of physical
+[00:50:21] locations of of the data but you can
+[00:50:23] basically do the same thing at the
+[00:50:24] administrative level by using like sin
+[00:50:26] links and things like that to put put
+[00:50:28] files in different devices but the data
+[00:50:30] itself is not aware of the locations of
+[00:50:33] the the the characteristics of the disc
+[00:50:35] that that it's reading from or writing
+[00:50:36] from just sees that you know a single
+[00:50:38] single disc location sees a single
+[00:50:40] logical uh file system.
+[00:50:43] So the
+[00:50:46] you know should be obvious why we want
+[00:50:47] to do this. But now there's a bunch of
+[00:50:48] trade-offs we have to consider when we
+[00:50:50] want to start start splitting our
+[00:50:52] database and putting on different files
+[00:50:53] or different locations on disk. And it's
+[00:50:56] very similar to the trade-offs we'll see
+[00:50:57] in a distributed system of where we
+[00:50:58] start putting the data across multiple
+[00:51:00] nodes because sometimes it'll make
+[00:51:02] things go faster but we'll have less
+[00:51:05] guarantees about the durability and
+[00:51:07] safety of our data. Or we could have
+[00:51:09] great durability and safety of our data.
+[00:51:10] But now things are going to go a lot
+[00:51:12] slower because now I got to make sure
+[00:51:13] everybody is synchronized and and and up
+[00:51:15] to date.
+[00:51:17] So say really trivial example. I have
+[00:51:19] six pages and this is what we just sort
+[00:51:22] of see at the the sort of logical level.
+[00:51:24] I have six pages. I don't really know
+[00:51:25] where they're being stored, but I know I
+[00:51:27] can I can address each of them. And so
+[00:51:29] now if I want to split this across the
+[00:51:32] uh you know say three disks we're going
+[00:51:34] to sort of way say the two extremes
+[00:51:35] would be mirroring it everywhere versus
+[00:51:37] striping the data and in in practice
+[00:51:41] you're going to do something in in
+[00:51:42] between the two of them. So if you're
+[00:51:44] ever familiar with RAID like the way you
+[00:51:46] sort of redundant array of independent
+[00:51:49] discs um RAID zero level is is where you
+[00:51:53] just you're just striping where
+[00:51:55] basically do roundroin writing of the
+[00:51:57] data. So page one goes to the first
+[00:51:58] disc, page two goes to the second disc,
+[00:52:00] page three and so forth. Right? So each
+[00:52:01] page only exists in in one physical disk
+[00:52:05] at any time. So now anytime I want to
+[00:52:08] read data, I go to one disk and I get
+[00:52:10] the page I want. And if I have to write
+[00:52:12] the data, I go to one p one one disk and
+[00:52:14] write that data. And if I have multiple
+[00:52:17] queries or multiple workers trying to
+[00:52:18] readwrite data at the same time, I get
+[00:52:20] the parallelism that I want across
+[00:52:21] different discs because one worker could
+[00:52:23] be going to dis first disk, another
+[00:52:24] worker could go to the second disc. you
+[00:52:26] ignoring bandwidth issues of getting
+[00:52:27] data up to memory, right? We ignore that
+[00:52:29] for now, but I can get the parallelism I
+[00:52:31] want because because now these things
+[00:52:32] are completely independent of each
+[00:52:33] other. Of course, the downside is that
+[00:52:36] if I lose one disc, then I lose one
+[00:52:37] throw of my database and that could be,
+[00:52:40] you know, that could be catastrophic.
+[00:52:42] Okay, if it's your bank account on that
+[00:52:43] disc, you care.
+[00:52:46] The other extreme is called uh RAID one
+[00:52:48] or mirroring where that's where for
+[00:52:50] every single every single disk page
+[00:52:54] I'm going to write that to all my discs
+[00:52:56] complete copy of it and then I don't
+[00:52:58] report back to the so the data server
+[00:53:01] the disk manager that my data has
+[00:53:02] successfully been written until I
+[00:53:04] successfully fsync across all these all
+[00:53:08] three storage devices. So this makes
+[00:53:10] reads go really great because I can
+[00:53:12] still now u I can read any page I want
+[00:53:15] from any disc and now I can have a load
+[00:53:17] balancer above this deciding you know
+[00:53:18] what disc I want to have so I maximize
+[00:53:20] bandwidth across all of them course but
+[00:53:22] of course this makes rights go bad or go
+[00:53:24] slowly because now I got to update the
+[00:53:26] same page across three different discs
+[00:53:28] and make sure they're all in sync before
+[00:53:30] I report back to the application that I
+[00:53:33] that you know I've successfully stored
+[00:53:34] your data you access to. So two
+[00:53:38] different ways to do this. One is that
+[00:53:39] you can buy storage devices that have a
+[00:53:42] built-in IO controller that can do this
+[00:53:44] mirroring for you, right? But this
+[00:53:46] actually would be transparent to the
+[00:53:47] database system because it'll look like
+[00:53:49] a single logical file system, but
+[00:53:51] underneath the covers, it's it's storing
+[00:53:52] the data across different ways. Um, a
+[00:53:55] better approach and what most systems
+[00:53:57] are going to do is sort of software
+[00:53:59] based. So I don't mean like software
+[00:54:00] raid where it's it's the file system
+[00:54:02] level but now inside the data system
+[00:54:03] itself I'm basically have code that that
+[00:54:06] can do the different types of of these
+[00:54:08] storage layouts
+[00:54:10] uh
+[00:54:12] inside my own data system because now I
+[00:54:13] know where the data is being stored. I
+[00:54:15] know the implications of like losing one
+[00:54:16] disc versus another disc, right? I have
+[00:54:19] all complete management of everything.
+[00:54:20] And again this is what the high-end
+[00:54:22] systems will do for you. Like Oracle has
+[00:54:23] has a bunch of uh capabilities in the
+[00:54:26] space. It's faster. It's more flexible
+[00:54:28] than just relying on again transparent
+[00:54:30] RAID or transparent hardware to do this
+[00:54:32] for you. But again, you only see this
+[00:54:35] you only see the software one doing all
+[00:54:36] this kind of stuff in in the expensive
+[00:54:38] systems. So there's this trade-off
+[00:54:40] between how how fast I want my data
+[00:54:42] systems to be, how safe or durable I
+[00:54:44] want my data to be, and then my storage
+[00:54:46] capacity, right? because I have to buy
+[00:54:49] more disc now if I'm mirroring
+[00:54:50] everything and having complete copies of
+[00:54:52] my database cuz because you know if my
+[00:54:54] database is one terabyte I can't you
+[00:54:57] know I can't use a bunch of smaller disc
+[00:54:59] and get get the composite one terabyte I
+[00:55:01] need I have to have one terabyte per
+[00:55:02] disc because I need to copy the whole
+[00:55:04] thing the whole database inside that
+[00:55:05] that disc at a time so
+[00:55:10] in the database world if you really care
+[00:55:12] about data and you don't want to lose
+[00:55:13] data chances are you usually have money
+[00:55:16] and so you put you you don't go cheap on
+[00:55:18] your database system. And so capacity is
+[00:55:21] less of an issue. It's more of the
+[00:55:22] trade-off between durability and
+[00:55:23] performance because you just throw more
+[00:55:24] money at it to get more capacity,
+[00:55:28] right? I say that, but like you know 99%
+[00:55:30] of the databases are running on the same
+[00:55:32] box as the web server. Uh which you're
+[00:55:34] not supposed to do, but everyone does
+[00:55:35] because if it's WordPress, who cares,
+[00:55:37] right? But like think of like your bank,
+[00:55:39] think of like Visa, Mastercard, big, you
+[00:55:41] know, big uh financial companies.
+[00:55:44] they have infinite money and they really
+[00:55:47] care about those two factors and
+[00:55:48] capacity is less of an issue. But of
+[00:55:50] course now this means like your database
+[00:55:51] system is running on expensive hardware
+[00:55:53] and like you don't want to put r you
+[00:55:55] know you don't want to put a lot of data
+[00:55:56] in it uh stupidly because then you're
+[00:56:00] you know you're just makes it even more
+[00:56:02] expensive and you run out more capacity
+[00:56:04] and you have to manage it that way like
+[00:56:06] that's a separate issue. uh this is
+[00:56:08] mostly an issue for for for
+[00:56:10] transactional workloads in the cloud.
+[00:56:12] Now everyone just runs on S3 and that's
+[00:56:14] infinite capacity and they they'll
+[00:56:16] handle the durability for you and
+[00:56:18] performance is is depends on you know
+[00:56:20] how much how much parallelism you can
+[00:56:22] you can get reading data out how much
+[00:56:23] you want to cache things on the local
+[00:56:24] side that's distributed database problem
+[00:56:26] we'll cover that later
+[00:56:29] all right so another thing we have a
+[00:56:30] handy about today as well is
+[00:56:32] partitioning
+[00:56:34] uh this basically to take a a single
+[00:56:37] table or or a database and you want to
+[00:56:39] split it up into these disjoint subsets
+[00:56:41] And I was being handway about it saying
+[00:56:43] like, oh, you could just split on bas
+[00:56:45] ranges of ranges of pages or you could
+[00:56:48] hash a value like we did in the divide
+[00:56:50] and conquer stuff with hash tables to
+[00:56:52] split things up. I'm being handw about
+[00:56:54] that because we'll cover that more in in
+[00:56:57] uh in a few weeks. But the the data
+[00:57:01] system has again has complete control
+[00:57:03] over where it's writing data to and
+[00:57:04] understands that the you know there's
+[00:57:07] this disc there and there's that disc
+[00:57:09] there and this data needs to go with
+[00:57:10] this disc or that disc like it can make
+[00:57:11] better decisions about how it wants to
+[00:57:14] uh split things up and partitioning is
+[00:57:17] is one of the ways that's going to be
+[00:57:18] able to do this for us. And we'll see
+[00:57:20] different types of partitioning where we
+[00:57:21] can now take a single logical table and
+[00:57:23] then split split up to these disjoint
+[00:57:25] subsets that we can then route to
+[00:57:27] different uh storage devices separately.
+[00:57:29] And again, we don't have to rewrite
+[00:57:31] anything in our application code at the
+[00:57:33] SQL level because we're just accessing
+[00:57:35] tables. We don't know how things
+[00:57:36] actually being physically split up and
+[00:57:38] how things be running in parallel. All
+[00:57:40] that is hidden for us. Ideally, most
+[00:57:43] systems that that's the case. We kind of
+[00:57:45] saw this before when we talked about um
+[00:57:48] you know column sources row stores right
+[00:57:50] row store was like taking all the the
+[00:57:52] data for a single tupil and they were
+[00:57:53] just sort of contiguous with each other
+[00:57:55] in in a single page and then with the
+[00:57:57] column store we were saying oh take the
+[00:57:59] you know take just the data for for one
+[00:58:00] column across all the tupils in a table
+[00:58:02] and store that in a separate page that's
+[00:58:05] basically the same thing as vertical
+[00:58:06] partitioning I'm splitting my my my
+[00:58:08] table up my my record up into uh
+[00:58:11] different pieces based on the columns
+[00:58:12] and I now store them in separate files
+[00:58:14] separate pages, separate storage
+[00:58:16] devices. Right? So, we've seen this
+[00:58:19] technique before, but we'll we'll see it
+[00:58:20] more explicitly when we talk about
+[00:58:21] distributed databases because that's
+[00:58:22] going to be how they're going to scale
+[00:58:24] out um across multiple machines.
+[00:58:28] All right. So, to finish up, so par
+[00:58:30] execution is is is is super common and
+[00:58:33] it's how the data sim is going to be
+[00:58:34] able to get the the better performance,
+[00:58:36] right? taking advantage of the
+[00:58:37] additional computational resources and
+[00:58:39] storage resources that are now available
+[00:58:40] to us in you know in in modern world
+[00:58:43] like your cell phone has more threads or
+[00:58:45] more CPU cores then like the database
+[00:58:47] systems from the 1980s right it's
+[00:58:50] infinitely faster but it has more
+[00:58:52] computational power more you know
+[00:58:54] threads more more cores that they can
+[00:58:55] take advantage of so you need to design
+[00:58:57] your data system to be able to to use
+[00:58:59] all these things we'll see this later on
+[00:59:02] but like the the the the multiple
+[00:59:04] workers also going to allow us to do not
+[00:59:06] just hide the disc latency like I got
+[00:59:08] something from disk or from across the
+[00:59:10] network. I can have other threads keep
+[00:59:12] or other workers keep running while my
+[00:59:13] thread is my worker is paused but we're
+[00:59:15] going to be able to do the same thing
+[00:59:16] now when we run uh multiple queries that
+[00:59:19] want to update the data set at the same
+[00:59:20] time in parallel because now I can
+[00:59:22] basically control who can run what and
+[00:59:24] when and I would know that this thread
+[00:59:26] or this worker for this query is waiting
+[00:59:28] for this other query to finish commit
+[00:59:31] whatever whatever changes it's made
+[00:59:33] before my query can start running.
+[00:59:34] Hello.
+[00:59:35] >> Shoot. Sorry.
+[00:59:37] >> Me pause that.
+[00:59:40] >> All right. Sorry. Um, so I I can run
+[00:59:42] these multiple workers at the same time
+[00:59:45] and I can have complete control of who's
+[00:59:47] allowed to run one rod to run when based
+[00:59:50] on the data they want to modify, the
+[00:59:53] data that other queries have modified.
+[00:59:55] So we have complete control of
+[00:59:56] everything in our database system and we
+[00:59:58] know exactly what every query wants to
+[01:00:00] do. we can then make the best decisions
+[01:00:02] on how to paralyze things instead of
+[01:00:03] just letting OS take the wheel and do
+[01:00:06] whatever it wants because it doesn't
+[01:00:07] know what the queries actually want to
+[01:00:08] do.
+[01:00:10] Okay.
+[01:00:12] All right. So, next class will be us
+[01:00:14] discussing begin discussion about uh how
+[01:00:17] do we again take a SQL query and
+[01:00:19] generate the that physical plan that we
+[01:00:21] then can actually execute and it's not
+[01:00:23] just deciding what the shape of the
+[01:00:25] query panel looks like. So he was asking
+[01:00:26] you know you know I showed a sort of
+[01:00:28] what I call a bushy joins where I'm
+[01:00:29] joining was A and B and C and D and they
+[01:00:31] were done run in parallel and they take
+[01:00:33] the output of those joins them together.
+[01:00:34] Do I, you know, the do I generate plans
+[01:00:38] that look like that or do I join A and B
+[01:00:40] first followed by C followed by D or do
+[01:00:42] I join B first A first like all those
+[01:00:44] decisions what what the actual physical
+[01:00:46] plan is going to look like that's what
+[01:00:47] we'll start talking about on uh on
+[01:00:50] Monday next week and again I fully admit
+[01:00:53] this is this is going to be the hardest
+[01:00:54] part about database systems do query
+[01:00:56] optimization so we'll go through it at a
+[01:00:58] high level first about how to how how
+[01:01:01] we're actually going to search for
+[01:01:02] different plans and then on Wednesday
+[01:01:03] next week we'll talk about how we cost
+[01:01:05] them to decide whether one plan is
+[01:01:07] actually better than another. And the
+[01:01:08] dirty secret is going to be it's not a
+[01:01:10] dirty secret. It's it's it's well known.
+[01:01:12] Everybody's career optimizer is
+[01:01:13] terrible. Everybody does a terrible job
+[01:01:15] at this. The question is how are you how
+[01:01:18] worse are you compared to other database
+[01:01:19] systems, right? And the challenge is
+[01:01:22] going to be is because you're basically
+[01:01:23] making decisions on on incomplete data.
+[01:01:26] Like I can't know exactly what the query
+[01:01:29] is going to do until I run it. But I got
+[01:01:30] to decide what I'm going to do before I
+[01:01:32] run it. And so they'll have these
+[01:01:34] summaries and statistics to try to try
+[01:01:36] to extrapolate what the data actually
+[01:01:37] looks like. But everyone's going to be
+[01:01:38] terrible at this, right? Uh and so we
+[01:01:43] we'll understand why more next week, but
+[01:01:45] on Wednesday, but Monday's class will be
+[01:01:47] mostly about like how do we actually
+[01:01:48] structure these things. Okay,
+[01:01:50] >> thanks for having me. Um if you saw my
+[01:01:53] talk a week and a half ago, some of this
+[01:01:55] will overlap quick. I'm CEO Spiral.
+[01:01:58] Before that, I guess the most relevant
+[01:01:59] thing is uh this is was I was one of the
+[01:02:02] key people behind Foundry at Palunteer.
+[01:02:04] So, this is hopefully my second
+[01:02:06] successful exabyte scale database thing.
+[01:02:09] Um I'm actually going to start with like
+[01:02:11] a bit of a history lesson, ancient
+[01:02:12] history. I guess most of you are
+[01:02:14] undergrads. You don't even remember 2005
+[01:02:17] probably. Anyway, 2005 was about when
+[01:02:19] Dennard scaling ended. So, that's uh
+[01:02:22] that was the end of cores get faster.
+[01:02:23] like CPUs today are kind of the same
+[01:02:25] gigahertzish as CPUs from 20 years ago.
+[01:02:29] Um, but Mo's law continued because we
+[01:02:32] moved to sort of multipprocessor CPUs.
+[01:02:35] Um, this is hardware from 2005. If you
+[01:02:37] need a reference point, we all play the
+[01:02:39] same cell phone game. Um, this is
+[01:02:41] exactly what I'm saying. You can see the
+[01:02:43] sort of shift around 2005 to now there
+[01:02:45] are two cores, but the black line
+[01:02:47] represents clock speed and there was a
+[01:02:49] real switch over. I'm saying Mors law
+[01:02:52] though continued up and to the right
+[01:02:55] harder in 2015 was actually I think
+[01:02:57] still sort of reckoning with this like
+[01:02:59] we moved from single cores that were
+[01:03:00] really fast to lots of cores and so if
+[01:03:04] you think of the era of Hadoop um or
+[01:03:06] MSOS and later Kubernetes that was sort
+[01:03:08] of like how do I manage lots of cores
+[01:03:10] and eventually lots of machines that are
+[01:03:12] sort of providing yet more cores um it
+[01:03:14] was all about managing these large
+[01:03:17] homogeneous pools of resources Um there
+[01:03:20] was sort of a speed hierarchy like RAM
+[01:03:22] was faster than the disk. Disk was
+[01:03:24] faster than the network. Um there was an
+[01:03:27] ongoing move from migrating from on-rem
+[01:03:29] to the cloud. Uh again showing my age I
+[01:03:33] definitely remember like wrapping
+[01:03:34] servers in weird places. Uh and then you
+[01:03:37] know now that's a bit less common. Uh
+[01:03:40] this is MSUS. This actually fun bit of
+[01:03:42] trivia was out of the same lab that
+[01:03:45] produced Spark and actually Spark was
+[01:03:47] meant to be a proof of concept of how to
+[01:03:48] run stuff on MSUS. But then now MSIS is
+[01:03:51] pretty much is dead and Spark is you
+[01:03:53] know Spark went on to eat the world.
+[01:03:56] What's different now 2025 computers is
+[01:03:59] heterogous. So sort of GP GPU compute um
+[01:04:03] is probably here to stay. you know, all
+[01:04:06] your money goes to Jensen Huang. Um, if
+[01:04:09] you get the mean reference of all your
+[01:04:11] base belong to us, good. Um, the
+[01:04:16] other thing is that that speed hierarchy
+[01:04:17] I talked about still holds for latency,
+[01:04:19] but doesn't hold any more for bandwidth
+[01:04:21] or throughput. So, network cards have
+[01:04:23] dramatically more bandwidth than a PCIe
+[01:04:26] bus. So, that's to say that like sort of
+[01:04:28] copying from RAM to a GPU has, you know,
+[01:04:32] potentially much less bandwidth than
+[01:04:33] copying over the network. and storage
+[01:04:35] generally
+[01:04:37] um is both faster and slower. So I think
+[01:04:39] there's been a a bifurcation away from
+[01:04:42] sort of hard disks like spinning
+[01:04:45] physically spinning HDDs um towards
+[01:04:48] object storage which are backed by
+[01:04:50] physically spinning HDDs um typically
+[01:04:53] and NVMe which is sort of ultraast
+[01:04:56] um that actually stands for basically
+[01:04:58] nonvolatile memory express effectively
+[01:05:01] that's the thing they're ultra fast
+[01:05:03] discs um on local device and then now
+[01:05:06] we're seeing multicloud setup s are
+[01:05:09] prevalent especially amongst those the
+[01:05:11] various like AI players or anyone doing
+[01:05:14] GPUs because they essentially need
+[01:05:16] multiple providers and so starting to
+[01:05:18] see onrem is kind of coming back um
+[01:05:20] their neoclouds like coreweave are
+[01:05:23] having a bit of a moment
+[01:05:26] paralleling all of that is what I
+[01:05:28] usually talked about sort of three
+[01:05:30] errors of databases postgress actually
+[01:05:32] predates all of us but you can think of
+[01:05:33] it as even some of the decisions in
+[01:05:35] postgress around like uh process per
+[01:05:38] connection
+[01:05:39] predate when you know it cores were
+[01:05:41] getting faster but post was designed
+[01:05:43] originally for human data in and human
+[01:05:46] data out like you know you might look at
+[01:05:48] your profile which is a row and update
+[01:05:50] the email address and it sort of I think
+[01:05:53] posgress while it's expanded beyond that
+[01:05:55] as I say it's the king of databases um
+[01:05:57] is still fundamentally row oriented and
+[01:06:00] it's sort of archetypically an
+[01:06:02] application database
+[01:06:05] afterwards around all the stuff I said
+[01:06:07] about Hadoop MSOS, multi-core
+[01:06:10] processors, big data. That was the late
+[01:06:14] as um through most of the 2010s was
+[01:06:17] where we automated data collection. And
+[01:06:19] so there were
+[01:06:21] sort of the we still had like machine
+[01:06:23] what I would call machine scale data in
+[01:06:25] but human scale outputs. You might
+[01:06:27] distill terabytes into a chart or a
+[01:06:29] table in a dashboard. And um I think
+[01:06:32] Andy and Michael Stonbreaker had a
+[01:06:34] really great paper sort of talking about
+[01:06:37] this whole era. Um and it's like you
+[01:06:39] know a lot of it was let's throw out all
+[01:06:41] the stuff we we think we know all the
+[01:06:43] Postgress things all the tables the
+[01:06:44] future is map produce and data links and
+[01:06:46] NoSQL um and all of that was really
+[01:06:49] those were strategies of dealing with I
+[01:06:51] think in many ways um the shift in the
+[01:06:54] underlying hardware. So moving from sort
+[01:06:55] of like single CPU to to many CPU um and
+[01:07:00] so we had to manage this multi-core
+[01:07:01] parallelism and these uh sort of
+[01:07:05] revolutionaries for lack better way to
+[01:07:07] put it unlocked a lot of short-term
+[01:07:09] scale um you know I like to make fun of
+[01:07:11] webcale um as a as a concept but in the
+[01:07:14] end they came back around to sort of
+[01:07:16] tables that are useful after all and
+[01:07:18] that's what people refer to today as the
+[01:07:19] lakehouse
+[01:07:22] um this is how I feel roughly about
+[01:07:26] everything, not just hive, but the
+[01:07:29] entire lakehouse concept, which is
+[01:07:30] someone decided to take a bee and
+[01:07:32] elephant and somehow hybridize them in a
+[01:07:34] weird way. It's like lakehouse tables, I
+[01:07:37] think, often more like duct typed and
+[01:07:40] duct taped together.
+[01:07:43] Um, we're now in what I describe as the
+[01:07:45] machine consumer era. So, we're starting
+[01:07:47] to see a demand for databases where the
+[01:07:50] output is massive. And so you know you
+[01:07:53] get machine scale data in and we have
+[01:07:55] queries where the result set might be
+[01:07:58] sort of need to be like sent at
+[01:08:00] terabytes per second like the result set
+[01:08:01] can be many terabytes egressing the
+[01:08:03] system. And so this is pretty different.
+[01:08:07] The most obvious case is something like
+[01:08:08] GPU data loading. GPUs happily consume
+[01:08:12] terabytes per second. But it leads to
+[01:08:14] sort of different database design
+[01:08:16] including around like hybrid compute for
+[01:08:18] example becomes the default. And this is
+[01:08:21] where spiral sits.
+[01:08:24] I sometimes describe spiral as building
+[01:08:27] for complex data at machine scale. And
+[01:08:29] so um what I mean by complex data is
+[01:08:33] actually like unstructured I think is a
+[01:08:34] misnomer. So images are highly
+[01:08:36] structured. Audio video highly
+[01:08:38] structured vectors and tensors insanely
+[01:08:41] structured. Um
+[01:08:44] typically not well served by classical
+[01:08:46] database systems. Uh I think you know I
+[01:08:48] put this paper here uh from
+[01:08:51] uh TUM which is like why files if you
+[01:08:53] have a DBMS it's like there is I think
+[01:08:55] files are strictly inferior to a DBMS.
+[01:08:57] It's just that existing DBMS's have sort
+[01:09:00] of not served a bunch of use cases. So
+[01:09:02] uh practitioners fall back down to the
+[01:09:04] lowest common denominator.
+[01:09:06] So spiral is an object store native
+[01:09:09] multimodal column store with primary
+[01:09:12] keys and indexes.
+[01:09:15] There's a lot there to unpack. We're not
+[01:09:17] going to get to all of it today, but we
+[01:09:19] optimize for throughput. So, like I
+[01:09:20] said, you know, the my my party trick is
+[01:09:23] I can actually run a dynamic query
+[01:09:27] uh where I get more bytes or tokens per
+[01:09:30] second loaded into a GPU than if you
+[01:09:32] prematerialize the results of that query
+[01:09:35] as paret on local disk. Um, which is
+[01:09:38] kind of I think mindbending to a lot of
+[01:09:40] people.
+[01:09:41] And like I say, it has to support hybrid
+[01:09:44] compute across many fronts. So PyTorch
+[01:09:46] is pretty important for the GPU use
+[01:09:47] case, but we also need to be able to
+[01:09:49] support things like polers or duct DB
+[01:09:51] because actually in practice there's a
+[01:09:53] lot of data exploration that happens on
+[01:09:55] basically any data set and uh people
+[01:09:58] want to inspect some working set
+[01:09:59] locally.
+[01:10:01] They say here example workloads there's
+[01:10:03] classic columner analytics even for
+[01:10:05] these sort of AI oriented workflows. I
+[01:10:08] think filters are really important. Um,
+[01:10:11] index lookups. Anytime someone talks
+[01:10:13] about a vector database, it's really
+[01:10:14] just a server that holds a vector index.
+[01:10:17] Um, I think in general that's not the
+[01:10:20] only kind of index. You know, they're
+[01:10:21] inverted indices. There's also secondary
+[01:10:23] indices. Um, we maintain those you have
+[01:10:26] to do lookups. That's particularly
+[01:10:28] relevant. Sometimes that the third one
+[01:10:30] which breaks the world is pre-training
+[01:10:33] which will be like filter by this 50%
+[01:10:36] density mask. So literally I need half
+[01:10:38] the rows but a very specific half of the
+[01:10:40] rows. Um and I need those to be sharted
+[01:10:42] and then shuffled. So sort of grouped
+[01:10:44] together and then set where each group
+[01:10:47] is loaded into deterministic or like
+[01:10:49] reproducible order. So it's no longer a
+[01:10:51] bag of rows because that's how sort of
+[01:10:54] these things work when you go through
+[01:10:55] various epochs of curriculum training.
+[01:10:59] Anyway, the only as I said for my party
+[01:11:02] trick of loading more tokens per second
+[01:11:04] um into a GPU than a prematerialized
+[01:11:07] result, the only practical way is to
+[01:11:08] actually stream bytes straight from
+[01:11:09] object storage because object stores
+[01:11:12] like S3 give you actually effectively
+[01:11:15] infinite throughput so you can get you
+[01:11:17] know the goal is can you saturate the
+[01:11:19] network card which has more bandwidth
+[01:11:21] than the PCIe bus and then the file
+[01:11:23] format in S3 defines how the bytes are
+[01:11:27] actually stored. So QED, we care a lot
+[01:11:29] about file formats. This is mostly a
+[01:11:31] teaser. I gave a longer talk in in
+[01:11:35] Andy's sort of like future data system
+[01:11:37] seminar last week. If you didn't see it,
+[01:11:39] you can see it on YouTube. Here's my
+[01:11:41] teaser about Portex. This is why we made
+[01:11:43] a file format. A lot of work we do at
+[01:11:45] the company is around this file format.
+[01:11:46] It's actually a Linux Foundation project
+[01:11:48] now, so doesn't belong to the company.
+[01:11:50] Um, but you know, it turns out we're not
+[01:11:52] the only ones that kind of want to
+[01:11:54] replace Parquet, which is the deacto
+[01:11:56] standard. And so, you know, naturally,
+[01:11:59] well, this this XQCD comes to mind. And
+[01:12:02] it turns out that's exactly what
+[01:12:03] happened. There are lots of new file
+[01:12:04] formats because turns out that park is a
+[01:12:06] pretty crusty, slow standard that needs
+[01:12:09] lots of improvement. And this is from
+[01:12:12] Andy on Hacker Days like two weeks ago.
+[01:12:15] I usually put my thing in I think we're
+[01:12:16] in the sweet spot. I'm biased. You know,
+[01:12:18] we have open governance and industrial
+[01:12:20] strength implementation and then we're
+[01:12:22] at the cutting edge. And I think there
+[01:12:23] are lots of other ones I can say the the
+[01:12:25] work on fast lanes and and F3 and Nimble
+[01:12:28] are all very much cutting edge but you
+[01:12:31] know it's like how do you get the
+[01:12:32] intersection of all these three things
+[01:12:33] that's my pitch for Vortex in a single
+[01:12:35] slide. Um a teaser because I know this
+[01:12:39] this seminar today was or like and last
+[01:12:42] the last one were about query execution.
+[01:12:44] Um a unique thing about vortex is we
+[01:12:47] implement a scan operator that's highly
+[01:12:49] optimized. So it has components of a
+[01:12:51] query engine with lots of types of push
+[01:12:53] down and then we compile that for
+[01:12:56] execution or well compile is maybe not
+[01:12:58] quite the right word. It's correct for
+[01:12:59] GPUs but not for CPUs um to handle
+[01:13:02] either vector a vectorzed sort of
+[01:13:04] implementation on CPUs or um actual
+[01:13:08] direct centi execution on GPUs. So if
+[01:13:11] that's if you are not tired of the topic
+[01:13:14] and you haven't seen the talk you can go
+[01:13:15] see it or dig around the code base.
+[01:13:18] Um, the other fun thing they say about
+[01:13:21] Vortex, it's outrageously fast. So for
+[01:13:23] random access, it's faster. It's a more
+[01:13:26] than 100 times faster than perk, but
+[01:13:27] it's even faster than lance, which is
+[01:13:29] specialized for random access. Um, for
+[01:13:33] sort of right speed and scan speed,
+[01:13:35] we're looking at five and 18, 17, 18
+[01:13:38] times faster than perk. Um, roughly the
+[01:13:42] same size with a lot of variance. And
+[01:13:45] then my favorite fun fact about Cortex
+[01:13:48] for those who care about file formats is
+[01:13:49] that on ClickBench on NVME,
+[01:13:52] it is faster queried from ductb than
+[01:13:55] duct native is. Um, it's also going to
+[01:13:57] be shipped as a core extension in the
+[01:13:59] next DV release, which is kind of a fun
+[01:14:02] other thing to announce. Um, so yeah, if
+[01:14:04] you're really into file formats and
+[01:14:06] databases and implementing research, hit
+[01:14:09] me up. Um, and as Andy said, you're
+[01:14:11] hiring. Connor who graduated CMU last
+[01:14:14] year is great and is with us and I love
+[01:14:17] CMU students.
+[01:14:19] >> Okay, round of applause.
+[01:14:23] >> Good for one question
+[01:14:26] back. Yes.
+[01:14:27] >> What's the difference between Spire and
+[01:14:29] Vortex?
+[01:14:30] >> The question is
+[01:14:33] >> yeah, Vortex is a file format and it's
+[01:14:35] purely open source. Like a file format
+[01:14:37] you think of like how do I store bytes
+[01:14:38] on disk? Um, Spiral DB is a hosted
+[01:14:42] database product that is built on top of
+[01:14:44] that file format, but there's a bunch of
+[01:14:46] stuff it does around orchestrating
+[01:14:47] transactions and indexes and query
+[01:14:49] planning. Um, that you know is not
+[01:14:53] included in the open source thing.
+[01:14:55] >> One more question, go for it. What were
+[01:14:57] the biggest changes that you had to do
+[01:14:58] to go from a CPU native right to a GPU
+[01:15:00] native site like a completely separated
+[01:15:03] computer so what's what did you change?
+[01:15:06] So actually the the main thing was
+[01:15:07] designing um so we a lot of this code
+[01:15:11] actually is pretty classical because it
+[01:15:13] it turned out like I don't know having
+[01:15:14] operators and pipelines are uh I mean
+[01:15:18] not that new I was corrected it's not
+[01:15:20] modeb it's vector- wise but like you
+[01:15:22] know it's been around for 20 years
+[01:15:23] conceptually and I know you just did a
+[01:15:25] lecture the main thing is that for GPUs
+[01:15:27] you really want to have fixed known
+[01:15:30] output size and so um it puts a little
+[01:15:33] bit of extra constraint on how you think
+[01:15:35] about like what is a pipeline breaker
+[01:15:36] and what do you need to know? Um so we
+[01:15:38] need to know the actual size of the
+[01:15:40] output before executing a given
+[01:15:41] operator. So it that um turns out that
+[01:15:45] constraint and like you know the other
+[01:15:47] constraints sort of lack of data
+[01:15:48] dependencies for example are the same
+[01:15:50] with CPU SIMD um but that one was a
+[01:15:53] little special. So we just had to design
+[01:15:54] the whole like kind of query planning
+[01:15:58] uh apparatus for executing operators
+[01:16:00] around that extra constraint.
+[01:16:02] I mean to his point like everything we
+[01:16:04] talked about today we talking about last
+[01:16:06] class whether on GPU FPGAAS CPUs
+[01:16:09] whatever comes next the core concepts
+[01:16:12] are the same just you know the hardware
+[01:16:13] implementation
+[01:16:15] is different
+[01:16:17] >> I think that is the main thing is like
+[01:16:19] there are no new ideas under the sun
+[01:16:21] under databases but the hardware changes
+[01:16:22] a lot and that drives you can think of
+[01:16:24] like a database as of you know it's a I
+[01:16:27] always think of the fundamental theorem
+[01:16:29] of linear programming and like simplex
+[01:16:31] algorithm it's like a bunch of the
+[01:16:32] constraints change because of hardware
+[01:16:33] and it pushes you to a different vertex.
+[01:16:35] Like the answer is the optimum is always
+[01:16:37] in vertex. And so it can be pretty
+[01:16:39] different from stuff that existed before
+[01:16:40] just because hardware shifted.
+[01:16:47] [Music]
+[01:16:56] asset.
+[01:16:58] [Music]
+[01:17:06] Get the fortune. Get the fortune
+[01:17:11] with the grain. The fortune

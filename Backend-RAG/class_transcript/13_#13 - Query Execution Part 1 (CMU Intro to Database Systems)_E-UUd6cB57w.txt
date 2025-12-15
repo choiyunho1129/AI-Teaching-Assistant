@@ -1,0 +1,2230 @@
+[00:00:00] [music]
+[00:00:06] [music] I'm still
+[00:00:08] ass.
+[00:00:12] [music]
+[00:00:17] [music]
+[00:00:24] >> All right, let's get started. Round of
+[00:00:25] applause for DD Cash. [applause]
+[00:00:28] Welcome back everyone. I you did a bunch
+[00:00:30] of travels over the break.
+[00:00:31] >> Yes, sir. Yes, sir.
+[00:00:32] >> Went to LA.
+[00:00:34] >> San Francisco.
+[00:00:35] >> See like Do you do any shows out there
+[00:00:37] or you just hanging out?
+[00:00:39] >> Oh, yeah. DJing a little bit.
+[00:00:40] >> Yeah.
+[00:00:41] >> Here and there.
+[00:00:41] >> Okay. Is that Did you live stream it?
+[00:00:44] >> My friend wanted to, but we didn't.
+[00:00:46] >> Okay, that's fair. All right. So,
+[00:00:47] hopefully everyone had a good break. I
+[00:00:49] did what I because I only care about
+[00:00:50] databases. I visited a bunch of database
+[00:00:52] companies. We went to Snowflake. We went
+[00:00:53] to Superbase. We went to Planet Scale.
+[00:00:54] We went to Microsoft. Like, we talked
+[00:00:56] about databases. It was awesome. Um,
+[00:00:59] and when we talk about uh query
+[00:01:00] optimization next week, I can share what
+[00:01:02] I think is the from Microsoft of the
+[00:01:04] [clears throat]
+[00:01:05] one of the most brilliant ideas I've
+[00:01:06] heard the entire year of how they're
+[00:01:08] going to prove two query two SQL queries
+[00:01:10] are the same and they're going to use
+[00:01:12] the query optimizer for that. So next
+[00:01:13] week we'll see how it's not you know you
+[00:01:16] kind of need to understand what the quer
+[00:01:17] manizer is first but when they told me
+[00:01:19] what they were doing I was like oh
+[00:01:20] that's pure genius because it's taking a
+[00:01:23] SQL query rewriting it with an LLM and
+[00:01:25] then you need to prove that it's the
+[00:01:26] same and use the query manizer for it.
+[00:01:28] Sorry I'm getting way ahead of myself
+[00:01:29] because I think the idea is awesome but
+[00:01:31] we'll we can talk about briefly next
+[00:01:32] week. Today we got to talk about how how
+[00:01:33] we're gonna actually execute queries.
+[00:01:35] All right. So for everyone project two
+[00:01:37] is coming up this Sunday due again the
+[00:01:40] recitation video is available on box on
+[00:01:43] on uh piaza I think AWS is down this
+[00:01:46] morning so everything was broken uh so
+[00:01:48] you couldn't probably get to to uh to
+[00:01:50] great scope and to AWS but uh it should
+[00:01:55] be up now. I haven't checked but it was
+[00:01:56] broken this morning. And then we're
+[00:01:57] having a special office hours this
+[00:01:59] Saturday uh on the 25th at 3 o'clock.
+[00:02:02] Same location on the fifth floor. And
+[00:02:04] then for the midterm grades, they've
+[00:02:05] been posted on uh on grade scope on
+[00:02:08] Canvas. And then if you want to view
+[00:02:10] your uh view your grade of the exam with
+[00:02:12] the solution, uh come to my office hours
+[00:02:15] on Wednesdays and you can sit down with
+[00:02:16] it and and look at it. Okay. Who here
+[00:02:19] has not started project two?
+[00:02:23] Really? Okay. Wow. All right. Uh it's
+[00:02:27] not gonna be good. That's not good. Uh I
+[00:02:30] warned you. All right. Project two is
+[00:02:31] much harder than project one. So please
+[00:02:33] start immediately after class. Okay. All
+[00:02:36] right. So uh other debates things going
+[00:02:39] on. So today after class we have the
+[00:02:41] guys from columnar uh who are building
+[00:02:45] this is a thing called Apache arrow.
+[00:02:47] Think of like it's a a file format
+[00:02:49] similar like parquet or vortex but it's
+[00:02:51] inmemory. So this is a way to transfer
+[00:02:54] data quickly between different systems.
+[00:02:55] So arrow is used everywhere. And then
+[00:02:57] they have this arrow database
+[00:02:58] compatibility or database connectivity
+[00:03:00] API. It's a layer that sits in front of
+[00:03:04] your application and the database
+[00:03:05] server. So you can send data back and
+[00:03:06] forth between your application and the
+[00:03:09] database server much more quickly. Uh
+[00:03:11] this is used in pretty much every single
+[00:03:12] modern system. So that'll be our talk
+[00:03:14] today at 4:30. Tomorrow uh I'll post
+[00:03:17] this on Piaza when it comes back online.
+[00:03:19] We have the guys from Astronomer coming
+[00:03:20] giving a tech talk on the eighth floor
+[00:03:22] at at noon. So there'll be pizza here
+[00:03:25] for this one. Astronomer is the main
+[00:03:27] company building Airflow. This is like
+[00:03:29] an orchestration layer for sending data
+[00:03:32] from one system to the other and I know
+[00:03:34] we posted for uh internships and jobs
+[00:03:36] from those guys on Piaza. So they're
+[00:03:38] coming on campus tomorrow to give a talk
+[00:03:40] about that and then I'll follow up with
+[00:03:41] people if you want to meet with them uh
+[00:03:43] to have like a small group session about
+[00:03:45] discuss internships and jobs. Uh we'll
+[00:03:47] arrange that in the afternoon uh before
+[00:03:49] they fly out. And then next week uh same
+[00:03:52] time will be on Monday the seminar
+[00:03:54] series will be the guy from single store
+[00:03:57] to expand upon what he talked about in
+[00:03:58] this class. Okay. Again all this is
+[00:04:00] optional and I'll post about the
+[00:04:01] astronomer stuff on uh PASA later today.
+[00:04:05] All right. So last class before the
+[00:04:07] break we were discussing different join
+[00:04:09] algorithms join operator implementations
+[00:04:11] you nested loop joins sort merge joins
+[00:04:14] and hash joins. Right. Right? So now at
+[00:04:16] this point we've covered sort of the
+[00:04:18] basic building blocks you need to to be
+[00:04:19] able to run queries. We know how to sort
+[00:04:21] data right whether it's in memory or out
+[00:04:22] of memory. Uh we know how to do
+[00:04:24] aggregations. We know how to do joins.
+[00:04:26] And so starting today for the next two
+[00:04:28] weeks now we put all these pieces
+[00:04:30] together in a conceptual system we'll
+[00:04:32] describe as we go along. But now we can
+[00:04:34] actually start executing queries. So we
+[00:04:36] can take the buffer pool that we built.
+[00:04:37] We can take the the page layouts we
+[00:04:39] we've designed. We can take now these
+[00:04:41] operator implementations. We're going to
+[00:04:42] mash them all together into a single
+[00:04:44] system and actually start executing
+[00:04:46] queries. So that's what really today's
+[00:04:47] about and next class will be about. Next
+[00:04:49] week we'll jump on the query optimizer
+[00:04:51] and that'll be how to take a SQL query
+[00:04:53] and convert it into a physical plan that
+[00:04:55] we're going to talk about how to execute
+[00:04:56] today. Okay.
+[00:04:59] So again as a reminder the query plan in
+[00:05:02] a relational data system is going to be
+[00:05:03] a DAG of operators, right? Ideally it's
+[00:05:07] a DAG. Most systems implement a tree but
+[00:05:09] a tree is a subset of a DAG. The idea
+[00:05:11] still holds. And and again, the idea is
+[00:05:13] that we're going to be moving data up
+[00:05:16] logically, and I'll explain what I mean
+[00:05:18] by logically versus physically in a
+[00:05:19] second. We're moving data logically
+[00:05:21] between these different operators till
+[00:05:22] we get the root of the query plan. And
+[00:05:25] that's the final output that we send
+[00:05:27] back to whoever requested the query,
+[00:05:29] whether it's an internal query, we keep
+[00:05:30] the data for ourselves or an application
+[00:05:32] or somebody sitting sitting at a
+[00:05:34] terminal, right? The the root is always
+[00:05:36] going to be the final app that we send
+[00:05:37] out to the the the to outside the
+[00:05:40] system.
+[00:05:42] But now we need to slice up this this
+[00:05:43] this query plan a little bit further and
+[00:05:45] talk about pipelines.
+[00:05:47] And pipelines are just again these
+[00:05:49] logical boundaries we're going to use to
+[00:05:51] denote that we have a sequence of
+[00:05:53] operators where tupils can flow
+[00:05:56] continuously between the operators,
+[00:05:58] right? Going from the the bottom to the
+[00:06:00] top and we can we we can keep going up
+[00:06:04] across these operators and we don't have
+[00:06:06] to stop or wait for more results.
+[00:06:11] Right? And a pipeline breaker would be
+[00:06:13] the operator that's going to be at the
+[00:06:15] the the root or the top of one of these
+[00:06:17] pipelines that can't finish or can't
+[00:06:20] give any output to whatever is above it
+[00:06:22] until it gets all the input of its
+[00:06:25] children.
+[00:06:26] So in my case here, say assume we're
+[00:06:29] doing a hash join. Although in this plan
+[00:06:30] again it's just the join symbol. We're
+[00:06:31] not saying what what the actual
+[00:06:32] algorithm is. We're saying we're doing
+[00:06:33] hash join. Uh we're going to scan R and
+[00:06:36] build a hash on that. Well, that's the
+[00:06:38] pipeline we really only can have. We
+[00:06:40] have we have the the scanning R populate
+[00:06:42] some hash the hash table and then we
+[00:06:45] can't execute anything else until this
+[00:06:47] pipeline finishes because we can't do
+[00:06:48] the join and start probing the hash
+[00:06:50] table until we know that the hash table
+[00:06:52] isn't populated because we could get
+[00:06:54] false negatives.
+[00:06:56] So you'll see this also in in sorting,
+[00:06:59] right? I can't have my sort operator
+[00:07:00] produce any output until I sort my data,
+[00:07:03] right? Because I can't tell you what the
+[00:07:04] order is going to be until I sorted
+[00:07:06] everything. So these pipeline breakers
+[00:07:08] are going to be a way we're going to
+[00:07:08] denote the boundaries of where we can do
+[00:07:11] as much work as we can on single tupils
+[00:07:13] or batches of tupils and we don't have
+[00:07:15] to get more data until we reach one of
+[00:07:16] these pipeline breakers at the top.
+[00:07:19] The reason why it's called pipeline
+[00:07:20] because it's the old days in the 70s was
+[00:07:22] the idea was like I can it's so
+[00:07:24] expensive to go get a tupil from disk.
+[00:07:26] So I can one of these bottom scan
+[00:07:28] operators on my tables. I I'll go get
+[00:07:30] one tupil and I'll ride it up as far as
+[00:07:32] I can up into my pipeline and don't go
+[00:07:35] back and get the next tupil uh until I
+[00:07:38] reach my pipeline breaker, right? I
+[00:07:40] would do as much work as I can with data
+[00:07:41] I bring into memory uh as I can and not
+[00:07:46] have to like write things out to disk
+[00:07:47] unnecessarily.
+[00:07:49] So that's the again the high level model
+[00:07:50] what we're dealing with today. uh and
+[00:07:52] the reason why I was trying to be uh
+[00:07:54] careful saying what logically versus
+[00:07:56] physically moving data because going
+[00:07:58] back here right it's clear from this
+[00:08:00] diagram looks like data is being sort of
+[00:08:02] pushed up but most systems don't do that
+[00:08:05] actually data is actually pulled up
+[00:08:07] physically so that'll be the processing
+[00:08:09] models we'll cover that first then we'll
+[00:08:11] talk about access methods like what are
+[00:08:12] the actual leaves of the query plan how
+[00:08:14] are we actually getting data from our
+[00:08:16] tables because that's something we
+[00:08:17] haven't really talked about in in detail
+[00:08:20] then we'll talk about how we hand handle
+[00:08:21] modifications queries. So, insert,
+[00:08:23] update, deletes, merge, and upserts. And
+[00:08:25] then we'll finish off talking about how
+[00:08:27] we're actually going to evaluate the
+[00:08:28] expressions we have in our wear clauses
+[00:08:30] or join clauses or whatever it is to
+[00:08:32] actually produce the the matches or do
+[00:08:34] filtering, whatever a query wants. Okay,
+[00:08:39] you good? Okay.
+[00:08:43] Um, all right. So the query processing
+[00:08:46] model is going to is going to determine
+[00:08:50] how the system is going to execute a
+[00:08:53] query plan and move data between these
+[00:08:55] different operators in the plan. Moving
+[00:08:57] data sort of one from one operator to
+[00:08:58] the next. And just like we saw when we
+[00:09:01] talked about storage models between like
+[00:09:03] row store versus column store, there's
+[00:09:05] going to be performance trade-offs or uh
+[00:09:07] and also engineering trade-offs between
+[00:09:10] these different processing model
+[00:09:11] approaches, right? One's going to be
+[00:09:13] better for OLTP and one's going to be
+[00:09:15] better for for OLAP.
+[00:09:18] And so each processing model is going to
+[00:09:19] be comprised of these two types of uh
+[00:09:22] communications or execution paths in our
+[00:09:24] query plan. One is going to be the
+[00:09:26] control flow and that's how the database
+[00:09:28] system is going to say or to instruct an
+[00:09:31] operator to execute,
+[00:09:33] right? And how the how we're
+[00:09:35] encapsulating what the operator code
+[00:09:37] actually is, whether it's a class or a
+[00:09:39] function or whatever, it doesn't matter.
+[00:09:40] But there's something that's saying in
+[00:09:42] the data system say, "Hey, go run this
+[00:09:44] operator. Do do your work." And then the
+[00:09:47] data flow is going to determine how an
+[00:09:49] operator is going to send data from one
+[00:09:51] operator to the next in in our query
+[00:09:53] plan. Right? Logically, I'm showing the
+[00:09:55] directed arrows going up from the bottom
+[00:09:57] to the top. And it doesn't necessarily
+[00:09:58] have to be that way, right?
+[00:10:02] And then the thing that we also need to
+[00:10:03] worry about is what is the what is the
+[00:10:06] output of these operators? And I we're
+[00:10:08] sort of loosely slaying tupils, but we
+[00:10:10] talked about the difference between
+[00:10:10] early materialization and late
+[00:10:12] materialization for before, right? We
+[00:10:14] said sometimes where in late
+[00:10:16] materialization maybe you just pass
+[00:10:17] along the bare minimum columns you need
+[00:10:19] and then a record ID so that if some
+[00:10:21] part of the query plan needs more data,
+[00:10:23] it knows how to go get it. In early
+[00:10:25] materialization, you basically
+[00:10:26] instantiate the entire tupil. May throw
+[00:10:28] things away with projections, but that's
+[00:10:30] fine. But basically, you never go back
+[00:10:32] to the the tables and get more data.
+[00:10:34] Everything you need is being moved up to
+[00:10:36] the query plan.
+[00:10:39] All right. So the three basic approaches
+[00:10:40] are do the iterative model,
+[00:10:41] materialization model and the vectorzed
+[00:10:44] or the batch model. The original for the
+[00:10:46] last one the original uh papers referred
+[00:10:48] to as the vectorzed model. Of course now
+[00:10:50] if you Google vector databases or
+[00:10:51] vectorzed databases you're going to get
+[00:10:53] all the the rag vector index stuff or
+[00:10:56] evendity stuff. But you know we just
+[00:10:58] think of this in batches. And the way to
+[00:11:00] think of this on the the the
+[00:11:04] as as we see as we go along, the the
+[00:11:06] iterator model is going to be sending
+[00:11:08] sort of the smallest amount of data from
+[00:11:09] one upper to the next. Materialization
+[00:11:11] model is going to be sending all the
+[00:11:12] data from one upper to the next. And
+[00:11:14] then the batch model is going to be
+[00:11:15] sending a subset.
+[00:11:18] And in terms of of how common these are
+[00:11:20] in the real world, most data systems you
+[00:11:22] know about and can think about are going
+[00:11:23] to be using the first approach, right?
+[00:11:26] Postgress, my SQL, SQL light, the the
+[00:11:30] OLAP systems like the ductbds, the red
+[00:11:32] shifts, the firebolts, the click houses,
+[00:11:34] those guys are going to be using the
+[00:11:35] bottom one. The middle one is actually
+[00:11:37] very rare. There's there's maybe five or
+[00:11:40] six systems that actually use it. Two of
+[00:11:42] them I wrote. So there's not that many.
+[00:11:45] But we'll go along each of these one by
+[00:11:46] one and we'll see um we'll see the
+[00:11:49] advantages and disadvantages of all
+[00:11:50] three models as we go along. All right.
+[00:11:53] So the most basic model or the the
+[00:11:55] simplest model the most common model is
+[00:11:56] the iterative model. This is sometimes
+[00:11:58] called the volcano model because
+[00:12:00] remember that guy that uh invented or
+[00:12:03] wrote that the the the the book on like
+[00:12:05] B+ trees he had a very famous project in
+[00:12:08] the late 80s early 90s called volcano
+[00:12:10] that defined not only how you do this
+[00:12:12] iterative model but also how you
+[00:12:14] parallelize it we'll see that next class
+[00:12:16] and also how you build a query optimizer
+[00:12:18] uh all in sort of one one project is
+[00:12:20] very influential that was also called
+[00:12:22] volcano we'll see that next week as well
+[00:12:25] um but that you know it's not to say
+[00:12:27] that thing didn't exist before uh this
+[00:12:30] guy wrote the paper in the late 80s.
+[00:12:32] Again, all the systems in the 70s and
+[00:12:34] 80s were doing this which is now you
+[00:12:36] know you could call the volcano model
+[00:12:38] and someone who's familiar with the the
+[00:12:40] the research area would know what you're
+[00:12:41] talking about but in the textbook I
+[00:12:43] think defines this as the iterator
+[00:12:44] model. So in our database system every
+[00:12:47] query plan operator it's going to
+[00:12:48] implement a next function and the the
+[00:12:52] contract the next function has is that
+[00:12:54] when one operator calls next on another
+[00:12:56] operator's you know next function
+[00:12:58] invokes the next function that operator
+[00:13:01] that operator's next function either
+[00:13:02] returns back the next tupil up the the
+[00:13:05] query plan or like a null or end of file
+[00:13:08] to indicate there are no more tupils and
+[00:13:10] at which point the calling operator will
+[00:13:12] never call next again because you know
+[00:13:13] there's no more data that could could
+[00:13:15] arrive or could be used below you at at
+[00:13:18] that point in the query plan.
+[00:13:21] Right? There's obviously also an open
+[00:13:23] and close functions to like think of
+[00:13:25] like a constructor deconstructor in C++
+[00:13:27] basically saying hey I'm going to tell
+[00:13:29] hey I'm going to go read some data get
+[00:13:31] ready and maybe you instantiate an
+[00:13:32] iterator on an index or open a file
+[00:13:34] handle whatever and then close basically
+[00:13:36] saying like close up whatever free up
+[00:13:39] whatever inter you know uh ephemeral
+[00:13:41] memory you've allocated for this right
+[00:13:44] again this is also called the pipeline
+[00:13:46] model because it it it's again the
+[00:13:48] simplest form of this moving things up
+[00:13:49] in a pipeline so I normally don't like
+[00:13:52] to show code in class, but for this it's
+[00:13:54] pretty simple. Um, and I so I don't
+[00:13:57] think this should be too taxing for you
+[00:13:58] guys. Um, but here's our here's our
+[00:14:00] query plan, right? And you can think of
+[00:14:02] each of these operators are going to
+[00:14:03] have their own operator implementation
+[00:14:07] that is going to have this sort of
+[00:14:08] pseudo Python code here, right? And so
+[00:14:11] think of each of these functions as or
+[00:14:14] these blocks of code as implementing the
+[00:14:15] next function for the different
+[00:14:17] operators, right?
+[00:14:20] And to sort of keep this simple, we're
+[00:14:21] going to number them from one starting
+[00:14:23] at the top and going to the bottom. So
+[00:14:25] the way you start executing query in the
+[00:14:27] iterator model is you start the database
+[00:14:30] systems sort of runtime engine, the
+[00:14:31] thing that's actually scheduling queries
+[00:14:33] to to execute will invoke next on the
+[00:14:36] root,
+[00:14:37] right? And the next function is is or
+[00:14:41] the next implementation for that top
+[00:14:43] operator which is the the projection. It
+[00:14:45] knows that it has some number of
+[00:14:47] children that it can call next on to go
+[00:14:50] get data that it needs. So the the top
+[00:14:54] next function calls next on the next guy
+[00:14:56] and this is the our hash join here. And
+[00:14:58] so we have the left side and the right
+[00:15:00] side. So on the left side we got to
+[00:15:01] build the hash table. So it's going to
+[00:15:03] call next on its left child. And that
+[00:15:05] gets down now to the scan operator on
+[00:15:07] table R. And now you see inside this we
+[00:15:10] we're just have this for loop iterating
+[00:15:12] every single tupole in R. Now obviously
+[00:15:14] hiding like how do we get it from the
+[00:15:15] buffer pool? How do we find the pages?
+[00:15:16] All that we know how to do that from
+[00:15:19] earlier lectures. But inside that for
+[00:15:21] loop we just have this emit function and
+[00:15:24] that's basically like returning the next
+[00:15:26] tupil that uh up to whoever called next
+[00:15:30] on this operator.
+[00:15:32] If you ever written like a a Python
+[00:15:34] generator, there's like a yield
+[00:15:35] function. So I'm not showing how we're
+[00:15:37] we're freezing state inside of our for
+[00:15:39] loop. Think of the same sort of way you
+[00:15:41] would do this in Python.
+[00:15:43] Right? And obviously C++ it's a little
+[00:15:45] more um it's you know it's a more
+[00:15:48] complicated the more machinery you got
+[00:15:49] to do. Right. So this out in in in
+[00:15:52] operator 2 it's calling next next over
+[00:15:54] the left child and down below we're just
+[00:15:56] feeding up tupils from table R and then
+[00:15:59] inside the for loop for the left child
+[00:16:02] and in in operator two I'm building my
+[00:16:04] hash table. And at some point the the
+[00:16:07] the operator 3 says I don't have any
+[00:16:09] more tupils for you. And at which point
+[00:16:11] operator two knows I never need to call
+[00:16:13] three again. So now let me go on down my
+[00:16:15] right right side of my branch my my tree
+[00:16:18] and call next on my child my right child
+[00:16:21] that has a it own that calls next on its
+[00:16:23] child. Now this is just scanning tupil
+[00:16:25] someum s and emitting them up to do the
+[00:16:28] probe inside the hash table.
+[00:16:31] Right. And it then if I have a match in
+[00:16:34] my in my when I'm doing my join then I
+[00:16:37] emit that up into my protection operator
+[00:16:39] which then can then emit that up to
+[00:16:41] whoever called or invoked the the query.
+[00:16:46] So for for the pipeline for this is that
+[00:16:48] we have one on the right side here
+[00:16:49] pipeline one because I can call
+[00:16:53] I call next on my left child in operator
+[00:16:56] two and I keep ripping through tupils in
+[00:16:58] R until I don't get anymore and at which
+[00:17:01] point I can then switch over and start
+[00:17:02] executing uh pipeline two and then if
+[00:17:05] you kind of think about is for for one
+[00:17:07] tupil that I would I pull out of S at
+[00:17:10] five I pass it up to four check to see
+[00:17:12] where the the predicate values are true
+[00:17:14] if yes I pass it up to do that it checks
+[00:17:17] to see whether uh if I probe the hash
+[00:17:19] table I have a match if it does then I
+[00:17:22] pass it up to one it does projection and
+[00:17:24] then it produces it final output so I've
+[00:17:26] sort of pipelineed the entire uh all the
+[00:17:29] processing for the for the tupil on this
+[00:17:31] side of the tree
+[00:17:36] so the great thing about this model is
+[00:17:38] that it's it's it's a pretty simple you
+[00:17:40] know uh interface it's just open next
+[00:17:43] close so I'm not even defining how we're
+[00:17:46] actually doing the scan here in at these
+[00:17:49] leaf nodes. In some systems, I may
+[00:17:52] actually want to scan the entire table,
+[00:17:54] materialize it in an in-memory buffer
+[00:17:56] and just keep track of a cursor every
+[00:17:58] time you call next, what's the next
+[00:17:59] tuple I want to hand out. Or you could
+[00:18:01] do it be, you know, sort of eagerly uh
+[00:18:04] anytime you call next, go get the the
+[00:18:06] next tup on the page and then if it's
+[00:18:07] that pages, if I if I already scan that
+[00:18:09] page, go get the next page. So I could
+[00:18:11] do everything all at once and just
+[00:18:13] materialize the output and wait to pass
+[00:18:14] it up one by one. Or I could do it one
+[00:18:16] at a time. It doesn't matter. And the
+[00:18:18] rest of the implementation of the other
+[00:18:20] operators doesn't have to care.
+[00:18:34] Yeah. So, so his statement is and he's
+[00:18:35] correct like let's not talk about
+[00:18:37] parallel execution, right? Just the
+[00:18:39] notion is that I can't do I can't go
+[00:18:42] down the
+[00:18:44] if here I can't go down the right side
+[00:18:46] of the tree until I finish scanning the
+[00:18:50] the left side. Now, there is a technique
+[00:18:52] called symmetric hash joins where you
+[00:18:54] actually kind of do both, but we we
+[00:18:56] don't need nobody does that.
+[00:18:59] >> What's that again?
+[00:19:00] one sort join.
+[00:19:01] >> Yeah, if you did a merge sort join, like
+[00:19:03] you'd have to scan and sort everything.
+[00:19:05] Well, yeah. So, his point is if I was
+[00:19:07] doing a sort merge join, I could scan
+[00:19:09] and sort both of these guys in parallel.
+[00:19:12] Then once they're both done, then
+[00:19:14] combine them. That's next class. Let's
+[00:19:18] keep it simple. Keep it single threaded,
+[00:19:20] but your intuition is correct.
+[00:19:25] All right. So, hopefully this this
+[00:19:26] shouldn't be like mindbending for
+[00:19:27] everyone. It's again, it's pretty basic.
+[00:19:30] You know, this is what Busub is using.
+[00:19:31] So, you'll see this in project 3, right?
+[00:19:34] It's easy to implement. It's easy to
+[00:19:35] debug because I just hook up GDB or pick
+[00:19:38] your favorite debugger and just walk
+[00:19:39] through all the next functions and see
+[00:19:41] how things move around, right? Uh, and
+[00:19:44] like I said, it's easy to run as a
+[00:19:46] single threaded model. Next class, we'll
+[00:19:47] see how to paralyze it, right? And the
+[00:19:50] advantage is that I can pipeline a bunch
+[00:19:51] of data all the way through my operators
+[00:19:53] without having to go get the next tupil.
+[00:19:55] So, I want to go as far as I can up
+[00:19:57] until until I'm until I'm done, right?
+[00:20:00] And some systems go take this to like
+[00:20:02] the next level. And I'm just talking
+[00:20:04] about keeping things in like, you know,
+[00:20:06] our our memory. And other systems with
+[00:20:08] this pipeline model, they'll try to keep
+[00:20:09] things in CPU caches or like the Germans
+[00:20:12] try to keep things in CPU registers
+[00:20:13] because that's the fastest memory you
+[00:20:15] can have all the way up. And that's
+[00:20:16] really fast. But for that, we we don't
+[00:20:18] we don't need to worry about that.
+[00:20:21] All right. So the iterative model it's
+[00:20:22] been great for OTP because it's going to
+[00:20:24] get one tuple at a time because most
+[00:20:26] your queries only need a small number of
+[00:20:27] tupils. So the overheadness is is
+[00:20:29] actually pretty small, right?
+[00:20:32] And another nice thing about this model
+[00:20:34] too is that for like limit when you have
+[00:20:35] like limit functions uh or sorry limit
+[00:20:38] operators like going back here like if I
+[00:20:40] only need the first 10 tupils that come
+[00:20:42] out of this, it's really easy for me to
+[00:20:44] implement that because I just put the
+[00:20:46] limit above above one or sorry above two
+[00:20:50] and I just stop calling next when I have
+[00:20:53] enough tupils for my output. Right? So
+[00:20:55] it's so the I'm sort of blending the
+[00:20:58] control and the data flow all sort of in
+[00:21:00] one channel, but it does make certain
+[00:21:03] things easier than it would be for other
+[00:21:04] things.
+[00:21:07] Of course, there's a bunch of downsides
+[00:21:08] like the function calls and next can be
+[00:21:10] expensive, especially if you're trying
+[00:21:11] to rip through a billion tupils. Like a
+[00:21:13] function call doesn't seem like that
+[00:21:14] much, but like in modern CPUs, that's
+[00:21:16] expensive and you have to do this for a
+[00:21:18] billion tupils, that's going to start to
+[00:21:20] add up.
+[00:21:23] All right. So, another approach is
+[00:21:25] called the materialization model. And
+[00:21:27] it's basically the same thing, but it's
+[00:21:29] it's it's the iterator model, but
+[00:21:31] instead of passing up one tupil, I'm
+[00:21:33] going to pass up all the tupils from an
+[00:21:35] operator. And at which point, I'm
+[00:21:37] basically calling next once, and I never
+[00:21:39] go back and ask for more data because I
+[00:21:41] know I've gotten everything I could ever
+[00:21:42] want. Right? Of course, the problem's
+[00:21:44] going to be with this is like if I only
+[00:21:47] need a subset of the data, uh like if I
+[00:21:50] have a limit clause, then I don't want
+[00:21:52] to have to pass up a billion two between
+[00:21:54] different operators just to get to the
+[00:21:56] limit at the top says, "Oh, I only need
+[00:21:58] 10 out of these a billion,
+[00:22:00] right?" And so the we'll see this in a
+[00:22:03] second. You basically do operator fusion
+[00:22:05] where you can kind of start merging down
+[00:22:07] logic that would normally be up above in
+[00:22:09] the query plan. you start putting it as
+[00:22:11] low as possible or embedding inside of
+[00:22:13] operators so that I'm not doing a bunch
+[00:22:15] of redundant work or passing around data
+[00:22:16] that I end up throwing away or don't
+[00:22:18] need.
+[00:22:20] And then just like before with um
+[00:22:23] with uh you know with the iterator model
+[00:22:27] right when I'm the data I'm passing
+[00:22:29] could either be the entire tupil could
+[00:22:31] be late materialization with a record ID
+[00:22:33] and some some columns or a subset of the
+[00:22:34] columns right there's tricks you want
+[00:22:36] you want to do it's like try to reduce
+[00:22:37] how much data you're sending up and that
+[00:22:38] matters a lot in the materialization
+[00:22:39] model because again I'm sending all the
+[00:22:42] data up [snorts]
+[00:22:44] so this technique was developed in the
+[00:22:46] 1990s it was a system called monadb uh
+[00:22:48] that came out of CWI I uh CWI is
+[00:22:52] basically where where ductb comes from
+[00:22:55] or the the co-founder Snowflake did his
+[00:22:57] PhD there and he invented basically they
+[00:23:00] they looked at this saw this was
+[00:23:01] terrible in MODB and then the guy uh
+[00:23:06] built a better system that then he went
+[00:23:07] off co-ounder of Snowflake that fixed
+[00:23:09] this ductb fixes this too but we'll see
+[00:23:12] this in a second. All right. So now in
+[00:23:14] our operator implementations we have uh
+[00:23:17] which again we still have these for
+[00:23:18] loops. We're calling you know get next
+[00:23:20] or calling output on our on our
+[00:23:22] children. Um but now in these these
+[00:23:25] operative implementations I don't call
+[00:23:28] I don't call like a yield or emit to
+[00:23:30] send things in peace meal. I just have
+[00:23:32] this output function that I'm returning
+[00:23:33] or out buffer and return back all the
+[00:23:35] tupils to whoever asked me for it. So at
+[00:23:38] the very top of the projection we call
+[00:23:39] we call down into this join. join then
+[00:23:42] calls down to its leaf node. Again, I'm
+[00:23:44] just going to scan through R. Just add
+[00:23:46] all the tupils in my output buffer.
+[00:23:47] Return that up to my uh to the the the
+[00:23:52] join operator. It then builds the hash
+[00:23:54] table. Then it calls on the right side
+[00:23:56] down its children, goes down the tree,
+[00:23:58] and then sends back up the tupils in in
+[00:24:00] in their entirety, computes the join,
+[00:24:02] and produces the final output.
+[00:24:07] >> [snorts]
+[00:24:08] >> So again, if you think about always
+[00:24:11] thinking in extremes, if table S has a
+[00:24:13] billion tuples and you look at the side
+[00:24:15] of the pipeline, what am I doing? I'm
+[00:24:17] scanning S, putting every single tuple
+[00:24:19] in a buffer, then passing that to the
+[00:24:21] filter operator, who then it's going to
+[00:24:22] look to see what which one of those, you
+[00:24:24] know, tupils I want to throw away. So
+[00:24:25] again, if you have a billion tupils, but
+[00:24:27] I only need I only get you like 10 of
+[00:24:29] them. I don't I don't want have to pass
+[00:24:31] a billion tupils up just to find out I
+[00:24:32] need 10. So with operator fusion, the
+[00:24:35] basic idea is that you combine together
+[00:24:37] the operators in the query plan so that
+[00:24:39] as I'm scanning the table, I can then
+[00:24:42] apply my filter and throw things away.
+[00:24:45] This is basically how you know you can
+[00:24:47] do the same thing in iterator model or
+[00:24:48] the vectorzed model, but it it's a big
+[00:24:51] deal in the materialization model just
+[00:24:52] because you're passing along so much
+[00:24:53] data.
+[00:24:57] Seems crazy, but why would you ever want
+[00:24:58] to do this? Let me take a guess.
+[00:25:03] What's that?
+[00:25:04] >> He said they're stupid. No, the guy
+[00:25:06] invented this is probably he's dead but
+[00:25:08] one of the d best datab researchers of
+[00:25:09] all time. So no, he's not stupid.
+[00:25:14] >> Always
+[00:25:16] >> if you always need a lot or uh if it's o
+[00:25:19] you know the guy that invented this who
+[00:25:20] was an OLAP system
+[00:25:23] uh they were assumed that you would need
+[00:25:26] all the all the data within a column but
+[00:25:28] not all the columns. So they would do
+[00:25:30] projections as operator fusion and throw
+[00:25:32] away a bunch of these columns and just
+[00:25:34] the columns you don't need and only pass
+[00:25:35] up the columns you do need.
+[00:25:37] >> Right? And then now you don't pay the
+[00:25:38] overhead of calling get next get next
+[00:25:40] get next for just to get all the columns
+[00:25:42] from one operator to the next.
+[00:25:45] the operators together.
+[00:25:51] >> Save it as uh if you do operator fusion,
+[00:25:54] you fuse everything together, which you
+[00:25:55] can't. You kind of you can fuse things
+[00:25:57] in pipelines, but not always.
+[00:25:59] >> Then it kind of just one giant program.
+[00:26:03] Uh
+[00:26:06] again, if you have a if you have a
+[00:26:08] pipeline some like I can't fuse
+[00:26:10] together.
+[00:26:12] Some things I can fuse together, some
+[00:26:13] some things I can't. And the Germans are
+[00:26:15] very good at fusing like almost all
+[00:26:17] together. You can fuse everything within
+[00:26:18] a pipeline. But soon as I have to go
+[00:26:20] across pipelines, I can't do that.
+[00:26:24] So for OLAP, no one does this except for
+[00:26:27] again very few systems. This actually
+[00:26:29] works in OTP systems because most of the
+[00:26:33] time you're not getting a lot of data.
+[00:26:36] So the overhead of having to call get
+[00:26:38] next, get next, get next, uh, if you can
+[00:26:40] fuse everything together because you're
+[00:26:41] probably going to only have one
+[00:26:42] pipeline, then it collapses down and
+[00:26:45] becomes way more efficient. Again, this
+[00:26:47] is for inmemory systems, it matters a
+[00:26:49] lot, right? Like because I I'm not
+[00:26:51] worried about fetching things from disk.
+[00:26:52] I'm trying to reduce my number of
+[00:26:54] function calls I have to make for OLTP.
+[00:26:56] This makes this makes a huge difference.
+[00:26:58] Um, but and most systems most OLAP
+[00:27:01] systems don't do this. like high-rise
+[00:27:02] was an experimental system out of
+[00:27:04] Germany that started implementing with
+[00:27:06] this approach and then they in the in
+[00:27:08] the rewrite they got rid of it and
+[00:27:09] switched over to uh the vectorzed model
+[00:27:12] we'll see in the next the next uh next
+[00:27:14] slide then Raven DB is a document
+[00:27:15] database system think like MongoDB but
+[00:27:18] out of Israel and again they're doing
+[00:27:19] OTP so it's uh it makes sense in that
+[00:27:23] environment right it's simple model easy
+[00:27:26] to code easy to debug uh and it's not
+[00:27:29] bad until you start getting with really
+[00:27:31] large data set sizes or intermediate
+[00:27:33] results then it falls apart.
+[00:27:36] [snorts]
+[00:27:37] All right. So the the best approach for
+[00:27:38] OLAP is going to be the vectorzed model
+[00:27:40] or vectorization model and that's going
+[00:27:42] to be somewhere in between the iterator
+[00:27:43] model and the materialization model. So
+[00:27:45] instead of passing along a single tupil
+[00:27:47] or all the tupils I pass along a subset
+[00:27:49] or a batch of them and different systems
+[00:27:52] have different batch sizes. I think duct
+[00:27:53] DB is like 1024, right? It's not going
+[00:27:56] to be in the millions. is going to be
+[00:27:58] some some multiple of a power two like
+[00:28:01] 1024 or 2048 something like that.
+[00:28:04] >> [snorts]
+[00:28:04] >> So you're still going to have a next
+[00:28:05] function but again now set instead of
+[00:28:07] passing along single tuple you're going
+[00:28:08] to pass along a batch or a vector right
+[00:28:12] and then within the we're not going to
+[00:28:15] go in too much detail for this in this
+[00:28:17] uh for this course but there's a bunch
+[00:28:19] of logic or there's different ways to
+[00:28:22] handle the case where I know my batch
+[00:28:25] sizes are 2048 but if I start filtering
+[00:28:27] things out in in a batch as I go up do I
+[00:28:30] wait to get more data down below to fill
+[00:28:33] that batch up back to 2048 or 1024 or do
+[00:28:36] I just pass along whatever I have up up
+[00:28:39] the query plan and let it be sparse as
+[00:28:41] you go up. There's not there's pros and
+[00:28:44] cons each of those approaches but for
+[00:28:45] this class we don't need to worry about
+[00:28:46] it. It's more about like how do we keep
+[00:28:48] keep track of this or how do we actually
+[00:28:50] just sort of implement the basic idea of
+[00:28:51] this. [snorts]
+[00:28:53] All right. So again going back to our
+[00:28:55] approach here or sorry our our example
+[00:28:57] here right now in our operator functions
+[00:29:00] or our next implementations now we see
+[00:29:02] that instead of passing along uh you
+[00:29:05] know instead of calling a mit
+[00:29:06] immediately when we have a tupil as our
+[00:29:08] output we are maintaining an output
+[00:29:10] buffer but it's not the full you know
+[00:29:12] it's not going to be some large chunk of
+[00:29:13] memory that we would have in the
+[00:29:14] material materialization model. Now that
+[00:29:17] we check to see anytime that our buffer
+[00:29:18] is our output buffer is full then we
+[00:29:21] emit it up. Right? Right. So now again
+[00:29:23] down here I'm going to scan through
+[00:29:25] table R add a tupil to my output buffer
+[00:29:28] and then only if the the size of the
+[00:29:30] output buffer is is greater than n where
+[00:29:33] it ends my batch size or target batch
+[00:29:35] size then I pass up the tupal batch and
+[00:29:37] I do the same thing down below over here
+[00:29:43] right
+[00:29:46] straightforward.
+[00:29:48] So this idea seems obvious. It's only
+[00:29:52] existed since like I don't know 2006
+[00:29:55] 2007, right? Even in the in the OLAP
+[00:29:58] systems that were around uh in the in
+[00:30:01] the 90s or 1980s, they were still doing
+[00:30:04] the iterative model or in the case of
+[00:30:05] MODB, they were doing the
+[00:30:06] materialization model. And like I said,
+[00:30:08] the guy that was a co-founder of
+[00:30:10] Snowflake was at CWI, saw them, saw MDB
+[00:30:13] doing materialization model, thought of
+[00:30:15] a better way to doing it in this batch
+[00:30:18] approach and then he did a startup that
+[00:30:20] got bought by Ingress, which was one of
+[00:30:23] the first legend databases, but then
+[00:30:24] they killed off that project and then he
+[00:30:25] went and founded Snowflake with two guys
+[00:30:27] from Oracle. The Snowflake is the
+[00:30:28] behemoth uh that it is today. But pretty
+[00:30:32] much every new database system that does
+[00:30:33] OLAP targeting OLAP workloads in the
+[00:30:35] last 10 years is going to be doing this
+[00:30:37] approach. And again, the size of the
+[00:30:39] batch will vary. Uh 1024 is probably
+[00:30:42] just anecdotally I would say is probably
+[00:30:44] the most common one. There's a bunch of
+[00:30:46] other optimizations that you can do now
+[00:30:48] because you're dealing with batches uh
+[00:30:50] that we're not going to talk about. uh
+[00:30:52] but if you know what SIMD is or uh
+[00:30:54] single instruction multiple data items
+[00:30:56] like now that I'm operating on a column
+[00:30:59] of data that's all the same that that
+[00:31:02] it's going to be aligned together in
+[00:31:03] memory I can shove that in my SIMD
+[00:31:05] registers and do a bunch of processing
+[00:31:07] in parallel and it's really really fast
+[00:31:09] or I can shove things down to a GPU if I
+[00:31:11] wanted to and do processing on parallel
+[00:31:14] on on those batches as well
+[00:31:16] right [snorts] so the the data system is
+[00:31:21] is going to have a really efficient
+[00:31:23] implementations for now these operator
+[00:31:24] kernels because they're just ripping
+[00:31:26] through these arrays or these these
+[00:31:28] vectors very efficiently and you're
+[00:31:30] you're basically doing the same amount
+[00:31:31] of work for a bunch of tupils
+[00:31:32] altogether. Uh, and that's the best
+[00:31:35] thing for a modern CPU because I don't
+[00:31:36] have a bunch of branches or conditionals
+[00:31:39] like I'm taking a batch of data and
+[00:31:41] having a tight for loop to do whatever
+[00:31:42] processing I want on it and then pass it
+[00:31:44] up. Right? [snorts]
+[00:31:47] Again, there's there's probably there's
+[00:31:49] way more systems than I'm showing here,
+[00:31:51] but every system that does OLAP nowadays
+[00:31:52] is going to use this approach. And even
+[00:31:55] systems that start started off the
+[00:31:56] iterator model abandon it and switch
+[00:31:58] over to the uh vectorzed model.
+[00:32:02] All right. So we have this iterandator
+[00:32:05] model, the materialization model and the
+[00:32:06] the the vectorzation model. In all the
+[00:32:09] examples I I showed showed now we assume
+[00:32:12] that there's this next function that I
+[00:32:15] kick off the query processing for for
+[00:32:17] given query plan by starting at the root
+[00:32:19] calling next and then that sort of
+[00:32:20] percolates uh its way down the tree and
+[00:32:23] data starts moving uh from from moving
+[00:32:26] towards the top. Right? So I'm
+[00:32:28] essentially pulling data from the top of
+[00:32:30] the query plan by calling next. I'm sort
+[00:32:32] of pulling it up uh between the
+[00:32:34] operators up into the query plan to to I
+[00:32:36] reach the top right now. This is how
+[00:32:39] most data systems are going to implement
+[00:32:40] this. So this is like this is sort of
+[00:32:42] independent of whether I'm doing
+[00:32:43] vectorization or iterator model
+[00:32:46] in either all three of those different
+[00:32:48] processing models. I can have this next
+[00:32:49] fun next function extraction and do that
+[00:32:52] pulling of the data up.
+[00:32:55] We would call this the
+[00:32:57] so lucid call this the plan processing
+[00:32:59] direction. And so the first approach is
+[00:33:01] this what I just said what I've been
+[00:33:02] showing you so far is again calling next
+[00:33:04] pulling data up but there's a whole
+[00:33:06] another approach where you actually
+[00:33:08] start with the bottom and push data up
+[00:33:11] and this is why I was trying to be
+[00:33:12] careful saying like oh when I show the
+[00:33:13] query plan at the beginning of the
+[00:33:14] lecture I'm saying oh this is logically
+[00:33:16] how data is going to flow but the
+[00:33:18] implementation the physical
+[00:33:19] implementation could actually be
+[00:33:20] different.
+[00:33:21] So in the pushbased model it is kind of
+[00:33:23] like again thinking at thinking how the
+[00:33:26] diagram is drawn in the logical plan
+[00:33:28] like I'm going to start at the leaf
+[00:33:29] nodes and they're going to do whatever
+[00:33:30] processing I have on them and then move
+[00:33:32] data up. So I don't even start at the
+[00:33:34] root and call next down low. There is
+[00:33:35] really no next function. There's some
+[00:33:38] higher level scheduler that says here's
+[00:33:39] all the the operators I need to execute
+[00:33:41] or here are the pipelines I need need to
+[00:33:42] execute and then it knows how to invoke
+[00:33:44] them individually which may not be sort
+[00:33:46] of that top the same uh bottom to the
+[00:33:50] top order. it can decide on its own how
+[00:33:51] to reorder the the pipelines to execute
+[00:33:54] uh based on um you know based on what
+[00:33:58] what it thinks is the most efficient
+[00:33:59] plan of efficient strategy.
+[00:34:02] So let me show you what I mean by this.
+[00:34:04] So we have these two pipelines here and
+[00:34:07] again each of them will have their own
+[00:34:08] operator implementations right the first
+[00:34:10] pipeline here we're just going to be
+[00:34:12] scanning table R and then we're we'll
+[00:34:15] build some hash table and then for our
+[00:34:17] second pipeline we're going to take all
+[00:34:19] the tupils in S and probe whatever hash
+[00:34:21] table got built down below us and uh and
+[00:34:25] then emit them if if there's an match
+[00:34:26] after doing the projection. So I'm doing
+[00:34:28] operator fusion here within my pipeline
+[00:34:30] because it's just take one tupil and run
+[00:34:33] it through those those individual
+[00:34:34] operators until I produce my output.
+[00:34:36] Right? But there's no direct connection.
+[00:34:39] There's no emit function anymore or next
+[00:34:41] invocation between these different
+[00:34:43] pipelines. I just know I have these two
+[00:34:45] pieces of code. They're going to get
+[00:34:47] data from somewhere. They're going to
+[00:34:48] write data somewhere. And then now I
+[00:34:50] have a highle scheduler that they can
+[00:34:52] say well here's all the tasks I need to
+[00:34:54] execute within my for for this query. It
+[00:34:56] can then decide in the order in which it
+[00:34:58] wants to execute it. But it knows the
+[00:34:59] dependencies of the data that between
+[00:35:01] these different pipelines. So no, it
+[00:35:03] can't run pipeline two until pipeline
+[00:35:05] one finishes populating the hash table.
+[00:35:08] So it it invoke pipeline one first and
+[00:35:11] then now there'll be part of this task
+[00:35:14] that we're executing here. There'll be
+[00:35:15] some notion of there's a location of
+[00:35:17] where I can write my data to, right, as
+[00:35:19] as I produce my results. So as I build
+[00:35:21] my hash table, I could just be
+[00:35:23] allocating pages in in my buffer pool
+[00:35:26] and writing my hash table out to there.
+[00:35:30] Uh and then when I get full and get more
+[00:35:31] pages and then when my operator one is
+[00:35:34] finished, the schedule says, "Oh, well,
+[00:35:36] one is finished, but I know task two was
+[00:35:38] waiting for task one to produce results.
+[00:35:41] So I can now schedule to execute task
+[00:35:44] two. And oh, by the way, task two,
+[00:35:47] here's the location of the data that the
+[00:35:49] first task wrote wrote to. So if you
+[00:35:52] need to go get it its output, here's
+[00:35:54] where to go find it,
+[00:35:57] right? And then it can do the same
+[00:35:59] thing. It's going to do some output that
+[00:36:00] it has when it does the the join and the
+[00:36:02] projection, and write to that output
+[00:36:04] buffer. When the task finishes, the
+[00:36:06] schedule knows here's the final location
+[00:36:07] of of the data that this second operator
+[00:36:10] produced or second task produced and it
+[00:36:12] knows that's the result that one sends
+[00:36:14] back to whoever asked for the query to
+[00:36:15] execute.
+[00:36:18] So I'm now I'm separating the the notion
+[00:36:20] of like the the control flow and the
+[00:36:22] data flow meaning like the scheduleuler
+[00:36:24] is saying execute this task execute that
+[00:36:26] task and it's not trying to piggy back
+[00:36:29] off like that next function to say all
+[00:36:31] right this guy calls this guy calls call
+[00:36:33] calls this guy because that's basically
+[00:36:34] the same scheduling mechanism but it's
+[00:36:36] implicitly happening because of the way
+[00:36:38] the the the next thing sort of
+[00:36:40] propagates down but now I have these
+[00:36:43] discrete tasks and I can have a more
+[00:36:44] global view what's going on in my query
+[00:36:47] and I can make better decisions how I
+[00:36:48] want to schedule things.
+[00:36:52] Again, the push model because I would
+[00:36:54] schedule the leaf nodes first and
+[00:36:56] they're sort of pushing data up rather
+[00:36:58] than me starting at the top and and
+[00:37:00] working my way down and pulling data to
+[00:37:01] to the top.
+[00:37:05] So, there's pros and cons to all of
+[00:37:06] these. Again, it's way easier to
+[00:37:08] implement the top to the bottom the pool
+[00:37:10] based approach and most systems are
+[00:37:12] going to do this, right? It's easy, we
+[00:37:14] talked before, it's easy to control the
+[00:37:15] output for my limit clauses because I
+[00:37:17] know how to you basically stop calling
+[00:37:18] next when I know I have enough data,
+[00:37:21] right? Uh in the case of the bottom to
+[00:37:24] the top of the pushbased model, you can
+[00:37:27] you can have a better implementation of
+[00:37:29] these operators that can be more careful
+[00:37:31] about where they're putting data. I'm
+[00:37:33] showing to write to generic output
+[00:37:35] buffers, but you can start doing things
+[00:37:36] like within my fuse pipelines, put
+[00:37:38] things in registers and then make sure
+[00:37:40] that the next task is scheduled can then
+[00:37:42] read maybe read those registers or
+[00:37:44] something, right?
+[00:37:47] For some operators, it can be diplom
+[00:37:49] like a sort merge join because I have to
+[00:37:52] sort of I have to sort two things
+[00:37:54] separately and then run a test that then
+[00:37:57] does does the join. Whereas I could have
+[00:37:59] a sing you if I'm doing the the
+[00:38:00] poolbased model I could have a single
+[00:38:02] pipeline assume that the first result is
+[00:38:05] sorted then sort the second one and then
+[00:38:07] just feed things up through uh through
+[00:38:10] that way. Um but that that's a low level
+[00:38:12] detail you don't need to worry about. So
+[00:38:14] the top one is way more common. The
+[00:38:16] second one I would say is rarish. Uh the
+[00:38:20] the most famous system that probably
+[00:38:22] start started implementing this approach
+[00:38:23] was hyper from the Germans. And then
+[00:38:25] this found its way into Umbrella.
+[00:38:26] There's the second version of hyper but
+[00:38:28] you know a ducky be started off actually
+[00:38:30] using the top one and then they realized
+[00:38:32] that was a mistake or they realized that
+[00:38:34] it was a better idea to do the second
+[00:38:35] one do the bottom one here so they
+[00:38:37] switched to that but they originally
+[00:38:38] didn't start this way click house does
+[00:38:40] this cb is a is a commercial fork of
+[00:38:43] umbra firebolt does this snowflake does
+[00:38:45] this like the major OLAP systems all do
+[00:38:47] this approach in combination with the
+[00:38:49] vectorization model but again those two
+[00:38:52] design choices are are independent so I
+[00:38:54] could do vectorization model with the
+[00:38:56] the pullbased approach data fusion does
+[00:38:58] this uh a bunch of other systems do this
+[00:39:01] but the the the second one is is has a
+[00:39:04] bunch of advantages but you maybe don't
+[00:39:06] only realize until you actually
+[00:39:07] implement the first one. Yes.
+[00:39:11] model.
+[00:39:22] >> This question is in in a in a could a
+[00:39:25] database system support different
+[00:39:28] processing models. So not the plan
+[00:39:30] direction but the processing model. So
+[00:39:31] iteration materialization vectorization.
+[00:39:33] Yes. In theory yes. Nobody does that
+[00:39:37] because it's it's now you got to
+[00:39:39] implement everything a bunch of
+[00:39:41] different things, right? And it makes it
+[00:39:43] harder now to com potentially compose
+[00:39:45] things together. I mean, you basically
+[00:39:46] can get the you can get the iterator
+[00:39:48] model if you implement vectorzation or
+[00:39:51] actually really all of these by just
+[00:39:52] having your vector size be one. It's the
+[00:39:55] same thing. It's be it could be less
+[00:39:57] efficient because you're put things in
+[00:39:58] an output buffer, right? Versus just
+[00:40:01] passing along a single tupil, but it's
+[00:40:02] basically the same. But nobody would do
+[00:40:04] that because now you're maintaining you
+[00:40:06] know you know different variations of
+[00:40:08] the same thing and that becomes an
+[00:40:10] engineering nightmare. It's just not
+[00:40:11] worth it.
+[00:40:25] Yeah. So his question is so say go back
+[00:40:27] to um
+[00:40:31] let's do iterative model and and then
+[00:40:32] the virtualization model. So in this
+[00:40:34] slide here I'm showing Oracle I'm
+[00:40:37] showing SQL server right. Let's focus on
+[00:40:39] those two and then and and or DB2 as
+[00:40:41] well. But then when I jump over now to
+[00:40:44] uh the vectorization model
+[00:40:48] uh Oracle's here DB2's there SQL
+[00:40:50] server's there. So in the case of
+[00:40:51] Oracle, uh we didn't get to talk about
+[00:40:53] this, but they actually have run dual
+[00:40:55] engines. So they'll have a column store
+[00:40:57] engine and a row store engine all within
+[00:40:59] the same binary, but they're separate
+[00:41:01] code bases. So technically they support
+[00:41:03] both. Same with like SQL server. They
+[00:41:05] would have they have like a column store
+[00:41:07] engine. So basically Oracle, SQL Server,
+[00:41:09] DB2, all these systems are from like the
+[00:41:11] 1980s or or 1970s. And so they're all
+[00:41:14] row based uh pool row based pool
+[00:41:19] iterator model implicitations and then
+[00:41:20] when column stores and OLAP stuff became
+[00:41:22] more common they realize oh our
+[00:41:24] implicitation is not is not efficient
+[00:41:26] right vectorization model is better the
+[00:41:29] let's ignore the pushbased thing
+[00:41:30] vectorization model is better and
+[00:41:32] passing being a column store is better
+[00:41:33] so they have separate engines that can
+[00:41:35] that can you know use these different
+[00:41:38] approaches but within one like within
+[00:41:41] one engine itself it won't patch
+[00:41:44] that that would just be a nightmare to
+[00:41:46] maintain.
+[00:41:50] Okay, cool.
+[00:41:54] All right. Um
+[00:41:57] [snorts]
+[00:41:58] All right. So now we want to talk about
+[00:41:59] access methods. So now we know
+[00:42:00] conceptually how we're going to move
+[00:42:01] data up from the different operators or
+[00:42:04] move between different operators. Okay.
+[00:42:06] I I don't mean to use direction but like
+[00:42:08] I think you understand the between the
+[00:42:10] different approaches now, right? So the
+[00:42:11] access method is going to be how you get
+[00:42:13] data from the leaf nodes, right? Because
+[00:42:16] in relational algebra, there wasn't a
+[00:42:17] definition. There wasn't we didn't say,
+[00:42:19] oh, here's a stretch scan operator or
+[00:42:21] here's an index operator. It was just
+[00:42:22] like I do a filter or projection or a
+[00:42:26] select on a on a on a relation, but I
+[00:42:30] didn't define how I'm actually going to
+[00:42:31] get the data. So now we in our
+[00:42:33] implementation, we actually have we have
+[00:42:34] to worry about that, right? So there's
+[00:42:37] three basic approaches. you either do a
+[00:42:39] sequential scan. That's the fallback
+[00:42:40] approach. Like no matter what, I can
+[00:42:42] always crunch scan the data. Uh but if I
+[00:42:45] have an index, uh then there's a bunch
+[00:42:48] of different ways I could go at this.
+[00:42:49] And I can either choose one index and do
+[00:42:50] an index scan or in some systems I have
+[00:42:53] multiple indexes. I can do index scans
+[00:42:55] on all of them or some some portion of
+[00:42:57] them and then be clever about how I
+[00:42:59] combine the results to put it together.
+[00:43:01] Right? So we're really focusing right
+[00:43:02] now like how do we actually do this this
+[00:43:04] bottom part here. [snorts] And like I
+[00:43:06] said, the squuncher scan is the easiest
+[00:43:08] thing to implement. Assume you're doing
+[00:43:10] a heap based system. It's just going to
+[00:43:12] the page directory, getting whatever the
+[00:43:14] first page is, reading, you know,
+[00:43:17] scanning it, finding tupils, and then
+[00:43:18] emitting them or putting them in a
+[00:43:20] buffer or however, however it's actually
+[00:43:22] being implemented, doesn't matter. Just
+[00:43:23] I'm going page by page and reading data
+[00:43:26] out and shoving it up to the next
+[00:43:28] operator.
+[00:43:29] And basically the the data system or the
+[00:43:31] operator implementation will maintain
+[00:43:33] its own cursor
+[00:43:35] that just keeps track of where it left
+[00:43:37] off in what the last page or the last
+[00:43:39] table that I looked at so that if it
+[00:43:41] calls next again or has to require more
+[00:43:43] more results it knows where to pick it
+[00:43:45] up where it left off before
+[00:43:47] right alternatively you could just you
+[00:43:50] know materialize everything scan all the
+[00:43:52] pages put it in a buffer and then c you
+[00:43:55] know scan through that or iterate
+[00:43:56] through that and shove tupils up but you
+[00:43:58] know that actually has that obviously
+[00:44:00] has problems because if it's a large
+[00:44:03] table I got to put it somewhere in
+[00:44:04] memory and I may you know it it may not
+[00:44:06] be the most efficient way to do this
+[00:44:08] right so again scan it's the fallback
+[00:44:11] choice it seems like again if I have no
+[00:44:13] index there's no other way to get data I
+[00:44:15] can always just read the pages one by
+[00:44:17] one so this seems like this would be
+[00:44:19] terrible uh and very inefficient except
+[00:44:22] that we've already talked about a bunch
+[00:44:23] of different ways to make this go fast
+[00:44:26] Right.
+[00:44:28] Right. We've already covered a lot of
+[00:44:30] these things in in previous lectures
+[00:44:31] like data encoding compression. What was
+[00:44:33] that? That was taking data and
+[00:44:36] converting it into a different binary
+[00:44:38] form that exploits uh repeated values,
+[00:44:42] repeated data. So that when I go fetch a
+[00:44:44] page from from disk, I'm to do my
+[00:44:47] scrunchial scan, I'm reading more tupils
+[00:44:48] than I would otherwise if it was
+[00:44:50] uncompressed.
+[00:44:51] All right. We talked about how to do
+[00:44:52] prefetching or scan shanning. We I think
+[00:44:54] we skip bufferable bypass basically.
+[00:44:56] just basically direct copy things into
+[00:44:58] memory space for for for a worker. But
+[00:45:01] pre-fetching was a big deal was like if
+[00:45:02] I know I'm going to scan the data uh
+[00:45:05] sequentially, go fetch a bunch of pages
+[00:45:07] ahead of time, bring them in memory so
+[00:45:08] that when I need them, I don't stall
+[00:45:10] waiting for disk, they're right there
+[00:45:12] available for me. Task parallelization,
+[00:45:15] multi-threading, we'll see that next
+[00:45:16] class. Uh clustering, sorting. Again, if
+[00:45:18] I'm doing I can do binary search over
+[00:45:21] sorted data or I can do sort merge joins
+[00:45:22] over sorted data much more efficiently
+[00:45:23] than just if it was unsorted.
+[00:45:26] materialized views or sorry m lab
+[00:45:28] materialization we already talked about
+[00:45:29] like passing along bare minimum data I
+[00:45:31] need materialized views and result
+[00:45:32] caching we won't cover this semester
+[00:45:35] result caching basically is like if I
+[00:45:37] execute the same query over and over
+[00:45:38] again and if the data hasn't changed why
+[00:45:40] execute the query again just give you
+[00:45:42] back the last result that is rare most
+[00:45:44] systems don't do that materialized views
+[00:45:46] is where the application tells it hey
+[00:45:49] I'm going to execute the same query over
+[00:45:50] and over again and so premputee the
+[00:45:52] results and give back give it back to
+[00:45:55] uh you know the cache results when I run
+[00:45:58] the same query or a query that looks or
+[00:46:00] that could be answered by the the
+[00:46:02] materialized view of course the
+[00:46:03] challenge is how do you maintain the the
+[00:46:05] freshness of that materialized result
+[00:46:08] uh the high-end systems can
+[00:46:10] incrementally update the materialized
+[00:46:12] view like every single time if I if I'm
+[00:46:14] computing the the sum of of a of a
+[00:46:16] column every single time I insert a new
+[00:46:18] tupil I don't have to scan all the
+[00:46:20] tupils and retreat the sum I can just
+[00:46:22] increment or decrement based on what new
+[00:46:23] value gets inserted or updated
+[00:46:25] Right?
+[00:46:27] Postgress can't do that. Postgress can't
+[00:46:29] even do it automatically. You have to
+[00:46:30] tell it when you want to refresh a
+[00:46:31] materialized view. So, you know, we're
+[00:46:33] not going to cover that this semester.
+[00:46:34] And admittedly, to do the the
+[00:46:36] sophisticated materialized views, that's
+[00:46:38] the part of data systems I know the
+[00:46:39] least about because it's it's really
+[00:46:41] it's really tricky. Um, and very few
+[00:46:43] systems do this. [snorts] Data skipping
+[00:46:45] is basically we'll cover in a second.
+[00:46:48] Data paralization, vectorzation, we'll
+[00:46:49] see in the next class. Co-pilation and
+[00:46:51] compilation. I'll talk briefly about
+[00:46:52] this end of the class here. Here I'll
+[00:46:53] show what Postest does. It's basically
+[00:46:55] saying, well, if I know I'm going to be
+[00:46:57] executing this, I know I'm going to be
+[00:46:59] executing this query. Rather than me
+[00:47:01] interpret that and walk through that
+[00:47:02] query query plan tree, let me just
+[00:47:05] generate a program that does exactly
+[00:47:07] what the query wants to do. Compile that
+[00:47:10] and that's going to be way faster than
+[00:47:11] interpreting.
+[00:47:13] So postcrist will do this for the wear
+[00:47:14] clause. They won't do it for the whole
+[00:47:15] things. The Germans do it for the whole
+[00:47:17] things. Uh and we'll cover the end end
+[00:47:20] of this class. All right. All right. So,
+[00:47:21] I want to go through data skipping uh
+[00:47:23] because again, this allows us to avoid
+[00:47:26] reading data we don't actually need if
+[00:47:28] we know we don't need it ahead of time.
+[00:47:30] And then we'll cover these other ones in
+[00:47:31] a second.
+[00:47:33] So, there's two ways to do data
+[00:47:34] skipping.
+[00:47:36] The first is is not that common. It's
+[00:47:38] called approximate queries. Basically
+[00:47:40] says, well, if I don't really need an
+[00:47:43] exact answer, don't read all the data to
+[00:47:45] compute the exact answer. If I want to
+[00:47:47] get, you know, the number of visitors on
+[00:47:49] my website for a given month, do I
+[00:47:51] really need need to know the maybe I may
+[00:47:54] not really need to know the exact count
+[00:47:55] of those of those of the number of
+[00:47:57] visitors, right? If I round it to the
+[00:47:59] nearest thousand, if I you know, my
+[00:48:01] website's getting millions of views,
+[00:48:02] that's good enough.
+[00:48:04] So in the high-end systems there are in
+[00:48:08] in addition to all the aggregate
+[00:48:09] functions we talked about before like
+[00:48:11] count min max sum average there's
+[00:48:14] approximate count and approximate min
+[00:48:16] approximate max they're basically doing
+[00:48:18] sampling and the the better systems can
+[00:48:22] give you sort of statistical guarantees
+[00:48:23] about how accurate the the sample is and
+[00:48:26] if I because if I really need the full
+[00:48:28] answer I'll just do a complete scan
+[00:48:31] [snorts]
+[00:48:32] zone maps is is way more common uh most
+[00:48:35] systems do this most file formats
+[00:48:36] support this basically it's a like a
+[00:48:38] precomputed aggregation on a column so
+[00:48:41] that depending on my query if I know
+[00:48:43] that I don't need if I if I can look at
+[00:48:45] the zone map and see that the data that
+[00:48:48] the zone map represents can't be
+[00:48:49] satisfied for my predicate I don't I
+[00:48:52] don't bother reading it it's like a it's
+[00:48:54] like a filter right it can't tell me
+[00:48:57] whether data actually can't tell me
+[00:48:58] where the data I may want is it can tell
+[00:49:00] me where a block of data would even have
+[00:49:02] the data that I'm looking for
+[00:49:05] and this is super common and it's in
+[00:49:07] pretty much every system uses this. So
+[00:49:09] say we have a simple column like this
+[00:49:11] right a single single column with um
+[00:49:15] with integer value. So my zone map could
+[00:49:17] say like for this these set of values
+[00:49:19] here's the min here's the max here's the
+[00:49:21] average here's all the the the the
+[00:49:24] aggregations I may want to compute on
+[00:49:25] this right sometimes also use like the
+[00:49:28] number of null values right ba basic
+[00:49:30] statistics min max and number null
+[00:49:33] values are or the number number of
+[00:49:36] distinct values most common ones but you
+[00:49:38] can pretty much throw anything in there
+[00:49:40] right and pretty much all the file
+[00:49:41] formats parquet or the vortex one from
+[00:49:44] last week that talk uh I think the guys
+[00:49:46] giving talk this Wednesday as well. They
+[00:49:48] all support basically the same kind of
+[00:49:49] thing in their file formats. So now my
+[00:49:51] query shows up select start from table
+[00:49:53] where value is greater than 600. So say
+[00:49:55] again I'm only showing five tupils here.
+[00:49:58] Say again if think in large terms I have
+[00:50:00] a billion tupils. So I can look in this
+[00:50:03] uh zone map and say well I want to I
+[00:50:06] only want to look for values that are
+[00:50:07] greater than uh 600. So, so I look in
+[00:50:11] the zone map and the zone map says,
+[00:50:13] well, my max value in this block of data
+[00:50:15] is 400. So, I know there could never be
+[00:50:17] a match for me in this in this block of
+[00:50:19] data. So, I don't even go bother reading
+[00:50:20] it.
+[00:50:22] >> I read the zone at that smaller. Yes.
+[00:50:27] >> Question is, how do you choose what
+[00:50:28] approach you want to do in terms of
+[00:50:29] going back here? So, the first one is
+[00:50:32] lossy, right? So, you're going to get
+[00:50:36] wrong results. Is that okay?
+[00:50:40] Well, the data system doesn't know
+[00:50:41] doesn't know what you care about, right?
+[00:50:43] It's your company, your organization,
+[00:50:44] your startup, whatever. So maybe you
+[00:50:47] know for for certain queries that's
+[00:50:49] okay. The data system can't infer that
+[00:50:50] because that's an externality it can't
+[00:50:52] know about. So you have to say I want
+[00:50:53] approximate that's approximate that
+[00:50:56] right
+[00:50:57] you always do this one. You always do
+[00:50:58] the bottom one because it's always a
+[00:51:00] huge win,
+[00:51:03] [snorts]
+[00:51:05] right? Right? If it's your bank account,
+[00:51:06] do you want to have approximate count on
+[00:51:08] your your or sum on your your balance?
+[00:51:10] No. Right? JSON can't know that.
+[00:51:14] All right. So, there's a paper so the
+[00:51:16] the oracle term is called zone maps.
+[00:51:19] Sometimes you see these calls SMAS or
+[00:51:20] small small materialized aggregates and
+[00:51:23] it's a paper from 98 basically defines
+[00:51:25] it in this way, right? Again, seems kind
+[00:51:27] of obvious, but it didn't really come
+[00:51:28] out until the 1990s. And this guy here,
+[00:51:30] Guido, he's a German. So this is the PhD
+[00:51:32] adviser of like the number one German
+[00:51:34] that does the umbra and hyper stuff that
+[00:51:36] we talked about many times. So this is
+[00:51:37] his PhD adviser. So the Germans are are
+[00:51:40] ridiculous. [snorts] All right. So
+[00:51:42] that's pretty much how what everything
+[00:51:43] you do with special scan. We'll talk
+[00:51:44] about compilation or code specialization
+[00:51:46] at the end of class. So let's talk about
+[00:51:48] index scans. Again, we know what index
+[00:51:50] are being used for, right? We saw this
+[00:51:53] uh before how to figure out like you
+[00:51:55] know what the
+[00:51:57] how to use a B+ tree or skip list or
+[00:51:59] whatever the dash we want to find the
+[00:52:01] tupils that match whatever we want in to
+[00:52:03] satisfy in our predicates in our query.
+[00:52:06] Now the challenge is going to be how do
+[00:52:07] we determine which index to use? Like if
+[00:52:10] I have a bunch of indexes I can use on
+[00:52:12] my my t that are available to me on my
+[00:52:14] tables and my wear clause actually
+[00:52:16] references a bunch of columns that are
+[00:52:18] being managed or referenced by a bunch
+[00:52:20] of indexes. Which one is going to be the
+[00:52:22] best one for me to use? That's a hard
+[00:52:24] problem and that's what we'll cover next
+[00:52:27] week. So for now we're going to ignore
+[00:52:28] how do we pick what the best index to
+[00:52:30] use is. So assume somebody some Oracle
+[00:52:32] has not Oracle the system the company
+[00:52:34] some Oracle has figured out this is the
+[00:52:35] best one you use. So now we talk about
+[00:52:37] how we actually want to go ahead and use
+[00:52:38] it.
+[00:52:41] [snorts] So the the way to think about
+[00:52:43] this challenge is like
+[00:52:46] we're trying to reduce the amount of
+[00:52:47] work we have to do and it's going to
+[00:52:48] depend heavily on what the data looks
+[00:52:51] like and what our predicate looks like.
+[00:52:52] So say we have a query here. We want to
+[00:52:54] get all the students that are less than
+[00:52:55] 30 that are in the CS department and and
+[00:52:57] come from the US. But I have an index on
+[00:52:59] age and department. So one scenario,
+[00:53:01] there's 99 people under the age of 30,
+[00:53:04] but there's only two people in the CS
+[00:53:05] department. But the flip side could be
+[00:53:07] there's 99 people in the CS department,
+[00:53:08] but only two of them are under the age
+[00:53:10] of 30.
+[00:53:12] Is that me? Sorry.
+[00:53:17] Sorry.
+[00:53:18] My lawyer. All right. Uh, right. So,
+[00:53:24] so in this case here, it's kind of
+[00:53:26] obvious, right? So, if I have more
+[00:53:27] students that are in in the the CS
+[00:53:29] department, but only two people that are
+[00:53:31] under the age of 30, then I want to use
+[00:53:33] that age index because I can quickly go
+[00:53:36] get those one two students that are age
+[00:53:38] 30 and then it's go check to see whether
+[00:53:40] they are, you know, in the CS1 or not.
+[00:53:42] And the flip side, if I have more people
+[00:53:43] that are under age of 30, I want to use
+[00:53:45] the department one because that's more
+[00:53:46] selective. So, this is basically what
+[00:53:48] the data center is going to try to
+[00:53:49] figure out for us. And then once it is
+[00:53:51] once we figure out this is the index I
+[00:53:52] want to use based on the uh the API
+[00:53:55] that's available to us that the index
+[00:53:58] exposes then we just invoke that API in
+[00:54:01] operator to get the data that we want
+[00:54:03] right in a B+ tree or a skip list or a
+[00:54:06] try. I can do range scans but I can't do
+[00:54:09] that in a hash hash index. So this so
+[00:54:11] the division also has to figure out all
+[00:54:12] right my predicate has uh a an
+[00:54:16] inequality or a less than for some some
+[00:54:19] my where my SQL query has a less than
+[00:54:21] for age but it equals equals for
+[00:54:23] department. So if I if I have a hash
+[00:54:26] index on age I can't can't use that to
+[00:54:28] satisfy this query. So it'll pick
+[00:54:29] another index and then we just invoke
+[00:54:32] the API to get the data we want out of
+[00:54:33] it.
+[00:54:36] The cool thing is that we may not we may
+[00:54:38] not always have to make you know a
+[00:54:40] single choice of like what's the one
+[00:54:41] index I want to use out of all my
+[00:54:42] indexes. Some systems let you use all
+[00:54:44] the index or as many indexes as you want
+[00:54:47] and then you just do the probes or do
+[00:54:49] the lookups on those indexes. You get
+[00:54:52] back the record ids that match whatever
+[00:54:55] your predicate is and then you just do
+[00:54:57] either a union or intersection between
+[00:55:00] the results of different indexes to find
+[00:55:01] the the the tools that you want.
+[00:55:04] So some systems will call these
+[00:55:06] multi-index scans. Postgress calls this
+[00:55:08] a bit map scan because it's going to
+[00:55:09] build a bit map and then do do
+[00:55:10] intersections on the bit maps. My SQL
+[00:55:12] calls these an index merge. They're all
+[00:55:14] basically doing the same thing, right?
+[00:55:17] And if the predicates in your wear
+[00:55:18] clause across the different indexes,
+[00:55:20] they're conjunctions or and clauses,
+[00:55:22] then I just take the intersection
+[00:55:25] of the the two sets. Or if I'm doing an
+[00:55:28] or a disjunction, then I take the union
+[00:55:30] of two sets. Then I have all the record
+[00:55:32] ids that match what are the predicates
+[00:55:34] across all my indexes and then I go go
+[00:55:36] fetch them from the table to go go get
+[00:55:38] actually results I need.
+[00:55:41] So we going back here to our table
+[00:55:42] again. So we have doing a look up of all
+[00:55:44] the students that are age less than 30
+[00:55:46] in department in computer science
+[00:55:48] department in the US assuming I have an
+[00:55:50] index on
+[00:55:52] uh on age and department. So and they're
+[00:55:56] both equally as good. So I'll retrieve
+[00:55:57] all the I'll do a look up on the the age
+[00:56:00] index to get all the tuples that are
+[00:56:01] less than 30 or sorry the tuples where
+[00:56:03] the age is less than 30. Then I'll do
+[00:56:05] another probe in the CS department and
+[00:56:07] get all those tupils that are in that
+[00:56:08] department. And then I take their
+[00:56:10] intersection
+[00:56:11] and then then I get go get the tupils
+[00:56:14] that uh that match the intersection or
+[00:56:17] that are still in my intersection
+[00:56:19] result. Then go see whether their their
+[00:56:21] country is US. So visually it just looks
+[00:56:24] like this. Probe the first index, get
+[00:56:25] all the records that are less than 30.
+[00:56:27] Uh, probe this index, get all the
+[00:56:29] records where the department is computer
+[00:56:30] science. Take the middle part, the
+[00:56:32] region here, the intersection, fetch
+[00:56:34] those records, then just do an
+[00:56:36] additional lookup to see whether the
+[00:56:37] country is US, right? Because there's no
+[00:56:38] index for me to do that.
+[00:56:42] Pretty straightforward.
+[00:56:48] All right. So now we got to talk about
+[00:56:49] how So we now do selects. We do either
+[00:56:51] index scan, a swatcher scan or a
+[00:56:53] multi-index scan. The basic idea is the
+[00:56:55] same, right? And then depending on our
+[00:56:56] our processing model, we're either
+[00:56:58] batching up a bunch of tubles or sending
+[00:57:00] one tupil at a time. It doesn't matter.
+[00:57:03] For tubles that modify the database,
+[00:57:05] insert, update, deletes. Uh we're
+[00:57:08] basically going to piggy back off of the
+[00:57:11] the the basic access methods that we
+[00:57:12] have and all the other operators we have
+[00:57:14] to
+[00:57:16] to to modify these database so that we
+[00:57:20] don't have to reimplement like in the
+[00:57:22] case of a delete or an update. We don't
+[00:57:24] have to reimplement scan operators to go
+[00:57:27] find tools that match our predicates. We
+[00:57:28] just reuse the scans we used for selects
+[00:57:31] and then now the output of those scan
+[00:57:33] operators are then used to then do
+[00:57:36] whatever the update or delete for
+[00:57:38] insert. The basic idea is that you
+[00:57:40] decide whether you want to materialize
+[00:57:42] the the result as a separate operator or
+[00:57:44] within this insert operator. And I'll
+[00:57:46] show that next slide.
+[00:57:49] For other operations like upserts, uh
+[00:57:51] merges, truncates, truncates are easy.
+[00:57:53] Just drop the table and then add it
+[00:57:54] back. Right? Upserts are basically scans
+[00:57:57] followed by updates if there's a match
+[00:57:59] or insert. They all they all basically
+[00:58:01] works the same way, [snorts] right? So
+[00:58:03] update, delete, we're just going to use
+[00:58:05] all the the scan operators, access
+[00:58:07] methods we talked about before, and as
+[00:58:08] they pass up the record ids, that's what
+[00:58:10] been used inside these these these
+[00:58:12] modifying operators to then change the
+[00:58:14] data as we need, right? We got to be
+[00:58:16] careful though to keep track of any
+[00:58:18] tuples that we may may see before
+[00:58:19] because if we'll see in the next slide
+[00:58:22] if if we start scanning data on an index
+[00:58:26] and we start modifying data and we
+[00:58:28] physically put it somewhere back in the
+[00:58:30] table or an index that the the iterator
+[00:58:33] hasn't got to yet then it comes across
+[00:58:35] it again. We don't want to have to
+[00:58:36] modify it or delete it multiple times.
+[00:58:40] For inserts again you either materialize
+[00:58:42] the tool inside the insert operator
+[00:58:43] itself or you in you modif you
+[00:58:46] materialize on the outside and if you do
+[00:58:48] the last one then you can do like select
+[00:58:50] into you can do like create tables all
+[00:58:52] the select statements like it's really
+[00:58:54] it's easy to compose these things
+[00:58:55] together because you can the insert
+[00:58:56] operator doesn't know doesn't care how
+[00:58:58] tubers are coming into it from down
+[00:59:00] below it in the query plan it just says
+[00:59:02] take this and put it into this table I
+[00:59:03] can do that so but again we had that
+[00:59:06] decoupling of the concerns or the logic
+[00:59:08] for populating tupal buffers. Then we
+[00:59:13] can have whatever went below us in the
+[00:59:14] query plan generate tupils as long as
+[00:59:16] it's in the right form that we expect
+[00:59:18] following our API. The insert operator
+[00:59:20] can sort anything from anywhere.
+[00:59:24] You can do temp tables and everything uh
+[00:59:26] using this as well. [snorts] All right,
+[00:59:28] so let's see this problem about updating
+[00:59:30] things multiple times. All right, say we
+[00:59:32] have a table of people and we want to
+[00:59:34] keep track of the salary and I want to
+[00:59:36] run a query. We're going to update
+[00:59:37] everyone's salary. We're going to add
+[00:59:39] $100 bonus or increase their salary $100
+[00:59:42] in the end of the year if they make that
+[00:59:44] if they make less than $1,100.
+[00:59:48] So the assuming we're going with the the
+[00:59:51] iterative model going from pool base
+[00:59:53] approach from top to the bottom. I start
+[00:59:55] at the top. I'm going to start scanning
+[00:59:57] all the the tuples of my child. It goes
+[00:59:59] down below. And now in this uh second
+[01:00:01] operator down here, then I'm going to do
+[01:00:02] my index scan and it's going to
+[01:00:05] instantiate an iterator that's going to
+[01:00:07] just scan across all the leaf nodes and
+[01:00:09] find tubless and then emit them up to
+[01:00:11] the next operator. So if they the first
+[01:00:14] thing it finds is me and I make $999.
+[01:00:17] Um so that gets passed up now to the
+[01:00:19] operator above it. We then go inside the
+[01:00:22] for loop, do the update, add $100 to it,
+[01:00:26] and then write it back out to the index.
+[01:00:29] Right?
+[01:00:31] So then now we go down back down to call
+[01:00:35] next on the child operator again. We
+[01:00:37] scan across even further and then now we
+[01:00:40] come across me again, right, with my
+[01:00:43] updated salary. And then now I'm going
+[01:00:45] to update it twice. That's obviously
+[01:00:48] bat.
+[01:00:51] Right. But what's happening here? The
+[01:00:55] the we're changing the physical location
+[01:00:57] of data in whatever data structure is
+[01:01:00] being used at the leaf operators, right?
+[01:01:03] I'm moving, you know, my record Andy
+[01:01:05] used to be over here because this is
+[01:01:06] indexed on my my salary. But when my
+[01:01:09] salary got updated, it got moved to
+[01:01:10] another physical location on the leaf
+[01:01:12] nodes. And then the iterator goes along
+[01:01:15] and then it finds it again. [snorts]
+[01:01:19] So this is a very famous problem from
+[01:01:21] IBM. It's called the Halloween problem.
+[01:01:23] And next week's Halloween. So I always
+[01:01:25] like to bring this up, right? So it's an
+[01:01:27] anomaly in a data system emulation that
+[01:01:29] occurs when the physical location of a
+[01:01:31] tupil changes that causes a access
+[01:01:34] method or a scan operator whether it's
+[01:01:36] an index scan or sequential scan to come
+[01:01:38] across or see the same logical tupil
+[01:01:43] multiple times because its physical
+[01:01:44] location has changed. Like logically
+[01:01:47] there's only one Andy,
+[01:01:49] you know, in in in the not the world,
+[01:01:52] whatever. There's one logical Andy, but
+[01:01:53] physically in my my database during the
+[01:01:57] execution of this query, it physically
+[01:01:58] moved different locations. So it doesn't
+[01:02:01] know it didn't at least the the
+[01:02:03] simplistic implementation, a naive
+[01:02:05] implementation wouldn't know that it's
+[01:02:06] seeing the same logical thing. It just
+[01:02:08] sees distinct physical tupils.
+[01:02:11] So this was discovered by the the IBM
+[01:02:14] researchers in in the 1970s 1976 when
+[01:02:17] they were building system R which is one
+[01:02:19] of the first relational systems ever
+[01:02:20] built right it has nothing to do with
+[01:02:22] Halloween there's like the original use
+[01:02:24] case wasn't Halloween they discovered
+[01:02:26] this problem on a Friday uh late Friday
+[01:02:29] afternoon when they were building system
+[01:02:30] R and they were like oh this is hard
+[01:02:32] what do we do and they were like oh I
+[01:02:34] don't know it's Halloween let's let's
+[01:02:35] let's let's figure it out on Monday
+[01:02:37] let's go out and drink and they just
+[01:02:38] left the problem then solved it the next
+[01:02:40] week so it just happened that they
+[01:02:41] discovered this on Halloween and went
+[01:02:42] drinking and didn't solve it that day.
+[01:02:44] That's why it's called the Halloween
+[01:02:45] problem. And there's a Wikipedia article
+[01:02:47] explicitly, you know, calls this out,
+[01:02:50] right? So again, it's just the way to
+[01:02:53] handle this is sort of obvious. You want
+[01:02:54] to keep track of like, have I seen this
+[01:02:56] this logical tupole uh you know multiple
+[01:03:00] times or did I modify this I'm looking
+[01:03:02] at to know I don't need to modify it
+[01:03:03] again. Right?
+[01:03:06] It's it's sort of obvious how to solve
+[01:03:08] how to do this. you have to handle this
+[01:03:09] in project 3. I'm only bringing this up
+[01:03:11] to say like there's a bunch of logic
+[01:03:12] that I'm not really showing here inside
+[01:03:14] of my scan operators where I'm keeping
+[01:03:16] track of actually what I actually am
+[01:03:17] modifying.
+[01:03:19] And then whether you keep track this
+[01:03:21] track of like here's the things I
+[01:03:22] modified in a separate buffer or you can
+[01:03:25] record in the header the tupil like this
+[01:03:27] thing was modified by me therefore don't
+[01:03:29] look at it again. There's definitely
+[01:03:31] different ways you can implement this
+[01:03:32] and they will see this in two weeks when
+[01:03:34] we start talking about convergial how to
+[01:03:35] handle it.
+[01:03:39] Okay, so the for the end of this class I
+[01:03:42] want to talk about how we actually
+[01:03:43] handle expressions. So it's sort of
+[01:03:46] obvious we have these wear clauses that
+[01:03:48] we want to evaluate to determine whether
+[01:03:50] tupils match you know whether there's a
+[01:03:52] join or or a filter or whatever it is.
+[01:03:54] So now we have to talk about actually
+[01:03:56] how do you actually execute these things
+[01:03:58] and the way you represent this is just
+[01:04:00] another tree. So within our tree query
+[01:04:03] plan we're each operator could have its
+[01:04:05] own trees that represent the expressions
+[01:04:08] that they're responsible for at that
+[01:04:09] sort of level or that point in the tree.
+[01:04:12] Right? So for for our our join clause
+[01:04:15] where r ID equals SID and the the wear
+[01:04:18] clause S.V value is greater than 100.
+[01:04:20] Well, this is just a a conjunction
+[01:04:23] between the the the join clause on the
+[01:04:26] two two tuples or two tables and then
+[01:04:28] the evaluation on the value uh based on
+[01:04:31] whether it's you know greater than some
+[01:04:33] constant here right so basically while a
+[01:04:36] query is executing as you're scanning
+[01:04:38] the data you have to evaluate this tree
+[01:04:41] to determine whether the the predicate
+[01:04:43] matches uh or whatever the the operator
+[01:04:46] is wants to do whether it satisfies this
+[01:04:49] expression defined in this to determine
+[01:04:51] whether you'd be moving tupils up to the
+[01:04:53] next operator or to the next stage in
+[01:04:54] the query plan. [snorts]
+[01:04:57] So let's look at sort of simple example
+[01:04:59] like this. So we haven't talked about
+[01:05:00] prepared statements but um think of it
+[01:05:03] like a macro I can have declare in SQL.
+[01:05:05] So I have prepare xxx as then I have my
+[01:05:08] select clause and now you can see inside
+[01:05:11] this my select clause I have where s.vow
+[01:05:14] equals dollar sign one. So parameter 1
+[01:05:16] plus 9, right? And so I call up a pair
+[01:05:20] on my application. I say, hey, I'm going
+[01:05:22] to execute this query a lot. Give it a
+[01:05:24] name xxx. And then now when I want to
+[01:05:27] execute it again, instead of calling
+[01:05:28] that entire select query, I can say
+[01:05:30] execute and treat it like a function,
+[01:05:32] say execute query xxx and pass in the
+[01:05:35] parameters 9991 and that'll get
+[01:05:38] substituted in dollar one up there.
+[01:05:41] some substance would would the basic
+[01:05:42] idea is like instead of me having to run
+[01:05:44] the query optimizer for every single
+[01:05:46] time I'm going to build this query I can
+[01:05:48] prepare it ahead of time cache it and
+[01:05:50] then re use the the query plan over and
+[01:05:52] over again of course there's trade-offs
+[01:05:53] to this whether it's a good idea or not
+[01:05:55] like depending on for some values I may
+[01:05:58] pass in because I don't know it I don't
+[01:06:00] don't know all the values when I call
+[01:06:01] when I call prepare some might have one
+[01:06:04] query plan versus another right there's
+[01:06:06] there's no free lunch sometimes it's a
+[01:06:08] good idea sometimes it's a bad idea and
+[01:06:10] different systems do different things.
+[01:06:11] Postgress will automatically generate
+[01:06:12] these prepared statements for you when
+[01:06:14] you run the same query five times,
+[01:06:16] right? Other systems don't do that.
+[01:06:21] All [snorts] right. So, as I'm scanning
+[01:06:22] my my data, my operator, I'm going to
+[01:06:25] have this execution context that's going
+[01:06:26] to keep track of like what's the tuple
+[01:06:28] I'm looking at, what are the parameters
+[01:06:30] that were passed in when I invoke this
+[01:06:31] query, and what's the schema of the
+[01:06:33] table I'm looking at. So now when I
+[01:06:34] evaluate my tree, different operators in
+[01:06:36] my expression tree are going to need
+[01:06:38] different information from these
+[01:06:40] different from the different context. So
+[01:06:41] all that I want to have ahead of time so
+[01:06:43] that I'm not doing these lookups every
+[01:06:44] single time because I'm trying to rip
+[01:06:46] through this this this expression tree
+[01:06:47] as fast as possible because I'm doing
+[01:06:49] this on a per tupal basis. I have a
+[01:06:51] billion tuples. I got to walk this tree
+[01:06:52] a billion times and I want this to go as
+[01:06:54] fast as possible. So you basically are
+[01:06:57] doing depth first search, right? I'm
+[01:06:59] going to start at the top or depth first
+[01:07:00] traversal. my equal sign here. I know I
+[01:07:02] want to go down to the left side. So I
+[01:07:04] want to get the value for the the
+[01:07:07] attribute s.val. So I again look up in
+[01:07:09] my execution context and say oh well I
+[01:07:12] know that I need s.vow my current tupil
+[01:07:15] and is at that offset based on the
+[01:07:16] schema. So I can just again extract out
+[01:07:18] the value a thousand here. Then I
+[01:07:21] traverse down to the the next side of
+[01:07:23] the tree and said all right well this
+[01:07:25] this leaf node here wants parameter
+[01:07:27] dollar sign one. I look at my execution
+[01:07:29] contact see that I'm being passed in 991
+[01:07:31] as the as that parameter and then I go
+[01:07:34] down to this side here. I just
+[01:07:35] materialize this constant nine nine.
+[01:07:38] They come back up to the addition
+[01:07:39] operator add these two values together
+[01:07:41] get a thousand and then come back to the
+[01:07:43] root and say you know does a thousand
+[01:07:45] equal thousand if yes emit true
+[01:07:47] otherwise emit false and then whoever
+[01:07:49] invoked this tree to do this evaluation
+[01:07:51] here takes the output and decides okay
+[01:07:53] for as I'm scanning this data does the
+[01:07:55] tuple match this predicate and the tree
+[01:07:57] tells me whether it does or not.
+[01:08:01] Do you think this is a good idea or a
+[01:08:03] bad idea?
+[01:08:05] It works.
+[01:08:09] >> It's what?
+[01:08:10] >> It's good. Why?
+[01:08:11] >> Because it works.
+[01:08:13] >> All right. You know what? I can't. Yeah,
+[01:08:14] I'll take that. Yeah. Can we do better?
+[01:08:18] >> Compile it.
+[01:08:19] >> Compile it. Yes. And we'll see that in a
+[01:08:22] second. Yes.
+[01:08:25] So it's terrible for the CPU because I
+[01:08:28] just made a big point about how like the
+[01:08:30] materialization model was trying to or
+[01:08:32] vectorization processing model was
+[01:08:34] trying to remove all the overhead of
+[01:08:35] calling next x next but now within you
+[01:08:38] know even I'm passing along a batch of
+[01:08:40] tupils remove those next calls I got to
+[01:08:42] evaluate that tree and that's kind of a
+[01:08:44] bunch of indirection for these function
+[01:08:45] for sorry for these operator pointers
+[01:08:47] right
+[01:08:48] and that's be that's going to be really
+[01:08:50] slow um so what I really want to be able
+[01:08:53] to do is just evaluate the expression
+[01:08:55] directly
+[01:08:56] and not have to traverse the tree
+[01:08:59] because it's pretty simple what actually
+[01:09:00] what we're doing here right so my my
+[01:09:03] example where sv value equals 1 and I
+[01:09:05] have my tree form of this well that's
+[01:09:08] really just a function called check that
+[01:09:10] returns true if value equals one
+[01:09:14] so if I could avoid that overhead of
+[01:09:16] droing the tree and just invoke this
+[01:09:18] function then be way faster and if I'm
+[01:09:21] running on a batch of tupless vector
+[01:09:23] vectorization model. I can hope my
+[01:09:25] compiler will automatically
+[01:09:26] autovectorize it using SIMD or if not I
+[01:09:29] could use intrinsics to write it myself.
+[01:09:31] But now I could pass along instead of a
+[01:09:33] single tupole I could pass a batch of
+[01:09:34] tupils. they're all just checking
+[01:09:35] whether something you know the value
+[01:09:37] equals one and that's going to go super
+[01:09:38] fast on uh on SIMD instructions and then
+[01:09:43] their suggestion was to uh compile into
+[01:09:46] machine code and some systems will
+[01:09:48] compile actually the whole query plan
+[01:09:50] systems like Postgress will compile a
+[01:09:53] portion of it. So let's do a quick demo
+[01:09:55] of that.
+[01:09:58] I'll turn off the uh the light so you
+[01:10:00] guys can see better.
+[01:10:04] So all right so this is going to run
+[01:10:05] Postgress um log in. So I have a um
+[01:10:11] I made a simple table of called fake
+[01:10:14] data with as you'd expect with fake
+[01:10:16] data, right? And it's just just just b
+[01:10:20] much much sorry.
+[01:10:22] Thank you.
+[01:10:30] There we go. Okay. Sorry about that.
+[01:10:33] Right. So it's it's a table with a bunch
+[01:10:35] of fake data. Right. There's nothing
+[01:10:37] there's nothing fancy fancy about it,
+[01:10:39] right? And I think there is 50 million
+[01:10:42] records.
+[01:10:50] Yeah. Okay. So, first I'm going to do is
+[01:10:54] I'm going to run this special function
+[01:10:56] in Postgress called PG pre-warm.
+[01:11:01] Uh that basically just does a special
+[01:11:03] scan. and it brings everything from the
+[01:11:04] table into the buffer pool. Right? So,
+[01:11:07] I'm going to turn off the just in time
+[01:11:10] compilation for the wear clauses in
+[01:11:12] Postgress. I'm also going to turn off
+[01:11:13] parallel scans
+[01:11:15] um because we'll cover that next class.
+[01:11:18] And then so I'm going to run some query
+[01:11:19] that produces
+[01:11:22] um I'm going to run some query that does
+[01:11:25] some kind of computation where there's a
+[01:11:26] wear clause. I'm doing a match, but I
+[01:11:28] don't have an index on this. So, I
+[01:11:29] basically have to scan everything to see
+[01:11:31] whether I have a match. So without doing
+[01:11:34] any just time compilation um it's going
+[01:11:37] to take a few seconds and so this I'm
+[01:11:39] running notice how I put explain and
+[01:11:41] then analyze and then I have my
+[01:11:43] parenthesis I want it to give me the
+[01:11:45] explain output analyze tells it to
+[01:11:46] actually run it and produce the time it
+[01:11:48] takes to actually run it and then buffer
+[01:11:50] just tells me uh tells me like tell me
+[01:11:54] whether you how many pages you read from
+[01:11:55] the buffer pool versus how many pages
+[01:11:56] you read from disk and so it's just for
+[01:11:58] my own sanity I'm making sure that
+[01:12:00] everything in this this this table is is
+[01:12:02] in memory. So it says shared hit equals
+[01:12:05] whatever the the the 200,000 pages. So I
+[01:12:08] know and everything's being read from
+[01:12:09] memory. So this query executed in uh
+[01:12:13] roughly you know 4 seconds. If I run it
+[01:12:16] again it take about the same. The
+[01:12:17] planning time is telling you how long it
+[01:12:18] takes in the query optimizer. So it
+[01:12:20] takes about 200 milliseconds. Uh and
+[01:12:23] then the query is only take always going
+[01:12:24] to take four seconds. Right? So now if I
+[01:12:27] turn on just in time compilation
+[01:12:29] postgress added this five or six years
+[01:12:32] ago and so what this is going to do it's
+[01:12:35] going to take the wear clause generate
+[01:12:37] the the instructions in the LLVM for in
+[01:12:41] LR for actually executing exactly that
+[01:12:44] wear clause. So instead of having this
+[01:12:45] like traversing the tree I basically
+[01:12:47] flatten the tree and and generate the
+[01:12:49] instructions to do exactly the work that
+[01:12:51] the tree wants to do. Right?
+[01:12:54] And now if I run it, it should be uh
+[01:12:58] yeah, there we go. So now it took two uh
+[01:13:00] 2.7 seconds, right? Whereas before was
+[01:13:02] taking four seconds. So I save about
+[01:13:04] about a second. But you notice here I
+[01:13:06] there's this extra output here where it
+[01:13:07] says JIT functions equals 4. And then it
+[01:13:09] has the time it takes to do generation
+[01:13:12] inlining and the optimization. So it
+[01:13:14] looks like it added about uh 381 seconds
+[01:13:18] to do the JIT compilation. So it's
+[01:13:20] paying an overhead up front before it
+[01:13:21] executes the query to do this
+[01:13:23] compilation. But in the end, it made the
+[01:13:25] query run a lot faster. So it was a good
+[01:13:26] trade-off. And Post has its own cost
+[01:13:29] model to determine, you know, it knows
+[01:13:31] roughly how long it takes to uh to jit
+[01:13:34] things. It has an estimate of how long
+[01:13:36] it's going to take to execute the query.
+[01:13:37] So it can decide whether actually to jit
+[01:13:39] things or not. Uh whether it's worth the
+[01:13:41] trade-off to pay that extra extra cost,
+[01:13:44] right?
+[01:13:46] But Postgress is a row-based system
+[01:13:48] that's doing a uh pool based sorry doing
+[01:13:52] an iterative model with a pool-based
+[01:13:54] approach. So with JIT compilation on and
+[01:13:58] I'm not doing parallel execution here
+[01:13:59] but it would wouldn't make that big of a
+[01:14:01] difference but post best effort here can
+[01:14:04] run this query on on this data in 2.7
+[01:14:07] seconds. If we cut over to uh duct db
+[01:14:13] and it's should be it's the same data
+[01:14:14] but I'm execute the same query
+[01:14:17] uh
+[01:14:19] just explain analyze so with ductb duct
+[01:14:22] db is not going to do any query
+[01:14:23] compilation not jet compilation it's
+[01:14:25] going to be do a pushbased
+[01:14:27] column store with a vectorzation model
+[01:14:31] right it completes the query in in half
+[01:14:35] a sec or sorry less than a second
+[01:14:37] right so all the extra machinery that
+[01:14:39] Postgress is doing to JIT things which
+[01:14:41] is not a trivial thing to write in and
+[01:14:43] debug right that's a major engineering
+[01:14:45] effort to add that
+[01:14:47] ductb still crushes it right I'm pretty
+[01:14:50] sure this is make sure this is single
+[01:14:51] threaded right single threaded
+[01:14:56] right less than a second
+[01:14:59] so again there's engineering trade-offs
+[01:15:01] because process is a column sorry row
+[01:15:04] store and it's using the iterative model
+[01:15:06] you know it's going to be great for OLTP
+[01:15:08] not so great for OLAP but if you design
+[01:15:10] a system specifically for OLAP you know
+[01:15:12] you can do way better and that's what
+[01:15:13] duct DB does fireball click house would
+[01:15:15] all have similar results
+[01:15:19] all right so quickly to finish up for
+[01:15:22] there are some additional optimizations
+[01:15:23] we can do in our uh in our expression
+[01:15:26] trees other than just compiling it so
+[01:15:28] you can do simple things like constant
+[01:15:30] folding if you ever take a compiler
+[01:15:32] class it's it's all the same tricks but
+[01:15:33] now we're you know it's in the context
+[01:15:35] of databases so it matters more uh
+[01:15:37] Right? So if I say if I see that I'm
+[01:15:39] going to be calling uh the upper
+[01:15:41] function on on the string wuang over and
+[01:15:43] over again. You know if I have a billion
+[01:15:45] tupils I'm going to call this function a
+[01:15:47] billion times for this constant. So I
+[01:15:48] just say recognize that okay well I only
+[01:15:50] need to actually execute this once
+[01:15:52] compute it once and then inject that as
+[01:15:53] a constant and I never have to call it
+[01:15:54] again. Right? Common subsection
+[01:15:58] elimination is another simple thing you
+[01:16:00] can do. Right? If I see that I in my
+[01:16:02] query I have a conjunction that's
+[01:16:04] basically computing the same thing or
+[01:16:05] sorry disjunction computing the same
+[01:16:07] thing right this string position on X
+[01:16:09] within a column right so this whole
+[01:16:12] portion of the subree over here is the
+[01:16:14] same as this sub tree over here so
+[01:16:16] rather than me executing it over again
+[01:16:18] over and over again for every single
+[01:16:19] tupole uh duplicatively I can recognize
+[01:16:23] that they're actually the same just
+[01:16:24] rewrite the expression tree to be able
+[01:16:27] to reuse the results of the calculation
+[01:16:29] as it occurs over Right?
+[01:16:33] And the JSON can do this for you
+[01:16:34] automatically. You don't have to rewrite
+[01:16:35] your SQL. I it can try to figure out
+[01:16:39] these the best way to actually execute
+[01:16:40] these expressions in the same way it's
+[01:16:41] going to try to figure out the next best
+[01:16:42] way to execute your query. And we'll see
+[01:16:45] that next week. Okay.
+[01:16:50] >> Say again.
+[01:16:56] So his statement is and he's correct
+[01:16:57] like if I'm saying like the LVM is going
+[01:16:59] to do this GCC is going to do this
+[01:17:01] clang's going to do this when I still
+[01:17:02] want to do this in my database system
+[01:17:04] even if I the compiler's going to do it.
+[01:17:06] So in case of Postgress they didn't the
+[01:17:08] JIT thing was added six years ago and
+[01:17:10] not every query is going to get the JIT
+[01:17:13] jet capabilities. So you still wouldn't
+[01:17:14] want to do this. There are some systems
+[01:17:17] where they try to use a compiler for
+[01:17:18] everything. There's an experimental
+[01:17:20] system from the Germans uh where they
+[01:17:24] will use compiler to like a classical
+[01:17:28] compiler to optimize the query plan
+[01:17:31] itself and also you know optimize all
+[01:17:33] the expressions as well to do it all at
+[01:17:35] once. The the the I say the big Germans
+[01:17:38] but the the hyper Germans the umber
+[01:17:39] Germans they will do this as well but
+[01:17:42] then they the the L of them will do its
+[01:17:44] own sort of passive optimizations as
+[01:17:46] well. The reason why they do this
+[01:17:47] separately is because they the way they
+[01:17:50] do compilation is they do in two-stage.
+[01:17:52] So they'll take your query plan,
+[01:17:54] generate assembly. So they generate x86
+[01:17:57] assembly, run that in assembler. That's
+[01:17:59] super fast to generate, run that, and
+[01:18:02] then in the background they invoke LLVM
+[01:18:04] to start compiling your query on that
+[01:18:06] assembly. Uh and then when if the
+[01:18:08] compilation finishes before the query
+[01:18:09] finishes, then they slide in the
+[01:18:10] compiled shared object to to replace
+[01:18:13] that. So in the assembled version, the
+[01:18:15] assembler version, if you want that run
+[01:18:16] fast, you still have to do this, but
+[01:18:19] doing doing this is not it's not it's
+[01:18:21] not hard to figure this out.
+[01:18:25] All right, so
+[01:18:27] the
+[01:18:29] the uh sorry, I just make sure I still
+[01:18:31] recording. All right, so I hope I convey
+[01:18:33] today that like the same query like the
+[01:18:35] same SQL query can be executed a bunch
+[01:18:37] of different ways, whether it's index
+[01:18:39] scans or sequential scans using top down
+[01:18:41] versus bottom up, right? And different
+[01:18:43] data centers do different things. And
+[01:18:45] depending on what your workload is and
+[01:18:46] the environment is that you're trying to
+[01:18:47] target, you want to choose one versus
+[01:18:49] another. In general, for OLAP, you want
+[01:18:51] to do a definitely do the vectorization
+[01:18:53] model. And then depending on your your
+[01:18:56] engineering tolerance, you could do a
+[01:18:57] pushbased model versus a pullbased
+[01:18:59] model, right? I can't say definitively
+[01:19:02] there's not one better than another
+[01:19:03] because much of a trade-offs for all of
+[01:19:04] them. For LTP, you want to use index
+[01:19:06] scans as much as possible. And therefore
+[01:19:09] uh if you know you're not going to read
+[01:19:11] a lot of data and everything's going to
+[01:19:12] be in memory then materialization model
+[01:19:14] probably be the better way to go right
+[01:19:16] the expression trees are a nice
+[01:19:17] abstraction for the for to represent
+[01:19:21] expressions and as you said they're good
+[01:19:23] because they work but there's ways to
+[01:19:24] make those go faster. Okay. All right.
+[01:19:27] So so this is all single thread
+[01:19:29] execution. Next class will say how do we
+[01:19:30] take the same things we talked about
+[01:19:32] today and now add multiple workers and
+[01:19:34] how do we combine them results to
+[01:19:35] produce the final result. Okay. All
+[01:19:38] right. Hit it.
+[01:19:41] [music]
+[01:19:46] [music]
+[01:19:53] over
+[01:19:57] [music]
+[01:20:02] the fortune. [music]
+[01:20:03] Get the maintain flow with
+[01:20:07] the drain. Get the fortune
+[01:20:10] maintain [music] flow with the grain.

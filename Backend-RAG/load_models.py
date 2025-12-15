@@ -6,10 +6,10 @@ if sys.platform != "darwin":
     from auto_gptq import AutoGPTQForCausalLM
 
 from huggingface_hub import hf_hub_download
-from langchain.llms import LlamaCpp
+from langchain_community.llms import LlamaCpp
 from transformers import AutoModelForCausalLM, AutoTokenizer, LlamaForCausalLM, LlamaTokenizer, BitsAndBytesConfig
 
-from constants import CONTEXT_WINDOW_SIZE, MAX_NEW_TOKENS, MODELS_PATH, N_BATCH, N_GPU_LAYERS
+from constants import CONTEXT_WINDOW_SIZE, MAX_NEW_TOKENS, N_BATCH, N_GPU_LAYERS
 
 
 def load_quantized_model_gguf_ggml(model_id, model_basename, device_type, logging):
@@ -40,7 +40,6 @@ def load_quantized_model_gguf_ggml(model_id, model_basename, device_type, loggin
             repo_id=model_id,
             filename=model_basename,
             resume_download=True,
-            cache_dir=MODELS_PATH,
         )
         kwargs = {
             "model_path": model_path,
@@ -141,18 +140,19 @@ def load_full_model(model_id, model_basename, device_type, logging):
         # tokenizer = LlamaTokenizer.from_pretrained(model_id, cache_dir="./models/")
         # model = LlamaForCausalLM.from_pretrained(model_id, cache_dir="./models/")
 
-        model = AutoModelForCausalLM.from_pretrained(model_id,
-                                            #  quantization_config=quantization_config,
-                                            #  low_cpu_mem_usage=True,
-                                            #  torch_dtype="auto",
-                                             torch_dtype=torch.bfloat16,
-                                             device_map="auto",
-                                             cache_dir="./models/")
+        model = AutoModelForCausalLM.from_pretrained(
+            model_id,
+            #  quantization_config=quantization_config,
+            #  low_cpu_mem_usage=True,
+            #  torch_dtype="auto",
+            torch_dtype=torch.bfloat16,
+            device_map="auto",
+        )
 
-        tokenizer = AutoTokenizer.from_pretrained(model_id, cache_dir="./models/")
+        tokenizer = AutoTokenizer.from_pretrained(model_id)
     else:
         logging.info("Using AutoModelForCausalLM for full models")
-        tokenizer = AutoTokenizer.from_pretrained(model_id, cache_dir="./models/")
+        tokenizer = AutoTokenizer.from_pretrained(model_id)
         logging.info("Tokenizer loaded")
         bnb_config = BitsAndBytesConfig(
                 load_in_4bit=True,
@@ -165,7 +165,6 @@ def load_full_model(model_id, model_basename, device_type, logging):
             device_map="auto",
             torch_dtype=torch.float16,
             low_cpu_mem_usage=True,
-            cache_dir=MODELS_PATH,
             trust_remote_code=True,  # set these if you are using NVIDIA GPU
             quantization_config=bnb_config
            # load_in_4bit=True,

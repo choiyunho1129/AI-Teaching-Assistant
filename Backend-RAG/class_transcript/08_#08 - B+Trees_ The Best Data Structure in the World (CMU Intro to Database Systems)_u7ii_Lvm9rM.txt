@@ -1,0 +1,2373 @@
+[00:00:00] [Music]
+[00:00:06] I'm still
+[00:00:08] ass.
+[00:00:11] [Music]
+[00:00:24] >> All right, round of applause for being
+[00:00:25] cash. Thank you.
+[00:00:28] uh a lot to cover and we do people don't
+[00:00:30] people have comments from feedback for
+[00:00:31] you. We'll get that in a second. Uh but
+[00:00:33] this is the first time we started on the
+[00:00:34] time all semester. So yay awesome right
+[00:00:37] and it's also the most important lecture
+[00:00:38] because it's going to be the most
+[00:00:39] important data structure in all of
+[00:00:40] computer science in all the world is be
+[00:00:42] B+ trees and hopefully today I'll convey
+[00:00:44] to you why that's the case. I don't care
+[00:00:46] about any other data. I mean you care
+[00:00:47] about them because you need them but
+[00:00:48] it's all about the B+ tree. That's the
+[00:00:50] most important thing. All right. So
+[00:00:52] again reminder project one is due this
+[00:00:55] Sunday coming up. Uh we had recitation
+[00:00:57] last week. The video is on uh is on
+[00:00:59] piaza. Go to that post there along with
+[00:01:01] the slides. And then as I said beginning
+[00:01:03] of the semester for every project since
+[00:01:05] they're all due on Sundays and we don't
+[00:01:07] have office hours on Saturdays and
+[00:01:08] Sundays normally, but the day before the
+[00:01:10] project is due, we have a special
+[00:01:11] Saturday office hours with multiple TAs
+[00:01:14] for multiple hours on campus. Uh so you
+[00:01:17] can come and ask hopefully what aren't
+[00:01:19] last minute questions like how do I get
+[00:01:20] started? Like more deeper things to help
+[00:01:22] you try to try to debug things. Okay.
+[00:01:25] Then homework three will be released on
+[00:01:26] Wednesday and that'll be due on October
+[00:01:28] 5th. And then just as to put this in
+[00:01:31] your radar, the midterm exam will be in
+[00:01:33] this room uh on Wednesday, October 8th.
+[00:01:36] And it's going to cover lecture 1 to 11
+[00:01:38] inclusive. All that material up to and
+[00:01:40] including but not the week of the exam.
+[00:01:42] So the week before the exam, all of that
+[00:01:44] will be on there. And then I'll release
+[00:01:45] a study guide with a practice exam next
+[00:01:47] week. Okay. Any questions about any of
+[00:01:50] these things?
+[00:01:54] All right. So also starting today is
+[00:01:56] we're kicking off the beginning of our
+[00:01:58] seminar series this semester. So a bunch
+[00:02:00] of you emailed and reached out and said
+[00:02:01] how I love databases maybe not as
+[00:02:03] obsessively as much as I am but like I
+[00:02:04] do but like how do I get how can I get
+[00:02:06] more databases in my life and go beyond
+[00:02:08] the course. So again we have these
+[00:02:09] optional seminars starting today every
+[00:02:12] Monday. Uh and the theme this semester
+[00:02:14] will be on iceberg. If you don't know
+[00:02:16] what iceberg is, uh it's one of the most
+[00:02:18] important pieces of database technology
+[00:02:20] that's come around the last three or
+[00:02:21] four or five years, right? There's a
+[00:02:23] reason why data bricks paid, I think, $2
+[00:02:26] billion for it. Billion with a B.
+[00:02:28] Snowflake tried to buy them for 600
+[00:02:30] million. Data bricks came in and uh
+[00:02:32] kneecapped them and took it for six or
+[00:02:34] two billion, right? So today will be
+[00:02:37] introduction to iceberg. Uh and then
+[00:02:40] next week will be hoodie which is the
+[00:02:41] alternative to iceberg. So both these
+[00:02:43] sort of technology or systems were built
+[00:02:44] at the same time. Iceberg came out of
+[00:02:46] Netflix. Hoodie came out of Uber.
+[00:02:48] Iceberg is the dominant one. And then
+[00:02:51] following after that we'll have mother
+[00:02:52] duck give a talk uh about the duck lake
+[00:02:55] system which is another alternative to
+[00:02:57] uh iceberg. Okay.
+[00:03:00] Again this is optional. All right. So
+[00:03:02] what I do want to cover is the the
+[00:03:04] feedback we've gotten through the
+[00:03:05] course. Believe it or not we get emails
+[00:03:07] and we get messages on YouTube and we do
+[00:03:09] read them. Uh so the first feedback we
+[00:03:11] got was actually for DJ Cash. So the
+[00:03:14] first guy says uh he heard your radio
+[00:03:16] show which I heard went really really
+[00:03:18] well. Uh at least from what I heard. Uh
+[00:03:21] he's basically saying like you to get
+[00:03:22] more money. Not me, you should get more
+[00:03:24] money. Uh this guy uh Sweaty the Glove
+[00:03:28] uh says they you got the best beats and
+[00:03:30] that he wants to buy your merch. So we
+[00:03:34] You're doing that, right? You're
+[00:03:35] releasing something.
+[00:03:36] >> We're working on it right now. you
+[00:03:37] release like stickers and shirts or
+[00:03:39] something?
+[00:03:39] >> T-shirt.
+[00:03:40] >> Okay. All right. Awesome. Uh so that'll
+[00:03:42] be available for for DJ Cash coming up.
+[00:03:44] Uh for me, somebody said in the first
+[00:03:47] lecture that I wasn't uh hyped up
+[00:03:49] enough. I wasn't speaking fast enough
+[00:03:50] that so you could still watch me at
+[00:03:51] 1.25x. Uh so that was surprising. Again,
+[00:03:55] maybe I was down that day, but I'm you
+[00:03:57] know, I get excited. I start thinking
+[00:03:58] really fast. I'm surprised this guy's
+[00:03:59] complaining that I was too slow. Um and
+[00:04:01] then this guy says that you can't be a
+[00:04:03] nerd or a gangster. You can be either
+[00:04:05] nerd or gangster. Can't be both. I don't
+[00:04:07] want to comment about my past, but like,
+[00:04:10] you know, was I arrested? Yes. Am I here
+[00:04:12] teaching you guys? Yes. Databases? Yes.
+[00:04:14] So, I'm not saying I'm doing something
+[00:04:16] really malicious, but like whatever. I
+[00:04:18] know a lot of people that have gotten in
+[00:04:20] a lot of trouble in life and end up
+[00:04:21] doing databases. So, this guy doesn't
+[00:04:23] know what he's talking about. Plus, he's
+[00:04:23] got a photo with his kid. So, that's his
+[00:04:26] problem. All right. But one feedback
+[00:04:27] that is actually correct. This guy here
+[00:04:29] uh pointed out that I made a mistake in
+[00:04:31] I think lecture six um where I talked
+[00:04:34] about how there's this distinction
+[00:04:36] between OLTP and OLAP and I made the
+[00:04:38] claim that OLAP was coined by Jim Gray.
+[00:04:41] Uh and this guy points out and he's
+[00:04:44] absolutely correct that is actually
+[00:04:45] wasn't Jim Gray it was the other touring
+[00:04:47] award winner in databases although
+[00:04:48] there's there's four of them. It was one
+[00:04:50] of the other ones, uh, Ted Cod, the guy
+[00:04:51] that invented rational model. He was the
+[00:04:53] one that was getting paid to write an
+[00:04:55] article about like, hey, here's what
+[00:04:56] OLAP is. And then the article got got
+[00:04:58] retracted once they found out it was,
+[00:05:01] uh, he was basically kind of shilling
+[00:05:02] for this company called Sspace, which is
+[00:05:04] a data cube. You don't even know what a
+[00:05:05] data cube is. It's another way to do
+[00:05:07] analytics for column stores, but this is
+[00:05:08] how people did things in the 90s. And
+[00:05:11] anyway, so he's right that this in this
+[00:05:12] lecture here when I show this picture,
+[00:05:14] it wasn't Jim Gray. Uh, it was it was
+[00:05:16] Ted Cot. Okay. So again feedback like
+[00:05:19] that is super useful not maybe not me
+[00:05:22] you know complain about me but feedback
+[00:05:24] for cache and feedback for the course
+[00:05:26] material is always appreciated. Okay, so
+[00:05:28] last class uh we were talking about hash
+[00:05:30] tables. We said these are an important
+[00:05:32] data structure you need in your database
+[00:05:33] system to support various
+[00:05:35] functionalities, various parts of the of
+[00:05:37] the system and we spent a lot of time
+[00:05:39] talking about static hash tables. We
+[00:05:41] kind of rushed at the end on dynamic
+[00:05:42] hash tables. So I'll pick that up again
+[00:05:44] and go over that one one more time. Um
+[00:05:47] but the most of the time these these
+[00:05:49] hash tables that we're talking about
+[00:05:50] will be used as for again for internal
+[00:05:52] data structures like things to keep
+[00:05:54] track of like your your page table and
+[00:05:55] so forth, right? not so much for indexes
+[00:05:57] which we'll see mostly how they're going
+[00:05:59] to be used in B+ uh today. Right? So
+[00:06:03] again remember last class when we
+[00:06:04] finished off dynamic hashing there was
+[00:06:06] essentially um there was three schemes.
+[00:06:08] There was chain hashing where you just
+[00:06:10] keep adding things to this long chain.
+[00:06:11] We said oh that kind of sucks because
+[00:06:13] now you if in the worst case scenario
+[00:06:15] you're you're regressing to a linear
+[00:06:17] scan and you're you're hitting up O. Um
+[00:06:19] so we talked about these two approaches
+[00:06:21] extendable hashing and linear hashing.
+[00:06:22] So I quickly just go over the the
+[00:06:24] example again and then we didn't get
+[00:06:25] through deletes for uh for linear
+[00:06:28] hashing. So I I want to cover that as
+[00:06:29] well again. So these are two approaches
+[00:06:31] that allow us to reorganize and resize
+[00:06:34] our hash table without having to
+[00:06:36] reorganize everything. Right? When we
+[00:06:37] had these static hash tables when we ran
+[00:06:39] out of space or the fill factor got too
+[00:06:41] big uh that we then basically had to
+[00:06:43] make a second copy of a hash table,
+[00:06:45] usually double the size of the original
+[00:06:46] one and then take all the keys out of
+[00:06:48] the first one and put them in the second
+[00:06:49] one. Right? And that's a very expensive
+[00:06:50] thing to do especially if your hash
+[00:06:51] table is really really big. So with
+[00:06:53] extendable hashing linear hashing the
+[00:06:54] idea is that we can split buckets
+[00:06:56] incrementally uh and grow them without
+[00:06:58] having to reorganize everything. So in
+[00:07:00] the case of standable hashing you have
+[00:07:02] this notion of a uh a global bit
+[00:07:05] counter. Basically it's the number of
+[00:07:06] bits we have to examine uh in our
+[00:07:08] hashes. Right? So when we hash a value
+[00:07:10] or hash a key we're always going to get
+[00:07:12] 32 bits or 64 bits. this global uh
+[00:07:15] marker just says how many bits uh do we
+[00:07:17] actually need to examine to figure out
+[00:07:18] where to go and then we had this bucket
+[00:07:20] array that was going to correspond to uh
+[00:07:23] bits uh that that that are the part of
+[00:07:26] the hash hash values. So in this case
+[00:07:28] here we'd have uh some some of some of
+[00:07:31] the bits or sorry some of some of the
+[00:07:33] buckets only require one bit and they're
+[00:07:35] end up pointing to the same bucket and
+[00:07:36] then these other two in the bottom are
+[00:07:38] looking at two bits right so then when
+[00:07:41] we started doing things like a lookup a
+[00:07:42] hash on a we would look at the global uh
+[00:07:45] the global bit counter is set to two. So
+[00:07:47] we know we only need to look at two bits
+[00:07:49] to figure out where in our bucket array
+[00:07:51] do we need to jump to. Right? In this
+[00:07:53] case 01. We follow that uh and we end up
+[00:07:56] with this bucket here at the top. We
+[00:07:57] find our key. Same thing. Now we do a
+[00:07:59] put in B. Uh we only need two bits. It
+[00:08:02] lands in this. No problem. That's fine.
+[00:08:03] Now we do a put at C. It requires two
+[00:08:06] bits. But then when we follow the
+[00:08:07] pointer, we land up the the bucket here
+[00:08:09] in the middle. but it's out of at a out
+[00:08:11] of slots in our buckets. So now we got
+[00:08:14] our overflow.
+[00:08:15] So when we do an overflow in uh external
+[00:08:18] hashing, we're basically going to double
+[00:08:20] the size of our bucket array, right? Uh
+[00:08:24] in actuality, you obviously usually
+[00:08:26] allocate maybe most of it uh or large
+[00:08:28] enough size. You're not doubling over
+[00:08:30] time. Also too, this thing is just not
+[00:08:32] that big. So it's not like the whole
+[00:08:34] hash table. We have the keys and the
+[00:08:35] values and everything else. So it's very
+[00:08:37] expensive to double things. In this
+[00:08:38] case, it's not that not expensive. So
+[00:08:40] now that I doubled the size, I can split
+[00:08:42] the bucket that overflowed. And then I
+[00:08:45] set now the the global counter to three.
+[00:08:47] And then some of the buckets that have
+[00:08:49] that weren't split still only require
+[00:08:50] one bit. In that case, they're all
+[00:08:52] pointing to the first bucket. The second
+[00:08:54] ones that need two bits point to the
+[00:08:55] other one here. And then for the ones
+[00:08:57] that we split before, now they're using
+[00:08:58] three bits and they're now pointing to
+[00:09:00] two different buckets. So now when I go
+[00:09:02] back and I want to put C back in again,
+[00:09:04] now I look at three bits. I find find
+[00:09:06] the the location in my bucket array and
+[00:09:09] I follow the pointer to the bucket that
+[00:09:10] I that I want. Okay,
+[00:09:16] so linear hatching was a different
+[00:09:17] approach where instead of splitting the
+[00:09:20] bucket that overflowed, we're actually
+[00:09:22] going to end up splitting the bucket
+[00:09:24] that's where something else is pointing
+[00:09:26] to this thing called a split pointer. So
+[00:09:28] there was a question last time, oh this
+[00:09:30] seems kind of wasteful that like why are
+[00:09:31] we not splitting the bucket that
+[00:09:32] overflowed? We're just splitting
+[00:09:34] whatever one the split pointer is
+[00:09:35] pointing to. And the idea is that over
+[00:09:36] time uh things are sort of balanced out.
+[00:09:39] Eventually you'll end up splitting the
+[00:09:41] bucket that overflowed and things sort
+[00:09:43] of nicely balanced out. All right, let's
+[00:09:46] go back here. So we still have our
+[00:09:47] bucket array. Uh and now again we're not
+[00:09:50] looking at just the bits, just sort of
+[00:09:51] what offset we are in our bucket array.
+[00:09:54] And then we have a split pointer that's
+[00:09:55] that's a just a demarcation to say
+[00:09:58] what's the next bucket we're going to
+[00:09:59] split. So the very beginning it's going
+[00:10:01] to soon as we overflow we'll end up
+[00:10:03] splitting bucket zero and there be some
+[00:10:06] hash function we just hash the key then
+[00:10:08] mod by n with ns the the the size of of
+[00:10:10] this bucket array. So we have n at this
+[00:10:12] point n equals four.
+[00:10:15] All right so now I want to put so when
+[00:10:17] we get six hash by six just say it's the
+[00:10:20] identity hash mod by four and I get two
+[00:10:22] and then I know how to jump to my bucket
+[00:10:24] array at offset two and I land to the
+[00:10:27] bucket that I want and there's the key I
+[00:10:28] want. Now I'm going to put 17 17 hashes
+[00:10:32] to uh you know when I mod four I end up
+[00:10:34] with one. It points to that bucket here.
+[00:10:36] But that now that bucket is full. So I
+[00:10:38] have to overflow. But instead of
+[00:10:40] splitting this like I did in extendable
+[00:10:41] hashing, I'm going to extend it out like
+[00:10:43] I do in chain hashing. Just add another
+[00:10:45] bucket and have it maintain a length
+[00:10:46] list. But then now I'm going to split
+[00:10:49] whatever the split pointer is pointing
+[00:10:50] at. So in this case here it's pointing
+[00:10:52] at zero. So I'm going to go ahead and
+[00:10:53] split that guy at the top. even though
+[00:10:55] that's not the one that overflowed, but
+[00:10:57] this is just how the algorithm and the
+[00:10:58] protocol works. So now what I'm going to
+[00:11:00] do, I'm going to add a new entry to my
+[00:11:02] bucket array. So I I have a slot four at
+[00:11:04] the bottom. And then now I have a second
+[00:11:06] hash key or hash function where I'm
+[00:11:08] going to modify two times the original
+[00:11:11] one. So before we had n equals two and
+[00:11:13] now we're going to modify by eight,
+[00:11:16] sorry, by four, right? because it's
+[00:11:19] sorry n equals two because I have yeah n
+[00:11:22] equals four in the original one going
+[00:11:23] back here and then now when I add the
+[00:11:25] new hash function now it's 2 n so
+[00:11:27] that'll be eight so I'll have and
+[00:11:28] eventually I'll have eight slots in my
+[00:11:30] bucket array and the split pointer is
+[00:11:32] keep moving down and then at some point
+[00:11:33] it'll wrap around and then I start the
+[00:11:35] whole process all over again all right
+[00:11:37] so in this case here again so we're
+[00:11:38] going to take whatever the the the
+[00:11:40] bucket at the top that the split point
+[00:11:41] is pointing at that we're going to end
+[00:11:42] up splitting that so we have to look at
+[00:11:44] all the keys that are inside that bucket
+[00:11:45] and figure out hash them again with the
+[00:11:47] new hash function and figure out where
+[00:11:48] they go. In the case of eight, eight
+[00:11:50] stays where it's at because eight mod 8
+[00:11:52] is zero. So that stays at the top. But
+[00:11:54] then when I eight, when I take 20 and
+[00:11:55] mod 8, I end up with uh four. So it
+[00:11:58] lands here at the bottom there.
+[00:12:01] Okay?
+[00:12:03] So it's not like when I do the second
+[00:12:04] hash because I'm just doing 2n in the
+[00:12:06] new hash function, it's not going to
+[00:12:07] land in any arbitrary bucket. It's
+[00:12:09] either going to be the original bucket
+[00:12:11] or the new bucket I just created.
+[00:12:14] Right? And then this split pointer moves
+[00:12:15] down by one. And now when I do a lookup
+[00:12:18] on 20
+[00:12:19] all right 20 mod 4 is is zero. So when I
+[00:12:23] do my first lookup I pro I would see
+[00:12:25] that oh I'm this thing for the first
+[00:12:27] hash function is zero. Well the split
+[00:12:29] pointer is pointing it now at one. So
+[00:12:31] since zero is less than one I know that
+[00:12:33] I've already split it anything above the
+[00:12:35] split pointer. So to figure out where 20
+[00:12:37] actually is I got to hash it again now
+[00:12:40] with the uh with with the second hash
+[00:12:43] function. And then now I'm gonna land
+[00:12:45] the location that has the key that I
+[00:12:47] want.
+[00:12:50] Same thing. Get on eight. Eight mod 4 is
+[00:12:52] just one. One is where the slip pointer
+[00:12:54] is at. So one is equal to one. So I know
+[00:12:57] I don't need to run the second hash
+[00:12:58] function. I can use I can just jump to
+[00:13:00] the first one and find the thing I'm
+[00:13:01] looking for.
+[00:13:05] >> Yes.
+[00:13:12] The statement is the decision of when to
+[00:13:13] use hash one or two is is determines
+[00:13:16] based on it has to do with what the
+[00:13:19] first hash function points at and is
+[00:13:21] above the split pointer. So going back
+[00:13:22] here I always got to hash the first one.
+[00:13:24] I hash the first one first time I get
+[00:13:26] zero. Zero is less than one where the
+[00:13:28] split point is pointing at. So I know I
+[00:13:30] have to go to the to the second hash
+[00:13:31] function.
+[00:13:39] the statement is and he's correct that
+[00:13:42] say I keep splitting because overflows
+[00:13:45] and I'm going to keep ex adding new
+[00:13:47] entries to my my buck array up until I
+[00:13:49] get to seven right and then at that
+[00:13:53] point the split pointer wraps back
+[00:13:54] around to zero I can yes throw away key
+[00:13:56] the first hash function key one mod n or
+[00:13:58] key mod n and I'll just have and then
+[00:14:00] key mod 2n will be the new hash function
+[00:14:02] or sorry the first hash function and
+[00:14:04] then I'll have key mod 4N after that.
+[00:14:08] >> Yes.
+[00:14:12] >> Is this just like a link or something
+[00:14:14] like
+[00:14:15] >> Yeah, this question is how do we do the
+[00:14:16] overflow? It's just the bucket hashing
+[00:14:17] we talked about before chain hashing. So
+[00:14:19] just add a pointer. Keep going.
+[00:14:21] >> If we put something that is what we're
+[00:14:25] going to end up splitting again.
+[00:14:27] >> So the question is uh if we Yes, he's
+[00:14:30] correct. So say now say this bucket here
+[00:14:34] one say it was actually at the bottom
+[00:14:36] right and I keep inserting into it keeps
+[00:14:38] overflowing. Yes, you would keep
+[00:14:40] splitting anything up above it the split
+[00:14:42] pointer because then eventually you
+[00:14:45] you'll overfl it'll get to it then it'll
+[00:14:46] split.
+[00:14:48] >> In this case we already overflow right?
+[00:14:51] >> Yes. So so your question is like if I
+[00:14:54] assert something again here does that
+[00:14:55] count as an overflow? Yes. because I'm I
+[00:14:58] mean like you could not do it and say
+[00:15:00] all right I'll just keep going until
+[00:15:01] that second bucket is is full because
+[00:15:04] I've already created no big deal but
+[00:15:06] again think of it extremes I don't want
+[00:15:07] to have this really I don't want I have
+[00:15:09] to do a linear scan jump inside that to
+[00:15:10] find things I'm looking for so if I if I
+[00:15:12] can avoid that by splitting it's I'm
+[00:15:14] worth it's worth doing that
+[00:15:18] okay so again this I've already said
+[00:15:21] before basically the idea is that we're
+[00:15:22] just going to keep doing this until even
+[00:15:24] though we're not splitting the one that
+[00:15:25] overflowed eventually But we will get to
+[00:15:28] this right
+[00:15:30] to do delete uh it's basically just the
+[00:15:32] reverse right so I want to delete key 20
+[00:15:35] uh same thing I first uh do the first
+[00:15:37] hash function I get zero I know zero is
+[00:15:40] above our split pointer so so then I'm
+[00:15:42] going to hash it again and now I get
+[00:15:44] four I jump down here right I delete 20
+[00:15:47] but now the the the bucket is basically
+[00:15:50] empty so you could just leave it there
+[00:15:52] if you wanted to or you just do the
+[00:15:54] reverse you could kill it uh roll the
+[00:15:56] flip pan pointer back back up and then
+[00:15:59] you know that four slot in the bucket
+[00:16:01] array nothing's really pointing to it.
+[00:16:02] Nothing can get to it anyway because
+[00:16:03] because my my hash function won't ever
+[00:16:05] jump to it. So I I could just leave it
+[00:16:06] there, right?
+[00:16:09] And the reason why I maybe don't want to
+[00:16:11] clean things up so quick or eagerly
+[00:16:13] immediately as it happens because if
+[00:16:15] someone now inserts 21 back in, I'm
+[00:16:18] going to be back where I started before
+[00:16:19] and just have another overflow and just
+[00:16:21] do do the same thing all over again. So,
+[00:16:23] I'm saying in in implementations of
+[00:16:25] this, you you kind of relax the rules
+[00:16:27] about how quickly you want to uh revert
+[00:16:30] back on deletes because you may be doing
+[00:16:33] the same thing over again and just
+[00:16:34] you're just spending time moving this
+[00:16:36] one back and forth and and uh free, you
+[00:16:39] know, reusing space or freeing up space
+[00:16:40] and then allocating it all over again.
+[00:16:44] And we'll see the same idea when we talk
+[00:16:46] about B+ today where there'll be
+[00:16:49] there'll be times where the so go
+[00:16:51] through what the what the algorithm says
+[00:16:53] you have to do but in real limitations
+[00:16:55] they'll relax this a little bit because
+[00:16:57] it'll make a difference in performance.
+[00:17:00] Okay.
+[00:17:02] All right. So let's jump into today's
+[00:17:03] lecture. Uh again the the beautiful BL
+[00:17:05] trees. Um, so first we do an overview on
+[00:17:08] what the data actually looks like and
+[00:17:10] then we'll talk about different design
+[00:17:11] choices you have and actually
+[00:17:12] implementation and then I'll try to plow
+[00:17:14] through as many optimizations as we can
+[00:17:16] until we run out of time. But I'll cover
+[00:17:17] the main ones that I think are the most
+[00:17:19] interesting, most important ones uh in
+[00:17:21] in the beginning.
+[00:17:24] Okay, so B post is by far the most
+[00:17:26] common data structure you're going to
+[00:17:27] have uh in databases used for indexes.
+[00:17:30] like when you call create index in in
+[00:17:32] nearly every single data system you're
+[00:17:34] going to be getting a a B+ tree or
+[00:17:37] something that looks like a B+ tree. uh
+[00:17:39] in some systems like postgress that
+[00:17:40] support hash hash uh hasht indexes you
+[00:17:44] have to explicitly say I want to create
+[00:17:45] table using hash or right and then
+[00:17:47] because otherwise the default is always
+[00:17:48] using the B+ tree the reason why is
+[00:17:51] because B+ trees can do any search you
+[00:17:53] can do point queries you can do range
+[00:17:55] scans you can do partial key lookup
+[00:17:57] sometimes we'll see how to do that where
+[00:17:59] in hash tables you can only do uh point
+[00:18:02] lookups like go get this one tupil I
+[00:18:04] can't do range scans because
+[00:18:05] everything's unordered in the hash table
+[00:18:06] so it doesn't mean anything there's no
+[00:18:07] notion of a range
+[00:18:08] the values aren't ordered. And if I have
+[00:18:11] multiple keys or multiple attributes in
+[00:18:14] my uh my index key like table or column
+[00:18:18] A and column B, I can't do a lookup on
+[00:18:20] that index unless I have both columns,
+[00:18:23] right? Because I can't go give me the
+[00:18:25] hash on A and then have that have me be
+[00:18:27] mean have that mean anything without B
+[00:18:29] because I have to have both of those
+[00:18:31] keys together. So B plus is going to be
+[00:18:33] way more versatile. So now the tricky
+[00:18:35] thing is going to be is the name is
+[00:18:37] going to be a bit confusing right so
+[00:18:39] there's going to be a class of data
+[00:18:40] structures called B trees of which
+[00:18:43] there's a specific data structure called
+[00:18:45] a B+ tree but then there's also another
+[00:18:47] data structure called a B tree but the B
+[00:18:50] B+ tree and the B tree are both B tree
+[00:18:53] data structures but the B+ tree is not
+[00:18:54] the same as the B tree
+[00:18:57] I'll explain what I mean okay so the but
+[00:19:00] generally you know this this sort of
+[00:19:02] category of of data structures
+[00:19:04] refer to what are called balance uh tree
+[00:19:07] or balance trees. All right. Um the the
+[00:19:10] original B tree paper uh is roughly
+[00:19:13] attributed around 1970. No one's quite
+[00:19:15] sure exactly when when this maybe 1969
+[00:19:17] 1970. Um and the the original paper is
+[00:19:21] basically this one here uh from from
+[00:19:24] came out of Boeing, right? And this
+[00:19:26] second author here, McCree, he's
+[00:19:28] actually CMU alum. He did his PhD here
+[00:19:30] in the 60s and then he went off to
+[00:19:32] Boeing and then they were building a
+[00:19:34] data structure. Uh they built a data
+[00:19:36] system and they needed the data
+[00:19:37] structure and they basically invented
+[00:19:38] the the D tree a B+ tree. Uh but the
+[00:19:41] paper most people site refer to as the
+[00:19:44] like the the original definition of the
+[00:19:47] B+ tree came out nine years later. This
+[00:19:49] famous paper called ubiquitous B tree.
+[00:19:52] Right? So again think you know it's the
+[00:19:54] early days of computing uh and obviously
+[00:19:56] there wasn't the internet so things
+[00:19:57] moved slowly more slowly than they do
+[00:19:58] now but by 1979 the B tree or the BSG
+[00:20:01] was considered you know the essential
+[00:20:03] data structure we use in data systems so
+[00:20:04] much they were it was everywhere and
+[00:20:05] they were calling it ubiquitous right
+[00:20:08] so the challenge I think it's going to
+[00:20:10] be is like there's original definition
+[00:20:11] of the B tree the B+ tree but no one
+[00:20:14] follows what those original papers
+[00:20:15] actually talk about they're actually
+[00:20:16] going to use bits and pieces of other
+[00:20:19] data structures that are extensions to
+[00:20:21] B+ trees that
+[00:20:23] come along over the years and in
+[00:20:25] particular the one we're going to talk
+[00:20:26] about today as well is called the be
+[00:20:28] link tree which actually was invented
+[00:20:30] here in 1981 in in Carnegie Melon and
+[00:20:34] the first author for this Phil Leman
+[00:20:36] he's still here at CMU so he's on the
+[00:20:37] fifth floor or the sixth floor at the
+[00:20:39] dean's office right the dude's dude's
+[00:20:42] awesome he's still here um and so when
+[00:20:45] you go look at the postgrads code also
+[00:20:46] as well they're basically be
+[00:20:48] implementing this this data structure as
+[00:20:49] well if you go look in the source code
+[00:20:51] it'll say for the actual
+[00:20:52] you know the the B tree data the B+ tree
+[00:20:54] data structure so they're going to call
+[00:20:56] it a B tree but it actually is just a B+
+[00:20:58] tree again people get fuzzy with the
+[00:20:59] names but lo and behold it says right
+[00:21:01] there the this directory contains a
+[00:21:03] correct implementation of Leman and
+[00:21:04] Yao's uh high concurrency B tree
+[00:21:06] management algorithm come comes from
+[00:21:08] this paper written by the dude over
+[00:21:10] there in uh in gates right so
+[00:21:14] again so post is called this B tree but
+[00:21:16] it's really a B+ tree and actually
+[00:21:17] they're going to call this an NB tree
+[00:21:20] which is non a a nonbalance. So they're
+[00:21:22] they're going to relax some of the
+[00:21:24] things that we talked about before.
+[00:21:25] Everyone take a guess what the B means
+[00:21:27] in B+3.
+[00:21:30] >> Boeing. Yes. He's seen the video. Yes.
+[00:21:31] Okay. Uh so people think it means
+[00:21:34] balanced. People mistakenly think it
+[00:21:36] means binary. Binary like a binary B
+[00:21:39] tree is basically where M equals three.
+[00:21:42] We'll cover that in a second. Uh or next
+[00:21:44] slide. Right. But according to Phil, he
+[00:21:47] said he's like 99% sure, 90% sure that
+[00:21:49] when he talked to like the dudes that
+[00:21:51] wrote all these other papers uh that
+[00:21:53] were at Boeing, he said, "Yeah, they
+[00:21:55] named it after Boeing because they were
+[00:21:56] at Boeing, right?" All right. So, so the
+[00:22:00] Boeing tree doesn't sound very uh
+[00:22:01] catchy. Uh but you know, people people
+[00:22:05] just heard it as the B tree or the B+
+[00:22:07] tree. So, I'll try to be very careful
+[00:22:09] and I'll distinct I'll make a
+[00:22:10] distinction what a B+ tree is versus a B
+[00:22:12] tree is. But for going going forward
+[00:22:15] when you when a database system says
+[00:22:16] they have a B tree 99.9% of the time
+[00:22:19] they really have a B+ tree. Okay.
+[00:22:23] All right. All right. So, B+ tree is
+[00:22:24] going to be a self-balanced ordered Mway
+[00:22:26] tree that is going to support the
+[00:22:28] searches, sequential access, insertion,
+[00:22:30] deletions, all the things that we'd want
+[00:22:31] to do in a data structure in log n uh
+[00:22:36] time where m's going to be defining the
+[00:22:38] fan out the number of sort of uh
+[00:22:41] pointers that are going to come out of
+[00:22:43] your of each node which either could be
+[00:22:45] to another node in the tree or could be
+[00:22:47] to the record or whatever it is that
+[00:22:48] that we're trying to find. So, we define
+[00:22:50] m by that. And so for every node, if you
+[00:22:52] say it's an uh it's an Mway tree, it'll
+[00:22:55] have m outbound pointers and that's the
+[00:22:57] degree of the node. But then it's going
+[00:22:59] to have n minus one keys that it can
+[00:23:01] reference inside of of each node.
+[00:23:04] So it's being claimed to be perfect
+[00:23:06] balance, meaning that the distance from
+[00:23:09] the root to any leaf node will always be
+[00:23:11] the same anywhere out through the
+[00:23:13] throughout the tree. It means we're
+[00:23:15] going to have to do a bunch of stuff in
+[00:23:16] our data structure to ensure that this
+[00:23:18] is the case. And one of the key
+[00:23:20] requirements is that we're going to say
+[00:23:21] that every single node except for the
+[00:23:23] root because it's kind of a special case
+[00:23:25] or it is a special case. Every single
+[00:23:26] route needs to be at least half full,
+[00:23:29] right? And then when it becomes less
+[00:23:31] than half full, we got to do a bunch of
+[00:23:33] extra work to to to get make it be half
+[00:23:36] full by by taking keys from our
+[00:23:38] neighbors or merging things together,
+[00:23:41] right?
+[00:23:43] And so the reason why this data
+[00:23:45] structure is going to be so important
+[00:23:46] because especially in the early days but
+[00:23:48] even now in in with modern hardware it's
+[00:23:51] be optimized for reading and writing
+[00:23:52] large blocks of data very efficiently
+[00:23:54] right this data structure is going to
+[00:23:56] convert what would otherwise be
+[00:23:58] potentially random IO into sequential IO
+[00:24:01] and as we said in the beginning that's
+[00:24:02] going to make a big deal when it comes
+[00:24:04] to actually you know constant time
+[00:24:05] factors for actually running running our
+[00:24:07] system right if we can maximize amount
+[00:24:09] of of IO then we're going to get better
+[00:24:11] performance
+[00:24:12] And as I said, some systems implement
+[00:24:15] that implement the B+3 will relax these
+[00:24:17] properties. Uh but we'll ignore that for
+[00:24:19] now and go strictly by by this
+[00:24:21] definition.
+[00:24:23] I say also too the fan out is going to
+[00:24:25] be pretty large, right? So m is usually
+[00:24:28] a large number. Uh you know, think of
+[00:24:31] like a of a 8 kilobyte page in
+[00:24:32] Postgress. I can put a lot of key values
+[00:24:34] in pairs inside that thing, right? So
+[00:24:37] the the height of the of an a real
+[00:24:39] system of these data structures of B+
+[00:24:40] it's be like maybe four or five levels
+[00:24:43] because the fan out is going to be quite
+[00:24:44] large. But in case of PowerPoint, you
+[00:24:47] know, I have to make it fit. So we'll
+[00:24:48] look at simple examples here. So this
+[00:24:51] would be a a three-way tree. So there's
+[00:24:53] be uh the fan out is three for every
+[00:24:55] node. So I have three pointers coming
+[00:24:57] out and I'll store two keys inside each
+[00:24:59] node. So at the top we have the root
+[00:25:01] node. The middle layers we call the
+[00:25:03] inner or non-leaf nodes. Uh and then the
+[00:25:06] bottom nodes are called the leaf nodes.
+[00:25:07] The way to think about this is that
+[00:25:08] along the leaf nodes are our our keys
+[00:25:10] are going to be sorted from this case
+[00:25:12] here low to high. You can define you
+[00:25:14] want to be the opposite you can go high
+[00:25:15] to low. But these are going to be sorted
+[00:25:17] according to some coalation ordering
+[00:25:19] that that that we would define in our
+[00:25:20] database system.
+[00:25:23] So the contents of the nodes uh for the
+[00:25:25] the root and the the non-leaf on the
+[00:25:26] inner nodes is going to be alternating
+[00:25:29] key value pairs of some kind of pointer
+[00:25:31] to another node in our data structure
+[00:25:33] followed by a discriminating key that's
+[00:25:36] going to allow us to determine whether
+[00:25:37] we want to go left or right to find the
+[00:25:39] entry that that we're looking for. And
+[00:25:42] then in the leaf nodes uh these will be
+[00:25:44] key value pairs where it'll be the
+[00:25:46] actual key that we we we want to find
+[00:25:48] and then its corresponding value which
+[00:25:50] could be a pointer just some data
+[00:25:51] structure something else or could be the
+[00:25:52] record ID in the case of other systems
+[00:25:54] like like my SQL could actually be the
+[00:25:56] entire tupil for our purposes now it it
+[00:25:59] doesn't quite matter. So way to
+[00:26:01] understand these keys, they're basically
+[00:26:04] in the inner nodes in the root. They're
+[00:26:05] guideposts that allow us to figure out
+[00:26:08] where we want to go when we do our
+[00:26:09] traversal into into the index. And so
+[00:26:11] for this example here, I'm going to say
+[00:26:13] I have a my root node, I have key 20. So
+[00:26:16] if I want to go to our left, uh that'll
+[00:26:19] be all the keys that are less than 20.
+[00:26:21] And then on the other side of the right,
+[00:26:23] there'll be all keys that are equal to
+[00:26:24] or greater than 20. So for any given
+[00:26:26] key, I can just look at that uh look at
+[00:26:29] what you know look at that node, look at
+[00:26:30] the key and decide whether I I want to
+[00:26:32] go left or right.
+[00:26:35] One thing we're we're going to also add
+[00:26:36] as well, and this will make it easier
+[00:26:38] for us to do splits and merges in a
+[00:26:39] second, is add sibling pointers. This is
+[00:26:42] what the the the BLink tree in 1981
+[00:26:44] added for us. So now when I want to do a
+[00:26:47] lookup like a range scan like find me
+[00:26:48] all the keys that are uh greater than 15
+[00:26:52] uh 15 or greater I could go start my
+[00:26:55] root node traverse down to the bottom
+[00:26:57] and then now scan across to on the on
+[00:27:00] the on the leaf nodes and follow those
+[00:27:02] sibling pointers to find all the entries
+[00:27:03] that I want and I don't have to
+[00:27:05] backtrack and go back up to my parent to
+[00:27:07] jump down to the next one.
+[00:27:11] >> Yes.
+[00:27:15] the question. Yeah. Yes.
+[00:27:18] We're sorry. What is the question?
+[00:27:22] >> So what is the values of m? Uh so I mean
+[00:27:25] n is just the number of keys at the
+[00:27:27] bottom. You count those. Uh but n would
+[00:27:30] be um m in this case there's three
+[00:27:33] because for every node right going back
+[00:27:36] uh say say the one at the top right you
+[00:27:39] have you have node pointer tells you how
+[00:27:41] to go down to one side. You have a key,
+[00:27:43] the discriminated key that tells you
+[00:27:44] whether you know what whether you want
+[00:27:46] to go left or right based on the value
+[00:27:47] of it followed by the next pointer.
+[00:27:50] >> Yes,
+[00:27:50] >> for range query I don't see why you
+[00:27:52] would need sibling pointers.
+[00:27:55] >> The question is for range pointers you
+[00:27:56] don't see you don't know why you need
+[00:27:58] sibling pointers in line you'll need
+[00:27:59] them for splits and merges but for for
+[00:28:01] once you reach to the bottom you you if
+[00:28:03] you're just reading you never to go back
+[00:28:05] up.
+[00:28:06] >> Yes.
+[00:28:10] question in that root node there's three
+[00:28:12] node pointers yes why what
+[00:28:18] question is why do I need three node
+[00:28:19] pointers I'm only pointing at two how am
+[00:28:20] I allocating this
+[00:28:23] thinking a real system what's the
+[00:28:25] backing memory of this
+[00:28:29] >> no no what's the backing memory of the
+[00:28:31] data in a node
+[00:28:33] like I got to I have stored the node the
+[00:28:36] contents of the node somewhere what am I
+[00:28:37] storing it in what is it a page
+[00:28:41] pages are all fixed size. So in my
+[00:28:43] PowerPoint example, yeah, I have two
+[00:28:45] pointers coming out of it. But in a real
+[00:28:46] system, I'm going to allocate a 4 kilob,
+[00:28:48] 8 kilobyte page. I'm I have to, you
+[00:28:50] know, I'm going to allocate the space
+[00:28:52] for it. So it's always going to be
+[00:28:53] there.
+[00:29:00] >> Because his question is why does that
+[00:29:01] why am I why did I just what I just said
+[00:29:03] explain what there's three pointers?
+[00:29:04] Because it's not like an inmemory data
+[00:29:05] structure where I'm just calling maloc
+[00:29:07] and I only get the data that I actually
+[00:29:08] need. I'm gonna go to the buffer manager
+[00:29:10] say I need a page right and you're gonna
+[00:29:12] get back an 8 kilobyte chunk of memory
+[00:29:14] so I'm going to allocate the space for
+[00:29:15] it in my diagram yes the space is not
+[00:29:18] being used in a real system you would
+[00:29:20] you would have that space allocated
+[00:29:21] anyway even it's not still not being
+[00:29:22] used
+[00:29:27] okay so on the leaf nodes um
+[00:29:31] I'm just showing that that you we you'd
+[00:29:32] have pointers for siblings uh on the
+[00:29:34] back side of the array right so at its
+[00:29:37] core
+[00:29:39] What is what is the B+ stream?
+[00:29:44] What are we doing?
+[00:29:48] >> He says binary search tree over over
+[00:29:50] what?
+[00:29:53] >> Yeah, but what's the data structure at
+[00:29:54] the bottom?
+[00:29:56] What is this?
+[00:29:59] >> No, not hash table link list. Right. So
+[00:30:02] all this data structure is and all these
+[00:30:03] tree data structures is just allow us to
+[00:30:05] jump into our link list more efficiently
+[00:30:07] because otherwise without this stuff at
+[00:30:09] the top what do I have to do? I got to
+[00:30:11] scan along linearly on the leaf nodes to
+[00:30:13] find the thing that I want. Right?
+[00:30:16] So sorry go back. So it's not that
+[00:30:19] exotic if you just think about think
+[00:30:21] about the top part is just the
+[00:30:22] scaffolding we're going to build up on
+[00:30:24] top of this link list so that we can
+[00:30:26] jump to the bottom to find the thing
+[00:30:27] that we want or or the keys that we
+[00:30:29] want.
+[00:30:31] Right? Skit list basically the same
+[00:30:33] thing. Try is a little bit different but
+[00:30:35] but you know in the end of the day
+[00:30:37] that's what this data structure is doing
+[00:30:38] for us. It allows us to jump to
+[00:30:40] locations in our link list without
+[00:30:42] having to scan from beginning to end
+[00:30:43] every single time. Again because always
+[00:30:45] thinking extremes right if I have a
+[00:30:47] billion keys or trillion keys I don't
+[00:30:50] want to do that linear scan every single
+[00:30:52] time. My BS3 will allow me to jump into
+[00:30:54] it. And as I said before the fan out
+[00:30:56] will be quite large in a real system. So
+[00:30:57] I'm only have to jump down at most maybe
+[00:30:59] five levels and I can represent a lot of
+[00:31:01] keys in in my in my leaf nodes.
+[00:31:07] All right. So the leaf nodes themselves
+[00:31:10] the node themselves are just think about
+[00:31:12] the arrays of key value pairs, right?
+[00:31:14] The the values that we're going to be
+[00:31:16] storing are going to be different based
+[00:31:17] on whether we are an inner node versus a
+[00:31:20] leaf node, right? If it's an inner node,
+[00:31:22] the values are going to be pointers to
+[00:31:23] other nodes and these are just page
+[00:31:24] numbers, right? that I can do a lookup
+[00:31:27] in the on the buffer pool to go go get
+[00:31:28] the data that I want. And then the leaf
+[00:31:30] nodes will vary based on what actually
+[00:31:33] want to store. Do I want to store uh
+[00:31:35] record ids to pointers to tupils? Uh do
+[00:31:37] I want to store the entire tupil itself?
+[00:31:39] I can do a my SQL and SQL light. In some
+[00:31:42] systems like my SQL as well, the leaf
+[00:31:43] nodes will actually store a primary key
+[00:31:45] as the values. So then I can do take the
+[00:31:47] value the primary key and do a lookup in
+[00:31:49] the primary key index to actually get
+[00:31:50] the get the record ID or get the table.
+[00:31:52] Right?
+[00:31:54] And then for nulls we have to treat them
+[00:31:55] specially and typically you either put
+[00:31:56] them at the beginning of the the the the
+[00:31:59] list or at the end of the leaf nodes. I
+[00:32:01] think by default in postgress they put
+[00:32:02] them at the end.
+[00:32:04] So again I'm showing this sort of
+[00:32:06] diagram like this uh of you know in my
+[00:32:09] before because it has to fit in
+[00:32:10] PowerPoint. I'm showing these sort of
+[00:32:11] key value pairs over over and over
+[00:32:13] again. In actuality a real system
+[00:32:14] wouldn't actually store it like this. Um
+[00:32:17] you would have some uh some extra
+[00:32:20] metadata. They would store it at the
+[00:32:21] top.
+[00:32:23] uh they say like what level I'm at, how
+[00:32:24] many slots can I store, what's my
+[00:32:26] previous pointer and and and next
+[00:32:28] pointer. Sometimes there's additional
+[00:32:29] metadata say like how many keys do I
+[00:32:31] have inside here? Uh what's the high
+[00:32:33] key? What's the max value I can store in
+[00:32:34] my page? Some extra things that make me
+[00:32:36] find find data more quickly. And then
+[00:32:39] the you could store the example I was
+[00:32:41] shown before you just have the key and
+[00:32:43] key followed by its its uh record ID or
+[00:32:46] sorry the pointer right afterwards as
+[00:32:47] the value. In a lot of systems, instead
+[00:32:49] what you do is you store all the keys
+[00:32:51] sorted as a separate array. Then you
+[00:32:53] store all the values just in a fixed
+[00:32:56] length array uh or or some kind of array
+[00:32:58] that you can then just jump to offsets
+[00:33:00] like we did in the column store based on
+[00:33:02] whatever key that I'm looking for. So
+[00:33:03] now I I can if I want to find the key
+[00:33:05] that I want uh I can just do binary
+[00:33:08] search on the key array and not have to
+[00:33:09] jump over data that that I actually
+[00:33:11] don't need.
+[00:33:13] >> Yes. I still don't get the relationship
+[00:33:15] between a node one page.
+[00:33:18] >> So question is one node one page. Uh not
+[00:33:20] always but you just you could for
+[00:33:22] simplicity think of it like that. Yes.
+[00:33:24] If a the database page is 8 kilobytes
+[00:33:27] the node is going to be 8 kilobytes.
+[00:33:29] That's what I'm saying. The fan out be
+[00:33:31] going to be quite big because you can
+[00:33:32] put a lot of key value pairs in 8
+[00:33:33] kilobytes.
+[00:33:37] >> What's that?
+[00:33:39] >> Question is when will it not be one
+[00:33:40] page? Give me a few more slides.
+[00:33:42] Sometimes my my my keys can be quite big
+[00:33:44] and I got to overflow.
+[00:33:47] >> The question is how do you maintain sort
+[00:33:48] of keys?
+[00:33:50] >> I don't pick your favorite sorting
+[00:33:50] algorithm. Quick sort
+[00:33:53] >> right it's in memory.
+[00:33:57] >> The question is does is that mean
+[00:33:58] whenever a key is sorted a key is
+[00:34:00] inserted am I going to resort it in most
+[00:34:02] systems? Yes. You don't have to
+[00:34:04] but in general yes but again like it's
+[00:34:06] in memory I'm already reading it. So I
+[00:34:08] hold the I hold the latch on it, the
+[00:34:11] mutex on it. So I can do whatever I want
+[00:34:13] once I have that.
+[00:34:16] >> Question that's a lot of movement. Uh
+[00:34:18] not this is going to fit in cash lines.
+[00:34:20] It's not it's not gonna be that bad.
+[00:34:24] I can I can sort 100 keys pretty
+[00:34:26] quickly.
+[00:34:29] Yes. Sorry.
+[00:34:32] >> Question is keys be variable length.
+[00:34:33] Yes. We'll we'll solve that. Give me a
+[00:34:34] few more slides. Yes. That makes it
+[00:34:36] harder.
+[00:34:38] All right. So, I've already said this.
+[00:34:39] What are going to be the the values on
+[00:34:41] our leaf nodes? Uh, in most systems,
+[00:34:42] it'll be the record ID and it's like a
+[00:34:44] page number and an offset. That's always
+[00:34:46] fixed length. And that'll that's, you
+[00:34:48] know, that'll allow us to jump to find
+[00:34:50] that we want. Um, in other systems can
+[00:34:53] actually be the tool themselves. We saw
+[00:34:54] this in index organized storage in MySQL
+[00:34:56] and Postgress and Oracle and other
+[00:34:58] systems, right? My SQL and SQL light
+[00:35:00] give you this by default. Like you when
+[00:35:02] you create table, you get it. In SQL
+[00:35:04] server and Oracle you have to explicitly
+[00:35:06] say that I want it.
+[00:35:08] All right. So now that you understand
+[00:35:09] the basics of B trees and B+ trees or
+[00:35:12] you know the basics of B+ trees let me
+[00:35:13] make the distinction what a difference
+[00:35:14] between a B tree is and a B+ tree.
+[00:35:17] Actually this should be 197 not 1971 but
+[00:35:20] in the original B tree
+[00:35:23] all the values were values could exist
+[00:35:25] anywhere in the in the inner nodes.
+[00:35:29] Meaning if I'm doing traversal to find
+[00:35:30] the thing and I'm find the key that I
+[00:35:33] want, I may hit the first root node and
+[00:35:36] then I'll find the key that I want and
+[00:35:37] then I get the value right then and
+[00:35:39] there.
+[00:35:40] In the B+ tree, the values again like
+[00:35:44] the record ids or whatever it is that's
+[00:35:46] actually representing the data of the
+[00:35:47] tupil that I'm trying to find in my data
+[00:35:49] structure only exist in the leaf nodes.
+[00:35:53] So in order to find whether a key
+[00:35:55] exists, I always got to get down to the
+[00:35:56] leaf node and it's either there or not
+[00:35:58] there.
+[00:36:01] So B trees are going to be more
+[00:36:02] efficient in terms of space, but I now
+[00:36:06] got may have to do this uh depth first
+[00:36:08] search and jump up and down and come
+[00:36:10] back up to the root over and over again
+[00:36:11] to try to find the thing that I want.
+[00:36:13] And that's going to be random IO. That's
+[00:36:15] gonna be bad. In the case of a B+ tree,
+[00:36:17] once I get to the leaf nodes, ignoring
+[00:36:19] splits and merges, once I get to the
+[00:36:22] leaf nodes, I'm trying to find data. I
+[00:36:23] can do sequential scans to find the all
+[00:36:25] the find the things that I'm looking
+[00:36:26] for.
+[00:36:28] And that's a key distinction. So when we
+[00:36:30] delete a key now, it may in a B+ tree,
+[00:36:34] it may still exist in the inner nodes,
+[00:36:36] but it'll it'll get removed from the
+[00:36:37] leaf nodes. And that's okay. In a B
+[00:36:40] tree, if we delete a key, it has to be
+[00:36:42] completely removed from the tree.
+[00:36:45] Red, black trees work the same way. All
+[00:36:46] the other ones work the same way, but
+[00:36:47] they're going to be, you know, they're
+[00:36:48] going to have their own issues, right?
+[00:36:51] So B plus trees are going to going to be
+[00:36:53] slightly larger than B trees, but we're
+[00:36:56] going to get better performance because
+[00:36:58] we do more sequential scans. And
+[00:36:59] actually, we'll see in two weeks or next
+[00:37:02] week it'll when we start having multiple
+[00:37:04] threads jumping into our data structure,
+[00:37:06] B+ is going to be way better than a B
+[00:37:07] tree.
+[00:37:11] All right. So let's first talk about how
+[00:37:12] we want to do insert. So the protocol uh
+[00:37:14] as I said for for doing a a lookup is
+[00:37:17] again you just look at the keys figure
+[00:37:18] out where you want to go left and right
+[00:37:19] and then jump down and keep going till
+[00:37:21] you find the leaf node and you either
+[00:37:22] find the data you want or you don't. Now
+[00:37:24] to do an insert we're going to do that
+[00:37:26] same lookup procedure where we're going
+[00:37:28] to traverse the the the data structure
+[00:37:31] find the leaf node that should have the
+[00:37:33] key that we want to insert and then go
+[00:37:35] ahead and try to insert it. If there's
+[00:37:37] enough space in that leaf node, great.
+[00:37:39] We're done. If there's not enough space,
+[00:37:41] meaning the all the the the the array is
+[00:37:44] full, then we have to do a split. And
+[00:37:47] that means we we in this case here, we
+[00:37:49] want to now redistribute our keys that
+[00:37:51] are in the the the node that overflowed
+[00:37:54] to to other nodes, which then may
+[00:37:56] require us to then do a bunch of splits
+[00:37:58] going up the data structure. So upon
+[00:38:01] insert we may have to reorganize the
+[00:38:02] entire tree in the worst case scenario
+[00:38:04] but in most of the cases uh you know
+[00:38:08] most cases we'll have enough space in
+[00:38:09] the leaf node we're trying to insert
+[00:38:11] into and then worst case scenario we'll
+[00:38:13] have to then maybe split our parent
+[00:38:16] right and then the split process we're
+[00:38:18] just going to redistribute the keys
+[00:38:20] evenly by just taking whatever the
+[00:38:22] middle key is and using that as the
+[00:38:23] halfway point split things in half and
+[00:38:25] then push the middle key up as a
+[00:38:26] discriminator in the in the tree in the
+[00:38:28] tree above us and recursively do this
+[00:38:30] till everything's balanced.
+[00:38:33] So going back to a really simple example
+[00:38:34] here, now we have again a uh four tree
+[00:38:37] with three keys. So there's four uh four
+[00:38:40] branches that could come out of every
+[00:38:41] single node and then we have our sort of
+[00:38:44] a range ranges here. And now I'm showing
+[00:38:46] like just four greater than equal to
+[00:38:48] four n less than 12. Here's the more
+[00:38:50] compact form of that. Right? So say I
+[00:38:53] want to insert six. So again I start at
+[00:38:55] my root node. I want I I I look at the
+[00:38:57] keys that I had there. Six is greater
+[00:39:00] than four but less than 12. So I know I
+[00:39:02] want to go down to this leaf node here.
+[00:39:04] But this node is full. So I have to
+[00:39:06] split it.
+[00:39:08] So what I'm going to do is I'm going to
+[00:39:09] end up creating a new node, a new leaf
+[00:39:12] node that's currently empty. Then I'm
+[00:39:14] going to take half the keys in my my
+[00:39:17] first node uh or take all the keys,
+[00:39:19] figure out what the middle the middle
+[00:39:21] point is. Half the keys are going to go
+[00:39:22] on the in the original node. The other
+[00:39:24] half the keys are going to go into the
+[00:39:26] other node. So you would end up like
+[00:39:28] this.
+[00:39:30] Right. The six went into the original
+[00:39:31] node, but nine and 10 got moved over to
+[00:39:33] the other one. Am I done? No. Right now,
+[00:39:38] I got to go back up to my to my my my
+[00:39:41] parent and add a key there to make sure
+[00:39:44] that if anybody's looking for nine and
+[00:39:45] 10, they know how to go find it. So, in
+[00:39:48] this case here, I can just choose the
+[00:39:49] the the smallest key on the on on this
+[00:39:53] note here. Nine is basically what I
+[00:39:55] split on before and put nine at the top
+[00:39:58] there. And this point I'm done,
+[00:40:02] right? I just I just update my well you
+[00:40:05] wouldn't store this the ranges up here
+[00:40:06] the keys essentially giving you that
+[00:40:08] ranges right because when you traverse
+[00:40:09] the tree you know how to interpret the
+[00:40:11] contents.
+[00:40:13] Okay.
+[00:40:15] Yes.
+[00:40:20] >> The question is you don't remove the
+[00:40:21] nine. Why would you do that?
+[00:40:26] statement is why why did I why don't I
+[00:40:29] remove the nine then if the key exists
+[00:40:32] it has to exist in the leaf nodes right
+[00:40:34] so going back here nine was in here
+[00:40:36] before
+[00:40:38] right 5 9 10 so nine's in there
+[00:40:44] >> same is and he's correct any key that
+[00:40:46] exists my data structure has to exist in
+[00:40:48] leaf nodes yes
+[00:40:52] H question is why isn't four there?
+[00:40:54] Because four might have got four was
+[00:40:55] inserted and then got deleted. That's
+[00:40:56] okay. In a B tree, you can't do that. In
+[00:40:58] a B+ tree, you can.
+[00:41:03] All right, let's do another insert.
+[00:41:04] Let's now insert uh eight. Eight. Again,
+[00:41:08] root node, we follow the the pointer.
+[00:41:10] Eight is less than nine but greater than
+[00:41:11] four. That takes us down here. We go
+[00:41:13] ahead insert. And that's fine, right?
+[00:41:17] And let's look at let's look at a bigger
+[00:41:18] table. So, I want to insert 17. 17
+[00:41:20] should go here. we uh that's fine. We
+[00:41:23] can absorb that. Now, I want to insert
+[00:41:24] 16. 16 should go between 15 and 16, but
+[00:41:27] there's not enough space in here where I
+[00:41:29] I can store it. So,
+[00:41:32] I can I'm going to split the node again.
+[00:41:35] Uh so, essentially, I'm going to create
+[00:41:36] a new node and then shuffle all the keys
+[00:41:39] from the the new node that that got
+[00:41:41] overflowed. Put half on one, half in the
+[00:41:43] other. Right? So, say I split on uh on
+[00:41:49] 16. So everything 16 and greater goes in
+[00:41:51] to the new node. Everything 16 less
+[00:41:52] stays in the original node. But now I
+[00:41:54] have to I have to update my my my root
+[00:41:57] parent in this case the root node to now
+[00:41:59] add 16 there. So anybody that is coming
+[00:42:01] down can find us. But of course now the
+[00:42:04] problem is our our root node is is full
+[00:42:06] as well. So again you recursively go up
+[00:42:09] and keep trying to add insert new keys
+[00:42:11] back up. And if you have to split your
+[00:42:14] parent node, you got to run basically
+[00:42:16] the whole protocol again. And as you go
+[00:42:18] up from one level to the next, you don't
+[00:42:20] reorganize anything below you because
+[00:42:21] you've already handled that. Make sure
+[00:42:23] it's balanced. But as you go up, you
+[00:42:24] make sure everything else is balanced
+[00:42:26] until you reach the root and you're
+[00:42:27] done.
+[00:42:28] So in this case here, our root node is
+[00:42:30] full. So we're going to split it again
+[00:42:32] and then grow the tree and make it
+[00:42:33] taller. So
+[00:42:36] 13 is going to get moved up because
+[00:42:37] that'll be the middle key for our uh for
+[00:42:41] for you know for for the new route of
+[00:42:43] the entire tree. And then 16 is going to
+[00:42:45] put where between nine and 19, right?
+[00:42:49] But now what we need to do is split this
+[00:42:50] because anytime I I've inserted
+[00:42:52] something up, I have to split whatever
+[00:42:53] node uh that that has got overflowed.
+[00:42:57] And so I'm going to create two new nodes
+[00:42:59] here. Well, you just copy you you you
+[00:43:02] create a new one and then reallocate
+[00:43:03] things in the original one. That's fine.
+[00:43:05] And then now I update my uh my root node
+[00:43:08] the new root node on 13 to now point to
+[00:43:11] uh values less than 13 which is five and
+[00:43:12] nine and values greater than 13 which is
+[00:43:14] 16 and 19 on this side or greater than
+[00:43:16] equal to 13 which is 1619 here. So the
+[00:43:20] new organization of the discriminator
+[00:43:22] keys is is looks like this.
+[00:43:26] >> Yes.
+[00:43:27] >> Is there a reason why when we initially
+[00:43:29] try to
+[00:43:32] move stuff to the
+[00:43:35] at the very beginning.
+[00:43:43] Yeah.
+[00:43:44] >> Yes. So, he's talking about optimization
+[00:43:46] and we'll see this when we do deletes.
+[00:43:48] If I'm back here, I I want to insert 16.
+[00:43:51] Uh I could I could recognize, oh, well,
+[00:43:54] the guy on where where node 911 are or
+[00:43:58] even 20 213, they can absorb one more
+[00:44:01] key. So I could follow my sibling
+[00:44:03] pointers and just shuffle things around.
+[00:44:05] Move 13 and 14 over the other one and
+[00:44:08] then put 16 on this one. I wouldn't have
+[00:44:09] to split it. You could do that. It's
+[00:44:12] basically what you do when sometimes
+[00:44:13] deletes and other things. It's just more
+[00:44:14] machinery,
+[00:44:16] right? It's an optimization like like
+[00:44:19] I'm just trying to do the basics first.
+[00:44:21] But yes, you could do that and it still
+[00:44:23] would be correct, right? And then the
+[00:44:25] question always people ask is like going
+[00:44:27] back here,
+[00:44:29] right? at this point here, why not just
+[00:44:31] say we're done here, right? Why do I
+[00:44:33] have to create the a new new node at the
+[00:44:35] second level because then it's actually
+[00:44:37] no longer balanced, right? It doesn't
+[00:44:39] follow the protocol where you have
+[00:44:41] exactly um you know it's still the
+[00:44:43] traversal is still locally still
+[00:44:45] correctly correct but from the top point
+[00:44:47] from the root node perspective all the
+[00:44:49] keys are on one side of it not the other
+[00:44:51] side. So it's not considered balanced in
+[00:44:53] that way. So that's why we always have
+[00:44:55] to split whatever the one uh whatever
+[00:44:57] the level just overflowed to create new
+[00:45:00] nodes and then reconstruct the tree like
+[00:45:02] that.
+[00:45:05] And again in the and since these are all
+[00:45:08] backed by pages if all the keys on this
+[00:45:10] side of the tree were out on disk and
+[00:45:12] and not in our buffer pool manager or
+[00:45:14] not in our buffer pool we don't have to
+[00:45:16] bring them in and do anything because
+[00:45:17] we're just updating pointers to the page
+[00:45:20] IDs for the other parts of the tree. And
+[00:45:22] so the nice thing about this data
+[00:45:24] structure is that we just, you know,
+[00:45:25] there's parts of the tree that we don't
+[00:45:27] need while we're reorganizing things.
+[00:45:28] They just can sit on disk and not not
+[00:45:30] bother anybody and not take up space.
+[00:45:36] All right. So look at the deletes.
+[00:45:37] Deletes are basically the opposite of
+[00:45:38] this.
+[00:45:42] Again, the idea is that when we delete a
+[00:45:43] key, if after the deletion of a key from
+[00:45:46] a leaf node, it's still at least half
+[00:45:48] full, congrats, we're done. We don't do
+[00:45:50] anything, right?
+[00:45:52] If though deleting that key now makes us
+[00:45:54] less than half full, we we can first try
+[00:45:57] to redistribute and rebalance the data
+[00:45:59] structure in the way he was suggesting
+[00:46:01] by try to stealing keys from our
+[00:46:03] siblings
+[00:46:04] uh so that we again we don't have to
+[00:46:06] reorganize everything all over again.
+[00:46:08] But if stealing a a key from an adjacent
+[00:46:12] node and usually you only look at so the
+[00:46:13] one one guy over you don't try to look
+[00:46:16] at all your siblings.
+[00:46:18] If if it's if you can if you can steal
+[00:46:21] it without rebalancing, you're done. If
+[00:46:23] though if you steal a key from either
+[00:46:25] one of your siblings and makes them less
+[00:46:26] than half full, then you have to do a
+[00:46:28] merge. In which case, you may you will
+[00:46:30] end up deleting a key discriminator key
+[00:46:32] on on your parent above you, which may
+[00:46:34] again recursively go all the way at the
+[00:46:35] top and cause you to rewrite the entire
+[00:46:37] tree.
+[00:46:40] All right, so let's here we're going to
+[00:46:41] delete key six. We go ahead and delete
+[00:46:43] that. doing turtle right now we're less
+[00:46:46] than half full after that.
+[00:46:49] So we can we can try to borrow from a
+[00:46:51] rich sibling meaning a a sibling that
+[00:46:54] can can absorb a delete from from us and
+[00:46:57] not and still be let more than half
+[00:46:58] full. So in this case here we can take
+[00:47:00] nine from our our our sibling go ahead
+[00:47:04] and put that in data structure but now
+[00:47:06] we need to update our parent pointer or
+[00:47:08] parent key for the discriminator because
+[00:47:10] anybody looking for any value greater
+[00:47:12] than equal to nine as in this current
+[00:47:14] form in the tree would end up falling to
+[00:47:16] the along the right side and at least
+[00:47:19] this leaf node and then completely
+[00:47:20] missed the key and think it was actually
+[00:47:21] not there when it actually was there. So
+[00:47:23] we got to go up and update the that guy
+[00:47:26] here by putting 12 there.
+[00:47:29] And then now now our tree is considered
+[00:47:31] correct.
+[00:47:32] >> Yes.
+[00:47:33] >> So in a production system if you're
+[00:47:35] going to do something like this would
+[00:47:37] you store metadata about the number of
+[00:47:39] children in the number.
+[00:47:44] >> Oh wait. So you said for uh in a
+[00:47:46] protection system. What do you mean?
+[00:47:46] Sorry.
+[00:47:47] >> Production system.
+[00:47:48] >> What's that?
+[00:47:48] >> A production system.
+[00:47:49] >> Oh production. Sorry. Sorry. Sorry.
+[00:47:50] Yeah. Um question is how do you find out
+[00:47:53] whether you can steal keys from your
+[00:47:54] neighbor?
+[00:47:57] large.
+[00:47:57] >> Yeah. Say you only look like you only
+[00:47:59] look the next door next door neighbors.
+[00:48:00] You don't try to look at all the
+[00:48:01] possible siblings. You could, but it's
+[00:48:04] just like now you're taking latches,
+[00:48:06] which again we'll talk about next week.
+[00:48:08] You're just taking more locks and taking
+[00:48:10] latches, not locks. Taking latches and
+[00:48:12] that just can slow everything else down.
+[00:48:15] Yes.
+[00:48:22] >> Yes. Yes.
+[00:48:25] But for for simplicity, we're just
+[00:48:27] assuming leaf nodes.
+[00:48:30] All right, let's look at a more
+[00:48:31] complicated example. So I'm going to
+[00:48:33] delete key 15 here. So again, if I
+[00:48:36] delete key 15 for this node or when I
+[00:48:38] delete key 15, the the node is less than
+[00:48:40] half full. So I can borrow from for
+[00:48:42] steal from a rich sibling, right? And
+[00:48:44] then 17 goes over there. Update the
+[00:48:46] parent now to put 19 there. And now
+[00:48:50] everything is is all all coc and
+[00:48:52] correct, right? So that's fine.
+[00:48:54] But now I want to go ahead and delete
+[00:48:55] 19.
+[00:48:57] Right? So I go ahead and I delete 19 and
+[00:49:00] I want to try to see whether I can steal
+[00:49:03] from one of my neighbors and I can't
+[00:49:05] because if I take either from 1317 or
+[00:49:07] 2123 take from any of those nodes
+[00:49:10] they'll be less than half full and then
+[00:49:12] now that's not balanced and we got to
+[00:49:13] fix that. So in this case here we don't
+[00:49:15] have a choice. We're gonna have we're
+[00:49:16] going to have to do a a merge, right?
+[00:49:19] So, we're going to merge from our our
+[00:49:21] neighbor to our right. It could do it
+[00:49:23] from the left. Different systems do
+[00:49:25] different things. It doesn't matter,
+[00:49:26] right? As long as long as we sort of to
+[00:49:28] go one way, it doesn't matter. Actually,
+[00:49:31] I think you you go both ways. For
+[00:49:32] simplicity, most people go one way. All
+[00:49:34] right. So, we're going to go ahead and
+[00:49:36] merge these guys. So, in this case here,
+[00:49:38] we're going to basically take all the
+[00:49:39] keys 2123 and put it in the the node
+[00:49:43] where 20 is located here. And we have to
+[00:49:45] then delete the the discriminator key in
+[00:49:47] our parent because it doesn't need we
+[00:49:48] don't need to point down now to this
+[00:49:50] other node that doesn't exist anymore.
+[00:49:51] Right? So after we do this, our leaf
+[00:49:54] nodes are all balanced. That's fine. But
+[00:49:57] now this parent node is less than half
+[00:49:59] full. So now we got to do this. We got
+[00:50:01] we got to do a uh we have to do a merge.
+[00:50:05] And essentially to do this because it's
+[00:50:07] the root, we can pull the root down
+[00:50:09] here. merge these guys together into a
+[00:50:13] to a new node like this, right? And the
+[00:50:16] height of our tree has shrunk and then
+[00:50:19] all of the discriminator keys correctly
+[00:50:21] point to the pages that we want.
+[00:50:31] >> Yes. So his question is what what am I
+[00:50:33] what do I mean by pull down? Yeah, you
+[00:50:35] would see well this guy's under full. Uh
+[00:50:37] if I check take my sibling following
+[00:50:39] that sibling point I'm just not showing
+[00:50:40] in the diagram then that guy would be
+[00:50:42] under full. So I have no choice but to
+[00:50:44] go up in this case here is the root. So
+[00:50:46] therefore I know if I just I can bring
+[00:50:48] it down and then uh collapse them
+[00:50:50] together into a single node. But a point
+[00:50:53] thing to point out here so I deleted key
+[00:50:55] 19 but I still have key 19 in my my
+[00:50:59] inner node. And again, in a B+ tree,
+[00:51:01] that's okay because it's just a
+[00:51:02] guidepost to tell us where to go find
+[00:51:04] the things that we want. You wouldn't
+[00:51:05] actually say, "Oh, I got key 19 in node.
+[00:51:07] I'm I'm looking for key 18. I'm done."
+[00:51:09] You always have to check the leaf node
+[00:51:10] to see whether it actually exists or
+[00:51:11] not. So, it's okay that key 19's in in
+[00:51:13] there already. Which means that we can
+[00:51:16] throw away anything we don't need in our
+[00:51:18] inner nodes when we do this compaction
+[00:51:20] or merging because again, we're not
+[00:51:23] throwing away real data. As long as our
+[00:51:25] discriminator keys correctly point to
+[00:51:27] the parts that we want in our in our
+[00:51:28] leaf nodes, it's okay for us to go from
+[00:51:31] five keys to four keys.
+[00:51:33] >> Yes.
+[00:51:37] >> His question is has the ribbon underfill
+[00:51:39] from the beginning in this example. Yes.
+[00:51:41] The rooe is like special case. You can
+[00:51:42] kind of let that
+[00:51:43] >> you can let that go less than half full.
+[00:51:45] That's usually how it works.
+[00:51:49] >> Yes.
+[00:51:52] >> We have to kind of redistribute
+[00:51:54] approach.
+[00:51:55] >> Yeah. Question is if if the root if the
+[00:51:57] the node 59 could could handle taking a
+[00:51:59] a sending a key over to the sibling,
+[00:52:02] what do we have to redistribute? Again,
+[00:52:03] you wouldn't have to touch the leaf
+[00:52:04] nodes, right? All you you'd have to do
+[00:52:07] say there was key I don't know four,
+[00:52:10] five, nine, and I send nine over, right?
+[00:52:13] All you need to do is drop the pointer
+[00:52:16] from from I use the laser pointer. Drop
+[00:52:18] that pointer here. Get rid of this. Then
+[00:52:20] now you have a new one point to that
+[00:52:21] >> and that's all fine. move on.
+[00:52:23] >> Yeah, that's fine.
+[00:52:28] Okay.
+[00:52:32] Well, if you follow this so far,
+[00:52:33] congrats. This is this is the B+ streak,
+[00:52:36] right? Of course, the devil's in the
+[00:52:37] details. Implementing will be
+[00:52:38] challenging for project two. Uh but the
+[00:52:41] the gist of it is is pretty
+[00:52:43] straightforward. The challenge really
+[00:52:45] comes to be when you start having to do
+[00:52:47] uh concurrent access of doing splits and
+[00:52:49] merges while other threads are trying to
+[00:52:50] read and write data at the same time.
+[00:52:52] That's where things get tricky.
+[00:52:55] All right. So I sort of mentioned this
+[00:52:56] before that uh the great things about B+
+[00:52:58] trees is that you can you can use
+[00:53:00] composite keys or composite indexes use
+[00:53:02] them as composite indexes which
+[00:53:03] basically means you have a key that's
+[00:53:04] comprised of multiple attributes. So I
+[00:53:06] can create a table on create an index on
+[00:53:09] table XXX and in here you can see that I
+[00:53:11] have uh I'm using three columns AB and C
+[00:53:15] for uh for for my key. And I can also
+[00:53:18] specify additional metadata about like
+[00:53:20] what should be the sort order on a per
+[00:53:21] key basis or whether I want the nulls to
+[00:53:23] be first or last on a per key basis,
+[00:53:25] right? And then now in in a B+ tree
+[00:53:29] because I uh because I'm not hashing
+[00:53:32] where I'm sort of randomizing the the
+[00:53:34] keys, I can do a bunch of different
+[00:53:36] lookups on having either the entire
+[00:53:39] entire keys or all the keys or a subset
+[00:53:41] of the keys and everything just all
+[00:53:43] works. So again, have a key index on A,
+[00:53:46] B, and C. I can do a lookup on A and B
+[00:53:48] and C or next A and B and then some
+[00:53:52] systems uh Oracle and now SQ or
+[00:53:54] postcrist now has has two you can do
+[00:53:56] what are called skip scans or partial
+[00:53:58] keys where I don't have the prefix I
+[00:54:00] don't have A but I can still do lookups
+[00:54:02] on B and C there's extra machinery to
+[00:54:05] make that work um we'll see that in in
+[00:54:08] the slides okay so again say have a key
+[00:54:12] on A and B uh and so again you see that
+[00:54:15] the keys now are comprised of multiple
+[00:54:16] And these are just the bits stored
+[00:54:18] sequentially after another. They're not
+[00:54:20] not there's nothing really special about
+[00:54:21] it. And because it's now it's all
+[00:54:23] declared in SQL, I know what the size of
+[00:54:25] the the the data type I'm trying to
+[00:54:27] store is. So I know how to interpret
+[00:54:29] like a a bite array as the first 32 bits
+[00:54:32] is an integer for key A and the next 32
+[00:54:34] bits is integer for key B, right? All
+[00:54:36] that you know because it's in the
+[00:54:37] catalog when when you created the table
+[00:54:38] or created the index. So if I want to do
+[00:54:40] a lookup on uh key one two or A equals
+[00:54:44] one and B equals two. So again I just
+[00:54:46] jump to the first node. I look at the
+[00:54:48] first first key in my uh in my my
+[00:54:51] composite index or composite key one is
+[00:54:53] less than one and then two is less than
+[00:54:55] less than equal three and I know how to
+[00:54:56] then jump down to the leaf node to find
+[00:54:58] uh the thing that I'm looking for. So
+[00:55:01] that's when you look up when you have
+[00:55:02] all the answers the full lookup if you
+[00:55:04] only have the first key and not the
+[00:55:06] other keys like a prefix lookup then
+[00:55:08] well in this case here I just do the the
+[00:55:11] lookup for the first key that I do have
+[00:55:13] one is less than equal to one. I then
+[00:55:14] jump down to this leaf node here. But
+[00:55:17] now since I don't know uh since there
+[00:55:20] may be multiple keys or multiple key
+[00:55:23] value pairs in my leaf nodes where the
+[00:55:26] key A equals one, I have to scan along
+[00:55:28] the leaf nodes until I find the first
+[00:55:30] entry where key A does not equal one.
+[00:55:35] Right? So in this case here I would I
+[00:55:37] would come across this the second last
+[00:55:39] key the next key in in this leaf node.
+[00:55:41] The key A equals two. I know that
+[00:55:43] doesn't equal one. So I can stop
+[00:55:44] scanning there and not have to look
+[00:55:46] anything after that. Right? So I can do
+[00:55:48] a sequencer scan along the leaf notes
+[00:55:49] and find everything I want.
+[00:55:51] And the last one, as I said, you can
+[00:55:53] actually do the suffix search or Oracle
+[00:55:56] calls them skip scans. Basically says
+[00:55:58] like I don't know what's in the prefix
+[00:56:00] of my key. I I don't have that. I only
+[00:56:02] have I only have the second part, right?
+[00:56:04] So I have I don't have A, but I have B.
+[00:56:07] So in this case here, there's nothing
+[00:56:08] really magical you can do. You kind of
+[00:56:10] got to look at everything, right? You
+[00:56:12] got to look at all the leaf nodes. Uh
+[00:56:14] but you can do this in parallel. They
+[00:56:15] can all scan across uh leaf nodes until
+[00:56:19] you find all the matches that you want
+[00:56:20] where uh where b equals equals one
+[00:56:23] because again it's sort of the the key
+[00:56:26] is first sort of on a then b. So all the
+[00:56:29] a's you know a equal one's going be on
+[00:56:31] one side then twos and threes and so
+[00:56:33] forth and then the b values are kind of
+[00:56:34] just they're sort of within each subset
+[00:56:37] of of the a values
+[00:56:39] like a group I like a group eye with
+[00:56:41] multiple columns.
+[00:56:45] Yes.
+[00:56:56] >> What do you mean reorder the keys?
+[00:57:07] smart enough to re
+[00:57:10] >> the question is um
+[00:57:13] if I do I have to specify in my SQL
+[00:57:16] query my wear clause the keys in the
+[00:57:18] same order that the index is defined on
+[00:57:20] no again it's declarative SQL says I I
+[00:57:23] do a look up on A equals 1 and B equals
+[00:57:25] two right I can do B equals 2 and A
+[00:57:27] equals Semantically they're the same.
+[00:57:30] >> Just because just because you wrote them
+[00:57:31] in that order doesn't mean I'm going to
+[00:57:32] run them in that order. Right?
+[00:57:37] >> Uh it's question the question is are the
+[00:57:39] query engines actually smart enough to
+[00:57:40] see that the good ones are right
+[00:57:43] >> like
+[00:57:44] >> uh most of the ones you can think of
+[00:57:47] like Oracle, Postgress, MySQL, all them
+[00:57:49] are not they'll do it right. When we
+[00:57:52] talk about join ordering uh there's a
+[00:57:55] bunch of systems. But join ordering you
+[00:57:56] basically want to figure out the right
+[00:57:57] way to join order join the join tables
+[00:58:01] and that way you can have a huge
+[00:58:02] difference performance. There's a bunch
+[00:58:03] of systems where that they'll go in the
+[00:58:05] order that you define in the in the SQL
+[00:58:08] query and they don't try to do reorder
+[00:58:09] it for you. The good ones say like I
+[00:58:11] don't care how you define it. I'm going
+[00:58:12] to figure out the best way to do it
+[00:58:14] right. So Oracle used to do that. Oracle
+[00:58:17] in the 80s, we'll cover this later, used
+[00:58:19] to say, "Oh, yeah, no, we'll we're going
+[00:58:21] to give you a query plan in the order
+[00:58:22] that you define the tables because
+[00:58:24] that's they called it a semantic
+[00:58:25] optimizer." It was all bull. It's like,
+[00:58:27] "Oh, here's the this is the order you
+[00:58:28] meanted to be in. So, we're going to run
+[00:58:29] it that way." Even though that wasn't
+[00:58:30] actually what the right way to do it is.
+[00:58:32] We'll cover this later. Yes, there's a
+[00:58:34] lot a lot of systems for getting this
+[00:58:37] right. It's not hard. Join order is a
+[00:58:39] harder one and some systems will will
+[00:58:41] cheap out on that.
+[00:58:44] Okay.
+[00:58:46] So all right duplicate keys.
+[00:58:50] So
+[00:58:53] we've talked about primary key indexes.
+[00:58:55] Primary key indexes have to be
+[00:58:56] guaranteed unique, right? Or pime the
+[00:58:58] primary keys to be guaranteed unique. Uh
+[00:59:00] you can also have secondary indexes uh
+[00:59:02] where again you can define that the
+[00:59:03] secondary index has to be unique on the
+[00:59:05] keys. In actuality though a lot of
+[00:59:07] systems actually still don't store
+[00:59:09] things. they still will have duplicate
+[00:59:12] keys
+[00:59:13] uh because you may do multi- versioning.
+[00:59:16] We'll cover that later. But I may have
+[00:59:17] multiple versions of a tupil that are
+[00:59:19] all going to have the same primary key
+[00:59:21] and I got to put this in the index in
+[00:59:23] order to find them. So, how do you
+[00:59:24] handle how do you handle that, right? Or
+[00:59:28] think of like people if you have an
+[00:59:29] index on the zip code for people's
+[00:59:31] address uh mailing address. There's a
+[00:59:33] bunch of people that live in 15217
+[00:59:35] uh 15213 in Pittsburgh. So I can't have
+[00:59:39] you know how am I going to handle having
+[00:59:40] duplicate keys in that C case. So
+[00:59:44] there's two ways to do this. The first
+[00:59:45] one is the right one. The second one
+[00:59:47] don't do this. Right? So the first one
+[00:59:49] is you basically store a hidden value or
+[00:59:53] sorry hidden uh attribute in the key of
+[00:59:55] the index. That's going to be the record
+[00:59:58] ID of the thing I want to point to.
+[01:00:00] Remember the record ID is like a page
+[01:00:02] number and an offset. It's a guaranteed
+[01:00:03] to be physically unique for every single
+[01:00:05] every single physical value.
+[01:00:07] So even though I'm going to declare my
+[01:00:09] index on the zip code, I'm actually
+[01:00:13] storeing the key, I'm also going to
+[01:00:14] store the record ID and it's be hidden
+[01:00:16] from you as as as the end user. You're
+[01:00:18] not you can't see it through SQL.
+[01:00:20] And the reason why B+es are going to
+[01:00:23] work for this because because we can do
+[01:00:25] that prefix scan because if I have a
+[01:00:27] index on A and B, but I only have the
+[01:00:30] value of key A, the first part, I can
+[01:00:33] still do lookups on it. So now I can do
+[01:00:35] my lookup on on the zip code without
+[01:00:37] having a record ID and find all the
+[01:00:38] entries correct uh the way find all the
+[01:00:41] entries that I wanted.
+[01:00:43] The alternative is do overload overflow
+[01:00:45] leaf nodes. Um now we'll see overflow
+[01:00:49] nodes to handle large keys which you you
+[01:00:51] kind of have to do. There's no way to
+[01:00:53] get around this but if you want to
+[01:00:54] handle duplicate keys you could overflow
+[01:00:56] on the leaf nodes. Don't do this even
+[01:00:58] though it's going to look very similar.
+[01:01:00] one is sort of this is all semantics
+[01:01:02] like one is sort of overflowing down
+[01:01:04] versus across don't do the down one do
+[01:01:07] the across one it'll make my second next
+[01:01:10] slide all right so the first one append
+[01:01:12] the append the record ID so the key now
+[01:01:15] is going to be whatever the real key is
+[01:01:17] I defined like on column A but also in
+[01:01:20] that same bite array for that key I'm
+[01:01:22] going to show the record ID
+[01:01:24] right and that'll be guaranteed
+[01:01:25] uniqueness because there's only one
+[01:01:27] physical tupil it could be at some
+[01:01:29] physical address in my pages at an
+[01:01:31] offset. So this guarantees uniqueness
+[01:01:33] even though I may have the same key over
+[01:01:35] and over again. So now I want to do key
+[01:01:38] so I insert six in my data structure my
+[01:01:40] B plus D. What I'm really doing is
+[01:01:42] inserting six followed by the page
+[01:01:44] number and the offset. And then now I
+[01:01:47] just do the traversal down looking at
+[01:01:48] the first key for six. Then I land into
+[01:01:52] you know whatever the leaf node I want
+[01:01:53] and store the thing I want. In this case
+[01:01:54] here I I have to do a split, right? and
+[01:01:57] everything everything works out fine
+[01:02:00] if I want to do an overflow node. So I
+[01:02:02] already have key six in my data
+[01:02:04] structure. Now I'm going to insert six
+[01:02:05] again. So I traverse down I end this
+[01:02:08] leaf node here. See that it's already
+[01:02:10] full. So, I'm going to add another page
+[01:02:13] uh to it and just maintain like a link
+[01:02:16] list going in the the vertical direction
+[01:02:18] going down
+[01:02:22] violates that log uh you know login
+[01:02:25] lookup because now I have to jump to
+[01:02:27] this one and maybe keep scanning. It's
+[01:02:29] but it's sort of like the the the chain
+[01:02:31] hash table where I can just keep adding
+[01:02:32] buckets my chain, right? In order to
+[01:02:35] accommodate when I have overflow. It's
+[01:02:37] basically the same idea.
+[01:02:39] I'm going to insert seven so forth. Same
+[01:02:41] down here. So I'm so in this case here,
+[01:02:43] I can absorb a bunch of writes into this
+[01:02:44] overflowed leaf node here and I'm not
+[01:02:46] changing any of the discriminator keys
+[01:02:47] in my inner nodes up above.
+[01:02:50] Insert six, you do the same thing,
+[01:02:54] right? The reason why this is a bad idea
+[01:02:55] is because if I need to now uh do a
+[01:03:00] split, right? Because I want to insert K
+[01:03:02] say key 7.5 that should be that
+[01:03:05] logically logically should go between
+[01:03:06] seven and eight. Now I got to do a split
+[01:03:09] and now I got to re move all this other
+[01:03:11] crap down below as well. I have to scan
+[01:03:13] them all in. Scan them all, bring them
+[01:03:14] all into memory, figure out where they
+[01:03:15] need to go and split them up. And they
+[01:03:17] now may may have overflows on both sides
+[01:03:18] or both both the new new pages. Yes.
+[01:03:34] This question is for this one here
+[01:03:36] because C already six already existed.
+[01:03:39] Am I only certing the page number and
+[01:03:41] the slot number and the the new key I'm
+[01:03:42] inserting or all the keys has to be all
+[01:03:44] the keys.
+[01:03:46] [Music]
+[01:03:48] >> The question is do you change the BP for
+[01:03:50] all B+ for all the keys? Yes, Postgress
+[01:03:52] does this.
+[01:03:54] Most systems have to do this.
+[01:04:01] Okay.
+[01:04:05] So uh
+[01:04:08] clustered indexes are basically the idea
+[01:04:10] uh sometimes you you hear things
+[01:04:11] referred as cluster index or cluster
+[01:04:13] table just means sorted a sorted table
+[01:04:16] and it's be sorted based on some uh some
+[01:04:19] some B+ up above right you can't use
+[01:04:21] hash index hash table because that's not
+[01:04:22] sorted but it'll be uh b+ up above and
+[01:04:26] so if you do index organized storage
+[01:04:28] like my SQL and post or my SQL and SQL
+[01:04:30] light you get this for free because the
+[01:04:32] leaf nodes are sorting the data
+[01:04:35] uh b b b b b b b b b b b b b b b b b b b
+[01:04:36] b based on the the primary key up above
+[01:04:38] in in in the in the inner nodes. In some
+[01:04:41] systems you can you can create a table
+[01:04:44] using you know heap storage so unordered
+[01:04:46] tupils but then you can tell the data
+[01:04:48] system oh by the way manage this make
+[01:04:50] sure things are sorted based on this
+[01:04:52] other data structure here and in some
+[01:04:53] systems they'll maintain it so if I
+[01:04:55] insert new things it'll make sure
+[01:04:56] everything's still sorted in other
+[01:04:57] systems like postgress you can call
+[01:04:59] there's a cluster command it'll sort
+[01:05:01] your table based on some index but it'll
+[01:05:02] do it once and then if it's updated and
+[01:05:05] changed over time it doesn't maintain
+[01:05:07] the sort order you got to run the
+[01:05:08] cluster thing Yeah.
+[01:05:11] So the reason why this matters is that
+[01:05:13] uh it's going to make a
+[01:05:16] it can make our lookups more more
+[01:05:18] efficient in many cases, right? Can have
+[01:05:20] to get things from disk. So if my table
+[01:05:23] pages are sorted in the same order
+[01:05:25] that's defined by the index, then when
+[01:05:28] you when I want to do a scan and try to
+[01:05:30] find data, I can just again use my index
+[01:05:33] to find to some offset within or some
+[01:05:35] location at a table page and then scan
+[01:05:37] along the rest of the the pages and I'll
+[01:05:39] find everything that I want.
+[01:05:42] Where things can go wrong is that if the
+[01:05:46] the the index is going to define one
+[01:05:49] sort order, but then the tables the data
+[01:05:51] is be sorted in another sort order. I
+[01:05:53] may have really inefficient access if I
+[01:05:56] naively retrieve whatever the page is
+[01:05:59] that the the index is pointing to one at
+[01:06:01] a time. So let's say I'm trying to find
+[01:06:04] some some range of data between these
+[01:06:05] pages here. And so if you look at the
+[01:06:07] the the pointers in my or the record ids
+[01:06:10] in my my index the leaf nodes they're
+[01:06:13] basically pointing to all different
+[01:06:15] locations in these different pages. So
+[01:06:17] if I do a sequential scan just starting
+[01:06:19] at whatever the the first the first key
+[01:06:22] that I want and then just go get that
+[01:06:24] data then go look at the next key in the
+[01:06:25] order to find with the index I'm going
+[01:06:27] to start jumping around at these
+[01:06:29] different pages over and over again
+[01:06:31] unnecessarily. So if you think of like a
+[01:06:33] really stupid system only had like one
+[01:06:35] slot in or one frame in our buffer pool,
+[01:06:37] I would read page 102, throw that away,
+[01:06:40] then read page 103, uh throw that away,
+[01:06:42] and then read page 104. In which case,
+[01:06:44] here I have two keys that are both in
+[01:06:46] page 104. I can and I can read it, you
+[01:06:48] know, read that page, use that page
+[01:06:49] twice, right? So in a bunch of systems,
+[01:06:52] a simple optimization is you'd actually
+[01:06:54] first do a scan on the index, find all
+[01:06:56] the record IDs and and the corresponding
+[01:06:59] page IDs that you know you're going to
+[01:07:00] need to access, sort them by the page
+[01:07:03] ID, and then now go retrieve them in
+[01:07:05] that sort order. So that guarantees I'm
+[01:07:07] only retrieving each page once and only
+[01:07:09] once. I still have to maintain some
+[01:07:11] metadata to keep track of like what's
+[01:07:13] the key sort order that came out of the
+[01:07:14] index, but I'm basically going to scan
+[01:07:16] the index first, figure out what I need,
+[01:07:18] then go get it.
+[01:07:21] And you can start playing other games uh
+[01:07:23] we'll see next class or in in a couple
+[01:07:25] weeks where like if I have to do if I
+[01:07:27] have like where a equals one and I have
+[01:07:29] index on that and b equals two and I
+[01:07:30] have a separate index on that I'll do a
+[01:07:33] index scan across them both then do a
+[01:07:36] intersection of those two list of page
+[01:07:38] ids to figure out what's the minimal set
+[01:07:39] that I actually need then go get those
+[01:07:41] pages
+[01:07:43] post calls this a be bit bitmap heap
+[01:07:45] scan
+[01:07:47] so we can use these indexes to be help
+[01:07:49] us be more intelligent about going in
+[01:07:50] the data that we need to to avoid random
+[01:07:53] IO.
+[01:07:57] All right, so let me get through the the
+[01:08:00] node design choices and like I said, I
+[01:08:01] want to plow through as many
+[01:08:02] optimizations as we can. These ones
+[01:08:04] pretty straightforward. Um, and again,
+[01:08:06] just to re reiterate how important this
+[01:08:08] data structure is just for humanity,
+[01:08:11] right? Uh, there's a book written about
+[01:08:14] 10 years ago on modern B+. So here's
+[01:08:17] like a data structure from the 1970s.
+[01:08:19] here's all the modern incarnations and
+[01:08:20] optimizations you can do to it uh to
+[01:08:23] make these things go better. And again,
+[01:08:24] it's so important that they wrote a
+[01:08:26] second book uh that came out last year
+[01:08:28] on more modern B+. And the guy that
+[01:08:30] wrote this is we're going to see
+[01:08:33] multiple times throughout the semester
+[01:08:34] that he's going to vent invent the the
+[01:08:36] iterator model of the volcano process
+[01:08:38] query processing model. He's going to
+[01:08:39] vent the way we want to build query
+[01:08:40] optimizers. He's going to vent the way
+[01:08:42] we're going to do parallel ax or par
+[01:08:44] operations in our database system. So
+[01:08:46] this guy is brilliant and he's written
+[01:08:47] the definitive guide on B+ trees. Again,
+[01:08:50] notice though he calls them B trees
+[01:08:51] instead of B+ trees, right? But it's the
+[01:08:53] same thing.
+[01:08:55] All right, node size should be pretty
+[01:08:57] obvious that
+[01:08:59] you can have different node sizes for
+[01:09:00] the inner nodes versus the leaf nodes.
+[01:09:02] Typically, you want to maybe have larger
+[01:09:04] uh larger inner nodes than leaf nodes,
+[01:09:06] assuming you're not storing the tupils
+[01:09:07] themselves or just record IDs because
+[01:09:09] then you can have a within one node, you
+[01:09:12] can have a a higher fan out and find
+[01:09:14] things more quickly. And then of course
+[01:09:16] the size of the nodes depend on on what
+[01:09:18] the hardware looks like. So the way the
+[01:09:20] research basically plays out is that if
+[01:09:22] your hardware is very very fast, your
+[01:09:24] storage is very very fast like in
+[01:09:25] memory, then you actually want really
+[01:09:27] small node sizes because you want to be
+[01:09:29] able to go uh go acquire the latch on
+[01:09:32] one small page, find what you want and
+[01:09:34] what you can do quickly immediately jump
+[01:09:35] out of that. But if your hardware is
+[01:09:37] slower like a spinning disc hard drive,
+[01:09:39] then you want your node sizes to be
+[01:09:41] maybe one megabyte.
+[01:09:44] So in a system like Postgress, you can't
+[01:09:46] vary the size of index pages. But in
+[01:09:47] enterprise systems like in DB2 again you
+[01:09:50] can specify different page sizes on a
+[01:09:51] table basis on and on an index basis and
+[01:09:54] I think they can even discriminate
+[01:09:55] between the the inner nodes and the the
+[01:09:57] leaf nodes and have different page page
+[01:09:59] sizes for them.
+[01:10:02] So the merge threshold we talked about
+[01:10:04] is like if it's if it's less than uh
+[01:10:06] half full then I I have to do a merge or
+[01:10:09] try to steal from my sibling right
+[01:10:12] if you follow exactly that protocol then
+[01:10:13] you roughly end up with the occupancy
+[01:10:15] rate of about 69 70%. So about 70% of
+[01:10:18] your nodes are going to be uh full at
+[01:10:21] any given time. Right? So if you can
+[01:10:24] delay the the merge process as long as
+[01:10:27] you as long as possible, then you can
+[01:10:29] avoid some some some unnecessary
+[01:10:32] uh disc IO because you're not in in a
+[01:10:35] situation where I'm merging and then
+[01:10:37] someone immediately inserts something
+[01:10:38] and I have to split again. So you want
+[01:10:40] to let things kind of go a little less
+[01:10:42] than half full for a while. Eventually
+[01:10:44] maybe say, "Oh, I'm not using this
+[01:10:45] space. Let me go ahead and clean it up."
+[01:10:47] But it it'll allow you to insert uh
+[01:10:50] handle more inserts uh without having to
+[01:10:52] do additional splits if you don't relax
+[01:10:54] this right away. So it ends up being not
+[01:10:56] exactly balanced anymore. This is why
+[01:10:58] the Postgress P3 implementation is
+[01:10:59] called a nonb nonbalanced push tree. So
+[01:11:02] overall it's balanced but sometimes it's
+[01:11:05] okay to to relax that.
+[01:11:09] All right, the last question is how to
+[01:11:11] handle uh vary length keys. So there's a
+[01:11:14] bunch of ways to do this. One
+[01:11:15] optimization is just to store pointers.
+[01:11:18] So instead of actually storing the
+[01:11:20] actual var key in my nodes, my pages, I
+[01:11:22] just have a pointer the record ID to the
+[01:11:25] actual tupil with that with that
+[01:11:27] attribute I want because I already know
+[01:11:28] how to store var length data in my my
+[01:11:30] table pages that we talked about before.
+[01:11:32] So instead of storing that in my tupil
+[01:11:33] pages, I store a record to it.
+[01:11:36] >> Yes.
+[01:11:38] >> So I said you still need the key to
+[01:11:40] research. You got to follow the pointer
+[01:11:42] to go get the key to figure out how to
+[01:11:43] do the research.
+[01:11:48] Yes. Yes.
+[01:11:52] >> Yes. Go ahead.
+[01:11:56] >> Yes. Don't do that. So this shows up in
+[01:12:00] in memory memory data systems in the in
+[01:12:02] the 80s. There was a system from Oracle
+[01:12:04] called times 10 in the 90s that did
+[01:12:05] this. Uh the basic idea is like oh
+[01:12:07] memory is so precious instead of storing
+[01:12:09] these these key redundant keys because
+[01:12:11] essentially the index is storing another
+[01:12:12] copy of data right it's like a secondary
+[01:12:14] copy of of the data that's in your
+[01:12:16] tables. So instead of storing the
+[01:12:18] secondary copy of data in my my index if
+[01:12:21] I can go get the data very quickly
+[01:12:22] because everything's in memory then I'll
+[01:12:24] just I'll just store the pointer to it.
+[01:12:27] Turns out though that random access
+[01:12:29] still sucks in memory uh as well as
+[01:12:31] definitely on disk. So nobody actually
+[01:12:34] does this at least I'm aware of like
+[01:12:35] Oracle still supports this in times 10
+[01:12:38] uh by default you they you went back to
+[01:12:40] B flush tree
+[01:12:43] uh you could have variable length nodes
+[01:12:46] uh basically allows the uh the the size
+[01:12:50] every single node could be arbitrarily
+[01:12:53] different size usually you do like sort
+[01:12:55] of almost like a slab allocator you'll
+[01:12:56] have like a you know a 1 kilobyte node a
+[01:12:58] 2 kilobyte node four and so forth right
+[01:13:01] this one you can do But it only shows up
+[01:13:03] in in academic systems because it
+[01:13:05] requires more memory management because
+[01:13:06] now the frames in your buffer pool
+[01:13:09] manager could be different sizes and you
+[01:13:11] have to be able to handle that. You're
+[01:13:12] basically doing reimplementing maloc uh
+[01:13:14] in in your database system which may not
+[01:13:16] be a good idea.
+[01:13:18] A a cheap out would be just just padding
+[01:13:20] so you know the max size of of any given
+[01:13:22] key like it's going to be 32 characters.
+[01:13:24] So no matter whether it's 32 characters
+[01:13:26] or something less, you just patter with
+[01:13:27] bunch of zeros at the end so that things
+[01:13:29] always nicely fit.
+[01:13:32] The implementation that everyone usually
+[01:13:33] does is that you just have a the same
+[01:13:36] way we had slotted pages uh where you
+[01:13:38] could have the the take a page and sort
+[01:13:41] of the data is growing from the end to
+[01:13:42] the beginning. You can do do the same
+[01:13:44] thing for your variable keys. So then
+[01:13:46] now in your you have an offset array to
+[01:13:48] say for a given key here's the offset
+[01:13:51] within my page to find the actual key uh
+[01:13:53] that I want.
+[01:13:56] So the last one is usually what people
+[01:13:58] do. And then if you have really really
+[01:13:59] large uh uh keys that don't fit, then
+[01:14:02] you just have you overflow horizontally.
+[01:14:04] And that's okay.
+[01:14:08] All right. How do you find the data
+[01:14:10] within a node? So the first most obvious
+[01:14:13] thing to do is just do linear linear
+[01:14:14] search. So I want to find key8. I got to
+[01:14:17] find it in my in my array. I just start
+[01:14:19] from the beginning, scan across until I
+[01:14:21] find it, and I'm done.
+[01:14:23] Again, it's not the full table or not
+[01:14:27] the full uh data set. So, this is okay,
+[01:14:29] right? The number of keys we have within
+[01:14:31] within a a node is is not going to be
+[01:14:33] massively large. So, yeah, it's linear
+[01:14:36] scan, but um it's not too bad because
+[01:14:39] it's in memory. One optimization you can
+[01:14:42] do if you have certain data types that
+[01:14:44] are fixed size, you can use SIMD to do
+[01:14:47] vectorzed operations. Who here is taking
+[01:14:49] 418?
+[01:14:51] All right. What's that? taking right
+[01:14:53] now. Have you covered SIMD yet?
+[01:14:54] >> Yeah.
+[01:14:54] >> You're right. SIMD basically means
+[01:14:56] single instruction, multiple data. So
+[01:14:57] think of like it's a single CPU
+[01:14:59] instruction that allows you to do some
+[01:15:01] operation on multiple data items at the
+[01:15:04] same time. So cyd is what you normally
+[01:15:06] think about like one you know one single
+[01:15:07] instruction single data like 1 plus one
+[01:15:10] equals two like you take the register
+[01:15:13] one for one register for the other one
+[01:15:15] you add them together single instruction
+[01:15:16] and it produces one one output. CIMD
+[01:15:19] allows you to take a single instruction
+[01:15:20] and take a vector of data and do some
+[01:15:22] operation on and produce a vector as
+[01:15:24] output. So to do something like this so
+[01:15:26] say I have a uh you can use a 128 bit
+[01:15:31] SIM instruction. This is like this is
+[01:15:32] Intel intrinsics or x86 intrinsics. So I
+[01:15:37] can take the first four keys four five
+[01:15:38] and six. I can then do uh build a vector
+[01:15:42] of just the key I'm looking for eight.
+[01:15:43] And then in a single instruction, I can
+[01:15:45] do a comparison of the input vector with
+[01:15:48] my target vector and it'll produce a bit
+[01:15:50] map that says here's all here's all the
+[01:15:52] tupils or here's the offsets of the
+[01:15:53] tupils that match. This case here, none
+[01:15:55] matches, but it's a single instruction
+[01:15:57] to do this comparison and produce the
+[01:15:58] output. And there's other CID
+[01:16:00] instructions that then do you know find
+[01:16:02] all the ones to see whether I have a
+[01:16:03] match or not. In this case here, I don't
+[01:16:05] have a match. So I just slide over, do
+[01:16:06] the next SID instruction on this. In
+[01:16:08] this case here, I only have three keys
+[01:16:10] instead of eight instead of sorry, then
+[01:16:11] a four. So I, you know, the last one's
+[01:16:13] ignored. And now I find a match. I see a
+[01:16:15] one. I know I find the thing I'm looking
+[01:16:16] for. So again, instead of having to do
+[01:16:18] scrunch one by one, I can do a smaller
+[01:16:21] number instructions to do do this in
+[01:16:22] parallel.
+[01:16:23] x86 has this. ARM has this. Uh, risk 5
+[01:16:27] has has their own like a bunch of
+[01:16:28] systems have vectorized instructions for
+[01:16:29] this, but it only works if if you know
+[01:16:32] don't doesn't work on strings. uh if
+[01:16:34] things are variable length, you know,
+[01:16:36] you want fixed length values. Another
+[01:16:38] obvious choice to do binary search
+[01:16:39] because if everything's sorted, I just
+[01:16:42] jump in the middle, look for key8. I
+[01:16:44] know key8 is is greater than seven, so I
+[01:16:47] want to look at the next side, binary
+[01:16:49] search over here, and eventually land in
+[01:16:50] the middle, right? That's pretty
+[01:16:53] obvious. And the last one is rare. uh so
+[01:16:57] no commercial system or real system
+[01:16:59] actually does this and do interpolation
+[01:17:01] where we just do some math and say well
+[01:17:02] I know I have a densely packed uh array
+[01:17:04] of keys with no gaps like four five six
+[01:17:07] seven eight nine 10 and the key I'm
+[01:17:09] looking for is key eight so I can just
+[01:17:10] do the simple math and say well if key
+[01:17:12] eight is going to exist then if I if I
+[01:17:15] just take the the min the min value and
+[01:17:17] the max value jump to my offset then I I
+[01:17:20] know it's going to be here
+[01:17:23] >> right
+[01:17:25] It's not if if you land on something
+[01:17:27] that's not eight, then you know doesn't
+[01:17:28] exist.
+[01:17:30] >> But like what if the array is not?
+[01:17:32] >> If you can't see, the question is the
+[01:17:34] question is what if the array is is
+[01:17:36] sparse, not dense, it's not packed. You
+[01:17:38] can't do this. That's what I'm saying.
+[01:17:40] It's a huge win if you could do this,
+[01:17:42] but you can only do it in rare cases.
+[01:17:47] All right, three minutes left. Let me
+[01:17:48] get through I'll get through four of
+[01:17:50] these.
+[01:17:52] All right. Again there again it's a data
+[01:17:54] structure from the 1970s. Look at all
+[01:17:56] the crazy you can do with this and make
+[01:17:57] these things actually work. And this is
+[01:17:58] what real systems are actually doing.
+[01:18:00] All right. First one is pointer
+[01:18:02] swizzling. This one is super common. I
+[01:18:03] don't know why it's called swizzling. I
+[01:18:04] didn't make the name up. It's the 80s.
+[01:18:06] Uh I think it's a reference but I wasn't
+[01:18:09] there so I don't know. Um all right. So
+[01:18:12] when we do lookups when we follow
+[01:18:14] pointers in our B+ tree what are we
+[01:18:16] doing? Right? We're not actually storing
+[01:18:18] memory pointers. We're storing page
+[01:18:19] numbers. So, if I want to traversal,
+[01:18:22] find key greater than three. The first
+[01:18:23] thing I got to do is look my look my
+[01:18:25] key, my my root node, find, you know, it
+[01:18:28] says six,
+[01:18:30] I know I want to go down to this side.
+[01:18:31] Okay. Well, how do I get down to that
+[01:18:33] leaf node? Well, I'm going to have a
+[01:18:34] page number in my in my uh in my root
+[01:18:37] node. Tells me what go how to go down
+[01:18:39] there. So, to get that page, I got to go
+[01:18:42] to my buffer pool and say, "Hey, go give
+[01:18:44] me page two. Give me back the the
+[01:18:45] pointer in memory for the frame that has
+[01:18:48] that data." Okay, once I get that, then
+[01:18:50] I can do the reversal. Now I got to scan
+[01:18:51] along the leaf nodes following the
+[01:18:53] sibling pointers. Same thing. I want to
+[01:18:54] get page three. What I got to do? I got
+[01:18:56] to go to the buff manager. Hey, go give
+[01:18:58] me page three. Right?
+[01:19:01] But because now we know it's a
+[01:19:02] hierarchical data structure, we can have
+[01:19:04] some guarantees about uh the order in
+[01:19:08] which things would get evicted uh if
+[01:19:10] we're a bit careful about this. So
+[01:19:12] instead of actually storing the page
+[01:19:15] numbers in the pages, we actually store
+[01:19:17] just the pointers to the actual data. We
+[01:19:20] got to pin those pages, make sure they
+[01:19:22] don't get swapped out and replace with
+[01:19:23] something else, right? Uh but now when I
+[01:19:26] when I when I have swizzle pointer, I
+[01:19:28] basically have a little region in my
+[01:19:29] page where I can store the extra raw
+[01:19:31] memory pointers and I have to know that
+[01:19:32] if it gets victed at the disk, I bring
+[01:19:34] it back in. Those pointers are not valid
+[01:19:35] anymore. But now I can just do my look
+[01:19:37] at my page and say here's directly to
+[01:19:38] the location that I want as I do my
+[01:19:40] traversal. and you get a huge win if you
+[01:19:42] do this. And the data structure of nice
+[01:19:44] provides this nice guarantee we would
+[01:19:46] say
+[01:19:48] uh we can know that we can have it be I
+[01:19:50] can't uh I don't want to evict anything
+[01:19:53] in a root node or sorry in an inner node
+[01:19:56] if one of its children node has been
+[01:19:58] swizzled or is in memory. So this makes
+[01:20:00] sure we have some guarantee about how we
+[01:20:02] order things to make sure that we don't
+[01:20:03] end up with pointers that go to nowhere
+[01:20:05] or pointers go to a frame that has no
+[01:20:07] longer uh the data we want.
+[01:20:09] All right, the last one I want to talk
+[01:20:11] about is um well I'll go two more. So
+[01:20:16] it should be clear that modifying the B+
+[01:20:17] tree when we have to do splits and
+[01:20:18] merges is expensive. If it's inserts, we
+[01:20:21] just keep inserting to one side if our
+[01:20:23] node has space for it. That's fast.
+[01:20:25] That's fine. Same with deletes, right?
+[01:20:27] But the worst case scenario is that we
+[01:20:29] do a delete or an insert and we got to
+[01:20:30] reorganize the entire tree to make sure
+[01:20:32] it's balanced, right?
+[01:20:34] So
+[01:20:36] ideally it' be kind of nice if we can
+[01:20:38] delay having to do these splits and
+[01:20:39] merges to accumulate a bunch of them and
+[01:20:41] then do them in a batch rather than
+[01:20:43] having to treat them as you know single
+[01:20:45] inserts and updates at one at a time.
+[01:20:48] So this is what's called a right
+[01:20:49] optimized tree. I think Wikipedia calls
+[01:20:51] them our fractal trees. That was sort of
+[01:20:52] like the brand name, right? Like like
+[01:20:55] Kleenex is the brand name of of face
+[01:20:56] tissue, right? So fractal tree is the
+[01:20:58] brand name. The generic name is also
+[01:21:01] called a B epsilon tree. And the basic
+[01:21:03] idea here is that in the same way you
+[01:21:06] saw in my SQL for compressed pages, they
+[01:21:07] added a mod log in front of the page,
+[01:21:09] we're going to add a mod log in front of
+[01:21:11] every single node. So now when we
+[01:21:13] anytime we want to do a an operation, we
+[01:21:16] don't have to maybe traverse all the way
+[01:21:17] down to the bottom of the tree. We just
+[01:21:19] find the first spot where we can put
+[01:21:21] something in in a mod log and put and
+[01:21:22] put it in there.
+[01:21:24] So I want to insert seven, right?
+[01:21:27] So in a regular B+ tree, I'd have to
+[01:21:29] traverse all the way down and then
+[01:21:30] insert it on this node here. Instead,
+[01:21:32] what I'm going to do, I'm going to put
+[01:21:34] an insert entry in my mod log.
+[01:21:38] It's like the mem table more or less or
+[01:21:39] not the me table like the how in the log
+[01:21:41] structure storage we storing these log
+[01:21:43] records like here's the changes I made
+[01:21:44] without maybe actually applying them. So
+[01:21:46] I'm going to put the insert seven in my
+[01:21:48] mod log. Now I'm going to do delete 10.
+[01:21:50] Same thing. And I I I put it in there.
+[01:21:54] Right? So now if anybody comes along and
+[01:21:56] wants to do a lookup on 10 when you do
+[01:21:59] the traversal you normally do it in a B+
+[01:22:01] tree but you check the mod log first and
+[01:22:03] if the mod log contains the thing you're
+[01:22:05] actually looking for the actual key that
+[01:22:07] you want then you know you can stop
+[01:22:09] right there because you found what you
+[01:22:10] want and you don't you don't have to do
+[01:22:11] traversal. So to find 10 I land in the
+[01:22:14] first root node I look in the mob I see
+[01:22:16] delete 10. Well I know that that point
+[01:22:18] the last thing that happened to to key
+[01:22:20] 10 was it was deleted because it's at
+[01:22:22] the top of the tree. So I can go ahead
+[01:22:23] and stop my search because I know it's I
+[01:22:25] know it's not there even though
+[01:22:27] physically it's still in the leaf node
+[01:22:29] here and I got to be careful anybody
+[01:22:31] scans along and tries to find it right
+[01:22:33] there's extra bookkeeping I have to do
+[01:22:36] but in this case here I don't have to
+[01:22:37] propagate the changes you know
+[01:22:39] immediately so what you what you do to
+[01:22:42] what happens if the the mod log does get
+[01:22:43] full like I want do insert 40 now I
+[01:22:46] don't have any more space in my my mod
+[01:22:48] my root node so then I got to propagate
+[01:22:50] the changes down right and And then
+[01:22:52] whether you just go one level down or
+[01:22:54] all the way down depends on on the
+[01:22:56] implementation.
+[01:22:58] So this is kind of getting the benefit
+[01:23:00] of the log structure merge tree but in
+[01:23:02] the context of of a breeze you're kind
+[01:23:04] of blending the both the the best of
+[01:23:06] both worlds.
+[01:23:08] Okay.
+[01:23:10] This is very rare. I think the data
+[01:23:12] structure was invented in the 90s but
+[01:23:14] very few systems actually implement
+[01:23:15] this. There was a system called tok uh
+[01:23:18] they got bought at Verona. the guy the
+[01:23:20] new professor William Kousmemell in in
+[01:23:22] computer science his dad was one of the
+[01:23:24] inventors of of that data structure even
+[01:23:26] though he claimed not to be a database
+[01:23:27] person. The best imitation probably that
+[01:23:30] was out for a while is this thing called
+[01:23:31] Splinter DB from VMware that I think has
+[01:23:34] been discontinued because the guy left
+[01:23:36] to go to Cornell but relational AI and
+[01:23:39] and uh Chromodb out of China is in the
+[01:23:42] US Chromb is in China. Those are the two
+[01:23:43] systems that I know that are pushing
+[01:23:44] this pretty hard. Okay. All right. Quick
+[01:23:47] question. Yes, go for it.
+[01:23:50] See, why isn't this more popular?
+[01:23:52] Because it's hard, right? Because you
+[01:23:54] have to, like I said, if I scan along
+[01:23:56] the leaf nodes,
+[01:23:57] >> I got to know how to find up above.
+[01:24:00] Okay. All right, guys. See you on
+[01:24:02] Wednesday. Hit it.
+[01:24:07] [Music]
+[01:24:12] Aquat
+[01:24:13] [Music]
+[01:24:27] the fortune
+[01:24:33] maintain flow with the brain.

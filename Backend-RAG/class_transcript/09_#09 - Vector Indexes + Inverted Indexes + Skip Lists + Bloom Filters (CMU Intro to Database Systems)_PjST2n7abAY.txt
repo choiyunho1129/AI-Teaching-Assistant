@@ -1,0 +1,2290 @@
+[00:00:00] [music]
+[00:00:06] [music] I'm still
+[00:00:08] ass.
+[00:00:12] [music]
+[00:00:17] [music]
+[00:00:24] Uh, round of applause for DJ Cash.
+[00:00:28] again. Thank you for being here. Um, a
+[00:00:30] lot to cover today.
+[00:00:32] >> Have you heard from your your friend Fat
+[00:00:35] Fat Face Trick?
+[00:00:36] >> Yeah, he's doing good.
+[00:00:37] >> He's doing better. Okay.
+[00:00:38] >> He picked up a charge, though.
+[00:00:40] >> He picked up a charge in London.
+[00:00:41] >> Yeah, he did.
+[00:00:42] >> For what?
+[00:00:43] >> I can't tell you that.
+[00:00:44] >> Oh, man. All right. Well, that's that's
+[00:00:46] his problem. Uh, we can't It's in
+[00:00:49] London. We can't help him here. All
+[00:00:50] right. So, let's jump into databases
+[00:00:51] because that's that's the most important
+[00:00:53] thing in life. Um, so again, this is
+[00:00:55] just a reminder for everything for you
+[00:00:56] guys is due. Project one is due coming
+[00:00:58] up. Uh, homework three will be out today
+[00:01:01] and that'll be due in um in a few weeks.
+[00:01:05] And then midterm again, midterm exam
+[00:01:07] again will be uh in class on October 8th
+[00:01:10] and it'll cover lectures zero zero
+[00:01:14] lecture one to lecture 11. Okay. And
+[00:01:16] then we'll we'll post the uh the study
+[00:01:18] guide this weekend early or like Monday
+[00:01:20] next week. Okay. Any questions about any
+[00:01:23] of this? Again, we have the special
+[00:01:25] office hours this Saturday at 3 PM in
+[00:01:27] Gates on 527.
+[00:01:29] That's one of the the the lab rooms.
+[00:01:32] Again, there'll be multiple TAs there.
+[00:01:33] We'll use OQ to queue yourself up and
+[00:01:36] come come and ask questions. Okay.
+[00:01:40] All right. So, let's continue on our
+[00:01:41] discussion on our journey about uh
+[00:01:44] indexes and and the data structures
+[00:01:45] we're going to use to build these things
+[00:01:46] inside of our system. Um today's class
+[00:01:49] we want to talk about indexes and
+[00:01:50] filters. We sort of mentioned filters
+[00:01:54] briefly early in the semester. Um when
+[00:01:56] mentioned bloom filters, we haven't
+[00:01:57] described what they are yet. Um but I
+[00:01:59] just want to highlight the distinction
+[00:02:00] between what a filter is and what an
+[00:02:01] index is. And we're going to need both
+[00:02:04] and sometimes you'll put a filter in
+[00:02:06] your in your index to help sort of speed
+[00:02:08] speed up certain operations. So an index
+[00:02:10] is going to be a data structure like a
+[00:02:11] hash table or a B+ tree or the things we
+[00:02:13] talked about so far that we're going to
+[00:02:15] use as a way to find uh find in records
+[00:02:19] that we want or or sets of records that
+[00:02:22] we want based on some attribute within
+[00:02:25] the table like a column in the table. We
+[00:02:27] want to do a be do a quick lookup to
+[00:02:29] find you know all the users or all the
+[00:02:31] people with you know cs.cmu.edu edu
+[00:02:34] email address, right? We can use an
+[00:02:35] index to go go find that, right? So,
+[00:02:37] it'll give us for some key, it'll give
+[00:02:40] us a an exact location of where we can
+[00:02:44] go find the data we want or at least a
+[00:02:46] starting point for the the data that we
+[00:02:48] want. A filter is going to be a uh it's
+[00:02:52] going to be like an index, but instead
+[00:02:53] of being able to tell us does this thing
+[00:02:56] exist and where does it exist in in our
+[00:02:58] tables, a filter is going to be able to
+[00:03:00] tell us just set membership. Does this
+[00:03:02] thing exist? Yes or no? And it can't
+[00:03:05] tell you where it is. It's just going to
+[00:03:06] tell you that that it does exist. Right
+[00:03:09] now, the tricky thing is going to be
+[00:03:11] when we look at bloom filters, these
+[00:03:12] these will be what are called
+[00:03:13] probabilistic data structures where it
+[00:03:15] will tell you that it's likely that the
+[00:03:17] key you're looking for exists, but it
+[00:03:19] may actually give you a false positive.
+[00:03:20] It may tell you actually it exists when
+[00:03:22] it actually doesn't. It'll guarantee no
+[00:03:24] false negatives. So, if it says it
+[00:03:25] doesn't exist, it definitely does not
+[00:03:27] exist. But it may give you false
+[00:03:28] positives and we'll see what that looks
+[00:03:29] like. So I'm going to quickly describe
+[00:03:31] what a bloom filter is. Uh and then
+[00:03:33] we'll see how we can tack this on to
+[00:03:35] other data structures we've been going
+[00:03:37] through. Okay. So today we got we want
+[00:03:40] to sort of do a smorgasborg of a bunch
+[00:03:42] of other data structures we're going to
+[00:03:42] want to use in our data system. Okay.
+[00:03:44] We'll start off with bloom filters. Uh
+[00:03:46] and then we'll jump to skip list tries
+[00:03:47] inverted indexes and vector indexes.
+[00:03:49] Quick show of hands. Who here has heard
+[00:03:51] of a know what a bloom filter is? Less
+[00:03:54] than 10%. Who here knows what a skip
+[00:03:55] list is? Oh about the same. What about
+[00:03:58] tries and radex trees? Yep. Okay.
+[00:04:01] Inverted indexes.
+[00:04:04] Few. And then vector indexes. I'm
+[00:04:06] assuming maybe HNSW, IV, FF flat.
+[00:04:10] Nobody. Perfect. All right. So, we'll
+[00:04:12] see as we go along in today's lecture as
+[00:04:13] well that we're going to use some of
+[00:04:14] these earlier data structures we'll
+[00:04:15] describe as building blocks to make more
+[00:04:17] complicated things or we'll apply some
+[00:04:18] of the ideas we've used in other parts
+[00:04:20] of the database system and they'll we'll
+[00:04:22] we'll we can we can use them to enhance
+[00:04:24] these different data structures. All
+[00:04:25] right. So, let's start off with bloom
+[00:04:27] filters. These are super useful, super
+[00:04:29] common um that pretty much use in almost
+[00:04:31] every every single database system and
+[00:04:34] it's a probabistic data structure where
+[00:04:36] it's going to be able to tell you
+[00:04:37] whether again whether a key exists in
+[00:04:40] your set or whether it does not exist,
+[00:04:42] right? And we mean pro the term
+[00:04:46] probabilistic means that like there'll
+[00:04:47] be some bit of randomness to it where it
+[00:04:49] could tell you something exists even
+[00:04:51] though it doesn't. But it's guaranteed
+[00:04:53] to never tell you something exists that
+[00:04:55] something that does not exist when it
+[00:04:56] actually does. So it'll give you false
+[00:04:58] positives with some some and you can
+[00:05:01] tune it based on you know how what the
+[00:05:03] false positive rate you want it to be
+[00:05:05] depending on the size and the number of
+[00:05:06] hash functions you're going to use. But
+[00:05:08] again you you'll never get false
+[00:05:09] negatives. So Bloom Filter is only going
+[00:05:11] to be able to give you basically two
+[00:05:14] operations. The API only has two things.
+[00:05:16] You can insert a key and you can do a
+[00:05:18] lookup a key. You can't delete a key.
+[00:05:20] We'll see how to handle that in a second
+[00:05:22] with other other data structures. Uh but
+[00:05:24] you can only do lookups and you can only
+[00:05:26] do uh uh uh inserts. And basically the
+[00:05:30] way it's going to work is that there's
+[00:05:31] going to be this bit map or bit vector
+[00:05:34] like a thing one hot encoding that we're
+[00:05:36] going to use to keep track of whether a
+[00:05:38] key hashes some location in the bit map.
+[00:05:41] And we can use multiple hash functions
+[00:05:42] to land at different locations to ensure
+[00:05:45] that uh you to change the false positive
+[00:05:48] rate or change the the accuracy of the
+[00:05:50] data structure.
+[00:05:52] So this is going to be widely used for
+[00:05:54] like inmemory caches. We want to use
+[00:05:56] this when we do joins. Uh we can also
+[00:05:58] put these things in our hash tables, put
+[00:05:59] these things in in our busties. We can
+[00:06:01] use these things to everywhere because
+[00:06:02] they're they're really compound. So
+[00:06:04] here's a basic bloom filter that has
+[00:06:06] eight bits, right? And initially when I
+[00:06:08] first init start the data structure
+[00:06:09] they're all set to zero. All right. So
+[00:06:12] say I'm going to insert a key. I want to
+[00:06:13] insert the riza. So for this bloom
+[00:06:15] filter I have eight bits. I'm going to
+[00:06:17] use two hash functions. Right? You can
+[00:06:19] you can calibrate how many hash
+[00:06:20] functions you want. You can calibrate
+[00:06:21] how what size you want the bit map you
+[00:06:22] want to be. Make this work in
+[00:06:23] PowerPoint. I'm doing two two functions
+[00:06:25] with eight bits. So what I'm going to do
+[00:06:27] is I'm going to hash it uh these two
+[00:06:29] hash functions. And again it'll be the
+[00:06:31] same algorithm the same hash function
+[00:06:32] algorithm like murmur hash city hash
+[00:06:34] whatever you want. just I give it a
+[00:06:35] different seed so that it permutes it in
+[00:06:37] a different way for for each invocation.
+[00:06:39] So let's say that I get now two
+[00:06:41] different hash values 222 44 44 44 44 44
+[00:06:43] 44 44 44 44 44 44 and I'm going to
+[00:06:44] modify the number of bits I have in my
+[00:06:46] my bit my uh bloom filter bit bit vector
+[00:06:49] I get six and four. So now I'm just
+[00:06:51] going to jump into those different
+[00:06:52] offsets and set those bits to one.
+[00:06:55] Right? That's pretty cheap. That's fast
+[00:06:56] to do. Let me insert the jiza. All
+[00:06:59] right, same thing. hash it twice, modify
+[00:07:01] the number of of of locations or spots I
+[00:07:04] have in my my bit map, and then that's
+[00:07:06] going to point me to now uh two
+[00:07:08] different locations. I set those bits to
+[00:07:09] one.
+[00:07:11] So now I want to do a look up on Rizza,
+[00:07:13] do the same thing. We're going to hash
+[00:07:14] it again, and I'm going to get those
+[00:07:17] same bit locations and then as long as
+[00:07:19] whatever I'm pointing at, if long as all
+[00:07:22] the bits are set to one, then I know the
+[00:07:24] key is is, you know, I'm going to say
+[00:07:26] the key exists,
+[00:07:28] right? And this is why we can't have
+[00:07:30] false negatives, right? Because if one
+[00:07:31] of those bits were zero, then I would
+[00:07:34] have never been able to insert Rizza
+[00:07:35] because when I hash it and put it in
+[00:07:36] there, I set them to one,
+[00:07:39] right? So this will always return true
+[00:07:41] and it'll be this case here. It's
+[00:07:42] correct. If I do look up on Raycon the
+[00:07:44] chef, right? Same thing. I hash it
+[00:07:46] twice. Now I get five and three, right?
+[00:07:49] One of those bits is set to zero. So I
+[00:07:52] know that this key was not inserted. So
+[00:07:54] I set it to false.
+[00:07:57] Now I I look up ODB. Rest in peace. Same
+[00:08:01] thing. Hash it twice. Get two different
+[00:08:02] locations. I didn't insert ODB, but my
+[00:08:06] two hash locations that I land on are
+[00:08:07] both set to one. So in this case here,
+[00:08:10] I'm going to say true. Right? And this
+[00:08:12] is example of the false positive. Right?
+[00:08:15] Both locations are set to one that I'm
+[00:08:16] looking up on, but I know I didn't
+[00:08:19] insert this key. So now you can see why
+[00:08:22] if I have more hash functions I can be
+[00:08:24] have a higher guarantee of of this thing
+[00:08:27] producing a you know a correct answer
+[00:08:30] but now if I have a really small bit map
+[00:08:33] then if I have a lot of hash functions
+[00:08:34] then like I may just be setting them all
+[00:08:36] to one and then it's basically basically
+[00:08:38] useless. So there's a bit of a balance
+[00:08:40] on how much you want to, you know, the
+[00:08:42] size and the how much compute you want
+[00:08:44] to do, right? We're talking maybe, you
+[00:08:46] know, kilobytes. These things aren't
+[00:08:47] that big relative to the size of of
+[00:08:49] large data sets,
+[00:08:52] right? You guys did the countman sketch.
+[00:08:53] That's another example for project zero.
+[00:08:55] That's another example of our
+[00:08:56] publicistic data structure where in
+[00:08:59] exchange for not having to store you
+[00:09:00] know giant list of all the possible keys
+[00:09:02] I could have uh to keep count of
+[00:09:04] everything I I I allow myself to have
+[00:09:07] some some wrong answers with some you
+[00:09:10] know some guarantee of that probability
+[00:09:14] pretty straightforward right
+[00:09:16] and there's a bunch optimizations you
+[00:09:18] can do to make these things real fast
+[00:09:19] really efficient uh for this class again
+[00:09:21] we're not worried about cash line stuff
+[00:09:22] and the CPU we can ignore that you
+[00:09:24] understand the basic data
+[00:09:25] infrastructure, you know, it's it's
+[00:09:26] pretty small. It's pretty compact. It's
+[00:09:28] pretty fast to do this lookup, right?
+[00:09:31] Much faster than doing a probe and a
+[00:09:33] hash table if you have to scan through
+[00:09:34] because now I'm comparing hashes and
+[00:09:35] comparing keys as I go along. So, when
+[00:09:38] we talk about uh doing um hash joins in
+[00:09:42] a few weeks, some systems will put a
+[00:09:44] build a bloom filter in front of the
+[00:09:45] hash table. So, you probe the bloom
+[00:09:46] filter first. If it comes back as
+[00:09:48] negative, then you know it can't be in
+[00:09:49] your hash table. So, you don't probe the
+[00:09:50] hash table. this comes back as positive
+[00:09:52] then you get go probe the hash table to
+[00:09:54] see whether it actually exists
+[00:09:56] right sometimes it's called a bloom join
+[00:09:58] a bloom hash join the basic idea we
+[00:10:00] again this is a useful data structure we
+[00:10:01] can use in a bunch of different
+[00:10:02] locations
+[00:10:04] other filters we may want to consider
+[00:10:05] also is a counting bloom filter uh for
+[00:10:07] this one you basically have multiple
+[00:10:09] levels of uh of of bit maps and this
+[00:10:14] allows you then to also then do deletes
+[00:10:17] um you sort of sort of stage things out
+[00:10:19] right instead of sorting single bits
+[00:10:21] uh I can store actually the count right
+[00:10:24] so I know if I decrement the count to to
+[00:10:27] zero I know I've I've removed something
+[00:10:29] but I still have that guarantee where I
+[00:10:30] can have false positives but not false
+[00:10:32] negatives yes
+[00:10:33] >> so
+[00:10:34] you
+[00:10:37] question is how do you update a bloom
+[00:10:38] filter if you delete a key you can't
+[00:10:40] >> you can't right because again if I
+[00:10:42] delete uh going back here if I delete um
+[00:10:46] who hashed am I a hash to what three
+[00:10:50] right or four if I so if I or six take
+[00:10:52] the six and then one of these guys hash
+[00:10:55] to it right or maybe I didn't see that
+[00:10:57] but anyway if I delete one of these
+[00:10:58] these hashes or one one of these bits uh
+[00:11:01] for one key then I don't know what are
+[00:11:04] the keys I have in here because it does
+[00:11:05] have bits so I made up end of removing a
+[00:11:08] key or removing a bit from a key that
+[00:11:10] should be in there and now I'm going to
+[00:11:11] get false negatives
+[00:11:14] >> false
+[00:11:17] question is uh that the false positive
+[00:11:19] rate will increase when sorry
+[00:11:24] >> don't delete you don't delete keys with
+[00:11:25] ease
+[00:11:26] >> you just don't the way you want to
+[00:11:28] delete keys you want to use a counting
+[00:11:29] bloom filter where instead of sorting a
+[00:11:31] bit you sort of count and that that
+[00:11:33] solves that problem
+[00:11:35] uh there's another uh version of this
+[00:11:37] called coug filter uh and the basic idea
+[00:11:40] is like in it's kind of like the cougar
+[00:11:42] hash table but instead of storing the
+[00:11:44] entire key you just store a a a small
+[00:11:46] representation called a fingerprint of
+[00:11:48] of the uh of of of the key and then that
+[00:11:52] guarantees that if I remove it I the
+[00:11:54] fingerprints gets removed and I'm I
+[00:11:56] still have the guarantee that I can have
+[00:11:58] false positives but not false negatives
+[00:12:00] and the last one is a called a sync ring
+[00:12:03] filter. We'll see this in a second when
+[00:12:05] we talk about tries, but this is
+[00:12:06] basically a compact version of a radix
+[00:12:08] tree where not only can I do um a set
+[00:12:13] membership queries, but also I can do
+[00:12:14] range membership queries like does this
+[00:12:17] key exist within some range of values
+[00:12:19] whereas all these other ones cannot do
+[00:12:21] that. So the bottom two here were then
+[00:12:24] here at CMU. Cuku filter is was created
+[00:12:27] by Dave Anderson and his students uh in
+[00:12:29] computer science department and then the
+[00:12:30] sync range filter or surf that was also
+[00:12:33] created by uh a student that I coded
+[00:12:35] with Dave Anderson who's now a faculty
+[00:12:37] at Shing Wua. Um and that again it's
+[00:12:40] another cool data structure and actually
+[00:12:41] in in Reddus you can actually explicitly
+[00:12:43] ask for a cougar filter and they have
+[00:12:45] their own like built-in type for this
+[00:12:47] again gives you that same probabil the
+[00:12:49] same guarantees uh you want for actually
+[00:12:51] a value you can store.
+[00:12:56] Uh the question is what's the difference
+[00:12:57] between a counting movement and
+[00:12:58] accountman sketch? Countman sketch is
+[00:13:00] giving you uh approximate cardality like
+[00:13:04] for a given key how many how many times
+[00:13:06] have I seen it? Counting move just says
+[00:13:08] like does this key exist but then if I
+[00:13:10] do multiple keys I can I can delete it.
+[00:13:12] Counting move won't handle deletes.
+[00:13:14] Won't tell you the exact number of times
+[00:13:15] you've seen a key.
+[00:13:20] uh [groaning]
+[00:13:22] statement is you can do same thing
+[00:13:23] countman sketch um I mean count sketch
+[00:13:26] again it's meant to track cardality this
+[00:13:28] is just trying to say like does the key
+[00:13:30] exist
+[00:13:32] >> calman sketch can do more than this than
+[00:13:34] accounting bloom filter
+[00:13:40] okay
+[00:13:42] all right so that so bloom filters again
+[00:13:43] that's the most important filter you
+[00:13:45] need to know about it's used everywhere
+[00:13:46] where these other ones I just talked
+[00:13:47] about, they're um they're used, but
+[00:13:49] they're not not as common as bloom
+[00:13:50] filters because they're not as fast as a
+[00:13:52] bloom filter, right? All right. So last
+[00:13:55] class when we talked about the B+
+[00:13:57] stream, switching over now to index data
+[00:13:59] structures, we talked about how the leaf
+[00:14:01] nodes are essentially a sorted link list
+[00:14:04] and then all the the the the inner nodes
+[00:14:07] and the root nodes above it with those
+[00:14:09] uh guidepost keys, the scrimmage node
+[00:14:11] keys, they're b they're basically
+[00:14:12] allowing you to jump into the the link
+[00:14:15] list to find the data which you want
+[00:14:17] more quickly. Right?
+[00:14:20] So
+[00:14:22] if now we want to do uh you know if we
+[00:14:25] just use a link list we end up with O
+[00:14:27] searches on average case right because
+[00:14:29] any single time we have to look for
+[00:14:30] something we may have to scan the entire
+[00:14:32] entire link list to find the thing we
+[00:14:33] want okay we're not even talking about
+[00:14:35] how to maintain it but it's it's the bas
+[00:14:37] basically the same right
+[00:14:40] so a simple link list would be sort of
+[00:14:42] like this right just key followed by a
+[00:14:44] pointer to the next key right
+[00:14:47] and so if you want to make this go
+[00:14:49] faster
+[00:14:50] Uh, we can do what the B+ tree did was
+[00:14:52] as things get inserted, right? You start
+[00:14:55] keeping track of the guideposts as you
+[00:14:57] go down to figure out when you go left
+[00:14:59] and right to to narrow down where you
+[00:15:00] want to jump. But a really more sort of
+[00:15:03] simple more simple approach would be
+[00:15:05] let's just have every other key uh also
+[00:15:09] maintain a pointer that allows us to
+[00:15:11] jump over the next key or jump over by
+[00:15:14] one. So if we land on key one, if you
+[00:15:15] want if we know we got to get to uh some
+[00:15:18] later point, we can just follow the key
+[00:15:21] follow the pointer at the top to jump
+[00:15:22] over key2 to get to key3 and so forth.
+[00:15:25] Right?
+[00:15:26] And we keep doing this to now also then
+[00:15:29] jump over uh larger segments.
+[00:15:32] Right?
+[00:15:36] So this again this this is going to
+[00:15:37] smell a lot like the the B+ tree what
+[00:15:39] we're doing here but instead of having
+[00:15:41] the
+[00:15:42] the keys being sort of added
+[00:15:44] incrementally and then building things
+[00:15:46] out um in a skip list we're basically
+[00:15:49] going to flip a coin and decide when do
+[00:15:51] we want to have these little sort of
+[00:15:52] skip pointers
+[00:15:55] right so you can think of a skip list is
+[00:15:57] just a it's a multi-level link list
+[00:16:01] where you just add these extra pointers
+[00:16:03] allowed you to skip over nodes to jump
+[00:16:04] to farther locations into the uh into
+[00:16:08] the the list. The way it works is it's a
+[00:16:11] probabilistic data structure in that the
+[00:16:13] not that you you'll get false negatives
+[00:16:14] or false positives but more like the the
+[00:16:17] the construction of the data structure
+[00:16:20] is based on some some randomness.
+[00:16:24] So the way you think about it is like at
+[00:16:25] the the bottom level of the list, we're
+[00:16:27] going to have all the keys. And then in
+[00:16:29] the next level above it, we're going to
+[00:16:32] have uh about half the keys as the one
+[00:16:34] below it. And then at the next level
+[00:16:36] that I'll have half the keys below that.
+[00:16:39] And so now when we insert something,
+[00:16:41] we're we're basically going to flip a
+[00:16:43] coin and decide for any key we're
+[00:16:45] inserting what levels do we need to keep
+[00:16:48] those skip pointers for?
+[00:16:51] And so you'll get approximate login,
+[00:16:54] right? Whereas in the B+ tree, if it was
+[00:16:55] balanced, it guarantees to be login. In
+[00:16:57] this case here, on average, it's
+[00:16:58] approximately login and it usually works
+[00:17:01] out to be just fine. So the skip lists
+[00:17:04] are from the 1990s. B+ trees are fun
+[00:17:06] from 1970s. Uh if you squint at them,
+[00:17:09] they're basically look look the same.
+[00:17:11] We'll see in a second. Um but these are
+[00:17:14] typically used for inmemory data
+[00:17:15] structures, inmemory indexes. Remember
+[00:17:17] we talked about the mem table or log
+[00:17:18] structure merge trees. There was like
+[00:17:19] this inmemory piece, right? Okay, often
+[00:17:21] times a lot of systems that's going to
+[00:17:22] be using a skip list.
+[00:17:26] There are very few systems that I'm
+[00:17:27] aware of use skip list for for on disk
+[00:17:30] just because it's the
+[00:17:33] there's a lot more movement than you
+[00:17:34] would have than a B+ tree for for moving
+[00:17:36] things around in the back. Yes.
+[00:17:40] >> Question is it only three levels? No,
+[00:17:41] you can go you flip the coin and keep
+[00:17:43] adding.
+[00:17:46] Um, all right. So, here's a basic one.
+[00:17:49] Again, I'm showing three levels, but it
+[00:17:51] doesn't have to be. Um, so all right.
+[00:17:54] So, say we've already inserted a bunch
+[00:17:55] of keys. And again, I flip coins to
+[00:17:56] decide how we want to put these. So, on
+[00:17:58] the on your right or left side, we have
+[00:18:01] all the levels. These are the entry
+[00:18:02] points into the the data structure. And
+[00:18:05] then on the right side, these have these
+[00:18:07] markers to say this is the end of the
+[00:18:09] link list. Right? So, if I see this,
+[00:18:11] then I then I know I've I've gone too
+[00:18:13] far or the thing I'm looking for doesn't
+[00:18:16] exist.
+[00:18:17] So the probability that a key is going
+[00:18:19] to exist at any level will be the number
+[00:18:22] of keys that I have divided by you know
+[00:18:25] uh 2n from one or divide by 2 n from the
+[00:18:28] one below me right so at the first level
+[00:18:30] the probability that keys exist is going
+[00:18:32] to be one because it's all the keys at
+[00:18:33] the next level it'll be uh n over two n
+[00:18:36] over four and then so forth going up
+[00:18:41] right skipping this right so when I want
+[00:18:45] to uh insert a level or certain key I'm
+[00:18:49] basically going to flip a coin
+[00:18:51] uh and at starting at the sort of the
+[00:18:54] lowest level I'll flip a coin and if
+[00:18:57] it's equals to true then I know I want
+[00:18:59] to I'll assert the key there. So the
+[00:19:01] very beginning again the the since you
+[00:19:03] have to always put the key at the bottom
+[00:19:04] because that's the final location where
+[00:19:05] every key has to exist. So this this one
+[00:19:07] you don't flip a coin. You know you're
+[00:19:08] always going to insert it, right? But
+[00:19:10] then at the next level I say, "All
+[00:19:11] right, I'll flip a coin." Uh, and if
+[00:19:15] it's true or heads, whatever, then I
+[00:19:18] know I want to insert this and I go to
+[00:19:19] the next one. If it's false, then I
+[00:19:21] don't insert an entry at this level and
+[00:19:23] I'm done. So this case here, I flip a
+[00:19:25] coin at this the second level, it's
+[00:19:28] true. So I know I want to insert a coin
+[00:19:29] or insert the key. then flip the ne go
+[00:19:32] to the next level flip a coin it equals
+[00:19:34] uh true that I don't I want to start it
+[00:19:36] again I could go that above that and
+[00:19:38] decide okay now now it's equal to false
+[00:19:40] so I don't want to put an entry in here
+[00:19:42] right so for this key here we're going
+[00:19:43] to put something in here so we know it
+[00:19:45] has to go in this location
+[00:19:48] so the way it's going to work is I'm
+[00:19:50] going to first insert the
+[00:19:52] [clears throat] keys where I want them
+[00:19:54] to be but without connecting the rest of
+[00:19:56] the data structure to them right so
+[00:19:59] simplicity assume it's in memory, right?
+[00:20:02] So, I'm going to I'm going to create
+[00:20:02] these the the key value records for
+[00:20:05] these guys. So, the ones the ones at the
+[00:20:07] top, the values are just going to be
+[00:20:08] pointers to the the next level below me,
+[00:20:12] right? In in skipless parlance, they
+[00:20:14] they would call these towers, right? So,
+[00:20:17] at the at the root level, I have the
+[00:20:19] value. At the upper levels, uh I'll have
+[00:20:22] pointers to the the the level below me
+[00:20:24] in my tower going down.
+[00:20:27] Right? Okay. So then now I need to
+[00:20:28] connect this to the rest of the of the
+[00:20:30] data structure. Right? So I'm going to
+[00:20:31] have pointers coming out to whatever the
+[00:20:33] next one the the the next location
+[00:20:35] should be in the in my data structure.
+[00:20:38] Right?
+[00:20:40] In this case here the bottom one key
+[00:20:42] five should go go before key six. So
+[00:20:44] it's going to point to key six. But key
+[00:20:45] five at the other levels there isn't
+[00:20:47] another key after that. So they're just
+[00:20:49] going to point to the the end markers
+[00:20:51] which is just infinity. And then now
+[00:20:54] starting at the bottom
+[00:20:57] uh I'm gonna then rec connect it into
+[00:20:59] the d the rest of the data structure by
+[00:21:01] changing this pointer here now to point
+[00:21:03] to my my new key. And at this point the
+[00:21:07] key is safely now in the data structure.
+[00:21:09] So even if if nobody follows those
+[00:21:11] guideposts up above, I'll still be able
+[00:21:13] to find the key that that this key here.
+[00:21:16] But I'm going to then then add those
+[00:21:17] keys at the top at the levels because
+[00:21:19] then again they're guidepost to help me
+[00:21:21] find find what I want. So then I do the
+[00:21:23] same thing. Go to the next level. Change
+[00:21:25] that pointer now point to me. Go to the
+[00:21:27] next level. I change that pointer now to
+[00:21:28] point to me. Right? And now my key is is
+[00:21:32] fully integrated with all the well all
+[00:21:34] the towers.
+[00:21:35] So now if I want to do a lookup, I want
+[00:21:37] to find key three. So I start at the
+[00:21:40] very top and I'm going to look ahead to
+[00:21:43] the to on the on the pointer to what the
+[00:21:46] key is is pointing at in this top level.
+[00:21:49] In this case here, it's five. But
+[00:21:51] because we know that three is less than
+[00:21:53] five, I don't want to follow this
+[00:21:54] pointer. I want to go down a level
+[00:21:57] because this is basically saying key
+[00:21:59] five is that the any value that comes
+[00:22:01] after this where key five is located at
+[00:22:03] the top level is going to be greater
+[00:22:04] than equal to five. So if I'm looking
+[00:22:07] for three, which is less than five, then
+[00:22:09] I know I don't want to go to the to the
+[00:22:11] right of it. I got to go before it. So
+[00:22:14] then I go down to the next level, do the
+[00:22:16] same thing. I compare key3 with key2.
+[00:22:18] key3 is greater than two or three is
+[00:22:21] greater than two. So I know I want to
+[00:22:22] follow this pointer to jump to this
+[00:22:24] location. Then do the same thing. Check
+[00:22:26] check check the next uh the next node
+[00:22:29] along this this level. Key3 is less than
+[00:22:31] the key4. So I know the thing that I
+[00:22:33] want has to be uh down and to the right
+[00:22:36] of me rather than going across to key4.
+[00:22:39] So then I move down here then just then
+[00:22:41] scan along the leaf nodes as I would and
+[00:22:43] any link list and then I'll find the
+[00:22:44] thing that I want in the back. Yes.
+[00:22:49] Yes.
+[00:22:53] >> Yeah. The question is going back here
+[00:22:55] are on these on these levels here. It's
+[00:22:58] it's basically like like the bucket
+[00:22:59] array just tells me where to jump into.
+[00:23:01] So I know how to jump to the starting
+[00:23:03] point at each level. Yeah. Yes.
+[00:23:08] >> Yeah. So I'm not showing the lines going
+[00:23:11] down. You would have them as well.
+[00:23:17] Okay,
+[00:23:19] so let's quickly talk how to handle
+[00:23:21] deletes. Um,
+[00:23:24] so again, without talking about multi-
+[00:23:25] threading stuff yet, that'll be next
+[00:23:27] week. Um, the the way it basically works
+[00:23:30] is that every key is going to have a
+[00:23:32] little marker to say, is this thing
+[00:23:33] deleted? Yes or no? And then without me
+[00:23:36] having to go physically remove it
+[00:23:37] because that's actually expensive
+[00:23:38] operation because I got to go remove the
+[00:23:39] towers. I got to go change a bunch of
+[00:23:41] pointers. So I'll have sort of the the
+[00:23:44] thread that wants to delete the key just
+[00:23:46] first mark this thing as being deleted
+[00:23:48] and then like compaction and log
+[00:23:49] structure merge trees there'll be a
+[00:23:51] separate background worker background
+[00:23:52] process that comes along and cleans
+[00:23:54] things up at at a at a regular interval.
+[00:23:58] So again along all the leaf nodes again
+[00:24:00] I'm going to have this this bite value
+[00:24:02] or boolean that says is this thing
+[00:24:04] deleted yes or no. So if I want to go
+[00:24:06] ahead now and delete key five I'll do
+[00:24:08] that traversal as I did before. I would
+[00:24:10] run along the the to the the top level,
+[00:24:12] see that I have key five, and then go
+[00:24:15] down and then uh set it to delete it as
+[00:24:17] true.
+[00:24:19] So now again, any other thread that
+[00:24:21] comes along and wants to do a lookup on
+[00:24:24] key five, they may see this leaf node
+[00:24:27] here or this bottom node in the link
+[00:24:29] list that it's been, you know, it would
+[00:24:31] find an actual key, but then it would
+[00:24:32] check the bit and see that it's been
+[00:24:34] marked as deleted. So not to just ignore
+[00:24:35] it. So now I want to go clean up the
+[00:24:38] tower. Basically, I'm going to do this
+[00:24:39] in reverse where I'm going to want to
+[00:24:42] change the pointer at the top uh first
+[00:24:45] and then work my way way down. Right?
+[00:24:47] When we inserted it, we we we changed
+[00:24:49] the pointers at the bottom and then
+[00:24:50] worked our way up to it. This this is
+[00:24:52] the opposite. So again, I'll go over to
+[00:24:55] the first the starting point at the
+[00:24:56] levels change that pointer now instead
+[00:24:58] of pointing to K5 uh have it point to
+[00:25:01] the end. And at this point here, anybody
+[00:25:03] comes along after me won't be able to
+[00:25:04] see K5.
+[00:25:07] Same thing, go to the next level, flip
+[00:25:08] that pointer. Then once I have that,
+[00:25:10] change that point at the bottom at this
+[00:25:11] point here. Again, assuming I'm single
+[00:25:13] threaded, right, for simplicity reasons,
+[00:25:16] I know that there isn't another another
+[00:25:17] thread, you know, hanging out here, uh,
+[00:25:20] and wants to follow something that that
+[00:25:22] goes in nowhere. If I, you know, there's
+[00:25:24] some guarantees I can provide, make sure
+[00:25:25] that nobody's actually reading this,
+[00:25:27] then it's it's safe for me to go ahead
+[00:25:28] and delete it. And I completely remove
+[00:25:30] the the key from from the data
+[00:25:31] structure.
+[00:25:35] So I mean skip lists are kind of cool.
+[00:25:36] It's a it's a nifty little thing, right?
+[00:25:38] It again if you just sort of think of it
+[00:25:40] sort of being rotated, it's like a a B+
+[00:25:42] tree, but I have instead of these
+[00:25:44] guideposts being determined b on how I'm
+[00:25:47] doing splits and merges, it's flipping a
+[00:25:49] coin decide where things are and again
+[00:25:52] there's no free lunch, it's still going
+[00:25:53] to be a login.
+[00:25:55] So the other thing I also point out to
+[00:25:57] is in my example here I showed a one
+[00:26:00] direction linked list whereas in the B+
+[00:26:02] we could we said we could have simply
+[00:26:03] pointers going in both directions. So
+[00:26:06] this if you want to have pointers go
+[00:26:07] direction it kind of complicates things
+[00:26:09] uh
+[00:26:11] it complicates the the some of the
+[00:26:13] operations to make things thread safe.
+[00:26:15] If you have a single thread in it no big
+[00:26:17] deal. Multi-threads makes a problem
+[00:26:18] because you could have one guy coming
+[00:26:19] one guy one way another guy coming the
+[00:26:21] other way and you'll be able to handle
+[00:26:22] that.
+[00:26:24] Unlike B+ trees, skip list don't require
+[00:26:27] any rebalancing or splits or merges
+[00:26:29] because it's just removing towers. And
+[00:26:30] when you remove a tower, uh when you
+[00:26:32] delete a key or if I insert a key, I'm
+[00:26:34] adding new towers. It doesn't change or
+[00:26:36] the the location or doesn't change the
+[00:26:39] the layout of the rest of the keys in
+[00:26:40] the data structure.
+[00:26:43] But again, I'm showing this on
+[00:26:45] PowerPoint. If it's in memory, no big
+[00:26:47] deal. You could you could pack multiple
+[00:26:49] keys in in a in a chunk of memory. But
+[00:26:52] if now if I am tab back by dis pages
+[00:26:55] then you end up may do you end up doing
+[00:26:58] more IO than you would in in a B+ stream
+[00:27:02] right so again you typically see these
+[00:27:05] only for inmemory data structure so the
+[00:27:07] single store people I talked about a few
+[00:27:08] weeks ago they were all in on the skip
+[00:27:10] list and that's the main data structure
+[00:27:11] they use for the row store uh in some
+[00:27:15] log structure merries like Rox DB the
+[00:27:17] the mem table is going to be a skip list
+[00:27:20] I think wire tiger for log retrie list.
+[00:27:22] So they for inmemory stuff it's often a
+[00:27:25] really easy thing to implement and a lot
+[00:27:26] of systems choose to do that.
+[00:27:31] Okay.
+[00:27:33] So now another thing to point out also
+[00:27:34] too with with B+ trees is that the
+[00:27:38] the inner nodes are
+[00:27:42] being used as again guidepost to tell us
+[00:27:44] how to get to the bottom. But remember
+[00:27:46] last class we talked about we said that
+[00:27:48] may end up may ending I may end up
+[00:27:50] deleting a key well it'll get removed
+[00:27:52] from the the leaf nodes but then I may
+[00:27:56] keep it around as one of the guidepost
+[00:27:57] because it's a good discriminator and I
+[00:27:59] don't want to rebalance things right
+[00:28:00] because I I don't need to and so if I'm
+[00:28:03] traversing down the the B+ tree and I
+[00:28:05] see a key in an inner node I can't be
+[00:28:07] guaranteed that the key actually exists
+[00:28:08] because I always got to get to to the
+[00:28:10] leaf node
+[00:28:12] right
+[00:28:13] and so what'll happen is I always have
+[00:28:16] to be able to traverse to the bottom of
+[00:28:18] the tree in order to tell you whether a
+[00:28:19] key exists or not in in in a B+ tree.
+[00:28:23] In the case of the B epsilon tree we
+[00:28:25] talked at the end of last class, if I'm
+[00:28:27] lucky and I land on the first node, I
+[00:28:28] look in its mod log and I see the key I
+[00:28:30] want has been deleted, I don't have to
+[00:28:31] reverse the rest of the way. But again,
+[00:28:33] for large key spaces, there's no
+[00:28:35] guarantee to do that.
+[00:28:37] So an alternative to doing a sort of
+[00:28:40] tree search or a B+ tree or in a skip
+[00:28:42] list as well uh is to do what's called a
+[00:28:45] try.
+[00:28:46] And the basic idea here is that instead
+[00:28:48] of storing uh at every sort of level in
+[00:28:51] the tree an entire key, I'm going to
+[00:28:53] store a portion of the key or a digit of
+[00:28:56] it. And then so now as I'm traversing
+[00:28:59] the key, as I'm traversing the tree, the
+[00:29:01] path I'm taking down to the tree is
+[00:29:03] actually can be used to then reconstruct
+[00:29:06] the key that that I'm looking for.
+[00:29:10] So if if I'm looking for a particular
+[00:29:12] key and I don't see it in the first
+[00:29:13] node, I don't see the first maybe the
+[00:29:15] first character, first bit that I want
+[00:29:16] in the first node, then I know it can't
+[00:29:18] exist in the rest of the tree and I can
+[00:29:20] stop right away.
+[00:29:23] So tries are older. Tries are from like
+[00:29:25] the late 1950s. uh was invented by some
+[00:29:27] French guy. Um again streets are 1970s
+[00:29:31] tribes are like 1959 58. Uh the term try
+[00:29:35] was actually invented by somebody here
+[00:29:36] at CMU. I think he died last year. Um
+[00:29:39] but he he coined the term in in the 60s.
+[00:29:41] Yes.
+[00:29:42] >> What one of the keys is
+[00:29:45] >> question is what if one of the keys is a
+[00:29:47] sub of another key?
+[00:29:50] >> Yes.
+[00:29:52] >> Yes. How would you resolve that?
+[00:29:55] >> You would you just add it?
+[00:29:57] >> No, but what would that look like?
+[00:29:59] >> Oh, his question is how would you
+[00:30:00] resolve it? Uh well, we'll go through
+[00:30:02] examples, but like uh you have h a t and
+[00:30:06] you would add and then poin just coming
+[00:30:08] out. Um oh, how to resolve like where
+[00:30:11] something is a subset of another key.
+[00:30:13] You would have both.
+[00:30:15] >> Oh, like how there's h to a h
+[00:30:19] >> a t and then t to e. Yes. Yeah. Yeah.
+[00:30:21] Yeah, so keys he's basically asking like
+[00:30:23] how do I handle the case where a key is
+[00:30:24] a subset of another key? Uh how do I
+[00:30:28] make how do I know whether the keys are
+[00:30:29] going to exist? Because again I'm I'm
+[00:30:31] going to be I'm going to be using these
+[00:30:32] tries for uh for giving key find the
+[00:30:35] things that I want range a bit more
+[00:30:38] tricky because you have to bounce up and
+[00:30:40] back but we we're ignoring that for now.
+[00:30:42] But the the use case you're talking
+[00:30:44] about would be handled just fine because
+[00:30:45] I say if I if I know for hat it's h at I
+[00:30:48] don't follow the what are pointer down
+[00:30:50] to the next the next letters the digits
+[00:30:52] I just stop if there's a pointer I say
+[00:30:54] no there's something exactly this key
+[00:30:58] >> yes
+[00:31:02] >> question the question is how does this
+[00:31:04] work for strings and ins give me a
+[00:31:05] second just fine no problem right what
+[00:31:09] is what is a string Assume
+[00:31:12] it's asky. What is it?
+[00:31:14] >> Yeah, it's a if it's ASKY, they're
+[00:31:16] always eight bytes. It's just an
+[00:31:17] integer. So there's Yeah, there's no big
+[00:31:20] deal. Uh other data other data types, I
+[00:31:24] don't have slides for this. Other data
+[00:31:25] types are more tricky. Um
+[00:31:28] like floats can be tricky uh because it
+[00:31:31] depends on as well. Like we'll ignore
+[00:31:32] that. We're ignoring all that. Assume
+[00:31:34] it's eight. It's ask 8 bit characters.
+[00:31:39] Okay. So what's really cool about tries
+[00:31:41] is that they don't require rebalancing.
+[00:31:44] Um not always, but the the other cool
+[00:31:47] thing is that the the the
+[00:31:50] data structure like the layout of of the
+[00:31:52] actual nodes in within our data
+[00:31:55] structure doesn't depend on the order in
+[00:31:57] which you insert things or delete
+[00:31:59] things. It just depends on the keys. So
+[00:32:01] no matter how what order you insert the
+[00:32:03] keys into your data structure, you're
+[00:32:05] always going to end up with the same
+[00:32:06] sort of layout.
+[00:32:08] And this can then guarantee that any
+[00:32:10] lookup is always going to be uh okay in
+[00:32:13] time where K is the the length of the
+[00:32:15] key that you're looking for. So if I'm
+[00:32:17] looking for the you know for for hello
+[00:32:20] right that has five characters. I in
+[00:32:23] this you know my example here I know I'm
+[00:32:25] going to have to look for at least five
+[00:32:26] characters to find the thing whether the
+[00:32:27] thing exists or not.
+[00:32:31] Right? And the way you just traverse you
+[00:32:32] just as as every time you go down a
+[00:32:34] level you just look for the next next
+[00:32:35] character or digit that you want and if
+[00:32:38] it's not there then you know it's not
+[00:32:39] there if it is there then you follow the
+[00:32:41] pointer to find the thing you want.
+[00:32:45] So in the same way we define B plus
+[00:32:47] trees as sort of Mway data structure
+[00:32:49] where M is the number of the the number
+[00:32:51] of pointers coming out of it. In a try,
+[00:32:53] we would say the span of the try is the
+[00:32:55] number of bits or digits we're going to
+[00:32:57] represent uh in in every level of of the
+[00:33:01] of of the try. All right? And then if
+[00:33:05] the digit exists in the corpus or the
+[00:33:07] keys that we're trying to to to maintain
+[00:33:09] in our data structure, then we have to
+[00:33:11] have a pointer to the next level.
+[00:33:12] Otherwise, we just say it's it's null.
+[00:33:14] We don't want to represent it. And then
+[00:33:16] the fan out would be the the
+[00:33:20] at every node, how many things are
+[00:33:21] coming out of it. And then that also
+[00:33:23] then determines what the height of the
+[00:33:24] physical tree is.
+[00:33:27] So let's look at a really trivial
+[00:33:29] example. Uh what they were asking for
+[00:33:32] how do you how would you represent
+[00:33:33] integers in this? Let's say we want to
+[00:33:35] sort uh three keys 10 25 and and 31. So
+[00:33:41] for this one we're going to store this
+[00:33:42] in a one bit span try. So that means
+[00:33:44] that every single level or every node in
+[00:33:46] a try is going to represent one bit in
+[00:33:50] the value you want to store. In a real
+[00:33:52] system, you wouldn't want to go you
+[00:33:53] wouldn't go by bits. You'd go by bytes
+[00:33:55] or something maybe even larger. Uh but
+[00:33:58] for simplicity, we'll go we'll go with
+[00:33:59] this. So to insert these records to to
+[00:34:02] insert these keys in this uh try would
+[00:34:05] essentially look like this again where
+[00:34:07] every single level in our try represents
+[00:34:10] just one bit position in the keys that
+[00:34:12] we're trying to store. Right? So these
+[00:34:14] are the the bit representation of keys
+[00:34:15] 10 25 31. And then for uh for simplicity
+[00:34:21] instead of saying you know drawing all
+[00:34:22] the bits out I just put repeat 10 right
+[00:34:24] you would have a bunch of extra nodes
+[00:34:26] for that. So now the first level a try
+[00:34:30] is bit position zero. They're all zeros.
+[00:34:32] So we just have a pointer at the zero
+[00:34:34] position in our in our node jump down to
+[00:34:37] uh the the next level. Whereas for the
+[00:34:40] one for the position one, the bit one,
+[00:34:43] it just goes to null. So if anybody's
+[00:34:45] looking for a key where the first bit is
+[00:34:47] set to one, I would jump in the first
+[00:34:48] node. See that one is mapped to to null
+[00:34:51] and therefore I know the key doesn't
+[00:34:53] exist. I can stop my search again. The
+[00:34:56] next level they're all zeros and repeat
+[00:34:58] this 10 times for for simplicity. Then
+[00:35:00] we now get down to this level here where
+[00:35:02] now we actually have uh different
+[00:35:04] differentiating values. So we have some
+[00:35:06] of the keys are set to zero at this
+[00:35:08] position. some of the keys are set to
+[00:35:09] one. So I have again pointers coming out
+[00:35:11] of of both of them. So now say I go down
+[00:35:14] here now I see have one zero one zero
+[00:35:16] and then same thing I have uh I have
+[00:35:19] different levels of those bit positions
+[00:35:20] and just mapping down and then when I
+[00:35:22] get to the bottom right it'll be a
+[00:35:24] record ID or a pointer to something like
+[00:35:26] this is the value that we're trying to
+[00:35:27] then represent in in this trial.
+[00:35:33] So
+[00:35:34] jumping ahead
+[00:35:37] this is actually kind of inefficient,
+[00:35:39] right? Um jumping ahead. Sorry. Um
+[00:35:43] ignoring the fact we're storing zero and
+[00:35:44] one, we could just represent that as
+[00:35:46] just in one bit instead of two bits,
+[00:35:48] right? Uh because if you had characters,
+[00:35:51] you wouldn't be able to easily do that
+[00:35:52] or sorting bytes wouldn't be easily do
+[00:35:54] that. But in this case here, we we see
+[00:35:56] that we have a bunch of these
+[00:35:59] uh bunch [clears throat] of these nodes
+[00:36:01] where we're not actually storing any
+[00:36:04] differentiating information,
+[00:36:06] right? Like we don't need to store that
+[00:36:08] we have one of the bits set to one and
+[00:36:10] one like one of the bits is set, the
+[00:36:12] other one is not set or one is null,
+[00:36:13] one's not null. So instead we can do
+[00:36:15] sort of horizontal compression with each
+[00:36:17] with each level. just remove the values
+[00:36:20] that we don't care about and only store
+[00:36:22] those.
+[00:36:25] Right? If we don't have a key, we don't
+[00:36:26] want your keys to have someone set to
+[00:36:27] one, someone set to zero at any given
+[00:36:29] level, we just store whatever the the
+[00:36:30] value actually is at that bit and with
+[00:36:32] just the pointer to the next level.
+[00:36:35] But then we can compress this even
+[00:36:37] further because we see on this case over
+[00:36:39] here on the side or the bottom ones,
+[00:36:41] it's kind of a straight path to the leaf
+[00:36:44] nodes, right? Like for this one over
+[00:36:47] here, zero set 0 0 0 going forth, right?
+[00:36:50] We don't need to record anything
+[00:36:51] information, extra information about
+[00:36:53] this. Um,
+[00:36:55] so instead we can do what's called
+[00:36:57] vertical compression and just truncate
+[00:36:59] the try and say the key that you want
+[00:37:03] exists here or the key that you're
+[00:37:04] looking for would exist here, but rather
+[00:37:06] than me storing the entire key, I'm just
+[00:37:08] going to stop the the the the branch
+[00:37:11] going down and just have a pointer
+[00:37:13] immediately to the record that I want.
+[00:37:17] So if you do this, this is called a rate
+[00:37:19] x tree. Rate x tree is this compressed
+[00:37:21] form of of a try. Uh where again you're
+[00:37:24] doing vertical compression. Now if you
+[00:37:26] truncate those branches, it's going to
+[00:37:28] end up being a probabistic data
+[00:37:30] structure in that you may get actually
+[00:37:31] false positives because it may tell you
+[00:37:34] a key exists when it doesn't actually
+[00:37:36] does not because you don't have the full
+[00:37:37] key embedded in the try.
+[00:37:41] So you got to follow the pointer to go
+[00:37:42] then go look up and see whether the key
+[00:37:44] that you want is actually there or not.
+[00:37:46] Right? Or you could use this again as a
+[00:37:48] filter and say yeah it's there or not
+[00:37:50] there or might might be there.
+[00:37:51] [clears throat]
+[00:37:52] But most systems will use this as uh as
+[00:37:55] actual index not a not a filter.
+[00:37:59] So
+[00:38:00] when when systems say they're using
+[00:38:02] tries
+[00:38:04] 99% of the time they're using a rate
+[00:38:05] extreme.
+[00:38:07] All right. because again it's it's uh
+[00:38:10] it's a compressed form of try without
+[00:38:11] have without having to store all
+[00:38:13] possible combinations of a key at at
+[00:38:15] every single level. There's a bunch of
+[00:38:17] systems that use this and and what's
+[00:38:19] interesting is that even though the try
+[00:38:21] is really old, the uh there's been a
+[00:38:24] sort of resurgence in the last 10 years
+[00:38:26] of a bunch of systems saying, "Hey,
+[00:38:27] look, tries are actually a good idea. We
+[00:38:29] should we should be doing this instead
+[00:38:30] of B+ trees in some cases, right? Or
+[00:38:32] instead instead of skipless like
+[00:38:33] Cassandra was using skip list for their
+[00:38:35] mem table uh for their lovers tree and
+[00:38:37] got rid of that switch to to a a rad
+[00:38:39] tree." Yes.
+[00:38:46] The question is before I did this
+[00:38:47] compression uh was it it was
+[00:38:50] deterministic
+[00:38:52] and then when I did this compression it
+[00:38:53] made it proistic more like it's
+[00:38:55] deterministic the structure itself is
+[00:38:57] deterministic meaning like no matter
+[00:38:58] what order I insert the keys it's always
+[00:39:00] going to have sort of the same this
+[00:39:02] level has this this level has that and
+[00:39:03] so forth right the probabilistic part
+[00:39:06] comes to be like if I do this truncation
+[00:39:10] I I I may do a lookup and find a match
+[00:39:12] for the key that takes me to the bottom
+[00:39:14] and then I then but then I have to
+[00:39:15] follow the point to see whether it
+[00:39:16] actually exists or not. Um is basically
+[00:39:19] giving me a false positive on saying the
+[00:39:22] key exists when it doesn't actually
+[00:39:23] because I'm throwing away information
+[00:39:24] when I do this truncation.
+[00:39:28] So the truncation part is what where you
+[00:39:29] get the the the the false positive. The
+[00:39:31] compression doesn't give you that. So
+[00:39:33] going back here like for
+[00:39:36] for this path here like I have uh it's a
+[00:39:40] straight line down. So
+[00:39:43] if I didn't do the compression over here
+[00:39:45] then I end up with like a um
+[00:39:49] how to say this? [snorts] I don't know
+[00:39:52] where the key exists
+[00:39:54] even though I landed at the I think the
+[00:39:57] key might exist even though I landed at
+[00:39:59] the at a leaf node in the try. So then I
+[00:40:01] have to follow the the pointer to figure
+[00:40:02] out whether actually does exist or not.
+[00:40:05] >> Yes.
+[00:40:09] >> Question is is this a data structure you
+[00:40:11] would be inserting keys into? Yes.
+[00:40:17] >> Yes. Question is what happens if you
+[00:40:20] start inserting a key that then follows
+[00:40:21] along path. You'd have to expand that
+[00:40:24] two slides. We we'll handle that. Yes.
+[00:40:27] >> Yes.
+[00:40:32] uh the question when I say check the
+[00:40:34] original to see what the key matches I
+[00:40:36] don't know what the record pointer is
+[00:40:38] actually I don't care what the record
+[00:40:39] pointer is actually pointing to it maybe
+[00:40:40] the might be a table heap I go check
+[00:40:42] that page the the data structure could
+[00:40:44] be for the storing the tupil is is the
+[00:40:47] B+ tree doesn't matter whatever whatever
+[00:40:49] the the final resting place of the tupil
+[00:40:51] is I got to go check it to see whether
+[00:40:52] it's actually a match or not think of
+[00:40:54] like when I do a we were doing that
+[00:40:56] linear hashing or linear linear probe
+[00:40:57] hashing I hashed my my key. I landed
+[00:41:00] somewhere in the hash table. I can't
+[00:41:02] just say I'm done because I landed
+[00:41:03] somewhere in the hash table and that's
+[00:41:04] occupied by something. I got to go and
+[00:41:06] check the key in that hash table to see
+[00:41:08] whether it's actually the one I'm
+[00:41:09] actually looking for. Same idea. I got
+[00:41:11] to go follow something to go look at the
+[00:41:12] original tupil because I've thrown away
+[00:41:14] some information to compress it.
+[00:41:24] The question is the the for the
+[00:41:26] complexity of this is same as what? His
+[00:41:37] question is is the complexity of a
+[00:41:39] compressed try o or
+[00:41:46] >> uh it is still I mean so like
+[00:41:50] yeah so
+[00:41:52] if if it's if it's a if it's an index if
+[00:41:54] it's a unique index then whatever I'm
+[00:41:56] pointing to uh it's either going to be
+[00:42:00] the key I want or not the key I want. So
+[00:42:02] So that's a one lookup. To your other
+[00:42:04] point of like if it's a non-unique
+[00:42:06] index,
+[00:42:07] >> what's that?
+[00:42:11] >> You have to match key. Yeah. So
+[00:42:14] >> because it's on the
+[00:42:16] >> it's okay plus one.
+[00:42:21] >> It'll be what will be faster? Sorry.
+[00:42:24] They won't have to jump in different
+[00:42:26] locations.
+[00:42:36] >> Uh I think so I think what you're saying
+[00:42:37] is
+[00:42:39] uh that if it's if it's
+[00:42:42] talking are we talking about press try
+[00:42:44] or non-cressed try? It doesn't matter.
+[00:42:46] >> Non-compressed try. I I look at my key
+[00:42:48] then so the number of things I got to
+[00:42:50] look down is is is the length of the
+[00:42:51] key. Yes.
+[00:42:56] >> Different locationations not the same
+[00:42:57] block
+[00:42:58] >> typically. Yes.
+[00:43:02] >> So what he's saying here if I compress
+[00:43:04] it down this is like a really trivial
+[00:43:06] example but I compress this down then
+[00:43:07] everything be inside a single block.
+[00:43:11] >> Uh
+[00:43:14] sorry say the last one again. Sorry.
+[00:43:16] >> Yes. The keys the keys somewhere else.
+[00:43:19] Sorry the original tupil somewhere else.
+[00:43:21] So whether it's compressed or not, uh,
+[00:43:24] sorry, if it is compressed, then I got
+[00:43:25] to go follow the pointer to go see
+[00:43:27] whether the key actually does match or
+[00:43:28] not. If it is not compressed, the key
+[00:43:31] might not exist. I I get the bottom of
+[00:43:33] the try and I'm done. If I get to the
+[00:43:35] bottom try and it is a match, then I
+[00:43:38] still got to go follow the pointer to
+[00:43:39] get get the two follow the the the
+[00:43:41] record I need to get the tuple.
+[00:43:45] >> You good or no?
+[00:43:46] >> So you're just doing all this work to
+[00:43:48] make sure you're not like
+[00:43:51] So that
+[00:43:53] exist the whole point of index is is us
+[00:43:56] for like not to do a sequential scan on
+[00:43:58] everything to be able to say for a given
+[00:43:59] key go does this thing exist not and if
+[00:44:02] it does tell me exactly where to go get
+[00:44:04] it. So I don't think because I want to
+[00:44:05] avoid scan of of the tables. Again,
+[00:44:08] think of extremes. If I have a billion
+[00:44:09] tupils, I don't want to scan a billion
+[00:44:11] tupils to go find the record I want. If
+[00:44:13] I have a data structure that again, it's
+[00:44:15] a little larger. Sorry, it's an extra
+[00:44:17] space, extra computational cost to
+[00:44:19] maintain this thing, but I'm avoiding
+[00:44:20] that sequential scan. That's usually
+[00:44:22] going to be a good trade-off.
+[00:44:27] All right. So tries again they're an old
+[00:44:30] data structure but there's been a
+[00:44:31] resurgence and in the last 10 years a
+[00:44:33] bunch of systems actually using it and
+[00:44:34] it all comes from the Germans who built
+[00:44:36] the system called hyper and then so
+[00:44:38] ductb uses a version of their try
+[00:44:40] because ductb saw their papers and wrote
+[00:44:42] the same thing and then the hyper guys
+[00:44:44] sold his native system to Tableau which
+[00:44:46] got bought by Salesforce and then he
+[00:44:48] rewrote a new system called Umbra uh
+[00:44:50] that also uses this try index but then
+[00:44:53] Umbra got forked off as a commercial
+[00:44:54] product called called Cedar DB um but
+[00:44:57] Reddus and SQL light and a bunch of
+[00:44:58] other systems use this internally.
+[00:45:01] You sometimes see see this in literature
+[00:45:02] called Patricia trees. Uh I looked this
+[00:45:05] up and it's actually from like Don
+[00:45:07] Canoose books from the like all all
+[00:45:09] computer science in the 1970s and
+[00:45:11] there's a data structure there's a
+[00:45:12] version of this called practical
+[00:45:13] algorithm to retrieve information coded
+[00:45:15] and alphabetic and so petition trees uh
+[00:45:19] come from that acronym again sometimes
+[00:45:21] you see called radius trees or just
+[00:45:22] tries or partition trees they're all
+[00:45:24] they're all roughly the same thing.
+[00:45:27] All right, let's quickly talk about how
+[00:45:28] we want to handle uh modifications. Say
+[00:45:31] now we have a a try looks like this. And
+[00:45:33] now with any every node, I can actually
+[00:45:35] store multiple keys inside them. They're
+[00:45:37] they're they are uh they're very length,
+[00:45:40] but we know how to handle that using
+[00:45:42] sort of roughly the slot and pay
+[00:45:43] architecture that we saw before. So if I
+[00:45:45] want toert hair, right, I know it should
+[00:45:47] go here. So I just follow the pointers
+[00:45:49] down, find a free slot in this this note
+[00:45:51] here, and insert my entry. If I want to
+[00:45:54] delete hat, right? Follow the pointer
+[00:45:56] down to h a t find t go ahead and delete
+[00:45:59] that. That's fine. But then now we can
+[00:46:01] decide that if we we delete have now we
+[00:46:04] only have one entry in this bottom node
+[00:46:06] here. So in some implementations of
+[00:46:08] tries or adaptive rad arts uh they can
+[00:46:12] decide okay well I don't want to have
+[00:46:13] this guy hanging out by himself because
+[00:46:15] then it's a straight path from a down to
+[00:46:17] a IR. Again, I I could do that vertical
+[00:46:20] compression and move IR up and
+[00:46:23] everything's just fine.
+[00:46:26] I'm glossing over the details this quite
+[00:46:28] a bit, but that's roughly how these
+[00:46:29] algorithms work.
+[00:46:32] So, I quickly just want to mention that
+[00:46:33] there's a bunch of implementation one
+[00:46:35] implementations of this. Again, surfy
+[00:46:37] mentioned before the art index is the
+[00:46:38] one from hyper that ductb uses as well.
+[00:46:41] There's another one called Judy arrays
+[00:46:43] which is sort of the first radex tree
+[00:46:45] that allowed the sort of the adaptive
+[00:46:47] nodes moving things up and down. Uh this
+[00:46:49] is about HP but they wrote a patent on
+[00:46:51] it and so for years it would show up on
+[00:46:53] Hacker News saying like hey there's this
+[00:46:54] cool thing called Judy Rays be nice if
+[00:46:56] we can implement this but there's this
+[00:46:57] patent. Um and then even though the
+[00:47:00] authors of the of the the actual Judy
+[00:47:02] Ray said oh HP won't sue you trust us.
+[00:47:04] Uh nobody actually end up actually
+[00:47:06] implemented. It's off patent as of like
+[00:47:07] two years ago, but as far as I know, I'm
+[00:47:09] not aware of any other system do it
+[00:47:10] using it. They're instead they're all
+[00:47:12] using the the art index, but rough
+[00:47:14] basically roughly idea is the same
+[00:47:15] thing, but you can have these adaptive
+[00:47:16] node uh layouts and you can move you can
+[00:47:19] resize them based on what the keys you
+[00:47:20] want to store.
+[00:47:23] >> All right. So, in the last half an hour,
+[00:47:24] I want to go through uh uh full text
+[00:47:27] search indexes and and vector indexes.
+[00:47:32] Yes.
+[00:47:37] >> Question. The question is what in what
+[00:47:39] scenarios would would a RAX tree be
+[00:47:41] better than a B+ tree? Uh for range
+[00:47:44] scans, B+ is going to be better. Uh for
+[00:47:48] large keys, tries will typically be
+[00:47:50] better because they're more they're more
+[00:47:51] compressed. Um
+[00:47:55] >> for what's that?
+[00:47:58] >> Like point like point lookups. Yeah.
+[00:47:59] Like if I'm looking for a single key,
+[00:48:01] tries would probably be better if if the
+[00:48:02] tries aren't if the if the keys are
+[00:48:04] really big. Again, it's a cop. I'm
+[00:48:06] saying it depends. Like if I'm doing
+[00:48:08] like a bunch of lookups on keys that
+[00:48:09] don't exist, try is going to be way
+[00:48:11] faster because like if I don't see it in
+[00:48:13] the first node, I'm done.
+[00:48:14] >> But if I do range scans, the B+ tries be
+[00:48:16] better. Yeah.
+[00:48:19] And typically in in most systems,
+[00:48:21] they'll implement either B+ trees or or
+[00:48:23] the radex trees you for as table
+[00:48:26] indexes, they don't do both. whereas
+[00:48:28] like some they'll have the hash table
+[00:48:29] indexes plus the B plus trees but they
+[00:48:32] won't have two they won't usually
+[00:48:33] implement two data structures. Um, okay.
+[00:48:38] So, all all the indexes we talked about,
+[00:48:40] all the dashes we talked about so far
+[00:48:41] are fantastic for doing what again
+[00:48:43] called point queries. Go find Andy's
+[00:48:45] bank account or, you know, go get your
+[00:48:47] single uh user account and for range
+[00:48:50] scans, right? Find all the people within
+[00:48:53] uh, you know, that born within some some
+[00:48:55] date range, right?
+[00:48:57] What they're not good at are sort of
+[00:49:00] keyword searches. So meaning like find
+[00:49:03] all the articles where the the the the
+[00:49:06] term or the word Pavlo appears because
+[00:49:09] think about how would you do that in
+[00:49:10] your B+ tree because the key has to be
+[00:49:12] the entire uh of the index has to be
+[00:49:14] whatever the entire value is for a given
+[00:49:17] column. So if I just sort of show
+[00:49:19] example like Wikipedia we had this sort
+[00:49:21] of revision table there was this column
+[00:49:23] called content that was just the text
+[00:49:24] field of whatever somebody entered in
+[00:49:27] when they they wrote the Wikipedia
+[00:49:28] article.
+[00:49:30] So if I build an index on this like a B+
+[00:49:33] tree or try it doesn't matter then I'm
+[00:49:36] not picking out the individual keys or
+[00:49:38] sorry individual words of the column
+[00:49:41] it's the entire column
+[00:49:44] so I can't do a query like this like uh
+[00:49:47] on an index like find all the the the
+[00:49:49] find all the records where the content
+[00:49:51] contains the keyword Pavlo
+[00:49:54] because the B+ tree doesn't know how to
+[00:49:56] pick apart the individual words. it just
+[00:49:59] it's going to see try to do a match on
+[00:50:00] the entire thing. So this is always
+[00:50:01] going to end up being a sequential scan
+[00:50:03] in a system,
+[00:50:05] right? It's actually incorrect query
+[00:50:07] anyway because like because the wild
+[00:50:09] card at the end could match like someone
+[00:50:10] like there's a Russian scientist Pavlov
+[00:50:12] with the V at the end. It would match
+[00:50:14] them not maybe exactly what I'm looking
+[00:50:15] for.
+[00:50:18] So this is what an inverted index is
+[00:50:19] going to solve for us. Okay, sometime
+[00:50:21] sometimes called a full text search
+[00:50:22] index. And the basic idea is that for a
+[00:50:25] for a given uh given column or attribute
+[00:50:28] within in a table we want to build this
+[00:50:30] index on we're going to pull out the
+[00:50:32] individual words or terms in in the in
+[00:50:35] the the the data and build an index on
+[00:50:38] those things
+[00:50:40] rather than the the entire the entire uh
+[00:50:43] uh value. Right? So this is again
+[00:50:47] sometimes called full text indexes. In
+[00:50:49] like medieval times they were called
+[00:50:50] concordances. Like there were some monks
+[00:50:52] back in the 1200s that went like they
+[00:50:55] some guy had a bunch of people like read
+[00:50:57] the Bible and create a mapping list of
+[00:50:59] like for here's every word in the Bible
+[00:51:00] like a glossery and what pages it appear
+[00:51:02] on the same idea
+[00:51:05] right and then a bunch of database
+[00:51:07] systems are now going to support these
+[00:51:09] uh not they're not always great and then
+[00:51:12] the the the SQL syntax of how to use
+[00:51:15] them is going to vary widely uh between
+[00:51:17] one system to the next but the general
+[00:51:19] idea of how they're going to work is is
+[00:51:20] going to be the
+[00:51:22] So we take this again the content field
+[00:51:24] here uh of this table and we're going to
+[00:51:27] pull out all the individual terms. We'll
+[00:51:29] talk a second how we actually do that.
+[00:51:31] Uh and then we'll have this thing this
+[00:51:33] dictionary data structure where for
+[00:51:35] every single term we'll keep a counter
+[00:51:36] how many times we've seen the the the
+[00:51:38] the term and then it'll be then have a
+[00:51:41] pointer to what we call a posting list.
+[00:51:43] were just going to be the record ids of
+[00:51:45] the uh of of the the tupils that had
+[00:51:49] this particular term in in in the data
+[00:51:51] struct or sorry term in the in the
+[00:51:53] column we built the index on
+[00:51:56] right so term frequency and so forth.
+[00:51:59] So there's a bunch of these sort of
+[00:52:02] specialized storage engines or storage
+[00:52:03] managers that'll give you these these
+[00:52:06] sort of uh these full these inverted
+[00:52:08] indexes and that's all pretty much all
+[00:52:09] they do is just do the inverted index
+[00:52:11] like they're not meant to be the primary
+[00:52:12] storage of of of your database
+[00:52:16] uh right but like you you you can build
+[00:52:18] a larger system on top of that. So,
+[00:52:20] Lucine is probably the most famous one
+[00:52:21] of all these, right? It's written in
+[00:52:23] Java. It's widely used. Zapion is is one
+[00:52:25] of C++. The new hot one now is Tantib,
+[00:52:28] which is basically Lucine but written in
+[00:52:30] in in Rust. And again, they're basically
+[00:52:33] building these things and they have
+[00:52:35] various uh ways to tokenize them and
+[00:52:37] split things up other other things. And
+[00:52:39] then there's larger systems that build
+[00:52:40] on top of this uh that have these uh
+[00:52:43] again that expose a sometimes a SQL
+[00:52:46] interface expose
+[00:52:48] custom API then allows you to do queries
+[00:52:51] on top of uh of these inverted indexes
+[00:52:55] and this space is super popular. Elastic
+[00:52:56] search is probably they're a public
+[00:52:58] company. They're probably the biggest
+[00:52:58] one in the space but then they changed
+[00:53:00] the license and people didn't like that.
+[00:53:02] So then Amazon 410 became open search.
+[00:53:05] Um Splunk is a really old one. They got
+[00:53:07] bought by Cisco last year. quit quit
+[00:53:09] just got by bought by data dog in in
+[00:53:11] January, right? So the these things are
+[00:53:13] widely used and they're pretty popular.
+[00:53:15] Even though again your your you know
+[00:53:17] your favorite relational data system
+[00:53:18] like Postgress and others will have
+[00:53:20] these kind of these functionality built
+[00:53:21] in, they're not going to be as
+[00:53:22] sophisticated as as uh this the
+[00:53:25] specialized engines like lucine and
+[00:53:26] tint.
+[00:53:28] All right. So let me show what an
+[00:53:29] inverted index looks like for lucine and
+[00:53:31] then I'll show what what what the
+[00:53:32] postcrist looks like. So in lucine the
+[00:53:35] basic data structure we're going to use
+[00:53:36] is called a finite state transducer and
+[00:53:38] it's basically going to be like a try
+[00:53:41] where we're going to break apart the the
+[00:53:43] digits within the keys we want to
+[00:53:44] represent uh or the terms we want to
+[00:53:46] represent but then rather than being a a
+[00:53:49] pointer to where the record actually
+[00:53:51] exists, we're actually going to use the
+[00:53:53] weights in the data structure to
+[00:53:55] determine the offset in this sorted
+[00:53:58] dictionary of keys or terms.
+[00:54:01] So it looks sort of like this. So say I
+[00:54:04] want to look up and find find the key
+[00:54:06] pav pav. So I I have my entry point into
+[00:54:10] the data structure and this try I'm
+[00:54:13] going to look at the different branches
+[00:54:14] or different possible keys that I have
+[00:54:15] at this level and that's going to tell
+[00:54:17] me whether I want to go left or right or
+[00:54:19] whatever down what path. And then at
+[00:54:21] every edge here I'm gonna have a weight
+[00:54:23] that's going to of course that I'm going
+[00:54:25] to use to then sum up all the weights to
+[00:54:27] get to either a terminating point or the
+[00:54:28] key that I want. And that's going to
+[00:54:30] tell me what offset I want to jump to in
+[00:54:32] my in my dictionary.
+[00:54:34] So again, looking for PAV. I follow the
+[00:54:36] edge down on P on P. Uh that edge has a
+[00:54:40] weight of two. So I add two to my
+[00:54:41] offset. Then I want to find find now A,
+[00:54:44] right? Follow that path here. That edge
+[00:54:47] has a weight of one. My offset now goes
+[00:54:48] to three. Then I I want to find V.
+[00:54:51] That's a straight path to the bottom.
+[00:54:52] This terminating node here. The weight
+[00:54:54] is zero. So my offset is three. And I
+[00:54:56] just jump to my jump to the that
+[00:54:58] location in my dictionary and I find
+[00:54:59] what I want.
+[00:55:02] Pretty cool.
+[00:55:05] So the the data structure itself is is
+[00:55:08] not immutable. Uh you can you can you
+[00:55:11] can uh you can sorry it is immutable
+[00:55:14] meaning like I can't add new keys to
+[00:55:16] this because that would change the
+[00:55:18] weights and and mess things up. So the
+[00:55:20] way it works in lucine is that you
+[00:55:23] basically do a batch insert, build the
+[00:55:27] trans transducer and then freeze it and
+[00:55:29] then any new keys get inserted, you're
+[00:55:30] going to build another, you know, build
+[00:55:32] another transucer for that. And then
+[00:55:33] there's a background job that then
+[00:55:34] merges this together to compute larger
+[00:55:36] transducers. So you're not storing the
+[00:55:38] keys over and over again uh across
+[00:55:40] different dictionaries, right? Basically
+[00:55:42] removing redundancies.
+[00:55:46] So we can do all the same things that we
+[00:55:47] talked about before uh in our dictionary
+[00:55:50] like the bit packing stuff and the delta
+[00:55:52] encoding to to reduce the size of of
+[00:55:55] these data structures.
+[00:55:58] So this idea is pretty cool. In
+[00:56:01] Postgress they use they have something
+[00:56:02] what's called the generalized inverted
+[00:56:04] index and they're actually you're going
+[00:56:05] to build upon the sorry in the back.
+[00:56:07] Yes.
+[00:56:09] >> How do you get the weights? You compute
+[00:56:11] them. Do you have all the keys ahead of
+[00:56:12] time and then you you you sort the keys
+[00:56:15] in alphabetical order right and then
+[00:56:18] based on that you can then build the the
+[00:56:20] transucer graph.
+[00:56:24] Again that's why it's immutable because
+[00:56:25] if I add more keys like if I add key uh
+[00:56:28] I don't know uh jelly like with a j that
+[00:56:32] would go in between bar rav and pav I
+[00:56:36] would have to change the weights and
+[00:56:37] have to rebuild the whole the whole
+[00:56:38] graph so that's why they make it
+[00:56:39] immutable
+[00:56:43] all right in postgress they're going to
+[00:56:44] use what they call the g generalized
+[00:56:46] inverted index the jin and what that's
+[00:56:48] basically the dictionary is going to be
+[00:56:50] a b+ tree using the existing B+ tree
+[00:56:53] they already have and then for the
+[00:56:55] posting list they're going to be at the
+[00:56:57] at the leaf node
+[00:56:58] So in the leaf nodes if the number of
+[00:57:01] records that map to a single particular
+[00:57:04] term or key you're looking for again I
+[00:57:07] want to use the word ter term I use I
+[00:57:09] want to use term not key because key
+[00:57:10] would sort of imply like the like the
+[00:57:12] entire uh entire value of a column we're
+[00:57:15] trying to build index on this is like a
+[00:57:16] portion of it so if you have a given
+[00:57:18] term have a lot of uh have a small
+[00:57:20] number of record ids that are matching
+[00:57:22] for it then your posting list are just
+[00:57:24] uh just arrays uh with values But then
+[00:57:28] this goes above a threshold you and you
+[00:57:30] don't want to have do a sequential scan
+[00:57:31] every single time to find all the things
+[00:57:33] you you know you may be looking for in
+[00:57:35] these posting lists. They'll then
+[00:57:37] convert the posting list into a another
+[00:57:40] B+ tree. So you basically end up with a
+[00:57:43] a forest of trees. So you have a tree to
+[00:57:45] get into the looking for terms and then
+[00:57:47] the leaf node may end up pointing to the
+[00:57:49] entry point of another B+ tree where
+[00:57:51] you're maintaining the sort of list of
+[00:57:53] of the posting ids.
+[00:57:55] Now maintaining this again is going to
+[00:57:57] be expensive. Uh so to avoid the
+[00:58:00] overhead of doing that every single time
+[00:58:01] you do do an insert update delete,
+[00:58:04] they're going to bring in a mod log just
+[00:58:06] like we saw many times before this
+[00:58:07] semester where all my updates will get
+[00:58:10] absorbed into that mod log and then
+[00:58:12] there's a background job that runs
+[00:58:13] through and compacts it and merges
+[00:58:15] everything into the main dictionary.
+[00:58:21] So beyond just doing uh you know for
+[00:58:25] given key or sorry given term find me
+[00:58:27] all the the records that have this term
+[00:58:28] in it some other things you can do to to
+[00:58:31] with these these full text search
+[00:58:32] indexes that are really cool uh you can
+[00:58:35] use them for ranking.
+[00:58:37] So instead of just saying go me find
+[00:58:39] find me all the the records where this
+[00:58:41] this term exists, you want to know
+[00:58:43] what's the importance of the different
+[00:58:47] uh records that match,
+[00:58:49] right? So again, if I'm if I'm doing a
+[00:58:52] look up on the word like Wuang, I'm
+[00:58:54] gonna I could potentially get a lot of
+[00:58:55] articles on Wikipedia that match that,
+[00:58:57] but the one that's probably the most
+[00:58:59] important is the one where Wuang appears
+[00:59:00] the most, likely the article about the
+[00:59:02] Wuang clan. And that will have a higher
+[00:59:04] importance if I just use a simple
+[00:59:06] ranking algorithm that says what's the
+[00:59:08] frequency of this term appearing in a in
+[00:59:11] a in a given uh record relative to the
+[00:59:13] appearance in all the other records.
+[00:59:16] This helps you avoid things like the
+[00:59:17] word 'the' that's going to appear every
+[00:59:19] word everywhere and so that you don't
+[00:59:20] end up weird with weird rankings because
+[00:59:22] you know that term appears everywhere as
+[00:59:24] well. So TF is the the basic one that
+[00:59:28] things like Postgress do. But then the
+[00:59:30] like lucine and the other like sort of
+[00:59:32] specialized search engine systems uh
+[00:59:34] with full text search indexes they can
+[00:59:36] do BM25 which is enhanced version of
+[00:59:38] this. Basically if you have a key that's
+[00:59:40] repeated a ton of uh a term that's
+[00:59:42] repeated over and over again at some
+[00:59:43] point it the the its weight decays
+[00:59:46] because it's like it's not overflooded
+[00:59:48] with that term over and over again. If
+[00:59:50] an article has nothing but the word
+[00:59:51] wuang in it with no other words in it,
+[00:59:54] uh you don't want that thing to maybe
+[00:59:55] always be the most important thing
+[00:59:57] because it's kind of kind of full of
+[00:59:58] garbage.
+[01:00:00] So again, the the the other the not all
+[01:00:04] the the data systems that like the
+[01:00:06] relational data systems that support
+[01:00:08] full text full text inverted indexes uh
+[01:00:11] can do do the more sophisticated things
+[01:00:13] like postgress only does TF. You have to
+[01:00:15] use uh extensions and add-ons to get
+[01:00:17] BM25. I don't know what Oracle and um uh
+[01:00:20] SQL server do.
+[01:00:23] The other thing you can also do to
+[01:00:24] improve search is to do run these things
+[01:00:26] through tokenizers. So my simple
+[01:00:28] example, I just said, "All right, I'll
+[01:00:29] split all the split the the the column
+[01:00:32] attribute based on the space." But like
+[01:00:37] there may be sometimes where uh if I
+[01:00:39] want to do like a fuzzy match, find
+[01:00:41] things where people even though they
+[01:00:43] they misspell the words, uh I can run
+[01:00:46] this through a tokenizer that can
+[01:00:47] rewrite the the terms into engrams
+[01:00:51] or do other things like remove move
+[01:00:53] hyphens or map things like u us u
+[01:00:58] it's the same thing as USA without the
+[01:01:00] periods. So there's a bunch of other
+[01:01:01] tricks you can do to improve search. So
+[01:01:04] with an engram uh tokenizer, you
+[01:01:06] basically take the term wuang and then
+[01:01:08] if I want to make triagrams, I just have
+[01:01:10] all combinations or of consecutive uh
+[01:01:13] characters up to uh the three letters.
+[01:01:17] So now I can do fuzzy matches of like
+[01:01:19] someone only writes, you know, someone
+[01:01:20] searches like, you know, uh Muan instead
+[01:01:23] of the G, I can still do a match on
+[01:01:26] that. Whereas if I'm just using an
+[01:01:28] inverted index without this
+[01:01:29] tokenization, then I I can only do exact
+[01:01:32] matches.
+[01:01:37] What's that? Oh, that's a typo. Yeah.
+[01:01:39] Question is, why does UTA appear twice?
+[01:01:41] That's a typo, right?
+[01:01:44] Thank you. I'll fix that.
+[01:01:48] All right. So these inverted indexes are
+[01:01:50] useful for again looking for contents
+[01:01:55] uh based on on the on the keywords but
+[01:01:57] it's kind of like trying to do almost an
+[01:02:00] exact match like does this keyword exist
+[01:02:04] and you can play some games like Wuang
+[01:02:06] with a hyphen can be matched to Wuang
+[01:02:08] without the hyphen or Wuang without the
+[01:02:10] space. The tokenizer can can sort of
+[01:02:12] handle that. But what you can't do uh is
+[01:02:17] do searches based on the meaning of what
+[01:02:20] the actual the data actually represents.
+[01:02:24] Right? So I can't I can't ask my
+[01:02:26] databases with a full text or verted
+[01:02:28] index and say find me all the songs that
+[01:02:32] talk about you know people slinging or
+[01:02:35] doing doing some action unless I can do
+[01:02:38] a lookup exactly on all possible
+[01:02:40] combinations of the the synonyms for
+[01:02:43] that action for for that idea right
+[01:02:46] because it's just trying to match bits
+[01:02:47] in the index it can't match can deeper
+[01:02:50] it doesn't have any deeper meaning about
+[01:02:51] what the uh what's actually in your data
+[01:02:55] So this is what the similarity search
+[01:02:57] that people are doing or the rag stuff
+[01:02:58] people are doing in in in modern AI
+[01:03:00] systems, right? And you can just build
+[01:03:03] this directly in your data system and do
+[01:03:04] this. It's just another index. So let's
+[01:03:07] say again I have my table of all my
+[01:03:09] albums and and for whatever reason I
+[01:03:10] have a column in there with all the
+[01:03:12] lyrics for all the songs in every album.
+[01:03:15] Obviously you would not want to store it
+[01:03:16] to album. You store it per song. We can
+[01:03:18] ignore that. So what I'm going to do is
+[01:03:20] I'm going to take all that those that
+[01:03:22] text column. I'm going to run it through
+[01:03:24] my favorite transformer. Open a has one.
+[01:03:26] There's a bunch of hugging faces.
+[01:03:27] There's the original one. Uh, word
+[01:03:29] tovec, right? Whatever, whatever I want.
+[01:03:31] Some it's going to convert free form
+[01:03:33] text into a fixed length array of
+[01:03:37] floatingoint numbers called an
+[01:03:39] embedding. And then I can take those
+[01:03:41] embeddings, store this in in a vector
+[01:03:43] index. Not saying what this is yet,
+[01:03:46] we'll cover that in the next few slides,
+[01:03:47] but like there's some way for now for me
+[01:03:49] to do lookups on on those embeddings in
+[01:03:52] an efficient manner. So now when my
+[01:03:54] query comes along and here I'm showing
+[01:03:56] free form text instead of SQL, but you
+[01:03:59] could put whatever the search term in
+[01:04:00] SQL if you wanted and I say find me all
+[01:04:02] the lyrics about running from the
+[01:04:04] police. So I take that running from the
+[01:04:06] police portion uh and I run it through
+[01:04:09] my same transformer and somehow
+[01:04:10] magically it it it generates an
+[01:04:13] embedding that that represents that that
+[01:04:16] search term and then now I do a
+[01:04:19] approximate nearest neighbor search in
+[01:04:21] my vector index based on that embedding
+[01:04:23] that I got and it's going to produce a
+[01:04:25] rank list of of of record IDs that
+[01:04:28] somehow semantically match the thing I'm
+[01:04:30] looking for. like the semantic meaning
+[01:04:32] of the search term running from the
+[01:04:33] police is somehow through the
+[01:04:35] transformer
+[01:04:37] embided in that or imbued in that that
+[01:04:40] that vector of of of floatingoint
+[01:04:42] numbers right the floatingoint numbers
+[01:04:43] aren't meant to be read understood by
+[01:04:45] humans just the transformer magically
+[01:04:46] does that for because that that's what
+[01:04:47] it's trained on
+[01:04:51] I can also do other things like store
+[01:04:53] additional metadata that is in my table
+[01:04:56] in my vector index so that if I have
+[01:04:59] additional queries I want to do lookups
+[01:05:00] on semantic meaning and additional
+[01:05:02] qualifiers. I instead of having do
+[01:05:04] sequential scan, I can do all the
+[01:05:06] searches inside of the index. So if I
+[01:05:09] want to find all the songs that talk
+[01:05:11] about running for the police and
+[01:05:12] released after 2005, I take again that
+[01:05:15] search term, run that through my
+[01:05:16] transformer, I get an embedding, but
+[01:05:18] then I can also pass along and when I do
+[01:05:20] my lookup uh the qualifier year greater
+[01:05:23] than 2005.
+[01:05:25] So now as I'm doing my approximate
+[01:05:26] nearest neighbor search inside this
+[01:05:28] thing, uh I can also throw away entries
+[01:05:30] that doesn't match that second
+[01:05:31] qualifier. And there's a question like
+[01:05:34] do you do you do the the year filter
+[01:05:36] first before you do the embedding
+[01:05:37] lookup? You know there's there's no good
+[01:05:40] answer how to do that.
+[01:05:43] So the magic is of makes this all work
+[01:05:44] is called a vector index. And this is a
+[01:05:47] specialized data structure that's
+[01:05:48] explicitly designed to do nearest
+[01:05:50] neighbor approximate nearest neighbor
+[01:05:51] searches on these embeddings. We're just
+[01:05:54] going to be a a one-dimensional uh array
+[01:05:57] of floating point numbers. And the array
+[01:05:59] is always has to be fixed. It's always
+[01:06:00] fixed length meaning like the the size
+[01:06:02] of one embedding from one one record to
+[01:06:04] the next record is always going to be
+[01:06:05] the same because that's what the trans
+[01:06:07] transformer generates.
+[01:06:09] So the challenge in this is that just
+[01:06:12] like we talk about ranking like you know
+[01:06:14] how do I how do I get a bunch of results
+[01:06:15] and then rank them in order of
+[01:06:16] importance in semantic search it gets
+[01:06:20] kind of really fuzzy because like
+[01:06:22] there's no because the transformer is
+[01:06:24] doing this magic to convert free form
+[01:06:26] text or whatever it is we want to look
+[01:06:28] up on into this embedding and somehow
+[01:06:30] the embedding represents some higher
+[01:06:31] level meaning that that we've extracted
+[01:06:33] from the data we're trying to look up on
+[01:06:34] or store.
+[01:06:37] there's no guarantee that we're going to
+[01:06:39] find exactly the the the results that we
+[01:06:41] want. So you kind of just go by what
+[01:06:43] what what feels good enough, what feels
+[01:06:45] okay, right?
+[01:06:47] So there's a bunch of different data
+[01:06:49] structures you can use uh sorry a bunch
+[01:06:50] of different uh specialized database
+[01:06:52] systems uh that you can use to do these
+[01:06:55] things like pine cone, weate middle are
+[01:06:57] probably the main ones. Um but pretty
+[01:06:59] much every relational data system that
+[01:07:01] people are actively using today and
+[01:07:02] actively maintained has their own uh
+[01:07:04] vector index. Postgress has PG vector
+[01:07:07] Oracle my SQL actually my SQL I don't
+[01:07:09] know like Oracle SQL server everyone
+[01:07:12] everyone has a a uh a vector index now
+[01:07:16] and the two main data structures you're
+[01:07:17] going to use is either going to be an
+[01:07:18] inverted index like we just talked about
+[01:07:21] or a graph index
+[01:07:23] I'll go through both of those.
+[01:07:26] So in inverted index the basic idea is
+[01:07:28] that we're going to we want to maintain
+[01:07:30] a uh a mapping from from some some
+[01:07:36] uh some location in this high high
+[01:07:39] dimensional space to the the records
+[01:07:42] that match the the you know have have an
+[01:07:45] embedding that's close to the one that
+[01:07:46] we're trying to do a lookup on. Right?
+[01:07:49] So the basic ways it works is you just
+[01:07:50] sort of scan through your data ahead of
+[01:07:52] time. you're going to do uh run your K
+[01:07:54] means clustering algorithm where K is
+[01:07:56] defined whatever uh
+[01:07:59] it's a black magic how you assign it but
+[01:08:00] like it's it's usually not that not
+[01:08:02] quite large. Um and then you're going to
+[01:08:05] then do lookups by just running the same
+[01:08:07] clustering algorithm to jump into that
+[01:08:08] high dimensional space and figure out
+[01:08:10] what are all the the the records that
+[01:08:12] are close to you in the cluster. Right?
+[01:08:15] So look at an example. So say we have
+[01:08:17] all the embeddings we got from the
+[01:08:18] lyrics and so in the first pass we want
+[01:08:20] we want to compute K's cluster. We're
+[01:08:21] going to figure out what how to cluster
+[01:08:22] these guys into a lower dimensional
+[01:08:24] space uh that allows us to find things
+[01:08:26] that that are similar to each other. So
+[01:08:28] I'm just going to sequential scan
+[01:08:30] through the data and place clusters on a
+[01:08:33] again in a high dimensional space here.
+[01:08:35] Right? I'm showing two dimensions but in
+[01:08:37] actuality it would be much larger.
+[01:08:40] And I want to do this for all the other
+[01:08:42] all the other uh key embeddings I have
+[01:08:44] in my data set. So then now I'm going to
+[01:08:47] run my clustering algorithm that's going
+[01:08:48] to then generate a bunch of different
+[01:08:49] regions. And then for each cluster, I'm
+[01:08:51] going to compute the centrid, like
+[01:08:53] what's the central location that's
+[01:08:54] closest to to
+[01:08:57] to all the the points in in my cluster.
+[01:09:00] And then now once I have my my
+[01:09:02] centroidids, I'm going to build a and
+[01:09:03] basically an index inverted index that's
+[01:09:06] going to map these centrids to the
+[01:09:08] records that exist in in my cluster,
+[01:09:13] right? Because what's now what we'll do
+[01:09:15] is for a new embedding key that shows
+[01:09:17] up. I run it through or so you for new
+[01:09:20] key I want to do a look up on term I
+[01:09:21] want to look up for I I I run it through
+[01:09:23] my transformer I end up with again this
+[01:09:26] this fixed one dimensional array of
+[01:09:28] embeddings and then I run the c mean you
+[01:09:31] know I just compute where it exists in
+[01:09:33] high dimensional space what cluster it
+[01:09:34] exists in that's going to give me the
+[01:09:35] centroidid and then the mapping then
+[01:09:38] from the posting list is just going to
+[01:09:39] be the the records that are close to
+[01:09:42] this in in the space and somehow through
+[01:09:45] the embedding I I know these things are
+[01:09:47] similar to each other semantically
+[01:09:54] pretty pretty basic right the challenge
+[01:09:56] of course is how do you maintain this
+[01:09:57] right so if you if I insert a bunch of
+[01:10:00] new keys then that's going to put you
+[01:10:02] the clustering may get out of whack and
+[01:10:03] therefore my results may not be as
+[01:10:05] accurate so you can either do this in a
+[01:10:08] sort of partition manner like I like it
+[01:10:09] we did with uh lucine where you sort of
+[01:10:12] build that dictionary list once make
+[01:10:14] that immutable and then build another
+[01:10:15] one for new ones to come in and
+[01:10:16] occasionally and combine them and recmp
+[01:10:18] compute stuff. Right? The basic idea is
+[01:10:21] the same.
+[01:10:23] The alternative approach is to do uh do
+[01:10:26] a graph search and the idea here is that
+[01:10:29] we're going to build now a a graph of
+[01:10:31] our of our our of our embeddings again
+[01:10:34] in high dimensional space. And then for
+[01:10:37] each for each point in the high
+[01:10:39] dimensional space, we're compute the the
+[01:10:41] atmost and nearest neighbors and
+[01:10:43] maintain an edge between them. And this
+[01:10:45] edge is going to how we're going to
+[01:10:46] traverse along this this between the
+[01:10:49] different entries until we can narrow
+[01:10:51] down and find the the one that we think
+[01:10:52] is the best match for what we're
+[01:10:53] looking. So let's say that the embedding
+[01:10:56] we want to find is this search vector
+[01:10:58] here. Again, it's in my query. I run it
+[01:11:00] through my transformer. I get an
+[01:11:01] embedding and then it I plop it down in
+[01:11:03] my high dimensional space like this. And
+[01:11:05] so for this graph data structure, I
+[01:11:06] always have to have an entry point like
+[01:11:08] where can where am I allowed to start?
+[01:11:09] because I maintain a pointer something
+[01:11:12] somewhere that says how do I start doing
+[01:11:14] traversal into this. So at this first
+[01:11:16] location here I'm going to look at all
+[01:11:18] my neighbors that this this node is
+[01:11:20] connected to and for each of those I'm
+[01:11:22] just basically going to compute their
+[01:11:23] distance according to some some some
+[01:11:26] function of how close they are to my
+[01:11:29] search vector because I know what my
+[01:11:30] search vector is. So I know I know what
+[01:11:31] the location I want to get to but I'm
+[01:11:33] trying to find all the ones that are
+[01:11:34] that are close to it. So in this case
+[01:11:36] here it's this one at the top. So, we're
+[01:11:37] going to follow that pointer and then do
+[01:11:39] the same thing. Look at all the other
+[01:11:41] entries that I'm I'm connected to.
+[01:11:42] Figure out who's closer. Jump along to
+[01:11:44] this and then I land to the one that I
+[01:11:47] want.
+[01:11:50] Pretty cool. But again, think in
+[01:11:52] extremes. If I have uh you know trillion
+[01:11:55] records doing this this graph traversal
+[01:11:58] traversal is going to be expensive.
+[01:12:01] So the optimization people use is what's
+[01:12:03] called HNSW or hierarchal graphs or
+[01:12:05] hierarchal navigable small worlds where
+[01:12:08] you basically have multiple layers of
+[01:12:11] graphs and you start at the top and you
+[01:12:14] follow a bunch of these you follow the
+[01:12:16] traversals and a smaller subset of the
+[01:12:18] graph at the top and then when you
+[01:12:19] exhaust your search at the top level you
+[01:12:21] go down. So there's pointers going down
+[01:12:23] to the nodes below you.
+[01:12:27] What does it smell like? I think you
+[01:12:28] just said it. Skipless. Exactly right.
+[01:12:31] Same idea. When I when I build these, I
+[01:12:34] have I always have my graph at the
+[01:12:35] bottom. When I add the layers at the
+[01:12:37] top, I'll flip a coin, decide whether I
+[01:12:39] want to keep a node there or not. And
+[01:12:41] then I and then that way like as I
+[01:12:43] progressively go to the top the number
+[01:12:45] of nodes are smaller because I can do
+[01:12:48] that search more quickly and then narrow
+[01:12:50] down to the result that I want.
+[01:12:54] Right? A lot of stuff's not new even
+[01:12:56] though it's AI. They're borrowing ideas
+[01:12:58] from skip list from the 1990s.
+[01:13:01] Right? So again this is the search
+[01:13:03] vector I want. I start at the top level.
+[01:13:04] I enter enter my graph here. In this
+[01:13:07] case here I I only have one neighbor. I
+[01:13:08] know it's closer to than my starting
+[01:13:10] point. I want to traverse down. Come
+[01:13:12] down now to the second level, right? Do
+[01:13:14] the same thing. Look at all my
+[01:13:15] neighbors. See that this one at the
+[01:13:17] bottom is is closer. I go there and jump
+[01:13:19] to this one. Go there. Jump down here.
+[01:13:22] And then my search is done.
+[01:13:25] >> Yes.
+[01:13:29] >> Question. How do you store a graph a
+[01:13:30] graph representation in a relational
+[01:13:32] data system? Uh
+[01:13:35] you just have a table for nodes and then
+[01:13:37] you have a table as the dig matrix for
+[01:13:39] edges.
+[01:13:47] So question is so
+[01:13:51] there are so so he's sort of asking like
+[01:13:53] would I store this as a table you could
+[01:13:57] the vector index implementations do not
+[01:13:59] they would store this as a specialized
+[01:14:00] graph data structures
+[01:14:03] you're you're stepping on a landmine
+[01:14:05] here so I'm of the opinion that graph
+[01:14:07] databases are a bad idea and the better
+[01:14:09] way to store graph classes is in a
+[01:14:10] relational database system and there's a
+[01:14:12] bunch of algorithms that we won't cover
+[01:14:14] so much this class but there's there's
+[01:14:16] optimized algorithms to do graph
+[01:14:18] traversal very efficiently on relational
+[01:14:20] data whereas relational data people like
+[01:14:22] the Neo4j people they would say oh no
+[01:14:24] you want to store things as like node
+[01:14:26] and and and and edges explicitly and you
+[01:14:29] just sort of you follow those pointers
+[01:14:31] in your data structure when you want to
+[01:14:32] do graph traversals in a modern
+[01:14:35] relational data system that does a bunch
+[01:14:36] of these enhanced uh uh a fancy query
+[01:14:41] processing techniques. We'll talk a
+[01:14:42] little about them in a few weeks, but
+[01:14:44] you can rip through that GC matrix very
+[01:14:46] quickly. Think of like running through a
+[01:14:47] column store, but there's other tricks
+[01:14:49] you can do where you know if you're
+[01:14:50] traversing a graph, you can you can do
+[01:14:53] things more efficiently than you would
+[01:14:54] if it was regular tupils.
+[01:14:56] Then in SQL 2023 in the in the standard,
+[01:14:59] they added now property graph queries.
+[01:15:01] So now in SQL you can define graphs over
+[01:15:03] existing tables and you can do things
+[01:15:05] that look like cipher graph queries in
+[01:15:08] SQL directly because one of the things
+[01:15:10] that like the graph databases will do
+[01:15:11] better than than a relational data
+[01:15:12] system is if I'm doing node traversal
+[01:15:15] there's got to be logic to decide like
+[01:15:16] okay I'm at this node where do I go next
+[01:15:18] and if you just do that in the
+[01:15:19] application now you're going back and
+[01:15:20] forth between the the application the
+[01:15:22] client and a data server and a bunch of
+[01:15:23] network round trips whereas the graph
+[01:15:25] database guys have a single API say you
+[01:15:27] know traverse this graph and everything
+[01:15:28] runs on the server side when they added
+[01:15:30] property graph queries to SQL. Now you
+[01:15:32] can define that traversal logic all in
+[01:15:34] SQL. So there's no round trip.
+[01:15:35] Everything's done on the server side.
+[01:15:37] >> So database that
+[01:15:39] >> question is what data is implement that
+[01:15:42] only Oracle at this point. There's an
+[01:15:44] extensor for DTB to add property graphs.
+[01:15:46] Uh I don't think it made it mainline
+[01:15:48] branch, but there's a paper I'm happy to
+[01:15:50] share on piaza from like two years ago.
+[01:15:52] They mop the floor out of ductb crushes
+[01:15:54] like Neo4j and all these other systems
+[01:15:56] by adding some of these addition. They
+[01:15:57] don't add all the enhancements
+[01:16:00] but just some of them crush Neo and
+[01:16:02] Neoforj is a not a good system not sorry
+[01:16:04] let me face that Neoforj is a poorly
+[01:16:06] written system
+[01:16:08] as if that's better so yeah usually the
+[01:16:10] graph databases they'll they'll get if a
+[01:16:13] relational data system natively supports
+[01:16:14] graph uh and uh some of the uh query
+[01:16:18] passing techniques where you own graphs
+[01:16:20] they'll crush any graph database don't
+[01:16:23] use a graph database
+[01:16:24] >> yes
+[01:16:28] As a question, how is PG vector
+[01:16:30] implementing their data structure? So,
+[01:16:31] PG vector is the why they use extension
+[01:16:33] in Postgress that give you vector
+[01:16:35] search. They have both. They'll have
+[01:16:37] they started off the the inverted index,
+[01:16:39] the IBF flap uh and then they added HNSW
+[01:16:42] I think last year, right?
+[01:16:46] It's written by like one it was written
+[01:16:47] by one dude, right? He's just doing it
+[01:16:49] because he wanted to do it and then uh
+[01:16:51] the PG vector guy and then it's got a
+[01:16:53] lot of traction. I think Amazon's thrown
+[01:16:54] some time at like it's it's pretty it's
+[01:16:57] pretty good and for for for I don't know
+[01:17:00] 90% of the use cases it's probably good
+[01:17:02] enough for my people the in the same way
+[01:17:04] that like elastic search and Vespa and
+[01:17:07] and these other specialized full text
+[01:17:09] search database systems
+[01:17:12] they will have a uh more sophisticated
+[01:17:15] algorithms and data structures to do
+[01:17:17] inverted indexes than Postgress and
+[01:17:19] other relation data systems uh
+[01:17:24] the specialized vector databases like a
+[01:17:26] pine cone, like a weev8 and so forth,
+[01:17:27] they're going to have a bunch of
+[01:17:28] enhancements that like PG vector is
+[01:17:30] going to have, but for most people, PG
+[01:17:32] vector is probably been good enough.
+[01:17:35] >> Yes.
+[01:17:39] >> Yes. Question like what am I searching
+[01:17:41] here? It's nearest neighbors. I want to
+[01:17:42] find all the the depending on how many
+[01:17:45] nodes I want to get back, how many
+[01:17:46] entries I want to get back. I want to
+[01:17:47] find the what which vertices is the
+[01:17:49] closest to me.
+[01:17:51] that you have
+[01:17:54] >> all the points in the entire graph.
+[01:17:56] >> No, but like if if my my graph has a
+[01:18:01] billion nodes and I want the top 10, I I
+[01:18:04] would, you know, if I do this, I can
+[01:18:06] skip a bunch of the the rest of the
+[01:18:08] graph and jump, you know, get closer to
+[01:18:09] the location, land in the bottom part
+[01:18:11] here and then kind of expand out till I
+[01:18:15] find the 10 the 10. If I'm looking for
+[01:18:17] 10, find the 10 nodes that that match.
+[01:18:23] Okay.
+[01:18:25] All right. So, I missed this last class
+[01:18:26] and I but I do want to talk about
+[01:18:27] because I think it's just kind of cool.
+[01:18:28] I'm going to show you one last thing of
+[01:18:29] extra stuff you can do with indexes. So,
+[01:18:31] regardless of whether you're using
+[01:18:32] escape list, try whatever you want. Uh
+[01:18:35] there's some actually some cool things
+[01:18:36] you can add in in SQL to make your
+[01:18:39] indexes even better. So, the first one
+[01:18:41] is you can do what's called partial
+[01:18:42] indexes. So every single time when I
+[01:18:45] declared indexes before I would call you
+[01:18:46] know create create index on table
+[01:18:48] whatever and without a partial qualifier
+[01:18:52] it's going to build the index on the
+[01:18:54] entire all the tupils in in that in that
+[01:18:56] table but I can add a qualifier like
+[01:18:59] this like a wear clause in my create
+[01:19:01] index statement to then say only build
+[01:19:03] the indexes on the tupils that match
+[01:19:05] this.
+[01:19:07] So what this allows me to do is like
+[01:19:09] tricks like this where if now I have a
+[01:19:11] query like select B from fu where A
+[01:19:13] equals 1 23 and C equals Wuang I can
+[01:19:15] actually just take this first predicate
+[01:19:17] here look in the catalog and say oh this
+[01:19:20] this index I want is a qualifies this
+[01:19:22] and therefore now when I do my lookup on
+[01:19:25] a uh I don't need actually check the C2
+[01:19:29] C values because I know that if it's if
+[01:19:31] it's in this index it has to match that
+[01:19:33] that my wear clause. So it's an extra
+[01:19:35] check I I don't have to do I only have
+[01:19:37] to do it once in the catalog see whether
+[01:19:38] the the index matches for me.
+[01:19:40] Furthermore now my index is going to be
+[01:19:41] much smaller take less space in memory
+[01:19:44] uh and we be way more inefficient
+[01:19:46] because I'm throwing away a bunch of
+[01:19:48] stuff that I don't need. So typically
+[01:19:50] you see this in um people create
+[01:19:53] separate indexes for events that occur
+[01:19:55] like on a per month per year. So every
+[01:19:57] month you're going to create a new
+[01:19:57] index. is when I want to look up all the
+[01:19:59] events that happened, what what are the
+[01:20:01] all the orders that that occurred in the
+[01:20:02] month of September, I'll have an um I'll
+[01:20:04] have my September 25 index and that's a
+[01:20:06] fast look up to go get that. So that's
+[01:20:08] super cool.
+[01:20:10] The other thing you can do is call it
+[01:20:11] include columns.
+[01:20:14] So again when we talked about uh storing
+[01:20:16] data in indexes uh again whether it's B
+[01:20:19] plus whatever you want like all the
+[01:20:20] attributes whatever defined as the key
+[01:20:22] they're going to be stored within the
+[01:20:25] within all the the nodes in in the data
+[01:20:28] structure but I can add this include
+[01:20:30] qualifier where I say this is not what
+[01:20:33] the key is based on. So in this case
+[01:20:35] here the key is still based on A and B
+[01:20:36] but in the leaf nodes I'm in the B+ tree
+[01:20:39] I'll throw in C. So now if I have
+[01:20:42] queries like this same before selects
+[01:20:43] you know selects uh B from fu where A
+[01:20:46] equals 1 2 3 and C equals Wuang the B
+[01:20:49] and A part I'm going to get from the
+[01:20:50] index and then when I get to the leaf
+[01:20:53] node then I just check the the the C C
+[01:20:56] attribute and if it matches then
+[01:21:00] actually in this case here I'm done. I
+[01:21:02] actually don't even need to look at the
+[01:21:03] original tupil because it's called a
+[01:21:05] covering index. Everything I need for
+[01:21:06] this query is in the index. I didn't
+[01:21:07] have to go look at the original tupil or
+[01:21:09] if it doesn't match on the wuang then I
+[01:21:11] know don't follow pointer anyway
+[01:21:14] right so again this is called a covering
+[01:21:17] index or called index only scans this is
+[01:21:20] a huge win if you're not storing an
+[01:21:21] index organized table of your table
+[01:21:22] heaps if you can pack a bunch of crap in
+[01:21:24] the leaf nodes you know you obviously
+[01:21:26] don't want to put the entire table then
+[01:21:28] all my queries just touch indexes and I
+[01:21:30] never go look at the original tables and
+[01:21:32] that's much much faster
+[01:21:34] all right again I just think it's kind
+[01:21:36] of cool I think you guys be aware of it
+[01:21:37] that you can do this extra stuff and
+[01:21:38] Postgress and Postgress can do this and
+[01:21:41] all the enterprise systems can do this.
+[01:21:42] So when Postgress says they're the best
+[01:21:43] open source enterprise data system, it's
+[01:21:45] because they have a bunch of these extra
+[01:21:46] features that like my SQL and others
+[01:21:48] don't have. Okay, so as I said we we
+[01:21:51] went through a lot again this this is a
+[01:21:53] a buffet of cool data structures for
+[01:21:55] databases. We'll see filters again when
+[01:21:57] we talk about joins. B+ trees are still
+[01:22:00] going to be default choice for indexes.
+[01:22:02] We if you love inverted indexes there's
+[01:22:04] a whole course on this in LTI and then
+[01:22:06] there's a whole another data structure
+[01:22:07] we didn't talk about called R trees or
+[01:22:09] Katy trees uh where think of them as
+[01:22:12] like lowdimensional vector indexes like
+[01:22:15] if I want to like bounding boxes with
+[01:22:18] within like geospatial stuff like find
+[01:22:19] me all the what's the bounding region of
+[01:22:21] of of zip code 15217 I could represent
+[01:22:25] this in one of these data structures
+[01:22:27] there's a whole another course on that
+[01:22:28] from 15826 I don't know how often that's
+[01:22:30] taught that they cover those
+[01:22:32] All right. So, next class we will break
+[01:22:35] the assumption that we had so far is
+[01:22:37] that all our data structures are single
+[01:22:38] threaded. We will make them
+[01:22:40] multi-threaded and talk about how to
+[01:22:41] make them thread safe. Okay. Project two
+[01:22:44] or project one is due this Sunday. Make
+[01:22:46] sure you do that. And then office hours
+[01:22:48] are on Saturday. Okay. Hit it.
+[01:22:57] >> [music]
+[01:22:58] >> Flips over
+[01:23:03] [music]
+[01:23:09] [music]
+[01:23:12] the fortune maintain
+[01:23:17] [music] flow with the brain. Get the
+[01:23:20] maintain flow [music] with
+[01:23:23] the brain.

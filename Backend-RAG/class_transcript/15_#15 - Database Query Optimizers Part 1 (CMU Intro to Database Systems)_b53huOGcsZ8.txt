@@ -1,0 +1,2214 @@
+[00:00:00] [music]
+[00:00:06] [music] I'm still
+[00:00:08] ass.
+[00:00:12] [music]
+[00:00:17] [music]
+[00:00:24] Let's get started. Round of applause for
+[00:00:27] DJ CASH HERE.
+[00:00:30] YOU HAVE A GOOD WEEKEND?
+[00:00:31] >> YEP. Did you?
+[00:00:32] >> Did you make any money?
+[00:00:34] >> I made a lot of money.
+[00:00:34] >> That's what I Okay, good to hear. Good
+[00:00:36] to hear. All right, guys. Uh for you in
+[00:00:38] the class, lot lot to cover, a lot to
+[00:00:40] lot to go over. Um again, on the the
+[00:00:43] docket for you again, the hopefully
+[00:00:45] everyone's well rested after getting
+[00:00:47] project two uh completed last night. Um
+[00:00:50] midterm exam again still available. My
+[00:00:52] office hours on Wednesdays. Come take a
+[00:00:53] look. Uh and if you want things
+[00:00:55] regraded, take you take a photo and send
+[00:00:56] it to me. Homework 4 will be due this
+[00:00:58] Sunday coming up on November 2nd. And
+[00:01:00] then project three that came out last
+[00:01:02] week that'll be due uh in November 16th.
+[00:01:05] And the recitation for for that will be
+[00:01:07] tomorrow night at 8:00m on on Zoom and
+[00:01:10] it's been posted on Piaza for this. All
+[00:01:13] right. Any questions about homework four
+[00:01:15] or project three?
+[00:01:17] >> Yes.
+[00:01:19] >> Which column is?
+[00:01:22] >> The question is what column is the
+[00:01:24] leaderboard graded by? Uh, it should be
+[00:01:26] the one on the far right. The last one.
+[00:01:28] Yeah. If you like it doesn't rank that
+[00:01:31] by default, you click it like twice and
+[00:01:32] it'll rank it.
+[00:01:34] >> Yep.
+[00:01:35] Other questions.
+[00:01:38] All right. And again, if you can't get
+[00:01:40] over databases today after class, we'll
+[00:01:43] have the another seminar speaker. This
+[00:01:45] will be the same guy that came gave a
+[00:01:47] talk in class about single store. I
+[00:01:49] think the that day single store got
+[00:01:52] acquired by the private equity. So this
+[00:01:53] is post private equity ac acquisition
+[00:01:54] for those guys. Um so he's giving a talk
+[00:01:56] to us at 4:30 after this class. Uh and a
+[00:01:59] week from now we'll have a CMU alumni,
+[00:02:01] distinguished alumni, uh Ryan Johnson
+[00:02:04] who did his PhD here before I came to
+[00:02:05] CMU. Um did his PhD in databases and now
+[00:02:08] he's at data bricks working on Delta
+[00:02:10] Lake. So he'll come talk about uh what
+[00:02:12] Delta Lake does. It's in the same sort
+[00:02:14] of family as the iceberg hoodie or uh
+[00:02:17] hoodie stuff that we talked about so far
+[00:02:18] in Duck Lake. Um and then next week on
+[00:02:22] Tuesday at the regular data script
+[00:02:24] meeting on on um uh at noon we have
+[00:02:27] somebody from Uber calling in to give a
+[00:02:29] talk about how they they how Uber uses
+[00:02:31] Apache Pino. Okay.
+[00:02:35] All right. So [snorts] last class all
+[00:02:38] last week we were talking about how we
+[00:02:41] are going to build the data systems
+[00:02:43] runtime component the query engine the
+[00:02:46] execution engine to execute queries. In
+[00:02:48] last class in particular, we talked
+[00:02:49] about how we want to design the system
+[00:02:51] to support parallel queries. We talk
+[00:02:53] about these exchange operators,
+[00:02:55] essentially these ways to coales results
+[00:02:58] from multiple workers running at the
+[00:02:59] same time uh that are working on
+[00:03:01] different parts of a data set or
+[00:03:03] different parts of a query plan at the
+[00:03:05] same time and we put them all together
+[00:03:07] and produce a final result. And so the
+[00:03:09] key thing that we were talking about
+[00:03:10] during this process was that how there
+[00:03:12] was there's this query plan that was
+[00:03:14] being generated. We didn't say how, but
+[00:03:16] if there's this query plan that had
+[00:03:17] these physical operators that were
+[00:03:19] defining how we were going to access
+[00:03:21] tables, how we going to compute joins
+[00:03:23] and, you know, do any of the other
+[00:03:24] algorithms we talked about so far. And
+[00:03:26] so we've been been very hand wavy
+[00:03:28] throughout the entire semester about
+[00:03:30] okay, how do we get one of these query
+[00:03:31] plans? And so that's what today is all
+[00:03:34] about and for for this week, right? How
+[00:03:36] do we take a SQL query uh from from an
+[00:03:39] application or from some from somebody
+[00:03:41] who wants to run a query and how do we
+[00:03:43] produce that into a query plan that we
+[00:03:45] can then execute using all the
+[00:03:47] components in our system that we've
+[00:03:49] designed so far and obviously I'm going
+[00:03:50] to focus on SQL because that's the
+[00:03:52] default default language or de facto
+[00:03:54] standard for uh querying tables and
+[00:03:56] relational model that the the same
+[00:03:59] concepts and techniques that I'll be
+[00:04:00] talking about today are applicable for
+[00:04:02] whatever other query language uh you may
+[00:04:04] want to use All right.
+[00:04:07] All right. So again, the high level path
+[00:04:09] of where we're going through now is that
+[00:04:11] we have our application that you know is
+[00:04:13] written in PHP, Java, ROSS, whatever, it
+[00:04:15] doesn't matter. And they're going to
+[00:04:17] connect to our database system uh and
+[00:04:19] they're going to send us a SQL query.
+[00:04:20] And the first step along this process is
+[00:04:22] that we have to parse the SQL query,
+[00:04:24] right? You know, classic compiler class,
+[00:04:27] uh you know, pick your favorite uh
+[00:04:30] parsing library or tokenizer, whatever.
+[00:04:32] like we'll we'll parse the tokens and
+[00:04:34] we'll generate what's called an abstract
+[00:04:36] syntax tree which is just a a tree duct
+[00:04:39] structure that's going to say things
+[00:04:40] like there is a scan on on some table
+[00:04:44] that has a name right there's all a
+[00:04:46] bunch of strings that's that's defined
+[00:04:48] in within the SQL query [snorts] so then
+[00:04:50] this abstract syntax tree is passed into
+[00:04:52] a a binder and that's responsible for
+[00:04:56] now resolving all those string
+[00:04:59] identifiers that are in our SQL query
+[00:05:00] like table names column names
+[00:05:02] things like that or function names of
+[00:05:04] course, right? And it's going to consult
+[00:05:06] the catalog that's going to have all
+[00:05:08] this information about what these
+[00:05:10] different database objects we have in
+[00:05:11] our system. And it's basically going to
+[00:05:13] do this mapping from a name to an
+[00:05:15] internal ID like an object ID. In
+[00:05:17] Postgress, they're called oids. Right.
+[00:05:20] Right. And we have to do this because if
+[00:05:21] someone says select star from table blah
+[00:05:23] and we don't have a table blah, we want
+[00:05:25] to throw an error. Right. And so that's
+[00:05:26] the binder is responsible for doing
+[00:05:28] that. Binders are super complicated
+[00:05:31] because it's it's easy if it's like
+[00:05:32] select star from table foo, right?
+[00:05:34] That's easy. It's when you start having
+[00:05:36] nested queries and duplicate names or
+[00:05:38] joins on the on on the joining the same
+[00:05:41] table with itself. That's when the
+[00:05:43] binder gets kind of nasty. Uh you know,
+[00:05:46] we could spend a whole semester on this
+[00:05:47] or not, but just assume that something
+[00:05:49] knows how to take string tokens for
+[00:05:51] table name objects or column names and
+[00:05:53] map it to an internal ID. And then that
+[00:05:54] at that point we know like the type or
+[00:05:56] the schema or whatever the thing that
+[00:05:58] they're accessing.
+[00:05:59] And then once we do this binding, now we
+[00:06:02] have what is called a logical plan. So
+[00:06:04] now we have something that says I want
+[00:06:05] to access table foo and I want to do an
+[00:06:08] aggregation on it. I want to do a
+[00:06:09] sorting on this column. Right? It's a
+[00:06:11] high level definition of what the query
+[00:06:14] wants to do without defining exactly how
+[00:06:17] to do it or how to actually execute it.
+[00:06:19] And then we take that logical plan pass
+[00:06:21] it into our optimizer and this is now
+[00:06:23] responsible for looking at the schema to
+[00:06:25] figure out what are the objects that
+[00:06:27] this thing is trying to access.
+[00:06:28] Consulting a cost model says all right
+[00:06:30] for these different options that I have
+[00:06:32] to execute this query which one is
+[00:06:33] actually better and this cost model
+[00:06:35] could be fed using statistics that that
+[00:06:37] I've collected in the catalog could have
+[00:06:39] its own magic constants in them uh to
+[00:06:42] define how you know whether scan is
+[00:06:44] faster or spectral scan is faster than
+[00:06:45] the index scan or whatever right there's
+[00:06:47] some the cost model allowed it to judge
+[00:06:49] whether one plan is going to be better
+[00:06:50] than another given a bunch of
+[00:06:52] alternatives and then voila the opart
+[00:06:54] says okay well I here's you know I
+[00:06:56] crunch on this here's the best physical
+[00:06:58] plan that I could find for this query
+[00:07:01] and then we can then pass that off now
+[00:07:02] to the query engine we just discussed
+[00:07:04] last class to go ahead and schedule this
+[00:07:06] for execution.
+[00:07:08] So today's class we're going to focus on
+[00:07:09] this the optimizer box here. Next class
+[00:07:12] we'll focus on the cost model box up
+[00:07:14] above and obviously it's semiotic. You
+[00:07:16] need one you don't the optimizer doesn't
+[00:07:19] always need a cost model but a lot of
+[00:07:20] the methods we'll talk about today do uh
+[00:07:22] but you need some way to say this is
+[00:07:24] actually better. You know, ideally you
+[00:07:26] want to be able to say this alternate
+[00:07:27] plan is better than another plan,
+[00:07:30] right? So this is the path we're going
+[00:07:32] on and we're focusing on the optimizer
+[00:07:34] piece and the cost model. Like I said,
+[00:07:36] the binder and parser, it's just a bunch
+[00:07:38] of engineering. It's it's it's painful,
+[00:07:41] especially the binder, but you know, we
+[00:07:43] we can use stuff off the shelf if
+[00:07:45] necessary. [snorts]
+[00:07:47] All right, so let's look at an example
+[00:07:48] of what we're trying to, you know, look
+[00:07:50] at actually a query and see how we're
+[00:07:51] going to do this. So say we have now a
+[00:07:54] simple query like this. We're doing a
+[00:07:56] join against the employee table with the
+[00:07:58] department table. We're going to find
+[00:07:59] everyone who's in the toy department and
+[00:08:02] we want to get the their the all the
+[00:08:04] unique names. All right. And say that in
+[00:08:07] our data system we also have this
+[00:08:09] catalog that keeps track of all the
+[00:08:11] different uh tables that I have. What
+[00:08:13] are their primary keys? What indexes do
+[00:08:15] I have? And whether they're clustered or
+[00:08:17] uncclustered on on those keys. And then
+[00:08:20] I'll have some basic information that
+[00:08:21] says I have in the case of the the
+[00:08:23] employee table I have 10,000 tuples or
+[00:08:25] 10,000 records split across a thousand
+[00:08:27] pages and for department there's 500
+[00:08:29] records split across 50 pages right this
+[00:08:33] is like kind of the bare min well the
+[00:08:34] bare minimum is you have nothing right
+[00:08:36] but that's more the lakehouse data lake
+[00:08:39] stuff we can ignore that but this is the
+[00:08:40] bare minimum you need you obviously need
+[00:08:42] to know the schema because you need to
+[00:08:43] know what what you if the query says I
+[00:08:45] want to read table employee that what
+[00:08:47] the schema actually is
+[00:08:49] Not always, but for our class here, we
+[00:08:51] assume that's the case. Um, and then we
+[00:08:53] need to know obviously what indexes we
+[00:08:54] have available to us. So, if you just
+[00:08:56] sort of take a almost a little little
+[00:08:59] transcription or or mapping of the SQL
+[00:09:02] query and convert it to relational
+[00:09:04] algebra, you end up with something like
+[00:09:06] this, right? You have scans on employee
+[00:09:08] and department. Now, I'm going to do a
+[00:09:10] cross join and then everything that I
+[00:09:12] have in either my wear clause, my on
+[00:09:13] clause, right? Those are just filters.
+[00:09:15] And then I have the the projection at
+[00:09:17] the top. Right? So let's say we build a
+[00:09:21] a sort of a naive implementation of a
+[00:09:23] database system. And at the leaf nodes
+[00:09:26] of this query plan, we're going to do uh
+[00:09:29] we're going to do going to read the
+[00:09:31] employee table all 5,000 records. And
+[00:09:35] then we're going to read the the rights
+[00:09:36] table all uh you know all 500 records.
+[00:09:40] And then what we're going to do is when
+[00:09:42] we do the uh we're just we're just going
+[00:09:45] to scan them in and write them out to
+[00:09:46] like a temp file like something really
+[00:09:49] really basic. And then now once we have
+[00:09:51] all that data prepared we can then do
+[00:09:53] the join. Sorry after we do the
+[00:09:55] cartisian join or cartian product then
+[00:09:57] we now start doing the filtering. So
+[00:09:59] again this is just bottom here we're
+[00:10:00] just matching up all the tuples
+[00:10:01] employees all the pupils of the
+[00:10:03] department. Then we now we do the filter
+[00:10:05] to start throwing away tubables where
+[00:10:06] that aren't uh where there isn't a match
+[00:10:09] on the department ID and the employee
+[00:10:11] department ID. And same thing now we're
+[00:10:13] going to suck in all the the the the
+[00:10:16] tuples we wrote out in temp table temp
+[00:10:18] file one read those back in and then
+[00:10:20] produce a new temp file two t2 that has
+[00:10:24] the result of this join. We then pass
+[00:10:26] this up to the next filter operator.
+[00:10:28] read all the data in, do the filter,
+[00:10:30] write it all out, and then we end up
+[00:10:32] with our final projection at the top. We
+[00:10:34] do four reads in, one right out to
+[00:10:36] produce the final result. So for this
+[00:10:38] naive plan, because you know, you never
+[00:10:40] want to do a cross join, right? If we
+[00:10:43] just execute almost again a literal
+[00:10:44] translation of what the SQL query
+[00:10:46] defines for us, right? Map it to
+[00:10:48] relation algebra, we we're doing two
+[00:10:49] million IO's. But we can start doing all
+[00:10:52] the tricks we talked about throughout
+[00:10:53] the entire semester to reduce this, you
+[00:10:56] know, reduce the amount of IO we're
+[00:10:57] doing by just being more uh more
+[00:11:00] intelligent or more more uh efficient in
+[00:11:03] the operators we're going to choose when
+[00:11:04] we execute this query. So for example,
+[00:11:07] if I get rid of that cross join and now
+[00:11:09] I do an inner join. So as I'm as I'm
+[00:11:12] scanning the table, I can just do the
+[00:11:14] join rather than having to materialize
+[00:11:15] everything out on the cross join. Right?
+[00:11:17] And now I got to start making a decision
+[00:11:19] what my joint algorithm should be. So if
+[00:11:21] I just do like a block nestloop join or
+[00:11:23] page nestloop join, I'm still going to
+[00:11:25] write things out to a temp file. But now
+[00:11:27] I I'm not writing out the cross productd
+[00:11:29] of all combinations of all tuples from
+[00:11:31] the left and the right side. I'm
+[00:11:32] actually doing the the matching as I'm
+[00:11:35] going along. And then now when I when I
+[00:11:37] in the next phase when I do this
+[00:11:39] additional filter here to throw anybody
+[00:11:41] that's not in the toy department, right,
+[00:11:44] I'm reading less data in and now again
+[00:11:46] writing the same same amount of data
+[00:11:48] out. And so the end projection is still
+[00:11:50] the same. So now we got it down to
+[00:11:52] 54,000 IO's from 2 million,
+[00:11:55] right? By choosing a better plan.
+[00:11:59] Can we do better?
+[00:12:01] Of course, right? It's all the tricks
+[00:12:02] that that we we we learned throughout
+[00:12:04] the entire semester, right? So if I just
+[00:12:07] take this and I replace the the nested
+[00:12:09] loop join with a sort merge join, right?
+[00:12:12] Assuming I have 50 buffers, I can now
+[00:12:14] write out less data for for this phase.
+[00:12:18] uh and I again reduce the total amount I
+[00:12:21] owed even further. Now we can get it
+[00:12:22] down to uh 7,000. But again in this
+[00:12:26] example here because I'm taking all the
+[00:12:27] results of the scan from this and this
+[00:12:30] and the join and then writing it out all
+[00:12:32] the tupils out to a file and then once
+[00:12:34] that that file is written then start the
+[00:12:36] next operator to read it all back in.
+[00:12:38] That's the materialization model that we
+[00:12:39] talked about last class which you said
+[00:12:40] is very inefficient if you're reading a
+[00:12:42] lot of data or passing a lot of data
+[00:12:44] from one operator to the next, right?
+[00:12:46] Because there's no pipelining of this.
+[00:12:47] So, if we switch to the vectorzation
+[00:12:49] model, we can get rid of all of these
+[00:12:51] additional writes and reads back in for
+[00:12:53] these for these temp files and just
+[00:12:55] pipeline all the tupils up and now we
+[00:12:57] get it down to 3,000 IO's.
+[00:13:00] Can we do even better than this?
+[00:13:04] >> Yeah, push down filter. There's one more
+[00:13:05] optimization we can do.
+[00:13:09] remember the joins we said that the you
+[00:13:12] know it matters whether the the largest
+[00:13:14] tables on the on the right hand side or
+[00:13:16] the lefth hand side. So in this case
+[00:13:18] here we can do what he proposed push
+[00:13:20] down the the filter and now swap the
+[00:13:22] order of the employees table and
+[00:13:23] department table right and push push
+[00:13:26] down the the filter below the join like
+[00:13:30] this right and now the query is is going
+[00:13:33] to be even more efficient. Now we can
+[00:13:34] get it down to just three reads and one
+[00:13:37] right uh because we can do an index
+[00:13:38] lookup on the name. Then we do an index
+[00:13:40] and nestla loop join instead of the sort
+[00:13:41] merge join and now we're only reading
+[00:13:44] you know 37 IO's or doing 37 IO's for
+[00:13:46] this one query.
+[00:13:52] The question is so the question is how
+[00:13:53] do I decide which one to be on the left
+[00:13:55] or the right in this example here
+[00:13:57] because I had index on the department
+[00:13:59] name you would and you could then do and
+[00:14:02] you know there's only 500 records I mean
+[00:14:05] handwaving how we determine the um the
+[00:14:08] selectivity of this this predicate here
+[00:14:10] that's next class but you would look and
+[00:14:12] say all right well I only have 500
+[00:14:14] records and there's 100 departments so
+[00:14:16] therefore or you know and and I have
+[00:14:19] some distribution information to say
+[00:14:20] like you know it's not one department
+[00:14:21] has everybody then I know I would want
+[00:14:23] to choose this index right because now I
+[00:14:25] can just do the just go get the you know
+[00:14:28] the small number of tuples that are
+[00:14:29] coming out of this and then now when I
+[00:14:31] do my join it's it's way more efficient
+[00:14:33] because now it's probing the other side
+[00:14:38] >> what's that
+[00:14:42] question do I need additional IO to go
+[00:14:44] fetch statistics yes I'm ignoring
+[00:14:48] Right. It it'd be typically that that
+[00:14:51] would stay in memory because it's much
+[00:14:52] smaller than the actual data.
+[00:14:55] The way you actually implement that in a
+[00:14:57] like you would actually implement the
+[00:14:58] statistics as just another table. So
+[00:15:00] yeah, there is IO there's locking and
+[00:15:02] stuff which I haven't talked about
+[00:15:03] that's next week. Like there is
+[00:15:05] additional overhead of going and getting
+[00:15:06] those statistics but like for our
+[00:15:09] purposes here we're ignoring all that.
+[00:15:15] All right. So we can kind of see we did
+[00:15:17] a couple things here. We did a bunch of
+[00:15:18] optimizations where we moved things
+[00:15:19] down. We changed the the physical
+[00:15:21] ordering of of different operations. We
+[00:15:24] changed the order of like whether
+[00:15:25] department employees on the right or
+[00:15:26] left hand side of the join, right? We so
+[00:15:30] there's a bunch of these tricks here and
+[00:15:31] this is what the optimization is going
+[00:15:32] to do. So anytime you open up like SQL
+[00:15:34] light or duct db or postgquest from your
+[00:15:36] terminal and you write a SQL query in
+[00:15:38] it, it's going to run some some
+[00:15:40] variation of these algorithms we'll talk
+[00:15:41] about today to produce a a physical plan
+[00:15:44] that it actually can execute. Then it
+[00:15:46] runs your query,
+[00:15:48] right? It's doing this in real time as
+[00:15:49] as you know as you hit enter and run run
+[00:15:51] a query for like in case of homework
+[00:15:53] one. So like it's going to spend you
+[00:15:54] know the query is going to run say for
+[00:15:56] like 10 milliseconds. It'll spend maybe
+[00:15:58] a millisecond for simple queries to run
+[00:16:00] all this optimization stuff then produce
+[00:16:02] a result and it's as a human appears
+[00:16:04] almost instantaneous.
+[00:16:06] For more complex queries it's not
+[00:16:09] instantaneous and you know there's we'll
+[00:16:10] talk about how we decide when to
+[00:16:12] terminate. But this is all going to
+[00:16:13] happen like it when you hit enter or
+[00:16:14] when you set up a query data is going to
+[00:16:16] do all this and then run the query which
+[00:16:18] to me I find fascinating.
+[00:16:21] All right. So today we're going to talk
+[00:16:22] about the background of query
+[00:16:23] optimization cover a little bit more
+[00:16:24] detail than what we talked about so far.
+[00:16:26] Then we'll spend time talking about how
+[00:16:27] we're going to do transformations or
+[00:16:28] numerations of the different possible
+[00:16:30] query alternatives or query plan
+[00:16:31] alternatives we have for uh for you know
+[00:16:33] for a given query. Then we'll talk about
+[00:16:35] the sort of the two basic categories of
+[00:16:38] high level categories for query
+[00:16:39] optimization. There's heristics and
+[00:16:40] rulebased where you're applying the
+[00:16:42] transformation rules without a cost
+[00:16:43] model. Uh and then there'll be the
+[00:16:45] costbased search and there'll be two
+[00:16:47] variations of that. So most systems when
+[00:16:50] they most new database systems when they
+[00:16:52] first time they come online they'll
+[00:16:53] build a heristic based rule based
+[00:16:55] optimizer and then later on they'll get
+[00:16:57] more sophisticated either you know as
+[00:16:59] the project grows and becomes more
+[00:17:00] popular then they'll switch over to a
+[00:17:02] call space one [snorts]
+[00:17:04] right but you need you sort of need the
+[00:17:05] the the rules first to do the call space
+[00:17:08] we'll see why as we go along
+[00:17:11] all right so what are we doing here at a
+[00:17:12] high level so again given a query's
+[00:17:15] logical plan that we get from the binder
+[00:17:17] because it's mapped the names of tables
+[00:17:19] and columns to actual object identifiers
+[00:17:22] in the catalog. The optimizer is
+[00:17:24] responsible for generating a bunch of
+[00:17:26] different alternative plans to execute
+[00:17:29] and those alternatives could be at least
+[00:17:31] initially could be other logical plans.
+[00:17:33] But in the end, we got to produce a a a
+[00:17:35] physical execution plan that our engine
+[00:17:37] can actually run. Right? So now I don't
+[00:17:39] have to say I want to join table A and
+[00:17:40] table B. I have to know like I'm going
+[00:17:42] to do a hash join on table E A and B or
+[00:17:44] I'm going to do a sort merge on table A
+[00:17:45] and B. But that's the physical plan. I I
+[00:17:47] need to know what that is in order to
+[00:17:49] actually execute anything. And the key
+[00:17:51] thing is that we when whenever we
+[00:17:53] generate these alternate plans, it's
+[00:17:55] absolutely critical that whatever our
+[00:17:57] plan we generate is equivalent to
+[00:18:00] whatever the original query was or
+[00:18:01] whatever the original logical plan that
+[00:18:03] we were given, right? It doesn't matter
+[00:18:04] that we produce a really fast plan if it
+[00:18:07] produces incorrect results because you
+[00:18:09] know what's the whole point of doing any
+[00:18:11] optimization? Like I might as well just
+[00:18:12] return one or null, right? If no one's
+[00:18:15] going to care. So we'll see as we go
+[00:18:17] along these transformation rules that
+[00:18:18] we'll talk about, you know, they're
+[00:18:20] going to be set up so that when I change
+[00:18:22] when I, you know, when I permute the
+[00:18:24] plan and start making changes to things,
+[00:18:26] I I need I have to be guaranteed that
+[00:18:28] the the output of that transformation
+[00:18:31] process is is a plan that's still
+[00:18:32] correct.
+[00:18:34] So this would be very complicated to do.
+[00:18:36] It's just picking the right join order.
+[00:18:38] Uh the join the joins for for a for a
+[00:18:40] query plan is shown to be np hard,
+[00:18:43] right? So, so the search space for our
+[00:18:45] our the possible queries that we may
+[00:18:47] have to to deal with is quite large.
+[00:18:49] Now, most queries aren't joining a lot
+[00:18:51] of tables. Most are joining one table.
+[00:18:53] Sorry, most queries don't have joins.
+[00:18:55] And then the probably the second most
+[00:18:57] common query is have having two joins,
+[00:18:58] but it's a long tail where people do a
+[00:19:00] lot of weird stuff and we we have to be
+[00:19:02] able to handle that. The largest number
+[00:19:04] of joins I've I've I've come across in a
+[00:19:07] in a database is 1500. And this is
+[00:19:10] obviously not a query written by humans.
+[00:19:11] This is something from a dashboard.
+[00:19:12] someone clicking a bunch of buttons to
+[00:19:14] do a bunch of things. But like you have
+[00:19:15] to do a join on 1500 tables, you know,
+[00:19:18] and and our our solution space is
+[00:19:20] exponential. We have to start making a
+[00:19:22] bunch of decisions how to how to prune
+[00:19:24] prune this down.
+[00:19:26] How to figure out whether one plan is
+[00:19:27] better than another as we look at these
+[00:19:29] alternatives. That'll be the cost model
+[00:19:30] and that we'll cover next week, right?
+[00:19:33] And then an ideal scenario is that no
+[00:19:36] matter how bizarre someone writes a
+[00:19:39] query plan and this especially matters
+[00:19:41] now with or sorry not not a query plan
+[00:19:43] how no matter how bizarre someone writes
+[00:19:44] a SQL query and this matters now with
+[00:19:46] LLMs because LM are spitting out stuff
+[00:19:48] all the time right no matter how bizarre
+[00:19:50] it actually is no matter what weird
+[00:19:52] things they're doing ideally the
+[00:19:54] optimizer should be able to produce a
+[00:19:56] good plan a good a good optimal plan
+[00:19:59] we'll see some cases where that's that's
+[00:20:00] not always true uh when we open up
+[00:20:02] Postgress and other systems uh for thing
+[00:20:04] for things as humans you think that
+[00:20:05] should be obvious in other cases it's
+[00:20:07] it's not always
+[00:20:10] all right so I think we've already
+[00:20:11] covered this but logical and physical
+[00:20:12] plan logic plan again it's just
+[00:20:13] describing at a high level what I want
+[00:20:16] my operator to be in a query plan I want
+[00:20:18] to join table A and B I'm not saying how
+[00:20:21] to join it just saying I want to join
+[00:20:22] them and then the physical operators
+[00:20:25] will be a the the actual implementation
+[00:20:27] details of how to actually execute that
+[00:20:30] equivalent logical operator like I want
+[00:20:31] to do a hash joint on a table A and B. I
+[00:20:33] want to sort merge A and B. And as I'm
+[00:20:35] doing my transformations to convert
+[00:20:38] logical operators to physical operators,
+[00:20:40] it isn't always going to be a one to one
+[00:20:42] mapping. Meaning like a like a logical
+[00:20:45] join operator might not always produce
+[00:20:47] when I do my transformation a single
+[00:20:49] equivalent physical join operator. In
+[00:20:52] some cases, I I'll break it up. In other
+[00:20:54] cases, I I can retract them. And I'm the
+[00:20:56] the data system is free to move things
+[00:20:57] around. the operator is free to move
+[00:20:58] things around if it thinks it's going to
+[00:21:00] make a difference about producing a
+[00:21:02] better query plan.
+[00:21:05] There's other things we'll care about in
+[00:21:06] a second or maybe end of this lecture
+[00:21:08] like I also need to keep track of like
+[00:21:11] for each operator how what does the data
+[00:21:13] look like that they're producing. Most
+[00:21:15] obvious thing is the sort order. So if I
+[00:21:18] know I need my output to be sorted I
+[00:21:20] want to keep track of like what operator
+[00:21:21] is going to be is is going to be my is
+[00:21:23] going to produce the data in that sorted
+[00:21:24] order because it might be the sort merge
+[00:21:26] join operator. might be the order by
+[00:21:28] operator or the data might already be
+[00:21:30] sorted or coming from an index, right?
+[00:21:32] So you keep track of some of these
+[00:21:33] physical properties in your query uh
+[00:21:35] optimizer so that when you're doing
+[00:21:37] these transformations, you know that
+[00:21:38] data is coming out in the right form
+[00:21:39] that you would need or that one operator
+[00:21:41] may need. [snorts]
+[00:21:46] It's also worth mentioning too that
+[00:21:47] we're only going to focus on doing query
+[00:21:49] optimization at one query at a time. So
+[00:21:51] we're going to treat every query as if
+[00:21:53] it's, you know, on an island by itself.
+[00:21:55] We're not worried about other queries
+[00:21:57] running at the same time. We'll get a
+[00:21:58] little bit we can talk a little about
+[00:22:00] that that in the cost model. Uh that's
+[00:22:02] mostly determining you know is one query
+[00:22:04] going to interfere with another and that
+[00:22:05] changes the expected cost of certain
+[00:22:07] operators. But nearly all systems I
+[00:22:11] can't think of anybody outside of
+[00:22:13] research that does this. Yeah, pretty
+[00:22:14] much every system you can think of takes
+[00:22:16] a se one SQL query in and produces one
+[00:22:18] query plan for it. Right. It's not going
+[00:22:21] to take. You could also take multiple
+[00:22:23] queries in and either figure out how to
+[00:22:26] overlap them so you can run them at the
+[00:22:27] same time or be aware that one query
+[00:22:30] could be producing results that another
+[00:22:32] query could read similar to the scan
+[00:22:33] sharing that stuff that we talked about
+[00:22:35] before. But no, no system actually does
+[00:22:37] this because you don't most people don't
+[00:22:38] write programs that way where you say
+[00:22:40] here's all the queries I'm going to
+[00:22:40] execute ahead of time and in this order.
+[00:22:43] DBT does that which we talked about at
+[00:22:45] the beginning of the semester where you
+[00:22:46] have sort of a DAG of queries and then
+[00:22:48] you can do this multiquery optimization.
+[00:22:49] But to keep our life simple today and in
+[00:22:51] most systems that are out there, at
+[00:22:52] least all the ones we actually use in
+[00:22:54] production, they're only going to do
+[00:22:55] single query optimization.
+[00:22:59] All right. So now that we have sort of
+[00:23:01] high level understanding of what a
+[00:23:02] career optimizer is doing in the first
+[00:23:03] 20 minutes of class, we want to now go
+[00:23:05] into more details and start talking
+[00:23:06] about how we're actually going to
+[00:23:07] implement this in our database system.
+[00:23:10] And a optimizer is really comprised of
+[00:23:14] of three components or three three
+[00:23:16] concepts or design decisions. The first
+[00:23:18] is how we're going to do
+[00:23:19] transformations. You're converting
+[00:23:21] logical operators into other logical
+[00:23:22] operators or logical operators into
+[00:23:24] physical operators. And this allows us
+[00:23:26] to enumerate over a bunch of different
+[00:23:27] possibility of a query plan. And then we
+[00:23:30] can have a way to determine whether one
+[00:23:31] plan is going to be better than another.
+[00:23:33] The next piece is going to be the search
+[00:23:35] algorithm. Like how are we going to look
+[00:23:37] at our possible enumerations and
+[00:23:40] evaluate them and make decisions of
+[00:23:41] what's the next transformation we should
+[00:23:42] apply or what's the next part of the
+[00:23:44] solution space we should examine and how
+[00:23:47] that process runs and how we you know
+[00:23:49] get feedback and and try to refine our
+[00:23:51] decision-m and then the last piece again
+[00:23:53] is the cost model is how we're going to
+[00:23:55] determine whether one query plan is
+[00:23:58] better than another.
+[00:24:00] What's the abs what's the correct cost
+[00:24:02] of a query plan?
+[00:24:05] I want if I want to know how long it's
+[00:24:06] going to take, what's the easiest or not
+[00:24:07] the easiest, what's the most accurate
+[00:24:08] way to determine how long a query is
+[00:24:09] going to take? Run it, right? But if I
+[00:24:12] just said my solution space is
+[00:24:14] exponential and I have for one query a
+[00:24:16] billion different choices of queries, I
+[00:24:18] could query plans I could use, I can't
+[00:24:20] possibly actually run them because if I
+[00:24:22] ran them and I I get the result and I
+[00:24:23] could just return that back to the to
+[00:24:25] the user. So the the cost model is a way
+[00:24:28] for allows to approximate guess whether
+[00:24:31] one query plan is going to be better
+[00:24:32] than another. Again, we we'll focus that
+[00:24:35] on how we do that next next class.
+[00:24:37] MongoDB does actually does what what I
+[00:24:40] just said before. They they just run the
+[00:24:42] queries, see what everyone comes back
+[00:24:44] first, and that's the one they keep
+[00:24:45] reusing.
+[00:24:47] It's simple. It's brain dead. It sort of
+[00:24:49] works. Uh but for more complex things,
+[00:24:51] it falls apart. But as I said last in
+[00:24:54] the last class, everyone's query
+[00:24:55] optimizer is really bad. Uh it's just
+[00:24:58] it's a determining how bad you are
+[00:24:59] relative to other ones. All right. So
+[00:25:02] today's class we're talking about this
+[00:25:03] the first two how we do transformations
+[00:25:05] the enumeration and then what the search
+[00:25:06] algorithms actually look like.
+[00:25:08] So a transformation rule uh is allows us
+[00:25:11] again to convert the the query operator
+[00:25:15] or query plans the operators within them
+[00:25:17] either logical uh sorry they're always
+[00:25:19] going to be logical and then we go go to
+[00:25:21] physical usually don't do
+[00:25:22] transformations from physical to
+[00:25:23] physical um that complicates things but
+[00:25:26] the idea is that it allows us to take a
+[00:25:29] current state of our query plan and it
+[00:25:32] could be a mixture of logical operators
+[00:25:33] and physical operators all logical
+[00:25:35] operators um and then generate
+[00:25:37] alternatives
+[00:25:39] for that query plan that we think will
+[00:25:41] lead us to a a better result or we think
+[00:25:44] that they're will have um
+[00:25:47] promising solutions for for our search
+[00:25:50] process. [snorts]
+[00:25:52] >> What's that?
+[00:25:54] >> The statement is it's like rewrite
+[00:25:56] rules. Yes. But rewrite rules for the
+[00:26:00] for the at the plan level
+[00:26:03] >> for uh for the DAG. Yes. For the tree
+[00:26:06] structure for the query plan. Yes.
+[00:26:07] There's we the reason why I was being
+[00:26:09] hesitant is that there are rewrite rules
+[00:26:11] for SQL like at the SQL level like the
+[00:26:13] strings if if I pattern match on like
+[00:26:15] like select star from a view they can
+[00:26:18] then rewrite that into something else
+[00:26:20] that's that would be in my example
+[00:26:22] before that would be be
+[00:26:25] potentially before the binder or after
+[00:26:27] the binder
+[00:26:30] >> you just string matching
+[00:26:32] >> okay
+[00:26:32] >> it's it's errorrone but like you can do
+[00:26:34] it some some people do that I'm seems a
+[00:26:37] good idea. You could, right?
+[00:26:41] All right. Um, right. So, again, these
+[00:26:44] transformation rules allow us to
+[00:26:46] identify different promising plans and
+[00:26:48] then either they will the the the output
+[00:26:52] is always going to be an alternative
+[00:26:54] plan. And ideally, that plan will have a
+[00:26:56] lower cost or expected cost than the one
+[00:26:58] we started off with or alternatively it
+[00:27:01] may actually be worse. But because we do
+[00:27:04] a certain transformation, it then leads
+[00:27:05] us or unlocks a bunch of other
+[00:27:07] transformations we could do that those
+[00:27:09] will then have a lower cost. Right? And
+[00:27:13] the key tenant we're going to use to
+[00:27:14] make this all work is rely on relational
+[00:27:16] algebra equivalencies where we can be
+[00:27:19] assured that if we convert a certain set
+[00:27:21] of operators in our query plan to
+[00:27:23] another set of operators because of the
+[00:27:26] the the rules of relational algebra, we
+[00:27:28] know that the the plans will be
+[00:27:30] equivalent and correct. [snorts]
+[00:27:33] And this just repeating what I said. So
+[00:27:35] again we can rely on the fact that
+[00:27:37] because relational algebra is well
+[00:27:38] defined uh more so than SQL relation
+[00:27:41] algebra is well defined. We would know
+[00:27:42] the rules in which we can change things
+[00:27:44] and permute the the those relational
+[00:27:46] algebra operators to produce other
+[00:27:49] operators that we know are are
+[00:27:51] equivalent to each other. Right? So if
+[00:27:54] you just go look at examples like
+[00:27:56] selections, right? So I know that if I
+[00:27:59] have a like a a a select operator with a
+[00:28:03] predicate P1, P2, P3 up to PN that I in
+[00:28:08] in this case here it's conjunction. I
+[00:28:10] know I can I can decompose or break up
+[00:28:13] that conjunctive clauses into separate
+[00:28:15] predicates and have now separate select
+[00:28:17] operators or filter operators for each
+[00:28:19] of those individually. So instead of
+[00:28:21] having uh you for scanning relation R
+[00:28:24] and applying P1 NP2 NP3 and P4 all at
+[00:28:28] the same time, I can break it up into
+[00:28:30] different select oper or filter
+[00:28:31] operators and then now I can move them
+[00:28:33] around in uh independently from each
+[00:28:35] other and I know I'm still going to
+[00:28:37] produce the the same correct result. Or
+[00:28:39] I may want to do P2 first, apply P2
+[00:28:42] first before P1 because P2 is cheaper to
+[00:28:44] run and it's more selective. And again
+[00:28:46] because of the rational object rules I
+[00:28:48] can move those things around and I still
+[00:28:50] produce the same uh semantically logical
+[00:28:52] result. [snorts]
+[00:28:55] >> What's that?
+[00:28:57] >> The question is would you ever want to
+[00:28:58] combine them again? Sure. Why not?
+[00:29:01] Yes.
+[00:29:06] >> The question is is the select operator
+[00:29:07] commutive with all other operators? Uh
+[00:29:12] everything but outer joins.
+[00:29:14] We're not going to cover outer joins.
+[00:29:15] Outer joints are tricky because of null
+[00:29:16] semantics. But for for this lecture,
+[00:29:19] yes. [snorts] The question again like
+[00:29:22] the question is is this select operator
+[00:29:24] commutive? And my answer is
+[00:29:26] yes except for outer joins because
+[00:29:29] because of the nulls, right? Like do you
+[00:29:31] match if there's no match on one side
+[00:29:33] versus another? What produces the null?
+[00:29:34] But let's ignore that. Okay, [snorts]
+[00:29:37] that's why I'm saying like there's no
+[00:29:39] there's no outer join in in in relation
+[00:29:42] to algebra. There is in SQL. That's why
+[00:29:43] the semantics are trickier. SQL has been
+[00:29:46] extended for that but all right so all
+[00:29:49] right there other authorizations we can
+[00:29:51] do like this is similar to what we
+[00:29:53] talked about I think two classes ago of
+[00:29:54] like hey here's this expression tree we
+[00:29:56] can apply sort of compiler tricks to try
+[00:29:58] to optimize things further right so here
+[00:30:00] I have x= 3 and y= x well I know because
+[00:30:04] of commutitivity that or sensitivity
+[00:30:07] that I sorry transitivity that I can
+[00:30:09] take the x= 3 and replace the yals x to
+[00:30:13] be yals three because I know x equals 3
+[00:30:16] when I was doing the comparison. And it
+[00:30:18] seems like a trivial thing, but that's
+[00:30:19] actually going to be way faster now to
+[00:30:21] do my evaluation when I'm actually
+[00:30:23] running through through real data
+[00:30:24] because now I'm just comparing, you
+[00:30:26] know, with a value that can sit in a
+[00:30:28] register rather than a reference to
+[00:30:29] another variable.
+[00:30:31] You can do other optimizations ahead of
+[00:30:33] time, too, like x= 1 plus 1. The
+[00:30:36] optimizer can say, well, I know 1 plus 1
+[00:30:37] is going to produce a constant, so let
+[00:30:38] me just evaluate that now and produce
+[00:30:41] two and then substitute that. So I'm not
+[00:30:43] doing PL oneplus one over and over
+[00:30:44] again. And this last one a bit more
+[00:30:46] nuance, but it basically says like it's
+[00:30:48] similar to the the constant propagation
+[00:30:49] stuff we covered last time where instead
+[00:30:51] of me running this year function to get
+[00:30:54] the year out for every single tupole I
+[00:30:55] may be looking at, if I have a billion
+[00:30:56] tupils, then I'm better off just
+[00:30:58] applying the function once and then
+[00:30:59] reusing the result over and over again.
+[00:31:03] Uh for joins again ignoring uh outer
+[00:31:06] joins, but for case inner joins equins
+[00:31:08] uh they are commutive. So I can swap the
+[00:31:10] order like R joint S that's equivalent
+[00:31:12] to S joint R. Likewise if I have R joint
+[00:31:15] S followed by joint T, I can move all
+[00:31:17] those things around and I still produce
+[00:31:19] the same result. And as we talked as we
+[00:31:22] when we talked about joints, we said
+[00:31:23] that depending on the join algorithm
+[00:31:25] implementation, the physical operator
+[00:31:27] we're going to use in our query plan to
+[00:31:28] do the join, I may want to have the
+[00:31:30] larger table be the out the outer table
+[00:31:32] versus the inner table. So that's why if
+[00:31:34] I have statistics to determine which one
+[00:31:36] is actually the larger one, I can look
+[00:31:38] at the I can move things around and I
+[00:31:41] know I'm guaranteed to still produce the
+[00:31:42] same result because of those uh
+[00:31:44] cumitivity and sensitivity rules.
+[00:31:48] Cartisian mark same thing. Yes. In
+[00:31:50] general, you never want to do a cross
+[00:31:51] product though unless unless unless
+[00:31:53] unless the query explicitly says do a
+[00:31:55] cross join, never do it. Yeah. But
+[00:31:58] that's that's an easy one.
+[00:32:01] All right. So again, just to show you
+[00:32:02] how how challenging this is, the number
+[00:32:04] of join orders you have in an Nway
+[00:32:06] binary join. Again, binary means I'm
+[00:32:08] just I can only join two tables at a
+[00:32:09] time is mean this massive number here,
+[00:32:12] right? Just showing you this like
+[00:32:13] there's so many different choices we we
+[00:32:14] we have to consider. And if we just try
+[00:32:17] to blindly look at everything uh
+[00:32:21] all possible combinations as we sort of
+[00:32:22] permute the search tree, you know, it
+[00:32:24] would it would take
+[00:32:26] would be exhaustive would just be way
+[00:32:28] too slow. So a bunch of these
+[00:32:30] transformation rules are going to allow
+[00:32:31] us to throw things away that we don't
+[00:32:33] want to consider like like a cross join
+[00:32:35] for example uh and I don't have to
+[00:32:36] bother even considering them. And when
+[00:32:38] we talk about IBM systemr R they're
+[00:32:40] going to throw away uh a bunch of one
+[00:32:43] two different types of join tree
+[00:32:45] structures because then that cuts down
+[00:32:47] the search base even though that may
+[00:32:49] should be the true optimal plan just in
+[00:32:50] the sake of actually producing a result
+[00:32:52] they would need actually can run in in
+[00:32:53] reasonable time they don't even bother
+[00:32:55] considering them.
+[00:32:58] [snorts]
+[00:32:58] All right. So what are kind of
+[00:33:00] transformations we can do? Well, a bunch
+[00:33:01] of these we've already talked about and
+[00:33:02] I'll just go through an example one by
+[00:33:04] one. And all these here we can do this
+[00:33:05] at the logical level.
+[00:33:08] Um because we don't have to define
+[00:33:10] exactly what al what join algorithm
+[00:33:13] we're going to use. We just know that
+[00:33:14] these rules should get applied because
+[00:33:16] we as database people that built the
+[00:33:18] system, we know that these are things
+[00:33:19] you're always going to do. So we don't
+[00:33:20] have to ask a cost model, hey, is this
+[00:33:22] going to be maybe better or not? These
+[00:33:23] are things you always want to apply.
+[00:33:26] So the first one was the example that we
+[00:33:28] saw at the beginning. I want to split my
+[00:33:29] conjunctive clauses. So again, if I take
+[00:33:32] a literal translation of the seagull
+[00:33:33] query trying to find all the people that
+[00:33:35] are all the artists appear on the
+[00:33:37] tribute album for DJ Mushu, then I would
+[00:33:40] have these bunch of cross joins because
+[00:33:41] that's a naive implementation that
+[00:33:43] produced comes out of the binder and
+[00:33:44] then I have my single uh filter clause
+[00:33:47] filter operator that has all the
+[00:33:49] conductor clauses inside of them. So if
+[00:33:50] I just take this guy here, just split it
+[00:33:53] up on the ends, which is easy to do
+[00:33:55] because I'm traversing the tree
+[00:33:56] structure. Then I'm going to produce a
+[00:33:57] bunch of different or now a sequence of
+[00:33:59] three filter operators that each going
+[00:34:01] to do one of those predicates by
+[00:34:02] themselves.
+[00:34:05] Now, now I can do the predicate push
+[00:34:06] down trick we saw before. And see this
+[00:34:08] is why you want to break this up because
+[00:34:09] now they're they're independent of each
+[00:34:10] other. I can move them individually
+[00:34:12] based on uh you know what I see below me
+[00:34:16] in in the query plan. So this top
+[00:34:17] predicate here, artist ID equals appears
+[00:34:20] and artist ID, I could put that right
+[00:34:21] above the the cross productd join
+[00:34:23] between artist and appears. And likewise
+[00:34:25] the the album name equals mushu tribute.
+[00:34:28] I put that right above the the scan on
+[00:34:30] on album, right? And I get a query plan
+[00:34:33] that looks like this.
+[00:34:36] Then the obvious thing I want to do is
+[00:34:38] apply a transformation rule that says
+[00:34:40] well if I see a cartisian product with a
+[00:34:43] predicate right above it that has the
+[00:34:45] join clause I can convert that into an
+[00:34:48] inner join
+[00:34:50] right and I just you traverse down the
+[00:34:52] tree and apply those changes [snorts]
+[00:34:56] this one depends on what your ex the
+[00:34:58] execution environment is depends on what
+[00:34:59] the query processing model you're using
+[00:35:01] depends on what the data actually looks
+[00:35:03] like you can also do a projection push
+[00:35:05] down so I can have a projection top
+[00:35:07] artist.name. That's the only thing I I
+[00:35:09] need in my output. But depending on how
+[00:35:11] big wide these tables are, I may want to
+[00:35:14] push down projections before I even do
+[00:35:15] the join because I I can throw away a
+[00:35:17] bunch of columns that I don't need and
+[00:35:18] don't need to propagate up into to the
+[00:35:20] query plan. So you end up something like
+[00:35:23] this.
+[00:35:25] So all these transformations, again just
+[00:35:26] reiterate, all these transformations I
+[00:35:28] just did here are doing logical to
+[00:35:30] logical transformations. And I don't
+[00:35:32] need a cost model to determine whether
+[00:35:34] it's a the right thing to do. We as
+[00:35:36] database people we people that
+[00:35:37] understand how the system is actually
+[00:35:39] going to be implemented can define rules
+[00:35:41] to say this is something I always want
+[00:35:43] to do. If again if you don't remember
+[00:35:45] anything else with this course other
+[00:35:46] than use never use MAP in your database
+[00:35:48] like you should never do a cross join
+[00:35:49] unless somebody asks you to do it. So an
+[00:35:52] easy logical oper uh logical
+[00:35:54] transformation rule is say replace any
+[00:35:56] cross joins or cross productds with with
+[00:35:58] a uh inner join if you can.
+[00:36:02] So the the number of these
+[00:36:06] transformation rules your system will
+[00:36:07] have will depend on the sophistication
+[00:36:10] of the system itself and the optimizer.
+[00:36:12] I think Microsoft publicly talks about I
+[00:36:14] think they have about 480 500 different
+[00:36:16] transformation rules right uh and that's
+[00:36:20] they probably want they have one of the
+[00:36:23] world's best query optimizer so that's
+[00:36:24] probably the upper limit of how many
+[00:36:26] would actually exist although I will say
+[00:36:28] they are discovering new ones that
+[00:36:29] didn't exist before using AI. Uh so
+[00:36:31] that's kind of cool and that paper's
+[00:36:32] coming out. Uh it's been announced uh
+[00:36:36] and it's the one I talk about when I get
+[00:36:38] came back from Microsoft I was really
+[00:36:39] excited about. That one should be coming
+[00:36:40] out pretty soon. But they're they're
+[00:36:42] doing using LMS to find query you know
+[00:36:44] transformation rules they didn't think
+[00:36:45] about before. It turns out a lot of them
+[00:36:47] they're actually correct. [snorts]
+[00:36:51] So I would say also too in my my example
+[00:36:53] here all these transformation rules are
+[00:36:55] doing one to one mapping like I'm doing
+[00:36:57] like I went from well in this case here
+[00:37:00] I it's less than one like I took a
+[00:37:02] filter operator and a cross join and
+[00:37:04] then I converted that to a single joint
+[00:37:05] operator. So I went from two logical
+[00:37:07] operators to one one logical operator.
+[00:37:10] In other cases it may go in the other
+[00:37:12] direction. Right? In this case here I
+[00:37:13] had uh one projection operator then it
+[00:37:16] then converted it to a bunch more
+[00:37:17] projection operators. Um and in this
+[00:37:20] example here I'm kind of going a one-way
+[00:37:22] street my transformations like I'm
+[00:37:23] saying going back here I'm saying I know
+[00:37:26] I want to do this get rid of this cross
+[00:37:27] join. So let me go and generate the an
+[00:37:31] alternative that uses the inner join.
+[00:37:33] And then you don't actually care about
+[00:37:34] the the the where you came from. So I
+[00:37:36] don't need to keep track of the history
+[00:37:38] of what was the query plan before I did
+[00:37:40] that transformation rule. In other
+[00:37:42] transformation rules, you do actually
+[00:37:44] want to keep around the old ones. And
+[00:37:45] we'll see how we handle that in a second
+[00:37:47] because you may you may decide you're
+[00:37:48] going down a path in your sort of search
+[00:37:50] tree that doesn't actually help you and
+[00:37:51] you and you want to backtrack and go
+[00:37:53] back go back. Yes,
+[00:38:02] >> the statement is uh in this in this
+[00:38:03] example here I'm doing artisan appears
+[00:38:05] first is that just incidental in the
+[00:38:07] PowerPoint demonstration yes uh you
+[00:38:12] would need a cost model to determine
+[00:38:13] whether one's bigger than another which
+[00:38:15] you know which one you want to join
+[00:38:16] first
+[00:38:18] we'll talk about that in a sec so in
+[00:38:20] some database systems like Oracle
+[00:38:22] famously in the 80s
+[00:38:24] However you defined it in your in your
+[00:38:26] in your from clause like if you look at
+[00:38:28] this it says from artist appears album
+[00:38:30] and at the bottom I have artist appears
+[00:38:32] and album I'm joining in that order.
+[00:38:33] That's how they would decide join
+[00:38:35] ordering and they called this a semantic
+[00:38:37] optimizer because it's you as the human
+[00:38:40] wrote your query this way. Therefore you
+[00:38:41] knew you knew the order you wanted to
+[00:38:42] join things. It's all it's not real
+[00:38:45] right like people don't know what the
+[00:38:46] hell they're doing. So uh but that's
+[00:38:48] what that's what Larry has say how great
+[00:38:50] his optimizing was because allowed to
+[00:38:52] maintain the semantic meaning of what
+[00:38:53] you wrote in your application. It's all
+[00:38:58] I'll show a quote in a second.
+[00:39:00] All right. So
+[00:39:02] yes
+[00:39:02] >> I'm just curious what is there
+[00:39:07] >> his question is is there a way to hint
+[00:39:09] to to give hints to the quer to the data
+[00:39:12] system the query app and say I do want
+[00:39:14] things join order this way. Yes. So not
+[00:39:16] all J systems support hints like
+[00:39:18] Postgress by default does not. There's
+[00:39:19] an there's a extension called PG plan PG
+[00:39:22] plan hint plan or plan hint one of the
+[00:39:23] two where you basically put comments in
+[00:39:25] in the front of the SQL query and say
+[00:39:28] join A then followed by B or GB to A and
+[00:39:30] you can actually do things like I want
+[00:39:31] to do a hash join I make sure you use
+[00:39:32] this index right my SQL can do this and
+[00:39:35] some things Oracle can do this SQL
+[00:39:36] server I think you have to dump the
+[00:39:38] whole query out and put it back and put
+[00:39:39] hints in but yeah you can override the
+[00:39:41] optimizer decision where you where you
+[00:39:43] find it just making stupid choices and
+[00:39:46] you say you're dumb do it this way But
+[00:39:49] you have to know what you're doing.
+[00:39:50] >> Do you think there's value?
+[00:39:52] >> Is the question is do I think there's
+[00:39:53] value in hinting? Yes. Because I'd be
+[00:39:55] naive to saying well like so the
+[00:39:57] Postgress the Postgress engineering
+[00:39:59] philosophy is that you should not have
+[00:40:01] hints. The optimizer should be just
+[00:40:03] improved. Make sure you don't ever have
+[00:40:04] to write hints. We we can look at some
+[00:40:07] examples in a second where they they
+[00:40:08] just get it wrong and you do want hints.
+[00:40:10] Um
+[00:40:12] the challenge of hints though it kind of
+[00:40:13] goes back to I think maybe the first or
+[00:40:16] second lecture when I talked about like
+[00:40:18] this kodil thing where if you if you
+[00:40:21] didn't write your queries in a
+[00:40:21] declarative language you would say I
+[00:40:23] want to do the join order this way and I
+[00:40:25] want to make sure I use this algorithm.
+[00:40:26] You sort of hand coding what the joint
+[00:40:28] algorithm actually going to be and you
+[00:40:31] would you would you're essentially
+[00:40:32] locking in the query plan based on what
+[00:40:34] you see the data at that time. So now if
+[00:40:36] the the data distribution changes and
+[00:40:38] now you want to flip the joint order or
+[00:40:39] flip what algorithm you're using, you
+[00:40:40] got to go back and rewrite your
+[00:40:42] application. So hints kind of give you
+[00:40:44] that problem as well. Basically locking
+[00:40:46] in what you exactly you want the query
+[00:40:48] plan to be. And maybe that that's okay,
+[00:40:50] but if if the assumptions you make when
+[00:40:51] you define those query plans change, the
+[00:40:53] data evolves in some way or the guy that
+[00:40:55] wrote the hints quits and then you're
+[00:40:58] now responsible for maintaining this
+[00:40:59] codebase from 10 years ago and you're
+[00:41:00] like what are all these hints and the
+[00:41:02] and the and the assumptions are all
+[00:41:03] wrong. it's going to produce bad query
+[00:41:05] plans. So like a double-edged sword like
+[00:41:07] yes in some cases they're a good idea in
+[00:41:09] other cases
+[00:41:10] you know maybe not.
+[00:41:15] All right. So the again the search alg
+[00:41:19] the search search engine in our query
+[00:41:20] optimizer is responsible for applying
+[00:41:23] with these these transformation rules
+[00:41:24] generating different alternatives either
+[00:41:26] either logical alternatives or physical
+[00:41:28] alternatives and then using a cost model
+[00:41:30] to determine uh whether one plan is
+[00:41:33] better than another. But it may not be
+[00:41:34] the case that you always apply a cost
+[00:41:36] model. And maybe it's be the search
+[00:41:38] engine just says, "I'm out of rules for
+[00:41:40] me to run or I run out of time." Then it
+[00:41:42] just stops, right?
+[00:41:45] The challenge is going to be that we may
+[00:41:47] not always have all the information we
+[00:41:49] need to produce the best optimal plan.
+[00:41:51] So remember we talked about prepared
+[00:41:52] statements where you can basically say
+[00:41:54] here's a SQL query I want to run in the
+[00:41:56] future. Give it a name like a macro and
+[00:41:58] then now I can execute it by passing in
+[00:42:00] like input parameters to like an RPC or
+[00:42:02] a function call. when you call up a pair
+[00:42:05] some most data systems will generate a
+[00:42:07] physical plan for you so that when you
+[00:42:09] then invoke that query it doesn't have
+[00:42:10] to run through the optimizer it has has
+[00:42:12] a query plan ready to go of course the
+[00:42:14] challenge is if I have input parameters
+[00:42:16] that I don't know at the time I'm doing
+[00:42:17] planning how do I pick the best optimal
+[00:42:19] plan
+[00:42:21] and so the easiest thing is take take an
+[00:42:23] average of the values well that assumes
+[00:42:25] you have statistics or could take a good
+[00:42:27] average so we we we may deal be dealing
+[00:42:30] with in incomplete information
+[00:42:32] especially with statistics we may not
+[00:42:33] have anything. We we'll we'll see how we
+[00:42:35] can handle that uh next class. [snorts]
+[00:42:39] All right. So, as I said, there's
+[00:42:40] basically two approaches to this.
+[00:42:42] There's just applying all the rules that
+[00:42:43] we talked about so far and just you keep
+[00:42:46] applying them until you you realize
+[00:42:48] you're stuck in an infinite loop or
+[00:42:50] you've run out some whatever your budget
+[00:42:51] is for running or there's no more
+[00:42:53] transformations actually to apply. And
+[00:42:55] as I said, this is what most people
+[00:42:57] build when they build a data system that
+[00:42:58] will support SQL. This is the very first
+[00:42:59] thing that that they're they're going to
+[00:43:01] end up implementing. And then a more
+[00:43:03] sophisticated approach uh is to use call
+[00:43:06] space search. I'm saying sophisticated
+[00:43:08] like this is actually what IBM built
+[00:43:10] back in the 70s. So the very first
+[00:43:12] relational data system came with its own
+[00:43:14] call spacebased query optimizer. Uh but
+[00:43:16] still people implement the first one
+[00:43:17] because that's it's just easier to do.
+[00:43:19] So we'll first talk about this one
+[00:43:21] understand what it is and then we'll see
+[00:43:22] how we can do you still need to do the
+[00:43:24] heristics some cases to help us guide in
+[00:43:26] our in our costbased search.
+[00:43:29] All right. So a here's the basic query
+[00:43:32] optimizer. It's defining the static
+[00:43:34] rules that that are going to transform
+[00:43:35] to logic operators and physical
+[00:43:36] operators again without a cost model.
+[00:43:38] And these decisions can be based on
+[00:43:40] things like oh you're doing a a wear
+[00:43:43] clause on a with a quality predicate on
+[00:43:45] a primary key. Well I know I have a
+[00:43:47] primary key index. Therefore the access
+[00:43:49] method should the physical operator for
+[00:43:50] your for your scan for reading that
+[00:43:52] table should just be looking up on that
+[00:43:54] primary key index. Right? Right? It
+[00:43:55] could be sort of simple things like that
+[00:43:57] where all that projection predicate uh
+[00:43:59] push down we talked about before limit
+[00:44:01] push down if you can and then some
+[00:44:03] really basic simple rules for uh for
+[00:44:07] determining whether you know what should
+[00:44:08] be the join order could be the naive
+[00:44:10] thing like just assume whatever the SQL
+[00:44:12] query gives you that's the joint order
+[00:44:13] people wanted or again whether or not
+[00:44:15] this is the cost model it's sort of
+[00:44:16] semantics to say all right I'll just go
+[00:44:18] look to see how many tupless I expect to
+[00:44:20] be in in this table and then that'll
+[00:44:23] determine the joint
+[00:44:25] So this is what ingress built uh in the
+[00:44:29] 1970s
+[00:44:30] their first query optimizer. Uh ingress
+[00:44:32] again was the precursor to Postgress.
+[00:44:35] Oracle had this also in the 1970s up
+[00:44:37] until early 90s. They went pretty far
+[00:44:39] with this. This is what MongoDB
+[00:44:41] essentially does now. And again, every
+[00:44:42] new data system written in the last 10
+[00:44:44] years when they first start off the
+[00:44:46] unless they're using bits and pieces of
+[00:44:48] Postgress or a query optimizer package
+[00:44:51] called Calite. Um, this is what per
+[00:44:54] everyone else does. And the reason is
+[00:44:56] because it's pretty simple to implement.
+[00:44:58] It's really easy to debug because you
+[00:45:00] just take the SQL query and set trace
+[00:45:02] through the debugger and see all the
+[00:45:03] transformation rules that get applied uh
+[00:45:06] and see see what comes along. The
+[00:45:08] problem is going to be though it's going
+[00:45:10] to rely on magic constants or hard-coded
+[00:45:13] intuition about whether one decision is
+[00:45:16] better than another. And for simple
+[00:45:17] things like predicate push down, that's
+[00:45:19] okay. For more complex queries, uh this
+[00:45:22] this becomes problematic.
+[00:45:24] And if I have to do a lot of joins,
+[00:45:26] you're never going to get an optimal
+[00:45:28] plan just because you can't reason about
+[00:45:31] all the different independencies and and
+[00:45:33] what the data looks like and understand
+[00:45:35] how things get get propagated up in
+[00:45:37] query plans. So optimization get you get
+[00:45:40] you for simple things like simple
+[00:45:41] applications where there are no joins
+[00:45:43] but once you start doing more than two
+[00:45:45] two tables in a in a query sorry two
+[00:45:48] joining two more than two tables in a
+[00:45:49] query this falls apart. Yes.
+[00:45:52] magic constant.
+[00:45:53] >> So the qu question is what do I mean
+[00:45:54] magic constant? So do I have slides on
+[00:45:57] this? Let me think. No, it's not here.
+[00:45:59] So um a magic constant would be how do I
+[00:46:02] determine whether an index scan is
+[00:46:04] better than a sequential scan.
+[00:46:07] So if it's like simple things like where
+[00:46:09] ID equals 1 2 3 and ID is the primary
+[00:46:12] key, then yeah, the index scan is going
+[00:46:13] to make sense. But now if I start doing
+[00:46:15] range predicates scans and my choice is
+[00:46:18] either do a sequential scan or an index
+[00:46:20] scan I kind of need to know like what
+[00:46:23] the distri distribution of the data
+[00:46:24] looks like. What's the cost of accessing
+[00:46:26] the index versus scanning the table?
+[00:46:29] Right now you're basically starting to
+[00:46:30] build a cost model. So a lot of times in
+[00:46:34] systems they'll say well a sequester
+[00:46:37] scan is some multiple faster than an you
+[00:46:41] know a a random IO. So now you how do
+[00:46:44] you how do you set those knobs
+[00:46:45] correctly? Depends on the hardware
+[00:46:46] depends on depends on what the data is.
+[00:46:49] Now the cost model stuff next class will
+[00:46:51] have the same problem too. But this this
+[00:46:53] is even more problematic in in in if you
+[00:46:55] just pure heristics. Ideally also too
+[00:46:58] you want to define your transformation
+[00:46:59] rules in not necessarily DSL but in a
+[00:47:03] structured manner so that you can
+[00:47:04] compose them together real quickly. In
+[00:47:06] Postgress it's bunch of if and else
+[00:47:08] that's that's the rules.
+[00:47:13] The question is why don't they write a
+[00:47:14] DSL for that? It's hard.
+[00:47:18] >> I I mean let me tell you, right? And
+[00:47:20] they know their optimizer sucks, but
+[00:47:22] like it's hard. Yeah. Yeah. In the back.
+[00:47:32] >> The question is, is there only one
+[00:47:33] parameter we want to optimize as a cost
+[00:47:34] model? We'll cover that next class. No,
+[00:47:37] but IO usually is is the the big one.
+[00:47:40] But IO could be network IO, dis IO,
+[00:47:43] right? And disk and network is getting
+[00:47:45] really fast. CPU is probably bottleneck.
+[00:47:48] So that matters too. Now,
+[00:48:00] The question is how when I say we're
+[00:48:01] trying to produce a good plan, what do I
+[00:48:03] mean by good?
+[00:48:06] Depends. Most data systems will optimize
+[00:48:08] for performance, right? And and how
+[00:48:14] you know how do you as a human perceive
+[00:48:17] performance is wall clock time. But it's
+[00:48:20] very hard to be able to to come up with
+[00:48:22] a cost model that says these amount of
+[00:48:24] IO's are going to take this many
+[00:48:25] milliseconds and therefore I have to
+[00:48:26] have this many and that's going to
+[00:48:27] calculate the wall clock time. So
+[00:48:29] instead they use a they use you know a
+[00:48:31] synthetic values
+[00:48:34] again we'll cover that more in the next
+[00:48:35] class but like and and most systems are
+[00:48:38] going to say I care about the
+[00:48:40] performance of of the query other
+[00:48:42] systems say may care about the cost of
+[00:48:44] actually running the query in the cloud
+[00:48:45] environment but that's not not that not
+[00:48:48] that common but you could do it because
+[00:48:49] it's another it's another objective you
+[00:48:51] just optimize for them. All right. So,
+[00:48:54] this is the snippet from the unofficial
+[00:48:55] Larry Ellison uh autobiography. Uh and
+[00:48:59] in in one of these pages here, it's
+[00:49:01] Stonebreaker, the guy invented Postgress
+[00:49:02] and Ingress. They interview him and he
+[00:49:05] starts talking about how uh again
+[00:49:08] Oracle's queer optimizer in the 80 was
+[00:49:09] in the 80s was total crap. But then he
+[00:49:12] called them instead of saying you know
+[00:49:15] instead of making his weakness be the
+[00:49:16] thing that the marketing people and
+[00:49:17] another and his competitors could take
+[00:49:19] advantage of he would then claim that
+[00:49:21] they had this beautiful semantic
+[00:49:22] optimizer that just generated the joiner
+[00:49:25] based on the order in which the tables
+[00:49:26] appeared in the query and as I said like
+[00:49:29] nobody it's a stupid thing you wouldn't
+[00:49:31] actually want to build an operator this
+[00:49:32] way but they were able to sell that to
+[00:49:34] people because it was the 80s right
+[00:49:37] all right so that's heristic and rules
+[00:49:39] again these are I would say also say
+[00:49:41] these are not uh mutually exclusive. So
+[00:49:43] you could build a costbased search that
+[00:49:44] still applies to all the transformation
+[00:49:46] rules that we talked about so far and
+[00:49:47] you could do a first pass of doing that
+[00:49:49] logical transformation stuff that I
+[00:49:50] talked about at the beginning and then
+[00:49:52] you hand off the the final remaining
+[00:49:54] decisions to a costbased optimizer
+[00:49:59] but it depends on how you implement
+[00:50:00] stuff. All right. So again with a
+[00:50:03] costbased search going apply the
+[00:50:04] transformation rules that that we've
+[00:50:06] defined before going enumerate a bunch
+[00:50:07] of different choices we would have uh
+[00:50:10] and at every step of the way at least
+[00:50:14] when we're doing the costbased search we
+[00:50:15] would consult the cost model and say is
+[00:50:18] this new plan we're generating after you
+[00:50:20] apply this rule is this better than the
+[00:50:23] best I've seen so far
+[00:50:25] if no then based on how I'm searching
+[00:50:27] things I may actually want to stop
+[00:50:28] searching that sort of that branch in my
+[00:50:30] my solution case or I may be allowed to
+[00:50:33] override that that uh initial increase
+[00:50:36] in the in the cost. Think of like a
+[00:50:39] gradient descent search like I'm allowed
+[00:50:41] to to ignore that I'm bumping back up
+[00:50:42] because I know if I get once I get on
+[00:50:44] the other side of that hill then I'll
+[00:50:45] get down to uh something that looks like
+[00:50:47] the local true optimal.
+[00:50:49] So
+[00:50:51] you would typically do this on uh well
+[00:50:54] you could do this in a bunch different
+[00:50:56] phases depending what your query looks
+[00:50:57] like. like you could handle all the sort
+[00:50:59] of subplans that are tackling one one
+[00:51:01] table at a time, one relation at a time.
+[00:51:03] Then you expand out and say I want to
+[00:51:04] handle all the joins. Then you expand
+[00:51:06] out even further and say I want to
+[00:51:07] handle all the nested queries. Some
+[00:51:09] systems do this in in sort of stages.
+[00:51:12] Other systems do this in in sort of a
+[00:51:15] all at once holistic uh tuning approach
+[00:51:16] or sorry optimization approach. Again,
+[00:51:19] we'll see the two examples of this.
+[00:51:21] [snorts] So when do we decide to stop?
+[00:51:23] Right? The most obvious thing is you
+[00:51:25] just set a timer and say, well, when my
+[00:51:26] query optimizer is run for, I don't
+[00:51:28] know, 500 milliseconds, right? Or some
+[00:51:31] whatever you want to set the threshold
+[00:51:32] to be. Once I run to that time, then I
+[00:51:34] stop and I produce whatever the best
+[00:51:36] query plan I've seen so far. That's what
+[00:51:37] I'm going to execute with.
+[00:51:40] Another could be if you if you have a
+[00:51:42] way to define the the threshold and say,
+[00:51:44] I don't want don't give me back any
+[00:51:46] query. Don't stop searching till you
+[00:51:47] find a query plan that has this lower
+[00:51:49] call. So, it could could be like I'm
+[00:51:51] replanning the query I've seen before. I
+[00:51:53] don't want to let it go until I see, you
+[00:51:56] know, stop once I see a query that's 10%
+[00:51:58] better than a query plan that's 10%
+[00:51:59] better than I've seen before. [snorts]
+[00:52:01] Or at some point if if you sort of
+[00:52:03] plateau, you're not seeing any any
+[00:52:04] better plan over a period of time, then
+[00:52:06] then you can drop out as well. If the
+[00:52:09] query is simple or and your system's
+[00:52:11] really fast and you don't have a lot of
+[00:52:12] rules to apply, you may end up just
+[00:52:14] exhausting all the possible combinations
+[00:52:16] and then you don't have to wait for the
+[00:52:17] timeout or or the cost threshold. you
+[00:52:19] just come back say I know this is the
+[00:52:20] optimal plan like select star from fu
+[00:52:22] that's pretty instantaneous right you
+[00:52:24] don't have to do a lot of rules to
+[00:52:26] figure out what you don't have to look
+[00:52:27] at a lot of bunch of alternatives you
+[00:52:29] can you can spit out something very
+[00:52:31] quickly [snorts]
+[00:52:33] the way to actually really do this is
+[00:52:34] actually not on wall clock time or all
+[00:52:37] these other things um it's actually
+[00:52:39] going to be number three is obvious you
+[00:52:41] always want to do number three but like
+[00:52:42] for this last one here instead of trying
+[00:52:44] to count how long I've run in SQL server
+[00:52:47] what they do is they count how many
+[00:52:49] transformation rules they've applied and
+[00:52:51] then when you exhaust the number of
+[00:52:53] these number of transformation rules
+[00:52:54] then it kicks out and and terminates the
+[00:52:57] search.
+[00:52:59] Anybody take a guess why they do this
+[00:53:01] instead of walk time
+[00:53:08] as you're guaranteed to get at least
+[00:53:09] what
+[00:53:14] >> they say it is you're you're guaranteed
+[00:53:16] to at least get one transformation
+[00:53:17] considered. Yeah, you would set the
+[00:53:18] treasure count to like I don't know
+[00:53:19] hundreds of thousand.
+[00:53:24] >> Yes. Bingo. They they said that
+[00:53:25] different hardware may have different
+[00:53:26] wall clock time or actually same
+[00:53:28] hardware but now the the system is being
+[00:53:31] overloaded because a lot of queries are
+[00:53:32] running and if I set it to the wall
+[00:53:35] clock time and my CPU is taxed out if I
+[00:53:38] you know one second when my CPU has is
+[00:53:41] overutilized I may not apply as many
+[00:53:43] rules versus like one second when it's
+[00:53:46] you know underutilized and I can use the
+[00:53:48] core to its fullest uh capabilities. So
+[00:53:50] this guarantees that no matter how
+[00:53:52] stressed out the system actually is
+[00:53:54] you're always guaranteed to produce the
+[00:53:56] same plan for the same query given the
+[00:53:58] same you know same same input
+[00:53:59] constraints
+[00:54:01] right so my SQL and SQL server they do
+[00:54:04] the first one right because in case of
+[00:54:06] or sorry Postgress and my SQL do the
+[00:54:08] first one case of Postgress there is no
+[00:54:10] concept of transformation rules that
+[00:54:11] applies and can start counting them
+[00:54:13] because it just has a bunch of if then
+[00:54:14] else statements that it always runs
+[00:54:15] through and the way SQL server does does
+[00:54:17] it and that'll be the the top down
+[00:54:19] search we'll see in a and they they're
+[00:54:21] they know all the they as they go along
+[00:54:23] they're sort of incrementally applying
+[00:54:24] rules and they just keep count of of how
+[00:54:27] many they've applied. If they exhaust
+[00:54:29] it, you at least need to get to the
+[00:54:31] bottom of the search tree so you have at
+[00:54:32] least one query plan uh that you can
+[00:54:35] actually then run. Um but you know it's
+[00:54:39] at least no matter whether you you're
+[00:54:40] again you're running on a machine that's
+[00:54:42] fully utilized or underutilized you
+[00:54:43] you'll always produce the same query
+[00:54:45] plan.
+[00:54:47] All right. All right. So, the first
+[00:54:48] thing we want to do is figure out, you
+[00:54:50] know, one of the things we have to do is
+[00:54:51] apply transformation to rules to figure
+[00:54:52] out how we're actually going to access
+[00:54:54] the data on our underlying tables,
+[00:54:56] right? And this could be through a
+[00:54:58] combination of things we'll see next
+[00:55:00] class, but like well, we want to look at
+[00:55:02] all the different choices that we have
+[00:55:04] for our accessing our table. And a
+[00:55:07] transformation rule can convert things
+[00:55:09] like you know scan get table fu or scan
+[00:55:12] table fu however you want to define it
+[00:55:13] and it can convert that into a physical
+[00:55:15] operator that either does a sequential
+[00:55:17] scan or an index scan or a multi-index
+[00:55:20] scan that we talked about last time
+[00:55:21] right so it look at the catalog look at
+[00:55:24] these statistical information and it can
+[00:55:25] say here's here's all the choices I have
+[00:55:28] for this for this accessing this data
+[00:55:30] and then applies transformation rules to
+[00:55:32] convert that logical scan operator into
+[00:55:34] the different physical operators.
+[00:55:37] And this is essentially repeating what
+[00:55:39] I've already said like again we look at
+[00:55:41] all the things we have the way to access
+[00:55:44] data and we just try out different
+[00:55:45] combinations of them based on what our
+[00:55:47] rules are allowed to do. In the end of
+[00:55:48] the day if we have no index we could use
+[00:55:52] because it's you know the predicates
+[00:55:53] don't match on it or the the you know
+[00:55:56] it's a it's a hash index and we want to
+[00:55:58] do a less than or greater than. the end
+[00:56:00] of the day, no matter what, we could
+[00:56:01] always convert a a logical scan operator
+[00:56:04] on table into a physical sequential
+[00:56:06] scan. Like that's the fallback choice
+[00:56:08] and it could be the slowest, but it's
+[00:56:10] something we we can always rely on.
+[00:56:11] [snorts]
+[00:56:13] For simple queries, uh there what is
+[00:56:15] known as called sarable. This is a
+[00:56:17] database term. It just means search
+[00:56:18] argument able. It comes from the 80s.
+[00:56:20] Um, and basically this says is like I
+[00:56:23] can have a transformation rule that that
+[00:56:25] looks at my scan operator, looks at my
+[00:56:26] predicate and just then looks in the
+[00:56:29] catalog and says, you know, here's an
+[00:56:31] index that I could use for this uh for
+[00:56:33] this predicate here. And I just convert
+[00:56:36] the the logical scan operator into a
+[00:56:38] physical operator on that index.
+[00:56:41] And it seems kind of obvious that like
+[00:56:42] you know you could always just do this
+[00:56:44] always just look at like oh I definitely
+[00:56:46] need to access this data and I need to
+[00:56:48] uh or I want to be sorted on whatever
+[00:56:51] this column is but a lot of these
+[00:56:52] systems choke up on this or I may decide
+[00:56:54] even though I have the index uh in in a
+[00:56:57] call space transformation that I don't
+[00:56:59] actually even want to apply it because
+[00:57:01] it's it's just better because it's to do
+[00:57:03] a central scan. So let's do a quick demo
+[00:57:06] of that.
+[00:57:10] All right, let me log in. [snorts]
+[00:57:13] So I pre-populated some some data in
+[00:57:15] Postgress. I think it's 10 million uh 10
+[00:57:19] million rows which is a bunch of random
+[00:57:21] random information
+[00:57:24] right uh do limit one right there's a
+[00:57:28] primary key called ID and then a value
+[00:57:30] just it's a random random integer and I
+[00:57:32] think I have um
+[00:57:37] I probably think 10 million yeah okay so
+[00:57:43] I've created an index on
+[00:57:47] on the value column,
+[00:57:49] right? So when you in the bottom here, I
+[00:57:51] created a B+3 index. You always have one
+[00:57:53] in the primary key, but I also created a
+[00:57:54] B+ 3 index on the value column. [snorts]
+[00:57:58] So without running the queries again, we
+[00:58:00] can put the we can put the explain uh
+[00:58:03] keyword in front of our query and this
+[00:58:07] will give us the query plan here. Right?
+[00:58:09] So here I'm doing a select star select
+[00:58:12] ID from the xxx table where value is
+[00:58:14] greater than equal to 1 2 3 and value is
+[00:58:16] less than 456 and then in this case here
+[00:58:19] post decides that yes I want to use the
+[00:58:21] index on the value column and it go and
+[00:58:24] and you know instead of doing a
+[00:58:26] sequential scan [snorts]
+[00:58:28] likewise if I do a lookup like this I
+[00:58:30] want to do a
+[00:58:33] uh select from the table order by the
+[00:58:36] the value column and give me the the top
+[00:58:39] the top top 20 values, right? In this
+[00:58:42] case here, Postgress recognizes I again
+[00:58:44] I have a an index on the the value
+[00:58:46] column and I the data is going to be
+[00:58:49] sorted the way I want. So it's it's
+[00:58:51] allowed to go ahead and use that. See if
+[00:58:53] it finds me. No, didn't find me. Okay,
+[00:58:56] but Postgress is optimizer is dumb.
+[00:59:01] Let's look at this query. What am I
+[00:59:02] doing? Same query as above. give me the
+[00:59:05] top 20 values. But in my order by
+[00:59:07] clause, I put value plus zero.
+[00:59:10] Value is an integer column. That means
+[00:59:14] you add zero to it. It's the same value,
+[00:59:17] right?
+[00:59:20] Well, I've already told you what's going
+[00:59:20] to happen. I say let's vote see what
+[00:59:22] Postgress whether Postgress picks the
+[00:59:23] index or not. But I already told you
+[00:59:24] it's stupid and it doesn't,
+[00:59:28] right? So this seems as humans you look
+[00:59:30] at this say well clearly plus zero I can
+[00:59:32] just drop that because I know it's an
+[00:59:34] integer
+[00:59:36] right
+[00:59:38] I think I and if I go back correctly I I
+[00:59:40] made the column
+[00:59:44] I didn't make it not null maybe that's
+[00:59:46] that's why right but it could look at it
+[00:59:49] statistics and recognize that I don't
+[00:59:51] have any null values right in its cost
+[00:59:54] model but it can't do that
+[00:59:57] right so if Let's see. I doubt it'll
+[01:00:00] even do that. So, if I drop the table,
+[01:00:02] this should go fast.
+[01:00:04] Um,
+[01:00:06] I add it back. And here now, I'm going
+[01:00:08] to say the value is not null. And let me
+[01:00:11] go generate some um
+[01:00:15] this query here is the insert into that
+[01:00:18] just generates generate series makes a
+[01:00:20] bunch of values. And I'm going to insert
+[01:00:22] that into into the table. It only takes
+[01:00:26] a few seconds.
+[01:00:27] um [snorts]
+[01:00:31] in theory.
+[01:00:33] There it goes. All right. So now and let
+[01:00:35] me add now the index on
+[01:00:40] on that column. Should take a few
+[01:00:42] seconds. And
+[01:00:46] now I go on the same there's the first
+[01:00:48] query without the plus zero and it's
+[01:00:50] able to figure out that I should use the
+[01:00:51] index.
+[01:00:53] In this case here, even though it's not
+[01:00:55] null, it can't use the index.
+[01:00:58] Now, we'll talk about analyze next
+[01:00:59] class, but that's basically a way for it
+[01:01:01] to collect statistics about the the the
+[01:01:04] um the table. In this case here, it has
+[01:01:08] all the it needs and it still can't pick
+[01:01:11] the index.
+[01:01:13] >> Yes.
+[01:01:18] >> The question is why does it why does it
+[01:01:19] think the question has a lower cost than
+[01:01:20] what? Sorry.
+[01:01:23] So let's see.
+[01:01:26] >> So here's here's the first one
+[01:01:28] >> and here's the second one.
+[01:01:31] Right. So you're saying for what? Which
+[01:01:33] one?
+[01:01:36] >> Which one? So which one? The for which
+[01:01:38] operator? So each each operator has its
+[01:01:39] own cost. Right.
+[01:01:47] >> Why is one in the top smaller than this
+[01:01:49] one?
+[01:01:49] >> Yeah.
+[01:01:49] >> Because this is a special this is
+[01:01:50] reading all the data. Yeah, like what
+[01:01:52] I'm saying like the query is order by
+[01:01:55] value plus zero. As a human, you know
+[01:01:58] any integer plus zero is the same in
+[01:02:00] same value. So that plus zero means
+[01:02:01] nothing. Postgress sees that says oh I
+[01:02:03] can't do this because this can't match.
+[01:02:05] It's trying to do like a string match on
+[01:02:07] the the name of the column and if it
+[01:02:09] sees any expression like a plus zero, it
+[01:02:11] knows to it it it uh it just it doesn't
+[01:02:15] pick the index
+[01:02:17] >> case like no matter how many plus the
+[01:02:26] statement is no matter how many uh no
+[01:02:28] matter what like plus zero times one
+[01:02:30] right like plus a thousand should should
+[01:02:33] just always use the index
+[01:02:35] >> doesn't
+[01:02:37] >> but like [snorts]
+[01:02:44] >> uh the same is if I need to uh if I if I
+[01:02:47] want to do an an expression in my Like
+[01:02:51] like do it in a principal way.
+[01:02:53] >> Yes. Yes. Do it in a principal way. Yes.
+[01:02:56] They're not.
+[01:02:57] >> Yeah.
+[01:02:58] >> Because the optimizer says up I can't
+[01:02:59] it's not an exact match. I can't do it.
+[01:03:03] >> Uh it's the same as partial evaluation
+[01:03:04] is hard. Uh why
+[01:03:09] >> not many what
+[01:03:11] >> database compilers or compiler compiler?
+[01:03:15] >> I mean datavis could do it. So, I I
+[01:03:17] don't have SQL Server running, but like
+[01:03:19] SQL Server handles this no problem, but
+[01:03:21] that's like SQL Server.
+[01:03:24] >> I I I I wish I could get it working. I
+[01:03:27] don't have it working. Uh
+[01:03:30] um yeah, I I was rushing this. going to
+[01:03:33] work. But let me try um
+[01:03:36] let's try duct DB
+[01:03:42] overflow.
+[01:03:46] >> Statement is plus one might overflow.
+[01:03:48] Yes.
+[01:03:50] >> But if if you have statist statical
+[01:03:52] information about your queries or so
+[01:03:54] your data, you can say no value is
+[01:03:56] greater than whatever the upper limit or
+[01:03:58] even close to it. So therefore it's safe
+[01:04:00] for me to do it. Now your statistics
+[01:04:01] might be wrong.
+[01:04:03] And therefore you're very conservative
+[01:04:04] about it. Yes. But you don't need that
+[01:04:06] for
+[01:04:08] uh like you could still do the order by
+[01:04:13] and and again again because you know
+[01:04:14] like if you if it's just like plus
+[01:04:16] something right like the
+[01:04:21] how does this actually I I don't know
+[01:04:23] what they would do if for the
+[01:04:27] I don't know I actually don't know how
+[01:04:29] they would handle the overflow if you do
+[01:04:30] the projection after the fact. uh
+[01:04:35] cuz it's still technically the largest
+[01:04:38] but it's still would you might it might
+[01:04:40] throw an error I don't know
+[01:04:43] you get into like semantics of SQL like
+[01:04:44] does it round or not round right and
+[01:04:46] that's
+[01:04:52] >> I rounding gets weird um
+[01:04:58] >> now we're now we're getting into a
+[01:04:59] rabbit hole uh hold up so I have four
+[01:05:01] like Say I have 4.5. Say 4.2.
+[01:05:05] Right?
+[01:05:06] >> If I cast that to an int, what number
+[01:05:08] should I get?
+[01:05:09] >> Four.
+[01:05:09] >> Who says raise your hand and say four?
+[01:05:13] Raise your hand. You say say five.
+[01:05:16] Raise your hand. Say throw an error.
+[01:05:19] There's an error. Right.
+[01:05:23] So what if I do that?
+[01:05:26] Doesn't like that. What about this?
+[01:05:29] Takes four. All right, let's try DTB.
+[01:05:34] All right, so select 4.2
+[01:05:39] cast in it. All right, raise your hand
+[01:05:41] if you say an error. Raise your hand to
+[01:05:43] say four. Raise your hand to say five.
+[01:05:48] Four. All right, let's try 4.8.
+[01:05:53] Raise your hand. Clearly not an error.
+[01:05:55] Say raise your hand to say four. Raise
+[01:05:58] your hand and say five.
+[01:06:02] Five.
+[01:06:04] Right. But we just we just did this in
+[01:06:06] Postgress and showed an error. Right. Uh
+[01:06:09] Firebolt might work too because it I
+[01:06:12] think it uses the Postgress parser. Um
+[01:06:16] I I don't think this is going to work.
+[01:06:18] 4.2.
+[01:06:20] No, it doesn't doesn't like that. that
+[01:06:22] dot that colon dot colon colon and then
+[01:06:24] the the um
+[01:06:27] the uh and then what the type is that's
+[01:06:30] a that's a that's a it's a postress
+[01:06:32] idium that duckb picked up um
+[01:06:38] >> uh in postgress
+[01:06:40] so select oh you're
+[01:06:43] 4.2
+[01:06:45] cast 4.2 do as
+[01:06:48] integer.
+[01:06:53] Uh, what am I doing wrong?
+[01:06:55] [clears throat]
+[01:07:02] No, no,
+[01:07:05] you got to do
+[01:07:08] like that.
+[01:07:11] >> So, it can't cast. And I forget. Is this
+[01:07:13] the one that went signed?
+[01:07:19] It might be my SQL.
+[01:07:23] It restarted. Sorry. Um, all right.
+[01:07:27] I forgot the point of this. Uh,
+[01:07:32] actually, I want to show something duct
+[01:07:33] real quick.
+[01:07:36] So, duct DB, I've created the same
+[01:07:37] table. Um, and I can run the same
+[01:07:40] queries as before.
+[01:07:43] Right? [snorts] And even though I had an
+[01:07:45] index uh on this table, uh it decides it
+[01:07:50] to still do a sequential scan. Right?
+[01:07:54] Now, if I do this, the one we query we
+[01:07:56] had before again, give me the top 20
+[01:07:59] uh values after ordering by who says
+[01:08:03] it's going to use the index? Raise your
+[01:08:05] hand. Very few. Who says it's going to
+[01:08:07] do a special scan?
+[01:08:10] I tricked you. They're all wrong. It's
+[01:08:12] going to do two sequential scans.
+[01:08:14] All right, that's kind of hard to see.
+[01:08:16] Um, I'll just scroll up. So, what is it
+[01:08:20] doing? So, it's doing a sequential scan
+[01:08:23] uh once on the on the side here.
+[01:08:27] uh so on the one side and that's and
+[01:08:29] it's the
+[01:08:31] then it's going to get the top end
+[01:08:33] values of that and then it builds a hash
+[01:08:35] join and then then scans the table again
+[01:08:38] and joins it with the self and trying
+[01:08:40] finds all the matches
+[01:08:42] and again according to to ductb's cost
+[01:08:45] model this says it's just it's just
+[01:08:46] faster to do that so no matter what I
+[01:08:47] put here I put a plus zero right it's
+[01:08:50] still going to pick the same thing and
+[01:08:52] if I actually run it as we saw before
+[01:08:55] although this is parallel queries like
+[01:08:57] it can rip through this in what is that
+[01:09:00] 0.01 uh 10 milliseconds
+[01:09:04] uh whereas Postgress will take
+[01:09:12] you know almost a second. [snorts] Okay
+[01:09:18] >> that this was central scan if I give it
+[01:09:19] get rid of this.
+[01:09:21] All right still slower.
+[01:09:27] Yeah.
+[01:09:29] >> Statement is I'm comparing between
+[01:09:31] column store and rotor. Yeah. I didn't
+[01:09:32] say it was a fair comparison. I'm just
+[01:09:34] saying that like
+[01:09:37] >> uh statement is what if I force I don't
+[01:09:39] know if they querance I forget. I think
+[01:09:42] it might I don't I know how to do it in
+[01:09:44] postgress and other things. All right.
+[01:09:46] Sorry. That was that was I love demos. I
+[01:09:49] love SQL. All right. Let's see if we get
+[01:09:50] this to work again.
+[01:09:53] um or not,
+[01:09:56] whatever. If it finds me, it finds me.
+[01:09:59] Whatever. All right. Cool. Um all right.
+[01:10:02] The thing I want to get into again
+[01:10:04] that's important is understand is
+[01:10:05] there's for a call space.
+[01:10:15] >> Let's screw that one in the end. The
+[01:10:16] question is which one's the least worst
+[01:10:18] one?
+[01:10:20] The Germans have the best one. Umbra uh
+[01:10:23] duct DB copied what Umbra did, but
+[01:10:26] actually they didn't copy from Umbra.
+[01:10:27] They copied from the first German
+[01:10:28] system, Hyper. The Umbra one has a bunch
+[01:10:31] of other stuff and they write about in
+[01:10:32] papers that blows duct out of the water,
+[01:10:34] but that one's not open source and it's
+[01:10:36] commercialized to Cedarb.
+[01:10:38] Umbra has the best
+[01:10:41] bottom up one. SQL server has the best
+[01:10:44] top down one.
+[01:10:46] The theory I think shows the bottom one
+[01:10:49] is actually better than top down. top
+[01:10:51] down has other advantages that we'll
+[01:10:53] cover along. All right. So,
+[01:10:56] all right. There's two ways to implement
+[01:10:57] your C optimizer. When you do these
+[01:10:58] these search and when you start looking
+[01:11:00] at multiple relations, you're going
+[01:11:01] bottom up or top down. So, in bottoms
+[01:11:03] up, the idea is that you start with
+[01:11:04] nothing. You have nothing in your in
+[01:11:07] your query plan. You just have like what
+[01:11:08] the leaves of the the query plan are and
+[01:11:10] then you build it up incrementally to
+[01:11:13] get to the final outcome that you want.
+[01:11:15] In a top- down optimizer, you start with
+[01:11:17] the final result that you want. like I
+[01:11:19] want to produce the join of this this
+[01:11:20] and this whatever sort of I whatever
+[01:11:22] whatever you know whatever is in my
+[01:11:23] query plan or my my in my query and then
+[01:11:26] I traverse down search down the the
+[01:11:29] query plan adding the operators I need
+[01:11:31] to get me to that result until I I reach
+[01:11:34] the leaf nodes and again me sitting with
+[01:11:36] my hands making little finger gesture
+[01:11:38] doesn't mean anything so let's look at
+[01:11:40] examples see see what I'm talking about
+[01:11:41] for now for all these examples we're
+[01:11:43] going to have two distinctions between
+[01:11:44] our operators and our query plan we'll
+[01:11:46] have the light gray one to be logical
+[01:11:47] operators and then the The darker ones
+[01:11:49] be the physical operators,
+[01:11:51] right? So bottoms up, we start with uh
+[01:11:55] the the bottom of this delete nodes. I
+[01:11:56] want to I want to scan artists. I want
+[01:11:58] to scan appears. And then eventually I
+[01:11:59] want to get into the artist appears uh
+[01:12:02] join output. So what I would do is I
+[01:12:05] start start from the bottom and I look
+[01:12:07] at apply my transformation rules and say
+[01:12:08] here's all the choices I would have as I
+[01:12:10] go up the query plan until I reach my
+[01:12:13] final destination. And whatever path to
+[01:12:15] that final destination at the top has
+[01:12:17] the lowest cost. That's my optimal plan.
+[01:12:19] And I choose that. In top down or
+[01:12:22] backward chaining, you start at the very
+[01:12:24] top here and you say, well, what do I
+[01:12:27] need to do to get down to the to the
+[01:12:29] leaf nodes? So, first thing I have my my
+[01:12:31] artist appears. I try apply this first
+[01:12:34] choice
+[01:12:35] and because now I need to at least get
+[01:12:37] to the leaf nodes once so I can at least
+[01:12:39] have some query plan. I would do basic
+[01:12:41] basically a depth first search going
+[01:12:42] down one side of the query plan. get
+[01:12:44] down to this leaf node, look at all my
+[01:12:45] possible choices, get down and then come
+[01:12:47] back up and look at down this path and
+[01:12:49] look at all my possible choices and then
+[01:12:51] I end up with the the the final result
+[01:12:52] for my query. [snorts]
+[01:12:55] Okay, let me go through more details of
+[01:12:56] these. This is this is a high level the
+[01:12:58] two distinctions that we're going to
+[01:12:59] have in our implementations,
+[01:13:02] right? And if you're coming from the
+[01:13:04] sort of sort of classical optimization
+[01:13:06] world, it's backward chaining versus
+[01:13:08] forward chaining.
+[01:13:11] All right, let me skip this. This is
+[01:13:13] basically saying that if there are p
+[01:13:16] there's patterns you can recognize in
+[01:13:17] your query where you know that it's it's
+[01:13:20] if a query of a certain category like
+[01:13:22] when we talked about snowflake schemas
+[01:13:23] and star schemas if you know it's going
+[01:13:25] to be like I have a single fact table
+[01:13:27] and a bunch of dimension tables then you
+[01:13:30] you don't even bother doing a full
+[01:13:31] search you just sort of you bootstrap it
+[01:13:34] with the a plan structure they think is
+[01:13:37] close to the optimal and you start your
+[01:13:38] search from there again ra ra ra ra ra
+[01:13:39] ra ra ra ra ra ra ra ra ra ra ra ra ra
+[01:13:39] ra ra rather from starting from scratch.
+[01:13:41] >> [snorts]
+[01:13:42] >> All right, so bottom optimization, we're
+[01:13:44] going to do a bunch of static rules that
+[01:13:45] we had beginning to do this initial
+[01:13:46] optimization, and then we're going to
+[01:13:48] use dynamic programming, uh, which I
+[01:13:50] realized I shouldn't rush through in the
+[01:13:51] last six minutes, but let me get through
+[01:13:53] the bottoms up, and we'll come back to
+[01:13:54] top down next class. All right, so
+[01:13:56] you're going to do dynamic programming,
+[01:13:57] which is divide and conquer. Start
+[01:13:59] looking at the different choices you
+[01:14:00] have going up to the query plan, and you
+[01:14:02] work your way up into the top. the very
+[01:14:04] first bottoms up query optimizer. The
+[01:14:06] first call costbased query optimizer
+[01:14:07] ever was IBM's system R. And basically
+[01:14:11] what they do is they would break up the
+[01:14:12] query plan into these blocks like sort
+[01:14:15] of sub plans and they would optimize
+[01:14:17] them and they would sort of stitch the
+[01:14:19] blocks back together to produce the the
+[01:14:20] final result that they would want.
+[01:14:22] Because it was the 1970s, computer
+[01:14:24] hardware was very limited and not a lot
+[01:14:26] of memory and and you know single core
+[01:14:28] very weak CPUs. they had to do a bunch
+[01:14:30] of uh simple optimizations to throw away
+[01:14:33] results to reduce the search base to
+[01:14:35] make the problem more tractable. So one
+[01:14:36] of the assign decisions they made is
+[01:14:38] that they would only consider left deep
+[01:14:40] trees and they would never look at right
+[01:14:41] deep trees or bushy trees. So left deep
+[01:14:43] tree basically says I'm going to join
+[01:14:45] two tables A and B and whatever the
+[01:14:47] output of that is I'm going to join with
+[01:14:48] the next table and whatever the output
+[01:14:49] of that I join with the next table.
+[01:14:51] Right? Sort of it's all it's left deep
+[01:14:52] because it's going up on on one side of
+[01:14:54] the query plan rather than have this
+[01:14:56] example we had before. I could join A
+[01:14:58] and B and then join C and D and then
+[01:15:00] take the output of those two joins and
+[01:15:01] then join them together. So system R is
+[01:15:04] not going to do any of that. Some
+[01:15:05] systems I think Postgress still does
+[01:15:07] does this today like they won't support
+[01:15:09] bushy joins as an optimizer again just
+[01:15:11] just to reduce the the search search
+[01:15:13] space. [snorts]
+[01:15:15] All right. So the way it work is you you
+[01:15:17] first look at all your your your the
+[01:15:20] leaf notes and your query plan all your
+[01:15:21] access methods and you apply simple
+[01:15:23] heristics to say which are the best
+[01:15:24] choices based on what I have in my
+[01:15:26] catalog. Then you're going to apply
+[01:15:28] transformation rules to enumerate all
+[01:15:30] possible joint arguments you would have
+[01:15:31] for your table and then you then you
+[01:15:34] figure out which one is going to be have
+[01:15:35] the lowest cost. This diagram doesn't
+[01:15:38] mean anything. So let's look at at the
+[01:15:39] tree structure. So again I start at the
+[01:15:41] beginning. I would figure out all the
+[01:15:43] different ways I could I could access t
+[01:15:45] these three tables artist album appears.
+[01:15:48] And then once I have that now I want to
+[01:15:49] figure out what's the join order I want
+[01:15:50] to use. What path I want to get up to my
+[01:15:53] final outcome where I join artist
+[01:15:54] appears and album. So in the first level
+[01:15:57] of the tree search I would look at all
+[01:15:59] possible combinations of joining these
+[01:16:01] three three different tables here right
+[01:16:03] so I could do a and now I'm looking at
+[01:16:05] the physical operator so I could join
+[01:16:06] hash hash join on artist and appears
+[01:16:09] merge sort merge join on artisan appears
+[01:16:11] right and so forth and this obviously
+[01:16:13] this doesn't fit in powerpoint so
+[01:16:14] imagine it's all possible combinations
+[01:16:16] going here on the other side then I
+[01:16:18] invoke the cost model and say okay these
+[01:16:20] different physical operators that I have
+[01:16:22] which one going which which path going
+[01:16:25] up to the next logical operators in my
+[01:16:28] in my in the tree. Which one each of
+[01:16:31] those have the lowest cost? And I'm
+[01:16:32] going to throw away the ones that that
+[01:16:34] don't have the highest cost, right?
+[01:16:36] Highest or best cost and lowest cost
+[01:16:38] dependent you're trying to minimize or
+[01:16:40] act maximize for. And then I do the same
+[01:16:42] thing again. I look at all possible join
+[01:16:44] orders for the the next two tables in in
+[01:16:47] the query plan. Right? So taking the
+[01:16:49] output of artist appears and I want to
+[01:16:51] join with album. So I look at the hash
+[01:16:52] joint, look at the merge joint, I can
+[01:16:54] look at an S loop joint if I wanted and
+[01:16:55] have more space in PowerPoint. I look at
+[01:16:57] all those possible combinations and then
+[01:16:59] same thing I pick for each path which
+[01:17:00] whatever one has the lowest cost. Then I
+[01:17:03] look now for all the paths from the from
+[01:17:05] the bottom the the starting point to the
+[01:17:08] top which path has the the global uh
+[01:17:10] lowest cost and that's the one I want to
+[01:17:13] end up with at the end.
+[01:17:17] Right? It's just dynamic programing.
+[01:17:19] means you're dividing up by looking at
+[01:17:20] one level at a time rather looking at
+[01:17:22] all possible join orderings at at the
+[01:17:24] same time.
+[01:17:26] Of course, the challenge in this
+[01:17:27] implementation is that they had no
+[01:17:29] notion of of the physical properties of
+[01:17:31] the data. So they had no notion of a
+[01:17:32] sort order. So if my query had an order
+[01:17:35] by clause uh and in this case here they
+[01:17:38] couldn't account for that in in their
+[01:17:40] implementation and hash joins make all
+[01:17:43] the data random anyway. So the way they
+[01:17:46] way to make this work is they would
+[01:17:47] embed in the um in the cost model
+[01:17:51] itself. They would say, "Oh, well after
+[01:17:53] I figure out the the the path I want to
+[01:17:56] go through, which one is, you know, I I
+[01:17:58] would I would give a penalty to any
+[01:18:01] query plan that doesn't have the data
+[01:18:02] sorted in the way that I want it versus
+[01:18:04] the ones that do have sorted the data
+[01:18:05] that I wanted."
+[01:18:07] Okay.
+[01:18:09] Yes.
+[01:18:10] that
+[01:18:13] >> his question is is this guaranteed be
+[01:18:14] optimal? No. Of course. No.
+[01:18:16] >> Yeah. Can't. Yes.
+[01:18:23] >> The question is the statement is and
+[01:18:24] they're correct. This is quadratic cost
+[01:18:26] if you only consider left deep trees.
+[01:18:27] Yes. And so if you throw away bushy
+[01:18:29] plans and right deep trees, it reduces
+[01:18:31] quite significantly. But it's still
+[01:18:33] quadratic.
+[01:18:40] Then it's that large number that that
+[01:18:42] your cataly number. Yes, I was talking
+[01:18:43] about board. Yes. And that's massive.
+[01:18:46] Okay, let's stop here again. This was
+[01:18:47] rushed so I apologize. We'll pick up on
+[01:18:50] this on Wednesday. We'll go over this
+[01:18:52] and the topization and then we'll spend
+[01:18:54] the rest of the class talking about uh
+[01:18:57] talking about um cost models. Okay. All
+[01:18:59] right. Hit it. [music]
+[01:19:04] Bats over
+[01:19:08] the click clips over [music]
+[01:19:15] [music]
+[01:19:23] the [music]
+[01:19:24] fortune
+[01:19:30] maintain [music]
+[01:19:32] flow with the brain.
+[01:19:37] >> [music]

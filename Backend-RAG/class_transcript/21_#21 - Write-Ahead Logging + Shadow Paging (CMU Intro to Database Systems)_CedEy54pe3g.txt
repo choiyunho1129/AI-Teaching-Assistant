@@ -1,0 +1,2249 @@
+[00:00:00] [music]
+[00:00:06] [music] I'm still
+[00:00:08] associated.
+[00:00:12] [music]
+[00:00:17] [music]
+[00:00:26] Round of applause if you need your cash
+[00:00:28] [applause]
+[00:00:29] again. take out. So, a quick comment. I
+[00:00:32] uh was going to give you a thank you for
+[00:00:35] being professional this semester. Like
+[00:00:36] my other DJs always had like
+[00:00:39] ex-girlfriend showing up at my office or
+[00:00:41] like you know behind on child support
+[00:00:43] payments, but you've been very
+[00:00:44] professional. I appreciate you being
+[00:00:45] here always on time. So, thank you again
+[00:00:47] for even though this is not over. I was
+[00:00:48] just thinking about this morning. Oh
+[00:00:49] man, DJ Cash has so many problems. It's
+[00:00:51] kind of nice. Um all right, so guys, a
+[00:00:53] lot to get started, a lot to discuss.
+[00:00:55] Let's get started. Um again for the for
+[00:00:58] you guys in the class the docket is
+[00:01:00] looks like this as we finish up near the
+[00:01:02] end of semester. Homework five is going
+[00:01:04] be due again this Sunday coming up.
+[00:01:05] Project 4 went out last week. The
+[00:01:08] recitation will be tomorrow November
+[00:01:09] 18th at 8 p.m. on Zoom and the link is
+[00:01:12] on Piaza. And again the write up is
+[00:01:16] quite exhaustive uh deliberately so
+[00:01:18] because transactions are super hard.
+[00:01:20] We're trying to be very thorough on what
+[00:01:21] exactly you need to do uh for project
+[00:01:23] four so you don't you don't get lost.
+[00:01:24] Um, so please read that before you show
+[00:01:26] up to the recitation. And then the final
+[00:01:28] exam is going to be Thursday, December
+[00:01:30] 11th at 1 p.m. It's a three-hour exam. I
+[00:01:33] don't know where it's going to be. They
+[00:01:35] haven't scheduled that yet. Uh, so
+[00:01:36] please don't make travel plans before
+[00:01:38] this date because there's no makeup and
+[00:01:39] there's no early early exams. Any
+[00:01:42] questions about any of these things?
+[00:01:44] Yes.
+[00:01:46] >> Chris, what happened to the advanced
+[00:01:47] class 721? Uh, other people have emailed
+[00:01:50] me about this. Uh, Jes Patel is the data
+[00:01:53] professor at CMU. uh in the CS
+[00:01:55] department they made him the department
+[00:01:57] chair because nobody else wanted to do
+[00:01:58] it but it's interim department chair uh
+[00:02:00] and as such he they were supposed to
+[00:02:02] find a replacement for him so that he
+[00:02:04] could teach the intro class next
+[00:02:05] semester and I could teach the advanced
+[00:02:07] class they have not found replacement
+[00:02:09] yet they haven't done the dean hasn't
+[00:02:11] started the external search yet um so at
+[00:02:14] this point there's nobody nobody can
+[00:02:16] teach the class other than me next
+[00:02:17] semester so I can't teach 721
+[00:02:20] >> you think
+[00:02:22] >> the question is can do I think we find
+[00:02:23] replacement
+[00:02:25] be nice. Yes. Do you want Do you want to
+[00:02:28] be department chair?
+[00:02:30] No. No. I mean, it's a it's a thankless
+[00:02:33] job. Yes. At this point, like I like
+[00:02:36] it's outside my hands. I don't have
+[00:02:37] control. I apologize, but there's
+[00:02:39] nothing I can do at this point.
+[00:02:41] >> Uh the question is does he get a raise?
+[00:02:43] Again, that's above my pay scale. I
+[00:02:45] don't know, right? All I know is he's
+[00:02:47] teaching the 721 now and being
+[00:02:49] department chair and trying to do like,
+[00:02:51] you know, awesome data research with me.
+[00:02:52] So it's he's not it's not sustainable.
+[00:02:57] So if it gets added back, I will email
+[00:03:00] everyone. But at this point, don't bank
+[00:03:02] on it.
+[00:03:05] >> The question is what? I don't know.
+[00:03:10] >> I mean, ide like Yeah. Like I can't be
+[00:03:13] like two weeks into the semester. Oh,
+[00:03:14] guys, it's gonna come back. No, like
+[00:03:17] January, early January. But again, don't
+[00:03:18] don't bank on it.
+[00:03:21] Yeah, I'm I'm not happy to It is what it
+[00:03:24] is, but what can you do? Um, you it used
+[00:03:28] to be the intro class was only once per
+[00:03:30] semester because it was just me teaching
+[00:03:31] it. Uh, and the weight list was 500
+[00:03:33] people, right? And so we we stole
+[00:03:36] gymnast from Wisconsin. Maybe we'll hire
+[00:03:39] somebody else. Uh but even then like
+[00:03:43] if you hire somebody else in if you hire
+[00:03:46] another Davis per Davis person this year
+[00:03:48] then that person could potentially teach
+[00:03:50] the intro class in the in the fall and
+[00:03:54] then I could teach 721 in the fall but
+[00:03:56] spring is not looking good. Okay. All
+[00:03:58] right. So moving on. Uh what else we
+[00:04:00] have going on? We have a lot of cool
+[00:04:02] data talks coming up tonight or today
+[00:04:04] after this class. We'll have uh Ben who
+[00:04:06] gave the talk in class before from Fyal
+[00:04:08] talk about how they support Iceberg.
+[00:04:09] Now, uh Snowflake is on campus today and
+[00:04:12] tomorrow. One of my former students is
+[00:04:13] giving a talk tomorrow at uh 12:00. I
+[00:04:16] think the university recruiter is here
+[00:04:18] as well. Uh I don't know what I know
+[00:04:20] they've made some offers, some students
+[00:04:22] for full-time positions. I don't know
+[00:04:23] what the status of internships and um
+[00:04:26] full-time offers beyond that from
+[00:04:27] Snowflake, but they're on campus here if
+[00:04:29] you want to meet up and talk to them.
+[00:04:30] And then the following week we'll have
+[00:04:32] uh it's this is a a system out of the UK
+[00:04:35] called XTDB. This is a weird one. It's a
+[00:04:38] time series database but it runs on
+[00:04:39] multiple dimensions of time. Uh we don't
+[00:04:42] really cover time series databases in
+[00:04:44] here class but just think of like I want
+[00:04:46] to keep track of like stock ticks when
+[00:04:48] these events occur. And then I also want
+[00:04:50] to keep track of like I have another
+[00:04:53] dimension of time like what would happen
+[00:04:54] if I traded this stock at a at at an
+[00:04:56] earlier point in time. So you have now
+[00:04:58] you have sort of two parallel dimensions
+[00:04:59] running on it. It's wild stuff. This is
+[00:05:02] used not this system but time series
+[00:05:04] abases are widely used in fintech and
+[00:05:07] trading world. But again that that'll be
+[00:05:09] next week at uh on the zoom seminar.
+[00:05:12] Okay.
+[00:05:14] All right. So last class was the last
+[00:05:16] lecture we did on concurrency tool and
+[00:05:18] we finished up talking about multi
+[00:05:20] version concurrent control and we said
+[00:05:21] this was a mechanism we could allow us
+[00:05:22] to basically make multiple logical vers
+[00:05:27] sorry multiple physical versions of a
+[00:05:29] logical object in our database. So
+[00:05:31] instead of overwriting the the data
+[00:05:33] directly, we'll make a copy or make a an
+[00:05:37] extra physical version that has either
+[00:05:39] the delta of the change or the actual
+[00:05:41] change itself uh in in our system so
+[00:05:44] that we can do a bunch of tricks of
+[00:05:46] allowing consistent snapshots of the
+[00:05:48] database when we go read things. And we
+[00:05:50] talked about how like not just in MVPC
+[00:05:52] but all the other concurrent protocols
+[00:05:53] we talked about before how the design
+[00:05:56] decisions we make in our concurrent
+[00:05:58] protocols are going to affect all
+[00:05:59] throughout all the other parts of the
+[00:06:01] system because the other parts of the
+[00:06:02] system need to be aware of transactions
+[00:06:04] and what transactions are doing to uh in
+[00:06:08] the system to make sure we do we're
+[00:06:09] doing things correctly. So what we
+[00:06:12] talked about so far has given us three
+[00:06:14] of the the the properties of assets. So
+[00:06:17] we got atomicity, consistency, and
+[00:06:19] isolation. Today's class and next class,
+[00:06:21] we're going to talk about how we
+[00:06:22] guarantee durability as well as
+[00:06:25] atomicity after a crash. Okay, so here's
+[00:06:29] the motivation of the problem we're
+[00:06:30] trying to solve here today or for this
+[00:06:32] week. We have a transaction T1, which
+[00:06:34] read on a, write on A, uh, and and then
+[00:06:37] commit, right? So we know how to do
+[00:06:39] reads, right? Ignoring how we find
+[00:06:42] object A, right, in in a page on disk,
+[00:06:45] index, whatever, it doesn't matter,
+[00:06:46] right? We know that in order to read
+[00:06:48] this object, we first got to make a copy
+[00:06:50] of the the page out on disk in our
+[00:06:52] nonvolatile storage, bring that into our
+[00:06:54] buffer pool, hand out the pointer to the
+[00:06:56] execution engine so the operators can
+[00:06:58] can access this data. Then now we want
+[00:07:01] to do a write on a
+[00:07:04] ignoring multi- versioning. Say, you
+[00:07:06] know, I'm doing a single version system.
+[00:07:08] uh I apply my change directly in my in
+[00:07:10] my my page in my buffer pool, right? And
+[00:07:14] then I go ahead and commit.
+[00:07:16] Again, the property of commit we is that
+[00:07:18] we're we're telling the outside world
+[00:07:20] that all the changes for your your
+[00:07:21] transaction uh have the asset guarantees
+[00:07:24] that we care about, right? So, we've
+[00:07:26] told the outside world that our
+[00:07:27] transaction has committed. But then the
+[00:07:29] problem is if there's a bad storm and
+[00:07:32] there's a major disruption to power
+[00:07:34] ignoring whether we have battery backups
+[00:07:36] or whatever, doesn't matter.
+[00:07:37] Right? We the system crashes and we lose
+[00:07:41] everything in our in our buffer pool. Of
+[00:07:44] course, the problem here is that we told
+[00:07:46] the outside world that our transaction
+[00:07:48] committed and we applied their change.
+[00:07:50] But now we if we upon recovery, assuming
+[00:07:52] we get power again, when we come back,
+[00:07:54] we're not going to see that modification
+[00:07:55] we made to a because we didn't write it
+[00:07:58] out to disk.
+[00:08:00] So that's the problem we're trying to
+[00:08:01] solve today and next class. How do we
+[00:08:03] make sure that if we tell the outside
+[00:08:05] world your your connection has
+[00:08:06] committed, how do we make sure that no
+[00:08:07] matter what happens to our database
+[00:08:10] system, even if the data center melts
+[00:08:12] down,
+[00:08:13] uh we won't solve that problem this
+[00:08:14] week. That'll be when we talk about
+[00:08:15] distributed databases, but like the
+[00:08:16] whole thing falls in a giant sinkhole,
+[00:08:19] we can still come back and and recover
+[00:08:22] your your data.
+[00:08:24] So that's the problem we're trying to
+[00:08:25] solve with through crash recovery. The
+[00:08:26] idea here is that it's the algorithms
+[00:08:28] we're going to implement in our database
+[00:08:30] system so that no matter what happens to
+[00:08:33] our database system
+[00:08:35] as long as we if we tell you that your
+[00:08:37] transaction is committed then we'll
+[00:08:39] guarantee that we'll we'll retain that
+[00:08:41] data and we can guarantee the
+[00:08:42] consistency atomicity properties uh that
+[00:08:46] that we want despite what happens.
+[00:08:49] Now just because you store it and say
+[00:08:51] you committed and even even it is
+[00:08:52] durable someone of course can come along
+[00:08:54] and overwrite your change because the
+[00:08:55] next transaction but that's okay that's
+[00:08:57] the normal operations of the database.
+[00:08:58] It's really like if things are cra
+[00:09:00] things crash how do we come back and not
+[00:09:01] lose anything.
+[00:09:04] So our recovery algorithm is going to
+[00:09:06] have two parts. The first would be what
+[00:09:08] we'll talk about today and that'll be
+[00:09:10] the things that the data system does
+[00:09:12] during normal operations during normal
+[00:09:14] execution of transactions and queries so
+[00:09:17] that it can set itself up to be able to
+[00:09:20] recover any of those changes if there's
+[00:09:22] a later crash. And then next class will
+[00:09:25] be how do we go back after a crash look
+[00:09:27] at all the things we're going to record
+[00:09:28] today in our data system to go figure
+[00:09:31] out what what was this what was going on
+[00:09:33] the system at the moment of the crash
+[00:09:34] and how can we reconstruct the state of
+[00:09:36] the database to put us back where where
+[00:09:38] we where we where we should be.
+[00:09:41] Another important thing to understand
+[00:09:42] when we talk about this as well going
+[00:09:44] back to my diagram here ignoring the
+[00:09:45] crash part. But soon as I tell you that
+[00:09:49] your your your data has been committed
+[00:09:51] like you say I want to commit my
+[00:09:52] transaction as soon as you get back the
+[00:09:54] acknowledgement that the commit was
+[00:09:55] successful then you're guaranteed we
+[00:09:58] should be guaranteed your data will were
+[00:09:59] successfully stored. Now there may be a
+[00:10:01] race condition where you say you want to
+[00:10:03] commit the transaction we can make it
+[00:10:05] safe out on disk but then before we send
+[00:10:07] you the network messages saying your
+[00:10:09] transaction is successfully committed
+[00:10:11] the system crashes before that network
+[00:10:12] message goes out. That's still okay
+[00:10:15] because it's up for the application to
+[00:10:16] go back and say, "Okay, did my
+[00:10:17] transaction actually commit or not."
+[00:10:19] People don't write code that way. But
+[00:10:20] that's in in theory that's what you're
+[00:10:22] supposed to do.
+[00:10:24] All right. So today we're going to first
+[00:10:25] talk about what we uh the kind of fails
+[00:10:28] we can have and how we want to manage
+[00:10:29] this. And now in our buffer pool because
+[00:10:32] the buffer will again that's where we're
+[00:10:33] staging all the data in memory before we
+[00:10:34] make any changes to them. We need to be
+[00:10:36] aware of what's going to happen uh when
+[00:10:39] we're allowed to do certain things in
+[00:10:40] our buffer pool. Then we'll talk about
+[00:10:42] the two main approaches to guarantee
+[00:10:43] durability. Shadow paging and write
+[00:10:45] ahead logging. Display me right ahead
+[00:10:47] logging is what you're going to want to
+[00:10:48] use and most data system are going to go
+[00:10:50] ahead and use this. Um then we'll talk
+[00:10:52] about different logging schemes of what
+[00:10:54] you can put in your write ahead log like
+[00:10:56] what data should actually be and then
+[00:10:58] we'll finish up talking briefly about
+[00:11:00] checkpoints
+[00:11:02] and I'll show a sort of naive checkpoint
+[00:11:04] scheme that works in conjunction with
+[00:11:06] the right head log and then we'll see
+[00:11:08] the problems with it and then next class
+[00:11:09] we'll start off with uh doing better
+[00:11:11] checkpointing.
+[00:11:13] Okay.
+[00:11:17] All right. So at this point in the
+[00:11:19] semester this should not be a shock when
+[00:11:20] I say this but again we've been assuming
+[00:11:22] this this assumption of our sort of
+[00:11:24] conceptual database system we've been
+[00:11:25] talking about through all these lectures
+[00:11:28] where the primary storage location of
+[00:11:29] the data of the database itself is going
+[00:11:32] to be on nonvolatile storage an SSD
+[00:11:34] spinning disc hard drive S3 it doesn't
+[00:11:36] matter and then because we can't
+[00:11:39] manipulate that data on non storage
+[00:11:42] directly we always got to copy it into
+[00:11:44] our buffer pool which runs in DRAM which
+[00:11:47] is going to be volatile storage, right?
+[00:11:50] And it's going to give us faster access.
+[00:11:52] So, anytime we want to manipulate data,
+[00:11:53] we got to copy into memory, do whatever
+[00:11:55] changes we want we want on on the on
+[00:11:57] that data, and then we're going to write
+[00:11:59] that dirty data out to disk at some
+[00:12:01] point, right? And again, we can't do by
+[00:12:05] although once it's in memory, we can do
+[00:12:06] bite addressable modifications. The
+[00:12:08] granularity that we're going to interact
+[00:12:10] with data on nonval storage is going to
+[00:12:12] be through pages, 4 kilobytes, 8
+[00:12:14] kilobytes, or whatever, right? And then
+[00:12:15] the the hardware itself can only ensure
+[00:12:17] that 4 kilobytes be written atomically.
+[00:12:22] So again the property we need to
+[00:12:24] guarantee or need to provide in order to
+[00:12:25] say we have a durable transactions is
+[00:12:27] that for any changes that a transaction
+[00:12:29] makes once we tell somebody they they
+[00:12:32] transaction has been successfully
+[00:12:33] committed then we then the data has to
+[00:12:36] be durable and of course that means we
+[00:12:38] can't have any partial changes that for
+[00:12:42] any transaction that's been committed.
+[00:12:43] We don't want to like write, you know,
+[00:12:44] they have the transaction modify two
+[00:12:46] pages and only one of them make out the
+[00:12:48] disk or if the database page is eight
+[00:12:51] kilobytes and therefore we got to write
+[00:12:53] two 4 kilobyte pages out to the
+[00:12:55] hardware. We don't want the first p page
+[00:12:57] to be written but not the second and if
+[00:12:59] we're telling the outside world that our
+[00:13:00] that our transaction has successfully
+[00:13:02] committed.
+[00:13:04] So today is is about understanding like
+[00:13:07] how to make sure that our changes are
+[00:13:09] written out to disk in the right order
+[00:13:12] so that again next class when we crash
+[00:13:14] come back we make sure that we have what
+[00:13:16] we expect to see with and enough
+[00:13:18] information for us to we recover the
+[00:13:20] database back to the correct state.
+[00:13:24] So the two mechanisms mechanisms we need
+[00:13:26] to have uh are undo and redo and this
+[00:13:29] again this should be kind of obvious
+[00:13:30] when we're setting up to something do
+[00:13:32] something more sophisticated. So undo is
+[00:13:34] be the mechanism we use to remove the
+[00:13:36] effects of an incomplete or aborted
+[00:13:39] transaction.
+[00:13:40] Right? If again that can be hap that can
+[00:13:42] happen because either the transaction
+[00:13:44] itself says it want to abort cause roll
+[00:13:46] back explicitly. The concurrent protocol
+[00:13:48] says you can't commit and the
+[00:13:50] transaction gets rolled back or again
+[00:13:51] the transaction is in flight or inactive
+[00:13:54] or is active and then we crash. We got
+[00:13:56] to make sure we roll roll things back.
+[00:13:59] redo it with a mechanism that allows us
+[00:14:01] to reapply the changes of of a
+[00:14:04] transaction that has committed. So we
+[00:14:06] want to make sure that we reinstall or
+[00:14:08] install the changes that they did that
+[00:14:09] they when they were normally running so
+[00:14:12] that again upon recovery it looks like
+[00:14:14] you know we not looks but it is it is as
+[00:14:17] if that transaction fully executed or
+[00:14:19] did fully execute.
+[00:14:21] So how we're going to support undo and
+[00:14:22] redo is going to depend on the policies
+[00:14:26] we're going to have in in our buffer
+[00:14:27] pool.
+[00:14:29] Let's go back to this example here. Now
+[00:14:31] we have two transactions. T1's going to
+[00:14:32] do read on A, write on A. T2 is going to
+[00:14:34] read on B and write on B. Again, I'm
+[00:14:36] showing all this, you know, we're just
+[00:14:38] sort of moving pages back and forth
+[00:14:39] between buffer pool and disk. There's
+[00:14:41] still going to be the concern protocols
+[00:14:42] that we talked about before like
+[00:14:43] two-phase locking or or OC. All that's
+[00:14:46] still going to happen above all this as
+[00:14:48] well, but we're ignoring that for
+[00:14:49] today's class because in this example
+[00:14:51] here, they don't conflict. Therefore,
+[00:14:52] they can write independently.
+[00:14:55] So T1's going to start want to read on
+[00:14:57] A. It's not in our buffer pool. So, we
+[00:14:58] know how to go out and disc and get it.
+[00:15:00] We fetch it into fetch the page and we
+[00:15:02] store it in our buffer pool. Now, we're
+[00:15:04] going to do a write on A and we'll
+[00:15:05] update A uh A equals 3 there. Now,
+[00:15:08] there's a context switch where T2
+[00:15:11] starts. It does a read on B. That's
+[00:15:13] already in the buffer pool. So, that's
+[00:15:14] fine. We can read that that page. And
+[00:15:16] then now we're going to do a write on B
+[00:15:17] and set B's value to eight. Now, B wants
+[00:15:20] to commit. Right? Again assuming this is
+[00:15:24] one page with three three cells or three
+[00:15:27] blocks in it. So at this point here we
+[00:15:30] need to make sure before we tell the
+[00:15:32] application that T2 has successfully
+[00:15:33] committed its changes have been written
+[00:15:36] out the disk. Right? The problem is in
+[00:15:40] the same page as where B is located
+[00:15:42] there's also A.
+[00:15:44] So the question is should we allow A's
+[00:15:46] dirty change be written out the disk as
+[00:15:48] well because it's not committed.
+[00:15:54] So let's say we do write it out put a
+[00:15:56] equals 3 and B equals 8 and you update
+[00:15:57] that that single page out on disk.
+[00:15:59] Right? So now we tell T2, haha,
+[00:16:02] congrats, your transaction has been
+[00:16:03] success to the committed and they're
+[00:16:05] happy. But now when T1 starts running up
+[00:16:08] again now they invoke roll back and now
+[00:16:10] we need to make sure before we uh
+[00:16:14] proceed any further
+[00:16:16] uh we don't have to block when on the
+[00:16:17] roll back request. So the application
+[00:16:19] says roll back we'll immediately come
+[00:16:20] back say yep got it no problem right but
+[00:16:22] now it's our job and and the database
+[00:16:24] system to go clean things up. So now we
+[00:16:26] got to make sure that we go remove the
+[00:16:28] effects of T1
+[00:16:30] uh in that page because we flush it out
+[00:16:33] the disk.
+[00:16:36] So, what's one one way to do that?
+[00:16:41] It's not your question. It's kind of
+[00:16:42] obvious, right? Go uh go fetch the page
+[00:16:46] back in, see that it matches what I have
+[00:16:48] now, and undo the effects of T1.
+[00:16:51] Do you think it's a good idea or a bad
+[00:16:53] idea?
+[00:16:58] Is it correct
+[00:17:01] for one page? Yeah.
+[00:17:04] But always think strange. What if I have
+[00:17:05] a billion pages? Do I really want to go
+[00:17:07] out like and bring back in a billion
+[00:17:09] pages, reverse changes, and write them
+[00:17:11] all back out again? No. Because what
+[00:17:14] happens also too if I crash halfway
+[00:17:15] through that updating a billion things?
+[00:17:17] Now I got a bunch of torn rights I got
+[00:17:19] to go clean up.
+[00:17:22] So there be two policies that are affect
+[00:17:25] what the data system is allowed to write
+[00:17:27] out to disk and when is it allowed to
+[00:17:29] write out the the pages to disk.
+[00:17:32] The first is going to be called the
+[00:17:33] steel policy and this determines whether
+[00:17:36] the data system the data system is
+[00:17:38] allowed to evict a dirty object again
+[00:17:40] think of page a dirty object from the
+[00:17:42] buffer pool that's been modified by a
+[00:17:45] transaction that has not committed
+[00:17:48] and therefore is allowed to overwrite
+[00:17:50] whatever the most recent committed
+[00:17:52] version of of that object out in
+[00:17:54] nonvault storage out out in our disk.
+[00:17:57] So if if steel is enabled, then you're
+[00:17:59] allowed to evict things and overwrite
+[00:18:00] what's out on disk.
+[00:18:03] If no steel is enabled, then you're not
+[00:18:05] allowed to do this.
+[00:18:10] So this all ties back up to ties
+[00:18:12] together with the project one now
+[00:18:13] because now in your in your replacement
+[00:18:15] policy algorithm like ARC or LRUK,
+[00:18:17] whatever you're using, it's got to be
+[00:18:18] aware of what which of these ones you're
+[00:18:20] actually doing because it has to then
+[00:18:21] determine if I have a dirty page, am I
+[00:18:23] allowed to write it out or not?
+[00:18:26] And I'll say also too, I'm showing you
+[00:18:28] steal no steal. It's not like you do you
+[00:18:29] do steal for some transactions, steal
+[00:18:31] for no steal for other transactions.
+[00:18:32] Like your implementation only does one
+[00:18:34] of these.
+[00:18:46] >> The qu the question is if it's no steel
+[00:18:48] then some transactions may never be
+[00:18:50] allowed to finish.
+[00:18:54] pages.
+[00:18:56] >> Yes, we'll get there in a second. Yes,
+[00:18:58] this the thing the thing they point out
+[00:18:59] which they are correct that if I'm not
+[00:19:01] allowed if I am not allowed to write
+[00:19:03] uncommitted pages out the disk
+[00:19:07] then how would I ever handle a billion
+[00:19:09] updates where I can't everything fit in
+[00:19:11] memory? You can kind of get around that
+[00:19:13] by writing things to the side but we'll
+[00:19:15] get that in a second.
+[00:19:19] All right. The other policy is is is
+[00:19:21] called the force policy. And this says
+[00:19:23] this determines whether the data system
+[00:19:25] is required to flush all the dirty pages
+[00:19:28] from a transaction uh that they're
+[00:19:31] modified by transaction before the
+[00:19:33] transaction is allowed to commit. So
+[00:19:35] when I get that commit message from the
+[00:19:36] application, I don't respond back and
+[00:19:38] say yes, you've successfully committed
+[00:19:40] until all the pages that it's modified
+[00:19:42] in the buffer pool have been written out
+[00:19:43] to disk.
+[00:19:46] And if I say no force, then I don't
+[00:19:48] require that,
+[00:19:50] right?
+[00:19:52] So forcing is going to make it easier
+[00:19:53] for us to do recovery later on because I
+[00:19:56] don't have to worry about whether a
+[00:19:57] transaction has has all it changes made
+[00:20:00] out to disk or not. Right? If I'm
+[00:20:01] totally committed, then I got them all
+[00:20:03] all out on disk. I still may have to
+[00:20:06] clean things up to make sure I handle
+[00:20:07] torn transactions.
+[00:20:10] All right. So let's look at an example
+[00:20:12] of no steal and force. Again, no steal
+[00:20:14] means that I'm not allowed to evict
+[00:20:17] dirty pages before transaction commits.
+[00:20:21] And then force means that when a
+[00:20:22] transaction gets I do I have to write
+[00:20:24] all of the changes out to disk. So I
+[00:20:27] start off again. T1 does a read on A. I
+[00:20:29] fetch that page, bring it to memory.
+[00:20:31] Then I do the write on A. I update that
+[00:20:33] single record in the page. Context
+[00:20:35] switch over to T2. T2 does a read on B.
+[00:20:37] That's fine. That's in memory. Does a
+[00:20:39] write on B. That's in memory. We
+[00:20:40] overwrite the existing value. Now I go
+[00:20:42] ahead and commit. And again under the
+[00:20:44] force policy before I can tell the
+[00:20:46] application that T2 is successfully
+[00:20:48] committed I got to write out that page
+[00:20:50] that it modified. But the problem is in
+[00:20:53] that page I also have changes from T1 on
+[00:20:57] A but T1 is not committed. So no steel
+[00:21:00] says I can't write out that that page at
+[00:21:02] all. So I have this sort of conflict
+[00:21:03] here that says one transaction says
+[00:21:06] flush everything. The other transaction
+[00:21:07] is not allowed to flush anything.
+[00:21:10] So a simple way to handle this is just
+[00:21:12] make a copy of the page only include the
+[00:21:15] change from the uncommitt from from the
+[00:21:16] transactions that's committing into that
+[00:21:18] new page and then that gets written out
+[00:21:21] to disk.
+[00:21:24] >> Yes.
+[00:21:35] The question is why is no preventing us
+[00:21:37] from writing out that that page because
+[00:21:39] I can't write pages I can't write uh
+[00:21:43] modifications from transactions that
+[00:21:44] have not committed yet. They just have
+[00:21:46] to be in the same page. Yes.
+[00:21:51] >> Question is how do I know the original
+[00:21:52] data of the page? We're getting there in
+[00:21:54] a second, but assume there's a there's a
+[00:21:56] your transaction maintains a some
+[00:21:58] metadata like the undo redo to know what
+[00:22:00] it changed and what it changed it from.
+[00:22:05] >> Question is, what if there's no space to
+[00:22:06] make the copy? Correct. Yes, you're
+[00:22:08] you're point poking holes to this. Yes.
+[00:22:10] I'm not saying this is a good idea. This
+[00:22:11] is the straw man. So, yes.
+[00:22:17] >> Yes. It's kind of similar, but I was is
+[00:22:19] it an option to just wait?
+[00:22:21] >> The question is, is it an option to wait
+[00:22:23] on T1? I mean, wait for T1 to to wait
+[00:22:27] for T1 to do what? Sorry.
+[00:22:28] >> Well, who's waiting T2 is waiting for
+[00:22:30] T1?
+[00:22:32] >> T2.
+[00:22:34] >> The question is,
+[00:22:35] >> so yeah, in this case here, should just
+[00:22:37] T2 yield for T1 and wait till T1 does
+[00:22:40] something that I can decide what to do.
+[00:22:42] Shadow paging will do this, but how long
+[00:22:44] should you wait?
+[00:22:47] What if you know what if a person in T1
+[00:22:49] you know walks was typing at the
+[00:22:51] terminal walks away. So the data bricks
+[00:22:54] talk talked about this. So they said
+[00:22:55] that people in like notebooks in in data
+[00:22:58] bricks people start transactions and
+[00:23:00] then they get up and walk away and then
+[00:23:02] so they had to set an automatic timeout
+[00:23:03] to kill transactions if they run for 24
+[00:23:05] hours. Do I want to wait 24? Should T2
+[00:23:08] wait for 24 hours? No.
+[00:23:12] All right. So the advantage of this now
+[00:23:13] if we do this approach it's really
+[00:23:15] treatable for us to roll back T1 now
+[00:23:17] because we just go reverse the change in
+[00:23:19] our page and we didn't none of its
+[00:23:21] changes made it out to disk right the no
+[00:23:23] steel prevent us that so we don't do any
+[00:23:24] clean up with no steel because we know
+[00:23:26] whatever's been out out on disk is from
+[00:23:28] transactions that have committed so
+[00:23:29] that's good
+[00:23:33] so I was saying it's a strong man this
+[00:23:35] is this is the easiest thing to
+[00:23:36] implement right uh again of course the
+[00:23:39] problem is you have to have enough
+[00:23:40] memory so that you can maintain the set
+[00:23:42] uh in memory, you know, without running
+[00:23:44] at the disk. Assuming you can do that.
+[00:23:47] Uh then this is pretty simple to do and
+[00:23:49] it makes recovery trivial because again
+[00:23:52] when you come back on the disc is going
+[00:23:53] to look exactly the way it should uh
+[00:23:56] because this is only contain uh
+[00:23:57] information from committed transactions.
+[00:24:00] That's not entirely true either in the
+[00:24:02] example I'm showing here because there's
+[00:24:04] no metadata. There's no addition
+[00:24:05] metadata to say that all the changes
+[00:24:07] from a committed transaction have been
+[00:24:09] written out to disk. In my toy example,
+[00:24:10] they're only writing one page and that
+[00:24:12] can be done. We can assume that that's
+[00:24:13] done atomically.
+[00:24:18] So the way you really implement no steel
+[00:24:20] and force is through a technique we
+[00:24:22] talked earlier on talked about earlier
+[00:24:23] on called shadow paging. And this is
+[00:24:25] what IBM invented in the in the 1970s on
+[00:24:29] system R. This is the first way they
+[00:24:30] they wanted to implement and support uh
+[00:24:32] durable transactions in one of the first
+[00:24:35] relational database systems. I don't
+[00:24:36] know what ingress did in in the early
+[00:24:38] days and Oracle came later and Oracle
+[00:24:40] didn't didn't do this. So the basic idea
+[00:24:42] is that shadow paging is that you
+[00:24:44] maintain two copies of the database. Uh
+[00:24:47] the master copies is only it's contain
+[00:24:50] changes from only committed transactions
+[00:24:52] and then the shadow copy is sort of
+[00:24:54] temporary space where uncommitted
+[00:24:56] transactions are making making changes
+[00:25:00] um and can write them out to to disk if
+[00:25:03] necessary to swap them out in order to
+[00:25:04] get space. uh but because they're not
+[00:25:06] overwriting the the the master copies
+[00:25:11] then then this is okay. So that now if I
+[00:25:14] crash come back I just ignore what
+[00:25:16] whatever's in the shadow copy database
+[00:25:17] because the master only contains the the
+[00:25:19] data from committed transactions.
+[00:25:22] And then to make sure that we know that
+[00:25:24] all of our changes from a trans from
+[00:25:26] from a committed transactions have been
+[00:25:28] successfully made it out to disk, I'm
+[00:25:30] gonna have a single record called the
+[00:25:32] the the master record, which is
+[00:25:34] basically the a pointer that says here's
+[00:25:38] the the
+[00:25:40] here's the the latest page table. Here's
+[00:25:42] the current page table of the of the
+[00:25:44] database system or sorry not page table
+[00:25:46] directory. Here's the current page
+[00:25:48] directory that I know that only contains
+[00:25:50] changes from committed transactions. So
+[00:25:52] once my transaction commits and I write
+[00:25:53] all those pages out to disk, I just flip
+[00:25:55] a pointer now in a single record which I
+[00:25:57] can do atomically to say now you're
+[00:25:59] pointing to the new page directory.
+[00:26:03] So this again this technique is old but
+[00:26:06] it's very rare. We'll talk a little bit
+[00:26:07] why IBM abandoned this later on. Uh the
+[00:26:10] probably the most famous system that
+[00:26:12] uses this approach is LMDB. Again he's
+[00:26:14] the opposite of me. He loves MAP. He
+[00:26:17] loves shadow paging. Uh, and he he's
+[00:26:20] very voc vocal about this and we'll see
+[00:26:22] how roughly how they do it. Um,
+[00:26:25] but it has some limitations. Couchb does
+[00:26:28] this as well. Uh, they're going to get
+[00:26:30] around the the the the fragmentation
+[00:26:32] problem by only appending to the
+[00:26:34] appending the shadow pages to to the end
+[00:26:37] of the database file. Of course, you
+[00:26:38] have to do garbage collection and clean
+[00:26:39] that up. Fast DB is out of Russia.
+[00:26:41] Gemstone, that's a randos system that's
+[00:26:44] pretty old. And then SQL light did this
+[00:26:45] originally, but they got rid of it and
+[00:26:47] they switched over to the right head
+[00:26:49] log. We'll see that in a second.
+[00:26:55] >> Question where are the shadow pages? Uh
+[00:26:57] do the example and you'll see. Yeah, but
+[00:26:59] both it's in both.
+[00:27:02] Right. This is also going to look a lot
+[00:27:03] like multi- versioning
+[00:27:05] but now it's being done at the
+[00:27:06] granularity of a page instead of a
+[00:27:08] single record.
+[00:27:10] Right? And then we talked about taking
+[00:27:12] uh page locks when we talked about the
+[00:27:14] sort of the hierarchy of of of locks um
+[00:27:18] and pages were in there but I didn't
+[00:27:19] really discuss discuss them. You would
+[00:27:20] use page locking for this kind of stuff.
+[00:27:24] All right. So we have our master pointer
+[00:27:25] that's pointing to the the master page
+[00:27:28] table page directory but all the same.
+[00:27:30] Um but it's basically in memory a
+[00:27:32] mapping through a page ID to some
+[00:27:34] location in on on disk. So then now when
+[00:27:38] a transaction starts, say T1 comes along
+[00:27:40] and it starts, it's going to create a p
+[00:27:43] a a shadow page table that's going to
+[00:27:45] basically in the beginning just contain
+[00:27:47] the exact same uh records and pointers
+[00:27:49] to those pages out out on disk because
+[00:27:51] there's been no changes made yet. But
+[00:27:53] then as T1 modifies things and modifies
+[00:27:56] data and pages, instead of overwriting
+[00:27:59] the the the master record database,
+[00:28:02] we're going to say make a copy of that
+[00:28:04] data first. make a copy of that page on
+[00:28:07] on disk or in in and in memory and then
+[00:28:10] write all our changes to to there
+[00:28:13] and then same thing as we update other
+[00:28:15] pages we're going to make make more more
+[00:28:17] copies of them.
+[00:28:19] Now any other transaction that comes
+[00:28:20] along uh that's read only, right? Well,
+[00:28:24] they're they're going to always go to
+[00:28:26] the master pointer which is going to
+[00:28:27] take them to the master page table. So
+[00:28:29] they'll see the the the the master
+[00:28:31] version of the database. they're not
+[00:28:32] going to see any of the changes from
+[00:28:34] from uh from the first transaction,
+[00:28:38] right? So, LMDB does this. LMDB only
+[00:28:41] allows one writer transaction and can
+[00:28:43] have multiple reader transactions
+[00:28:44] because they're essentially hide hiding
+[00:28:46] things this way. You don't have to, but
+[00:28:48] it it makes things a lot easier.
+[00:28:51] All right. So then now
+[00:28:53] T1 wants to commit.
+[00:28:56] So, what we're going to do is that we're
+[00:28:58] going to make sure that we update the
+[00:29:00] master pointer to now point to the the
+[00:29:02] new page directory with all all our
+[00:29:03] shadow pages that we we've installed.
+[00:29:05] And then once we know that's been
+[00:29:07] flushed and safe out on disk, then now
+[00:29:10] we're essentially flipping the pointer
+[00:29:11] to point to the master page the shadow p
+[00:29:14] the old shadow page table comes to the
+[00:29:16] new master page table. Any other
+[00:29:18] transaction that comes along after we've
+[00:29:20] done this the switch over, we'll now see
+[00:29:22] the changes that T1 made.
+[00:29:25] And if we crash and come back, we look
+[00:29:27] in that the master pointer on disk and
+[00:29:30] we would know which page directory we
+[00:29:32] should be looking at. So we we won't
+[00:29:34] lose any of the changes from this
+[00:29:35] transaction once we set said it's
+[00:29:36] committed.
+[00:29:39] And then just like a multi version, we
+[00:29:40] have to do garbage collection. So
+[00:29:42] eventually at some point we got to make
+[00:29:43] sure we we throw away the old page table
+[00:29:45] and then clean up any of the the the
+[00:29:48] invalidated older version pages, right?
+[00:29:51] And then we can just re reuse them for
+[00:29:53] for future transactions.
+[00:29:58] >> Yes.
+[00:30:00] >> Question. Does this only allow one
+[00:30:02] writer in my example here? Yes. It
+[00:30:04] doesn't have to. It's just now you got
+[00:30:06] to do the the thing he was he he was
+[00:30:09] asking about like all right well when do
+[00:30:12] I switch my master pointer over because
+[00:30:13] I don't want to switch it over with a
+[00:30:15] transaction that hasn't committed yet.
+[00:30:16] So now I got to wait for all the
+[00:30:17] transactions to say oh we're going to
+[00:30:18] commit. Then I then I can do a group fit
+[00:30:21] that way. If you allow multiple writers,
+[00:30:23] if you have if you only allow one writer
+[00:30:25] transaction, then you don't have to do
+[00:30:26] that.
+[00:30:38] So,
+[00:30:39] so, so that you can
+[00:30:43] you can get around this a little bit
+[00:30:45] like
+[00:30:46] uh if you do page level locks, then your
+[00:30:50] transaction is updating some pages. My
+[00:30:52] transaction is updating other pages. I
+[00:30:53] can't read your rights. That's fine. I I
+[00:30:56] go ahead and commit. I update the the
+[00:30:59] master pointer to now point to the new
+[00:31:02] master page table, but I make sure it
+[00:31:03] doesn't include any your changes. and I
+[00:31:05] immediately establish a new shadow page
+[00:31:07] table with all your uh inflight changes
+[00:31:11] you can do but but it's it's more work
+[00:31:15] and what LMDB does I'm showing like an
+[00:31:17] example here of like there's a single
+[00:31:18] master pointer but they the the data
+[00:31:20] they're doing index organized storage so
+[00:31:21] the index is actually the data itself so
+[00:31:24] in that case you just change the root of
+[00:31:26] the B+ tree you swap that to the new
+[00:31:28] pointer and then that gives you the
+[00:31:29] switch between the master and the shadow
+[00:31:34] Say it again.
+[00:31:40] >> The question is this a naive way to do
+[00:31:42] multi merging. So I'll talk about this
+[00:31:43] in a second but like all these ideas
+[00:31:46] like between multi- version current
+[00:31:48] control this logging stuff we're talking
+[00:31:49] about the shadow paging stuff we're
+[00:31:50] talking about here we talk about log
+[00:31:51] structure merge trees all these things
+[00:31:54] kind of are very similar to each other
+[00:31:56] but oftent times they're treated as
+[00:31:57] separate concepts because the way you
+[00:32:00] sort of abstract the concerns of the
+[00:32:02] system so there's a lot of redundancy in
+[00:32:05] this right uh we'll talk about post in a
+[00:32:09] second post didn't have a right log
+[00:32:10] because they send they assumed I make a
+[00:32:12] copy of the people and I'd write that
+[00:32:14] out and that was the log but the
+[00:32:16] performance reasons right then down
+[00:32:18] below that you have like your file
+[00:32:20] system that's doing journaling too
+[00:32:22] that's maintaining its own log as well
+[00:32:25] and then go even lower than that now you
+[00:32:27] got on the actual like SSD it's doing
+[00:32:30] logging down there too so it's a lot lot
+[00:32:32] of redundancy but like it's just you
+[00:32:34] know unless you control the entire stack
+[00:32:36] which nobody actually can uh it's all
+[00:32:38] kind of unavoidable
+[00:32:41] except Oracle But uh but even then I I
+[00:32:44] like they're probably still running on a
+[00:32:45] journaling file system, right? There's
+[00:32:47] they're still going to do right ahead
+[00:32:48] logging. They're not a log structure
+[00:32:50] storage system, right? So
+[00:33:02] How does this ensure
+[00:33:05] >> atomicity?
+[00:33:06] >> The question is how does shadow paging
+[00:33:08] ensure atomicity? All right. So going
+[00:33:10] back here, transaction wants transaction
+[00:33:12] T1 wants to commit. Okay, so it modified
+[00:33:15] three pages. So we need to make sure
+[00:33:17] those three pages are get installed and
+[00:33:20] everyone can see them at you know at the
+[00:33:22] moment we say this thing's been
+[00:33:23] committed. Okay. So I can't I can't
+[00:33:27] guarantee that I can do flushing to
+[00:33:29] those three pages out on disk
+[00:33:32] atomically, right? So I need I need some
+[00:33:35] way to guarantee through one right
+[00:33:37] atomic right on disk that these things
+[00:33:38] have been installed. So that's what the
+[00:33:40] master pointer does. That's a single
+[00:33:42] page say at the head header of of the
+[00:33:44] file and I can guarantee I can write
+[00:33:45] that atomically. So once now I install
+[00:33:48] all the changes uh for this transaction
+[00:33:50] those those three pages in blue then now
+[00:33:54] to switch it over I need to atomic write
+[00:33:56] to the master pointer record once that's
+[00:33:59] been installed then I know now that
+[00:34:01] anybody comes along and reads the master
+[00:34:03] pointer is going to see the shadow page
+[00:34:05] table and would see my three changes. So
+[00:34:07] this guarantees that no matter how many
+[00:34:08] pages I modify that they all get
+[00:34:10] installed automically and with a single
+[00:34:12] parent swap everyone sees them.
+[00:34:19] Okay.
+[00:34:21] So swinging rollbacks is super easy. As
+[00:34:23] I said if if your transactions in flight
+[00:34:25] and I crash come back I ignore what I
+[00:34:27] ignore what what what was in the shadow
+[00:34:29] shadow pages right?
+[00:34:31] [snorts]
+[00:34:32] If a transaction aborts while running,
+[00:34:35] same thing. I throw away the shadow
+[00:34:36] pages uh for the inflight transaction
+[00:34:38] that got aborted and then don't update
+[00:34:40] it. Don't update the pointer. So, no
+[00:34:42] one's going to see any of the changes
+[00:34:43] anyway, right?
+[00:34:47] So, the the problem with this is that
+[00:34:50] copying that page table is is expensive.
+[00:34:53] Now, LMDB gets gets away from that
+[00:34:55] doesn't have have this problem because
+[00:34:56] they're copying sort of paths through
+[00:34:58] trees uh through a B+ tree, right?
+[00:35:02] Um but if I if I have to copy the entire
+[00:35:04] tree or I have to copy the entire um
+[00:35:07] uh the entire page table then that's
+[00:35:10] expensive especially for large databases
+[00:35:12] this becomes problematic.
+[00:35:14] The other challenge is that going back
+[00:35:17] here
+[00:35:20] now I have a bunch of empty space or
+[00:35:21] empty pages in my my database file. Now
+[00:35:24] I can maybe get around that by by
+[00:35:25] creating a new file every single time.
+[00:35:27] So I I don't worry about all these empty
+[00:35:29] pages, but at some point I got to be
+[00:35:30] able to reclaim them. And in the case of
+[00:35:32] system R, the problem they had when they
+[00:35:34] were running shadow paging is that since
+[00:35:35] they're trying to since sequential IO is
+[00:35:37] so much faster than random IO, now I
+[00:35:39] have a bunch of gaps in my tables that I
+[00:35:41] got to jump over and ignore and and that
+[00:35:45] starts to look more like random IO the
+[00:35:47] more the more fragmentation I have. So
+[00:35:49] over time, the database would get slower
+[00:35:51] and slower and slower and then you have
+[00:35:53] to run expensive garbage collection to
+[00:35:54] go go clean all that up. And again the
+[00:35:56] 1970s the hardware was like super slow
+[00:35:59] you know this this became really
+[00:36:00] problematic back then.
+[00:36:03] >> Yes.
+[00:36:09] >> Yeah. So the question is um is still
+[00:36:12] this still concerned on SSDs go even
+[00:36:14] faster than SSDs. So we were looking at
+[00:36:17] uh the Optane stuff from Intel
+[00:36:19] persistent memory. So it was like DRAM
+[00:36:21] but it was persistent. So it had the
+[00:36:23] speed of DRAM but like you could you
+[00:36:25] could ensure your your rights got
+[00:36:27] actually were durable. And in that
+[00:36:29] environment the the shadow copying or
+[00:36:31] shadow paging uh if remember correctly
+[00:36:35] still did not perform as well as
+[00:36:38] uh as like right head logging because
+[00:36:42] you have to do uh because you do copy
+[00:36:44] and writes the copies kill you at that
+[00:36:46] at that point. So if the disc is slower,
+[00:36:50] the disc rights are are that that's what
+[00:36:52] kills you. If it's if it gets faster
+[00:36:55] now, the mem copying you're doing in
+[00:36:56] this world gets slower. I don't think
+[00:36:59] this is a few this a few years ago.
+[00:37:01] Optane is dead. Of course, you can't buy
+[00:37:02] the hardware, but um I still think I
+[00:37:06] find still hold today, but I have to go
+[00:37:08] I would have to go look again.
+[00:37:13] >> Question. If it was an SSD, do are we
+[00:37:15] are we do we care about hover
+[00:37:17] prefetching? What do you mean?
+[00:37:20] >> Yeah. Yeah. Statement is like I I want
+[00:37:22] things to be as sequential as possible.
+[00:37:25] Uh because that's again if I'm doing
+[00:37:27] scans it's going to be faster and so
+[00:37:28] even the LMDB stuff because it's a tree
+[00:37:31] structure things are more scattered. But
+[00:37:32] if you're only doing point queries maybe
+[00:37:34] not big not that big of a deal but
+[00:37:35] anything beyond that the having
+[00:37:37] everything sequential still helps. And
+[00:37:40] again you say oh is it multi versioning
+[00:37:41] isn't that going to have the same kind
+[00:37:42] of fragmentation? Well, no. If I do it
+[00:37:44] the MySQL Oracle way where I do uh
+[00:37:46] newest to oldest and most queries only
+[00:37:49] need the newest data, then the the main
+[00:37:51] table itself is going to have the data I
+[00:37:54] want and I don't have to go look at the
+[00:37:55] the delta records.
+[00:37:57] >> Yes.
+[00:38:11] >> Yes.
+[00:38:20] So the question is going back here uh
+[00:38:22] when I showed sort of the the straw man
+[00:38:24] approach I had to make this copy here
+[00:38:26] for the page because two transactions
+[00:38:28] modify the contents of the page and I
+[00:38:31] can only one of them is allowed to write
+[00:38:32] things out. So I had to make a copy and
+[00:38:34] make sure that copy didn't include the
+[00:38:35] changes from the first transaction.
+[00:38:37] Assuming I have a single writer under
+[00:38:39] shadow paging, this problem doesn't
+[00:38:41] occur because only one transaction is
+[00:38:42] allowed to modify a page. So you might
+[00:38:45] take a lock on the whole page. So I when
+[00:38:47] I write out the disk, I'm only writing
+[00:38:49] out the disk. Uh I'm only it's only
+[00:38:53] going to become the master version when
+[00:38:55] the transaction goes goes and commits.
+[00:38:57] And because I'm doing a single writer,
+[00:38:59] it won't contain commit changes from
+[00:39:02] uncommitted transactions. So I don't
+[00:39:03] have this problem.
+[00:39:06] If you have multiple writers, then you
+[00:39:07] have to do that reversal thing I said
+[00:39:09] before, right? But if you take page
+[00:39:10] level locks, exclusive locks on pages,
+[00:39:13] then two transactions can't write to the
+[00:39:15] same page under the scheme.
+[00:39:22] Okay.
+[00:39:24] So I I don't want to dwell too much on
+[00:39:25] shadow paging because again nobody does
+[00:39:27] this or very few systems do it. Um the I
+[00:39:32] do want to show what SQLite used to do.
+[00:39:34] So, SQLite did a version of shadow
+[00:39:36] paging called roll back mode uh up until
+[00:39:39] 2010. Then they got rid of this uh and
+[00:39:42] now they now they use right ahead log by
+[00:39:44] default. I think you still can switch it
+[00:39:46] back on if you wanted to for like uh uh
+[00:39:49] compatibility reasons. It's famously
+[00:39:51] backwards compatible for like the
+[00:39:53] seagullite guarantees that the single
+[00:39:55] light file format will be supported
+[00:39:57] until 2035,
+[00:39:59] right? Because again this thing's
+[00:40:01] running in satellites, it's running in
+[00:40:02] planes. like this is a critical piece of
+[00:40:04] infrastructure. You need to make sure
+[00:40:05] that it runs forever, right? Um so
+[00:40:08] that's what you're very unlikely current
+[00:40:09] version of SQLite SQLite 3. You're very
+[00:40:11] like unlikely to see SQLite 4 anytime
+[00:40:14] soon. All right. So the way it would
+[00:40:16] work is that uh there wouldn't be a uh
+[00:40:19] there wouldn't be a sort of page table.
+[00:40:21] There'd be a separate journal file. And
+[00:40:23] what would happen is anytime I wanted to
+[00:40:24] make a change to a page in memory but
+[00:40:27] from a transaction and by the way SQL
+[00:40:29] light was like LMDB one writer multiple
+[00:40:31] readers. So only one writer thread. We
+[00:40:33] don't worry about concurrent updates
+[00:40:34] from different transactions. So before I
+[00:40:36] modify page two in memory, I'm going to
+[00:40:39] make a copy of it and flush it out to
+[00:40:41] disk in the special file called the
+[00:40:43] journal file. Right? That was that was
+[00:40:45] separate from the main database file.
+[00:40:47] Then once that's been flushed, then I go
+[00:40:49] ahead and make my change to page two in
+[00:40:51] memory. Same thing. I want to modify
+[00:40:53] page three, right? I make a copy to the
+[00:40:56] page in the in the journal file and I go
+[00:40:58] ahead and then modify page three.
+[00:41:01] Then when you know when I want to say my
+[00:41:03] transactions committed now I got to make
+[00:41:05] sure that all these changes have been
+[00:41:07] written out. So I start writing out page
+[00:41:10] two to disk right flush that that's
+[00:41:12] fine. But then I as I start trying to
+[00:41:14] write page three
+[00:41:16] during this commit process there's a
+[00:41:18] system crash and I lose all my contents
+[00:41:21] on my buffer pool.
+[00:41:23] Right? So again going back here in order
+[00:41:25] for me to say the transactions committed
+[00:41:26] I got to write page two and then write
+[00:41:28] page three. And once I know that's done,
+[00:41:29] then I can tell the outside world you've
+[00:41:31] committed. But if I crash before then,
+[00:41:34] then upon recovery, when I come back,
+[00:41:36] the first thing I'm going to go do is
+[00:41:37] look in this journal file and figure out
+[00:41:40] what was in there. Again, these are the
+[00:41:41] copies of the data before I I I made any
+[00:41:44] changes. So, I'm going to go bring in
+[00:41:46] page two and page three back into
+[00:41:47] memory. And I know that these this is
+[00:41:50] should be the current version of these
+[00:41:53] pages before I start running new
+[00:41:55] transactions.
+[00:41:56] All right? in order to say I completed
+[00:41:58] the recovery process, I got to make sure
+[00:42:00] that whatever got from the journal file
+[00:42:02] is is what matches what's actually in
+[00:42:04] the database file itself. So I'll go
+[00:42:06] ahead and take take page two and make
+[00:42:08] sure I just overwrite whatever's in in
+[00:42:10] the the database file for page two. And
+[00:42:12] I'll do the same thing for page three.
+[00:42:14] Since I don't know what's in there, I
+[00:42:16] know I got to just overwrite it to make
+[00:42:17] sure that it's it's the version I I
+[00:42:18] expect.
+[00:42:22] >> What mean if it didn't commit? Uh what
+[00:42:24] didn't commit? Sorry. Right.
+[00:42:29] The question is uh what if there's
+[00:42:31] action that modify page three doesn't
+[00:42:32] commit? Well, that's this case here,
+[00:42:34] right? So, page three isn't written down
+[00:42:35] the disk. I crash come back. I don't
+[00:42:39] care. I don't care what is in this
+[00:42:42] thing. The journal file says these these
+[00:42:45] are the this is the page before the
+[00:42:47] transaction started running. So, if I
+[00:42:49] have things in my journal file that I
+[00:42:50] know there's a transaction that that
+[00:42:52] didn't commit successfully.
+[00:42:55] So, I need to go take whatever's in my
+[00:42:56] journal file and make sure it goes back
+[00:42:58] down into my database file.
+[00:43:05] >> No, no, no. So, the journal file is
+[00:43:06] before the change, right? So, again,
+[00:43:08] like
+[00:43:09] >> Yeah. So, I'm saying like maybe it's
+[00:43:11] hard to read. There's the block boxes
+[00:43:12] are blue. So, I might maybe I change a
+[00:43:14] page two, maybe page three. Blue boxes
+[00:43:16] only the blue box page two got written.
+[00:43:18] That crashes. So, then I bring up the
+[00:43:20] white boxes for page two and three.
+[00:43:23] Yes, I should make that more clear on it
+[00:43:25] looks good in the slides. It doesn't
+[00:43:26] look good in the overhead or it's clear
+[00:43:27] on the overhead. Not not as clear on the
+[00:43:29] overhead,
+[00:43:31] right? So, it's kind of like it's the
+[00:43:33] opposite of the of the shadow paging
+[00:43:35] where like I the master page would tell
+[00:43:37] me here's things that
+[00:43:40] uh here are the there's in my shadow
+[00:43:43] page table I have changes from
+[00:43:44] uncommitted transactions that I just
+[00:43:45] ignore. the journal file is like here's
+[00:43:47] the things you need to roll back and
+[00:43:49] undo because there might transaction
+[00:43:51] might have modified these pages and then
+[00:43:53] and then it didn't commit. You make sure
+[00:43:55] the those things get reversed.
+[00:44:03] >> Yeah, the statement is correct. Yes. So
+[00:44:05] after I after I replay the journal file,
+[00:44:07] bring that back into memory, write them
+[00:44:09] back back out the disk, then I delete
+[00:44:11] the journal file and then I can start
+[00:44:12] executing new transactions again.
+[00:44:16] So we can give a demo next class, but
+[00:44:18] like if you go read the like the debug
+[00:44:20] log of any pick your favorite data
+[00:44:22] system, it'll say when it first boots up
+[00:44:23] doing recovery and it's it's looking in
+[00:44:26] the log, looking at checkpoints, trying
+[00:44:28] to figure out or it's it's got a journal
+[00:44:29] file looks in that. It's trying to
+[00:44:30] figure out what was going on at the time
+[00:44:32] I when I when the last time I was
+[00:44:34] running because it may not may have not
+[00:44:37] been a clean shutdown.
+[00:44:43] Okay, so as we said before, shadow
+[00:44:46] paging requires us to do a bunch of
+[00:44:48] random IO's to potentially non-ontiguous
+[00:44:50] pages on disk. Even the the SQL light
+[00:44:53] method, right? Those pages were right
+[00:44:54] next to two and three, but like they
+[00:44:56] could have been all different parts of
+[00:44:57] the file and have no bunch of random IO
+[00:44:59] to write them out.
+[00:45:02] And we said in the beginning of the of
+[00:45:03] the semester and we we've repeated this
+[00:45:05] many times, sequential IO is going to be
+[00:45:07] faster than random IO even on modern
+[00:45:10] SSDs. And therefore, we want to choose
+[00:45:13] algorithms where we we can maximize
+[00:45:16] amount of scentual IO that we're doing.
+[00:45:18] And ideally, we want to be able to
+[00:45:20] choose algorithms where we don't have to
+[00:45:22] write entire pages out to disk, even if
+[00:45:24] only a small portion of it, a small
+[00:45:27] portion of that page has been the disk.
+[00:45:31] Right. So, Calcb is is is going to get
+[00:45:34] rid of the the the random IO problem
+[00:45:36] because they're just going to append the
+[00:45:37] shadow pages to the end of the file and
+[00:45:40] then truncate it later later on and do
+[00:45:42] do sort of compaction like a log
+[00:45:43] structure registry. But they're still
+[00:45:45] going to have to copy the entire page
+[00:45:46] out to disk even if only a small portion
+[00:45:48] of it has been written.
+[00:45:51] So, the solution to this is going to be
+[00:45:52] the write ahead log. And as I said, this
+[00:45:54] is what pretty much every single data
+[00:45:55] system that supports durable
+[00:45:56] transactions and recovery is been doing
+[00:45:58] this approach.
+[00:46:01] So the idea is that we're going to
+[00:46:02] maintain a separate log file uh on disk
+[00:46:05] or non-model storage that's separate
+[00:46:06] from the database file and that we're
+[00:46:09] that's going to contain all the changes
+[00:46:10] that transactions make to the database
+[00:46:13] while they're running.
+[00:46:16] And we're going to assume that the log
+[00:46:17] itself is going to have enough
+[00:46:19] information for us to allow to undo and
+[00:46:22] redo any transaction that has come along
+[00:46:24] and either committed or or did not
+[00:46:25] commit.
+[00:46:27] And the most important thing you got to
+[00:46:28] understand about the redhead log is this
+[00:46:30] paragraph right here. And that is the
+[00:46:32] database system is not allowed to write
+[00:46:34] out any page that's been modified by a
+[00:46:37] transaction from the buffer pool cannot
+[00:46:40] write that out to disk before the log
+[00:46:43] record that corresponds to those changes
+[00:46:45] have has been safely written out to
+[00:46:47] disk. Right? Why it's called the write
+[00:46:49] ahead log because you're writing ahead
+[00:46:50] to the log before you write to the
+[00:46:53] database system.
+[00:46:56] There is right behind logging for the
+[00:46:57] experimental hardware that he and I were
+[00:46:59] talking about. We did that and you
+[00:47:00] actually want to write to the database
+[00:47:02] first before the log. That's only in
+[00:47:04] research land. Don't do that for real,
+[00:47:06] right? It has to be before. And so with
+[00:47:08] this, this is allow us going to do steel
+[00:47:10] and no force. So steel is going to allow
+[00:47:11] us to write out uncommitted changes or
+[00:47:14] changes from uncommitted transactions
+[00:47:15] before the transactions committed. But
+[00:47:17] again, we got to make sure we write the
+[00:47:18] log records first before those pages get
+[00:47:21] written to disk. And then no force says
+[00:47:23] that we don't require the data system to
+[00:47:26] flush out all the pages that that
+[00:47:28] transaction is modified when the trans
+[00:47:30] transaction is committed. But we got to
+[00:47:31] write out the log records for that
+[00:47:33] transaction first before we tell the
+[00:47:35] outside world you've committed.
+[00:47:39] So that means that if a transaction
+[00:47:41] modifies a thousand pages, there'll be a
+[00:47:44] thousand log records at least for for
+[00:47:47] those changes. And all those thousand
+[00:47:49] log records we got to write to disk. But
+[00:47:50] we can do that sequentially
+[00:47:53] with with a fewer number IO's versus
+[00:47:55] doing random IO's for all those thousand
+[00:47:56] pages as we would have to do in shadow
+[00:47:58] paging and other techniques.
+[00:48:11] The question is do are people doing
+[00:48:13] shadow paging because no steel and force
+[00:48:16] is easier to implement.
+[00:48:18] Yes.
+[00:48:20] But like it's [clears throat] like you
+[00:48:22] can do it quick and dirty pretty easily
+[00:48:26] because right head log we'll see as go
+[00:48:28] along it's a it's a bit more
+[00:48:30] complicated. And then when you throw
+[00:48:31] checkpoints in that's hard because now
+[00:48:34] you got to be able to handle what if I
+[00:48:35] crash and recover and then dur my
+[00:48:37] recovery I crash again. That's hard.
+[00:48:40] Shadow paging doesn't have that problem.
+[00:48:46] All right. So, again, I'll sort of go
+[00:48:48] through this quickly, but for force and
+[00:48:51] steel, right, if I do force, it's
+[00:48:53] trivial to do. Uh, but I want to be able
+[00:48:56] to do steel because I want to be able to
+[00:48:58] write out pages before transactions
+[00:49:00] committed, right? So, again, this is
+[00:49:02] repeating what I said like if you do
+[00:49:04] force on every update, you flush all the
+[00:49:05] pages before they go to disk. If I do no
+[00:49:07] steel, then I got to I can't flush
+[00:49:10] anything out before transactions
+[00:49:12] committed. But it it makes it trivial
+[00:49:15] for us to do roll backs on a board of
+[00:49:16] transactions because you just throw away
+[00:49:18] everything in memory and nothing's out
+[00:49:19] on disk. If I'm doing no force, then in
+[00:49:22] order for me to cover after crash uh on
+[00:49:25] I need to maintain log information to
+[00:49:27] know that transactions committed and
+[00:49:29] make sure I can redo any of the changes
+[00:49:30] so I don't lose them. And then if I'm
+[00:49:32] doing steel as well, I I can flush any
+[00:49:36] dirty pages out the disc, even the
+[00:49:37] transaction, even the transition still
+[00:49:39] running, but I need to make sure I can
+[00:49:40] undo those changes later on if I crash
+[00:49:42] and come back.
+[00:49:44] So, let me walk through this and then
+[00:49:46] hopefully this make more sense. So,
+[00:49:48] again, now we're going to have uh this
+[00:49:50] these log records we're going to
+[00:49:51] maintain for transactions, but now we
+[00:49:53] need a place to store them. So there'll
+[00:49:55] be some some some area in memory that we
+[00:49:58] where we're going to basically append
+[00:49:59] changes to to uh we're going to append
+[00:50:03] the changes to our to this this b memory
+[00:50:06] buffer as transactions make them. It
+[00:50:09] says usually backed by buffer pool.
+[00:50:10] That's usually not the case. Right.
+[00:50:14] It's just memory. Right. Right. And then
+[00:50:16] again all the log records for
+[00:50:18] transaction uh for the pages they
+[00:50:20] modified have to be written to disk
+[00:50:22] non-focal storage before the page itself
+[00:50:24] is allowed to be overwritten. So again
+[00:50:26] in your buffer pull replacement policy
+[00:50:28] when you or the background writer when
+[00:50:29] you go through and start evicting pages
+[00:50:31] and writing them out to disk you got to
+[00:50:33] make sure the log records
+[00:50:36] that dirty those pages those are written
+[00:50:37] to disk.
+[00:50:39] And we'll see how we're going to track
+[00:50:40] that next class using log sequence
+[00:50:42] numbers. you basically keep track of a
+[00:50:44] you know a number that says here's the
+[00:50:45] log record that corresponded to this
+[00:50:46] change I know it's been written to disk
+[00:50:48] therefore I can evict this page
+[00:50:50] and then we don't tell the outside world
+[00:50:53] that our transaction is fully committed
+[00:50:56] until all its log records have been
+[00:50:58] written to uh non-ausal storage stable
+[00:51:01] storage is the same thing
+[00:51:04] all right so the way it's going to work
+[00:51:05] is that when a transaction starts we're
+[00:51:07] going to put a begin record into the log
+[00:51:10] uh as represent its starting
+[00:51:12] It's kind of not unnecessary for today's
+[00:51:15] class, but next class we'll see it
+[00:51:16] because we need to know when a
+[00:51:17] transaction showed up uh when we do
+[00:51:19] recovery to figure out where like the
+[00:51:21] the demarcation line is at starting
+[00:51:22] point starting point of the transaction.
+[00:51:26] Then anytime that transaction makes a
+[00:51:28] change to an object, we're going to
+[00:51:30] record a new log record that keep track
+[00:51:32] of it transaction ID, the object ID of
+[00:51:34] of what got modified, then the before
+[00:51:37] value for undo and the after value for
+[00:51:38] redo. If we're doing multi version
+[00:51:40] concurrency control the postgress way,
+[00:51:42] we don't actually need need the undo
+[00:51:44] value because we're never un we're never
+[00:51:46] overwriting things. We're always making
+[00:51:48] a new copy of it. But again, for for um
+[00:51:53] to be, you know, super careful, we we'll
+[00:51:55] record both.
+[00:51:57] Then when a transaction finishes
+[00:52:00] and say that it gets committed
+[00:52:01] successfully, then we're going to append
+[00:52:03] this commit record to the log. And then
+[00:52:05] we need to make sure that all the uh log
+[00:52:07] records that come before this commit for
+[00:52:10] that transaction get written out to disk
+[00:52:12] before we come back with acknowledgement
+[00:52:14] say your transaction has successfully
+[00:52:15] committed. Now this means that we may be
+[00:52:17] writing out log records from
+[00:52:19] transactions that have not committed
+[00:52:20] yet. But that's okay because we haven't
+[00:52:24] written the commit record yet for them.
+[00:52:25] So again when we crash and come back we
+[00:52:27] see a bunch of changes a bunch of log
+[00:52:28] records for changes but then not the
+[00:52:30] commit we know we need to reverse that
+[00:52:31] you know undo that transaction.
+[00:52:34] So is it okay for write us to write out
+[00:52:36] changes from transactions in in our log
+[00:52:37] records that have not committed yet?
+[00:52:42] All right. So when transaction T1
+[00:52:44] starts, there's a write on a, right? We
+[00:52:46] pend a log record that says our
+[00:52:47] transaction has begun, right? And then
+[00:52:50] now when we do a write, the first thing
+[00:52:51] we got to do is update uh append a log
+[00:52:54] record in the in the right hand log
+[00:52:55] buffer that corresponds to the change.
+[00:52:57] So our transaction is T1. We're
+[00:52:59] modifying object A and then we have the
+[00:53:01] before and after value. And then once
+[00:53:04] that's in, you know, written written
+[00:53:05] appended to the log, everything
+[00:53:07] everything's still in memory here. So
+[00:53:08] that's fine. So that's fast. We append
+[00:53:10] that log record. And then we go ahead
+[00:53:13] and make our change to to the actual the
+[00:53:16] data object itself.
+[00:53:19] Then we do uh another item B. Same
+[00:53:21] thing, append the log record, then
+[00:53:23] modify the page. Then when our
+[00:53:25] transaction commits, we put a log record
+[00:53:27] in to say T1 has committed. Then we do
+[00:53:30] an F-sync, flush that out to disk. And
+[00:53:33] then once now the hardware comes back or
+[00:53:35] the OS comes back with an
+[00:53:36] acknowledgement saying that our change
+[00:53:37] has been flushed to disk, then we can
+[00:53:39] tell the outside world that our
+[00:53:41] transaction is committed.
+[00:53:44] Yes.
+[00:53:49] >> The question is we never put the values
+[00:53:50] in non mean in the buffer pool. Yeah,
+[00:53:53] that's the whole point. That's fine,
+[00:53:56] right? Because everything I need if
+[00:53:58] there's a crash, everything I need to be
+[00:53:59] able to recover the database if there's
+[00:54:01] a crash is in the is in the log,
+[00:54:07] right? So again, if if I get blasted by,
+[00:54:09] you know, power outage or whatever that
+[00:54:12] OS crashes or whatever, right? That's
+[00:54:15] okay because everything I need to replay
+[00:54:16] that transaction is up above in the
+[00:54:18] redhead log and I can bring that in
+[00:54:20] memory upon recovery. Next class we'll
+[00:54:22] talk about how we handle that and I can
+[00:54:23] just replay the transactions changes
+[00:54:29] of course now if I have to flush
+[00:54:33] uh the log for every single transaction
+[00:54:35] in order to say it's committed right if
+[00:54:37] the log flush on a fast SD takes you
+[00:54:39] know one to five milliseconds
+[00:54:42] then that's going to really become a
+[00:54:43] bottleneck in my system right best case
+[00:54:46] scenario if if a log flush takes one
+[00:54:49] millisecond and I can only run a
+[00:54:51] thousand transactions a second.
+[00:54:54] That's and that's that's super slow.
+[00:54:55] Like some sites want to run 100
+[00:54:57] thousands of transactions a second or a
+[00:54:58] million transactions a second.
+[00:55:00] So the way to get around that is through
+[00:55:02] a simple optimization called group
+[00:55:04] commit
+[00:55:05] where when a transaction wants to go
+[00:55:08] ahead and commit then uh it'll wait
+[00:55:12] until a small timeout period right think
+[00:55:15] of like every five milliseconds the
+[00:55:17] system will say if I have any un if I
+[00:55:19] have any changes from uh from a
+[00:55:22] transaction that wants to commit after
+[00:55:23] this timeout I'm going to go ahead and
+[00:55:24] write write it all to disk. I'm
+[00:55:26] basically batching together a bunch of
+[00:55:28] changes in my my buffer pool, sorry, in
+[00:55:31] my my log buffer and then those things
+[00:55:34] can all get get written out together. So
+[00:55:36] I'm not blocked waiting for one commit
+[00:55:38] after after another.
+[00:55:42] >> Say it again.
+[00:55:44] >> When you say when you say queries, what
+[00:55:46] what do you mean?
+[00:55:52] >> Question is, can a transaction only
+[00:55:53] commit in five minutes to get intervals?
+[00:55:57] That's pretty good. Yeah, because I can
+[00:56:00] commit whatever 10,000 transactions in
+[00:56:02] that five milliseconds.
+[00:56:05] I would say the the general rule of
+[00:56:07] thumb in in databases is that anything
+[00:56:10] below 50 milliseconds is good enough. If
+[00:56:13] you get into high frequency trading,
+[00:56:14] those guys do cocaine, they want to be
+[00:56:16] under a millisecond, right? They want
+[00:56:17] microcond level. But most websites like
+[00:56:20] the 50 milliseconds is is is is the the
+[00:56:24] upper bound of what you want to be for a
+[00:56:25] transaction for bit time. And this comes
+[00:56:27] from like internet uh advertising
+[00:56:29] auctions. Like when you go visit a
+[00:56:30] website, assuming you're not using
+[00:56:31] Ublock Origin, uh then when you visit a
+[00:56:35] website, the you know the Google ads or
+[00:56:37] whatever the the ad broker sends bid
+[00:56:40] requests to a bunch of other other
+[00:56:42] advertising brokers and they come back
+[00:56:44] and say, you know, whether they want to
+[00:56:46] how much they want to pay to show you an
+[00:56:47] ad or something, right? And the the the
+[00:56:50] timeout request for that is like 50
+[00:56:52] milliseconds or less, maybe 40
+[00:56:54] milliseconds. So you have basically you
+[00:56:56] get a request, you need do some kind of
+[00:56:58] run a transaction and come back with a
+[00:56:59] response within 40 milliseconds.
+[00:57:03] >> Say it again.
+[00:57:05] >> Is there overhead?
+[00:57:07] >> Yeah, there's network overhead. So yeah.
+[00:57:08] So like but say that the deadline you
+[00:57:10] got to be back in 50 millconds. So say
+[00:57:11] like you get request you have 40
+[00:57:12] millconds to figure out what you want to
+[00:57:14] do and send out, right? Or anytime you
+[00:57:16] like update a website like you want to
+[00:57:17] be back 50 millconds is the general rule
+[00:57:19] of thumb. So if I if I'm committing
+[00:57:21] every five milliseconds, that's good
+[00:57:22] enough. That's pretty good.
+[00:57:27] All right. So again, the way it works
+[00:57:29] like this is that now we're going to
+[00:57:31] have two log buffers, right? So T1
+[00:57:33] starts, it begins a transaction. We put
+[00:57:36] our entry in the first log buffer, does
+[00:57:38] a right on A, ends up there. Again,
+[00:57:39] assuming I'm not showing updating the
+[00:57:41] pages in the buffer pool. Assume we're
+[00:57:42] doing that, too. Then I do a right on B.
+[00:57:45] Contact switch over to T2. T2 does a
+[00:57:47] begin, does a right on C, does a right
+[00:57:49] on D. Uh, before we do the right on D,
+[00:57:51] though, our buffer pool is full. So now
+[00:57:53] we can go ahead and asynchronously flush
+[00:57:56] this out to disk. But in the meanwhile,
+[00:57:58] now we just switch over now to using the
+[00:57:59] second log buffer. So we write all our
+[00:58:01] changes there, right? And then say now
+[00:58:03] there's a stall and we get we go ahead
+[00:58:05] and do a bunch of commit. And at this
+[00:58:06] point here, the first transaction T1
+[00:58:08] will wait until the timeout to do group
+[00:58:10] commit uh in the second log buffer. And
+[00:58:13] then when when that happens, again,
+[00:58:15] think of like in milliseconds, then we
+[00:58:18] write out the change from the second log
+[00:58:20] buffer out to disk.
+[00:58:23] Right. So basically I'm showing two
+[00:58:25] buffers here. You could have more than
+[00:58:26] more than two. I could basically always
+[00:58:28] be writing things out to disk and
+[00:58:30] they're all sequential writes because
+[00:58:31] I'm just appending to this log file. I'm
+[00:58:33] not doing random IO. So this is pretty
+[00:58:34] efficient and pretty fast to do. Yes.
+[00:58:40] >> The question is what do you do for HFT
+[00:58:41] guys?
+[00:58:43] uh they usually run inmemory databases
+[00:58:46] and then they can do uh they they
+[00:58:50] replicate
+[00:58:52] >> they don't
+[00:58:54] they don't fail. Yeah. They're also not
+[00:58:56] running on like machines you find behind
+[00:58:57] the dumpster like they're running on
+[00:58:58] high-end machines that like they're fall
+[00:59:01] tolerant. Then there's a whole another
+[00:59:02] class of of databases called uh super
+[00:59:06] false databases. We're getting we're
+[00:59:07] getting ahead of ourselves. Um, but
+[00:59:09] there's a system called non-stop SQL
+[00:59:11] that's basically it's like NASA level
+[00:59:14] replication. So like you run a
+[00:59:15] transaction, it runs in parallel on
+[00:59:17] three machines and they all come back
+[00:59:18] and say yes, we did the same thing. Like
+[00:59:20] you they they do that kind of stuff,
+[00:59:22] right?
+[00:59:24] They also they they build their own
+[00:59:26] hardware or like they
+[00:59:28] like they'll they'll run fiber under
+[00:59:30] like the Hudson River to get an extra
+[00:59:32] five millisecond lower latency from like
+[00:59:34] the the data center into like the
+[00:59:36] trading headquarters. they like you know
+[00:59:38] they're just minting money they do
+[00:59:39] whatever right
+[00:59:43] all right
+[00:59:44] but the core idea is still basically
+[00:59:46] still the same all right so uh again as
+[00:59:49] I said before there's a lot seems like a
+[00:59:51] lot of overlap what I'm talking about
+[00:59:52] here uh for there's a right head log
+[00:59:54] versus like a log structure storage we
+[00:59:55] talked about before or append MVPCC and
+[00:59:57] yes there there is a lot of um sort of
+[01:00:00] duplicated ideas here I will say though
+[01:00:03] in the case of log structure merries
+[01:00:05] they're still going to have a write
+[01:00:06] ahead log for the mem table, right? The
+[01:00:07] mem table is like that skip list a B+
+[01:00:09] tree that's in memory that's absorbing
+[01:00:10] all the writes and then eventually gets
+[01:00:11] full and you then you compact it into an
+[01:00:13] SS table and write that out to disk for
+[01:00:15] that mem table piece. Since that's not
+[01:00:17] durable, it's in memory, they're going
+[01:00:19] to maintain a write ahead log for that
+[01:00:20] as well. Then once you know that the the
+[01:00:22] mem table has been converted to an SS
+[01:00:24] table and written out to disk, you can
+[01:00:25] then truncate the log. So even though
+[01:00:28] log structure storage kind of looks like
+[01:00:29] the same, they're still going to
+[01:00:30] maintain a a separate log file as well
+[01:00:32] doing the same things we're talking
+[01:00:33] about here.
+[01:00:36] All right. So now again if we go look at
+[01:00:39] again steel steel steel yeah no steel
+[01:00:42] versus steel and no force versus force
+[01:00:44] policies you can break up the the the
+[01:00:47] the sort of performance characteristics
+[01:00:50] of these two approaches uh based on what
+[01:00:52] happens when the system is running
+[01:00:54] during normal operations and what
+[01:00:55] happens during recovery. And part of the
+[01:00:58] reason why most systems are going to use
+[01:00:59] no steel and force and with with the
+[01:01:01] right ahead log is that it's be the
+[01:01:03] fastest approach to use for uh during
+[01:01:07] normal operations. If I assume my data
+[01:01:08] is not going to fail every 5 seconds
+[01:01:10] which you know if it does you have other
+[01:01:12] problems like you assume my system is
+[01:01:13] not going to fail all the time then
+[01:01:14] write ahead log approach is actually
+[01:01:16] going to be faster.
+[01:01:17] And so then you pay the penalty for slow
+[01:01:19] recovery. But again, if I don't think
+[01:01:21] I'm going to crash that often or if I
+[01:01:22] start replicating things the way that I
+[01:01:24] was briefly mentioning there, then it's
+[01:01:26] less of an issue,
+[01:01:29] right? And the reason why the recovery
+[01:01:32] be faster with force and no steel is
+[01:01:35] that I don't have to do any undo or redo
+[01:01:37] like in the shadow paging case. I just
+[01:01:39] come back and I ignore whatever's in the
+[01:01:40] shadow page table and I'm I'm good to
+[01:01:43] go. My data is consistent.
+[01:01:49] All right. So,
+[01:01:51] in my example so far in PowerPoint, I've
+[01:01:53] been showing like, oh, here's T1. I'm
+[01:01:55] showing the log recurses. Here's T1. I'm
+[01:01:58] modifying object A and then here's a
+[01:02:00] before and after value. But in actual
+[01:02:02] system, we have to be more more concrete
+[01:02:04] and and understand what we're actually
+[01:02:06] going to store in our logs.
+[01:02:09] And there's basically three approaches
+[01:02:10] to do this. wanted to do what's called
+[01:02:13] physical logging where we're storing a
+[01:02:14] bite level diff of the changes we're
+[01:02:18] making to a specific page at a specific
+[01:02:20] offset uh in in that page right think
+[01:02:24] like making a diff patch uh in git or in
+[01:02:28] in in Linux
+[01:02:30] another approach is do logical logging
+[01:02:32] where I store the actual query that uh
+[01:02:36] made the changes to the database like
+[01:02:38] the actual literal the SQL string itself
+[01:02:42] And then that way when I crash I just
+[01:02:44] come back and replay the the re
+[01:02:46] reexecute the SQL query.
+[01:02:49] [snorts] And then a hybrid approach is
+[01:02:51] sort of physiological where I don't want
+[01:02:54] to be I don't want to store the exact
+[01:02:56] lot the actual SQL query itself but I
+[01:02:58] maybe don't want to store bite level
+[01:02:59] discs. uh I want to be able to just keep
+[01:03:02] track of like here's the pages I
+[01:03:04] modified and then here's a highle change
+[01:03:07] of what I modified my page so that upon
+[01:03:10] recovery I don't have to make sure the
+[01:03:12] page is exactly the way it was well
+[01:03:14] before the data can decide to reorganize
+[01:03:16] and move things around within within
+[01:03:18] that page itself and things still work
+[01:03:20] out the same and and I don't lose any
+[01:03:22] data
+[01:03:25] I'll say also too that what I'm not
+[01:03:27] talking about so far is you know we
+[01:03:29] assuming we're modifying tupils,
+[01:03:32] but we have other data structures we
+[01:03:34] need to make sure they're safe on disk
+[01:03:35] as well. Indexes, right? Indexes are
+[01:03:37] basically a second copy of of data. So,
+[01:03:40] in addition to writing out log entries
+[01:03:42] for page the data pages themselves, I
+[01:03:44] want to write out log entries for my uh
+[01:03:47] for my indexes as well. So, upon
+[01:03:49] recovery, I want I want to restore them
+[01:03:52] because otherwise if I have to rebuild
+[01:03:54] the index, I got to read the whole table
+[01:03:55] all over again and repopulate it. And
+[01:03:58] that's what the inmemory database guys
+[01:04:00] do. Uh if you assume your primary
+[01:04:02] storage database is in memory like in in
+[01:04:04] HFT world they they do this a lot where
+[01:04:06] I'm you say I'm not going to pay the
+[01:04:07] penalty for writing log records for the
+[01:04:10] indexes uh so that I can I can rebuild
+[01:04:12] them more efficiently when I crash. I'm
+[01:04:14] just going to read the whole since I
+[01:04:15] have to read the whole database anyway
+[01:04:16] and bring it to memory. I'll re I'll
+[01:04:17] rebuild the index when I bring it to
+[01:04:19] memory and then they end up doing less
+[01:04:21] logging.
+[01:04:23] All right. So let's say sample query
+[01:04:25] select update fu set value equals xyz
+[01:04:28] where id equals 1. Again in phys in
+[01:04:30] physical logging again it's lowle diff
+[01:04:33] of what's actually in the bytes. So I
+[01:04:35] would say in this page at this offset I
+[01:04:38] want to write these values and I again I
+[01:04:41] still have to have before and after
+[01:04:42] value because I want to know what what
+[01:04:43] was there before. I want to know what
+[01:04:44] what I want to install in it. And I I
+[01:04:46] would have to do the same thing for for
+[01:04:48] the index.
+[01:04:51] In logical logging, I just record the
+[01:04:53] query to say, hey, there's transaction
+[01:04:56] T1 and here's the update query that it
+[01:04:58] ran.
+[01:05:01] Of course, now the challenge with this
+[01:05:03] one is
+[01:05:04] in this case here, it's pretty simple,
+[01:05:06] right? We're setting setting a value the
+[01:05:08] value XYZ setting to an exact value. If
+[01:05:11] I have things in like a random function,
+[01:05:14] time functions, I need to make sure that
+[01:05:16] when I replay the log that I get the
+[01:05:19] same values for those function calls as
+[01:05:22] I did when I first ran them because I
+[01:05:23] don't want to run this update query, get
+[01:05:25] today's, you know, today's date and
+[01:05:27] time, then I crash and recover it and
+[01:05:29] replay the same query and get tomorrow's
+[01:05:30] date and time, right? Because then then
+[01:05:32] my changes aren't durable and that's
+[01:05:33] bad,
+[01:05:36] right? But obviously, you know, if I
+[01:05:37] update a billion tupils with my one
+[01:05:39] update query, I I only need to put one
+[01:05:41] log record for that update. Whereas like
+[01:05:43] physical logging, you got to record a
+[01:05:45] billion billion log records for them,
+[01:05:46] assuming they're across a billion pages.
+[01:05:50] And then physio logical again, it may
+[01:05:52] may seem more nuanced, but again,
+[01:05:53] basically think about it as yeah, I got
+[01:05:55] to show what page I'm updating, but now
+[01:05:56] I'm just going to say what slot number
+[01:05:57] I'm modifying because that's
+[01:05:59] corresponding to a logical tupole within
+[01:06:01] within the page. And then the slot can
+[01:06:04] change this loc where the slot is
+[01:06:05] pointing to in the page can change. Uh
+[01:06:08] and then upon recovery I can move things
+[01:06:11] around and I still have the freedom to
+[01:06:13] you know I have the freedom to
+[01:06:14] reorganize things but then still know
+[01:06:15] how to apply the changes correctly.
+[01:06:18] And then same thing for the for the
+[01:06:20] indexes as well.
+[01:06:23] So logical logging is nice because you
+[01:06:24] end up lighting writing a lot less data
+[01:06:27] for uh the changes you make to your
+[01:06:29] database. But the challenge is going to
+[01:06:31] be as I said for you have time stamps
+[01:06:33] and other non-deterministic functions
+[01:06:35] you make sure they are deterministic
+[01:06:37] upon recovery and likewise if I have
+[01:06:39] transactions running at different
+[01:06:40] isolation levels uh I need to make sure
+[01:06:43] I replay the log in that in the same
+[01:06:46] ordering as I did when I actually
+[01:06:47] executed them. So I need to maintain
+[01:06:49] more metadata about the ordering of the
+[01:06:51] actual true ordering of transactions
+[01:06:53] when they actually executed not the
+[01:06:54] logical ordering necessarily.
+[01:06:58] The other thing about logical logging
+[01:06:59] too is if your if the query you get
+[01:07:01] logged took took an hour to run, there's
+[01:07:04] no magic wand that can make that query
+[01:07:06] run faster upon recovery. So if it took
+[01:07:07] a query it took a qu if a query took an
+[01:07:09] hour to run during no operations, when I
+[01:07:11] crash and come back, it's going to take
+[01:07:13] an hour again to run that same query. So
+[01:07:15] recovery could could be potentially
+[01:07:17] slow.
+[01:07:20] So most systems do not do logical
+[01:07:22] logging. Most systems are going to do
+[01:07:23] physiological logging. Yes.
+[01:07:30] The
+[01:07:30] >> question is do do data systems allow you
+[01:07:32] to choose what you want to do not for
+[01:07:34] recovery on the like as the the regular
+[01:07:38] mechanism for for the system to do
+[01:07:39] recovery
+[01:07:41] it'll show up when we do replication you
+[01:07:44] it's actually the next slide right um
+[01:07:48] if I want to make apply changes that I
+[01:07:49] make from one database to another
+[01:07:50] database so if I this node crashes I can
+[01:07:53] just pick pick up where I left on the
+[01:07:55] other Sometimes I could do logical
+[01:07:57] logging, sometimes I could do physical
+[01:07:58] logging and those you can change what
+[01:08:00] you want to do in post at least other
+[01:08:02] systems less so.
+[01:08:05] All right. So one of the cool things
+[01:08:07] about the redhead log is that we can use
+[01:08:09] it for other things other than recovery.
+[01:08:10] Again basically what I what I just said
+[01:08:12] to them is that we can use it to
+[01:08:14] propagate the changes on our database to
+[01:08:17] other sources that wouldn't be aware of
+[01:08:18] those changes.
+[01:08:20] So one example would be like if I have a
+[01:08:23] you know I have two copies of Postgress
+[01:08:24] and I you know all my rights go to this
+[01:08:26] one and I want to make sure that any
+[01:08:27] changes on this one gets propagated to
+[01:08:29] the other one. I can just send then the
+[01:08:30] log messages the write ahead log and to
+[01:08:33] that second database system and they can
+[01:08:36] pretend that it's in recovery mode and
+[01:08:38] just replay the log as if it was
+[01:08:39] recovering from a from a crash but it's
+[01:08:41] just replaying the log that's coming
+[01:08:42] over over the network. And this shows up
+[01:08:45] in a lot of times in systems that are
+[01:08:47] doing the you know the the ETL stuff
+[01:08:50] that the DBT guys talked about where I
+[01:08:52] want to take I I want to run analytical
+[01:08:55] queries or transform my data in a
+[01:08:56] certain way so I can stall it into
+[01:08:58] Snowflake or data bricks whatever my
+[01:08:59] data warehouse I want to want to use and
+[01:09:01] do a bunch of AI uh analytical stuff on
+[01:09:03] that data. The change data capture
+[01:09:05] technique is basically one way to
+[01:09:07] essentially do that.
+[01:09:09] And so you could the the most efficient
+[01:09:12] way to do this is to do the write ahead
+[01:09:13] log uh replication right as I'm writing
+[01:09:17] out the right headlog to disk I can also
+[01:09:18] write it out to the network and then
+[01:09:20] some other node on the other side knows
+[01:09:21] how to process that data and do
+[01:09:23] something with it.
+[01:09:25] So again like this I have my right head
+[01:09:27] log I apply I I commit a transaction on
+[01:09:29] this node here and I can send it over to
+[01:09:31] this other node here. Now we won't talk
+[01:09:33] about how to make sure that these things
+[01:09:34] are consistent. So if one guy crashes
+[01:09:36] how do we make sure that all our changes
+[01:09:37] made to the other one. That'll be
+[01:09:39] starting next week. We'll talk about how
+[01:09:40] we handle that. But there's a bunch of
+[01:09:41] tools that know how to interpret the
+[01:09:44] contents of the write ahead log because
+[01:09:46] these things are well documented and
+[01:09:47] then can extract them and do like
+[01:09:49] queries on top of them and transform
+[01:09:50] them in different ways. So the the most
+[01:09:53] expensive one of these is probably
+[01:09:54] Oracle Golden Gate. Um and then the open
+[01:09:58] source tool called Debzium. And you can
+[01:09:59] connect this with like streaming systems
+[01:10:01] like Kafka where you can take the output
+[01:10:02] of a post redhead log through DSium and
+[01:10:05] then convert this in like JSON files or
+[01:10:07] JSON documents. you can then process on
+[01:10:09] crunch on them and then transform that
+[01:10:10] and then send them off to other systems
+[01:10:11] for for consumption.
+[01:10:13] Okay, we'll talk about a little bit this
+[01:10:15] more about and starting next week but
+[01:10:17] you know when we talk about replication
+[01:10:18] the basic idea is like the right ahead
+[01:10:20] log doesn't have to be on disk. It could
+[01:10:22] actually be a network stream to another
+[01:10:23] system itself and all the all the
+[01:10:26] mechanisms we're talking about here
+[01:10:27] today still work.
+[01:10:32] All right. So now to finish up, the
+[01:10:36] obvious problem with everything we
+[01:10:37] talked about so far with Redhead
+[01:10:39] logging, you know, you know, it is the
+[01:10:40] preferred choice is that it grows
+[01:10:43] forever,
+[01:10:46] right? My database system has been
+[01:10:47] online for a year. My write ahead log
+[01:10:50] will contain a year's worth of write log
+[01:10:52] messages. And so that's going to suck if
+[01:10:54] now if I crash and come back, I don't
+[01:10:56] want to have to replay an entire year's
+[01:10:58] worth of log in order to recover the
+[01:10:59] database, right? Even I'm doing
+[01:11:01] physiological or physical logging where
+[01:11:03] the you know reapplying the changes very
+[01:11:05] fast not rerunning the queries as I
+[01:11:07] would in logical logging I still got to
+[01:11:10] crunch through you know a year's worth
+[01:11:11] of log messages and that that's going to
+[01:11:13] be take a long time
+[01:11:16] so the way we're going to this problem
+[01:11:18] is through checkpoints
+[01:11:20] checkpoint is basically a mechanism
+[01:11:22] where we say we're going to write out
+[01:11:23] all the dirty pages that are in our
+[01:11:25] buffer pool we're going to write them
+[01:11:27] out the disk record that as a checkpoint
+[01:11:28] right?
+[01:11:30] Uh or apply that, you know, write write
+[01:11:32] the flush them out the disk. And then
+[01:11:34] now we're going to record in a log
+[01:11:35] message that we took a checkpoint at
+[01:11:37] this point in time so that when we crash
+[01:11:40] and come back or restart the system and
+[01:11:42] need to examine the log, it sort of
+[01:11:44] bounds how far we have to look back
+[01:11:46] because we would know that there's not
+[01:11:47] going to be changes from uh from
+[01:11:49] transactions that didn't make it out to
+[01:11:51] disk. Right? At that the moment we take
+[01:11:53] the checkpoint, those change those dirty
+[01:11:55] pages have been flushed out. So we don't
+[01:11:57] have to look at the beginning of the
+[01:11:58] log. We we only have to look back just a
+[01:12:00] little bit uh to to some sort of safe
+[01:12:02] point in time.
+[01:12:05] So I'm going to first talk about how to
+[01:12:07] do this on naive scheme uh called
+[01:12:09] blocking checkpoints and then we'll see
+[01:12:11] the problems of this and then again as I
+[01:12:13] said next class we'll pick up with how
+[01:12:15] to make make this thing actually usable.
+[01:12:18] This is basically what you don't want to
+[01:12:20] do but it it'll solve the problems that
+[01:12:22] we want to have and not having to look
+[01:12:23] at the entire log but it's going to have
+[01:12:25] other problems.
+[01:12:27] All right. So, the blocking or
+[01:12:28] consistent checkpoint protocol is pretty
+[01:12:30] straightforward. You basically pause all
+[01:12:32] queries from executing
+[01:12:34] right wherever they're at, you stop
+[01:12:35] them. You don't let you don't let any
+[01:12:38] new transactions or any new query start.
+[01:12:40] And then now you're going to flush all
+[01:12:42] the log records that are in your your
+[01:12:44] buffer log in memory. You write that out
+[01:12:46] to disk first. Then you take your all
+[01:12:48] the pages in your buffer pool that are
+[01:12:49] dirty and flush those out to disk.
+[01:12:53] Then when you then you write a
+[01:12:55] checkpoint entry to the log, flush that
+[01:12:57] out to disk and now unpause and resume
+[01:12:59] all query execution.
+[01:13:04] So let's see what it looks like. So say
+[01:13:06] this is our writ log. We're applying a
+[01:13:07] bunch of changes, right? And then at
+[01:13:10] some later point we're going to crash.
+[01:13:11] You see we have a checkpoint uh entry in
+[01:13:13] here, right? So when we crash and come
+[01:13:15] back, you basically replay the log going
+[01:13:18] from from the the newest record to the
+[01:13:20] oldest record. you go sort of go go back
+[01:13:22] in time from the bottom to the top. So
+[01:13:24] you start from the bottom, scan up until
+[01:13:26] you find a checkpoint here. And now we
+[01:13:27] know this this is the starting point
+[01:13:29] where we want to make sure we apply all
+[01:13:31] the changes that come after this because
+[01:13:32] anything up above we know has made it
+[01:13:34] out to disk,
+[01:13:36] right? Because those pages have has been
+[01:13:39] have been flushed.
+[01:13:41] So at this point here we know that any
+[01:13:43] transaction that committed before T1 can
+[01:13:46] be just ignored and we don't have to do
+[01:13:48] anything because we know their changes
+[01:13:49] have been are safely on disk
+[01:13:53] but we're really looking so in case here
+[01:13:55] we ignore T1 but here we would see that
+[01:13:57] we have T2 and T3 exist and you know we
+[01:14:02] could scan up until we to find them but
+[01:14:04] again if we see a commit uh sorry we we
+[01:14:09] scan out and find them if we see a
+[01:14:10] commit from them we know ignore them. In
+[01:14:11] the case here, T2T3, they made some
+[01:14:13] changes after our checkpoint. So, we got
+[01:14:15] to make sure we undo those changes
+[01:14:17] because they they didn't commit before
+[01:14:19] we crashed,
+[01:14:21] right?
+[01:14:23] So, [snorts] we need to redo T2 because
+[01:14:26] T2 committed after our checkpoint and we
+[01:14:28] need to undo T3 because it didn't commit
+[01:14:31] before we crashed.
+[01:14:34] >> Yes.
+[01:14:41] The question is, do I need in this my
+[01:14:43] toy example here, do I need to scan the
+[01:14:44] whole log because I got there maybe
+[01:14:46] other transactions that made a bunch
+[01:14:47] bunch of changes at the beginning and I
+[01:14:49] didn't see any more things after my
+[01:14:50] checkpoint. Yes, we'll fix that next
+[01:14:53] class. Yes. All right. So, they brought
+[01:14:56] up a good point, but like one is the
+[01:14:59] one is again there may be changes from
+[01:15:00] transactions that have not committed yet
+[01:15:02] that aren't doing anything. So, I still
+[01:15:04] got to scan the log to find them. So
+[01:15:06] next class we'll see we can source some
+[01:15:07] metadata about how to keep track of what
+[01:15:09] are the actual transactions that are
+[01:15:11] running so that we know we know what we
+[01:15:13] need to go find them right the other
+[01:15:15] problem is that in order to make sure we
+[01:15:17] have a consistent snapshot of the
+[01:15:18] database we have to pause all all the
+[01:15:21] queries
+[01:15:23] and again depending on how big our
+[01:15:24] buffer pool is and how dirty it is we
+[01:15:27] may have to write out all the page you
+[01:15:28] know write out a lot of pages and that
+[01:15:30] could take a long time. So now your
+[01:15:31] queries are running a checkpoint happens
+[01:15:33] and it blocks all your queries until you
+[01:15:35] flush everything out to disk. So if my
+[01:15:37] buffer pool is like say 100 terabytes
+[01:15:41] again it's not outlandish on high-end
+[01:15:42] systems and all the pages in my my
+[01:15:45] buffer pool are dirty worst case
+[01:15:47] scenario I got to write 100 terabytes
+[01:15:48] before any query can start running
+[01:15:49] again. So that's problematic
+[01:15:53] to the point they said also well I got
+[01:15:55] to find all the committed transactions
+[01:15:56] which take a long time. And then the
+[01:15:58] other challenge is like how do we decide
+[01:16:00] when should we how often we should we
+[01:16:01] taking these checkpoints. So we have to
+[01:16:04] pause every so often. That's not good. I
+[01:16:06] don't want to take checkpoints too
+[01:16:07] often. But then now my my recovery time
+[01:16:10] is going to take longer because I have
+[01:16:11] longer gaps between my checkpoints.
+[01:16:15] So if we spend all our time just
+[01:16:17] flushing out dirty pages from from the
+[01:16:19] checkpoints, then that's going to slow
+[01:16:20] down queries. But again, if we don't if
+[01:16:22] we don't do that, then that takes the
+[01:16:24] recovery is going to take longer.
+[01:16:26] So there's no right answer. I can tell
+[01:16:29] you how often you should be taking
+[01:16:30] checkpoints. Even if you do the better
+[01:16:31] ones, the fuzzy ones we'll see next
+[01:16:33] class. It depends on the pain tolerance
+[01:16:36] uh for whatever your application or
+[01:16:38] whatever your company is. So the HFT
+[01:16:41] guys, they don't want things, they want
+[01:16:43] to recover right away. So they'll take
+[01:16:44] checkpoints every five minutes. But for
+[01:16:47] other systems, that's probably that's
+[01:16:49] probably more than you need.
+[01:16:52] Now it can be based on time or it can be
+[01:16:54] based on um in a lot of systems it's
+[01:16:56] based on how much log records how many
+[01:16:58] log records you how much log record data
+[01:17:00] you've generated. So like in like say
+[01:17:03] like my SQL it might be like if I write
+[01:17:05] 512 megabytes of log data then I take a
+[01:17:08] checkpoint so that way I'm not taking
+[01:17:10] checkpoints at regular intervals. I only
+[01:17:12] do it when I write a bunch of stuff. So
+[01:17:14] my my data system idle I'm running
+[01:17:16] queries I'm not taking checkpoints un uh
+[01:17:18] neededlessly.
+[01:17:20] So how to do this correctly again
+[01:17:21] depends on what what your tolerance is
+[01:17:23] but every single data system will expose
+[01:17:25] different parameters for these things.
+[01:17:28] So again next class we'll then talk
+[01:17:30] about how we actually make this
+[01:17:31] checkpoint thing for real and handle the
+[01:17:33] case where we can find transactions that
+[01:17:35] were running at the time you took the
+[01:17:36] checkpoint and not have to block anybody
+[01:17:39] while while we do it.
+[01:17:52] The question is, if I'm doing redhead
+[01:17:54] logging, does that mean I should keep
+[01:17:56] the entire redhead log since the
+[01:17:59] inception of the database? No.
+[01:18:01] Checkpoints will allow you not to have
+[01:18:02] to do that, the correct checkpoints.
+[01:18:05] There may be external factors that
+[01:18:07] require you to do that. So if you're a
+[01:18:09] financial firm, I gotta keep things
+[01:18:11] around for regulatory reasons like for
+[01:18:13] auditing like Sarbain Oxley. So you got
+[01:18:15] you got to keep the redhead long around
+[01:18:16] for seven years,
+[01:18:19] right? Because I need to be able to say
+[01:18:20] what were all the changes I made, right?
+[01:18:22] Um so the but in most systems you don't
+[01:18:27] you don't need that and I think
+[01:18:29] Postgress cleans clean them up. I think
+[01:18:30] my SQL the old versions didn't clean
+[01:18:32] them up. I think the new versions clean
+[01:18:33] up the log pretty efficiently, right?
+[01:18:35] But in general, yeah, if you don't need
+[01:18:36] it, like the if you take checkpoints
+[01:18:39] enough, you don't need a bunch of I
+[01:18:40] don't need last year's write ahead log.
+[01:18:44] And then when we talk about fuzzy
+[01:18:45] checkpoints, even I have last year's
+[01:18:47] write ahead log, I won't I I won't even
+[01:18:49] have to go look at it. It's just there
+[01:18:51] taking up space.
+[01:18:54] All right. So again, main take from all
+[01:18:56] this is that right ahead logging is
+[01:18:57] going to be the superior choice. Enable
+[01:18:59] your data system, right? to ensure
+[01:19:01] durable transactions. And the core ideas
+[01:19:04] of Ralog is the the the steel no force
+[01:19:07] policy where steel means we can write
+[01:19:08] out dirty pages before transactions
+[01:19:10] committed. Uh and no force means that we
+[01:19:12] don't require all those dirty pages in
+[01:19:14] memory to be written on disk. But we do
+[01:19:15] require all the log records for that
+[01:19:18] transaction to be written out to disk.
+[01:19:20] Now the dirty secret is every major data
+[01:19:23] system is going to support what are
+[01:19:25] called synchronous commits to make sure
+[01:19:26] that I I flush things to disk before I
+[01:19:28] say tell you committed. It's not on by
+[01:19:30] default in most systems like in
+[01:19:32] Postgress and in my SQL I don't think
+[01:19:34] it's on by default. So even then like
+[01:19:36] even though righthead logging you know
+[01:19:38] you say your transaction committed
+[01:19:39] there's still like a five millisecond
+[01:19:41] window depending on your group commit
+[01:19:42] interval where you could still crash and
+[01:19:44] lose data.
+[01:19:46] So if you really care care about
+[01:19:47] performance you uh sorry if you really
+[01:19:49] care about not losing data you make sure
+[01:19:50] that that thing is turned on.
+[01:19:53] All right. So again next class we'll be
+[01:19:54] taking better checkpoints so we don't
+[01:19:56] have to block the system. we don't have
+[01:19:57] to scan the entire log and allows us to
+[01:19:59] do more efficiently and then we'll show
+[01:20:01] how we actually take our logs and take
+[01:20:03] our checkpoints and do recovery for this
+[01:20:05] and the algorithm we're going to we're
+[01:20:06] going to use is called Aries this was
+[01:20:08] invented by IBM in the 19 paper came out
+[01:20:11] in 1992 and although the techniques like
+[01:20:15] although the I'll describe what the
+[01:20:17] textbook describes as Aries and uh what
+[01:20:19] the original Aries papers talks about
+[01:20:22] most systems are not going to implement
+[01:20:23] exactly as I'm describing here the high
+[01:20:25] level ideas of doing redo or analyze
+[01:20:26] redo and undo is going to be uh very
+[01:20:29] similar. Okay.
+[01:20:35] >> Question. Did IBM shadow agent? Yes. So
+[01:20:37] if you hang around any of the old school
+[01:20:39] database guys at IBM, you tell them
+[01:20:41] whatever your research is, they'll tell
+[01:20:42] you they invented that in the 80s. So
+[01:20:44] IBM always invented some before, right?
+[01:20:46] But then a lot of they didn't write
+[01:20:47] about, right? At least in this the paper
+[01:20:51] for Aries, it's it's amazing. It's 70
+[01:20:54] pages. It's because it's hard because
+[01:20:56] like how do you make sure you don't lose
+[01:20:57] data? Like this is that's this is the
+[01:21:00] say this that's the gold standard of how
+[01:21:02] you make sure your database is recover
+[01:21:03] after crash is using errors. But a lot
+[01:21:06] of they didn't they didn't publish.
+[01:21:08] Okay. Hit it
+[01:21:12] [music]
+[01:21:13] acquaint.
+[01:21:21] [music]
+[01:21:30] [music]
+[01:21:36] Maintain another straight [music] flow
+[01:21:38] with the grain for
+[01:21:41] maintain [music] flow with the grain.

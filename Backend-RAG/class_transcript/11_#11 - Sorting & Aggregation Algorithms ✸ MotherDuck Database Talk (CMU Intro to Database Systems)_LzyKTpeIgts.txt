@@ -1,0 +1,2166 @@
+[00:00:00] [music]
+[00:00:06] [music] I'm still
+[00:00:08] associate.
+[00:00:12] [music]
+[00:00:17] [music]
+[00:00:28] You're doing well.
+[00:00:28] >> Yeah. Okay. Uh, how's your money
+[00:00:31] situation? It's okay.
+[00:00:32] >> Yeah, it's it's getting better.
+[00:00:34] >> Okay, good to hear. Uh, again, that's
+[00:00:36] He's like, I need to make money as a DJ.
+[00:00:39] I'm like, all right, come. We'll pay you
+[00:00:40] to do this, but like anything else you
+[00:00:42] can't do you want to do? I can't do that
+[00:00:44] with you. Okay, I got it, kid. All
+[00:00:45] right.
+[00:00:47] All right, for you guys, a lot to cover
+[00:00:48] today. Um, so again, reminder for a
+[00:00:51] bunch of things coming up for you guys
+[00:00:52] in the class. Again, homework threes we
+[00:00:54] do this Sunday. Again, the idea is that
+[00:00:56] you submit it on Sunday and then we will
+[00:00:57] give you back the solutions uh on on
+[00:01:00] Monday because uh one week from now in
+[00:01:04] this room at the same time uh we will
+[00:01:06] have the midterm exam. I won't be here.
+[00:01:08] My number one PG students will be here
+[00:01:10] to practice the exam. The main thing to
+[00:01:13] know is that there's a study guide
+[00:01:14] available online with the practice exam
+[00:01:16] that's posted on Piaza. Make sure if you
+[00:01:18] show up here, bring your SMU ID so we
+[00:01:20] can keep track of who is who when when
+[00:01:21] you turn in your exam. And then for the
+[00:01:24] uh for the notes, it's single sheet of
+[00:01:26] paper, double-sided, eight and a half by
+[00:01:28] 11. Uh want them to be handwritten, so
+[00:01:31] you're just not like taking slides and
+[00:01:33] shrinking them down to fit on a single
+[00:01:35] paper. And if you want to write on your
+[00:01:36] tablet and print it out, that that's
+[00:01:37] fine, too. Okay. Any questions about the
+[00:01:41] exam?
+[00:01:44] Again, if if things are unclear, please
+[00:01:45] post some pata. And then project two
+[00:01:47] went out on uh Monday this week. Uh and
+[00:01:50] that'll be due after we come back from
+[00:01:52] fall break. Okay. All right. There was
+[00:01:54] actually one big announcement uh three
+[00:01:57] hours ago in the world of databases.
+[00:01:58] There was an acquisition. Anybody hear
+[00:02:00] what it is? I know what it is.
+[00:02:03] Uh data bricks bought another company.
+[00:02:06] Uh so they bought Moon Cake. They're
+[00:02:08] actually going to give a talk with us in
+[00:02:09] like I don't know three or four weeks
+[00:02:11] after fall break. Uh so they were
+[00:02:13] Postgress with duct DB inside of it. So
+[00:02:16] you you run your queries and you have
+[00:02:17] anical query. It could then call down to
+[00:02:19] DuckDB and then read and write to
+[00:02:21] iceberg uh who again we had them give a
+[00:02:24] talk um whatever last week kept saying
+[00:02:29] how important iceberg was again data
+[00:02:31] bricks is data bricks bought the iceberg
+[00:02:32] people for two billion and now they
+[00:02:34] bought moon cake for uh we go and then
+[00:02:39] there's there's
+[00:02:41] texting um whatever that's a weird flex
+[00:02:44] all right uh um yeah so they're just
+[00:02:47] they have a ton of
+[00:02:48] Everyone's waiting for go IPO and
+[00:02:50] they're hiring a ton. All right. So, uh
+[00:02:54] the where we're at now in the course is
+[00:02:56] again from this diagram I showed uh
+[00:02:59] earlier in the semester where we said
+[00:03:00] we're going to sort of start at the
+[00:03:01] bottom to disk layer and and work our
+[00:03:03] way up. Now, we're up here at the
+[00:03:05] operate execution. So, we know how to
+[00:03:07] build a dis uh disk manager, a buffer
+[00:03:10] pool manager to read and write pages
+[00:03:11] from disk into memory. we know now how
+[00:03:13] how to build indexes and other data
+[00:03:15] structures on top of our buffer pool to
+[00:03:18] allow us to access the data. Um so now
+[00:03:20] it's time to start talking about okay
+[00:03:21] let's let's let's run some queries. So
+[00:03:23] for the next four lectures, so this
+[00:03:25] class which will be covered on on the
+[00:03:26] midterm and then next class which is not
+[00:03:28] covered on the midterm and then a week
+[00:03:29] after the fall break, we'll start
+[00:03:32] talking about how you actually going to
+[00:03:33] take queries and execute them and
+[00:03:36] produce results as you would see when
+[00:03:38] you run you know duct db SQL light my
+[00:03:39] SQL whatever you want uh in your local
+[00:03:41] terminal how do you get back how do you
+[00:03:43] get back to those results that people
+[00:03:44] are asking for. So today's class uh
+[00:03:47] we're going to be focusing on sorting
+[00:03:48] algorithms. Next class will be about
+[00:03:50] joins. Sort of the two again two sort of
+[00:03:52] fundamental things you need to have in
+[00:03:53] your database system. And then
+[00:03:55] afterwards we'll talk about how do you
+[00:03:56] actually then build the database system
+[00:03:58] to take these different algorithms that
+[00:04:00] we can support and read on the data we
+[00:04:03] we stored on disk or bring in buffer
+[00:04:04] pool and produce results. Okay.
+[00:04:09] So the first thing to understand about
+[00:04:11] where we're going forward next is what
+[00:04:13] these query plans are actually going to
+[00:04:14] look like.
+[00:04:16] So this is now we're going to start
+[00:04:18] bringing back some of the relational
+[00:04:18] algebra stuff we talked about in the
+[00:04:20] beginning. But the high level idea of a
+[00:04:22] any of a query plan is that it's just
+[00:04:24] going to be this directed data
+[00:04:26] structure. Usually a tree. It's better
+[00:04:28] off to be a DAG, but not all systems do
+[00:04:30] that. We'll cover why that matters later
+[00:04:32] on. But it's basically some treel like
+[00:04:33] data structure here where you have on
+[00:04:36] the the leaf nodes are all the the
+[00:04:38] tables I want to access, right? or the
+[00:04:41] the the the the data that you know that
+[00:04:43] we're storing uh in some materialized
+[00:04:45] form as part of a table or a file
+[00:04:47] whatever that's all at the bottom and
+[00:04:49] then essentially they're going to be
+[00:04:50] feeding data up into these operators uh
+[00:04:53] like a filter or a join or a projection
+[00:04:55] or whatever and each operator is going
+[00:04:57] to do some computation on it based on
+[00:05:00] how help what the operator is defined to
+[00:05:02] do and then at the end we produce a
+[00:05:05] final result that we then send back to
+[00:05:06] the client and that's the result of your
+[00:05:08] query. So this is obviously PowerPoint
+[00:05:10] and there's a bunch of boxes going up on
+[00:05:12] the lines. So it doesn't really mean
+[00:05:13] anything but there's a bunch of lowle
+[00:05:14] details of of uh or design decisions we
+[00:05:17] can have in our system for what these
+[00:05:19] boxes actually represent. Like are we
+[00:05:21] sending single tupils? Are we sending
+[00:05:22] columns? Are we sending the entire
+[00:05:23] result? Are we pushing the data from the
+[00:05:27] from the bottom to the top? Are we
+[00:05:28] pulling it from the top to the bottom?
+[00:05:31] Right? There's a bunch of those things
+[00:05:32] we'll cover after after fall break.
+[00:05:34] Right? But the high level idea what you
+[00:05:36] need to understand is that there's these
+[00:05:37] sort of fundamental steps uh in our
+[00:05:40] query plan that will be represented by
+[00:05:41] these relational operators uh that are
+[00:05:44] going to again produce some portion of
+[00:05:45] the of the of the final result that we
+[00:05:48] need for our query and then once once we
+[00:05:50] reach the root node that's what get
+[00:05:52] that's what gets sent back to the to the
+[00:05:55] client.
+[00:05:57] Okay.
+[00:05:59] So now also hearkening back to the
+[00:06:02] beginning of the semester when we start
+[00:06:03] talking about the algorithms we're going
+[00:06:06] to implement to execute these queries we
+[00:06:08] have to remind ourselves that we're
+[00:06:09] focusing on what is again what are
+[00:06:11] called disoriented database systems
+[00:06:13] where the system has to assume that the
+[00:06:15] the table you're trying to access or
+[00:06:17] trying to uh query against in these
+[00:06:19] query plans may not fit entirely in uh
+[00:06:24] in in main memory. And furthermore, the
+[00:06:26] thing be aware about is that the
+[00:06:27] intermate results in between these
+[00:06:29] operators in our query plan that may not
+[00:06:31] fit in memory either. So we may have to
+[00:06:34] to write those things out to disk in
+[00:06:35] order to give the illusion that we we
+[00:06:37] can fit everything in memory. And so
+[00:06:39] this means that if we if there are times
+[00:06:42] where we think we're going to have to
+[00:06:43] write the out the disk, we're actually
+[00:06:45] going to choose algorithms that may not
+[00:06:47] be asmmptoically as efficient as other
+[00:06:51] algorithms, but they're going to
+[00:06:53] maximize the amount of sequential IO
+[00:06:54] that we have to do. And therefore,
+[00:06:56] that's how we're going to get better
+[00:06:57] performance. And in particular, when we
+[00:06:59] talk about sorting today,
+[00:07:01] you know, the fastest algorithms are
+[00:07:03] going to be like quick sort or power
+[00:07:04] sort pick whatever your favorite one is.
+[00:07:06] But those are great when everything's in
+[00:07:07] memory. But if you have to go read and
+[00:07:09] write data from disk because you're
+[00:07:10] running out of you're running out of
+[00:07:11] memory in your buffer pool and you got
+[00:07:12] to spill to disk, then those algorithms
+[00:07:14] are actually going to be not great and
+[00:07:16] there'll be better ones that we'll talk
+[00:07:17] about today.
+[00:07:19] Okay. Again, it's another example why we
+[00:07:22] don't want to rely on the operating
+[00:07:24] system to manage and memory for us
+[00:07:25] because we can make all these decisions
+[00:07:27] about what we actually want to stage uh
+[00:07:29] keep in memory and write out or if we
+[00:07:31] want to prefetch things. the OS doesn't
+[00:07:33] know anything about what what what this
+[00:07:35] query plan is actually doing. Uh so it's
+[00:07:39] not going to make good decisions whereas
+[00:07:40] we know exactly what this query plan is
+[00:07:42] because because we have to execute it.
+[00:07:44] So we know like we're running down here
+[00:07:45] what the other stages are going to be
+[00:07:46] and we can make decisions about where
+[00:07:48] we're going to put data and when we're
+[00:07:50] going to read it and write to disk.
+[00:07:53] Okay.
+[00:07:56] So should be kind of obvious why we want
+[00:07:58] sorting in our database system, right?
+[00:08:01] Uh but it's good to understand some some
+[00:08:02] some
+[00:08:04] key goals where I have why we're going
+[00:08:06] to want to do this. Obviously is that
+[00:08:07] the one big obvious thing is that the
+[00:08:09] relational model is unsorted, right? We
+[00:08:12] said that it was based on set algebra.
+[00:08:14] In the case of SQL, it's based on bag
+[00:08:17] algebra, right? There could be
+[00:08:18] duplicates, but everything's unsorted.
+[00:08:20] And so many times in applications,
+[00:08:22] people are going to want data sorted.
+[00:08:24] And the way you can ask for this in SQL
+[00:08:27] is through an order by clause.
+[00:08:30] Right? So if you can say, hey, I want
+[00:08:31] this data in this table, sort it based
+[00:08:34] on some arbitrary keys either ascending,
+[00:08:36] descending order, other characteristics,
+[00:08:38] other parameters we can pass in. And
+[00:08:40] therefore, we need to support that.
+[00:08:43] But one of the things we'll see uh in
+[00:08:45] today's class as well is that even if
+[00:08:47] the query is not asking for the data to
+[00:08:49] be sorted in a certain way that we may
+[00:08:52] end up still actually want to sort it
+[00:08:55] because therefore we can choose
+[00:08:57] different algorithms uh in our query
+[00:08:59] plan that'll be more efficient because
+[00:09:01] we know the data is sorted versus being
+[00:09:03] unsorted.
+[00:09:05] Right? Most obvious thing would be and
+[00:09:07] we'll see this later on when we talk
+[00:09:08] aggregations. If I sort my data, then
+[00:09:10] it's really easy for me to then figure
+[00:09:11] out to remove uh duplicates when I want
+[00:09:14] to have a distinct clause because sort
+[00:09:16] of scan through the sort of data and if
+[00:09:18] I see that a key is not the is the same
+[00:09:20] as the last one I just looked at, then I
+[00:09:22] I can just throw it away.
+[00:09:25] In other cases, uh if you're doing a
+[00:09:27] join, uh you may there's join algorithms
+[00:09:30] we'll see next class where you actually
+[00:09:32] sort the data first then and then you
+[00:09:34] and then you uh then you merge it
+[00:09:36] together and that's really efficient to
+[00:09:37] do as well.
+[00:09:39] In some systems like in um in SQL
+[00:09:42] Server, they will recognize that hey,
+[00:09:45] it'd be really nice if I had a B+ tree
+[00:09:47] on this table that you don't have. So
+[00:09:49] they'll sort the data first, then build
+[00:09:51] a B+ tree on top of that sorted data, do
+[00:09:54] whatever it is they need to do in the
+[00:09:55] query, and then immediately throw it
+[00:09:56] away once the query is done, right? They
+[00:09:59] call it a spooling index. So again in
+[00:10:00] that example you it's much more
+[00:10:02] efficient to build a B+ tree if you sort
+[00:10:04] the data first because then you just go
+[00:10:05] along the leaf nodes and build the
+[00:10:07] scaffolding up above rather than doing
+[00:10:08] things peacemail or incrementally
+[00:10:12] again. So in general sortings can be
+[00:10:13] really helpful for a bunch of different
+[00:10:15] things and obviously we want this to be
+[00:10:16] as efficient as possible.
+[00:10:20] So if the data either the tables at rest
+[00:10:24] or our inate results if that can fit
+[00:10:26] entirely in main memory then we don't
+[00:10:28] need anything we're gonna talk about
+[00:10:29] really in this class today because then
+[00:10:31] you just pick whatever your favorite
+[00:10:32] sorting algorithm is you learned in CS
+[00:10:34] 101 right kids usually say quick sort uh
+[00:10:39] and there's Tim sort power sort like go
+[00:10:41] read read the Wikipedia page there's a
+[00:10:42] ton of different sorting algorithms
+[00:10:44] pickle sort cycle sort gnome sort
+[00:10:46] cocktail shaker sort there's a ton of
+[00:10:48] these right and they all have different
+[00:10:49] properties If everything's in memory,
+[00:10:51] then pick one of those and you'll be
+[00:10:53] fine. There is one uh one optimization
+[00:10:57] you can do. If you know the data is
+[00:10:58] mostly sorted, then there's algorithms
+[00:11:01] that can take advantage of that and not
+[00:11:04] do sort of the full quick sort uh setup.
+[00:11:06] There's something called verge sort that
+[00:11:07] came out a few years ago. There's a
+[00:11:09] bunch of algorithms that have ability to
+[00:11:11] recognize whether the data is already
+[00:11:12] sorted. If not, they bail out, fall back
+[00:11:14] to quicksort. Otherwise, they then plow
+[00:11:17] through and do uh they can run things
+[00:11:19] more efficiently almost like an insert
+[00:11:20] sort. And there's a lot bunch of these
+[00:11:23] visualization tools people like to make
+[00:11:24] to show you the different uh so the the
+[00:11:27] how data moves around when when you run
+[00:11:30] one of these sorted algorithms. Again,
+[00:11:31] like if everything's in memory, no big
+[00:11:34] deal. Pick pick your favorite one. Tim
+[00:11:36] sort is what Python uses. Actually, they
+[00:11:39] got rid of Tim sort recently, but now
+[00:11:41] it's like power sort uses quicksort. You
+[00:11:44] know, all these ones are are pretty
+[00:11:46] common. But again, it's when we fall
+[00:11:49] when when we can't fit everything in
+[00:11:50] disk. And we would know this because we
+[00:11:52] know how much memory we we have in our
+[00:11:54] buffer pool manager. Uh or typically a
+[00:11:56] query is allocated a certain amount of
+[00:11:58] memory used for sorting or working
+[00:11:59] memory. So we'd know that hey, we got to
+[00:12:01] we have to sort one gigabyte of data,
+[00:12:03] but we only have 800 megabytes of RAM or
+[00:12:05] buffer space to use. Then we got to fall
+[00:12:08] back and and use something else.
+[00:12:12] So the thing to understand what we're
+[00:12:13] now going to be sorting is is what are
+[00:12:17] called runs. And so the input to these
+[00:12:19] sorting algorithms would sort of be this
+[00:12:21] unsorted runs or semi- sorted runs. And
+[00:12:23] then the then you run your your sort of
+[00:12:26] sorting algorithm and then you starting
+[00:12:28] with you know if it's in memory you run
+[00:12:29] quick sort of that then we'll see how to
+[00:12:30] do this in in multiple stages with
+[00:12:32] external ma sort. Uh but you end up
+[00:12:34] producing an output. The output is just
+[00:12:36] that that input run in sorted based on
+[00:12:38] whatever the key you want to sort on.
+[00:12:41] And so it isn't just going to be like in
+[00:12:43] uh your algorithms class we have like a
+[00:12:45] list of numbers. You want to sort those.
+[00:12:47] Remember that we we're talking about
+[00:12:48] tupils in in in in a database or in
+[00:12:51] tables. So it's actually going to be a
+[00:12:53] key value pair where the key is going to
+[00:12:55] be whatever it is that I want to sort on
+[00:12:58] and the value is going to be either a
+[00:13:00] the actual tupil that the key belongs to
+[00:13:04] or a a pointer to it or record ID to it.
+[00:13:09] And we won't talk about this too much in
+[00:13:10] this class. We'll see this more when we
+[00:13:11] talk about joins and and sort of query
+[00:13:13] processing later. But the two choices of
+[00:13:16] what the value is going to be can depend
+[00:13:17] on what kind of system you're building.
+[00:13:20] Now you see this why the these all these
+[00:13:22] understand what these different layers
+[00:13:23] are are going to matter because one is
+[00:13:25] actually be better than another in
+[00:13:26] different scenarios. So if I'm building
+[00:13:29] a row store system then I want to use
+[00:13:31] typically what's called a early
+[00:13:33] materialization meaning the the the the
+[00:13:36] sorted runs are going to contain the key
+[00:13:38] followed by the entire tupil like all
+[00:13:41] the the bytes for the tupil that I fetch
+[00:13:43] from from a page
+[00:13:46] right and the reason why this this makes
+[00:13:47] sense in a row store because when I go
+[00:13:49] fetch the page for a tupil I'm getting
+[00:13:51] all the data that I need at the moment I
+[00:13:53] go fetch that page so I don't I want to
+[00:13:56] be able to I don't want have to go back
+[00:13:58] and fetch more data later on and I don't
+[00:14:00] need to if everything's all there.
+[00:14:02] If you're building a column store, they
+[00:14:04] often use what is called late
+[00:14:05] materialization.
+[00:14:07] Meaning instead of storing the actual
+[00:14:08] tupil data, since I only have to bring
+[00:14:11] in the pages I need if it's a column
+[00:14:13] store and not maybe the entire thing,
+[00:14:15] then I just keep track of the record ID
+[00:14:17] or the offset in the columns for the
+[00:14:20] tupil, whatever it is that I'm sorting
+[00:14:21] on. And then at some later point if I
+[00:14:23] need to go get the rest of the data, I
+[00:14:24] just follow that record ID to get the
+[00:14:26] thing thing that I need. Right? And the
+[00:14:30] idea here is you don't want to pass
+[00:14:31] around a bunch of data that you don't
+[00:14:32] need if you're going to end up throwing
+[00:14:33] away a bunch of columns in your query.
+[00:14:36] So I'm bringing this up to say like I'm
+[00:14:38] not going to show you the value portion
+[00:14:40] of the of all the data we're be sorting
+[00:14:42] in in this class. Uh we'll see this
+[00:14:44] later again when we talk about joins.
+[00:14:46] But like just understand it isn't just
+[00:14:48] the keys. I also got to pass along extra
+[00:14:49] data to know like what the key belongs
+[00:14:51] to.
+[00:14:54] >> What is the question? What's the value?
+[00:14:56] K. It's a key an attribute.
+[00:15:01] >> It's like it's it's some subset of
+[00:15:03] columns of a table that I'm sorting on
+[00:15:06] the sort. You call you would call it the
+[00:15:07] sort key. It's the same key you build
+[00:15:10] the index on columns, right? It's the
+[00:15:12] same thing.
+[00:15:16] So this is a it is a bit of a debate in
+[00:15:19] in database systems when you build OLAP
+[00:15:20] systems which one you want to actually
+[00:15:22] use for row store you almost always use
+[00:15:24] early materialization because again you
+[00:15:26] don't you're already fetching the page
+[00:15:27] you get all the data might as well just
+[00:15:28] copied along whether or not to use late
+[00:15:30] materialization is depends on who you
+[00:15:32] ask uh one of the earlier systems that
+[00:15:35] built you know one of the early data
+[00:15:36] systems that was a column store that did
+[00:15:38] late materialization was Vertica but
+[00:15:40] then they said that was a mistake and
+[00:15:41] they got rid of it wouldn't start
+[00:15:42] reading from S3 click Click house put a
+[00:15:44] blog article out uh five three or four
+[00:15:47] months ago where they said they added
+[00:15:48] late materialization.
+[00:15:50] Uh so again we'll talk about this more
+[00:15:52] later but this is uh you know this is
+[00:15:55] very important when we talk about how we
+[00:15:56] actually do query processing on column
+[00:15:58] store systems.
+[00:16:01] All right so today's class we're going
+[00:16:02] to talk about sort of the two main
+[00:16:04] sorting algorithms you would see in a
+[00:16:05] data system topend heap sort and uh
+[00:16:08] external merge sort. Then we'll then
+[00:16:10] we'll talk about how we do aggregations
+[00:16:11] with sorting and then also give a
+[00:16:13] preview of how to do aggregations on
+[00:16:15] using hash tables or hashing because
+[00:16:17] then that'll segue us into next class
+[00:16:20] when we talk about joins because the big
+[00:16:21] date debates can be whether I want to do
+[00:16:22] a sort merge join or a hashbased hash
+[00:16:25] join and then today we have a flash talk
+[00:16:28] from the mother duck guys which is the
+[00:16:29] one of the commercial incarnations for
+[00:16:31] duckd
+[00:16:33] and again you may be thinking like why
+[00:16:34] do they spend all this time talking
+[00:16:35] about sorting isn't that like from the
+[00:16:36] 1960s in computer science like quicksort
+[00:16:38] is like the 60s or 70s, right? Who cares
+[00:16:40] about this all like in, you know,
+[00:16:42] nowadays anyway? Well, this is still a
+[00:16:44] hot topic in database systems because
+[00:16:46] there's always ways to improve these
+[00:16:47] these these sorting algorithms. Duct
+[00:16:49] people put out a blog article last week
+[00:16:52] where they went back and rewrote their
+[00:16:53] their entire sort algorithm to improve
+[00:16:55] performance based on a bunch of the
+[00:16:57] techniques and things that that we'll
+[00:16:58] talk about today. Some of this is like
+[00:16:59] low-level C++ stuff that's not really
+[00:17:01] germanine to the high level topics. But
+[00:17:03] again, I want to show you that like
+[00:17:04] sorting isn't a solved problem in
+[00:17:05] databases even though the topic is
+[00:17:07] really really old.
+[00:17:08] Same thing we talk about transactions.
+[00:17:10] Transactions go back to the 1970s. Uh
+[00:17:12] but it's it's an unsolved problem.
+[00:17:17] All right. So the first sorting
+[00:17:19] algorithm I talk about is top end heap
+[00:17:20] sort. And this is a special case sorting
+[00:17:22] algorithm where if you recognize that
+[00:17:25] the data has to be sorted and you have a
+[00:17:28] limit clause or you have a you have a
+[00:17:31] restriction on the number of tools you
+[00:17:32] want as part of the output then a
+[00:17:35] shortcut is just to scan the data once
+[00:17:38] and find the top end entries that you
+[00:17:40] need as part of your output and and spit
+[00:17:42] that out.
+[00:17:44] Right?
+[00:17:46] So say I have a query like this select
+[00:17:47] star from from the enroll table order by
+[00:17:49] the student ID ascending and then now I
+[00:17:51] have this extra parameters I can put at
+[00:17:53] the end where I say I want the the the
+[00:17:55] first four rows. This is like a limit
+[00:17:57] clause but this is the SQL standard says
+[00:17:59] says go like this but then al I also can
+[00:18:01] specify whether I want ties in my my
+[00:18:04] output result or not. So this same with
+[00:18:05] ties. So I have even though I want the
+[00:18:08] top four results if there are two of the
+[00:18:11] same key that are in the top four I
+[00:18:13] would have more than four as my output.
+[00:18:16] So the way to implement this is pretty
+[00:18:17] pretty basic. You just have some kind of
+[00:18:19] sort of heap data structure like a
+[00:18:20] priority queue and you just scan through
+[00:18:24] your data in sequential order once and
+[00:18:27] you just keep updating things in the
+[00:18:29] sorted heap. So in this case here my
+[00:18:31] sorted heap is empty. I see that I have
+[00:18:34] the first thing pointing out is key3.
+[00:18:35] Well, since it's empty, I know that this
+[00:18:37] is going to be the uh the smallest
+[00:18:40] value. So I just go ahead and add that.
+[00:18:41] Scan along. Now I see four. Four is
+[00:18:44] greater than three, so it goes after
+[00:18:45] three in the sort of heap. Same as six.
+[00:18:47] Six goes after four. And then in this
+[00:18:49] case here, two now is less than three.
+[00:18:51] It's the smallest value I've seen. So I
+[00:18:53] just slide everybody over and I put two
+[00:18:55] in the front. And now in this case here,
+[00:18:58] I see a nine.
+[00:19:00] Nine is is uh larger than the smallest
+[00:19:03] larger than the largest largest value I
+[00:19:05] have in my sort of heap because I can
+[00:19:07] keep track of the min and max pretty
+[00:19:08] easily. So in this case here, I don't
+[00:19:10] even bother processing nine. I just skip
+[00:19:13] it and move on to the next one because I
+[00:19:14] know it'll never fit in my top four
+[00:19:16] results that I want.
+[00:19:19] Now here I see one. One is less than
+[00:19:21] two. Uh but and and therefore it's going
+[00:19:24] to slide in the front. Six gets pushed
+[00:19:25] out. I come along here. Now I see four
+[00:19:28] again. And because my query asked that I
+[00:19:31] want to keep ties uh keys that have the
+[00:19:34] same value. Then now I just need to
+[00:19:36] extend my sort of heap to add more more
+[00:19:39] space or more buffer space to put in the
+[00:19:41] ties and then keep going the next four
+[00:19:44] and then until I get the end. In this
+[00:19:45] case here, eight is is greater than the
+[00:19:49] largest value I have my sort of heap
+[00:19:50] greater than four. So go ahead and go
+[00:19:52] ahead and skip that.
+[00:19:54] So I can do I can run this argument in
+[00:19:56] log n or sorry not log n in n. Uh
+[00:20:00] because I I have to scan all the keys
+[00:20:02] once and I populate my sort of heap.
+[00:20:04] That's obviously not done at end time,
+[00:20:06] but it's pretty pretty easy to do. And
+[00:20:08] and this would be pretty efficient in
+[00:20:10] the back. Yes.
+[00:20:29] So I think your question is how do I
+[00:20:31] know that whether or not the the data I
+[00:20:34] want to scan or the the output result is
+[00:20:36] going to fit in memory uh and especially
+[00:20:39] if I have multiple queries running at
+[00:20:40] the same time and how to balance that.
+[00:20:42] So we're not going to talk about
+[00:20:43] resource allocation and scheduling but
+[00:20:45] the simplest way to think about this is
+[00:20:48] like in Postgress you say every query is
+[00:20:50] allowed x amount of memory right and
+[00:20:52] then you then you specify a parameter of
+[00:20:54] like how many concurrent queries allow
+[00:20:56] allowed to run at the same time and so
+[00:20:58] you just say all right well I have a gig
+[00:21:00] I'll give each each uh you know each
+[00:21:03] each query is allowed to use up to you
+[00:21:05] know 100 gigs of 100 megabytes of memory
+[00:21:08] and then if I the data I'm going scan in
+[00:21:11] this case here the original data the
+[00:21:14] original data doesn't have to fit in
+[00:21:15] memory but I obviously want my sort of
+[00:21:16] heap in memory so I would just do a
+[00:21:18] sequential scan along the original data
+[00:21:19] I rely on my buffer pool to decide how
+[00:21:21] to evict things we talked about arc and
+[00:21:23] MRU and other things so that that's why
+[00:21:25] this all matters so I scan along my data
+[00:21:27] once and then I I just populate this
+[00:21:29] thing the sort of heap will typically
+[00:21:31] fit in memory this is not that big right
+[00:21:33] if I if I'm asking for the fet fetch the
+[00:21:36] first billion rows then yeah that's
+[00:21:38] going to be a problem but again I would
+[00:21:39] know that ahead of time the SQL's
+[00:21:41] declarative. I know how much I I know
+[00:21:43] how many results you're asking. Um and
+[00:21:45] therefore I can roughly I can calculate
+[00:21:47] how big do I think this data structure
+[00:21:49] is going to be and I can decide whether
+[00:21:50] it's going to fit in memory or not.
+[00:21:54] the enterprise systems do a much better
+[00:21:56] job at uh slicing dicing resources uh
+[00:22:00] where you you can allow like hey this
+[00:22:02] this query everybody's allowed to use
+[00:22:04] 100 megabytes but if I'm not using 100
+[00:22:06] megabytes I can borrow some from from
+[00:22:08] another system from sorry from another
+[00:22:11] query and they can be a bit more
+[00:22:12] flexible I think postgress is a bit more
+[00:22:14] rigid in in the parameters you specify
+[00:22:17] so this is one example where the
+[00:22:19] enterprise systems are much better at at
+[00:22:20] at uh at scheduling resources.
+[00:22:25] >> Yes.
+[00:22:31] >> Correct. So the question is if if
+[00:22:32] there's a lot of ties, how do I estimate
+[00:22:33] the size of this heap? So we're not
+[00:22:36] going to talk about cost estimates just
+[00:22:37] yet. That'll come after the the midterm.
+[00:22:39] But like you have some basic histograms
+[00:22:43] on the data. So you you could figure out
+[00:22:45] like how many distinct values would be
+[00:22:47] in a column, right? You there's little
+[00:22:49] you can the math is a bit fudgy. Uh and
+[00:22:52] because also too it's a summarization
+[00:22:54] it's not the real you don't have the
+[00:22:55] real data. So you basically use some
+[00:22:56] some some simple cost formulas to decide
+[00:22:59] how big you think this is going to be.
+[00:23:00] And in general you over you overestimate
+[00:23:03] because you don't you don't want to be
+[00:23:05] like really wrong.
+[00:23:08] >> Yes.
+[00:23:11] >> The question is uh do you do you always
+[00:23:13] overestimate from memory? typically yes
+[00:23:16] because again you don't know what you
+[00:23:17] don't know you don't know how much data
+[00:23:19] you're going to how much you don't know
+[00:23:21] the size in result until you actually
+[00:23:23] produce run it. So this is like your
+[00:23:25] hash table when you want to size that
+[00:23:27] thing so you don't have to like dump it
+[00:23:29] out and resize it uh when you run the
+[00:23:31] queries like they'll try to do an
+[00:23:33] estimate and then they have a fudge
+[00:23:34] factor say oh it's I think I have 100
+[00:23:36] records but I'll make I'll I might see
+[00:23:38] 150 so I'll just allocate it for that.
+[00:23:41] That's pretty much every system does
+[00:23:42] that because again, you don't know you
+[00:23:44] don't know what you're going to see
+[00:23:44] until you actually see it.
+[00:23:49] We'll spend two lectures on on uh query
+[00:23:51] cost models and cost estimations and all
+[00:23:53] these things. This is the black magic of
+[00:23:55] data systems and everybody's terrible at
+[00:23:57] it. Uh and it's like really really hard,
+[00:23:59] but we'll we'll cover that later.
+[00:24:03] All right. So again, this is a special
+[00:24:04] case. If you know your your query asks
+[00:24:06] asks for an order by and it's asking for
+[00:24:08] the top end entries, then you can do
+[00:24:10] this and you you don't have to do one
+[00:24:12] one scan of the data once.
+[00:24:14] If it's a general sort request or order
+[00:24:16] by request and I I I can estimate that
+[00:24:20] it's not going to fit in memory, um I
+[00:24:23] want to use what's called external merge
+[00:24:24] sort.
+[00:24:26] So in this case here, you would know how
+[00:24:28] much you would have a rough idea how
+[00:24:30] much data you're going to scan. Uh it's
+[00:24:33] not always true either because you could
+[00:24:34] do sorting after joins and join
+[00:24:35] estimates get way off. But like just
+[00:24:37] think the most simple thing. If I'm
+[00:24:39] going to scan a table and run an order
+[00:24:40] by without a filter, if I know that the
+[00:24:43] table has a billion tupils, I'm going to
+[00:24:45] have to sort a billion tupils and
+[00:24:46] therefore I can make my cost estimations
+[00:24:48] based on that. Decide to fall back to
+[00:24:50] this. There are some systems that can uh
+[00:24:54] be a bit more adaptive where they say,
+[00:24:55] "Okay, I think the data will fit in
+[00:24:57] memory. Just start running quicksort. If
+[00:24:59] I get it wrong and I realize I'm I'm
+[00:25:00] spilling to disk, then I just stop what
+[00:25:02] I'm doing, throw away the results, and
+[00:25:04] then fall back to one of these
+[00:25:06] algorithms. But not not every system can
+[00:25:08] do that.
+[00:25:10] All right. So, external merge sort is a
+[00:25:12] divide and conquer algorithm uh where
+[00:25:14] we're going to split the the data up
+[00:25:16] that we want to sort into separate runs,
+[00:25:19] sort them, and then start merging them
+[00:25:22] together into uh successively larger
+[00:25:24] sorted runs.
+[00:25:26] So there' be essentially two phases uh
+[00:25:29] for for every sort of pass with the
+[00:25:31] first phase we do the sorting. So we
+[00:25:33] just bring in chunks that we can fit
+[00:25:34] into memory, sort them with your
+[00:25:36] favorite inmemory sorting algorithm, a
+[00:25:38] quick sort or whatever, and then we
+[00:25:41] would then could
+[00:25:43] um if necessary write them back out to
+[00:25:46] uh to to pages on disk and then we bring
+[00:25:51] them back in, we'll merge them together
+[00:25:52] with sorted runs of the same size and
+[00:25:55] produce larger runs is just keep doing
+[00:25:57] this over and over again until we end up
+[00:25:58] with all the data completely sorted.
+[00:26:02] And I'll I'll show a visualization of
+[00:26:04] this. So the general algorithm is called
+[00:26:06] a K-way external merge sort. But I'll
+[00:26:08] start with a simple one which is two-way
+[00:26:10] uh merge sort external merge sort. And
+[00:26:12] then two is going to be the the number
+[00:26:14] of runs we're going to merge uh for
+[00:26:17] every pass that we do. So we're going to
+[00:26:19] take two runs, merge them together to
+[00:26:21] produce a uh a new sort of run that's
+[00:26:24] twice as large because it's the
+[00:26:25] combination of the two of them. And a K
+[00:26:27] way you can say I'm going to bring in
+[00:26:28] like K pages or K sorted runs and then
+[00:26:32] just merge them all together and produce
+[00:26:33] one that's that's K size and write that
+[00:26:35] out.
+[00:26:37] Again keep a symbol with two. So for
+[00:26:40] this we're going to assume that the data
+[00:26:41] be broken up into big N pages. Uh and
+[00:26:45] then we'll say that the the amount of
+[00:26:46] memory that we're allowed to use in our
+[00:26:48] buffer manager will be uh will be B
+[00:26:50] pages. And we're going to need that for
+[00:26:53] both the input of the pages that we're
+[00:26:54] bringing in for our for our input runs.
+[00:26:56] And then we need at least one page to
+[00:26:58] write out or we had one page that we'd
+[00:27:00] write out to our uh to disk.
+[00:27:04] So in pass zero, all the data is
+[00:27:06] unsorted on disk. So we're going to
+[00:27:08] bring the pages one one at a time into
+[00:27:10] memory, sort them in place within, you
+[00:27:13] know, well actually not in place, what
+[00:27:14] we make a copy into another bufferable
+[00:27:16] page, sort that page, and then we would
+[00:27:19] write it back out to disk. We do this
+[00:27:21] until we have all the pages we in in the
+[00:27:23] in the input table with input data
+[00:27:25] sorted. And then we then have the
+[00:27:27] successive passes. Uh we'll recursively
+[00:27:30] merge the pairs of sorted runs into
+[00:27:32] larger and larger larger runs. Uh and
+[00:27:35] then keep doing this until again we have
+[00:27:37] the complete output. So for this type of
+[00:27:39] example here for 2A merge sort we need
+[00:27:42] at least three buffer pool pages. We
+[00:27:44] need two for the input and then one for
+[00:27:46] writing out the output.
+[00:27:52] So again, in the in the first pass, uh
+[00:27:54] we're just going to read all the pages
+[00:27:56] we have on disk and just sort them,
+[00:27:58] right? So in pass zero, here's all the
+[00:28:00] pages on disk. Again, it's two-way merge
+[00:28:02] sort. We're just assuming that there's
+[00:28:04] uh two keys per page, right? So in the
+[00:28:07] first pass, pass zero, we're going to
+[00:28:09] produce uh sort of runs of size one
+[00:28:12] page. So for every single page at the
+[00:28:14] top, bring it in, sort its contents, the
+[00:28:16] two keys, and then just write that out
+[00:28:18] back back to disk.
+[00:28:21] Again, this is all sequential IO. So we
+[00:28:22] can scan the table sequentially. And
+[00:28:24] then we when we sort it and write it
+[00:28:26] out, that's all going to be done
+[00:28:27] sequentially as well.
+[00:28:29] Then now in the next pass, we want to
+[00:28:32] generate runs of size two pages because
+[00:28:35] we're doubling the size of the pages uh
+[00:28:38] size of the runs as we go down. So in
+[00:28:41] this case here we're going to bring in
+[00:28:43] uh we're going to bring in these two
+[00:28:44] pages that I have here 3 four and 26 and
+[00:28:47] then we have an output page. We're going
+[00:28:49] to take the uh you know take whatever
+[00:28:52] the the result of the sorted run uh at
+[00:28:54] least stage stage that sorted output
+[00:28:57] there and obviously we know it's going
+[00:28:58] to be two page runs. So we only have one
+[00:29:01] page to write the first output and when
+[00:29:02] when this gets written out to disk
+[00:29:04] because it's full we'll reuse the page
+[00:29:06] and write something else. So basically
+[00:29:08] in the this sort of merge pass you have
+[00:29:11] two iterators one of they're pointing at
+[00:29:13] the the both of the runs I'm trying to
+[00:29:15] trying to merge together and all you're
+[00:29:17] doing is just comparison of the keys. So
+[00:29:19] at the beginning here the first iterator
+[00:29:20] points to three the second iterator
+[00:29:22] points to two is less than three because
+[00:29:25] we're going in ascending order. So I'll
+[00:29:27] write out two and then move that
+[00:29:29] iterator on the second page over by one.
+[00:29:32] Now I do the same comparison. Compare
+[00:29:34] three in the first page with six in the
+[00:29:36] second second page. Three is less than
+[00:29:38] six. So I write three. Uh and then now
+[00:29:41] my page is full. So I'm going to go
+[00:29:43] ahead and write that out the disc. But
+[00:29:45] then complete the merging of the the
+[00:29:48] other pages.
+[00:29:53] >> Question offsets. Disc offsets. Offsets
+[00:29:55] of what? Sorry
+[00:29:59] >> like 3 426. These are the keys.
+[00:30:07] >> Question is uh if I brought the entire
+[00:30:09] page in memory. Yes, you have to because
+[00:30:11] you the keys are in there. My example,
+[00:30:13] it's it's two keys per page. But again,
+[00:30:15] think of like if I have larger keys, I
+[00:30:19] can't just have offsets like when I
+[00:30:20] start comparisons because I have to go
+[00:30:22] check to see values where they're real.
+[00:30:23] So I bring the pages in, scan through
+[00:30:26] them, and then do that that merge
+[00:30:27] comparison.
+[00:30:33] All right. So, I'll do this all for the
+[00:30:35] other pages uh at this pass. So, I end
+[00:30:37] up with two uh three three runs of size
+[00:30:41] two pages. And the last one here, it's
+[00:30:44] it's sort of it's less than one or less
+[00:30:46] than two, but that's okay. And I I have
+[00:30:48] a little end of file marker to say that
+[00:30:50] there there's nothing else beyond this.
+[00:30:53] So then now in the next pass again I'm
+[00:30:55] going to generate sorted runs of size
+[00:30:58] that double the size of the last pass.
+[00:31:00] So now I'm going to generate uh runs of
+[00:31:02] size four. Do the same thing. Iterate
+[00:31:04] through the the two two input pages my
+[00:31:08] sorted runs that I'm merging. Do key
+[00:31:10] comparisons to see which one is less
+[00:31:12] than the other and write them out in
+[00:31:13] successive order. And then when I'm done
+[00:31:15] with generating this run I then switch
+[00:31:17] over and do the next run.
+[00:31:20] Do this again and then you end up with a
+[00:31:21] pass of now eight page runs and that's
+[00:31:23] the entire data set. Yes.
+[00:31:26] >> First what? First pass.
+[00:31:28] >> First pass.
+[00:31:28] >> So pass zero.
+[00:31:30] >> Yeah.
+[00:31:30] >> Okay.
+[00:31:31] >> Pass one
+[00:31:32] >> or pass one or pass zero.
+[00:31:33] >> Pass one.
+[00:31:33] >> Okay.
+[00:31:37] >> Correct. In this example here, I'm
+[00:31:38] assuming I have three p
+[00:31:43] >> three. You only need three. So at any so
+[00:31:46] say I'm here.
+[00:31:49] So for this first guy here like 2 3 4
+[00:31:52] six that's on that's on this sort of run
+[00:31:55] on this side. I can't use the the red
+[00:31:57] and then there's 47 89. So I only bring
+[00:32:00] this first page here and this first page
+[00:32:02] here from that run. Then I can do my
+[00:32:04] comparison because within the run
+[00:32:06] they're sorted. I know that there isn't
+[00:32:08] going to be a key on these lower pages
+[00:32:11] here that could be less than over here
+[00:32:13] if I've already successfully moved down
+[00:32:15] on it. So I never need to go back and
+[00:32:17] look at the the the inputs of the sort
+[00:32:18] of runs again and therefore I only need
+[00:32:21] to bring in one page at a time for the
+[00:32:23] two sort of runs. So in this example
+[00:32:24] here we only need three.
+[00:32:27] >> Yes.
+[00:32:34] >> The question is are these these merges
+[00:32:37] consolidating the the results of the
+[00:32:39] sorting into separate pages?
+[00:32:47] uh no so like going back here so I'm at
+[00:32:51] pass after in pass one the size of the
+[00:32:54] sort of run I'm going to generate will
+[00:32:55] be two pages so the first page I'm going
+[00:32:57] to generate has two and three in it I
+[00:32:59] write that out the disk then then the
+[00:33:01] next page is going to have four and six
+[00:33:03] to it that's a new page and I write that
+[00:33:05] out the disk they're separate pages from
+[00:33:08] from the original pages that I started
+[00:33:09] with up here
+[00:33:13] Yes.
+[00:33:20] >> This question is as soon as we finish
+[00:33:22] generating a new P output page, we write
+[00:33:25] that out to disk and then we what? Bring
+[00:33:29] another one in. It's already you're like
+[00:33:31] we're going back here. So I wrote out
+[00:33:34] three. So I wrote out two and then I'm
+[00:33:37] going to write out three. That point
+[00:33:39] that thing is is is full. I'm going
+[00:33:41] write that out the disc. But I already
+[00:33:43] have this page and this page in memory.
+[00:33:47] >> Just keep scanning on them. Right? And
+[00:33:49] at some point the iterator will get to
+[00:33:50] the end and say, "Oh, I've seen
+[00:33:51] everything I can see for this
+[00:33:55] one." If one iterator finishes for the
+[00:33:56] other one, you say, "All right, well, I
+[00:33:58] know there there isn't anything on this
+[00:34:00] side that's going to be less than this
+[00:34:02] side. So therefore, just write out all
+[00:34:04] the from the first iterate out the
+[00:34:05] disc." And it's inserted because I
+[00:34:07] sorted it before I got to doing that
+[00:34:08] pass anyway.
+[00:34:10] >> Yes.
+[00:34:13] the index.
+[00:34:15] >> The question is why didn't it traverse
+[00:34:16] the index? It's already sorted. What
+[00:34:18] index
+[00:34:20] >> the indexing?
+[00:34:24] >> Uh same is why didn't do a
+[00:34:28] why is like want to use the index of the
+[00:34:31] key is ordered by there may not be an
+[00:34:33] index. What if there's no index?
+[00:34:35] >> Yeah, this is like for any arbitrary key
+[00:34:37] I can sort. If I have an index then yeah
+[00:34:40] I could just scan along leaf nodes and I
+[00:34:42] would use that but I can't.
+[00:34:44] >> Yes.
+[00:34:51] Are you concerned with
+[00:34:53] that?
+[00:34:55] >> His question is and he's right and we'll
+[00:34:56] we'll fix this in a second. Am I worried
+[00:34:59] about IO stalls when I write to disc?
+[00:35:00] Absolutely. We'll do double buffering.
+[00:35:02] That'll that'll make that go away. Yes.
+[00:35:05] This is the basic algorithm though. Just
+[00:35:06] like I got three pages. I can bring two
+[00:35:08] in and write one out.
+[00:35:14] Okay, so the number of passes we're
+[00:35:16] gonna have to do is one plus log 2 n
+[00:35:20] again it's the one is for the pass zero
+[00:35:22] because I have to pass through the data
+[00:35:23] once and the log two is because I'm
+[00:35:25] generating uh passes of that double the
+[00:35:28] size of the previous one. The n is the
+[00:35:29] total number of pages. Therefore the the
+[00:35:32] total number of IO calls will be 2N
+[00:35:35] because again for the for the plus one
+[00:35:38] that's pass zero I got to read it once
+[00:35:40] and write it out once hence 2N and then
+[00:35:43] the number of passes up above.
+[00:35:51] So again in this simple example here we
+[00:35:53] just assume that we only have three
+[00:35:54] bufferable pages. Two for the output one
+[00:35:56] for the input. Uh
+[00:35:59] the challenge is going to be though if
+[00:36:00] we even we give we give more buffer pool
+[00:36:03] space to our system
+[00:36:05] you know we're now we can take you
+[00:36:07] generate larger sorted runs right
+[00:36:09] that'll shrink the height of the of the
+[00:36:12] of the sort of the number of passes we
+[00:36:14] have to do but it's still going to be
+[00:36:16] slow as he pointed out because we are
+[00:36:18] essentially just blocking every time you
+[00:36:20] have to write stuff out block anytime
+[00:36:22] you have to read something right so
+[00:36:25] again we'll fix that in a
+[00:36:27] But in general the algorithm for this
+[00:36:28] for a general external mer assuming you
+[00:36:29] have bufferable pages you're going to
+[00:36:32] produce uh
+[00:36:34] uh to this the ceiling of n divided by b
+[00:36:37] sort of runs since size b and pass zero
+[00:36:39] because again you'd read everything once
+[00:36:41] then write it out once of that size
+[00:36:43] there and then in the subsequent passes
+[00:36:46] I can generate runs that are size b
+[00:36:48] minus one because I need always at least
+[00:36:52] one buffer for buffer page for my
+[00:36:54] output.
+[00:36:56] Right? And then that's the same formula
+[00:36:58] that we showed before. So let's run
+[00:37:01] through a quick example again without
+[00:37:02] doing any double buffering or any
+[00:37:04] optimizations. Right? So we want to we
+[00:37:06] want to sort a p a data set that has 108
+[00:37:09] pages and I'm allowed to use five
+[00:37:11] bufferable pages. Right? So big n equals
+[00:37:13] 108 and b equals 5 here. So in pass zero
+[00:37:16] again I got to read everything once and
+[00:37:18] write it out once in the in the sorted
+[00:37:20] runs. So this will generate 22 sorted
+[00:37:22] runs for me of size five pages each. The
+[00:37:25] last one is only be three pages because
+[00:37:29] 22 or 108 is not easily uh not perfectly
+[00:37:32] divisible by five. And so we take the
+[00:37:35] ceiling there because then that just
+[00:37:36] rounds up, right?
+[00:37:40] And then in pass one now we're reading
+[00:37:42] in the uh those 22 sort of runs of size
+[00:37:45] page five. And now we're going to donate
+[00:37:47] sort of runs of uh size page 10. Sorry,
+[00:37:51] size page 20. Um, and then the last run,
+[00:37:55] again, it's not full size, so it only
+[00:37:56] end up being eight pages again because
+[00:37:58] you have to round up. And we keep doing
+[00:37:59] this until we reach the end where we
+[00:38:01] produce the uh the two sort of runs that
+[00:38:03] we have to read in. And then we write
+[00:38:05] out one sort of run. That's a total 80
+[00:38:07] pages that that we originally give as
+[00:38:09] our as our input.
+[00:38:13] All right. So 80 plus 28,
+[00:38:18] right? So in this case here just plug
+[00:38:20] and chugging the formula you end up with
+[00:38:21] four passes because again you're
+[00:38:23] progressively getting uh having the
+[00:38:25] number of inputs and outputs you sorry
+[00:38:28] the number of pages you always have to
+[00:38:29] read in and out per per pass is the same
+[00:38:32] but it's the number of passes I have to
+[00:38:34] do uh shrinks down once you have more
+[00:38:36] buffer pull spaces.
+[00:38:40] So let's do solve the problem that he
+[00:38:42] brought up where if I naively just block
+[00:38:46] the world in my database system every
+[00:38:48] time I got to read and write a page
+[00:38:49] that's going to be slow because we said
+[00:38:51] disk stalls can be quite expensive
+[00:38:54] right slow spinning hard drives are
+[00:38:56] going to be you know the order of of up
+[00:38:59] to 10 to to 50 milliseconds right SSDs
+[00:39:02] are a bit faster but even SSDs are
+[00:39:04] really fast but the only way you get
+[00:39:05] that good speed is if you have a lot of
+[00:39:07] things in your your IO queue that you
+[00:39:09] want to read and write in paralle
+[00:39:10] parallel. That's how these these sort of
+[00:39:12] modern systems get get good performance.
+[00:39:14] So if I just do the naive thing where we
+[00:39:16] before like I'm going to sort this data
+[00:39:18] I'll go fetch in all my pages my buffer
+[00:39:20] pool then I go ahead and do the the
+[00:39:22] merge the sort and the merge produce
+[00:39:24] some output buffer and write that out
+[00:39:26] right while I'm doing this right I'm
+[00:39:29] basically stalling uh the rest of the
+[00:39:32] system the CPU is not doing anything
+[00:39:33] because it's waiting for all this this
+[00:39:34] this data to get written out to disk
+[00:39:37] right so what I want to do is actually
+[00:39:41] use half the buffers that are available
+[00:39:43] to me for sort of one stage of of of a
+[00:39:47] pass and then another I want to say
+[00:39:50] stage like sort of sort of one sort of
+[00:39:52] sliver of a of a of the data I need to
+[00:39:54] sort within one pass and then the other
+[00:39:56] buffer will be for another sort of
+[00:39:58] sliver of data within within my pass. So
+[00:40:01] now what'll happen is I can fetch in
+[00:40:03] data from one part of the file and then
+[00:40:06] while that's doing the merging which is
+[00:40:08] computationally expensive potentially
+[00:40:10] and writing out the disk I go fetch in
+[00:40:12] now the other pages uh for the other
+[00:40:14] part of of the the path I'm at and then
+[00:40:17] they do their own sorting. I'm sort of
+[00:40:19] pinging ponging or going back and forth
+[00:40:21] where one one sort of one portion of my
+[00:40:24] pool is being used for sorting things in
+[00:40:26] memory and running out to disk and the
+[00:40:28] other portion of my bull has been used
+[00:40:29] for fetching things from disk because
+[00:40:31] and then go ahead and sorting them.
+[00:40:35] Of course, obviously it's tricky that
+[00:40:36] you don't you know you can't magically
+[00:40:39] uh you know read and write data uh with
+[00:40:43] the same full speed at the same time. So
+[00:40:45] the timing can be be a bit tricky, but
+[00:40:47] modern again modern SSDs can sort of
+[00:40:50] handle all that and and do the balancing
+[00:40:52] to make sure you don't slow things down.
+[00:40:56] So this obviously again this this
+[00:40:58] reduces the amount of um memory buffer
+[00:41:01] pools they have available to to do large
+[00:41:03] sorted larger sorted runs, but this is
+[00:41:05] going to hide that the IO stalls you
+[00:41:08] would have from the workers waiting for
+[00:41:10] things to get read and written from
+[00:41:11] disk.
+[00:41:15] All right, there's some additional
+[00:41:16] optimizations we can do in our actual
+[00:41:18] implementation. Some of these are
+[00:41:20] low-level things uh where you're kind of
+[00:41:22] trying to shave off again cycles in your
+[00:41:24] CPU, but some of these are actually
+[00:41:26] necessary to actually get the thing to
+[00:41:27] actually work work well. So
+[00:41:31] the comparison operation is again in an
+[00:41:34] algorithms class they're very handy
+[00:41:35] about that because it's always like oh
+[00:41:37] comparing this integer with that integer
+[00:41:38] and you sort that. In actuality, oftent
+[00:41:41] times data is is usually going to look
+[00:41:42] like strings or be a combination of of
+[00:41:45] multiple keys. And that comparison call
+[00:41:47] to see whether one key is less than
+[00:41:49] another key that can start to add up and
+[00:41:50] be expensive especially if you're trying
+[00:41:52] to sort a billion things.
+[00:41:54] So a bunch of techniques you can do are
+[00:41:57] uh what is one is called code
+[00:41:58] specialization. So the idea is here is
+[00:42:00] that instead of having uh like in in C++
+[00:42:04] when these you have these sort of
+[00:42:05] built-in sort sort uh runners you pass
+[00:42:07] in a function to your comparison you
+[00:42:10] patch a pointer to your comparison
+[00:42:11] function and anytime the sort algorithm
+[00:42:13] says I I got to compare two keys it
+[00:42:16] makes a call to that to that function.
+[00:42:18] Well that can be expensive especially if
+[00:42:20] you're trying to interpret what the
+[00:42:21] bytes are in in your keys. Um we have to
+[00:42:25] go look at the catalog and say oh am I
+[00:42:26] sorting integers? Am I sorting strings
+[00:42:28] and so forth, right? So, a better
+[00:42:31] approach is that if you can pre-generate
+[00:42:34] a bunch of hard-coded versions of your
+[00:42:36] comparison function that sorts keys on
+[00:42:38] on a certain type, then you can now
+[00:42:41] inline that in your sorting algorithm
+[00:42:43] and then it's much faster because now
+[00:42:45] you're doing not doing the jump call in
+[00:42:46] your CPU to jump to some other location
+[00:42:48] in your address space and call your your
+[00:42:50] sorting function. And then you don't
+[00:42:51] have to worry about also too like
+[00:42:52] interpret how to figure out what the
+[00:42:53] bittes are. you just call you know
+[00:42:55] reinterpret cast and you know because
+[00:42:57] you know exactly what the data should
+[00:42:58] look like.
+[00:43:00] So there's a bunch of different ways to
+[00:43:01] do this. One is you can do code
+[00:43:03] generation just in time compilation on
+[00:43:04] the fly. So some systems like like
+[00:43:07] single store from a few weeks ago, they
+[00:43:09] will uh when your query shows up and you
+[00:43:12] want to sort it on some keys, they will
+[00:43:13] then codegen the comparison function in
+[00:43:16] like LLVM and compile that to machine
+[00:43:19] code and then now you're making a
+[00:43:20] function call into uh machine code
+[00:43:22] that's sort of hardcoded for exactly
+[00:43:24] comparison two keys.
+[00:43:26] Postgress kind of does this too. It's
+[00:43:28] bit of a hack but like it's written in C
+[00:43:30] so you have to deal with this. So in
+[00:43:31] postcript if you compile it by hand like
+[00:43:33] a instead of downloading the binaries
+[00:43:34] and compile the binary by s compile it
+[00:43:36] from the source there's a pearl script
+[00:43:38] that runs before you compile it that
+[00:43:40] takes their comparison function and then
+[00:43:43] makes a bunch of copies of it that have
+[00:43:45] different versions for different data
+[00:43:46] types. So they have a have a comparison
+[00:43:48] function for integers comparison
+[00:43:49] function for floats. It basically is
+[00:43:51] duplicating the code and then compiling
+[00:43:53] into the binary and then at runtime it
+[00:43:56] knows which sort of specialized version
+[00:43:57] of the sorting algorithms they should
+[00:43:59] use. It's basically templating, but it's
+[00:44:02] because they're in C and not C++, they
+[00:44:04] have to sort of do this little Pearl
+[00:44:06] script hack.
+[00:44:08] Another trick you can do is is called
+[00:44:10] suffix truncation. I think we talked
+[00:44:11] about this when we talked about bar
+[00:44:13] charts before, but basically instead of
+[00:44:15] doing the sort of the full key
+[00:44:18] comparison of two strings, you're
+[00:44:20] basically iterating over, you know,
+[00:44:21] every every every bite doing one one by
+[00:44:23] one comparisons. um you can you can
+[00:44:27] premputee a a prefix of the varchchar as
+[00:44:30] the key like think of like a 32-bit
+[00:44:32] integer and then now I can do fast
+[00:44:34] comparisons to see whether those those
+[00:44:36] two prefixes are the same. If no then I
+[00:44:39] know how to do you know easy comparison
+[00:44:41] to say whe whether one value is less
+[00:44:42] than another and that's way faster than
+[00:44:44] having to look at the full key. If the
+[00:44:46] two prefixes are the same then I fall
+[00:44:48] back to doing the the fast the slower
+[00:44:50] comparison.
+[00:44:52] And this one's a bit more nuanced. Um uh
+[00:44:55] it's an old technique from the 70s. It's
+[00:44:57] actually in the ductb article that came
+[00:44:59] out last week. Um but basically if you
+[00:45:02] if you have varchars, you don't want to
+[00:45:04] have to have um these these arbitrary
+[00:45:08] lengths sized keys because I'm trying to
+[00:45:09] keep everything nice tight tightly
+[00:45:11] packed uh and always be fixed length. So
+[00:45:14] if I can keep everything as dictionary
+[00:45:15] codes, great. But not always like I I
+[00:45:17] can't can't always do that especially if
+[00:45:19] the same column comes ac comes from
+[00:45:21] different files that may have different
+[00:45:22] dictionary codes with the same values.
+[00:45:24] So they have a way to normalize all this
+[00:45:26] by transforming any arbitrary name key
+[00:45:28] into a sort of binary representation. Um
+[00:45:33] you do a little padding to make sure
+[00:45:34] everything's always fixed length and
+[00:45:35] then I can do uh fast comparisons on
+[00:45:37] that.
+[00:45:40] Again, just just trying to point out
+[00:45:41] here we we'll cover more of this in the
+[00:45:43] advanced class, but the that like
+[00:45:46] just checking to see whether one value
+[00:45:47] is less than another value that actually
+[00:45:49] is expensive at scale and especially if
+[00:45:51] you're doing it a lot whereas something
+[00:45:53] in like your you know algorithms intro
+[00:45:55] algorithms class they'll be very hand
+[00:45:57] wavy over this because they're not
+[00:45:58] worried about actually working on real
+[00:46:00] data.
+[00:46:02] All right. So sort of what they were
+[00:46:04] asking about like can I just use the
+[00:46:05] index again external merge sort or the
+[00:46:08] inmemory sorting algorithms we need to
+[00:46:10] do this if there isn't a data structure
+[00:46:12] we can use or B+ tree we can't use a
+[00:46:15] hash table because hash table's unsorted
+[00:46:16] but if we do have a sorted data
+[00:46:18] structure then the we can take advantage
+[00:46:22] of that in some cases by just scanning
+[00:46:25] along the the leaf nodes uh for for the
+[00:46:28] data assuming that it's sorted on that
+[00:46:29] key and then we can get the data that
+[00:46:31] that we Now the challenge is going to be
+[00:46:33] is like
+[00:46:36] since the keys in the B+ tree may not
+[00:46:39] actually be the full tupil and we if we
+[00:46:42] need the full tupil as part of the
+[00:46:43] output of the query we got to go then
+[00:46:45] get that the data and the challenge is
+[00:46:48] going to be in that case is that the the
+[00:46:50] the
+[00:46:52] data might be stored in the in our table
+[00:46:54] pages uh in a manner that's different
+[00:46:57] than than what's defined in the in the
+[00:46:59] index. So the indexes could help us for
+[00:47:03] maybe finding a subset of the data more
+[00:47:05] quickly, but if we got to go fetch the
+[00:47:07] data, we we have to put it back in the
+[00:47:08] correct sort of order anyway. And that
+[00:47:10] could be a bunch of a random IO which
+[00:47:11] could kill us. So if we have a a cluster
+[00:47:14] B tree again where the the tupal pages
+[00:47:16] the tubles themselves are in the same
+[00:47:18] sort order as defined on your B+ tree,
+[00:47:20] fantastic. Then we don't want to use
+[00:47:22] external merge sort or any sort of
+[00:47:24] algorithm because again we just rip
+[00:47:25] along the leaf nodes. that's sequential
+[00:47:27] assets and everything's sorted already
+[00:47:29] in the way that we want. That's fine.
+[00:47:32] If it's uncclustered, then having to
+[00:47:35] chase pointers
+[00:47:37] to go get the tupils as defined in the
+[00:47:40] in the the ordering of the keys in the
+[00:47:41] leaf pages and then putting that back
+[00:47:43] into the the the order that we want as
+[00:47:46] part of our output. that's actually
+[00:47:48] gonna be terrible uh in the general case
+[00:47:51] because again it's a bunch of random
+[00:47:52] IO's to different different pages and I
+[00:47:54] can't do that trick we talked about
+[00:47:55] before where I can sort the pages uh
+[00:47:58] that I want to access uh so that I'm
+[00:48:00] only fetching in one page at a time
+[00:48:02] because it has to be in the order that's
+[00:48:03] defined by the order by clause or
+[00:48:05] whatever whatever the ordering is
+[00:48:07] requires
+[00:48:08] then this is going to be random IO and
+[00:48:11] it's going to be terrible and we just
+[00:48:12] want to fall back doing the external
+[00:48:14] merge sort if you're doing top end where
+[00:48:16] I I know only need a you know n number
+[00:48:19] of queries or sorry n number of tuples
+[00:48:20] my query then this might be okay because
+[00:48:22] I might be going getting like 10 pages
+[00:48:24] at most that's not so bad but anything
+[00:48:26] else this this is not going to be great
+[00:48:29] okay
+[00:48:33] so again if it's in memory use your
+[00:48:35] favorite sorting algorithm if it's a
+[00:48:37] limit if it's order by clause with a
+[00:48:39] limit then use the top end heap sort if
+[00:48:43] anything else if it's too large then I
+[00:48:45] want to fall back to external merge sort
+[00:48:50] All right. So, let's finish up talking
+[00:48:51] about aggregations. Um,
+[00:48:54] yeah. Go ahead. Yes.
+[00:48:58] >> Question. Bus trees are stored in disk
+[00:49:00] for this [snorts] class. Yes.
+[00:49:04] Some systems don't, but this class yes.
+[00:49:05] Postgress? Yes. Most systems? Yes.
+[00:49:21] No. So, so his statement is the question
+[00:49:23] is uh are we assuming that the B+ tree
+[00:49:26] cannot be stored on disk? Not not fit
+[00:49:28] entirely in main memory. No, could
+[00:49:32] right if if the buffer was enough space.
+[00:49:35] And then there's a whole bunch of like
+[00:49:37] policies you could set. Do I want do I
+[00:49:38] want to make sure that my buffer my my
+[00:49:40] B+ trees always fit in memory and
+[00:49:43] prioritize them over the tupal pages? So
+[00:49:45] systems let you do that, right? Depends.
+[00:49:49] I know again I keep saying it's a
+[00:49:50] copout. It depends on like what your
+[00:49:52] workload is, what your hardware is.
+[00:49:57] Okay, so aggregations again we this goes
+[00:50:00] back again to the earlier in the
+[00:50:01] semester where the idea is that we want
+[00:50:03] to scan some data and
+[00:50:06] produce uh scale results for some kind
+[00:50:09] of computation based on you know across
+[00:50:11] multiple tools that we see right
+[00:50:14] so the challenge is that in order to do
+[00:50:16] some of these aggregations we I want to
+[00:50:18] quickly find tupils that match on
+[00:50:21] you know like a group by clause or some
+[00:50:24] other aspect of of the aggregation I'm
+[00:50:26] trying to compute
+[00:50:27] So to do this uh as I said in the
+[00:50:30] beginning there's basically two
+[00:50:31] approaches there sort of two classes of
+[00:50:32] algorithms we can use to do aggregations
+[00:50:35] and joins from next class it's sorting
+[00:50:38] and hashing and this is like the age-old
+[00:50:40] debate goes back to the 1970s and in in
+[00:50:42] in database systems which of these two
+[00:50:44] approaches are better and it goes back
+[00:50:46] and forth originally sorting was faster
+[00:50:48] in the 70s then hardware got better and
+[00:50:50] hashing got faster and then uh the
+[00:50:54] sorting algorithms got better and then
+[00:50:55] sorting got sorting was considered the
+[00:50:58] preferred choice and but now in general
+[00:51:00] today's hardware in today's landscape
+[00:51:02] hashing them is always is going to be
+[00:51:03] the better approach right in some cases
+[00:51:06] except when as we'll see in a second if
+[00:51:08] if the data needs to be sorted uh
+[00:51:11] because there's an order by clause then
+[00:51:13] I can just piggyback off of that sorting
+[00:51:14] in some cases and do my aggregation
+[00:51:16] right but in general hashing is always
+[00:51:18] be better uh if your disc is slow so
+[00:51:22] let's say I have a query like this
+[00:51:23] select with a distinct clause
+[00:51:25] uh from the enroll table where the I
+[00:51:27] want to get all the records where the
+[00:51:30] the grades are either B and C and I want
+[00:51:32] to order by the course ID.
+[00:51:34] So again, think of this as that tree
+[00:51:36] data structure we saw before, but I'm
+[00:51:37] showing this sort of a sequential
+[00:51:40] ordering, but I'm scanning the RO table.
+[00:51:43] I do a filter. I I I throw away the
+[00:51:45] tubles that don't, you know, don't match
+[00:51:47] the gray I'm looking for. And then I'll
+[00:51:50] do a projection, remove the columns that
+[00:51:52] I don't need in my output. So in this
+[00:51:53] case here, I only need the the course
+[00:51:55] ID. So I can throw away everything else.
+[00:51:57] And now I'm going to sort it
+[00:52:00] based on what's defined in my order by
+[00:52:02] clause, right? Sorting on the course ID.
+[00:52:05] And then the last step, my query plan is
+[00:52:07] I want to remove the the duplicates
+[00:52:08] because I want to distinct. So in this
+[00:52:10] case here with my sort of output, all I
+[00:52:12] need to do is have a cursor or an
+[00:52:14] iterator just scan through sequentially
+[00:52:16] in this output. And anytime I see a
+[00:52:19] tupil or sorry a record that is the same
+[00:52:22] as the last one I just looked at then I
+[00:52:24] know I I can ignore it and discard it
+[00:52:27] because again you know because it's in
+[00:52:29] sorted order like I get to the bottom
+[00:52:31] for 15826
+[00:52:33] I'm not going to see 445 again because
+[00:52:36] 826 is greater than 445 and I've already
+[00:52:39] passed that part here.
+[00:52:43] Right?
+[00:52:44] So for distinct this is pretty easy and
+[00:52:46] again they wanted the data ordered on
+[00:52:48] the course ID anyway. So I just
+[00:52:50] piggyback off of that sorting to do my
+[00:52:52] duplicate elimination. I don't have to
+[00:52:55] build a separate hash table to do that.
+[00:52:58] For other things it could be more
+[00:53:00] tricky. Um
+[00:53:02] but even if you don't want the data
+[00:53:04] sorted you may still the the data system
+[00:53:06] will still could still decide to do
+[00:53:08] sorting uh based aggregation. Not always
+[00:53:11] but some will. Um, so again, so now a
+[00:53:15] different query. I want to get the
+[00:53:16] average GPA of all the students enrolled
+[00:53:19] in in certain courses. So assuming I've
+[00:53:22] already done my join, I'm not we'll talk
+[00:53:24] about next how we actually do that. So I
+[00:53:26] have now a bunch of course IDs and then
+[00:53:28] the student GPA. So I'll sort my data
+[00:53:30] based on the course IDs and then now
+[00:53:33] again I'll just scan through my my data
+[00:53:37] and then compute a running total of
+[00:53:39] whatever the aggregation function that
+[00:53:41] it wants. So what I'm showing here at
+[00:53:43] the top is the way you basically do is
+[00:53:44] it's pretty straightforward, right? For
+[00:53:46] min and max, you just keep track of the
+[00:53:47] the largest smallest value I've seen.
+[00:53:49] For the count, I'm just adding one to to
+[00:53:51] a counter summation. Just adding things
+[00:53:54] in the case of average, you just keep a
+[00:53:56] running total of the summation of the
+[00:53:58] column and the number of records you've
+[00:53:59] seen and you just divide it at the end
+[00:54:01] and it produces the I mean for for
+[00:54:04] arithmetic mean for geometric mean is
+[00:54:06] more complicated, but we could ignore
+[00:54:07] that. So in this case here, my iterator
+[00:54:09] starts. I keep track of the last key
+[00:54:11] that I've seen because I know they're
+[00:54:12] going to be in sorted order. So it's the
+[00:54:13] last course ID I've seen. It's the
+[00:54:15] beginning. It's null. And then I have my
+[00:54:17] first record. I have a counter that says
+[00:54:19] I've seen one tupal so far. And here's
+[00:54:20] the running sum of the GPA. Then I set
+[00:54:23] my previous to 15445. Come down here. I
+[00:54:26] see the same key again. 15445. So I just
+[00:54:29] update my running total. Increment the
+[00:54:30] counter by one. Add the the GPA to the
+[00:54:33] summation. Go down here. Now I see a key
+[00:54:36] that doesn't match my previous one that
+[00:54:38] I've seen. So at this point here, I know
+[00:54:39] I'm never going to see 15445 ever again
+[00:54:41] in my sort of output. So I can take this
+[00:54:44] whatever I computed here, do the math,
+[00:54:46] divide the uh the summation by the the
+[00:54:49] count, and then store the GPA in my
+[00:54:52] computer result here.
+[00:54:54] Same [clears throat] thing, update the
+[00:54:56] previous uh key that I've seen. Get down
+[00:54:58] here. I it's not matching. 826 doesn't
+[00:55:00] equal 721. So I put 1571 here. do the
+[00:55:04] same thing till I reach the bottom then
+[00:55:06] I know I'm done and then I put my output
+[00:55:08] there
+[00:55:10] pretty straightforward
+[00:55:13] window functions a bit more tricky and
+[00:55:14] we can cover that next class if we have
+[00:55:16] time
+[00:55:20] so the alternative to sorting is going
+[00:55:22] to be hashing
+[00:55:24] so if we don't need the data to be
+[00:55:26] sorted there often times hashing is
+[00:55:28] gonna be much better and the basic idea
+[00:55:30] is that we're going to build hash tables
+[00:55:32] or divide our data into partitions based
+[00:55:34] on hash functions. And again, it's going
+[00:55:37] to be a divide and conquer approach
+[00:55:38] where we can generate smaller subsets of
+[00:55:41] the data that we want uh to that we can
+[00:55:44] keep things in memory and not have to do
+[00:55:47] as much uh uh random IO.
+[00:55:52] So for hashing aggregation, you
+[00:55:54] basically build a hash table
+[00:55:57] in memory and as you're scanning through
+[00:56:00] through the data, you just update
+[00:56:01] entries in that hash table when you have
+[00:56:03] matches.
+[00:56:05] And if the hash table doesn't fit
+[00:56:08] memory, then we'll have to do sort of
+[00:56:10] recursive partitioning or do do
+[00:56:12] partitioning. And we'll see how to do
+[00:56:14] that in a second.
+[00:56:16] >> Oh sorry.
+[00:56:20] Let me just mute them.
+[00:56:24] Okay. Sorry.
+[00:56:29] >> All right. There we go. Sorry. All
+[00:56:30] right. Um,
+[00:56:33] let make sure they can hear me.
+[00:56:37] I don't want to jump yet, but they want
+[00:56:38] to know when I'm done.
+[00:56:41] I think I'm muted, right? I can't see.
+[00:56:43] >> Yes.
+[00:56:44] >> Am I muted or no?
+[00:56:46] >> All right. I want to be unmuted so they
+[00:56:47] can know. All right. Sorry. All right.
+[00:56:51] So a hashing aggregate again we maintain
+[00:56:53] this hash table we we'll populate it as
+[00:56:55] we go along and then if everything fits
+[00:56:57] in memory it's easy if not we have to
+[00:56:59] handle that
+[00:57:01] if it doesn't fit memory then we have to
+[00:57:02] do what's called external hashing
+[00:57:04] aggregation uh where we're going to take
+[00:57:07] a pass over the data use one hash
+[00:57:10] function to split it up into partitions
+[00:57:14] then bring those partitions one at a
+[00:57:16] time into memory and again that's going
+[00:57:18] to be IO and the
+[00:57:21] uh the
+[00:57:24] do whatever it is the aggregation I want
+[00:57:26] to compute produce some hash table and
+[00:57:28] then when I'm done with that partition
+[00:57:30] swap out to to the next partition
+[00:57:34] so this is repeating what I said in the
+[00:57:37] first phase you part partition things up
+[00:57:39] can I do a scruncher scan on the data
+[00:57:41] hash it once figure out what bucket it
+[00:57:43] goes to or uh you partition buckets it
+[00:57:46] goes to then the second pass I'll bring
+[00:57:48] it those this this partition in one by
+[00:57:50] one and do whatever the computation I
+[00:57:52] need. So let's look that example again.
+[00:57:54] I want to run the distinct clause on the
+[00:57:56] on the RO table. So again do my filter
+[00:57:59] that's all fine. Do a projection. That's
+[00:58:01] all fine. But then now I'm going to scan
+[00:58:04] through the the this intermediate output
+[00:58:07] here and for every single key I'm going
+[00:58:10] to hash it put it into one of these
+[00:58:13] partitions
+[00:58:16] uh which can be a series of of pages
+[00:58:19] right and assuming I have um you know B
+[00:58:23] minus one partitions I could use I I
+[00:58:25] could have that much space because say I
+[00:58:27] can bring in one of these pages at a
+[00:58:28] time over here then I'm going to write
+[00:58:30] it out to B minus one pages pages over
+[00:58:32] here. So this is the opposite of what we
+[00:58:33] saw sort of the sorted runs where like
+[00:58:35] my input is larger and my output is one.
+[00:58:38] In this case here, I want my output to
+[00:58:39] be larger because I'm trying to split
+[00:58:41] these things up into into uh individual
+[00:58:44] buckets. So in this case here, if this
+[00:58:47] if this page gets full, then I'm going
+[00:58:49] to just go ahead that write out the disk
+[00:58:52] and just make a new page for it
+[00:58:55] and keep filling that up.
+[00:58:59] So now in the second phase I'm going to
+[00:59:01] bring all those pages in from partition
+[00:59:03] one at a time. Again I can do that in
+[00:59:05] squ uh sequential io and then now
+[00:59:09] generate some kind of hash table that
+[00:59:10] that's going to build the the running
+[00:59:12] total the aggregation I'm trying to
+[00:59:14] compute. And then when I'm done with
+[00:59:17] that partition I take whatever the
+[00:59:18] results in that hash table and I put it
+[00:59:20] to some kind of final result buffer.
+[00:59:25] So going back here. So these are the the
+[00:59:27] buckets I generated before. So in
+[00:59:28] partition zero I had I had two pages.
+[00:59:31] Partition one is one page and so forth
+[00:59:33] like that. So I started the first the
+[00:59:35] first uh partition. I'm just going to
+[00:59:37] scan through sequentially. In this case
+[00:59:39] here I'm computing distinct. So it's
+[00:59:41] pretty obvious like I do a hash I land
+[00:59:42] in my hash table and if it's not if
+[00:59:44] there's no entry there for my key I put
+[00:59:46] it there. Otherwise I just ignore it.
+[00:59:48] Then I do the same thing. I scan through
+[00:59:50] all these entries doing the same thing
+[00:59:51] hashing over and over again. I keep
+[00:59:52] seeing the same key. So there's nothing
+[00:59:54] else to add. And then now when I'm
+[00:59:56] finished with that that partition,
+[00:59:59] if I assume that my data is going to be
+[01:00:01] really big, I could take whatever in
+[01:00:03] this hash table, write it out to a
+[01:00:05] result buffer, and then clear clear this
+[01:00:08] hash table for for the next partition.
+[01:00:10] Because again, I've already divided the
+[01:00:12] data up so that when I'm at partition
+[01:00:15] partition level one, I'm never going to
+[01:00:16] see 15445 again because if there's no
+[01:00:20] way it could have gotten to that level
+[01:00:21] when I hashed it because again, the same
+[01:00:23] key will always have the same hash
+[01:00:25] value. So they end up at the same
+[01:00:26] partition level. So I'll never see I'll
+[01:00:29] never see 1545 ever again once I finish
+[01:00:31] that. So what's that?
+[01:00:38] Can I guarantee that this the hash table
+[01:00:39] here is going to fit memory?
+[01:00:42] >> Uh does it fit in a single page? No, you
+[01:00:45] can't guarantee that. But you would say
+[01:00:46] uh again you you would have some kind of
+[01:00:48] approximation of how big it should
+[01:00:50] actually be.
+[01:00:52] And if I have a billion keys and it
+[01:00:53] takes you know takes pabytes then that's
+[01:00:54] a problem. But any algorithm is going to
+[01:00:56] break down if you do that.
+[01:01:00] Right? So you get this point here. Then
+[01:01:02] I take the next key h I'm gonna hash it
+[01:01:04] again point the hash function we're
+[01:01:07] using here at this sort of second pass
+[01:01:09] has to be different than the other one
+[01:01:10] because we kind of want to spread things
+[01:01:12] around um because you again the in this
+[01:01:16] case here it's simplified where like
+[01:01:18] there's only one key per level but you
+[01:01:20] could have multiple keys end up in the
+[01:01:21] same level and so the first first hash
+[01:01:24] function put them into the same
+[01:01:25] partition so I want to use a different
+[01:01:27] hashing function when I build this hash
+[01:01:28] table so that different keys don't then
+[01:01:31] end hashing to the same thing again.
+[01:01:34] >> Yes.
+[01:01:36] >> If they collide then like it's okay
+[01:01:38] because I can I just do linear probing
+[01:01:41] my hash table. Yeah. Assume this is a
+[01:01:42] linear probing hash table. Hash table.
+[01:01:47] All right. So then same thing I get to
+[01:01:49] this level next partition here. I can
+[01:01:50] write out the contents of this blow away
+[01:01:53] the contents of my hash table. Again you
+[01:01:55] don't have to you don't have to delete
+[01:01:56] the pages and start over. You can set a
+[01:01:58] flag and say ignore everything you ever
+[01:01:59] see afterwards. like basically zero it
+[01:02:01] out and then do the same thing. Produce
+[01:02:03] this final result. Once I'm done
+[01:02:05] scanning all my hash buckets, then I I
+[01:02:08] know I've completed my final result and
+[01:02:09] and I'm done.
+[01:02:13] Again, we can do the same thing with as
+[01:02:15] sorting. We can have this rolling tally
+[01:02:17] of the summation uh or summarization of
+[01:02:21] the data as we go along. Basically, it
+[01:02:23] works the same way where I just going to
+[01:02:25] scan through the the the the buckets
+[01:02:27] that I produced after the first phase.
+[01:02:30] and then just do again whatever hash
+[01:02:31] function I have now the second time
+[01:02:33] around and compute the same kind of
+[01:02:34] running total in my final result and I
+[01:02:37] would know again if I'm done at a given
+[01:02:39] level I can take whatever this is
+[01:02:41] compute the final result based on what
+[01:02:43] I'm trying to compute and produce
+[01:02:44] produce the fin final output
+[01:02:47] right
+[01:02:49] works the same way except now I'm
+[01:02:51] reading from a hash table instead of
+[01:02:53] reading from sorted list
+[01:02:58] all right So the again the main take
+[01:03:02] away from all this is that the if
+[01:03:05] everything's in memory sorting is is can
+[01:03:07] be pretty fast. If I have to spill a
+[01:03:10] disk then I want to use external
+[01:03:11] external merge sort to be able to sort
+[01:03:12] things. If uh
+[01:03:16] if I want to do aggregations hashing is
+[01:03:18] going to be oftent times the better
+[01:03:20] approach and most systems will choose
+[01:03:21] that over that. But the main again take
+[01:03:24] away from all this is that we've seen
+[01:03:25] some some of the same techniques uh in
+[01:03:27] this class we've seen in other classes
+[01:03:28] and going forward where we want to try
+[01:03:32] to convert data into sequential blocks
+[01:03:35] so that we can read that out
+[01:03:37] sequentially and write it out
+[01:03:38] sequentially and read it back in
+[01:03:39] sequentially because that's going to
+[01:03:40] make the the system perform much better
+[01:03:42] because again sequential IO is faster
+[01:03:43] than random IO and then we saw how to
+[01:03:46] use double buffering as a way to hide
+[01:03:48] those disc stalls so that the system can
+[01:03:51] still do useful work while other threads
+[01:03:54] are stalled or workers are stalled
+[01:03:55] reading writing from disk,
+[01:03:59] right? And then this is why we had to do
+[01:04:00] all that conial stuff from last class to
+[01:04:02] make sure all our data structures are
+[01:04:03] thread safe because we now we know we're
+[01:04:04] going to have multiple threads dancing
+[01:04:06] around in our system trying to to
+[01:04:08] manipulate things.
+[01:04:11] All right, before we switch over to the
+[01:04:13] the guest speaker again, next class will
+[01:04:15] be about joins. This lecture is is in
+[01:04:18] the homework and will be on the midterm
+[01:04:19] next week. next class will not be on the
+[01:04:22] the midterm.
+[01:04:23] >> Thank you. So, thanks Andy. Thanks
+[01:04:25] everyone. I cannot see. Hopefully,
+[01:04:26] you're happy. Um so, I'm here to talk
+[01:04:29] about Modduck. We have about 14 minutes
+[01:04:31] worth of talking. Uh I don't know if
+[01:04:33] that leaves times for questions or not.
+[01:04:36] Um my name is Boaz. Uh I'm the
+[01:04:39] engineering tech lead for Modak. I'm
+[01:04:41] based in Amsterdam as we just discussed.
+[01:04:43] And uh uh what I chose to talk about
+[01:04:46] with the lens of Modduck is how what
+[01:04:49] does it mean a little bit of building a
+[01:04:51] cloud data warehouse uh based on an
+[01:04:53] impulses O allap database that I
+[01:04:55] understand you guys are familiar with
+[01:04:56] DUTDB but we'll get there. Uh of course
+[01:04:59] it's just 14 minutes so we'll try to a
+[01:05:01] little bit motivate why because I think
+[01:05:03] that's maybe the most interesting. Why
+[01:05:05] would you even do this? uh and give you
+[01:05:07] some insight into into how how it's done
+[01:05:10] and and what is interested on those
+[01:05:12] various pieces. So let's go. Uh Andy, I
+[01:05:15] don't know how the question answers
+[01:05:16] going on, but if someone wants to raise
+[01:05:18] a question and you want to interrupt me,
+[01:05:19] that's that's fine with me.
+[01:05:21] >> We'll do them at the end.
+[01:05:22] >> Okay, perfect. Okay, so um before we go
+[01:05:26] and say why would you use a single node
+[01:05:28] database? Uh like I think it's good to
+[01:05:30] take a moment and reflect a little bit
+[01:05:32] of what people do with the cloud data
+[01:05:33] warehouse. And um I think it's Jordan
+[01:05:36] Tigani which kind of had the idea to
+[01:05:38] start something like Madak in the
+[01:05:40] beginning and and other people that
+[01:05:41] followed analyzed query query uh query
+[01:05:46] query patterns and specifically how much
+[01:05:47] data people actually look at when
+[01:05:50] running the query right so quer people
+[01:05:52] have lots and lots of data sitting in
+[01:05:53] their blob stores or in their S3s but
+[01:05:56] then the question is how much do they
+[01:05:57] actually look at actively and uh here's
+[01:06:00] the a tweet by George Fraser CEO of five
+[01:06:03] train looking at two famous data sets
+[01:06:05] the the queries from Snowflake and Red
+[01:06:07] Shift and you can as you clearly see the
+[01:06:10] vast vast vast majorities uh only look a
+[01:06:13] terabyte or less of worth of data. Okay,
+[01:06:15] so they may have a pabyte sitting there.
+[01:06:17] They may have 500 data terabytes sitting
+[01:06:19] there but they actually typically care
+[01:06:21] about the terabyte or less and
+[01:06:23] intuitively you can say well you know
+[01:06:25] typically you would look at the most
+[01:06:26] recent data like say two weeks, one
+[01:06:28] month uh or something like that and that
+[01:06:31] is fairly reflected. So that's one one
+[01:06:32] observation. Second observation is that
+[01:06:35] the the building blocks that we use to
+[01:06:37] build a cloud uh data warehouse uh the
+[01:06:39] machine that are available also have
+[01:06:42] materially changed in the last 20 years.
+[01:06:44] Right? So if you look in 2006 very early
+[01:06:46] cloud providers you can get a commodity
+[01:06:49] to say one core uh and 2 GB of RAM which
+[01:06:52] is pretty much nothing in terms of your
+[01:06:55] basic comput and then you will aggregate
+[01:06:57] hundreds of those to do something
+[01:06:58] meaningful. But if you look today what
+[01:07:00] you can do, you can get pretty much
+[01:07:02] insane machine with 400 cores plus 24
+[01:07:06] tab of RAM. Uh if you kind of manage to
+[01:07:08] get your hand on one on one of these,
+[01:07:10] that's hard. But if you look at the
+[01:07:12] commodity like something that I just
+[01:07:13] went to EC2 today and I click like yes,
+[01:07:16] I I I want it. Um you can get off the
+[01:07:19] shelf
+[01:07:21] 192 machine with one and a half
+[01:07:23] terabytes worth of one, which is insane.
+[01:07:26] Okay. So what can we do with these two
+[01:07:29] things? Um we can look at the system
+[01:07:32] that we have built so far and those
+[01:07:34] system are pretty much geared together
+[01:07:36] to take many many many machines right
+[01:07:38] and combine them together to be able to
+[01:07:40] process lots and lots and lots of data
+[01:07:42] right and the reason you need to do it
+[01:07:44] is because the machines were not that
+[01:07:45] powerful. So you'll need to combine them
+[01:07:48] and people were aiming for having lots
+[01:07:49] of data. But as we've just seen that's
+[01:07:53] neither of these necessarily true today.
+[01:07:55] like so the machines are actually quite
+[01:07:56] some powerful and uh maybe we don't need
+[01:08:00] to analyze so much data so why are we
+[01:08:02] investing in all of that machinery which
+[01:08:05] means both money and CPU time can we be
+[01:08:08] more efficient right and that that is
+[01:08:09] basically kind of the foundational
+[01:08:11] belief below below motheruck is that if
+[01:08:14] you use single nodes and you use them to
+[01:08:17] the maximum you will it will be simpler
+[01:08:19] because you will not have a distributed
+[01:08:21] system it will be efficient because you
+[01:08:23] will not pay uh a kind overhead of
+[01:08:25] network CPU allocation these type of
+[01:08:27] things and if you believe it's efficient
+[01:08:29] then this actually works wonderfully so
+[01:08:31] that that is kind of monaduck so in
+[01:08:34] monad we we have built a cloud data
+[01:08:36] warehouse based on a single node in
+[01:08:38] posters database system that you guys
+[01:08:41] know namely ductb now duct db is
+[01:08:44] wonderful and it's wonderful not only in
+[01:08:45] a sense that is uh a very recent uh
+[01:08:48] developed database with all the latest
+[01:08:50] and greatest research it's also
+[01:08:53] extremely focused on user friendliness
+[01:08:55] and it can do a lot a lot of things for
+[01:08:56] you. Be it being a classical database
+[01:08:59] which is store data read it out in SQL
+[01:09:01] or repet file on S3 or pass your CSV
+[01:09:04] file or parse your JSON and so forth and
+[01:09:06] so forth and also had a very rich
+[01:09:08] extension ecosystem to make it even more
+[01:09:10] powerful. So on its own it's very it's
+[01:09:12] very useful and it also has another
+[01:09:15] upside it's very lightweight right it's
+[01:09:17] it's very it's built to be embeddible in
+[01:09:19] many many environment uh and an extreme
+[01:09:22] case you can think you have duct DB is
+[01:09:24] available in your browser if you go to
+[01:09:26] that URL over there and you can process
+[01:09:29] data read data from S3 do whatever you
+[01:09:31] want to do in full SQL language so it's
+[01:09:33] it's fairly powerful and it's very
+[01:09:35] versatile and very lightweight so if you
+[01:09:37] put these two things together right you
+[01:09:39] you're going to get mad Motheruck uses
+[01:09:41] take your standard duct DB as a client
+[01:09:44] and then connects it with another duct
+[01:09:46] DB instance that runs all the way in the
+[01:09:48] cloud in those as big as you need the
+[01:09:50] machine and then together runs a query
+[01:09:53] in what we call dual execution which
+[01:09:55] means take your query look at what it
+[01:09:57] does and figure out which pieces of it
+[01:09:59] need to run at in the cloud uh and the
+[01:10:02] compute machines that are available
+[01:10:03] there and which pieces can run can run
+[01:10:06] locally which means that you have no
+[01:10:07] network overhead it's very close to you
+[01:10:10] And putting these things together means
+[01:10:11] you can do quite funky stuff. So for
+[01:10:13] example, here's a visualization built
+[01:10:16] also in CMU by the Dominic Moritz
+[01:10:19] library where it's geared toward taking
+[01:10:21] two charts and interestingly updating uh
+[01:10:25] the two together as you move right and
+[01:10:27] as you can see you move one and the
+[01:10:28] other one this is real time immediately
+[01:10:31] updates and the only reason you can do
+[01:10:32] so is because you have a full database
+[01:10:34] that running in the browser and there is
+[01:10:36] no network overhead. So every update
+[01:10:38] only needs to do the compute locally and
+[01:10:41] not have to go all the way to the
+[01:10:42] browser. We can also use it to uh
+[01:10:46] increase build a much nicer ID. So
+[01:10:48] here's a film of the motheruck UI where
+[01:10:52] we have a sample of your data set cached
+[01:10:54] locally and that means that we can run
+[01:10:56] your SQL locally and give you instant
+[01:10:58] preview of what you're typing and like
+[01:11:00] whether the columns that you added are
+[01:11:02] correct, if your modifications are
+[01:11:04] correct. Again, this is a real time
+[01:11:05] movie recorded by the senior engineer
+[01:11:08] for me this afternoon. Uh it it is very
+[01:11:12] very snappy and the only reason that is
+[01:11:13] the case is because we do not need to go
+[01:11:15] to the cell. Okay, so that that's a
+[01:11:17] little bit of the motivation and what
+[01:11:19] you can do when you have it. But I want
+[01:11:22] to address the like the
+[01:11:24] the one concern of that chart is it
+[01:11:26] didn't say all queries go below 1 TB or
+[01:11:30] less. It said that by far the majority
+[01:11:33] of them. But what happens if you get to
+[01:11:35] go higher? And I want to go a little bit
+[01:11:37] to how uh to how we think about that. So
+[01:11:40] to do that, let's divide the world a
+[01:11:41] little bit into a system, right? And
+[01:11:43] that system looks at two axises. The
+[01:11:45] amount of data that you need to analyze
+[01:11:46] and the amount of compute you want to
+[01:11:48] spend doing so or you can spend doing
+[01:11:50] so, right? And you go both axises. So
+[01:11:53] let's start on the on the easy side,
+[01:11:55] which is small data, small compute,
+[01:11:57] right? you have uh just reasonable
+[01:12:00] amount of data can be sitting on your
+[01:12:01] laptop and you just want to get some
+[01:12:04] insight about it and and this model is
+[01:12:06] basically what duct was born like that
+[01:12:08] was meant to do it's a tool you can use
+[01:12:10] it in your python that's why it's
+[01:12:11] embedded you can use it in your program
+[01:12:13] wherever you want and it will work
+[01:12:15] fantastically but even here if you
+[01:12:18] connect it with some cloud-based over
+[01:12:20] offering you get some benefits like uh
+[01:12:23] if you would think you have kit kit is
+[01:12:25] works greatly on your laptop and And you
+[01:12:27] have GitHub which typically will help
+[01:12:29] you back up your codebase and allow to
+[01:12:31] collaborate on it, supply some
+[01:12:33] authorization and control systems and so
+[01:12:35] forth and so forth. So that's the easy
+[01:12:37] one and let's go one up and say okay but
+[01:12:40] I have lots of data and I want to use it
+[01:12:44] with but I don't have a lot of comput
+[01:12:45] needs. Maybe I'm doing something super
+[01:12:47] small like even a simple query like how
+[01:12:49] many records do I have that match a
+[01:12:51] certain criteria and it turns out the
+[01:12:53] duct DB is also pretty good there too as
+[01:12:55] it is. Right? It can as I said scan a
+[01:12:58] park file and a string and give you a
+[01:12:59] great answer. But even in those cases if
+[01:13:02] you run it on your laptop then you need
+[01:13:04] to reach out of the network and network
+[01:13:06] into the AWS systems or wherever you are
+[01:13:08] and read the data. But if you connect it
+[01:13:10] with a ductb in the cloud that means
+[01:13:12] that aggregation or that scan can be
+[01:13:15] done much more quickly and very close to
+[01:13:17] the data and you only need to download
+[01:13:19] the summary. So that is something that
+[01:13:21] Modak will automatically do for you if
+[01:13:23] you use Modduck enabled which we'll get
+[01:13:27] to how in a second. So going to the next
+[01:13:29] one. Uh what happens if you have not not
+[01:13:32] a lot of data but you do need to do
+[01:13:34] quite a huge uh computation for some
+[01:13:37] whatever reason right maybe it is uh um
+[01:13:40] a very heavy recursive CTE that needs to
+[01:13:43] kind of crunch and crunch and crunch and
+[01:13:45] result itself to something or very very
+[01:13:47] loud join or maybe you just need to do
+[01:13:49] it as quickly as you can because your
+[01:13:51] latency requirements are are very low so
+[01:13:53] you need to get a very quick answer and
+[01:13:55] you want all the data to be in memory uh
+[01:13:57] at that point yeah you can use one of
+[01:13:59] those beef beefy machines. And then
+[01:14:01] again, it's no secret that the cloud
+[01:14:03] allows you to spin it up, use it and
+[01:14:06] move uh when you need it and remove it
+[01:14:08] when you don't need it anymore and
+[01:14:09] becomes much much more cost effective.
+[01:14:12] again uh we will do it for you
+[01:14:15] and I think there is another reason why
+[01:14:17] you would like big compute and that's
+[01:14:19] not necessarily because uh your actual
+[01:14:21] compute is big but you just want to do
+[01:14:22] it many many times concurrently right or
+[01:14:25] say you have a whole bunch or if you all
+[01:14:27] will look at a certain uh data sets and
+[01:14:30] will try to do something concurrently
+[01:14:32] then whatever the computation it is
+[01:14:34] needs to be done now I don't know how
+[01:14:36] many people are in the room but let's
+[01:14:37] say 100 times so because of that reason
+[01:14:39] you will have uh quite quite high
+[01:14:42] compute needs. And the nice thing is
+[01:14:46] about uh using duct DB which is a very
+[01:14:49] light lightweight operation is we can
+[01:14:50] actually now give each specific end user
+[01:14:54] its own duct DB in the cloud which we
+[01:14:57] call duckling right so our lightweight
+[01:14:59] oxation is able to spin up on demand uh
+[01:15:03] a back end for each of you guys and as
+[01:15:05] soon as you stop using it it will go
+[01:15:06] away and everything is fine. So that's
+[01:15:09] how we deal with kind of the the scale
+[01:15:11] through a website access or multiple
+[01:15:13] user using things concurrently. And
+[01:15:16] finally um
+[01:15:19] the the biggest have lots of data and
+[01:15:21] you need lots of compute to process it
+[01:15:23] and and I think the the question is here
+[01:15:26] is also a little bit to uh what exactly
+[01:15:28] what you're trying to do. Uh as we said
+[01:15:31] before these huge machines can do quite
+[01:15:32] a quite a lot right. Uh it also it's
+[01:15:36] much more efficient to run on them. So
+[01:15:38] that that might give you the gains that
+[01:15:39] you need. You want closer and the nice
+[01:15:42] thing about ductb uh ductb the ductb
+[01:15:45] ecosystem that they now have a new data
+[01:15:47] lake format and architecture called duck
+[01:15:50] lake. I'm not going to go in there just
+[01:15:51] want to shout out that next mind our CEO
+[01:15:54] is also giving a talk about that. So if
+[01:15:56] you want to go go on bone but then
+[01:15:58] mother duck offer that type of uh
+[01:16:00] integration as well. So we also have
+[01:16:02] solution for that much bigger bigger
+[01:16:04] scale if you happen to know to need it.
+[01:16:08] So with that in mind uh let's go uh a
+[01:16:11] little bit about the the the lower level
+[01:16:13] and architecture. This is actual
+[01:16:15] screenshot from our internal mirrorboard
+[01:16:16] that says how things are. Uh this is a
+[01:16:18] screenshot of a data region. I'm not
+[01:16:20] going to go into all of those boxes but
+[01:16:22] just to give you a little bit of a
+[01:16:24] taste. Um first uh again I don't know
+[01:16:27] how much time was spent going into howb
+[01:16:29] works uh but we integrate into it
+[01:16:32] through an extension mechanism. uh at
+[01:16:35] the top top line you can see how normal
+[01:16:37] ductb query life cycle goes it will
+[01:16:39] parse it it will bind it that means
+[01:16:41] figure out which tables what fields and
+[01:16:42] so forth then we'll figure out how to
+[01:16:44] run the query and optimize it and
+[01:16:46] finally it will go and run it we extend
+[01:16:48] each one of those phases uh um with new
+[01:16:51] functionality so the binding needs to
+[01:16:53] know about the cloud tables the
+[01:16:56] optimizer need to decide basically what
+[01:16:58] runs where right so we have the native
+[01:17:00] ductb optimization decides how to run
+[01:17:02] effectively a query if you're close to
+[01:17:04] the data but we can split the query and
+[01:17:06] decide okay this part of the filtering
+[01:17:08] we're going to push up to the cloud do
+[01:17:10] the aggregation download it and then do
+[01:17:12] the join with some local data set for
+[01:17:13] example and then of course the actual
+[01:17:16] execution which needs to run in in in
+[01:17:19] this two dual mode part in the cloud
+[01:17:20] part locally again I think they can go
+[01:17:23] we can spend a whole talk there but just
+[01:17:25] realize that we hook into all these
+[01:17:27] faces
+[01:17:28] um and then finally going level up to
+[01:17:31] what does it mean to have a a cloud
+[01:17:32] system So typically cloud is separate
+[01:17:34] into a compute layer and a storage layer
+[01:17:37] and touch both of this. So for the
+[01:17:39] lightweight compute that we have first
+[01:17:41] of all we enjoy the fact we're a single
+[01:17:43] node and duct DB is so fast to start up
+[01:17:45] right. So our goal for uh time to an
+[01:17:47] answer for a query is 100 millisecond
+[01:17:49] and if that query is very light it will
+[01:17:51] also return and around that that the
+[01:17:53] time cold start later will be less like
+[01:17:56] depends on what the query execution time
+[01:17:58] is. uh while it's up as we said uh we
+[01:18:01] enjoy the efficiency of the DB itself
+[01:18:03] and being a single node and also because
+[01:18:05] it's so light to start up that also
+[01:18:07] means that we can shut it down very
+[01:18:08] aggressively so that makes it cost
+[01:18:10] effective
+[01:18:12] and the last point is um this is again a
+[01:18:15] quite big topic but in distributed
+[01:18:18] system one of the challenges you have is
+[01:18:20] to figure out how much resources to get
+[01:18:22] give each user and to make sure that no
+[01:18:24] user dominates the whole system because
+[01:18:26] we are using a single node we completely
+[01:18:28] outsources to the container
+[01:18:30] orchestration system. So every database
+[01:18:32] is completely contained and we don't
+[01:18:34] have to worry about it. But
+[01:18:38] >> we're out of time. Sorry to run the next
+[01:18:40] class. We have time for one question.
+[01:18:42] >> Yes, one question.
+[01:18:44] >> Any question?
+[01:18:47] >> How much the how much of the uh is
+[01:18:50] mother duck contributing back to DB?
+[01:18:53] >> Yeah.
+[01:18:56] So we have engineers that write code for
+[01:18:58] DB. Most of the contribution that we do
+[01:19:00] is through through subscription to their
+[01:19:02] to their work and guiding them together.
+[01:19:04] So our engineers typically open PR when
+[01:19:07] something small but if it's a bigger
+[01:19:09] item we will work together with DBS to
+[01:19:11] develop it.
+[01:19:12] >> Okay. Awesome. Give it a round of
+[01:19:14] applause.
+[01:19:16] Again reminder 3 is due on Sunday.
+[01:19:19] Please do the practice exam and then as
+[01:19:21] you said the mother duck talk on Duck
+[01:19:23] Lake will be on Monday after class uh
+[01:19:26] next week. Okay. All right guys have a
+[01:19:28] good weekend. Hit it
+[01:19:31] fast money [music] acquats
+[01:19:38] [music]
+[01:19:43] [music]
+[01:19:44] over
+[01:19:52] the [music]
+[01:19:53] fortune maintain flow with
+[01:19:57] the brain.
+[01:19:59] for [music] maintain flow
+[01:20:02] with the bra.

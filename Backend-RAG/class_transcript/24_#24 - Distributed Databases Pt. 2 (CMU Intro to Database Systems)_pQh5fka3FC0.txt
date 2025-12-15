@@ -1,0 +1,2247 @@
+[00:00:00] [music]
+[00:00:06] [music] I'm still
+[00:00:08] associant.
+[00:00:12] [music]
+[00:00:17] [music]
+[00:00:28] So, he's gone today. He should be back
+[00:00:31] uh on on Wednesday for the last class.
+[00:00:34] Um all right. So, lot to cover. Again,
+[00:00:37] as a reminder, everything I'm talking
+[00:00:38] about today is fair game on the on the
+[00:00:41] final exam. Obviously, since you know,
+[00:00:44] we're kind of covered at this at the
+[00:00:45] last minute. We can't go to, you know,
+[00:00:47] can't ask you too many too many details,
+[00:00:49] but some of the questions are on the the
+[00:00:51] homework six, which is coming due this
+[00:00:53] Wednesday. Project four is also coming
+[00:00:55] due this Wednesday as well. Sorry,
+[00:00:57] Sunday. both are due on Sunday. And oh,
+[00:01:00] there's also the uh for the project
+[00:01:03] four, the Saturday office hours are
+[00:01:04] coming up this Saturday on the 6th. I'll
+[00:01:07] post that on on Piaza. That'll be 6th
+[00:01:10] fifth floor in gates from 3:00 to 5:00.
+[00:01:13] And as always, post your questions on
+[00:01:15] Piaza uh before. Uh the final exam,
+[00:01:18] again, it's Thursday, December 11th.
+[00:01:20] It's going to be over in the student
+[00:01:22] center in the giant auditorium. Uh there
+[00:01:25] is a final study guide. I'm finishing up
+[00:01:27] also with the practice final exam. I'll
+[00:01:29] post that tonight. Um, and then on next
+[00:01:32] class on Wednesday will be the sort of a
+[00:01:34] quick overview of of the the material
+[00:01:37] we've covered so far that'll be uh
+[00:01:40] applicable to on the final exam. And
+[00:01:42] I'll go over some of the um the
+[00:01:44] questions people had about you know
+[00:01:46] strict QPL and some of the other things
+[00:01:48] that come up along the during the
+[00:01:50] lectures but having time to go re
+[00:01:51] revisit. I'll cover those again on on
+[00:01:53] Wednesday. And again, if you're
+[00:01:55] interested in this kind of stuff and get
+[00:01:56] around for next semester, I want to be a
+[00:01:57] TA, please sign up here. So, any
+[00:01:59] questions about the final exam, homework
+[00:02:01] six, or project four.
+[00:02:03] >> What's the maximum bonus you get?
+[00:02:06] >> What's the question is, what's the
+[00:02:07] maximum bonus you get for project four?
+[00:02:08] Should be the same as the other ones? I
+[00:02:10] think 25. Yeah, 25,
+[00:02:13] >> but I'll double check it. It should be
+[00:02:15] the same. Other [snorts] questions?
+[00:02:20] All right. And then the um
+[00:02:23] for the the the last two weeks of the
+[00:02:25] semester, uh we have two remaining
+[00:02:27] speakers. So the snowflake guys are
+[00:02:29] giving a talk tonight or today at 4:30
+[00:02:31] after class. That should be not 12 p.m.
+[00:02:34] It should be 4:30. Both of these are are
+[00:02:36] at 4:30, not 12 p.m. Sorry. Uh so
+[00:02:39] that'll be the Polaris is the open
+[00:02:42] source reimplication of of the iceberg
+[00:02:46] catalog API. Remember data bricks,
+[00:02:49] sorry, snowflake tried to buy the
+[00:02:50] iceberg people called a company called
+[00:02:52] tabular for 600 million. Data bricks
+[00:02:55] came in and kicked their knees out and
+[00:02:57] bought them for $1 billion. So then uh
+[00:03:00] Snowflake decided to write their own and
+[00:03:02] that's what Apache Polaris is. So
+[00:03:03] they'll be they'll be talking today
+[00:03:04] again at 4:30, not 12 p.m. And then next
+[00:03:07] week we have uh the guys from Apache
+[00:03:10] Fluence. Again, I don't really know a
+[00:03:11] lot about the system, but they've asked
+[00:03:12] to give a talk and they'll be giving a
+[00:03:14] talk about what they're building as
+[00:03:15] well. Okay. [snorts]
+[00:03:17] All right. So, last class we talked
+[00:03:18] about distributed databases. Um, and
+[00:03:21] sort of a quick introduction to the the
+[00:03:22] key ideas and key concepts behind them,
+[00:03:25] right? We spend most of our time talking
+[00:03:26] about the difference between shared
+[00:03:27] nothing and shared shared disk
+[00:03:28] architectures. Shared nothing is when
+[00:03:30] every single node has sort of some some
+[00:03:32] partition or piece of of of the database
+[00:03:36] um and in its local disk. And anytime
+[00:03:38] you want to communicate between the
+[00:03:39] nodes, you're sort of going through
+[00:03:40] regular TCIP
+[00:03:42] typically connections. You can do UDP.
+[00:03:45] Then shared disc is where the primary
+[00:03:46] storage location of the database was a
+[00:03:50] external storage system like an Amazon
+[00:03:52] S3 or GCS or distributed file system and
+[00:03:55] then all the the databases would
+[00:03:57] retrieve pages retrieve data from that
+[00:03:59] shared storage and then bring them into
+[00:04:01] it it's their own local memory. [snorts]
+[00:04:03] We talk about how to do partitioning on
+[00:04:05] the data to split it up into disjoint
+[00:04:06] subsets or usually disjoint subsets
+[00:04:09] right and this is the technique called
+[00:04:10] horizontal partitioning. People say
+[00:04:12] sharding. It's essentially the same
+[00:04:13] idea. And you can usually, you know,
+[00:04:15] pick a um you would pick a a set of keys
+[00:04:20] that you would then hash or use the
+[00:04:22] generate the ranges on. So you divide
+[00:04:23] things up in such a way that when
+[00:04:25] queries run all the data they need is on
+[00:04:27] a single uh on a single node or single
+[00:04:29] partition. But we'll see later today how
+[00:04:31] we're going to handle that when we want
+[00:04:32] to do joins and the data is not
+[00:04:34] partitioned in a way that we want for
+[00:04:35] our join and how we how we're going to
+[00:04:37] handle uh in that in our system. Talk
+[00:04:39] about how to do replication. So primary
+[00:04:40] replica, multi- primary, the two basic
+[00:04:42] setups and then transaction
+[00:04:43] coordination. We talked about having a
+[00:04:46] centralized coordinator either as an
+[00:04:48] external thirdparty thing on the side
+[00:04:49] like a TP monitor or a middleware
+[00:04:51] sitting in the in in between the
+[00:04:53] application and the database system that
+[00:04:55] is coordinating the transactions or you
+[00:04:56] have a decentralized model where all the
+[00:04:58] nodes themselves are trying to decide
+[00:04:59] how to uh whether transactions are
+[00:05:02] allowed to commit. We'll spend more
+[00:05:04] we'll spend more on that topic today.
+[00:05:05] [snorts]
+[00:05:06] So today's class again I'm trying to
+[00:05:08] condense down the two major concepts you
+[00:05:10] need to be aware of in distributed
+[00:05:11] systems but we're going to distinguish
+[00:05:12] sort of the first half of the lecture
+[00:05:13] will be on OLTP uh systems and the
+[00:05:16] second half will be on OLAP systems and
+[00:05:18] I think we we talked about this earlier
+[00:05:19] in the semester the way to think about
+[00:05:20] OTP is this is like what most websites
+[00:05:24] are when you when you buy things and and
+[00:05:26] place orders or do comments on Reddit or
+[00:05:28] or hackernews right this is where you're
+[00:05:30] the trans the application is making
+[00:05:32] small number of updates uh at a time
+[00:05:34] within transactions
+[00:05:35] and you want this to run as fast as
+[00:05:37] possible because again this is something
+[00:05:38] that exposed to to humans or other
+[00:05:41] machines and then analytical workloads
+[00:05:43] is where we would do exploratory
+[00:05:45] analysis of the data to extrapolate new
+[00:05:47] knowledge from the data we've already
+[00:05:48] collected from a OTP system so in this
+[00:05:51] environment we're running long running
+[00:05:52] queries that can take seconds or even
+[00:05:54] minutes or hours that will do a bunch of
+[00:05:56] joins and uh try to aggregate a bunch of
+[00:05:59] information together right so in the
+[00:06:02] world we want transactions to run less
+[00:06:04] than 50 milliseconds
+[00:06:05] in a OLAP system, you know, less than a
+[00:06:08] second is usually good enough, right,
+[00:06:10] for most things. So, as I said, we're
+[00:06:13] going to first talk about stuff and then
+[00:06:14] we'll talk about uh OLAP stuff. And
+[00:06:17] again, it's not to say that that these
+[00:06:19] things are completely, you know,
+[00:06:21] mutually exclusive to each other. Like
+[00:06:22] if I'm building a a distributed
+[00:06:25] transactional database system, OTB
+[00:06:26] database system, I may have to do joins
+[00:06:29] in it and therefore I'm going to need to
+[00:06:30] do my different distributed join
+[00:06:32] algorithms, right? But it may not be the
+[00:06:34] main thing I'm going to focus in my in
+[00:06:35] my system. And likewise in a uh in an
+[00:06:39] analytical system, I may I still want to
+[00:06:41] have transactions and I still need to
+[00:06:42] use a consistency protocol, atomic
+[00:06:45] commit protocol, make sure this all
+[00:06:46] works. Uh but it's not the thing I'm
+[00:06:49] trying to optimize for. Right? So again,
+[00:06:52] these are these whether or not you spend
+[00:06:54] all your effort in when you engineer a
+[00:06:55] system to focus on one of these two
+[00:06:57] these two two category things depends on
+[00:06:59] what the workload you're trying to
+[00:07:00] target.
+[00:07:02] And this again there's a lot to cover
+[00:07:04] here. I'm trying to condense what would
+[00:07:05] been you know if we had more faculty at
+[00:07:07] CMU we could teach a whole course on
+[00:07:09] distributed databases try to condense
+[00:07:10] down the main things you need to
+[00:07:12] understand so that when you got in the
+[00:07:13] real world to be exposed to these
+[00:07:14] concepts exposed to these topics you may
+[00:07:16] not be an expert in it but you just be
+[00:07:17] aware of it and some of the design
+[00:07:19] decisions that you have to make when you
+[00:07:20] start evaluating systems or try to build
+[00:07:22] your own.
+[00:07:25] Okay.
+[00:07:26] So remember that last class we talked
+[00:07:28] about how the whole goal of a
+[00:07:31] distributed database system is that we
+[00:07:32] want it to appear to the application as
+[00:07:35] if as if it's a single logical database.
+[00:07:38] So again, ideally the same query I could
+[00:07:40] run on a single node Postgress database
+[00:07:42] instance uh could run if I had a sharded
+[00:07:46] or partitioned or uh distributed system,
+[00:07:49] right? But then now we got to worry
+[00:07:51] about if now my data is broken up across
+[00:07:54] or or is is resides in a bunch of these
+[00:07:57] different nodes, whether it's shared
+[00:07:58] disk or a shared nothing system. When we
+[00:08:02] start making changes to data that maybe
+[00:08:03] reside on different nodes and we want to
+[00:08:06] go commit a transaction, how are we
+[00:08:08] going to make sure that all the same
+[00:08:10] asset properties we had when we were
+[00:08:12] doing transactions on a single node
+[00:08:14] system uh still are still going to work
+[00:08:16] for us in a distributed environment.
+[00:08:19] Right? Again, distributed doesn't mean
+[00:08:22] it doesn't mean it's a completely
+[00:08:23] radical way of thinking about how to
+[00:08:24] build the system. It's just doing all
+[00:08:26] the same stuff we were doing before, but
+[00:08:28] now just in hard mode because we have to
+[00:08:30] worry about a bunch of things we didn't
+[00:08:32] worry about before when we were on a
+[00:08:33] single node. So say we want to do a
+[00:08:35] commit across for a transaction that
+[00:08:36] touches multiple nodes, but one of those
+[00:08:38] nodes goes down. What should happen to
+[00:08:40] that transaction? What happens if the
+[00:08:41] messages that we're sending for commit
+[00:08:44] transaction show up late or somehow get
+[00:08:46] dropped along the way because a weird
+[00:08:48] network hiccup? What should happen?
+[00:08:49] Right? And then what happens if we are
+[00:08:53] doing a large distributed transaction
+[00:08:56] and like you know 100 machines
+[00:08:58] uh should we wait for every single one
+[00:09:00] to agree that we should commit or can we
+[00:09:03] uh can we look at less something less
+[00:09:04] than that right
+[00:09:07] so one important assumption we're going
+[00:09:09] to make throughout this lecture today is
+[00:09:11] that actually going off the real world
+[00:09:13] you should make this assumption as well
+[00:09:14] is that we're going to assume all the
+[00:09:16] nodes that are participating in our
+[00:09:18] distributed AB system are controlled
+[00:09:20] followed by us and therefore are well
+[00:09:23] behaved. Well behaved in quotes.
+[00:09:24] Obviously if like the harbor crashes
+[00:09:26] that's you know that's we can't prevent
+[00:09:28] that. Well, what what we mean is that
+[00:09:30] it's not like we're worried about
+[00:09:31] someone running a malicious version of
+[00:09:34] our database system. Uh so that when we
+[00:09:37] go to commit a transaction, they start
+[00:09:39] messing around with us and causing you
+[00:09:41] know weird states, right? So we assume
+[00:09:44] that we control everything. Uh even if
+[00:09:47] we don't control the hardware, we're at
+[00:09:48] least controlling the software and that
+[00:09:49] if a node tells us, yeah, let's go ahead
+[00:09:52] and commit, they're not going to like
+[00:09:53] change their mind or try to try to screw
+[00:09:55] around with the decisions that are being
+[00:09:56] made in our system, right?
+[00:10:00] What what kind of protocol would you
+[00:10:01] want to use if you don't trust the other
+[00:10:03] nodes?
+[00:10:05] Byzantine. Yes. So if you don't trust
+[00:10:07] the other nodes and you assume they
+[00:10:08] could be malicious actors, you need what
+[00:10:10] is called a Byzantine fault tolerant
+[00:10:12] protocol, the BFT protocol, right? If
+[00:10:14] you know what I'm sure everyone heard of
+[00:10:16] blockchains, but this is basically how
+[00:10:18] blockchains work. Blockchains are just
+[00:10:19] running transactions like we normally
+[00:10:21] would in our in our beautiful database
+[00:10:23] system, except those guys don't trust
+[00:10:26] the other nodes. So therefore they have
+[00:10:28] to run a BFT protocol to get everyone to
+[00:10:30] to majority to agree that this is what's
+[00:10:33] going to happen, right? And they use
+[00:10:35] like the Merkel tree stuff which I'm not
+[00:10:36] going to talk about. They they use a
+[00:10:38] immutable ledger, immutable redhead log
+[00:10:40] to keep track of here's all the changes
+[00:10:41] that that get made and then you can't go
+[00:10:43] back and reverse things, right? They do
+[00:10:45] all this extra stuff because they're,
+[00:10:47] you know, it's bunch of randos and
+[00:10:49] crypto boy bros mining things and you
+[00:10:51] can't trust them, right?
+[00:10:53] You never want to do this with a in a in
+[00:10:55] a real system running real transactions
+[00:10:58] that isn't crypto, right? There there
+[00:11:01] really isn't a good practical use case
+[00:11:02] for blockchains other than than crypto.
+[00:11:04] Like if you're moneyaundering stuff,
+[00:11:05] then you want to use that. But like
+[00:11:06] Amazon's not going to run off this,
+[00:11:08] right? Blockchain, any real system is
+[00:11:10] not going to run on blockchain because
+[00:11:11] it's going to be five to 10x slower than
+[00:11:13] the stuff we're talking about today.
+[00:11:15] Okay? So again, if you remember only two
+[00:11:17] things from this class, never use MAPAP
+[00:11:20] in your data system and then don't use
+[00:11:21] blockchain databases, right? Uh use use
+[00:11:23] the transactional stuff we'll talk about
+[00:11:25] today because we're already be facing
+[00:11:26] the struggling with the speed of light
+[00:11:27] issues to do our atomic commit
+[00:11:30] protocols. We'll see in a second. And
+[00:11:32] now I got to run a bunch of BFT stuff
+[00:11:33] for it. You know, it's a waste.
+[00:11:37] All right. So how are we going to make
+[00:11:38] sure that everyone can agree that in our
+[00:11:40] distributed database when we want to
+[00:11:41] commit that we can all go ahead and
+[00:11:42] agree that we're going to commit. So
+[00:11:44] this is what's been called atomic commit
+[00:11:46] protocol. If you're coming from the
+[00:11:47] distributed systems world, they would
+[00:11:48] call this a consensus protocol. They're
+[00:11:50] basic they're the they are the same
+[00:11:51] thing, right? Um and in the distributive
+[00:11:55] systems world, they would call these
+[00:11:56] things state machines. The thing that we
+[00:12:00] care about is the order in which
+[00:12:02] transactions are going to get committed.
+[00:12:04] Guess what? That's that's the state of
+[00:12:06] the system. It's the same thing. So
+[00:12:08] we're going to use our atomic commit
+[00:12:09] protocol to decide which what is the
+[00:12:12] order that transactions will be will be
+[00:12:14] allowed to commit. And then once we know
+[00:12:15] they've been committed, we want to write
+[00:12:17] them out in such a way a ledger or log
+[00:12:20] so that we recorded that this is the
+[00:12:22] order that they were then committed. So
+[00:12:24] that if anybody comes back and tries to
+[00:12:25] read uh you know to replay that those
+[00:12:28] transactions in that same order, you
+[00:12:30] know, we'd be guaranteed to put it back
+[00:12:31] in the same state.
+[00:12:34] Okay. And we're going to want to do this
+[00:12:37] use our atomic compet no matter how the
+[00:12:39] database is divided split across the
+[00:12:41] nodes in our system. So whether a piece
+[00:12:43] of data has been replicated across
+[00:12:44] multiple machines or it's been
+[00:12:46] partitioned and there's only one
+[00:12:47] location of that data in our distributed
+[00:12:49] system cluster uh we're still going to
+[00:12:51] run this atomic commit protocol.
+[00:12:54] So the very first one that uh in that
+[00:12:58] that people sort of developed in this to
+[00:12:59] solve this problem was is two-phase
+[00:13:01] commit. Who here has heard of two-phase
+[00:13:03] commit? All right, less than half. And
+[00:13:06] then they'll have one problem. We'll see
+[00:13:07] in a second. And then um there was a
+[00:13:11] stonebreaker, the guy invented postgress
+[00:13:12] came up with another version called
+[00:13:13] three-phase commit to solve some of the
+[00:13:15] problems that two-phase commit does, but
+[00:13:17] that's overly complicated. So nobody
+[00:13:18] does three-phase commit. There's a
+[00:13:19] four-phase commit from Microsoft uh that
+[00:13:24] for specialized hardware, but again,
+[00:13:26] that's a that's a research system, not a
+[00:13:27] real system. But the the problem we're
+[00:13:29] trying to solve is basically get
+[00:13:30] everyone to agree that this thing is
+[00:13:32] when we say transactions allowed to
+[00:13:33] commit that we can go ahead and commit
+[00:13:35] and then we don't have to ideally not to
+[00:13:37] block the entire system until everyone
+[00:13:39] agrees. Two-phase commits going to have
+[00:13:41] that problem. But the the newer
+[00:13:44] protocols like Paxos that probably
+[00:13:46] everyone is familiar with uh they're
+[00:13:48] going to get around this because they'll
+[00:13:49] take majorities. So two-pace commit will
+[00:13:52] block everybody to to everyone agrees to
+[00:13:53] commit. There's a protocol developed at
+[00:13:55] MIT called viewstamped uh replication
+[00:13:58] that came out in 1988. This predates
+[00:13:59] Paxos by a year but it's bas essentially
+[00:14:02] the same solving the same problem. Paxos
+[00:14:04] came out in ' 89. Um again solves the
+[00:14:06] same things. Zab is the Zookeeper atomic
+[00:14:08] broker protocol that's only used in
+[00:14:10] Zookeeper. And then Raft is another one
+[00:14:11] probably everyone familiar with as well.
+[00:14:13] uh it's getting it's a it's a
+[00:14:16] simplification simplification of Paxos
+[00:14:18] in a certain way but it's designed to be
+[00:14:21] more easily understand but a high level
+[00:14:22] they're all the same thing right so
+[00:14:25] we're going to focus on these two
+[00:14:26] because in databases most systems are
+[00:14:28] going to do two-based commit and then a
+[00:14:29] lot of a lot of them are also going be
+[00:14:31] doing paxels as well sometimes they'll
+[00:14:32] do both in a single system um raph again
+[00:14:36] if you if you understand paxos you'll be
+[00:14:38] able to understand raph and again this
+[00:14:39] is not a distributed systems class if
+[00:14:40] you taken uh was it 440 They cover this
+[00:14:44] as well, but we'll go to the high level
+[00:14:45] and talk about the things we care about
+[00:14:47] in our databases. Right? So, two-phase
+[00:14:50] commit is is again one the first one was
+[00:14:52] developed. It's originally attributed to
+[00:14:54] to Jim Gray, the guy that met at two
+[00:14:56] phase locking and a bunch of other
+[00:14:57] stuff. He won the Tory award in
+[00:14:58] databases in the in the 1990s. Um, but
+[00:15:01] in interviews with him, he says that he
+[00:15:03] got the idea from some some Italian
+[00:15:06] programmer in the 1970s. And when they
+[00:15:08] talked to that guy, he said, "Oh, it's
+[00:15:09] actually based on um how people did
+[00:15:13] contract law on pencil and paper." So
+[00:15:15] it's an application of ideas that that
+[00:15:17] were in the physical world applied to
+[00:15:19] the the digital world with databases.
+[00:15:23] All right. All right. So, our atomic pro
+[00:15:24] protocol again the idea is that we want
+[00:15:26] to get coordinate across multiple nodes
+[00:15:30] or resources in our system that a
+[00:15:33] transaction is allowed to commit and
+[00:15:35] that everyone's going to agree at the
+[00:15:37] same time that this transaction has
+[00:15:39] successfully committed or a batch of
+[00:15:40] transactions, right? And you can sort of
+[00:15:43] think the the the state machine for a
+[00:15:45] transaction we're trying to follow is
+[00:15:46] like this. So while transaction is
+[00:15:47] executing queries and reading data or
+[00:15:50] modifying modifying the database it's in
+[00:15:52] the working state and then it says all
+[00:15:54] right I'm done my changes I want to go
+[00:15:56] ahead and commit right then the
+[00:15:58] application sends a commit request and
+[00:16:00] then there's some work to be done to
+[00:16:01] figure out should we allow this guy to
+[00:16:03] this transaction to commit or is it not
+[00:16:05] allowed to commit and then we we get
+[00:16:07] everyone to agree that it can't commit
+[00:16:08] and we would abort and roll back these
+[00:16:10] changes [snorts]
+[00:16:12] and then the property of our commit
+[00:16:14] protocol is that once we decide that
+[00:16:16] this transaction has successfully
+[00:16:17] committed that we can't revert that that
+[00:16:20] decision like once all the nodes agree
+[00:16:23] that this transaction is allowed to
+[00:16:24] commit one of them can't come back said
+[00:16:26] I can't I can't can't I changed my mind
+[00:16:28] right and then when we finally reached
+[00:16:31] the end state either committed or
+[00:16:32] aborted everyone is simultaneously in
+[00:16:35] agreement that this is the right thing
+[00:16:36] to happen and this is the current state
+[00:16:38] of the system
+[00:16:40] so we're going to assume there has to be
+[00:16:42] uh we assume a livveness property
+[00:16:44] meaning that there's always going to be
+[00:16:47] some number of nodes available for us to
+[00:16:49] to keep making forward progress in our
+[00:16:52] in our system. Now, it doesn't mean that
+[00:16:54] transactions will be allowed to commit.
+[00:16:55] It may be the case that we keep losing
+[00:16:57] nodes and before we can everyone agree
+[00:16:59] that we can commit and transactions keep
+[00:17:01] getting aborted, but it's still moving
+[00:17:03] forward in time, right?
+[00:17:07] All right. So, let's look at the basic
+[00:17:09] one two-phase commit. So assume the
+[00:17:11] application server has commit did some
+[00:17:13] read and write operations on these these
+[00:17:15] these nodes here in our in our
+[00:17:16] distributed data system and then it's
+[00:17:18] going to go to this first one here. I'm
+[00:17:20] not going to say how it decides to do
+[00:17:21] that but we'll cover that in a second
+[00:17:22] but assume there's like a leader
+[00:17:24] election right this says this is the
+[00:17:25] node that's be in charge of of
+[00:17:27] committing my transaction. So under a
+[00:17:30] two-phase commit, you would call this
+[00:17:31] this node here the coordinator because
+[00:17:33] it's going to be responsible for
+[00:17:34] coordinating the commit process for this
+[00:17:36] transaction across the other nodes. And
+[00:17:38] then the other nodes would be the
+[00:17:39] participants and assume these are the
+[00:17:41] nodes that the applica the the
+[00:17:43] transaction read or wrote data from
+[00:17:45] while it was it was running. So you
+[00:17:47] could have like a thousand nodes in your
+[00:17:48] cluster, although that's rare for for
+[00:17:50] transactional systems, but I only need
+[00:17:52] to run two-based commit on the ones that
+[00:17:54] I've uh I've interacted with. So as it
+[00:17:57] as as it sounds two biz commit has two
+[00:18:00] phases. So in the first phase you send
+[00:18:02] up a prepare message to all the nodes
+[00:18:04] and say hey this transaction here with
+[00:18:06] this ID uh that's uniquely identifies
+[00:18:09] that it wants to commit and then all the
+[00:18:11] nodes will decide on their own whether
+[00:18:13] it this transaction is allowed to commit
+[00:18:15] right they have to be aware you know
+[00:18:16] they have to know what it did and they
+[00:18:18] can run whatever uh you know validation
+[00:18:21] process they want to run based on what
+[00:18:22] concurrency protocol they're using to
+[00:18:24] determine whe that that transaction is
+[00:18:25] allowed to commit and then they send
+[00:18:27] back an acknowledgement they send back
+[00:18:29] an okay right they're voting it So we
+[00:18:31] want to commit the transaction and then
+[00:18:33] once the coordinator gets the
+[00:18:35] acknowledgement back from all of the the
+[00:18:37] the nodes that it sent out the the first
+[00:18:39] message to then it can go ahead and
+[00:18:43] switch to the second phase the commit
+[00:18:44] phase where now it sends to everyone
+[00:18:46] saying hey guess what everyone said
+[00:18:48] we're going to commit this go ahead and
+[00:18:49] commit it then they come back and say
+[00:18:51] okay we did commit it and then and only
+[00:18:53] then under the sort of strict definition
+[00:18:55] of two-phase commit once you get back
+[00:18:57] the acknowledgement from all the nodes
+[00:18:59] participating in this transaction uh in
+[00:19:02] the second phase then you're allowed to
+[00:19:04] tell the application your transaction
+[00:19:05] has committed right you're telling the
+[00:19:07] outside world that this this this thing
+[00:19:08] has committed successfully
+[00:19:12] one thing I'm not showing here is that
+[00:19:14] we're actually going to be writing all
+[00:19:16] the messages we're passing around
+[00:19:18] between the the coordinator and the
+[00:19:19] participants we're going to be storing
+[00:19:21] them in the write ahead log as well
+[00:19:23] right could either be in the right ahead
+[00:19:24] log with the regular data or it could be
+[00:19:25] a separate write ahead log used for
+[00:19:27] transactional uh coordination stuff But
+[00:19:30] all these nodes will be recording on
+[00:19:32] disk what their votes are and what the
+[00:19:34] outcomes are. So that when we crash and
+[00:19:36] come back, we go look in that log and
+[00:19:38] figure out what was I doing at the
+[00:19:39] moment that crashed including what if I
+[00:19:41] was doing uh you know a two-phase commit
+[00:19:43] process across multiple nodes.
+[00:19:46] [snorts]
+[00:19:48] All right would be the abort case. Same
+[00:19:50] thing I get a commit message. First
+[00:19:51] phase you send out the the the pair
+[00:19:53] message to everyone. Say the first guy
+[00:19:55] comes back at the bottom here. He says
+[00:19:56] okay yeah we can go and commit this. But
+[00:19:58] the second one in the middle, for
+[00:20:00] whatever reason, it decides this
+[00:20:01] transaction is not allowed to commit.
+[00:20:03] Like say there's like an integrity
+[00:20:04] constraint violation or whatever. Um,
+[00:20:07] and so it sends back the abort message.
+[00:20:10] [snorts] So as soon as the the the abort
+[00:20:12] message come uh shows up from any one of
+[00:20:14] the participant nodes, then we
+[00:20:16] automatically switch into the prepare or
+[00:20:19] the abort phase, the second phase. So
+[00:20:20] we're not even going to wait for the
+[00:20:22] node two to come back with its vote
+[00:20:23] because once we get one abort because
+[00:20:24] everyone has to agree that this
+[00:20:25] transaction is allowed to commit. Once
+[00:20:27] we get one denial vote, then we switch
+[00:20:30] into the second phase. So we send out
+[00:20:32] the uh the abort message everyone in the
+[00:20:35] second phase and then we also
+[00:20:36] immediately tell the application that
+[00:20:39] the transaction has aborted. So we don't
+[00:20:41] need to wait to find out whether the
+[00:20:44] everyone's going to you know finally
+[00:20:45] commit this and or finally abort and
+[00:20:47] roll back all the changes. Soon as we
+[00:20:49] get one you know notification that this
+[00:20:51] transaction can't complete we send back
+[00:20:53] the abort message immediately to the the
+[00:20:55] application.
+[00:20:57] We saw this before like when um on a
+[00:20:59] single node when a transaction aborted
+[00:21:02] because like you know there was a
+[00:21:03] deadlock or something like that we would
+[00:21:04] then immediately send back the response
+[00:21:06] to the application the transaction has
+[00:21:07] aborted and then later on we go ahead
+[00:21:09] and clean things up with the CLRs to
+[00:21:11] reverse things in our log. the
+[00:21:12] application doesn't need to wait for
+[00:21:13] that cleanup process
+[00:21:16] and then eventually they all come back
+[00:21:18] and say yes we we this transaction has
+[00:21:20] has successfully been aborted and at
+[00:21:23] that point again there should be no
+[00:21:24] artifacts or no you know pending changes
+[00:21:27] for that transaction on any of the nodes
+[00:21:31] >> yes
+[00:21:36] question is what happens when one node
+[00:21:37] dies boom next slide so we send a commit
+[00:21:40] message goes first first prepare
+[00:21:42] messages go out. Then the first two
+[00:21:44] guys, the the top and the bottom, they
+[00:21:46] smack. Okay, the second one dies. This
+[00:21:48] is the scenario you want, right? So
+[00:21:51] again, under two-phase commit, all the
+[00:21:53] nodes have to agree that this
+[00:21:54] transaction is allowed to commit. So
+[00:21:56] that means the coordinator has to wait
+[00:21:59] for some amount of time to find out what
+[00:22:01] happened with this this the node in the
+[00:22:03] middle here. And again, if it crashes
+[00:22:07] completely, then if you're if you're
+[00:22:08] pinging it on the network, you you won't
+[00:22:10] get a response. you'll know that it's
+[00:22:12] dead. But it may be the case that the
+[00:22:15] the database system software itself is
+[00:22:18] bogged down for some reason. Like if
+[00:22:20] it's written in Java and the JVM uh the
+[00:22:22] the garbage collector in the JVM fires
+[00:22:24] up, it may do like a 30 secondond pause
+[00:22:27] where again you're not getting response
+[00:22:28] from the database server software
+[00:22:30] itself, but if you ping the node, it's
+[00:22:32] going to come back and say it's alive,
+[00:22:34] right? So it's really about like you
+[00:22:36] know sometimes there'll also be
+[00:22:38] heartbeats in these systems to send like
+[00:22:39] hey are you alive and can't be a ping
+[00:22:41] because the the ping's done at the
+[00:22:42] harbor level you got to go up the upper
+[00:22:44] layers and actually touch touch the
+[00:22:45] application. So in this case here we
+[00:22:47] have to wait. The coordinator has to
+[00:22:48] wait. At some point it's there's a
+[00:22:50] timeout and it says all right well node
+[00:22:53] 3 is not not coming back. It doesn't
+[00:22:54] want to talk to me. So at that point I
+[00:22:56] automatically switch into the abort
+[00:22:58] phase. All right. And I send back the
+[00:23:00] the abort message to the application
+[00:23:01] server. And eventually these guys will
+[00:23:03] come back and say we we've aborted as
+[00:23:05] well.
+[00:23:08] >> Yes.
+[00:23:15] The question is can can the application
+[00:23:16] abort before when? Sorry.
+[00:23:24] [snorts]
+[00:23:24] >> The question is like going back here
+[00:23:27] like
+[00:23:29] I I time out. I see I can't send it.
+[00:23:32] When do I send the the abort message
+[00:23:34] back? You can send it before and after.
+[00:23:36] It doesn't matter. Typically, you want
+[00:23:37] to send it sooner to the application
+[00:23:38] first because why wait, right? Because
+[00:23:41] you're not there's nothing, you know,
+[00:23:43] there's it's not like they're blocked
+[00:23:45] waiting for well, they they're blocked
+[00:23:47] and waiting for the response from the
+[00:23:49] commit request. So, if you can free them
+[00:23:50] up and let them do whatever, you know,
+[00:23:53] set up the prepare the retry, right?
+[00:23:56] Then they can go ahead and do that. But
+[00:23:58] you know it's we're talking microsconds
+[00:24:00] nconds difference between the two
+[00:24:01] because again you're not going to wait
+[00:24:02] for these guys to acknowledge that
+[00:24:04] they've aborted right you just
+[00:24:06] immediately tell them the outside world
+[00:24:07] you abort it. So whether you do one
+[00:24:08] versus the other the correctness isn't
+[00:24:10] there's not a correctness issue.
+[00:24:14] What's the point?
+[00:24:17] >> The question is what's the point of last
+[00:24:18] okay for note like um like what's why
+[00:24:22] does the the node one need to wait for
+[00:24:24] it or why do they need to send it back?
+[00:24:27] >> So
+[00:24:30] >> the question is why why even bother
+[00:24:32] sending back the acknowledgement that
+[00:24:34] we've successfully aborted just for
+[00:24:37] people to record every step of the
+[00:24:40] process what happened. So these nodes
+[00:24:43] record in their log, hey, we got an
+[00:24:44] abort message for this transaction. The
+[00:24:46] coordinator is going to record in its in
+[00:24:48] its uh in its own log that it got back
+[00:24:50] the acknowledgement for that abort
+[00:24:52] message. Because if the coordinator
+[00:24:54] crashes, which cover the next slide, and
+[00:24:56] I come back, I got to know what was I
+[00:24:57] doing at the time. I don't know whether
+[00:25:00] or not these guys have been told this
+[00:25:01] transaction has been aborted or not,
+[00:25:02] unless I get back the acknowledgement.
+[00:25:05] So we're being overly cautious here.
+[00:25:09] >> Yes.
+[00:25:21] So it's
+[00:25:24] >> so the question is what happens here? So
+[00:25:26] if I if I go everyone says we're going
+[00:25:28] to go ahead and commit and then all of a
+[00:25:30] sudden like one of these nodes come back
+[00:25:33] on the on the second phase and says no.
+[00:25:35] Right? In that case that's considered a
+[00:25:37] failure on that node. the transaction is
+[00:25:40] still committed because everyone agreed
+[00:25:43] since you got past the first phase,
+[00:25:44] everyone agreed that this transaction
+[00:25:46] has is is going to commit. So if the
+[00:25:47] second phase does something weird like
+[00:25:49] doesn't send back a response or sends
+[00:25:51] back an okay, which it shouldn't, but it
+[00:25:53] might because some some bug then that
+[00:25:56] node is considered faulty and therefore
+[00:25:58] it should crash. The transaction is
+[00:26:00] still committed and then the system has
+[00:26:02] to then bring up another node to replace
+[00:26:03] it and then replay the log to know that
+[00:26:05] that transaction has successfully
+[00:26:06] committed.
+[00:26:08] Yeah. So see his question is if one guy
+[00:26:11] goes down during the commit phase, do we
+[00:26:12] still tell tell the outside world that
+[00:26:14] you committed? Yes.
+[00:26:20] Okay.
+[00:26:23] So here all right. So I've already said
+[00:26:27] this, but again we basically need to
+[00:26:29] record in our log all the the the
+[00:26:32] inbound outbound messages we have for
+[00:26:34] every step along the way, right? And
+[00:26:37] just like in in [snorts] the write ahead
+[00:26:39] log, ideally I want to make sure I flush
+[00:26:42] those messages to disk before I send
+[00:26:45] out, you know, any acknowledgement. If I
+[00:26:46] like I I get the inbound message. I'm
+[00:26:48] going to say, "Hey, I'm going to send an
+[00:26:49] outbound message that like I'm okay with
+[00:26:51] voting this, I want to flush that before
+[00:26:53] maybe I send it out, uh before I can say
+[00:26:56] my transactions fully committed." Most
+[00:26:58] systems don't do that, right? There's a
+[00:27:02] small window. Again, you could
+[00:27:03] potentially lose things. Uh, but it's
+[00:27:05] not like you're going to lose um
+[00:27:08] it's not like you're going to, you know,
+[00:27:10] would lose the changes for a transaction
+[00:27:12] potentially because someone's still
+[00:27:13] going to be recording, you know, here's
+[00:27:15] all the here's all the events that
+[00:27:16] occurred. Um,
+[00:27:19] and so therefore, like it just makes
+[00:27:21] recovery longer and that's why most
+[00:27:23] systems do this optimization, right?
+[00:27:26] [snorts]
+[00:27:26] So now if I crash, if a transaction was
+[00:27:30] in the prepared state on my node when I
+[00:27:32] wake up, then I got to go talk to the
+[00:27:33] coordinator say, "Hey, I I I'm new to
+[00:27:35] the game or I crashed and came back.
+[00:27:37] What happened to this guy?" And the
+[00:27:38] coordinator tell what happened. Um if
+[00:27:41] the transaction just was still actively
+[00:27:43] running and didn't actually begin the
+[00:27:45] commit process, then you know should be
+[00:27:46] aborted, right? Um but then if the
+[00:27:50] coordinator crashes then you basically
+[00:27:52] have to figure out did everyone agree
+[00:27:53] that this transaction is allowed to
+[00:27:55] commit and did we send any outbound
+[00:27:56] messages to the application that
+[00:27:58] committed. Actually that one you can't
+[00:27:59] check but like if everyone agreed that
+[00:28:01] the thing is committed then the
+[00:28:02] transactions considered committed and
+[00:28:04] you may not even get the acknowledgement
+[00:28:05] to the application but everyone agreed
+[00:28:07] that the transaction committed. So you
+[00:28:08] need to make sure that actually happens.
+[00:28:12] So I think I already said this if the if
+[00:28:14] the the coordinator crashes right the
+[00:28:16] participants basically figure out what
+[00:28:18] the what should happen and the simplest
+[00:28:21] thing to do is just say coordinator
+[00:28:22] crashes the transaction gets aborted and
+[00:28:24] then you elect a new coordinator if
+[00:28:25] necessary. Uh if you want to be kind of
+[00:28:27] clever you could then get them to
+[00:28:29] reorganize themselves and try to figure
+[00:28:30] out whether it's the transaction allowed
+[00:28:32] to commit but most systems don't do
+[00:28:34] that. And again while you're doing this
+[00:28:36] reorganization process you can't commit
+[00:28:39] any other transactions because you need
+[00:28:40] to find out what whether the the
+[00:28:42] preceding transaction has successfully
+[00:28:43] committed or not right so that I know
+[00:28:46] that I'm always moving forward in time
+[00:28:47] in my state machine. So if one
+[00:28:49] participant goes down and I can figure
+[00:28:51] out how to be clever and try to
+[00:28:52] reorganize things and allow the
+[00:28:54] transaction to commit may not be worth
+[00:28:55] it because I'm blocking all other
+[00:28:58] transactions from committing.
+[00:29:01] If the participant crashes, then the we
+[00:29:04] just assume that the the the coordinator
+[00:29:06] assumed the participant was going to
+[00:29:07] vote for an abort um assuming, you know,
+[00:29:11] we're in the still in the first phase.
+[00:29:12] And then we just, you know, then we just
+[00:29:14] abort the transaction because there's no
+[00:29:16] guarantee that the changes that they
+[00:29:17] were they were going to make landed
+[00:29:19] correctly on that other other the the
+[00:29:22] participant. So, we can't allow the
+[00:29:23] transaction commit.
+[00:29:29] All right. All right. So, there's two
+[00:29:30] ways to make this a little faster. I
+[00:29:31] mean, I've already talked about one
+[00:29:32] where you don't log everything um
+[00:29:37] uh on disk, right? That's an obvious
+[00:29:39] one, but you can you can do two slight
+[00:29:41] modifications. One is very common, one
+[00:29:43] is not that common. So early pair voting
+[00:29:46] basically means that if I know that the
+[00:29:50] the query I'm going to be executing on a
+[00:29:52] node is the last query I'm ever going to
+[00:29:54] be executing for that transaction.
+[00:29:57] Then when I send my query request
+[00:29:59] message I also send along or piggyback
+[00:30:01] on that message. Hey by the way I'm
+[00:30:03] going to go ahead and commit after this
+[00:30:04] query. So give me back your vote for
+[00:30:06] two-phase commit.
+[00:30:08] Right? This assumes that your
+[00:30:10] application can expose in some way the
+[00:30:12] logic that this is the last query for my
+[00:30:14] transaction and because you don't want
+[00:30:15] to you know this can't be like a guess.
+[00:30:18] You can't say oh I'm going to run a
+[00:30:19] query and go ahead and commit and then
+[00:30:20] come back with another query. You have
+[00:30:22] to say I'm definitely done running this.
+[00:30:24] So you can do that with store procedures
+[00:30:26] where you have all the logic running
+[00:30:27] inside the application logic running
+[00:30:28] inside the data server. I think of like
+[00:30:30] a RPC call. Okay. Okay. So that that's
+[00:30:33] pretty rare. What's more common is to do
+[00:30:35] uh early acknowledgement and basically
+[00:30:37] the um when I go when I go to commit
+[00:30:41] transaction once the coordinator gets
+[00:30:43] the acknowledgement from the all the
+[00:30:45] participants that the transaction is
+[00:30:46] about to commit rather than waiting for
+[00:30:48] the the second round trip for the second
+[00:30:50] phase prepare or the commit phase I
+[00:30:52] immediately send back the
+[00:30:53] acknowledgement that the transactions
+[00:30:54] committed. So it looks like this commit
+[00:30:56] request shows up. I do the first round
+[00:30:58] prepare everyone votes. Okay. And again
+[00:31:01] at this point here with early if I run
+[00:31:03] the regular two-phase commit protocol I
+[00:31:05] got to then switch in the second phase
+[00:31:06] do another round trip and then once
+[00:31:08] everyone agrees that this thing's
+[00:31:09] committed then send back the
+[00:31:10] acknowledgement. But with early early
+[00:31:12] acknowledgement once I get back from the
+[00:31:14] first phase that everyone agrees that
+[00:31:15] this transaction is going to commit then
+[00:31:17] I can tell the application they've
+[00:31:18] committed
+[00:31:21] right and the idea is again that like
+[00:31:22] the likelihood that I'm going to fail
+[00:31:24] and not be able to record my transaction
+[00:31:26] is is low assuming I'm logging things in
+[00:31:28] appropriate manner.
+[00:31:30] Right. But I still have to run the the
+[00:31:31] the second phase and I can't commit any
+[00:31:34] other transaction until this transaction
+[00:31:35] commits.
+[00:31:41] So two-phase commit was used in some of
+[00:31:43] the first distributed databases in the
+[00:31:45] 19 late 1970s early 1980s. Um but again
+[00:31:49] it has this problem that like again if
+[00:31:51] one of the nodes goes down during my
+[00:31:53] transaction I have to stall the entire
+[00:31:55] system until that node recovers and then
+[00:31:58] we we then we can then continue running
+[00:31:59] right
+[00:32:02] so the with paxos and raft and viewstamp
+[00:32:04] replication solve is the ability to not
+[00:32:07] require a all participants to
+[00:32:11] acknowledge that a transaction is
+[00:32:12] committed and you only require a
+[00:32:14] majority
+[00:32:17] right So this gives you the guarantee
+[00:32:18] that even if some of the nodes go down,
+[00:32:20] you can still make forward progress as
+[00:32:22] long as you have a majority of of the
+[00:32:23] nodes agree that a transaction is
+[00:32:25] allowed to commit.
+[00:32:27] So view state replication was was the
+[00:32:29] first one that was provably correct to
+[00:32:31] be resilient for uh in asynchronous
+[00:32:34] networks. Um and then Paxos came out a
+[00:32:37] year later. Who few here has read the
+[00:32:39] Paxos paper?
+[00:32:41] What do you think?
+[00:32:45] >> It's a wild ride. Yeah.
+[00:32:47] >> So go read it tonight. You will not find
+[00:32:50] any other paper written like this in
+[00:32:51] computer science. So it's written by
+[00:32:53] Leslie Lampport. He run the Tory award I
+[00:32:55] don't know seven years ago or so uh for
+[00:32:58] you know seminal work in distributed
+[00:32:59] systems. Um he's at Microsoft research
+[00:33:01] now. The paper he originally wrote it in
+[00:33:04] '89 but it isn't like a computer science
+[00:33:07] paper like describing algorithms. It's
+[00:33:09] written as if he's an archaeologist
+[00:33:11] discovering this ancient Greek tribe on
+[00:33:14] the island of Paxos and it it talked
+[00:33:17] about how they would do voting in a in
+[00:33:18] an early de democratic society by
+[00:33:20] writing on stone tablets throwing them
+[00:33:22] into a hole and then other people in the
+[00:33:25] village or the town would come look to
+[00:33:26] the hole and pull out the tablets and
+[00:33:27] look look at what happened. Right? So
+[00:33:31] you can't take this paper and actually
+[00:33:32] implement anything from it. Right? It's
+[00:33:34] just inscrutable. It's it's hilarious.
+[00:33:36] It's it's as you said it's it's a lot
+[00:33:38] very challenging. Um so the story goes
+[00:33:41] he wrote this paper in '89. It got
+[00:33:44] rejected uh by you know what whatever
+[00:33:47] the the the peerreview committee that
+[00:33:49] was he submitted to the conference he
+[00:33:50] submitted to and then he put it in the
+[00:33:52] put it like in in his in his filing
+[00:33:54] cabinet and didn't touch it for like
+[00:33:56] years and then a bunch of people were
+[00:33:58] writing other papers that were kind of
+[00:33:59] dancing around trying to solve roughly
+[00:34:01] the same idea that Paxos had already
+[00:34:02] solved. So then he pulled it out and
+[00:34:04] dusted it off and then resubmitted it.
+[00:34:06] So if you go like in read read the paper
+[00:34:08] here, there's this little gray box blurb
+[00:34:10] that talks about how this this
+[00:34:11] submission was recently discovered
+[00:34:12] behind a filing cabinet in the in the
+[00:34:14] the TOCS editorial office. Despite its
+[00:34:17] age, the editor-in chief thought it
+[00:34:18] would be great would be worth public
+[00:34:19] publishing, right? Because this is the
+[00:34:20] reissue for Leslie Lamport after he he
+[00:34:23] he uh you know after it got rejected,
+[00:34:26] right? And so if you go to Leslie
+[00:34:28] Lampart's website, he's got this like
+[00:34:30] chron chronology that talks about all
+[00:34:31] his like his papers and what he was like
+[00:34:34] where he was living, who he was like
+[00:34:36] dating or what he was eating for every
+[00:34:37] single one of these papers. So for the
+[00:34:38] pax of his paper, he talks about how he
+[00:34:40] submitted it. He thought it was, you
+[00:34:42] know, a genius work of art and the the
+[00:34:44] the the re reviewing committee, they
+[00:34:46] were all idiots and they couldn't see
+[00:34:47] his brilliance of it. Right? So I when I
+[00:34:50] was in grad school, I I presented this
+[00:34:52] paper to my distributed systems class
+[00:34:53] and I said basically the same thing. Oh,
+[00:34:55] this paper is a work of art. you know,
+[00:34:56] those those reviewers were all stupid
+[00:34:57] for rejecting it. Turns out though, the
+[00:34:59] professor in the class for the class was
+[00:35:02] one of the reviewers for it, Maurice
+[00:35:04] Hurley. He used to hear be at CMU and
+[00:35:06] now he's at Brown. And he says, which I
+[00:35:08] believe him, not Leslie Lampard's uh
+[00:35:10] retelling, he said that they were okay
+[00:35:12] with all this archaeology stuff, but
+[00:35:14] they just wanted him to add an appendix
+[00:35:16] with the algorithm to explain how to
+[00:35:18] actually implement this thing.
+[00:35:20] >> And Leslie Lampart refused to make any
+[00:35:21] change because he thought it was it was
+[00:35:23] pristine or thought it was it was
+[00:35:24] perfect the way it was submitted. So
+[00:35:25] that's why it was rejected. All right.
+[00:35:27] Um and then again you can't read this.
+[00:35:30] You can't implement anything. Then he
+[00:35:31] did a follow-up paper called Paxus made
+[00:35:33] simple. That one is not simple either.
+[00:35:35] That one you can't understand. The best
+[00:35:37] paper to read understand Paxos is uh
+[00:35:39] Paxos made live from Google. It's like
+[00:35:42] 2004 because they implemented this in
+[00:35:44] their chubby lock service and a bunch
+[00:35:45] bunch of other things right. So the
+[00:35:49] thing to understand about between paxos
+[00:35:50] and two-phase commit
+[00:35:52] two-phase commit is a degenerative case
+[00:35:54] of paxos and there's a paper in 2006
+[00:35:57] from Leslie Lamport the author of paxos
+[00:35:59] and Jim Gray the guy that you know did
+[00:36:02] early two-phase commit work where they
+[00:36:03] prove that two-phase commit is just a
+[00:36:05] subset of paxos and raph and and raph
+[00:36:09] came out later but they're all basically
+[00:36:10] the same thing right the key idea here
+[00:36:12] is that in in paxos is that we only need
+[00:36:16] a majority of participants to agree that
+[00:36:17] a transaction is allowed a commit uh
+[00:36:20] rather than a a unanimous decision as
+[00:36:22] you would in twobased commit.
+[00:36:25] All right, good. So it looks like this
+[00:36:26] same as setup before I have four nodes.
+[00:36:28] My application says I wanted to commit
+[00:36:31] under Paxos. They don't call them
+[00:36:32] coordinators participants. They're going
+[00:36:33] to call them proposers and acptors.
+[00:36:36] There's a third category of nodes in
+[00:36:38] Pexos called learners, which are
+[00:36:40] basically things that observe the
+[00:36:41] changes to the state machine or the
+[00:36:43] commit order log, but aren't allowed to
+[00:36:45] to vote. But we we don't care about
+[00:36:47] that. It's, you know, it's it's just an
+[00:36:48] add-on, right?
+[00:36:50] So, all right. So, now the same thing.
+[00:36:52] We're going to send a in the first
+[00:36:53] round, we're going to send our post
+[00:36:54] message to all the nodes, and they're
+[00:36:56] all going to vote for whether
+[00:36:57] transactions allowed to commit,
+[00:37:00] right? And and if they all agree, if a
+[00:37:01] majority agrees, then we go and do this.
+[00:37:02] So let's say the case though the setup
+[00:37:04] we had before where the middle guy dies
+[00:37:06] while this transaction runs. So the top
+[00:37:08] two sorry the bottom one and the top one
+[00:37:11] say yes we can go ahead and agree to
+[00:37:12] commit this transaction. So under paxos
+[00:37:16] this is still allowed now to proceed and
+[00:37:18] do the commit because a majority agrees
+[00:37:20] that this transaction is allowed to
+[00:37:21] commit. So two out of three
+[00:37:24] right. So then we go ahead and agree
+[00:37:27] this transaction is allowed to commit.
+[00:37:28] And then once all they all come back say
+[00:37:30] yeah we got it. Then we send back the
+[00:37:31] the acknowledgement to the application.
+[00:37:38] Now when the when that the middle guy
+[00:37:40] who crashed comes back they again they
+[00:37:42] have to go look at the log and go figure
+[00:37:44] out what what what they missed
+[00:37:46] or if I can fail over to a replica of
+[00:37:49] this of this node then it has to then
+[00:37:51] learn that this thing has been
+[00:37:52] successfully committed.
+[00:37:54] Right? So there's an extra step to
+[00:37:56] reconcile the the the state machine when
+[00:37:59] there's failure and again because we
+[00:38:02] assuming that our that our nodes are not
+[00:38:04] malicious actors that they read the log
+[00:38:06] and they'll do what the log says rather
+[00:38:08] than like I'm not going to do that and
+[00:38:09] throw things away and end up with
+[00:38:11] inconsistent state across the nodes.
+[00:38:16] >> The question is if a if if if this guy
+[00:38:18] says abort yes
+[00:38:21] >> it's still coming.
+[00:38:22] >> Yes.
+[00:38:25] Uh see so [sighs]
+[00:38:28] [snorts]
+[00:38:29] uh yeah so if if sorry if if you're
+[00:38:33] using Paxos to commit transactions yes
+[00:38:35] if one guy says abort and then then you
+[00:38:37] have to abort because again to your
+[00:38:39] point there can be integrity for other
+[00:38:41] types of things you want to use Paxos
+[00:38:42] for like leader election then you you
+[00:38:45] you ignore them but yeah so some things
+[00:38:47] yes some things no
+[00:38:54] >> [snorts]
+[00:38:55] >> The question is um
+[00:38:58] uh taxes would not be suitable because
+[00:39:00] like so the idea is that like I still
+[00:39:03] have to wait for this guy to come back
+[00:39:05] to say what happened right but if
+[00:39:07] there's a timeout like the same as two
+[00:39:10] days commit then I don't have to if if I
+[00:39:12] get a majority agree that the thing's
+[00:39:14] allowed to commit then that's enough for
+[00:39:16] me right and then this thing has to then
+[00:39:20] deal with
+[00:39:23] So the question is what if it dies and
+[00:39:24] comes back and should have been aborted.
+[00:39:26] So
+[00:39:28] how to say this the
+[00:39:31] [snorts]
+[00:39:33] depending what kio protocol you'd want
+[00:39:35] to do like if it's two-phase locking you
+[00:39:37] would you would do all your integrity
+[00:39:39] checks as the thing's running or you do
+[00:39:41] all your locking checks as things
+[00:39:42] running like with OC the validation step
+[00:39:45] like that would be you'd have to figure
+[00:39:47] that out but then the like if this is
+[00:39:51] the only copy node three is the only
+[00:39:52] copy of the data you have and therefore
+[00:39:53] this is the only source in which you you
+[00:39:55] could figure out where this transaction
+[00:39:57] allowed to commit then you're going to
+[00:39:58] have you're going to have this problem
+[00:39:59] right so assume that there could be a
+[00:40:01] replica that also could be involved in
+[00:40:02] the in the process like a learner to
+[00:40:04] decide that this thing would allow
+[00:40:09] >> the question is MCC and pass will not be
+[00:40:10] good I'm not not saying that at all I'm
+[00:40:12] saying that uh assume that if
+[00:40:16] not it's not not single version single
+[00:40:18] copy like if node 3 is the only location
+[00:40:21] for for tupil a if that thing goes down
+[00:40:24] then my my system's host
+[00:40:26] I'm assuming,
+[00:40:30] >> right? So, I'm Yes. What I'm saying
+[00:40:32] though is like the
+[00:40:36] in order to make sure you don't have
+[00:40:38] like integrity constraint violations
+[00:40:40] that you can't reverse later on. I
+[00:40:42] either have to do them while the
+[00:40:44] transaction is running or I have to have
+[00:40:46] a replica be able to be involved and
+[00:40:48] decide whether this transaction is
+[00:40:49] allowed to commit or not.
+[00:40:52] >> Question back.
+[00:41:02] It can't. So it can't question is if no
+[00:41:04] three comes back and disagrees. It
+[00:41:06] can't,
+[00:41:08] >> right? Because we assume these are these
+[00:41:09] are nonmalicious actors. So they they
+[00:41:11] have to they will do whatever the log
+[00:41:14] tells them to do when they come back up.
+[00:41:17] >> Yes.
+[00:41:32] The question is if if if the commit
+[00:41:34] process includes checking integrity
+[00:41:36] constraints
+[00:41:38] uh then
+[00:41:40] this devol this devolves into uh
+[00:41:44] two-phase commit because I have to wait
+[00:41:46] for everyone to agree that some um yeah
+[00:41:49] so again Like if you're running
+[00:41:51] transactions that could cause integrity
+[00:41:53] violations, you have to know that before
+[00:41:56] you before you go ahead in the commit
+[00:41:57] process because otherwise you can't. But
+[00:42:00] if it's like later election, I don't
+[00:42:02] there's no there's not going to be any
+[00:42:02] integrity violations.
+[00:42:07] Replication again the assuming
+[00:42:09] non-malicious actors that the replicas
+[00:42:10] are going to are going to mirror the
+[00:42:12] state of whatever they're replicating.
+[00:42:14] They have to
+[00:42:20] question is the statement is sharding
+[00:42:21] more problematic. No, because
+[00:42:24] >> sharded data.
+[00:42:29] >> Yeah. So statement is with sharded data
+[00:42:31] you could have integrity violations more
+[00:42:32] easily. No, it doesn't matter if it's
+[00:42:34] sharded a single node like not null is
+[00:42:36] not null whether it's you know one node
+[00:42:38] or multiple nodes. But I'm saying you
+[00:42:39] would check those things while the
+[00:42:40] transaction is making the changes.
+[00:42:43] >> Yeah.
+[00:42:47] think you know if you start doing okay
+[00:42:48] I'm go do reconnaissance transactions
+[00:42:50] like [snorts] the way Dino does
+[00:42:52] transactions is like you run all the
+[00:42:54] queries you don't actually do any
+[00:42:56] changes it's sort of like that repeating
+[00:42:57] that scan we did to avoid phantoms so
+[00:43:00] you run all the queries uh record what
+[00:43:02] they're going to do at that point you
+[00:43:04] check to see whether they have any
+[00:43:05] integrity violations but you didn't
+[00:43:07] actually make any changes so I just know
+[00:43:08] like I'm trying to insert something and
+[00:43:09] can't be null and I try to insert
+[00:43:10] something null so you would do that
+[00:43:11] before it runs then you go to commit and
+[00:43:13] then that's when you apply all the
+[00:43:14] changes and therefore you don't you
+[00:43:16] won't have any integrity chain
+[00:43:17] violations because you check beforehand.
+[00:43:19] But whether or not you're running these
+[00:43:20] queries one at a time or in a batch, you
+[00:43:22] you would check these things as they're
+[00:43:23] running.
+[00:43:31] >> The qu the question is um
+[00:43:34] if I try to insert something and then it
+[00:43:35] would duplicate the value, I still have
+[00:43:37] the constraint violation. So
+[00:43:40] again, that's if you're doing like
+[00:43:41] phantom checks. Well, hold up.
+[00:43:44] like they're still doing two phase
+[00:43:46] locking. You're still doing all the
+[00:43:48] other sort of high level things we so
+[00:43:50] mean inserting you wouldn't take locks
+[00:43:51] on assert but you like um
+[00:43:55] how do I say this
+[00:44:03] again the you don't have to wait for Pax
+[00:44:06] says you're not going to wait for
+[00:44:07] everyone to come back you have to wait
+[00:44:10] for everything. Yeah, this is hard.
+[00:44:12] Okay,
+[00:44:14] trying to think of a concrete example
+[00:44:16] how this would work. Um, [snorts]
+[00:44:21] let me follow on this next week or
+[00:44:23] sorry, next next class. Um, just in
+[00:44:25] general assume that by the time you go
+[00:44:27] to commit, everyone has to agree that
+[00:44:29] this this is allowed to happen.
+[00:44:32] So you don't try to like undo certain
+[00:44:33] things.
+[00:44:37] Okay.
+[00:44:40] All right. So let me just plow through
+[00:44:41] this again. If you take a distributed
+[00:44:43] system class, this is nothing new.
+[00:44:44] Basically you have these proposers. They
+[00:44:46] say I want to commit and then they all
+[00:44:48] agree but then at any time someone says
+[00:44:50] hey I want to propose a new transaction.
+[00:44:52] The way paxos works you ensure that you
+[00:44:54] have liess property. You're always
+[00:44:55] moving forward in time. Soon as somebody
+[00:44:56] else says I want to go to commit a new
+[00:44:58] transaction before the second one first
+[00:45:00] one has finished then immediately you
+[00:45:02] you the the acceptors can't allow the
+[00:45:05] transaction commit because they've
+[00:45:07] learned about a new one. So they reject
+[00:45:08] it and say you told us about committing
+[00:45:10] transaction N but we we now know about N
+[00:45:11] plus one so we can't commit you right
+[00:45:14] and then you go agree this other one and
+[00:45:16] then they commit say yes and then the
+[00:45:18] bottom guy has to then resubmit the
+[00:45:20] transaction to get committed again it's
+[00:45:22] basically again there's avoiding this
+[00:45:23] blocking forever you allow transactions
+[00:45:25] to always move forward in time of course
+[00:45:27] is now problematic if you have proposers
+[00:45:28] clobbering each other all the time try
+[00:45:30] to commit new transactions then you
+[00:45:32] never get any work done right so this is
+[00:45:34] where multiplexes comes in uh and this
+[00:45:36] is from this is from Google and
+[00:45:38] basically you just do leader election
+[00:45:39] which is another transaction on the
+[00:45:42] state of the system who's the leader and
+[00:45:44] the leader is only allowed to commit
+[00:45:45] transactions or propose that we commit
+[00:45:47] transactions and anytime the leader
+[00:45:49] fails then you just run leader election
+[00:45:51] again and elect a new one. So they're
+[00:45:54] doing multiple rounds of Paxos to both
+[00:45:56] commit transactions and decide who's the
+[00:45:58] leader within a you know within a
+[00:46:00] quorum.
+[00:46:04] So, and then and the how long you're
+[00:46:06] going to wait for the how long the
+[00:46:07] releases last depends on the
+[00:46:09] implementation. I think Spanner is 10
+[00:46:11] seconds. Uh cockroach is like five
+[00:46:13] minutes. Uh Tidb is 10 15 seconds. I I
+[00:46:19] forget what Yugabyte is. Uh but like
+[00:46:21] different systems do different things.
+[00:46:24] [snorts]
+[00:46:25] >> Yes.
+[00:46:29] >> The question is why do you need
+[00:46:30] periodically renew the leader? Because
+[00:46:31] how do I know it's alive?
+[00:46:34] Right.
+[00:46:36] And again, I can the idea is like if I
+[00:46:38] if I'm doing leader election all the
+[00:46:40] time over and over again, then like I'm
+[00:46:42] I'm doing leader election instead of
+[00:46:43] committing transactions. But then if I
+[00:46:45] don't do it that often, then I may end
+[00:46:48] up with, you know, the thing crashes and
+[00:46:50] it takes me a while to then decide
+[00:46:51] here's the new leader and I'm stalling
+[00:46:52] transactions. So that happens. You
+[00:46:54] basically again paxus allows to avoid
+[00:46:57] uh you know when the leader goes down
+[00:47:00] you have now two two nodes say I want to
+[00:47:02] be the leader and then you you do leader
+[00:47:04] election decide which one can be the
+[00:47:05] leader and it's get sort of like going
+[00:47:07] back here it's this clobbering thing so
+[00:47:08] like say the saying I want to be the
+[00:47:10] leader but
+[00:47:12] the idea is that soon as I I see a new
+[00:47:14] new proposal from another another node
+[00:47:17] and that I throw away any other
+[00:47:18] outstanding proposals. So it's ideally
+[00:47:20] eventually somebody will be able to get
+[00:47:22] in commit and then they become the new
+[00:47:23] leader. So you just do like sort of
+[00:47:25] simple exponential backoff. If I try to
+[00:47:27] propose something and I get denied
+[00:47:28] because somebody else proposed
+[00:47:29] something, then I'll wait 50
+[00:47:31] milliseconds and then 100 millconds. So
+[00:47:33] and that way eventually someone will
+[00:47:34] commit. Again, they're not malicious.
+[00:47:36] They're all trying to do, you know,
+[00:47:37] they're all trying to they're trying,
+[00:47:39] you know, work together on this. You
+[00:47:40] just need a quick and easy way to get
+[00:47:41] them to back off and not collaborate
+[00:47:43] each other.
+[00:47:46] [snorts] All right. So again, the the
+[00:47:48] main takeaways to understand from Paxos,
+[00:47:50] two-based commit, and and RAPH, again,
+[00:47:53] they're all essentially the same thing.
+[00:47:54] Um, it's just in two-based kit, you have
+[00:47:56] to block the coordinator until everyone
+[00:47:59] uh until everyone comes back or, you
+[00:48:02] know, can respond or or a timeout. And
+[00:48:04] if if one node goes down, then the
+[00:48:06] transaction can't commit. In Paxos, it's
+[00:48:08] non-blocking as long as the majority are
+[00:48:10] alive. And then in Raft, it's basically
+[00:48:13] the same thing, but the the way they do
+[00:48:15] a leader election is is based on who has
+[00:48:19] the most up-to-date version of the log.
+[00:48:21] Uh, and therefore, it's in the best
+[00:48:23] state to become the leader. But at a
+[00:48:24] high level, it basically works the same
+[00:48:26] way. Instead of calling learners, they
+[00:48:28] call them followers, right? But the
+[00:48:30] again high level, it's the same thing.
+[00:48:34] [snorts]
+[00:48:34] All right? So,
+[00:48:39] we have like
+[00:48:41] 30 minutes.
+[00:48:43] Yeah. Let me let me let's keep let's
+[00:48:45] keep going. Uh I want to get to
+[00:48:46] distributed joins as well. All right.
+[00:48:49] And then we we if we run out of time, we
+[00:48:51] can we can pick up on on Wednesday at
+[00:48:53] the end. All right. So
+[00:48:57] the
+[00:49:00] atomic commit protocol either two-phase
+[00:49:02] commit, paxos or raft will provide us
+[00:49:04] the guarantee that when a transaction
+[00:49:06] goes ahead and commits and everyone
+[00:49:08] agrees that it commits then it's
+[00:49:10] committed right. Um but the challenge is
+[00:49:13] going to be what happens when there's
+[00:49:15] failures and the the database system
+[00:49:19] ends up in this
+[00:49:21] uh in this state where the nodes can can
+[00:49:23] maybe not potentially communicate with
+[00:49:24] each other and we need to know what's
+[00:49:28] you know what guarantees can we can we
+[00:49:30] provide of whether the system can still
+[00:49:32] be considered alive and actually running
+[00:49:34] queries and running transactions right
+[00:49:37] so this this cat theorem was proposed in
+[00:49:39] the late 90s by Eric Brewer who's a
+[00:49:40] professor at Berkeley and he had a
+[00:49:43] startup at the time I think uh I forget
+[00:49:46] what it was called but like they
+[00:49:47] basically were trying to reason about
+[00:49:48] the different states of distributed
+[00:49:50] systems at their startup and the cat
+[00:49:52] there basically trying to say that like
+[00:49:54] you have a distributed system a
+[00:49:55] distributed data system uh that there's
+[00:49:59] these three properties you may want to
+[00:50:00] have consistency always available and
+[00:50:02] network partition tolerant I'll explain
+[00:50:03] what they are each each of them but you
+[00:50:05] can only pick two out of three
+[00:50:09] right like if you're trying to pick a
+[00:50:10] you know sort of the same rule of thumb
+[00:50:12] like you know trying to pick a boyfriend
+[00:50:14] or girlfriend they can either be really
+[00:50:15] good-looking, really smart or not crazy
+[00:50:18] and you can only get two out of three,
+[00:50:20] right? Uh so the basic idea here, so
+[00:50:26] the question we're trying to answer here
+[00:50:27] with the cat theorem is what happens
+[00:50:28] when there is a network partition where
+[00:50:30] the nodes can't communicate with each
+[00:50:32] other. are can we still guarantee the
+[00:50:34] consistency of the database or can we
+[00:50:37] guarantee that it's still going to be
+[00:50:38] available to run queries and the NoSQL
+[00:50:41] guys will choose availability
+[00:50:44] uh over consistency uh but any any sort
+[00:50:47] of traditional relational data system or
+[00:50:49] even the newer distributed SQL data
+[00:50:51] systems they're going to choose
+[00:50:52] consistency over availability
+[00:50:54] [clears throat]
+[00:50:55] so let's see what see what this looks
+[00:50:57] like so say that I have my my database I
+[00:51:00] have a primary and a replica and I I
+[00:51:01] have I have two application servers is
+[00:51:03] running in two different uh two
+[00:51:04] different data centers. So when the
+[00:51:07] transaction over here wants to do a
+[00:51:08] modification on a goes ahead and applies
+[00:51:10] the change and then we send the the the
+[00:51:13] the update to to the replica and again
+[00:51:16] this is just sending over the right
+[00:51:17] ahead log message that we talked about
+[00:51:18] before and then once we know that the
+[00:51:22] change has been applied right two-phase
+[00:51:24] commit whatever we want we can send back
+[00:51:25] the acknowledgement to the application
+[00:51:27] server saying your change has
+[00:51:29] successfully saved right and then now if
+[00:51:32] a transaction over here wants to read a
+[00:51:34] right it could either go to the the
+[00:51:36] replica or the primary and it's
+[00:51:38] guaranteed to see the the same result
+[00:51:40] because we've told the outside world our
+[00:51:41] transactions committed. Right? [snorts]
+[00:51:45] So if the primary says to the other
+[00:51:47] transaction over there that you
+[00:51:48] committed, then we can immediately see
+[00:51:50] that change over on the on the replica,
+[00:51:52] right?
+[00:51:54] Availability says that now if the
+[00:51:56] replica goes down, then I can still run
+[00:51:59] queries on the primary, right? and do
+[00:52:01] whatever I need. But I can also have my
+[00:52:03] application server on the other side
+[00:52:04] send queries to the primary and read
+[00:52:08] data and and as as I need over there and
+[00:52:10] all that's fine, right? [snorts] The
+[00:52:12] problem is going to be now when I have a
+[00:52:14] partition tolerance or sorry when I have
+[00:52:15] a network partition. So if the network
+[00:52:17] goes down for whatever reason now I have
+[00:52:20] my primary and my replica over here. My
+[00:52:22] primary is going to say, "Oh, well I was
+[00:52:24] the primary before. I'm still the
+[00:52:25] primary now. That's fine. I'll just run
+[00:52:27] like as I did before."
+[00:52:28] >> [clears throat]
+[00:52:28] >> But the replica can't talk to the
+[00:52:30] primary because the network's down. So
+[00:52:32] it is is going to assume that the the
+[00:52:33] pime the other primary failed has
+[00:52:36] crashed. So now it's going to run leader
+[00:52:38] election and decide that it's now the
+[00:52:40] new primary.
+[00:52:42] Right? And then so now the application
+[00:52:44] server on one side of the network can
+[00:52:45] make changes to the it what it thinks is
+[00:52:47] the primary. The other application
+[00:52:49] server can make changes to what it
+[00:52:50] thinks is the primary. Right? And those
+[00:52:52] commit all that's fine. Right? But now
+[00:52:54] the problem is going to be when the
+[00:52:55] network comes back online, these two
+[00:52:57] primaries are going to think, you know,
+[00:52:59] they have the latest version of of the
+[00:53:01] data of the database, but we've already
+[00:53:03] told the outside world that these two
+[00:53:06] separate transactions committed and now
+[00:53:08] we got to reconcile the differences,
+[00:53:11] right? So that's that's the question
+[00:53:13] we're trying to deal with. What happens
+[00:53:14] when the network goes down? Should we
+[00:53:15] stop everything and not run any queries
+[00:53:18] until the network comes back up so we
+[00:53:20] know that we don't have this this this
+[00:53:22] split brain issue or should we allow
+[00:53:25] changes get still happen but then we
+[00:53:27] have to figure out how to reconcile them
+[00:53:28] when we put it back together.
+[00:53:30] So most distributed data systems that
+[00:53:32] are doing transactions will do the first
+[00:53:34] one like if if enough nodes go down
+[00:53:37] where you can't you no longer have a
+[00:53:39] majority of the nodes then you you you
+[00:53:42] say the system is unavailable.
+[00:53:44] You can still run read only queries if
+[00:53:46] you wanted, right? But no one's allowed
+[00:53:48] to modify anything. No transaction can
+[00:53:50] modify the database. And then eventually
+[00:53:52] the other nodes will come up and then
+[00:53:54] now you have a a a majority and then you
+[00:53:57] now you know you're you're in a correct
+[00:53:59] state.
+[00:54:01] A alternative is that you allow both
+[00:54:04] sides of the partition to still accept
+[00:54:08] writes and reads and then when the the
+[00:54:11] the the system comes back online
+[00:54:15] then you just figure out how to to to
+[00:54:17] merge those changes together. So a
+[00:54:19] simple thing would be like you just look
+[00:54:20] at the time stamps of the records when
+[00:54:22] they were modified and assume the the
+[00:54:24] the latest one is going to be the the
+[00:54:26] newest version,
+[00:54:28] right?
+[00:54:29] An alternative is you do what's called
+[00:54:31] vector clocks. I don't think they even
+[00:54:33] teach that anymore in distributed
+[00:54:34] systems. Um but this is something less
+[00:54:36] lame in embedded. Just think of like
+[00:54:38] remember how multi- versioning every
+[00:54:40] time I did an update I created a new new
+[00:54:42] physical version of of the tupil. But at
+[00:54:44] the SQL level I can't see any of those
+[00:54:46] different versions. I only see what the
+[00:54:48] latest one or whatever's whatever the
+[00:54:49] the I'm allowed to see within my
+[00:54:51] snapshot. But with the vector clocks,
+[00:54:53] the idea is like when I go read a tupil
+[00:54:55] now, I'm going to get back the version
+[00:54:57] chain of all the versions that of of
+[00:55:00] that tupil that I'm trying to look up on
+[00:55:02] and now it's my job in the client to
+[00:55:04] figure out what is the right version I
+[00:55:05] should be looking at.
+[00:55:07] And then most people do this the easiest
+[00:55:09] thing just pick whatever the latest
+[00:55:10] version assume that's the one I want.
+[00:55:11] But actually that may not be the correct
+[00:55:12] thing if you start doing multi-statement
+[00:55:14] transactions.
+[00:55:17] So most of the NoSQL systems will do
+[00:55:19] last writer wins uh last update wins.
+[00:55:22] There was I know one system that was
+[00:55:23] doing vector clocks called React. Don't
+[00:55:26] do this. This is this is super hard to
+[00:55:28] do because your average JavaScript
+[00:55:30] programmer isn't going to know what a
+[00:55:31] vector clock is. Isn't know how to
+[00:55:33] reason about the correctness of the
+[00:55:34] state of the database system, right?
+[00:55:36] You're just better off either lying to
+[00:55:37] them and say, "All right, last update
+[00:55:38] wins." And deal with those problems
+[00:55:40] later on or stop the system until you
+[00:55:42] can you have all the nodes enough to
+[00:55:44] figure out what's going on.
+[00:55:47] >> [snorts]
+[00:55:50] >> So the cap theorem is a pretty
+[00:55:52] simplistic idea, right? Where it just
+[00:55:54] assumes like oh do do I want to be able
+[00:55:55] to handle things when there when there's
+[00:55:57] a partition uh you know let them be
+[00:56:00] available or just guarantee that my
+[00:56:03] database is going to be consistent.
+[00:56:05] There was an extension to it called Pacy
+[00:56:08] uh came out in 2010 which now includes
+[00:56:12] the the the notion of consistency and uh
+[00:56:17] latency because there's there's actually
+[00:56:19] a trade-off between the two of these
+[00:56:20] things that the original cap theorem
+[00:56:22] doesn't cover,
+[00:56:24] right? because I can wait forever until
+[00:56:28] my my system comes back up and I'll
+[00:56:30] guarantee consistency but then my
+[00:56:31] latency is going to be you know minutes
+[00:56:33] or hours which is not realistic.
+[00:56:37] So basically think like this. So I have
+[00:56:38] my primary two replicas and say they're
+[00:56:40] running in different data centers,
+[00:56:41] right? I do a set on a uh I go ahead and
+[00:56:45] applies the change here and then now
+[00:56:47] I'll send those changes to the to the
+[00:56:49] other nodes uh to my replicas apply the
+[00:56:52] change and then now they're going to
+[00:56:54] send me back an acknowledgement. But the
+[00:56:56] question is be how long should the
+[00:56:58] primary wait to hear back to know
+[00:57:00] whether that they've accepted the change
+[00:57:02] has been successfully modified. Right?
+[00:57:05] If I don't wait, if I don't wait a long
+[00:57:07] time, then yeah, my latency will be low,
+[00:57:09] but now I don't have any consistency
+[00:57:11] guarantees because I don't know whether
+[00:57:12] those changes actually made it, right?
+[00:57:16] So, I could wait for one of them uh and
+[00:57:18] then not know what happened to the other
+[00:57:19] one because it's like I'm going over the
+[00:57:21] underneath the ocean to to the to
+[00:57:23] Europe, right? So, maybe that's I don't
+[00:57:24] want to wait that long and that's that's
+[00:57:26] be bad for me. But again, there's no
+[00:57:27] guarantee that when I go read the data,
+[00:57:30] if if I tell the outside world that the
+[00:57:32] transactions committed and I go read the
+[00:57:33] data here, there's no guarantee that's
+[00:57:35] going to be correct.
+[00:57:38] Right? So then eventually again, if if I
+[00:57:39] care about consistency, then I would
+[00:57:40] wait for everyone to come back and say,
+[00:57:42] I got your change. Then I tell the
+[00:57:43] outside world that you successfully
+[00:57:45] committed your your change, successfully
+[00:57:46] modified.
+[00:57:50] So latency is additional thing that like
+[00:57:51] the cat theorem doesn't cover. Uh, and
+[00:57:55] again, usually there's a timeout and say
+[00:57:57] how long I'm going to wait and then you
+[00:57:58] can decide whether to abort the
+[00:57:59] transaction because you haven't heard
+[00:58:00] back from the other nodes or allow
+[00:58:03] yourself to be in in a in a a sort of
+[00:58:06] transient state.
+[00:58:09] But that's okay because the
+[00:58:10] application's allowed to do that, right?
+[00:58:13] Now that I think about it, like it's the
+[00:58:16] same way we talked about transactions.
+[00:58:18] Like if it's your bank account and
+[00:58:19] you're trying to count money stuff, you
+[00:58:20] want to have consistency because you you
+[00:58:22] don't want to lose lose money. But if
+[00:58:24] it's like a post on Reddit, who cares if
+[00:58:27] it gets delayed by a couple seconds like
+[00:58:29] no one's going to know really care about
+[00:58:31] these things. So it's okay for me to be
+[00:58:33] not consistent for that and eventually
+[00:58:35] things will get propagated and updated
+[00:58:36] correctly.
+[00:58:38] My C or Facebook used to do this.
+[00:58:40] Facebook used to have a single primary
+[00:58:43] data center for all their updates. That
+[00:58:44] would be in in the US and then they
+[00:58:47] would have data centers would have
+[00:58:48] copies of of the database um the giant
+[00:58:51] my SQL fleet. They would copy the
+[00:58:53] database in different continents but
+[00:58:55] then all the rights had to go into to
+[00:58:57] the US then they would then get
+[00:59:00] propagated out to the different
+[00:59:01] continents and obviously that's a big
+[00:59:02] round trip time. So what would happen is
+[00:59:05] people would post on their timeline uh
+[00:59:08] and then that right would have to go to
+[00:59:09] the US and eventually would get
+[00:59:10] propagated to like the South American
+[00:59:12] data center. So that means if they
+[00:59:13] refresh the page they wouldn't see their
+[00:59:15] own update and they think something was
+[00:59:17] broken, something's wrong. So what they
+[00:59:19] did is they just put a little uh store
+[00:59:21] the post in your cookie in your browser
+[00:59:24] so that when they refresh the page and
+[00:59:25] read it from the cookie and showed it
+[00:59:26] back to you. So you thought that things
+[00:59:28] are fine even though it had been hasn't
+[00:59:31] you know successfully made it from the
+[00:59:32] the US data center and propagated to all
+[00:59:34] the replicas
+[00:59:36] they switched now to be a multi primary
+[00:59:38] uh setup but that's a good trick where
+[00:59:40] like again I can it's okay for me to
+[00:59:43] have not have latency or not have
+[00:59:45] consistency guarantees because I can
+[00:59:47] hide that uh in the application level
+[00:59:53] because I I want lower latency for these
+[00:59:56] >> [snorts]
+[00:59:59] >> Okay,
+[01:00:00] so that's again that's the crash course
+[01:00:02] everything you need to know about for
+[01:00:03] for doing transactions in a distributed
+[01:00:05] OTB system. So let's talk about now how
+[01:00:06] we're going to do analytical queries in
+[01:00:09] in a distributed database system. Right?
+[01:00:11] So the most expensive operation in a
+[01:00:14] distributed data system for for
+[01:00:15] analytical queries is going to be the
+[01:00:17] joints and it's going to depend on how
+[01:00:20] the data is being partitioned and stored
+[01:00:22] across the different nodes and whether
+[01:00:23] it's share disk or share nothing it
+[01:00:25] doesn't matter like how we're actually
+[01:00:26] going to be able be able to to do our
+[01:00:27] joints right and the stupidest thing
+[01:00:32] which is if you want to do a you know
+[01:00:33] join across distributed systems to copy
+[01:00:35] all the data you want that across
+[01:00:36] different nodes put it into a single
+[01:00:38] node and just run all the join
+[01:00:40] algorithms we talked about earlier in
+[01:00:41] the semester on a single box. Of course,
+[01:00:42] now you lose all the parallelism uh of a
+[01:00:45] distributed system and you know your
+[01:00:48] data might may not even fit on a single
+[01:00:49] node to be able to do that. So ideally I
+[01:00:52] want to reduce the amount of data
+[01:00:53] transfer I have and run my join most
+[01:00:55] efficiently as possible.
+[01:00:58] So what I'm going to be talking about
+[01:01:00] now is the way we're going to organize
+[01:01:02] data so that we can do our joins in a
+[01:01:05] distributed data system.
+[01:01:08] We're still going to be doing all the
+[01:01:09] join algorithms we talked about before.
+[01:01:11] So nest loop join, hash join, and sort
+[01:01:12] merge join. Those are the basic three
+[01:01:14] categories of of joins. So all that
+[01:01:17] still going to be applied here and we're
+[01:01:18] still going to do that on on our local
+[01:01:21] nodes. So now we're talking about is how
+[01:01:24] are we going to move data if we need to
+[01:01:26] across the nodes so that we can then
+[01:01:28] compute those joins locally.
+[01:01:31] Right?
+[01:01:34] Again the goal is again we want our
+[01:01:35] joint algorith produce the same result
+[01:01:37] same logical result uh when it's running
+[01:01:39] a distributed system as it would on a
+[01:01:41] single node system right SQL is
+[01:01:43] unordered unless there's an order by so
+[01:01:45] it's okay that the ordering of the
+[01:01:46] output is different long the logical
+[01:01:48] content should still be the same
+[01:01:52] [snorts] all right so the first case
+[01:01:54] scenario it would be the the most
+[01:01:55] simplest thing right and this is where
+[01:01:58] we want to do a join uh between tables R
+[01:02:00] and S and the table R has been
+[01:02:04] partitioned on the ID column which just
+[01:02:07] happens to be our join key
+[01:02:10] and then table S is replicated on every
+[01:02:13] single node. So think of like table R is
+[01:02:14] a big big really big table and we
+[01:02:16] divided it up partition and put it on
+[01:02:17] different nodes. Table S is small. Think
+[01:02:19] of like zip code tables like 35,000
+[01:02:21] records that's going to be in megabytes.
+[01:02:23] We can put that on every single node.
+[01:02:25] Now if we update this the the replicated
+[01:02:28] table we got to run twobased commit or
+[01:02:29] paxos make sure they're all in sync
+[01:02:31] right from the stuff we just talked
+[01:02:32] about but for this we can ignore that.
+[01:02:35] So again our data has been partitioned
+[01:02:37] on on this key here. So that means to do
+[01:02:40] the join between RNS for this query here
+[01:02:42] we don't need to send data between the
+[01:02:44] different nodes. Everything we have to
+[01:02:47] do the join within one partition of R is
+[01:02:50] available to us on our on our own node.
+[01:02:53] So we'll run our own local nestloop
+[01:02:55] joint, hash join, servers, join,
+[01:02:57] whatever you want. We run that locally
+[01:02:58] here. We we produce the result and then
+[01:03:02] now one of the nodes will be designated
+[01:03:05] the coordinator or the leader or
+[01:03:06] whatever whatever you know whoever's
+[01:03:08] responsible for returning back the the
+[01:03:09] the result to the application.
+[01:03:12] The other nodes will send the data that
+[01:03:14] for their local join to that other node.
+[01:03:16] It just does a union on them which is
+[01:03:18] cheap to do because just copying bytes
+[01:03:20] or concatenating bytes together and then
+[01:03:22] now produces the final result of the the
+[01:03:25] partition join from the two nodes to a
+[01:03:27] final to a single result.
+[01:03:31] So this this is easy to do right because
+[01:03:33] because things are you know everything's
+[01:03:34] all local. [snorts]
+[01:03:37] Another easy easy case is when the data
+[01:03:40] is partitioned on the join key. So in
+[01:03:42] the last example, R was partitioned on
+[01:03:44] ID and S was replicated. And now this
+[01:03:46] example here, S is also partitioned on
+[01:03:48] ID and the the the range of values line
+[01:03:52] up uh between R and S in each partition,
+[01:03:56] right? If it was hash partition, you
+[01:03:58] wouldn't worry about the ranges, but it
+[01:04:00] work the same way. So [snorts] again,
+[01:04:02] just like before, I don't have to move
+[01:04:04] data between the different nodes to do
+[01:04:06] my join. I do my local join at every
+[01:04:08] single node, produce the, you know, the
+[01:04:10] portion of the result that I have for
+[01:04:12] each node, send that over to the network
+[01:04:14] or however I want to get it to this
+[01:04:15] other node who then combines it together
+[01:04:17] and produces the output we send to the
+[01:04:19] application.
+[01:04:23] Now, where things get hard is when the
+[01:04:24] data isn't partitioned on our join keys,
+[01:04:26] which is which is common, right? Because
+[01:04:29] you know sometimes it's obvious what
+[01:04:30] picked it for you know for a partition
+[01:04:32] key uh in the beginning when you start
+[01:04:34] load some data but then eventually some
+[01:04:36] people might want to start running
+[01:04:37] queries and start joining in ways that
+[01:04:38] you didn't expect and now you have to
+[01:04:41] account for that in in your
+[01:04:42] implementation.
+[01:04:44] So the first approach is called what's
+[01:04:46] called a broadcast join.
+[01:04:48] And this is where you identify that one
+[01:04:51] of the data sets or one of the the
+[01:04:52] tables you're trying to join is small
+[01:04:54] enough
+[01:04:56] uh that you could actually just
+[01:04:58] broadcast and make a copy of it send it
+[01:05:00] to every single node that's going to be
+[01:05:02] participating in the join sending them
+[01:05:04] all you know whatever copy of the data
+[01:05:06] they have. So for example, I'm
+[01:05:09] partitioning uh table S on value, but I
+[01:05:12] need it need to be partitioned on ID,
+[01:05:14] right? So rather than partitioning on
+[01:05:15] ID, what I'm doing is going to copy the
+[01:05:17] the range of the values 1 to 50 from S
+[01:05:20] over here to this node and then just
+[01:05:22] combine together with 51 over 100. And
+[01:05:24] I'll do the same thing on the other
+[01:05:25] side. So now it's like my first case
+[01:05:26] where I every node has a complete copy
+[01:05:29] of the table S. Then I do my local join,
+[01:05:32] produce produce the result, send it over
+[01:05:34] the wire, and combine it together.
+[01:05:38] Yes,
+[01:05:42] >> it's end to end. Yes. The question is if
+[01:05:45] I have more than two nodes, do I do end
+[01:05:46] to end send every node has to send their
+[01:05:48] the pion part of the data to every other
+[01:05:50] node? Yes. And if it's shared disk, you
+[01:05:53] you could say all right well just go
+[01:05:54] fetch it from the shared disk. But then
+[01:05:57] depending on whether you pay for those
+[01:05:59] reads like S3, Amazon charges you for
+[01:06:02] every time you read something in S3. You
+[01:06:03] don't have like you know 50 nodes go
+[01:06:05] read the same thing on S3. You have one
+[01:06:07] node need it read it and then could send
+[01:06:08] it out. That's usually cheaper way to do
+[01:06:10] it or you have like a local cache that's
+[01:06:12] outside S3. But it's the basic idea
+[01:06:14] still is you're you're copying
+[01:06:18] partitions of the data to every other
+[01:06:19] node. So now they have a complete copy
+[01:06:20] of the data data.
+[01:06:24] So sometimes you'll see systems refer to
+[01:06:26] these as broadcast joins but broadcast
+[01:06:29] is just like a modifier for like what
+[01:06:31] the you know there's still going to be a
+[01:06:33] a a basic join algorithm underneath
+[01:06:35] that. So like it'll be a broadcast hash
+[01:06:37] join instead of a broadcast join or
+[01:06:39] broadcast start merge join instead of a
+[01:06:41] you know but people just might just call
+[01:06:42] it a broadcast join and typically that
+[01:06:44] means they're doing a hash join.
+[01:06:47] All right, the last one is where the
+[01:06:50] both tables are not are too big to be uh
+[01:06:54] broadcast and replicated around. Um, and
+[01:06:56] they're also not on the uh not
+[01:06:59] partitioned on the join key. So I have
+[01:07:01] to do what's called a shuffle to
+[01:07:03] basically repartition the data on the
+[01:07:05] fly based on my join key. So that now
+[01:07:08] when I do my join uh on every single
+[01:07:11] node, every node has all the data that
+[01:07:13] it needs. So in this case here, table R
+[01:07:15] is partitioned on name and I needs to be
+[01:07:17] partitioned on R ID. So I'll decide what
+[01:07:20] the partitioning boundaries are either
+[01:07:22] with rain partitioning or using hash
+[01:07:23] partitioning or just hash the key that
+[01:07:25] I'm trying to join on. And every node is
+[01:07:27] going to send their portion of the data
+[01:07:28] to all other nodes, right? And then same
+[01:07:31] thing for S. And then now I'm in my
+[01:07:34] second scenario where the the the the
+[01:07:37] data is now on every single node. It's
+[01:07:39] partitioned on on that join key. I can
+[01:07:41] do my local join and then copy the
+[01:07:43] result over and send it back to the
+[01:07:45] application that way. And just like in
+[01:07:47] broadcast join, uh some systems will
+[01:07:49] call these shuffle joins, but it's
+[01:07:51] really shuffle hash joint shuffle join.
+[01:07:53] Yes.
+[01:07:58] >> The question is is this the same as map
+[01:07:59] reduce?
+[01:08:01] Yes. uh
+[01:08:04] map produce is so yes it is same in map
+[01:08:08] reduce but distributed systems existed
+[01:08:10] before map reduce
+[01:08:12] so there's a there you know there's um
+[01:08:15] map reduce came out like oh my god this
+[01:08:16] is groundbreaking we've never seen it
+[01:08:17] before it's distributed data system from
+[01:08:19] the 80s and 90s it's the same idea like
+[01:08:22] the the map function is basically a
+[01:08:24] group by and and and a sort in some
+[01:08:27] cases
+[01:08:30] okay so One visual option we can do is
+[01:08:33] called a semi join. And I know I'll
+[01:08:35] explain next class what fact tables and
+[01:08:37] dimension tables are. Just think of like
+[01:08:38] fact tables like I have a giant table of
+[01:08:41] every single time someone bought
+[01:08:42] something on Amazon. Like it's a one row
+[01:08:44] would be like somebody bought this,
+[01:08:45] someone bought that. And dimension table
+[01:08:47] would be a a t a side table that's
+[01:08:50] usually read only would contain things
+[01:08:52] like you know the the item name, the
+[01:08:54] item description. You wouldn't put that
+[01:08:55] in the giant fact table. So dimension
+[01:08:57] tables could be like the zip code for
+[01:08:58] example. I'll show what this looks like
+[01:09:00] in the class.
+[01:09:02] But a one option we can do is called a
+[01:09:04] semi join where instead of sending
+[01:09:06] around the entire data set between the
+[01:09:08] different nodes when I do the shuffles
+[01:09:09] of the broadcasts, I'm going to send a
+[01:09:11] summarization or the bare minimum
+[01:09:13] information I need between the different
+[01:09:15] nodes in order for me to compute the
+[01:09:16] join. So let's say that I have I'm
+[01:09:18] joining a fact table and dimension table
+[01:09:21] and the fact table is on one giant node
+[01:09:23] and then dimension tables on another
+[01:09:24] node. So instead of uh instead of moving
+[01:09:28] the data around, what I'm then going to
+[01:09:29] do is sort of run a sub query on this
+[01:09:32] side table here to just get out all the
+[01:09:35] records where the zip code equals one uh
+[01:09:38] 15213. And then I'm going to send that
+[01:09:41] over now to this node here. And I'm
+[01:09:44] still not going to want to compute the
+[01:09:46] join, right? Instead, what I'm going to
+[01:09:48] do is apply this filter to strip out all
+[01:09:51] the things I actually need. uh the the
+[01:09:54] actual records I want from the fact
+[01:09:55] table and then send that smaller portion
+[01:09:58] over here to now compute my joint
+[01:10:02] right and the trick is like if it's
+[01:10:05] based on what the the output of the
+[01:10:06] query is the projection output for
+[01:10:08] example if you notice I need all the
+[01:10:10] elements from the dimension table but I
+[01:10:11] only need the price from the fact table
+[01:10:14] so I don't want to have again can copy
+[01:10:15] the entire tupil I want to do my
+[01:10:16] projection on that node here again the
+[01:10:19] projection predicate push down we talked
+[01:10:20] about before to filter out all the
+[01:10:23] redundant or unnecessary information I
+[01:10:25] need before I send that over the wire.
+[01:10:28] Furthermore, I can optimize this even
+[01:10:29] more by over here instead of actually
+[01:10:31] sending maybe the list of the records
+[01:10:33] here, I could send like a bloom filter
+[01:10:36] because that's super compact to send
+[01:10:38] that over the wire and then do the the
+[01:10:39] filtering on that side and then send my
+[01:10:41] results later on.
+[01:10:44] >> Yes. [snorts]
+[01:10:52] The question is can this be done can can
+[01:10:54] this optimization be uh can the query
+[01:10:57] plan where this optimization be applied
+[01:10:58] in the query optimizer? Yes. So some
+[01:11:00] systems I think allow you to specify
+[01:11:02] semi-join in SQL but it's not in the
+[01:11:04] standard.
+[01:11:06] Yes. But like there is like I think some
+[01:11:08] systems have like a semi-join operator
+[01:11:10] in SQL but that's not in the standard
+[01:11:13] right. It underneath the covers. Yes.
+[01:11:16] like like you like for the example here
+[01:11:19] I didn't write in my my select query
+[01:11:20] that I'm doing a semi- join the
+[01:11:22] optimizer figured it out that it could
+[01:11:23] support that and it does all that that
+[01:11:25] predicate projection push down when it
+[01:11:26] runs it
+[01:11:32] all right so
+[01:11:34] let me finish this last thing so the
+[01:11:39] I sort of was lying when not lying but I
+[01:11:41] I sort of was not saying the entire
+[01:11:43] truth when I said joints are the most
+[01:11:44] expensive thing in a dribblap
+[01:11:46] The most expensive thing is actually
+[01:11:48] going to be shuffles. That shuffle thing
+[01:11:50] I showed in in the in the the ship of
+[01:11:52] joints, that fourth phase of moving data
+[01:11:54] around. If you have to do that, that's
+[01:11:56] always going to be uh super slow. Now,
+[01:11:59] why would you want to shuffle? Because
+[01:12:00] you're using it for a join. So,
+[01:12:01] technically, yes, the joints arensive
+[01:12:03] thing, but within that join operation
+[01:12:05] itself, the shuffle phase is usually
+[01:12:06] going to be the biggest bottleneck for
+[01:12:08] you because you're copying data and
+[01:12:10] moving across the network and have to
+[01:12:11] send it somewhere else, right?
+[01:12:14] So the the challenge is going to be how
+[01:12:17] can we uh you know how can we make that
+[01:12:20] run efficiently and furthermore what if
+[01:12:22] our data is highly skewed so that when
+[01:12:25] we start doing the shuffle and the
+[01:12:26] repartitioning things um or the data
+[01:12:30] itself when when it originally you know
+[01:12:32] resides without doing the shuffle like
+[01:12:33] what if one nodes has a large majority
+[01:12:35] of all the data when we're trying to do
+[01:12:37] the join or any other query operation
+[01:12:39] then all our other machines are going to
+[01:12:40] be idle while that one node is trying
+[01:12:43] crunch through the bulk of the data. So
+[01:12:46] the shuffle phase is gonna allow us to
+[01:12:48] redistribute data across our distributed
+[01:12:50] system in such a way that we can
+[01:12:53] rebalance things and repartition it so
+[01:12:56] that we can compute you know most of our
+[01:12:58] operations we need for our query on on
+[01:13:00] the local nodes right only touching data
+[01:13:02] that's local to us. So some systems will
+[01:13:06] will incorporate shuffle uh as it's sort
+[01:13:09] of once in a while like some queries you
+[01:13:11] need you know you're doing a shuffle
+[01:13:12] join then I have to do a uh have a
+[01:13:15] shuffle shuffle operator other systems
+[01:13:17] like big query for every single time I
+[01:13:19] have a pipeline breaker they're going to
+[01:13:21] introduce a shuffle uh explicitly and
+[01:13:24] this allows them to do certain
+[01:13:26] optimizations like decide while the
+[01:13:28] query is running whether they need more
+[01:13:30] nodes or fewer nodes to compute whatever
+[01:13:32] it is they want to compute and They use
+[01:13:35] that the the shuffle staging process as
+[01:13:37] sort of a a an intermediate staging
+[01:13:40] checkpoint if you will for the query to
+[01:13:42] decide okay this is what I'm seeing in
+[01:13:43] the data at this my at this sort of
+[01:13:45] pipeline breaker I can then decide how
+[01:13:47] to then reorganize the other parts of
+[01:13:49] the the query plan going up above
+[01:13:53] there are some systems uh that can you
+[01:13:55] can swap out what the the sort of the
+[01:13:57] built-in shuffle implementation to
+[01:13:59] switch it with one of these open source
+[01:14:00] ones Celiborn and
+[01:14:04] Unifl
+[01:14:06] uh these came out of the Chinese
+[01:14:07] companies but these are like open-
+[01:14:08] source systems that only do shuffle in
+[01:14:12] the case of Google and BigQuery shuffle
+[01:14:14] is so important for them they have
+[01:14:15] specialized hardware to do inmemory
+[01:14:17] shuffle that runs on like smart nick
+[01:14:19] FPGAAS to make the shuffle phase go fast
+[01:14:21] as possible
+[01:14:23] right because it's nice it's sort of
+[01:14:25] abstracting away um the idea is like
+[01:14:29] this sort of shuffle step stage allows
+[01:14:31] us to implement different operators up
+[01:14:34] and down the query plan without worrying
+[01:14:35] about how we're going to move things
+[01:14:36] around. The shuffle phase is going to do
+[01:14:38] that for us. So I don't have to write a
+[01:14:41] partition aware hash join operator. If I
+[01:14:43] just do my shuffle phase before I do a
+[01:14:45] join, then every node can just have the
+[01:14:47] local implementation of their hash
+[01:14:48] joint.
+[01:14:50] So it basically looks like this. So say
+[01:14:52] I'm I my my I first stage my my query
+[01:14:56] considered like the first pipeline. It's
+[01:14:58] almost like a producer consumer model.
+[01:15:00] So they're reading data up from from
+[01:15:01] either from from disk or from other
+[01:15:04] nodes in in the query plan or other
+[01:15:06] workers.
+[01:15:08] Uh actually not other workers like the
+[01:15:10] say from like either local disc or share
+[01:15:12] disk. They're reading it in producing
+[01:15:14] some output and then now they're going
+[01:15:16] to do take the output of the data and
+[01:15:18] hash it on on whatever partition key I
+[01:15:20] care about and I modify the number of
+[01:15:22] shuffle nodes that I have. And if these
+[01:15:24] guys run out of memory because I want to
+[01:15:25] keep things in memory, then I can spill
+[01:15:27] over to a shared disc. Then now in the
+[01:15:29] second stage that comes after this, I
+[01:15:31] can decide well I don't have as much
+[01:15:32] data as I thought it I was going to have
+[01:15:34] after I do whatever the first workers
+[01:15:35] were doing to clean things up or process
+[01:15:37] the queries. Uh so therefore I only need
+[01:15:40] three workers, right? I don't have to
+[01:15:42] have a one to one correspondence between
+[01:15:43] the workers in the first stage and the
+[01:15:44] workers in the second phase because the
+[01:15:46] shuffle phase abstracts that away. And
+[01:15:48] then now these workers will then be
+[01:15:49] reading data out from from the the
+[01:15:51] shuffle nodes or reading it from the
+[01:15:53] shared disk to then produce whatever the
+[01:15:54] result they want to send it off to the
+[01:15:56] next stage or to the final result of the
+[01:15:58] query.
+[01:16:00] So what does this smell like when we
+[01:16:01] talk about parallel query execution
+[01:16:05] not map reduce
+[01:16:08] map reduce has a shovel f has trouble
+[01:16:09] phase yes but databases did it first
+[01:16:13] it's the exchange operator right and in
+[01:16:16] particular it's this bottom one here the
+[01:16:17] repartition right I can have a bunch of
+[01:16:19] operators feeding data up in parallel to
+[01:16:23] some repartition box right so that red
+[01:16:27] box has to be partitioned that's that
+[01:16:28] middle phase the shuffle nodes. So it's
+[01:16:30] the same idea rather I'm running on on a
+[01:16:32] single box or distributed system, right?
+[01:16:35] It's I it allows me to have these these
+[01:16:39] sort of break points in my query that I
+[01:16:40] can then decide how to reorganize things
+[01:16:43] and then repartition it based on what my
+[01:16:45] query wants to do.
+[01:16:50] All right, so again that's a crash
+[01:16:53] course for distributed databases. Um the
+[01:16:56] main takeaways should be that
+[01:16:58] uh
+[01:17:00] having strong consistency for
+[01:17:02] transactions is hard to do but it's it's
+[01:17:05] important necessary because we can't
+[01:17:06] assume the application developer is
+[01:17:08] going to know how to reason about
+[01:17:09] inconsistent data right and then paxos
+[01:17:13] twobased commit and raft are the most
+[01:17:14] common uh uh consensus protocols or
+[01:17:17] atomic commit protocols that distributed
+[01:17:18] data systems use it's probably raft
+[01:17:20] outpaces uh paxos now just because
+[01:17:23] there's a lot of open source source
+[01:17:25] implementations of raft. In Pexos, there
+[01:17:27] wasn't really any. Um, and when we do
+[01:17:30] distributed joins, we want to minimize
+[01:17:32] the data we have to move and we we don't
+[01:17:35] want any false neg false sorry false
+[01:17:37] negatives. So, we need to make sure that
+[01:17:38] in order to compute the data we want
+[01:17:40] through our local join on every single
+[01:17:41] node, we have the data that we need
+[01:17:42] because we repartition things and move
+[01:17:44] things around ahead of time.
+[01:17:47] Okay.
+[01:17:49] All right. So, next class will be the
+[01:17:51] last class. DJ Cashache will be back. We
+[01:17:53] will do a start off with the the the
+[01:17:56] review for the final cover over the main
+[01:17:58] topics. We can cover this atomic fit
+[01:17:59] protocol and integrity strra violation
+[01:18:01] stuff we talked about before and then
+[01:18:03] I'm going to try to cram in what you you
+[01:18:05] would have learned in 721 into a single
+[01:18:07] lecture. So we'll try to basically build
+[01:18:10] up all the analytical stuff we talk
+[01:18:11] about at the end here. We'll try to talk
+[01:18:13] about how to make the queries run fast
+[01:18:14] through vectorization uh just time
+[01:18:16] compilation how different data formats
+[01:18:18] look like how to do uh parallel hash
+[01:18:21] joins just try to cram as much as I can
+[01:18:23] but obviously none of that will be on
+[01:18:24] the final exam okay
+[01:18:28] [music]
+[01:18:34] [music]
+[01:18:41] tracks
+[01:18:42] >> [music]
+[01:18:43] >> Bad ass
+[01:18:50] for [music] Maintain flow
+[01:18:54] with the grain for [music]
+[01:18:57] maintain flow with the grain.

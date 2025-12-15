@@ -1,0 +1,2341 @@
+[00:00:00] [music]
+[00:00:06] [music] I'm still
+[00:00:08] ass.
+[00:00:12] [music]
+[00:00:17] [music]
+[00:00:24] >> All right, guys. Let's get started.
+[00:00:26] Round of applause for DJ Cash.
+[00:00:28] Awesome. Welcome back.
+[00:00:30] >> Thank you.
+[00:00:30] >> How'd it go last week?
+[00:00:32] >> Uh, it went it could have been a little
+[00:00:34] better. They're saying I have to pay
+[00:00:36] taxes on my beats. So,
+[00:00:38] >> your tax account says you pay taxes on
+[00:00:39] your beats.
+[00:00:40] >> Yeah.
+[00:00:41] >> Well, I mean, not paying taxes on the
+[00:00:42] beats. You're paying taxes on the money
+[00:00:43] you made with your beats,
+[00:00:45] >> right?
+[00:00:46] >> Yeah. Well, you got to do that. All
+[00:00:47] right. Yeah, pay your taxes. All right.
+[00:00:49] But it's good again. Good. You're
+[00:00:50] getting back where you need to be in
+[00:00:51] life. All right, guys. A lot to cover
+[00:00:52] and today's lecture is awesome because
+[00:00:54] it's transactions and I get very
+[00:00:55] excited. Uh, so let's jump into this. Um
+[00:00:58] so all right uh for you guys in the
+[00:01:01] class project 3 is coming up this Sunday
+[00:01:04] that's due and we have the special
+[00:01:05] office hours um uh this that should be
+[00:01:09] the 15th not the fifth I'm missing a one
+[00:01:11] sorry coming up on the 15th this
+[00:01:13] Saturday from 3:00 to 5:00 p.m. in in
+[00:01:15] gates. Uh and again, post on Patiaza
+[00:01:18] post if you have questions or come to
+[00:01:19] office hours. And then I messed up the
+[00:01:21] due date for homework five that was also
+[00:01:24] due the 16th of Sunday coming up. That's
+[00:01:26] been pushed out a week and that'll be
+[00:01:27] due on the 23rd. And grades go piaza and
+[00:01:30] the website should be updated for that.
+[00:01:32] Any questions about project 3?
+[00:01:35] Who here has not started project 3?
+[00:01:39] Okay. And I should I'll post this too.
+[00:01:42] If you are concerned about your your
+[00:01:44] buffer pool manager or from project one
+[00:01:46] or your B+ tree from project two not
+[00:01:49] being completely thread safe, just put a
+[00:01:51] latch in front of it, right? Put a
+[00:01:53] global latch in front front of the
+[00:01:54] entire page table and you know what's
+[00:01:57] that? Yeah, but like the
+[00:02:00] the things that will slow you down for
+[00:02:02] project three uh will be like
+[00:02:05] transactional like the lock manager
+[00:02:07] stuff, not the not like the page table
+[00:02:09] latch, right? Other
+[00:02:12] questions or comments about project 3?
+[00:02:16] All right. And then for database talks
+[00:02:18] after this class today, we have the the
+[00:02:20] co-founder from Moon Cake. It was a
+[00:02:22] database startup uh that had extensions
+[00:02:24] for Postgress that could read iceberg
+[00:02:25] tables. That's been uh they got acquired
+[00:02:27] by data bricks. So that guy's giving a
+[00:02:29] talk. Tomorrow as I posted on on Piaza,
+[00:02:31] we're having one of the co-founders of
+[00:02:33] DBT flying in from Philadelphia. So,
+[00:02:35] he's giving a talk at noon uh on the
+[00:02:37] eighth floor in Gates and there'll be
+[00:02:39] pizza at that and then there'll be an
+[00:02:40] info session for hiring and internships
+[00:02:42] with him uh at 2:30 also in 8115 and I'd
+[00:02:46] post that on Piaza. Again, you know the
+[00:02:48] RSVP for that. Just show up, talk to the
+[00:02:50] guy. Um and then the Firebolt guy is Ben
+[00:02:53] who gave a talk with us on Wednesday. I
+[00:02:54] said he was giving a talk today. I was
+[00:02:56] wrong. It's Moon Cake, but he's coming
+[00:02:57] back to give a talk uh in the center
+[00:02:59] series a week from today. Um and that'll
+[00:03:02] be on Zoom. Okay.
+[00:03:04] All right. So, last class we talked
+[00:03:08] about current protocols and in
+[00:03:10] particular we talked about uh two-phase
+[00:03:12] locking. We said this was a protocol
+[00:03:14] that data sets can use at runtime to
+[00:03:17] allow it to schedule the behavior or the
+[00:03:20] ordering of transactions uh in such a
+[00:03:22] way that you can you can guarantee
+[00:03:24] serializability, right? And we said this
+[00:03:27] was a pessimistic protocol where the the
+[00:03:30] data systems assumes the transactions
+[00:03:31] are going to have conflicts. Therefore,
+[00:03:33] it requires them to acquire locks in in
+[00:03:37] different modes on the objects that they
+[00:03:39] were going to access before they're
+[00:03:40] allowed to access them.
+[00:03:43] Right? And we showed different
+[00:03:44] variations of of of two-phase locking,
+[00:03:46] right? And in most systems, they're
+[00:03:47] going to implement the strong strict one
+[00:03:48] where you just end up holding all the
+[00:03:50] locks to the very end.
+[00:03:53] So,
+[00:03:55] in the two-phase locking two-phase
+[00:03:57] locking protocol, as I was saying, it's
+[00:03:58] it's a it's a pessimistic approach
+[00:04:00] again. So, you're going to assume
+[00:04:01] transactions are going to conflict. Um,
+[00:04:04] but if you assume that they're not going
+[00:04:06] to conflict and that most of the
+[00:04:07] transactions are not going to interfere
+[00:04:08] with each other and most of your
+[00:04:10] transactions are going to be pretty
+[00:04:11] fast, pretty quick, right? Think of like
+[00:04:14] loading a web page. That's basically a
+[00:04:16] transaction. Like you're going get some
+[00:04:18] queries, get a small amount of data, and
+[00:04:20] then you're done real quickly. Like in
+[00:04:21] the order of of milliseconds, right?
+[00:04:23] It's rare that transactions will take
+[00:04:26] more than a second on modern systems,
+[00:04:29] right? or minutes or hours, days, worst
+[00:04:33] case weeks, right? They were more common
+[00:04:35] in the old days. Sometimes they're
+[00:04:36] common because you have to do like big
+[00:04:37] bulk updates, but most of the
+[00:04:39] transactions don't look bad. The
+[00:04:40] majority of transactions that are
+[00:04:41] executing the world are going to be
+[00:04:42] pretty fast. So therefore, if you assume
+[00:04:46] these these properties about
+[00:04:47] transactions, you assume that they're
+[00:04:48] not going to conflict and you assume
+[00:04:50] they're going to be pretty fast, then an
+[00:04:52] alternative protocol might be to not
+[00:04:55] require them to acquire locks. let them
+[00:04:58] do whatever they want to do and then at
+[00:05:01] the end when they go to commit figure
+[00:05:03] out whether there was actually a
+[00:05:04] conflict okay because you assume most of
+[00:05:06] the times there won't be and therefore
+[00:05:08] you'll be faster off than you would have
+[00:05:10] been in a pestmic approach like
+[00:05:12] two-phase locking
+[00:05:14] sound plausible
+[00:05:17] so that's what today is about today is
+[00:05:18] about optimistic protocols and these are
+[00:05:21] sort of fall under the umbrella umbrella
+[00:05:22] of what I call time stamp ordering
+[00:05:23] concurrency protocols and the idea is
+[00:05:25] that rather than using locks to enforce
+[00:05:27] the ordering of the operations with the
+[00:05:29] new transactions. We're going to use
+[00:05:31] timestamps to keep track of the order in
+[00:05:33] which these things occur uh or should
+[00:05:36] occur. And then when transactions go to
+[00:05:38] commit, we need to make sure that the uh
+[00:05:42] we we generate timestamps for these
+[00:05:45] transactions or the operations are
+[00:05:46] ordered in some kind of time stamp
+[00:05:48] sequence uh in such a way that it's
+[00:05:50] equivalent to executing the transactions
+[00:05:52] in serial order, right? where you you
+[00:05:54] have TI TJ TI is going to execute all
+[00:05:57] its operations first followed by TJ but
+[00:05:59] again when this con protocols I can
+[00:06:01] actually interle their operations where
+[00:06:03] they don't actually have to physically
+[00:06:04] occur you know immediately one after
+[00:06:06] another they can actually uh be
+[00:06:07] intertwined
+[00:06:09] so the way we're going to make this work
+[00:06:11] is that we're now going to maintain
+[00:06:13] these timestamps for uh not only the the
+[00:06:16] the the transactions as they're actually
+[00:06:19] doing operations in the data system
+[00:06:21] we're actually sorry in within the
+[00:06:22] database we're also going to maintain
+[00:06:24] timestamps for the database objects that
+[00:06:26] are in our database. And again, we're
+[00:06:28] being vague here. We're not saying
+[00:06:29] whether it's a tupil or a page or a
+[00:06:31] table or or or a database. It doesn't
+[00:06:34] matter. The protocol still works. But
+[00:06:36] now, we're going to keep track of the
+[00:06:37] time stamps of of every for every single
+[00:06:40] object in our database. What like when
+[00:06:43] were they accessed, when were they
+[00:06:44] modified, who was the last transaction,
+[00:06:45] what time stamp they modified. We're
+[00:06:47] going to maintain all that internally.
+[00:06:49] We'll see next class how we actually can
+[00:06:51] in some systems we we can in SQL we can
+[00:06:54] see these things uh in the case of
+[00:06:56] postgress it'll it'll expose it to you
+[00:06:58] but it's not so it's maintaining this
+[00:07:00] information for you but it's not always
+[00:07:01] uh they don't show it normally when you
+[00:07:03] see queries because you at the end the
+[00:07:04] end day the end of the day the
+[00:07:06] application programmer should know about
+[00:07:07] these these timestamps but underneath
+[00:07:09] the covers we're going to use them to
+[00:07:10] keep track of a uh keep track of things
+[00:07:14] right remember in the beginning we
+[00:07:15] talked about how like uh pages have
+[00:07:18] headers and tupless headers, right? This
+[00:07:20] is in that header. That's where we're
+[00:07:21] going to start storing these timestamps.
+[00:07:24] All right. So, now the questions be, all
+[00:07:26] right, how do we generate timestamps?
+[00:07:29] >> Satellites.
+[00:07:30] >> So, sat say they're saying satellites.
+[00:07:34] Two systems do that. But we'll we'll get
+[00:07:36] there. But what when you say satellite,
+[00:07:38] what is a satellite giving you?
+[00:07:40] >> Well, what kind of time?
+[00:07:45] >> Wall clock.
+[00:07:46] >> Right. All right. So we're getting ahead
+[00:07:49] of ourselves. So for a given transaction
+[00:07:51] TI, we're going to say that it's going
+[00:07:53] to be assigned a unique unique fixed
+[00:07:55] time stamp where those timestamp domain
+[00:07:58] is always increasing in value. Meaning
+[00:08:00] like you can never have a transaction
+[00:08:02] show up in the future that has a time
+[00:08:04] stamp that's less than one that that
+[00:08:05] executed before. You have to deal with
+[00:08:08] wraparound when the number gets really
+[00:08:09] big. But if you use a 64-bit integer,
+[00:08:11] then you know it's going to take a
+[00:08:13] while.
+[00:08:14] And so the the the different protocols
+[00:08:18] that are out there will assign these
+[00:08:21] timestamps to transactions at different
+[00:08:23] time uh or different points of their
+[00:08:25] execution.
+[00:08:27] So the protocol we're going to talk
+[00:08:28] about today, it's not you're not going
+[00:08:30] to get a time stamp till you actually
+[00:08:31] commit at the end. You don't get one at
+[00:08:34] the beginning. In the case of something
+[00:08:37] like Postgress, the way they do uh
+[00:08:39] concurrent protocol, their current
+[00:08:40] protocol, which we'll discuss next
+[00:08:41] class, you're actually going to get two
+[00:08:43] timestamps.
+[00:08:44] one beginning, one of the end, right?
+[00:08:48] But for today's class, we're assuming we
+[00:08:49] just have we just have one time stamp.
+[00:08:51] So,
+[00:08:53] they were jumping ahead a little bit and
+[00:08:55] saying like, oh, we can get this uh we
+[00:08:57] can get these time stamps from
+[00:08:59] satellites. But again, what you're
+[00:09:01] really getting is what I call a system
+[00:09:02] clock or a wall clock, right? An actual
+[00:09:04] physical time that's like that we keep
+[00:09:06] track of as humans. And typically, you
+[00:09:08] you want to use UTC because you're not
+[00:09:10] worried about daylight savings, right?
+[00:09:11] that you don't want to have the the
+[00:09:13] clock roll back and now your your your
+[00:09:14] time stamps are now in the past. That's
+[00:09:16] going to mess everything up, right? So,
+[00:09:18] daylight saving screws things up and you
+[00:09:19] want to use UTC. Doesn't have to be
+[00:09:22] coming from the uh from the wall clock
+[00:09:25] getting from a satellite GPS satellites
+[00:09:27] or getting it from an atomic clock.
+[00:09:28] We'll see that later when we talk about
+[00:09:30] Google Spanner that gives you really
+[00:09:31] accurate time stamps. But there's only
+[00:09:34] two systems that that use that kind of
+[00:09:35] thing. DSQL from Amazon that just came
+[00:09:39] out and the guy gave a talk
+[00:09:41] last class or sorry there's the advanced
+[00:09:43] datab class happening at the same time
+[00:09:44] as this class the the dsql guy gave a
+[00:09:47] talk and it's on YouTube I'll post
+[00:09:48] something else about this right it could
+[00:09:50] just be also a logical counter right you
+[00:09:52] could just say you know increment a
+[00:09:53] counter by one and every time a new
+[00:09:55] transaction go comes along you just add
+[00:09:57] one to it right problem with that one
+[00:09:59] we'll see this when talking about
+[00:09:59] distributed systems like how do you make
+[00:10:01] sure that like your counter is in sync
+[00:10:03] with another node's counter you can't so
+[00:10:05] typically sometimes you can do a hybrid
+[00:10:07] of these things right but in general for
+[00:10:10] our purposes is here today. Just assume
+[00:10:12] that there's timestamps, assume that
+[00:10:13] they're unique, and assume that they're
+[00:10:15] always increasing in time and that we're
+[00:10:17] never going to go, you know, magically
+[00:10:18] back in time with these things.
+[00:10:21] In Postgress, uh, by default, their time
+[00:10:23] stamps are 32-bit integers. So, you wrap
+[00:10:25] around eventually, and that causes
+[00:10:28] problems. So they we'll talk about this
+[00:10:29] next class how you handle this but like
+[00:10:31] post explicitly has to deal with like
+[00:10:33] the the the 32-bit number wrapping
+[00:10:36] around and now you you have a bunch of
+[00:10:37] time stamps that are in the past even
+[00:10:39] though logically they're in the past but
+[00:10:41] physically they're in the future and
+[00:10:44] this idea of logical time physical time
+[00:10:45] will come up today.
+[00:10:47] All right. So again today we're going to
+[00:10:49] talk about optimistic certio protocol
+[00:10:50] which is the the the primary protocol
+[00:10:52] the most common protocol people use in a
+[00:10:54] timestamp ordering uh database system.
+[00:10:57] And again the confusing part about this
+[00:10:58] is that the the protocol's name is the
+[00:11:02] optimistic concurrency protocol. It is
+[00:11:04] in the category of optimistic
+[00:11:05] concurrency protocols but you just say
+[00:11:08] OCC and everyone will know what you're
+[00:11:09] talking about. And then we'll talk about
+[00:11:12] at the end how we're going to handle
+[00:11:13] additional anomalies that we did that
+[00:11:15] we're not going to be able to handle out
+[00:11:16] of the box at least. So far what we
+[00:11:17] talked about in twobased locking in OC
+[00:11:20] uh and how some systems might be okay
+[00:11:23] with with these additional anomalies and
+[00:11:26] we can run at lower isolation levels to
+[00:11:27] get better performance. Okay.
+[00:11:31] All right. So the the original
+[00:11:34] optimisticio protocol that was based on
+[00:11:36] time stamps uh it's called OC. Uh, and
+[00:11:39] the basic idea is that when transactions
+[00:11:42] run, the database system is going to
+[00:11:44] create a private workspace for them,
+[00:11:46] like a little little area in memory
+[00:11:48] where they're going to store all the the
+[00:11:50] things that they read and write from the
+[00:11:52] database. So anytime I'm going to read
+[00:11:53] something in the database, I'm going to
+[00:11:55] make a copy of it first in the sort of
+[00:11:57] the global database that all the
+[00:11:58] transactions can read from and I'm going
+[00:12:00] to copy it into my private workspace and
+[00:12:04] therefore I can make changes in that
+[00:12:05] private workspace. uh and no other
+[00:12:07] transaction can see those changes.
+[00:12:10] And then when it come time to commit now
+[00:12:13] we got we have to go look at the other
+[00:12:14] transactions that either have run in the
+[00:12:16] past or are running right now depending
+[00:12:18] how we want to do this. And we have to
+[00:12:20] see whether they have read or written to
+[00:12:22] anything that we have potentially
+[00:12:23] modified or read in our private
+[00:12:25] workspace.
+[00:12:27] And again, depending on the on the way
+[00:12:28] we're going to do this validation step,
+[00:12:30] we will um we we will we'll end up maybe
+[00:12:34] we maybe be allowed to commit or we may
+[00:12:35] have to kill ourselves and retry.
+[00:12:38] But the key idea is that this private
+[00:12:39] workspace part is where we can do all
+[00:12:41] our changes in like a private scratch
+[00:12:43] base and no one can see them.
+[00:12:46] So two-phase locking was invented at IBM
+[00:12:48] in 197 sorry 1976
+[00:12:52] at uh IBM working system R. OC was
+[00:12:56] embedded in 1981 here at CMU.
+[00:13:00] Um there was a and but the inventor HT
+[00:13:03] Kong he's not a database person he was a
+[00:13:05] networking person uh but he came up with
+[00:13:07] this protocol for uh for for interacting
+[00:13:10] with databases right I think it's a it's
+[00:13:12] a very famous paper written by a
+[00:13:14] non-dabatase person um of course at the
+[00:13:16] end of the day what do you need a
+[00:13:17] network for to talk to a database right
+[00:13:19] so it makes sense that they they were
+[00:13:20] looking at these things right the whole
+[00:13:22] point of a network is so you can talk to
+[00:13:23] databases um all right so the the
+[00:13:27] protocol is going to have three phases
+[00:13:29] and again because he's a networking
+[00:13:30] person that the the names of the phases
+[00:13:32] might be a little weird. Uh but just
+[00:13:35] bear with me. So in the first phase is
+[00:13:37] called the read phase and despite the
+[00:13:39] name read you actually can do reads and
+[00:13:40] writes but this is where you the data
+[00:13:43] system creates the private workspace at
+[00:13:45] the beginning for this transaction and
+[00:13:47] anything that it that it writes will
+[00:13:49] have to be stored in this private
+[00:13:50] workspace. Anything that it reads you
+[00:13:53] don't have to copy it into your private
+[00:13:56] workspace. But if you want to guarantee
+[00:13:57] that you have repeatable reads, meaning
+[00:13:59] if I read the same thing over and over
+[00:14:00] again, I want to see the same value,
+[00:14:02] then you put make a copy into your
+[00:14:03] private workspace.
+[00:14:06] All right? And then when you complete
+[00:14:07] all your read and write operations and
+[00:14:09] the transaction calls commit, then you
+[00:14:11] automatically switch into this
+[00:14:14] validation phase. And this is where the
+[00:14:16] data system is going to figure out, all
+[00:14:18] right, and is this transaction allowed
+[00:14:20] to commit? and
+[00:14:23] and based on whether it would it's
+[00:14:25] applying the changes would would uh
+[00:14:28] violate a time stamp ordering that is
+[00:14:31] equivalent to a serial ordering of the
+[00:14:33] transactions
+[00:14:37] right and I'll go through examples of
+[00:14:38] what how how we're going to do this and
+[00:14:40] then if you pass the validation phase
+[00:14:42] then you enter the right phase where the
+[00:14:44] the transaction is allowed to apply its
+[00:14:46] changes that are in its private
+[00:14:47] workspace into the global database
+[00:14:51] And we're kind of be hand waving how
+[00:14:53] we're going to do this right face, but
+[00:14:54] obviously you want this to be atomic
+[00:14:55] because you want all your changes to to
+[00:14:57] appear once. So, you know, one way to do
+[00:15:00] that is put a global lock on the entire
+[00:15:02] thing. But for simplicity, we'll do
+[00:15:04] that. But in in real systems, you
+[00:15:05] wouldn't do that, right? So then when
+[00:15:08] you if you pass also if you pass the
+[00:15:11] validation phase,
+[00:15:13] I say this when you when you enter the
+[00:15:14] validation phase, that's when you get a
+[00:15:16] time stamp. Then if you pass the
+[00:15:17] validation phase, all the objects that
+[00:15:19] you get modified are now assigned a
+[00:15:21] right timestamp for this transaction
+[00:15:23] that that you got that it got during the
+[00:15:25] validation phase. So you don't get your
+[00:15:27] time stamp when you start. You get the
+[00:15:28] time stamp when you hit the validation
+[00:15:30] phase. And then if you succeed that then
+[00:15:32] you're allowed to go update the global
+[00:15:34] database with your the time stamp you
+[00:15:36] got during the during the the you know
+[00:15:39] in the commit process.
+[00:15:41] So the read phase which we'll focus on
+[00:15:43] first this is basically where all the
+[00:15:44] work happens for the transaction. Then
+[00:15:46] everything else is is the commit
+[00:15:47] protocol that you're making sure that
+[00:15:49] things are allowed to happen or things
+[00:15:50] will happen in the order that it should
+[00:15:52] happen. That's equivalent to a serial
+[00:15:54] ordering.
+[00:15:57] All right. So let's look at a schedule
+[00:15:58] now. We have two transactions T1 T2.
+[00:16:00] T1's going to read on A, write on A, and
+[00:16:01] then read A again. And T2 is just going
+[00:16:03] to do a read on A. And so I'm showing
+[00:16:05] the boundaries here for the three
+[00:16:06] phases. Read, validate, and write.
+[00:16:08] Again, just like in the the lock and
+[00:16:10] unlock stuff in two-phase locking, you
+[00:16:12] don't explicitly call this in your
+[00:16:13] application code. I'm just showing you
+[00:16:15] the boxes to say where the boundaries
+[00:16:16] are for these phases.
+[00:16:18] So when the uh and so also too now in
+[00:16:21] our in our database now we have the it's
+[00:16:23] a key value pair. So an object and a
+[00:16:24] value like a and the value is 1 2 3 and
+[00:16:26] then we have this right time stamp that
+[00:16:28] corresponds to the last committed
+[00:16:30] transaction that wrote that that value.
+[00:16:32] In this case here assume there was
+[00:16:33] another transaction t0 that got time
+[00:16:35] stamp zero and therefore the right time
+[00:16:37] stamp for this for this object in the
+[00:16:38] database is zero.
+[00:16:40] And again and we have the three phases
+[00:16:42] here. All right. All right. So, our
+[00:16:44] transaction T1 starts. All right. Soon
+[00:16:45] as we call begin, we enter the read
+[00:16:47] phase and then we create this private
+[00:16:49] workspace that has nothing in it right
+[00:16:50] now. Then when it wants to read object
+[00:16:53] A, assuming we're going to copy
+[00:16:55] everything to our workspace, uh because
+[00:16:56] we want to have repeatable reads, it's
+[00:16:59] going to copy the the current value of
+[00:17:01] A, the entire tupil, and put it into a
+[00:17:04] private workspace. Now there's a context
+[00:17:07] switch. T2 starts running. So again, we
+[00:17:08] it enters the read phase. we we create
+[00:17:11] the uh the workspace for it and then
+[00:17:14] when it reads a again we copy the latest
+[00:17:16] version or the the the we copy a from
+[00:17:19] the global workspace into the um into
+[00:17:22] its sorry in the global database into
+[00:17:24] its workspace
+[00:17:26] then now it goes to commit so now we
+[00:17:28] enter the validate phase validation
+[00:17:30] phase so this is when that again the
+[00:17:32] data system assigns time stamp to the
+[00:17:33] transaction so t2 is committing first so
+[00:17:36] it's going to get time stamp one
+[00:17:39] so now we're going to run this
+[00:17:40] validation protocol to see whether this
+[00:17:41] thing has uh read or written to anything
+[00:17:46] else that that any other active
+[00:17:47] transaction could have modified or also
+[00:17:49] read. In this case here, T2 read a T1
+[00:17:53] read a but hasn't hasn't written to it
+[00:17:55] yet. So therefore, there's no conflict
+[00:17:58] and T2 is allowed to commit. So when we
+[00:18:01] enter the right phase, there's nothing
+[00:18:02] for us to do because there's no
+[00:18:03] modifications in the private workspace.
+[00:18:05] So we we just blow it away and we're
+[00:18:07] done. And now we context switch back
+[00:18:10] over to T T T T T T T T T T T T T T T T
+[00:18:10] T T T T T T T T T T T T T T T T T T T T
+[00:18:11] T T T T T1. T T T T T T T T T T T T T T
+[00:18:11] T T T T T T T T T T T T T T T T T T T T
+[00:18:12] T T T T T T T1 does a write on A. So in
+[00:18:14] this case here, uh, we're going to
+[00:18:15] update in our private workspace with the
+[00:18:17] new value, but now we're going to set
+[00:18:18] the right time stamp to infinity just to
+[00:18:21] say that this is something that we've
+[00:18:22] modified, but we don't have a time stamp
+[00:18:23] yet because we don't get one for our
+[00:18:25] transactions until we enter the validate
+[00:18:26] phase.
+[00:18:29] So then now reads a and again go read
+[00:18:31] this the the same record that it
+[00:18:33] modified in its private workspace. So
+[00:18:35] again that guarantees repeatable reads.
+[00:18:38] Then then now now it enters the
+[00:18:39] validation phase. It gets it's assigned
+[00:18:41] time stamp t2 checks to see whether
+[00:18:44] there's any conflicts. There isn't
+[00:18:45] because there's no other actual
+[00:18:46] transactions. So now when it enters the
+[00:18:48] right phase, it then applies the time
+[00:18:50] stamp it was given to it uh in in the
+[00:18:53] validation phase into its private
+[00:18:55] workspace for the object that it
+[00:18:56] modified. So this it got time stamp two.
+[00:18:58] So now sets right time stamp to this
+[00:19:00] object in the private workspace to two.
+[00:19:03] And then it pushes the change up into
+[00:19:04] the global database. Yes.
+[00:19:08] after.
+[00:19:11] >> The question is why is the time stamp
+[00:19:12] assigned at the validation phase after
+[00:19:14] you've done everything rather than when
+[00:19:16] the transactions started
+[00:19:18] because you don't know that the the
+[00:19:21] you don't know what the logical ordering
+[00:19:23] should be before all the transactions
+[00:19:25] finish. So in this case here T1 started
+[00:19:27] before T2 did, right? So physically T1
+[00:19:30] started before T2, but T2 logically
+[00:19:33] committed before T1 does. So therefore
+[00:19:35] it has a lower time stamp.
+[00:19:38] So put getting it at the beginning
+[00:19:39] doesn't make a difference here. Getting
+[00:19:41] at the beginning would restrain you to
+[00:19:44] make sure that the ordering of the
+[00:19:45] operations for the transactions match
+[00:19:47] the time stamps you were given when they
+[00:19:48] show up and that limits parallelism.
+[00:19:51] >> What's that?
+[00:19:55] >> The statement is um because we assign it
+[00:19:58] when they validate that it gives us more
+[00:20:00] flexibility to get better parallelism.
+[00:20:01] Yes.
+[00:20:03] Other
+[00:20:05] questions?
+[00:20:09] All right. So, you know, this is
+[00:20:10] obviously a simple example, but again,
+[00:20:13] this reemphasizing the same point I was
+[00:20:14] just making that like physically T1
+[00:20:17] started before T2 did, but logically T1
+[00:20:20] T2 committed before T1 did. That's why
+[00:20:24] T2 has a time stamp in the past from T1.
+[00:20:29] And it makes sense, right? Because T1
+[00:20:31] wrote to A. It wrote to A after T2
+[00:20:33] committed, right? If T2 came, if T2
+[00:20:37] would have committed after T1 did, then
+[00:20:39] it should have seen that right on A. But
+[00:20:40] it didn't.
+[00:20:43] Again, that's why getting the time stamp
+[00:20:45] later rather than the beginning ensures
+[00:20:47] you can, you know, allows you to get
+[00:20:49] that that that allows you to order the
+[00:20:52] things in a way that's still correct.
+[00:20:54] Even though it's not the same order in
+[00:20:55] which they arrived, but it is still
+[00:20:58] equivalent to a serial ordering. And as
+[00:21:00] we said last class or two classes ago
+[00:21:01] that that's correct. That's our that's
+[00:21:03] our metric for correctness.
+[00:21:13] >> So the the question is uh is this
+[00:21:16] protocol going to handle the memory
+[00:21:18] overhead of having to make all these
+[00:21:19] extra copies? I mean if you if you have
+[00:21:21] to update a billion things then you have
+[00:21:24] to update you know to make a billion
+[00:21:25] copies in this protocol. we'll see next
+[00:21:27] class in in MVCC
+[00:21:30] where you can basically take diffs of
+[00:21:32] the changes you make and those will be
+[00:21:34] much smaller but again I can back all my
+[00:21:35] intermate results in my buffer pool and
+[00:21:38] if they get swapped out to disk that's
+[00:21:39] okay because I can always bring them
+[00:21:41] back in yes
+[00:21:48] >> the question is uh the question is how
+[00:21:51] do you make sure this is happening
+[00:21:52] atomically so like I'm showing one tuple
+[00:21:55] getting written I can do that pretty
+[00:21:56] easily atomically. What do I have to
+[00:21:58] update? Multiple tables, multiple pages.
+[00:22:00] We'll come to that in a second.
+[00:22:02] The original protocol from 1981 just had
+[00:22:04] a single latch lock in front of
+[00:22:06] everything, right?
+[00:22:09] >> I think so. Yes. Uh yes, for all of
+[00:22:12] them. Uh because again, think back then
+[00:22:14] there wasn't you didn't you had one core
+[00:22:16] on your CPU. It's not like you had a
+[00:22:17] bunch of threads active. Um there's
+[00:22:20] other tricks a way to get around that
+[00:22:21] like but it'll make more sense when we
+[00:22:24] do MCC but I'll talk a little about that
+[00:22:26] in a second. Yeah, there's other tricks
+[00:22:28] you can do like you can you can make
+[00:22:29] sure that when you do the validation if
+[00:22:31] you have parallel you have multiple
+[00:22:33] workers doing validation in the same
+[00:22:34] phase that they're all going in the same
+[00:22:36] lexographical ordering of the keys. So
+[00:22:39] if I updated key ABC and you updated key
+[00:22:42] key ABC then I'm going to check A then B
+[00:22:45] then C and you'll go in the same order.
+[00:22:47] So that way like you're not checking B
+[00:22:48] and you need to check A and I'm checking
+[00:22:50] A.
+[00:22:52] >> Yes. Yes. The statement is you need a
+[00:22:55] fairness guarantee. Yes. That's outside
+[00:22:56] the scope of what we're talking about
+[00:22:57] here today. All right. So the read phase
+[00:23:00] is repeating what I already said. Right.
+[00:23:01] So we're going to track the rewrite set
+[00:23:02] of all the transactions. Uh and anytime
+[00:23:05] they want to modify something uh again
+[00:23:08] we're not doing inserts and deletes.
+[00:23:09] We're just doing updates right now.
+[00:23:10] Anytime I want to update something I'm
+[00:23:11] going to do it in my private workspace.
+[00:23:14] And so if I want to have read peral
+[00:23:16] reads, I want to make sure that I copy
+[00:23:18] everything I'm going to read also my
+[00:23:20] private workspace as well. So that way
+[00:23:22] that when I go read it again, I'm
+[00:23:23] guaranteed to see the same thing. We'll
+[00:23:26] see multi version control next class.
+[00:23:28] This is where having two timestamps can
+[00:23:30] help you because now you can say not
+[00:23:32] only the time stamp of uh was this thing
+[00:23:35] modified since I started and then if it
+[00:23:38] was, what's the time stamp of when when
+[00:23:40] it was last considered the latest
+[00:23:42] version? so I can figure out where I
+[00:23:44] land in my ranges. Again, I'm jumping
+[00:23:45] ahead of myself, but that's where the
+[00:23:46] two time stamps helps helps us the
+[00:23:48] things.
+[00:23:50] The other thing I haven't talked about
+[00:23:51] also too is like in here I'm just all
+[00:23:53] right, it's a bunch of boxes in
+[00:23:54] PowerPoint, obviously in a real system,
+[00:23:56] you have indexes. So, how do I make sure
+[00:23:58] that if I'm updating something and I'm
+[00:24:00] going to go read it again, I can do this
+[00:24:03] efficiently and because if I go check
+[00:24:04] the the global index of this table, it's
+[00:24:06] it's going to point to the database at
+[00:24:08] the top, not to my private workspace. So
+[00:24:09] a little extra little extra metadata I
+[00:24:11] got to keep track of like okay if I'm
+[00:24:12] looking for A on this table I actually
+[00:24:14] have a copy of it. Don't check the the
+[00:24:16] don't check the BL stream but we can
+[00:24:19] ignore that for now. All right so the
+[00:24:21] real magic happens with the validation
+[00:24:23] phase. Right. This is how we're going to
+[00:24:24] enforce that the ordering of the
+[00:24:27] operations within our transactions end
+[00:24:29] up matching a or equivalent to a serial
+[00:24:31] ordering. Right. And it so related to
+[00:24:35] what what they brought up in the
+[00:24:37] original protocol it was all serial
+[00:24:38] validation meaning like I can only have
+[00:24:40] one transaction in the validation phase
+[00:24:42] at any given time. If I now have to have
+[00:24:45] multiple transactions validating becomes
+[00:24:46] more tricky because if there's potential
+[00:24:48] deadlock issues I'm taking latches on
+[00:24:50] these right sets and readwrite sets all
+[00:24:51] the different private workspaces. It
+[00:24:52] starts to get expensive but it's the
+[00:24:54] overall high protocol doesn't change.
+[00:24:56] It's just I I need I need more machinery
+[00:24:58] to make sure that I have uh I don't have
+[00:25:00] uh race conditions and other problems.
+[00:25:04] All right. So, there's two ways to do
+[00:25:05] validation. And if your system is going
+[00:25:07] to implement OCC, you do one of these
+[00:25:09] two. And at a high level, they're the
+[00:25:12] same,
+[00:25:13] right? In the end, you're checking to
+[00:25:14] see you're for each transaction, you're
+[00:25:16] trying to see, can I am I allowed to
+[00:25:17] commit? And the question is, are you
+[00:25:19] looking back in time or forward in time
+[00:25:22] to see whether you potentially have a
+[00:25:23] conflict?
+[00:25:25] So with forward validation the idea is
+[00:25:27] that you're going to check to see
+[00:25:28] whether you the transaction that's
+[00:25:30] trying to commit whether your readr set
+[00:25:33] has a conflict with any other active
+[00:25:35] transaction running in the system right
+[00:25:37] now because you can peek in their readr
+[00:25:40] sets. know what things are looking at.
+[00:25:42] You see, have I modified something that
+[00:25:44] some transaction uh has read and I'm
+[00:25:47] trying to commit now and I'm going to be
+[00:25:49] in the past or that transa other
+[00:25:50] transactions could be in the future and
+[00:25:52] it's going to miss my right and then
+[00:25:54] again that would violate serial
+[00:25:55] ordering.
+[00:25:57] Backward validation uh is where you go
+[00:26:00] to see whether there's a read or write
+[00:26:02] that was made by a transaction that has
+[00:26:04] already committed in the past and that
+[00:26:06] you missed it like you didn't read their
+[00:26:08] changes and therefore again that would
+[00:26:11] violate the ser ordering because now you
+[00:26:13] you're traveling back in time and seeing
+[00:26:15] the state of the database as it was
+[00:26:17] before that other transaction committed
+[00:26:18] and you miss that read.
+[00:26:20] So the second one is the most common
+[00:26:22] one, right? Any system that's
+[00:26:24] implementing OTC, including the DSQL
+[00:26:26] stuff that we just mentioned from Amazon
+[00:26:28] uh and a couple other famous systems,
+[00:26:30] they're going to be doing this the
+[00:26:31] second approach because it's easier
+[00:26:33] because I just go check to see what's
+[00:26:35] the readr set of any transaction in the
+[00:26:37] last you certain certain time range or
+[00:26:39] something. Uh or I check the time stamp
+[00:26:42] of the latest version of the transaction
+[00:26:44] and see whether it's uh it's in the
+[00:26:46] future from when I'm trying when I when
+[00:26:48] I read it. And therefore I know I would
+[00:26:50] have uh I have a conflict. But I want to
+[00:26:53] go through forward validation just
+[00:26:54] because that'll again really clearly
+[00:26:57] shows you the idea of things may
+[00:26:59] physically happen in different order in
+[00:27:00] which they're may physically happen in a
+[00:27:03] different order than we than the
+[00:27:04] logically way the logical way we want to
+[00:27:06] store this in the database.
+[00:27:10] All right. So as we already said when a
+[00:27:11] transaction enters the validation phase
+[00:27:13] the the data system is going to assign
+[00:27:15] it a time stamp. those time stamps are
+[00:27:16] always going forward uh increasing in
+[00:27:18] time. And then now we're going to check
+[00:27:21] the the the the for the the transaction
+[00:27:24] that's trying to commit in the
+[00:27:25] validation phase. We're going to check
+[00:27:27] the rewrite set of all the other active
+[00:27:29] transactions in the system. Again, for
+[00:27:31] simplicity, assume they're they are just
+[00:27:32] in the read phase, right? They're not in
+[00:27:34] the validation phase. In the validation
+[00:27:36] phase, again, you you do same check or
+[00:27:38] simplicity, we'll keep keep them
+[00:27:39] separate. So we're going to say that the
+[00:27:42] time stamp for our transaction uh if
+[00:27:45] it's less than any other transaction
+[00:27:47] that's still running which again if you
+[00:27:48] don't have a time stamp then it's
+[00:27:49] infinity so you're definitely less than
+[00:27:51] them then one of the three following
+[00:27:54] conditions must hold in order for you to
+[00:27:56] pass the validation phase and say your
+[00:27:58] transaction is allowed to commit.
+[00:28:01] So the first one's pretty easy pretty
+[00:28:02] easy to understand. So say your t T1 T1
+[00:28:05] wants to commit and so the first check
+[00:28:07] has to be if my time stamp is less than
+[00:28:10] the other transaction's time stamp and
+[00:28:12] again if it hasn't been assigned one
+[00:28:14] it's infinity then if my transaction is
+[00:28:17] going to complete its validation phase
+[00:28:19] before the other transaction has even
+[00:28:21] started
+[00:28:23] then then it's safe for me to go ahead
+[00:28:25] and commit. So T1 starts does whatever
+[00:28:28] changes makes whatever changes it wants
+[00:28:30] in the validation phase then it hits the
+[00:28:31] validate sorry in the read phase then it
+[00:28:33] hits the validation phase and T2 hasn't
+[00:28:36] started at all. So it can't possibly
+[00:28:38] conflict because T2 hasn't read anything
+[00:28:41] in the database. It just hasn't started.
+[00:28:42] So it hasn't if I make a bunch of
+[00:28:43] changes it'll see it the transaction the
+[00:28:46] second transaction will see it when it
+[00:28:47] starts. So this one's pretty obvious,
+[00:28:50] right? It's basically saying it
+[00:28:52] guarantees this is it's a serial
+[00:28:54] ordering.
+[00:28:58] Uh I say also too for this one I'm
+[00:28:59] showing two transactions. If if you had
+[00:29:02] like you know hundreds of transactions
+[00:29:05] again the rewrite set is empty they
+[00:29:06] haven't done anything then then this is
+[00:29:09] trial to do as well. All right, the next
+[00:29:11] more complicated one is if again T1
+[00:29:13] wants to commit. If the if T1's going to
+[00:29:18] complete its right phase before T2
+[00:29:21] starts its right phase and T T1 doesn't
+[00:29:25] modify anything that's been read by T2,
+[00:29:30] then then it then the there's no
+[00:29:32] conflict and it's safe to commit T1.
+[00:29:35] Another way to say think about is like
+[00:29:36] T1 makes a bunch of changes, T2 read a
+[00:29:39] bunch of stuff. If I take the
+[00:29:40] intersection of those two sets, if it's
+[00:29:41] if it's the the empty set, then I know
+[00:29:44] there's no conflict,
+[00:29:46] right? And what this is doing, this
+[00:29:48] preventing a transaction in the future
+[00:29:50] from reading an older version of an
+[00:29:51] object that we modified. Yes,
+[00:29:57] the question is why why are we not
+[00:29:58] looking at the red set? That's case
+[00:30:00] three,
+[00:30:01] we're building up. It's a simple one is
+[00:30:03] like I you haven't started running yet.
+[00:30:04] No conflict. This one is you have
+[00:30:06] starting running yet, but you didn't
+[00:30:07] read anything that I wrote to. So no
+[00:30:09] conflict. Third one will handle the
+[00:30:11] right conflicts,
+[00:30:15] right? Okay. So T1 starts, right? We
+[00:30:18] create the workspace. It does a read on
+[00:30:20] A. Copy that workspace does a write on
+[00:30:22] A, right? We update that in our
+[00:30:24] workspace. Then now T2 starts running
+[00:30:27] and it does the read on A.
+[00:30:30] And then so then now when T1 wants to go
+[00:30:33] commit, we're going to check the the the
+[00:30:35] right set of T1 with the reset of T2. In
+[00:30:38] this case here, we have a conflict
+[00:30:40] because T2 read the object with with at
+[00:30:44] time stamp zero, but now we're trying to
+[00:30:46] write a new version of it at a future
+[00:30:49] time stamp that's going to be greater
+[00:30:50] than zero. So if T2 was really being
+[00:30:54] executed in serial ordering where it
+[00:30:56] would have it would execute after T1
+[00:30:57] committed then it would have read
+[00:30:59] whatever the version is. I don't use the
+[00:31:01] word version but would would have read
+[00:31:03] the the value at the time stamp that T1
+[00:31:05] is going to install
+[00:31:07] but it hasn't right. So therefore T1 has
+[00:31:11] to abort
+[00:31:13] even though T2 hasn't touched anything.
+[00:31:14] So it's not not a right conflict right?
+[00:31:17] But it read something in it read it read
+[00:31:20] something in the past that it shouldn't
+[00:31:21] have seen because it would should be
+[00:31:22] executing in the future.
+[00:31:27] >> The question is why not kill T2? T2
+[00:31:29] didn't do anything wrong. It's your
+[00:31:31] fault, right?
+[00:31:35] >> Say it again.
+[00:31:40] >> So his comment is like T1 did a bunch of
+[00:31:42] stuff. T2 barely has done anything yet.
+[00:31:44] Isn't it better to uh allow is it would
+[00:31:48] it be better to kill T1 sorry T2 and
+[00:31:51] that instead of rolling back the changes
+[00:31:52] of T1? Uh would that still be correct?
+[00:31:57] I mean for serial ordering you could
+[00:31:59] play that game when you start doing
+[00:32:01] parallel ones then you like you and I
+[00:32:03] conflict and now we need to coordinate
+[00:32:04] who's going to die, right? It's just
+[00:32:06] easier to kill yourself. It's like the
+[00:32:08] latching stuff with the the be tree.
+[00:32:11] How do you decide?
+[00:32:31] All right, the statement is in my
+[00:32:33] example here, I said that the the the
+[00:32:36] ordering of the transactions has to be
+[00:32:37] one where if T1 has a lower lower time
+[00:32:39] stamp than T2, then that's the zero
+[00:32:41] ordering. But in my example here, where
+[00:32:43] my black arrow is, think of the black
+[00:32:44] arrow is like the program counter. T2
+[00:32:47] does not have a time stamp yet. It's
+[00:32:48] infinity, right? So at this point here,
+[00:32:51] T2, T1 is going to get time stamp one.
+[00:32:55] Uh, and one is less than infinity. So T1
+[00:32:58] occurs logically before T2 does. In this
+[00:33:01] we're at the moment where I'm pointing
+[00:33:03] at the black where the the black arrow
+[00:33:04] is.
+[00:33:11] >> The question is what's it what's the
+[00:33:12] benefit of using time stamps versus what
+[00:33:14] using values?
+[00:33:17] >> Uh
+[00:33:20] yeah. So their statement is why do I
+[00:33:23] want to why even bother just looking at
+[00:33:25] these time stamps rather than just
+[00:33:26] seeing just comparing the values and
+[00:33:28] seeing that they're not the same.
+[00:33:30] Because the value like comparing time
+[00:33:31] stamps is cheap you know 2 64 integers
+[00:33:34] that's a single instruction. If I have
+[00:33:36] these huge strings I got to do diffs on
+[00:33:38] them that way.
+[00:33:41] >> Yes.
+[00:33:44] >> Can you what? Sorry.
+[00:33:46] >> Live lock in this case.
+[00:33:47] >> Okay.
+[00:33:51] >> Oh
+[00:33:53] >> yeah.
+[00:33:54] >> Yes. So,
+[00:33:57] so this their statement and they are
+[00:33:59] correct that in a highly contentious
+[00:34:02] system where there's a lot of conflicts,
+[00:34:04] you may end up just burning a bunch of
+[00:34:06] uh cycles trying to do a bunch of work
+[00:34:08] on transactions and then only find out
+[00:34:09] that you don't commit. You're not going
+[00:34:10] to be able to commit till the end. So,
+[00:34:11] you did a bunch of waste work.
+[00:34:12] Absolutely. Yes, you could do that.
+[00:34:17] So, in that case, you know, the
+[00:34:18] pessimistic protocol of two-based
+[00:34:20] locking would be better. So we we this
+[00:34:22] this work we've done some research was
+[00:34:24] about 10 years ago. We basically tried
+[00:34:26] every single protocol at like extreme
+[00:34:29] scale like 10,000 or a thousand cores
+[00:34:32] and in the end if everyone's trying to
+[00:34:33] update the same key they're all it's all
+[00:34:35] the same like you get one transaction at
+[00:34:37] a time right basically becomes a serial
+[00:34:39] ordering. So if you have light
+[00:34:42] contention this will be better than two
+[00:34:43] phase locking a little bit more
+[00:34:44] contention two-phase locking will be
+[00:34:46] better but then extreme contention
+[00:34:47] they're all the same. So now there are
+[00:34:49] some academic systems that try to be
+[00:34:51] clever and say uh to try to measure how
+[00:34:53] much contention you have and can
+[00:34:55] dynamically switch or adapt what
+[00:34:56] commercial protocol they're using. They
+[00:34:57] switch OC or two locking based on the
+[00:35:00] workload. No real system implements that
+[00:35:02] because it's so hard to do one of these.
+[00:35:04] Now you got to do two of them. No way.
+[00:35:06] Yeah. No, no one's going to touch that
+[00:35:08] from engineer perspective.
+[00:35:13] All right. So again with forward
+[00:35:14] validation we're going to make sure the
+[00:35:15] basic idea is that we want to make sure
+[00:35:17] that transactions don't miss changes
+[00:35:19] that they should have seen if we were
+[00:35:21] following along in in the in the proper
+[00:35:23] serial ordering right so T2 when it
+[00:35:25] committed should have seen the update
+[00:35:28] that T1 did right but it missed it
+[00:35:31] because it it read the global database
+[00:35:33] before T1 installed the the change in
+[00:35:35] the global database. Therefore T1 is not
+[00:35:37] not allowed to commit.
+[00:35:40] So an easy fix for this would be uh just
+[00:35:42] you know changing the schedule. T1
+[00:35:44] starts right does a read on a write on a
+[00:35:48] uh that that all goes in it private
+[00:35:49] workspace then now t2 is going to start
+[00:35:53] does the read on a
+[00:35:55] then it enters the validation phase. So
+[00:35:57] again at this point here even though
+[00:35:59] it's the same workload just the ordering
+[00:36:00] in which they're doing validation has
+[00:36:02] now changed right so the same operations
+[00:36:04] right but in physically they're
+[00:36:06] occurring the same way but logically the
+[00:36:08] validation for T2 is occurring before
+[00:36:11] the the validation for T1 so T2 checks
+[00:36:15] have I read anything that uh that has
+[00:36:19] been has been modified by any other
+[00:36:22] transaction again we're only checking
+[00:36:24] for whether I modified something that
+[00:36:25] somebody else read not whether I read
+[00:36:27] something that somebody else modified or
+[00:36:29] sorry that I read something I did not
+[00:36:31] read something that somebody else
+[00:36:32] modified. So again T2 is occurring
+[00:36:34] logically in the past. So it's allowed
+[00:36:37] to read the older version of A and
+[00:36:39] allowed a commit. Then now when T1 does
+[00:36:42] its commit the validation it's allowed
+[00:36:45] to commit because logically the update
+[00:36:47] to object A is occurring after T2 had
+[00:36:51] committed. So physically the update
+[00:36:53] happened before but it went was in the
+[00:36:55] private workspace that nobody could see
+[00:36:57] but then now when I go to commit want to
+[00:36:59] install it it's okay to happen uh this
+[00:37:02] is allowed to happen because T1 sorry T2
+[00:37:04] was in the past and didn't wouldn't have
+[00:37:06] seen my change.
+[00:37:11] All right the last one is the the deal
+[00:37:13] with the the right right complex and the
+[00:37:15] re the right read complex that they were
+[00:37:17] mentioning. So again it's basically the
+[00:37:19] same logic again we check to see whether
+[00:37:20] the intersection of our right set with
+[00:37:23] the right set of the other transaction
+[00:37:25] and in and the read set if those are all
+[00:37:27] empty then I know that we we have not
+[00:37:29] mod any modified anything that they have
+[00:37:31] written to or they have read.
+[00:37:34] So going back here again. So say now uh
+[00:37:37] T1 wants to do a read on A and a write
+[00:37:38] on A. T2 wants to do a read on A and a
+[00:37:41] read sorry read on B and read on A. So
+[00:37:43] in this case here when T t T T T T T T T
+[00:37:45] T T T T T T T T T T T T1 goes to commit
+[00:37:46] we'll give it time stamp one, right? We
+[00:37:49] go update its uh it's the right time
+[00:37:52] stamp for it workspace because T2 has
+[00:37:55] not read uh has not physically read A
+[00:37:59] yet. Then there's no conflict allowing
+[00:38:02] with T allowing T1 to commit. So there's
+[00:38:04] no conflict between the right set here
+[00:38:06] with a read set on disk because this is
+[00:38:07] read B. This is only written to A. So T2
+[00:38:11] T1 is allowed allowed to commit. We
+[00:38:13] install that change now in the private
+[00:38:14] workspace. Then now when T2 starts
+[00:38:18] running again and it reads A, it's going
+[00:38:19] to read the later the newest version of
+[00:38:21] of A that was modified by T1 T1. And
+[00:38:25] again and this is equivalent to the
+[00:38:26] transactions happening executing in
+[00:38:28] serial order.
+[00:38:30] So it's given time stamp two right
+[00:38:33] uh and we didn't do any right. So
+[00:38:35] there's there's nothing to install. So
+[00:38:36] we just blow it all away.
+[00:38:38] Make sense?
+[00:38:41] So at a high level again what forward
+[00:38:43] validation is basically doing is you're
+[00:38:45] checking to see whether your right set
+[00:38:49] conflicts with any other transaction
+[00:38:50] that is still actively running even if
+[00:38:53] that transaction has started before you
+[00:38:55] did. But if they're still they're still
+[00:38:56] in the read phase they haven't they
+[00:38:58] haven't started the validation set yet
+[00:39:00] then logically they're they're still
+[00:39:02] they're going to be in the future of you
+[00:39:03] even though physically they started
+[00:39:04] before you did. So say again T1 is the
+[00:39:07] one that wants to commit. So we care
+[00:39:09] about at this point here in in the
+[00:39:10] timeline the the validation scope is is
+[00:39:13] at the moment that we committed going
+[00:39:15] back in time all the way back to
+[00:39:17] whatever transaction that was that to
+[00:39:19] any transaction that is still active.
+[00:39:22] So you got to keep again keep around the
+[00:39:23] rewrite set of every transaction. So T3
+[00:39:26] started physically before T1 did but we
+[00:39:28] can go back in time and look what T3
+[00:39:30] actually uh actually read.
+[00:39:37] backward validation which is what I say
+[00:39:38] the more common one. This one's easier
+[00:39:40] to implement uh and there's less
+[00:39:42] interference with other transactions
+[00:39:44] running the same like running the same
+[00:39:45] time as you because you're not checking
+[00:39:46] the rewrite sets of transactions that
+[00:39:48] are trying to modify their own rewrite
+[00:39:49] sets. You're just going back and looking
+[00:39:51] what are the other transactions that
+[00:39:52] have committed uh that were that were
+[00:39:56] least active when I started and
+[00:39:58] committed before I committed. So again
+[00:40:01] the validation scope for that one it
+[00:40:03] would be this range here just for T2.
+[00:40:08] >> Yes.
+[00:40:08] >> I have a question for
+[00:40:10] >> Yes.
+[00:40:12] I'm trying to wrap my mind around like
+[00:40:14] guarantee that when like that's in your
+[00:40:16] previous slide to guarantee that 22 ends
+[00:40:19] it validation phase no one else started
+[00:40:23] reading something that
+[00:40:25] like to me to implement that you kind of
+[00:40:27] need a like stop the world scenario
+[00:40:30] because like what if you compare
+[00:40:31] yourself with all the other
+[00:40:34] >> and then while you're at the end of the
+[00:40:36] list someone at the beginning of the
+[00:40:38] list like you won't come in or something
+[00:40:40] I don't have to basically stop the world
+[00:40:42] and guarantee that
+[00:40:45] there's not a new
+[00:40:46] >> right so their statement is and they are
+[00:40:48] correct that uh mostly correct like
+[00:40:52] don't I need to make sure that when I
+[00:40:54] when a transaction goes to validate that
+[00:40:57] so you want the validation or the right
+[00:40:58] the right phase with what part like have
+[00:41:01] I gotten past validation yet
+[00:41:02] >> validation the moment where you make
+[00:41:04] sure that no one else started reading
+[00:41:07] something that you're right
+[00:41:08] >> yes so
+[00:41:10] in if you do serial validation yes simp
+[00:41:13] simplest way is you stop the world right
+[00:41:16] or that you could put hints up and say
+[00:41:18] I'm in the global database or in a
+[00:41:21] posting table somewhere that says I'm
+[00:41:22] about to val I'm trying to validate now
+[00:41:25] here's the things that I've modified so
+[00:41:27] I'm going to go check to see whether
+[00:41:28] anybody else interferes with me but
+[00:41:30] anybody else that tries to read this the
+[00:41:32] thing I'm trying to validate on wait
+[00:41:34] >> it's also a little bit
+[00:41:37] like when a new transaction come in
+[00:41:39] needs to
+[00:41:42] the statement in the correct that like
+[00:41:43] there's a little bit of
+[00:41:46] backward validation being done by
+[00:41:47] transactions when they start because you
+[00:41:49] have to check to see whether this thing
+[00:41:50] is in in the process of being committed.
+[00:41:52] Yes. Well, that's what I'm saying. So if
+[00:41:54] you assume the transactions are fast and
+[00:41:56] the rewrite sets are small then like
+[00:41:57] it's a there's a window. Yes. But it's
+[00:42:00] going to be fraction of a millisecond
+[00:42:01] less than a millisecond because you're
+[00:42:02] just checking things in memory. But
+[00:42:04] again if my transaction read for hour
+[00:42:06] ran for hours or days then yeah that
+[00:42:08] that's going to be basically block
+[00:42:11] locking the whole set down to be a
+[00:42:13] single thread executing. Absolutely.
+[00:42:14] Yes.
+[00:42:16] It's unavoidable.
+[00:42:19] MVCC will handle a little bit of that
+[00:42:20] because they'll they'll do is basically
+[00:42:23] the
+[00:42:24] they'll store in the tupil itself the
+[00:42:26] metadata about what is what's being
+[00:42:29] committed or not. You still have to
+[00:42:30] check there's an actual transaction
+[00:42:32] table to keep track of like here's all
+[00:42:33] the transactions that are still running
+[00:42:34] and you got to go look at them. Uh but
+[00:42:37] like I don't have to check like
+[00:42:40] I like I can get information about
+[00:42:42] whether the current version of the
+[00:42:44] object I'm looking at is the one I
+[00:42:46] should be reading direct by looking the
+[00:42:48] object but without checking a global
+[00:42:49] thing. So that'll be the next class.
+[00:42:51] Yes.
+[00:43:04] Yeah. So the question is with backward
+[00:43:05] validation I said you have to check all
+[00:43:09] of the transactions that have committed
+[00:43:12] that that committed since I started.
+[00:43:14] Yes. So there would be a transaction
+[00:43:16] table we'll cover next class. There's a
+[00:43:18] basic internal table says here's all the
+[00:43:19] transactions that are that are that are
+[00:43:21] in some state my system. They could
+[00:43:23] either be like like you know waiting to
+[00:43:25] start running like in my read phase,
+[00:43:28] validation phase, write phase and then
+[00:43:29] also like committed but not completely
+[00:43:32] gone because someone is still depending
+[00:43:34] on the note you know maybe depending on
+[00:43:36] see whether they conflict with them.
+[00:43:41] >> Yes. And in for validation once
+[00:43:42] something commits uh and we pass a
+[00:43:46] validation step then we're done with
+[00:43:47] them. Yes.
+[00:43:54] Yes, I think the answer is yes.
+[00:44:06] check.
+[00:44:08] >> So the question is um
+[00:44:11] uh be very clear when you say check
+[00:44:12] who's check like who's checking and when
+[00:44:14] are they checking?
+[00:44:15] >> So when you try to validate
+[00:44:18] >> you need a list of transactions instead
+[00:44:21] of just going to the main database and
+[00:44:24] check
+[00:44:26] the time stamps of the objects that
+[00:44:28] depend on.
+[00:44:29] >> Uh right yeah they are correct. So um in
+[00:44:32] this step here why do I get why do I
+[00:44:34] keep track of the transactions that that
+[00:44:35] are around why just check the object
+[00:44:37] that I wrote to or read too red you got
+[00:44:40] to check the reads as well so like
+[00:44:44] uh you why not check every individual
+[00:44:46] tupil versus just checking this like
+[00:44:49] state table I'm mentioning because if
+[00:44:51] the p for correctness for correct reason
+[00:44:54] what you're proposing is still correct
+[00:44:56] like whether you check the state table
+[00:44:58] the transaction state table or the
+[00:44:59] individual tupils it'll still be
+[00:45:01] correct. It's way faster to go check a
+[00:45:03] single state table, it's going to have
+[00:45:05] all your information because that'll be
+[00:45:06] in memory. Whereas if the tupils that
+[00:45:09] they modified that I go that I read, but
+[00:45:11] I didn't write to. So I read them and
+[00:45:13] maybe they got swapped out to disk. Now
+[00:45:15] I got to go read them again to see
+[00:45:16] whether uh someone has modified them
+[00:45:19] since the last time. Right? We'll see
+[00:45:22] this in um it sounds like a crazy idea.
+[00:45:25] You're basically trying to say I got to
+[00:45:26] read it twice. Some systems will
+[00:45:28] actually do that. We'll cover that in
+[00:45:30] this class.
+[00:45:37] >> The question is backward validation
+[00:45:38] versus forward validation faster.
+[00:45:41] In the end, I think performance is the
+[00:45:43] same. Uh engineering wise, backward is
+[00:45:46] easier. That's why most of the systems
+[00:45:47] do that because there's less
+[00:45:49] interference with the runtime of other
+[00:45:50] transactions. With backward, I'm just
+[00:45:53] going to see whether things have already
+[00:45:54] committed. They've already done. So I'm
+[00:45:56] not really interfering with them because
+[00:45:57] they're dead or you know they've they've
+[00:45:59] moved on
+[00:46:01] and most systems implement the the
+[00:46:03] backward one.
+[00:46:08] All right. So then this this one we
+[00:46:09] covered already about like the serial
+[00:46:10] commits and the parallel commits. Again
+[00:46:12] it's it's a bit more complicated. It
+[00:46:15] just you have to make sure things happen
+[00:46:17] in in sort of a in in in the same order.
+[00:46:22] uh and you you acquire latches on the
+[00:46:23] various data structures you're using to
+[00:46:24] check different things.
+[00:46:27] We've already covered a lot of these
+[00:46:28] points. All right. So the main take away
+[00:46:30] from OC is that this is going to work
+[00:46:31] really great if the number of conflicts
+[00:46:34] are low, right? If all the transactions
+[00:46:36] are read only, then that's the best
+[00:46:37] situation because who cares whether you
+[00:46:41] know I you read you you and I read the
+[00:46:43] same thing because we did so we can
+[00:46:46] commit right away, right?
+[00:46:49] But as I've already said before, if you
+[00:46:50] have high contention, you actually do
+[00:46:53] have a lot of conflicts, then this is
+[00:46:55] going to perform worse than two-phase
+[00:46:56] locking because in the case of two-phase
+[00:46:58] locking, if I find out I have a
+[00:46:59] deadlock, I'll find out the moment I try
+[00:47:01] to acquire the lock, I won't do a bunch
+[00:47:03] of work and then realize that was a
+[00:47:05] mistake and have to throw all the work
+[00:47:06] away. Now, I may do a bunch of work and
+[00:47:08] then try to get the last lock I need
+[00:47:10] after doing a million things and then
+[00:47:11] get a deadlock and get killed. So you
+[00:47:13] can still have the same problem. But in
+[00:47:16] many cases the or because two base
+[00:47:19] locking is pessimistic. You can't do
+[00:47:21] things until you get the locks. So if
+[00:47:23] something is high contention, you won't
+[00:47:24] get the lock for it and you don't end up
+[00:47:26] wasting time.
+[00:47:28] The other thing that we'll see next
+[00:47:30] class the big problem with HTC is that
+[00:47:32] copying from the private workspace that
+[00:47:34] sucks. That's a mem copy. That's a
+[00:47:37] terrible thing to do. It's always going
+[00:47:38] to be slow. And in the case of multi
+[00:47:41] version concurrent control, what we'll
+[00:47:42] see is that there's you can basically
+[00:47:44] like take a diff of things and only copy
+[00:47:46] the things that you actually modify
+[00:47:49] and that can be much smaller because if
+[00:47:50] I have a thousand attributes and I only
+[00:47:52] update one of them and what I'm showing
+[00:47:54] here today, you have to copy all
+[00:47:55] thousand attributes into your private
+[00:47:57] workspace. In the case of uh when we see
+[00:48:01] delta records in MVCC, I just copy the
+[00:48:03] things that I modified.
+[00:48:06] >> What's that? What about repeatable
+[00:48:07] reads?
+[00:48:08] >> The question is what about non-re
+[00:48:09] repeatable reads? Time stamps will fix
+[00:48:11] that for us next class.
+[00:48:13] >> Yes. So Postgress is basically doing
+[00:48:16] what I'm describing here today. Instead
+[00:48:17] of copying to private workspace, they're
+[00:48:19] going to copy tupils into uh back into
+[00:48:21] another page in the table.
+[00:48:25] >> No, they're using
+[00:48:27] again this is where things get muddy.
+[00:48:28] They're doing multi version control
+[00:48:29] which is gonna look like MPCC but
+[00:48:31] they're using two-based locking to
+[00:48:32] protect things
+[00:48:34] but also predicate locking for
+[00:48:36] serializability.
+[00:48:37] We'll get there in a second. Okay.
+[00:48:42] All right. So any question about OC
+[00:48:43] before we jump into more stuff because
+[00:48:46] now we're talking about how we handle
+[00:48:47] inserts and deletes because this is
+[00:48:49] where everything we've talked about so
+[00:48:50] far is going to break. We still need it
+[00:48:52] but we need to make it better.
+[00:48:54] So again if it's just updates sorry and
+[00:48:57] and reads that's fine because the the
+[00:48:59] set of the objects the the number of
+[00:49:01] objects in our database is not and
+[00:49:03] tables are not going to change but when
+[00:49:05] we start now having modifications that
+[00:49:07] can affect the result of queries within
+[00:49:10] our transactions like looking at high
+[00:49:12] level concepts instead of just read and
+[00:49:13] writes then then we have to be then
+[00:49:16] these protocols aren't going to work. So
+[00:49:18] look look at two transactions now where
+[00:49:19] now we're actually going to be doing
+[00:49:21] queries right instead of just doing uh
+[00:49:24] simple reads and writes but again the
+[00:49:25] data systems end of the day is just
+[00:49:26] going to see reads and writes on objects
+[00:49:29] uh but SQL queries is easy to
+[00:49:30] understand. So we have a table of
+[00:49:32] people. We have their ID, a name, and a
+[00:49:34] status. And so T1's going to start. It's
+[00:49:37] going to run this this aggregation
+[00:49:38] query. It's going to count all the
+[00:49:39] people where the status is paid. Then
+[00:49:42] there's a context switch. All right. And
+[00:49:44] it gets a value 99. Then there's the
+[00:49:46] context switch over to T2. T2 is going
+[00:49:48] to insert DJ cache into the table and
+[00:49:51] set a status to paid. Good job. All
+[00:49:54] right. And then it commits. And again,
+[00:49:57] install our change into the database.
+[00:50:00] Then now T1's going to run again. Run
+[00:50:02] that exact same query, but now the count
+[00:50:04] of number people paid is 100.
+[00:50:08] Right? So again, this is an unre
+[00:50:10] repeatable read, but it's not unre
+[00:50:11] repeatable in a single object. It's
+[00:50:13] unbeatable in a range of objects.
+[00:50:17] All right?
+[00:50:18] So two-base locking and OC will have
+[00:50:21] this problem.
+[00:50:23] So why does the pro what is the problem?
+[00:50:25] Well, it assume we're doing 2PL for
+[00:50:28] simplicity.
+[00:50:29] The problem is that you can't acquire a
+[00:50:32] lock on something that doesn't exist,
+[00:50:34] right? He wasn't in the database of the
+[00:50:36] table the time the first query ran. So
+[00:50:39] even though it took a shared lock on
+[00:50:40] everything, right? And again, yes, you
+[00:50:43] can take a share lock on the entire
+[00:50:44] table. Assum it didn't do that. It
+[00:50:47] didn't, you know, it didn't take
+[00:50:48] couldn't take the lock on his record.
+[00:50:51] Therefore, I was allowed to insert a new
+[00:50:52] record with with his information. And
+[00:50:54] then I run the same query. And then now
+[00:50:57] I'm seeing things that that weren't
+[00:50:58] there before, right? And again, if we
+[00:51:01] were running in serial ordering uh of
+[00:51:03] our of our transactions, we shouldn't
+[00:51:05] have that phenomenon. We shouldn't have
+[00:51:07] that problem.
+[00:51:09] So this is what is called a phantom
+[00:51:10] read, right? Phantom or ghost app, you
+[00:51:13] know, apparition, whatever. The idea
+[00:51:15] that tupils are magically going to
+[00:51:17] appear and disappear and cause us to get
+[00:51:20] incorrect results in our queries.
+[00:51:23] that should not happen if you are
+[00:51:25] running in true serial ordering.
+[00:51:29] Right? So range scan is the most obvious
+[00:51:31] way to think about this. That's
+[00:51:32] something I I read it read a range once
+[00:51:35] uh I don't see there's no value in
+[00:51:37] there. Then I read it again and now
+[00:51:38] there's a value in there that I didn't
+[00:51:39] see before or the value that I saw
+[00:51:41] before now has been deleted.
+[00:51:44] Right?
+[00:51:48] >> Question. How could another transaction
+[00:51:49] delete it if you hold the show lock on
+[00:51:50] it? uh
+[00:51:55] uh
+[00:51:57] depending on how you're defining the
+[00:51:59] ranges. Keep it simple to write. Yes. Uh
+[00:52:03] just assume that someone inserted
+[00:52:05] something but the ID is the same
+[00:52:09] right or again for two ways locking that
+[00:52:12] that would occur but OC that that could
+[00:52:13] still happen.
+[00:52:16] Okay. So how can we fix this problem?
+[00:52:17] Yes. Question.
+[00:52:31] uh
+[00:52:32] their question their statement is this
+[00:52:35] phantom problem is because like I'm
+[00:52:36] within one transaction I'm not seeing
+[00:52:38] the same results. Yes. So like if I run
+[00:52:41] and I get 99 and then you run and you
+[00:52:44] get 100 that's okay because again like
+[00:52:47] that insert could should have happened
+[00:52:49] in between my query and your query right
+[00:52:52] and that's equivalent to a serial
+[00:52:53] ordering it's like within one
+[00:52:54] transaction do I do I do are things
+[00:52:56] disappearing
+[00:53:01] okay so how how can we solve this
+[00:53:03] there's four basic categories of
+[00:53:05] approaches right so the most obvious
+[00:53:07] thing is just lock everything lock the
+[00:53:08] table lock database, lock the pages,
+[00:53:10] whatever. And then that way you can't
+[00:53:12] insert anything into the uh into a range
+[00:53:15] that that I've read, right? If I lock
+[00:53:17] the entire table, you can't do any
+[00:53:19] modifications,
+[00:53:20] uh,
+[00:53:22] you know, problem solved. But again, if
+[00:53:24] I have a billion tupils in my in my
+[00:53:26] table and I'm only reading small ranges,
+[00:53:28] that's probably not a good idea because
+[00:53:30] now I'm locking more things than I
+[00:53:31] actually need.
+[00:53:33] Another approach is what sort of we we
+[00:53:36] talk about here uh is you just rerun
+[00:53:38] your scan again
+[00:53:40] uh when you commit and see whether you
+[00:53:42] see things that you shouldn't have seen
+[00:53:45] or things have changed.
+[00:53:48] >> How would you know? You got to keep
+[00:53:49] track of your reset.
+[00:53:55] >> They said they said that that's
+[00:53:56] potentially building the rows. Yes.
+[00:53:58] >> Well, we'll come to that in a second.
+[00:54:00] You can do the reverse.
+[00:54:03] all the same
+[00:54:05] again.
+[00:54:06] >> The question is, do I keep track of all
+[00:54:07] the BS again?
+[00:54:08] >> Yes.
+[00:54:09] >> Or some kind of fingerprint of it or
+[00:54:11] something like that.
+[00:54:12] >> But again, this is what I'm saying like
+[00:54:13] if your if you assume your transactions
+[00:54:14] were small, most transactions are, then
+[00:54:17] this is okay. If I go read your your
+[00:54:19] account record once and then read it
+[00:54:21] again, no big deal. Or I read, you know,
+[00:54:24] the your all your orders, say you bought
+[00:54:26] 10 things on Amazon, you have 10 orders
+[00:54:28] on Amazon, read 10 orders, no big deal.
+[00:54:30] It's not for free, but you have to do
+[00:54:33] it.
+[00:54:34] >> What's that?
+[00:54:34] >> Not that expensive. Yes. Again, there's
+[00:54:36] no free lunch.
+[00:54:39] And then predicate locking and index
+[00:54:40] locking. We'll cover that in more
+[00:54:42] detail, right? Um so again this is what
+[00:54:45] IBM figured out in in 1970s 1976 like
+[00:54:49] they figured out that the the ordering
+[00:54:51] or try to figure out how to how to do
+[00:54:53] this efficiently uh at least in case of
+[00:54:56] predicate locking is going to be an
+[00:54:58] empty problem or empty hard right
+[00:55:02] rewrite re-executing scans that's easy
+[00:55:03] to do if everything is in memory
+[00:55:05] everything's fast but again larger
+[00:55:06] things are problematic. So the the the
+[00:55:10] most common of these is going to be the
+[00:55:11] bottom one index locking. We'll see that
+[00:55:12] in a second. Uh the two middle ones are
+[00:55:15] kind of pretty rare. Uh and that for for
+[00:55:19] rex scans you normally see this in in
+[00:55:20] the in memory queries. And then the the
+[00:55:22] one at the top lock everything.
+[00:55:25] Again it's some systems will do it if if
+[00:55:27] you care about serializability.
+[00:55:31] All right. So let's look about reex. So
+[00:55:33] again, you basically track of all the
+[00:55:35] wear clauses for any any query you run
+[00:55:38] and then you when a transaction commits,
+[00:55:41] you just check to see whether the the
+[00:55:44] output of those those wear clauses match
+[00:55:46] to what you saw when you ran it the
+[00:55:48] first time. So you don't need like if
+[00:55:49] it's if it's a say a select query that
+[00:55:52] computes that aggregation, I don't need
+[00:55:54] to keep track of the aggregation result
+[00:55:56] or whatever computation I'm doing or the
+[00:55:57] joins. I just need to know for all the
+[00:55:59] base tables, what data did I see?
+[00:56:03] Right.
+[00:56:04] So I just run it again and see whether I
+[00:56:06] get the same result. So Hecaton does
+[00:56:08] this. Uh Dynamo DB and Fauna kind of do
+[00:56:11] the opposite, reverse it. Meaning they
+[00:56:13] run your queries first, but don't make
+[00:56:16] any changes to the database. They call
+[00:56:18] them like reconnaissance transactions.
+[00:56:20] They run your queries and see what it's
+[00:56:21] going to do. Keep track of your your
+[00:56:22] your scan sets. Then you go to commit
+[00:56:27] and then you run then you actually run
+[00:56:28] the queries for real and see whether you
+[00:56:30] match which you which you did when you
+[00:56:32] ran it the first time. If yes, then you
+[00:56:34] know you got things in in the right
+[00:56:35] order. So you're still doing the the
+[00:56:38] whatever the time stamp ordering or the
+[00:56:39] two-phase locking part when when the the
+[00:56:41] fake transactions run first or the fake
+[00:56:43] queries run first. And then now that I
+[00:56:45] know that I got the right ordering, I if
+[00:56:47] I run them again, if I get the same
+[00:56:48] result since I I I scheduled you in in a
+[00:56:52] in a serializable way the first time,
+[00:56:54] then when I went it for real and I get
+[00:56:56] the same result, then I know it's the
+[00:56:57] same and you're safe to commit
+[00:57:00] in the back. Yes.
+[00:57:19] Wait, so your setup is you the first
+[00:57:20] transaction is you said long
+[00:57:24] long in time or long in like they're
+[00:57:26] updating a billion things.
+[00:57:28] >> Okay. You updated and then you have
+[00:57:29] another transaction that's really short.
+[00:57:31] >> Yes.
+[00:57:36] >> Yes.
+[00:57:40] Yes.
+[00:57:46] >> Yes.
+[00:57:52] >> All right. So, there's there scenarios.
+[00:57:54] I have transaction T1, it updates a
+[00:57:56] billion things. Transaction T2 while T1
+[00:57:59] is running comes in, reads something
+[00:58:01] from that T1 modified
+[00:58:04] uh and then then it goes ahead and goes
+[00:58:07] to commit. Right? That's your setup. If
+[00:58:10] you care about serial ordering or ser
+[00:58:11] serializability, T2 is not allowed to
+[00:58:14] commit until T1 commits because it did a
+[00:58:16] dirty read. It read something that T1
+[00:58:18] modified and it hasn't T1 has not
+[00:58:20] committed yet.
+[00:58:21] So if you care about ser
+[00:58:23] serializability, then you have to wait.
+[00:58:25] If you don't, we'll cover that in a
+[00:58:27] second. Then you you commit
+[00:58:31] and then you you I mean not you well you
+[00:58:34] as the application programmer deal with
+[00:58:35] whatever the con consequence of that
+[00:58:37] right data doesn't data did what you did
+[00:58:40] what you told it to do
+[00:58:45] okay uh predicate locking the idea again
+[00:58:48] this this is what they sort of they they
+[00:58:50] were proposed to do in IBM in the 1970s
+[00:58:53] and realized it was super hard to do on
+[00:58:55] the hardware they had at the time and
+[00:58:56] also doing this exactly is is is again
+[00:58:59] MP MP hard. Um the basic idea way think
+[00:59:02] about this is that you're going to
+[00:59:04] maintain this this highdimensional space
+[00:59:07] of all the possible locks you could have
+[00:59:10] in your in your database based on
+[00:59:11] predicates. So not locks on individual
+[00:59:14] tupils like we did in in two-phase
+[00:59:16] locking where like there's a lock table
+[00:59:17] and I acquire a lock on on you know
+[00:59:19] record one two three right think of it's
+[00:59:21] a a more abstract concept
+[00:59:24] and then I'm going to check to see
+[00:59:25] whether I have uh any of these these
+[00:59:29] these polygons or these these
+[00:59:31] highdimensional objects based that are
+[00:59:32] defined based on my predicates if they
+[00:59:35] intersect then I know I have a conflict
+[00:59:38] in those transactions and then I just do
+[00:59:40] two-face locking whatever to figure the
+[00:59:42] order in which things should occur where
+[00:59:43] you have to wait or kill yourself or
+[00:59:45] whether I have deadlocks.
+[00:59:47] So again, this is this is obviously very
+[00:59:49] difficult to do if you have a lot of
+[00:59:52] predicates on a lot of tables and so you
+[00:59:55] can approximate this using uh precision
+[00:59:58] locking where you just look at the
+[00:59:59] readwrite sets and you figure out
+[01:00:00] whether there's overlap. So you got to
+[01:00:02] keep doing things around. Um in the case
+[01:00:04] of Postgress and a bunch of other
+[01:00:05] systems, they're going to they're going
+[01:00:06] to approximate this using index locking
+[01:00:08] which we'll talk talk about in a second.
+[01:00:10] So no one does this exactly because
+[01:00:12] again it's it's kind of too hard too too
+[01:00:14] difficult to do but again you can kind
+[01:00:15] of get away with it using well you can
+[01:00:18] get away with this this precision
+[01:00:19] locking stuff which is basically you
+[01:00:20] look at the rewrite sets and you see
+[01:00:22] whether there's conflict therefore you
+[01:00:23] know the predicates overlap so the only
+[01:00:27] system that does this with precision
+[01:00:28] locking is these German systems and
+[01:00:31] they're all written by one guy right so
+[01:00:33] cedarb umbra and hyper it's all written
+[01:00:35] by this one guy in Munich um and the the
+[01:00:38] precision locking papers was like from
+[01:00:40] 1983. It had like 30 citations when the
+[01:00:43] German guy found it and it's like this
+[01:00:45] solves exactly my problem, right? And he
+[01:00:46] implements exactly what they're doing
+[01:00:48] here and it guarantees serializability,
+[01:00:50] right? But the the original proposal of
+[01:00:52] predicate locking looked like this. So I
+[01:00:54] have my my predicates uh and my my two
+[01:00:56] queries and I extract out the wear
+[01:00:58] clause and I'm going to map that to some
+[01:01:00] region in my in this high dimensional
+[01:01:01] space. So for simplicity, I assume that
+[01:01:03] there's only two dimensions. there's the
+[01:01:05] status and and the and the the person,
+[01:01:09] right? So then now for this other one
+[01:01:12] here, uh when I insert this query,
+[01:01:14] that's the same as acquiring a lock on
+[01:01:17] the name DJ cache and the status is
+[01:01:19] paid. And then if I know that the two
+[01:01:22] regions overlap, I know that there's a
+[01:01:24] conflict in their predicates and
+[01:01:25] therefore I have to decide now my
+[01:01:27] protocol who's allowed to acquire the
+[01:01:28] lock and who's allowed to commit and so
+[01:01:29] forth. Again for two dimensions it's
+[01:01:32] easy but think think of like a table you
+[01:01:33] know 10,000 columns this becomes uh
+[01:01:36] unmaintainable. Yes.
+[01:01:38] >> So,
+[01:01:41] >> precision locking
+[01:01:43] we teach this advanced class on here.
+[01:01:45] The basic gist of this like you look at
+[01:01:46] the rewrite sets of the transactions
+[01:01:49] >> the exact rows.
+[01:01:50] >> Yeah. The exact rows and you just check
+[01:01:52] to see whether like the they're
+[01:01:53] predicates whether you're you're
+[01:01:55] basically running the how is this you're
+[01:01:58] taking the wear clause of the other
+[01:01:59] query and you're seeing whether it
+[01:02:00] matches any tupils in the rewrite set of
+[01:02:02] the other transactions.
+[01:02:06] You'll see something. You'll see a
+[01:02:07] watered down version of this in in uh
+[01:02:09] project 4, right? But think of like the
+[01:02:12] readwrite set is just another table. So
+[01:02:14] I just run my query that I'm going to
+[01:02:16] run in my transaction on that rewrite
+[01:02:17] set and see whether matches.
+[01:02:22] All right. So most systems are going to
+[01:02:24] do predicate locking. And you can kind
+[01:02:25] of think of this as a special case of
+[01:02:27] index locking where we're going to use
+[01:02:29] the indexes themselves as the mechanism
+[01:02:32] or the data structure to keep track of
+[01:02:34] what locks are being held. uh by
+[01:02:36] transactions and this will cover the you
+[01:02:39] the values that don't exist yet and
+[01:02:42] allows me to lock them because again I I
+[01:02:43] don't want to have my in my my if I'm
+[01:02:45] doing two-phase locking my lock table I
+[01:02:46] don't want to have a you know entries
+[01:02:48] for for ranges or things that don't
+[01:02:50] exist because that's going to become
+[01:02:52] difficult to maintain and actually
+[01:02:53] build. So I'm going to use indexes
+[01:02:55] themselves because that's they're
+[01:02:56] already going to have data in an ordered
+[01:02:58] manner and I can use them as the the the
+[01:03:01] way to figure out how how to lock
+[01:03:02] things.
+[01:03:04] So there gonna be four four different
+[01:03:06] approaches and we're going to build up
+[01:03:08] uh and and use start with the basic ones
+[01:03:10] like the the key value locks but then we
+[01:03:12] can combine all these together and
+[01:03:14] include the hierarchal locking that we
+[01:03:15] talked about last time to and to see how
+[01:03:17] we actually implement this in a real
+[01:03:19] system.
+[01:03:20] >> Yes.
+[01:03:23] >> The question would if you have no index
+[01:03:24] on the keys do you have to fall back to
+[01:03:25] scans?
+[01:03:28] >> How do you what do you
+[01:03:30] >> question how would you lock this? You
+[01:03:32] like lock the entire table.
+[01:03:33] >> Yeah.
+[01:03:34] How do you lock?
+[01:03:36] >> Question is, how do you lock something
+[01:03:37] that doesn't exist? Gap locks. Two
+[01:03:39] slides.
+[01:03:42] All right. So, the most basic one is a
+[01:03:43] key value lock in your index, right? Is
+[01:03:46] where you have a thing that you know it
+[01:03:47] exists, right? And then I can just I can
+[01:03:51] just take a lock on it, right? And
+[01:03:54] again, you don't store this in the
+[01:03:55] actual B+ node itself. You're going to
+[01:03:57] store this in a lock management. Now
+[01:03:58] you're keeping track of like within this
+[01:04:00] value within this index this this this
+[01:04:02] transaction holds the lock for it right
+[01:04:04] for an exact match for things like
+[01:04:07] infinity right the upper bounds or lower
+[01:04:09] bounds right you can just have virtual
+[01:04:11] keys for those but it works basically
+[01:04:13] the same way right
+[01:04:17] so then now to handle the case he was
+[01:04:20] they they were asking about is how do I
+[01:04:22] lock things that don't exist
+[01:04:24] well again say that I have now a
+[01:04:26] transaction that wants to insert value
+[01:04:28] 15, right? Between 14 and 16. 15 doesn't
+[01:04:32] exist yet. So, I'm just going to keep
+[01:04:34] track of all the gaps between the keys
+[01:04:36] that I do have in my my index. And then
+[01:04:39] now I can take keys on the gaps or
+[01:04:41] sorry, take locks on the gaps. So, this
+[01:04:44] is going to say I'm going to have a a
+[01:04:46] lock on the the gap between 14 and 16
+[01:04:50] exclusive. So, again, these are all
+[01:04:52] integers, but say someone inserts like
+[01:04:54] 15.1, 15.2, 2 15.3 all of that would be
+[01:04:57] covered by the single gap lock
+[01:05:00] right if it's integers it's only 15 or
+[01:05:03] any possible value thing of strings I
+[01:05:06] have key aa and key abc I I need a gap
+[01:05:09] between the two of them and the gap lock
+[01:05:11] would handle that
+[01:05:15] but then now I don't want to have to
+[01:05:16] keep track of a or keep maintain uh a
+[01:05:19] lock for every single key value pair
+[01:05:21] that or key that that I want to maintain
+[01:05:22] and every single possible gaps that I
+[01:05:24] may have within a range of values. So
+[01:05:26] now I start combining them together and
+[01:05:28] take key range locks. So my lock tables
+[01:05:32] I'll basically keep track of like you
+[01:05:33] know here's the starting point 14
+[01:05:35] inclusive and then the the key range
+[01:05:37] lock goes up to 16 exclusive.
+[01:05:40] So now if anybody wants to insert
+[01:05:42] something in this range they got to go
+[01:05:43] acquire the the key range lock for this
+[01:05:45] that covers the gap and it would tell me
+[01:05:47] whether I'm allowed to to put something
+[01:05:48] something there. So going back to that
+[01:05:50] query I had in the beginning where I'm
+[01:05:51] doing that scan to trying to all find
+[01:05:53] the people within a status right I could
+[01:05:55] take the key range lock uh from that
+[01:05:58] status equals you know paid up until
+[01:06:00] whatever the next key is including the
+[01:06:02] gap and that'll prevent somebody uh you
+[01:06:04] know another transaction from inserting
+[01:06:05] a value in that range
+[01:06:10] right you can go you can go in either
+[01:06:11] directions typically you in your system
+[01:06:13] you only go one direction you either go
+[01:06:14] to the current key and going backwards
+[01:06:16] in in the ordering or the current key
+[01:06:18] and going forwards but you you only do
+[01:06:19] one.
+[01:06:22] All right. So now we can put this all
+[01:06:23] together and start do hierarchal locking
+[01:06:25] that we had before. So again, this is
+[01:06:28] kind of different than we talked about
+[01:06:29] before. We were like I was taking locks
+[01:06:30] on tupils and tables and so forth, but
+[01:06:32] now I'm taking locks on actual values
+[01:06:35] and actually within the page itself in
+[01:06:37] in my B+ tree, right? So I can take an
+[01:06:40] attention exclusive lock on a on this
+[01:06:43] sort of range of values within the page,
+[01:06:45] right? And then with inside that now I
+[01:06:47] can take an exclusive lock on the key
+[01:06:49] range from 14 inclusive to 16 exclusive
+[01:06:52] within the within the gap. But then also
+[01:06:55] I can take an exclusive lock within
+[01:06:57] another transaction can take an
+[01:06:58] exclusive lock on a another key value
+[01:07:00] pair or key key range by taking
+[01:07:02] attention attention exclusive lock which
+[01:07:04] is compatible with the intention
+[01:07:05] exclusive lock that somebody else
+[01:07:07] maintained. Now I can lock 12. So two
+[01:07:10] transactions can come in. Somebody could
+[01:07:12] be updating 12 and somebody could be
+[01:07:13] updating 14 up to the gap. And this will
+[01:07:16] prevent phantoms for me
+[01:07:19] because again, I'm trying to avoid
+[01:07:20] people inserting something that that you
+[01:07:22] know that didn't exist before because
+[01:07:24] this allows me to take locks on things
+[01:07:25] that that I didn't know about before.
+[01:07:31] Okay.
+[01:07:34] Yes.
+[01:07:37] >> Question is, what does a gap look like?
+[01:07:38] What do you mean like
+[01:07:41] The question is how would you actually
+[01:07:42] implement it? So you just keep track of
+[01:07:45] like uh where here you would keep track
+[01:07:48] of like the the range in which this is
+[01:07:50] being locked. So 14 exclusive to 16
+[01:07:52] exclusive. So the in the lock table you
+[01:07:54] would keep track of like that that that
+[01:07:56] interval. And so therefore if anybody is
+[01:07:59] trying to read something they would be
+[01:08:00] scanning along the leaf nodes and say
+[01:08:02] they're finding values. Say, say you
+[01:08:04] don't know the values that are or the
+[01:08:06] keys that are in in the in the in a
+[01:08:07] range before they start before you go
+[01:08:10] read something, you have to go check to
+[01:08:11] see whether you can quiet the lock on to
+[01:08:12] read something.
+[01:08:14] So think of like the BSG email in
+[01:08:16] project two, you got to go check the in
+[01:08:19] the lock manager as you're scanning
+[01:08:21] along leaf nodes.
+[01:08:22] >> Yes. So if you come in and you intend to
+[01:08:25] modify a gap at the back, do you always
+[01:08:29] lock everything until the end of the
+[01:08:30] page?
+[01:08:33] >> The question is if I intend to insert
+[01:08:35] something into this gap, do I lock from
+[01:08:37] the gap to the end of the page? Uh you
+[01:08:40] would know again at this point you're
+[01:08:42] inside you're inside the page. So you
+[01:08:44] know what the values that are here,
+[01:08:45] right? So you're you know you have it in
+[01:08:48] some kind of read mode. You're reading
+[01:08:49] things. That's okay. So then I'm going
+[01:08:51] to go check the the lock manager. So I I
+[01:08:55] know what I'm trying to insert or
+[01:08:56] delete, right? So you go check the lock
+[01:08:58] manager. Give me the lock for for the
+[01:09:00] thing I'm trying to modify. And it may
+[01:09:02] be to the end, may may not be. Depends
+[01:09:03] on what you're trying to do.
+[01:09:04] >> But I'm saying you know the you'd have
+[01:09:06] to know the value you're trying to
+[01:09:07] modify in order for it.
+[01:09:10] >> Yeah. But let's say you're trying to
+[01:09:11] insert.
+[01:09:12] >> Yes.
+[01:09:12] that you're going to move 16.
+[01:09:17] >> So his question is
+[01:09:20] uh if I insert 15 and then now I got to
+[01:09:22] split this node. How about that? The
+[01:09:24] people
+[01:09:30] >> uh you talking about physically within
+[01:09:32] the page.
+[01:09:33] >> I I still have to take a right latch on
+[01:09:35] the page. These are logical locks. So
+[01:09:38] I'm I'm trying to lock the logical
+[01:09:39] values that are stored inside the page.
+[01:09:40] In order for me to modify the page, I
+[01:09:42] have to take a physical latch.
+[01:09:48] Does that make sense? So again, so like
+[01:09:51] the in order for me to physically modify
+[01:09:54] the bytes within a page, I have to have
+[01:09:57] a right latch on that page. There's
+[01:09:59] another this is what we were separating
+[01:10:01] locks and latches. The the locks are
+[01:10:03] protecting the logical contents of the
+[01:10:04] database. The logical contents are the
+[01:10:06] keys that are stored within a range. I'm
+[01:10:08] using the index as the mechanism to
+[01:10:10] efficiently keep track of that range.
+[01:10:13] But I still have to maintain all the
+[01:10:14] physical correctness using the latches.
+[01:10:18] Lots of hands. Yes.
+[01:10:21] trying to do
+[01:10:33] >> the question is does that mean if I try
+[01:10:35] to do if I'm trying to run serializable
+[01:10:37] transactions where I don't and I don't
+[01:10:39] have an index on the thing on the ranges
+[01:10:41] that I'm looking at would could that be
+[01:10:44] causing them to be expensive yes
+[01:10:48] it's no free lunch
+[01:10:50] Yes.
+[01:11:02] all the other predicates.
+[01:11:04] >> The question is is try to do syntactic
+[01:11:06] uh is it static analysis of the
+[01:11:10] predicates to see whether you would have
+[01:11:11] conflicts with other um
+[01:11:14] maybe but like the pro like soon as you
+[01:11:16] have like functions inside that thing it
+[01:11:18] it it comes
+[01:11:23] The statement is like, could you just
+[01:11:26] could you do a quick fix? Could could
+[01:11:28] you quickly try to assess whether you
+[01:11:30] can determine statically through the
+[01:11:32] predicates whether you would have a
+[01:11:33] conflict with other transactions? If if
+[01:11:36] no and it's provably correct, then
+[01:11:38] you're good. If yes, then you fall back
+[01:11:40] to the more heavyweight like if if you
+[01:11:43] can't verify can't verify that they're
+[01:11:46] not going to click. Is there any space?
+[01:11:48] >> The question is, is there any work in
+[01:11:49] the space? Maybe. It's been 50 years
+[01:11:51] since people are trying to trying to do
+[01:11:52] this. So maybe
+[01:11:54] >> I I just don't know. Yeah.
+[01:11:57] >> Uh questions in the back. Sorry.
+[01:12:01] Okay.
+[01:12:04] I think we covered all this. All right.
+[01:12:07] So now
+[01:12:10] here's the dirty secret.
+[01:12:12] We spent the last three classes talking
+[01:12:13] about how great serializability is, how
+[01:12:15] it's important to, you know, keep track
+[01:12:16] of of of what transactions are doing so
+[01:12:18] you can generate schedules that are
+[01:12:19] serializable. The dirty secret is most
+[01:12:22] databases do not give you
+[01:12:23] serializability by default,
+[01:12:27] right?
+[01:12:28] And in some systems, they'll lie to you.
+[01:12:32] Oracle famously does this. If you say to
+[01:12:34] Oracle, I want serialize all
+[01:12:35] transactions, it'll come back and say,
+[01:12:37] yep, got it. No problem. It does not
+[01:12:39] give you serializability.
+[01:12:40] Right? It gives you gives you a lower
+[01:12:42] form of of of isolation, right? And so
+[01:12:46] the reason why these systems are not
+[01:12:47] going to do all this extra stuff we've
+[01:12:49] been talking about the last last two
+[01:12:50] classes, like they're still going to do
+[01:12:51] two-phase locking, they're still going
+[01:12:52] to do OC, but all these extra mechanisms
+[01:12:55] I just talked about now to guarantee
+[01:12:56] serializability. They're not going to do
+[01:12:58] these things because they're expensive.
+[01:13:00] He kept, you know, they kept asking the
+[01:13:01] front row, what if you don't have
+[01:13:02] indexes? How do I do this?
+[01:13:06] You have to you have to do the slow
+[01:13:07] thing and just scan everything.
+[01:13:10] And so by default that's going to suck.
+[01:13:13] If if that's on by default that's going
+[01:13:14] to suck. People are like yeah this
+[01:13:15] database sucks. It's so slow and they're
+[01:13:17] they're going to switch to something
+[01:13:18] else and you know you lose out potential
+[01:13:20] customers. So that's why default
+[01:13:24] the most data systems are going to run
+[01:13:26] with a lower isolation level. So now the
+[01:13:29] question is what is an isolation level?
+[01:13:32] So an isolation level is going to
+[01:13:34] control
+[01:13:36] the the sort of how aggressive you want
+[01:13:39] the data system to be to ensure your
+[01:13:41] transactions
+[01:13:42] uh don't incur any of the anomalies that
+[01:13:45] we talked about before right dirty reads
+[01:13:48] and repeatable reads loss updates and
+[01:13:50] then the the phantom reads we just
+[01:13:51] mentioned here.
+[01:13:54] So by default serializability make sure
+[01:13:56] make sure that none of these things
+[01:13:58] happen. But if you run at a lower
+[01:14:00] isolation level you so when a
+[01:14:01] transaction starts you can tell the
+[01:14:03] system run my new transaction but run
+[01:14:04] with lower isolation level you may incur
+[01:14:08] some of these other anomalies.
+[01:14:11] And so what I'm showing here is the the
+[01:14:12] the basic ones that were originally
+[01:14:14] defined in the SQL standard from 1992.
+[01:14:17] And this is assuming you're running in a
+[01:14:19] system that uses two-phase locking. Um,
+[01:14:22] [clears throat] but the highest level is
+[01:14:24] serializable. So you say I want my
+[01:14:25] transaction on serializable and you're
+[01:14:27] guaranteed to have no phantoms.
+[01:14:28] Everything's repeatable reads and then
+[01:14:29] no dirty reads. The next lowest
+[01:14:32] isolation level is called repeatable
+[01:14:33] reads. And this is where phantoms might
+[01:14:35] happen. But the other three types of
+[01:14:38] anomalies will not will not definitely
+[01:14:40] not happen. Read committed is that you
+[01:14:43] have phantoms potentially unre repeated
+[01:14:44] reads because you read you're reading
+[01:14:46] data from transactions that have have
+[01:14:48] recently committed but maybe you read it
+[01:14:50] before first an object before they
+[01:14:52] committed and so you see you see the
+[01:14:54] data one way then they commit and now
+[01:14:56] you read it again and because you're
+[01:14:57] allowed to read committed data you you
+[01:14:59] you'll see different values so you may
+[01:15:00] have unre repeatable reads
+[01:15:03] and the read committed is just like
+[01:15:04] you're driving up the seat belt all
+[01:15:06] these anomalies may happen
+[01:15:09] now I'm counting my language here I'm
+[01:15:11] not saying they will happen. I'm saying
+[01:15:12] they might happen because again if I
+[01:15:14] just execute one transaction by itself
+[01:15:16] and no other transactions that's
+[01:15:17] serializable, right? If one transaction
+[01:15:20] in one schedule with no other
+[01:15:22] transactions is by definition serial. So
+[01:15:24] that's always be serializable. So I'm
+[01:15:26] putting a bunch of may here just to say
+[01:15:28] that like if you run these other
+[01:15:30] isolation levels, you may have these
+[01:15:31] problems depends on whether the other
+[01:15:33] transactions running at the same time
+[01:15:34] that that your transaction is running is
+[01:15:37] reading writing the data that that
+[01:15:38] you're reading and writing to.
+[01:15:42] So now if you do this uh in two-based
+[01:15:45] locking, how do you actually implement
+[01:15:46] this? Well, again, you just turn off a
+[01:15:47] bunch of the stuff I just spent the last
+[01:15:49] half an hour telling you how to do,
+[01:15:51] right? Again, OCC basically works the
+[01:15:53] same way. But in the case of two-based
+[01:15:54] locking, if I run a strong straight TPL,
+[01:15:57] uh with additional phantom protection by
+[01:15:59] either like re-executing scans, the
+[01:16:00] index locks or predicate locking or
+[01:16:02] whatever, right? then I'm guaranteed to
+[01:16:05] not have any phantoms and and all the
+[01:16:07] transactions will run in serial order or
+[01:16:09] the equivalent to a serial ordering
+[01:16:11] repeatable age. You just you just don't
+[01:16:12] do the the index locks or the stuff we
+[01:16:14] talked at the end. just do two-phase
+[01:16:15] locking uh strict two-phase locking
+[01:16:17] strong two-phase locking and you're
+[01:16:18] guaranteed to get everything without uh
+[01:16:21] everything but phantoms recommitted you
+[01:16:24] for this one you basically just do 2PL
+[01:16:27] you don't do any index logs or DAP locks
+[01:16:29] the things we talked at the end and then
+[01:16:30] when a transaction uh reads an object
+[01:16:34] you acquire the share lock on it and
+[01:16:36] then you immediately give back the
+[01:16:37] shared lock you release the share lock
+[01:16:40] again it violates 2PL ordering but um
+[01:16:44] again you're going to get better
+[01:16:44] parallelism because you you can
+[01:16:46] guarantee that other transactions can
+[01:16:47] read data that that you've read uh
+[01:16:50] immediately. You still hold the right
+[01:16:51] locks to your commit
+[01:16:53] and then in read a committed you just
+[01:16:56] you you you just don't take any share
+[01:16:58] locks at all.
+[01:17:03] >> If you if you modify something again
+[01:17:06] it's about what you
+[01:17:09] uh
+[01:17:10] again it's about but what your
+[01:17:11] transaction cares about. So I want to
+[01:17:13] make sure that I don't have any lost
+[01:17:16] updates. So I I'll hold the right locks
+[01:17:19] until I know I'm not going to write to
+[01:17:21] that transaction anymore. And in case of
+[01:17:23] most systems since you can't supposed to
+[01:17:24] call unlock on a on a excuse lock on a
+[01:17:26] tupil, it's then it's you just hold it
+[01:17:28] to the very end commit.
+[01:17:34] >> Uh the same is you cannot have loss
+[01:17:36] updates for recommitted and below.
+[01:17:39] >> You can
+[01:17:40] >> Yes. So you don't need to
+[01:17:48] >> Yes. Uh
+[01:17:51] this is hard. Uh
+[01:17:54] if I want to avoid loss updates, I don't
+[01:17:56] want to write something and then not be
+[01:17:58] able to read it. So
+[01:18:01] yes, so
+[01:18:06] so you give up the exclusive locks
+[01:18:09] I think on a recommitted
+[01:18:11] Let me double check this. Yes,
+[01:18:15] [snorts]
+[01:18:15] I again hopefully it makes it clear this
+[01:18:17] is hard. Um
+[01:18:20] uh so
+[01:18:22] again what you define what isolation
+[01:18:24] level you want if you want something
+[01:18:25] other than the default when a
+[01:18:27] transaction starts right and different
+[01:18:29] systems have different different uh
+[01:18:31] different syntax on how to do this right
+[01:18:33] and then the default is going to depend
+[01:18:35] on what what your system actually
+[01:18:37] provides for you. So this is just a
+[01:18:39] quick survey of a bunch of you know
+[01:18:40] various systems that are out there. Um
+[01:18:42] and you see that there's this little
+[01:18:44] part here right here from you know SQL
+[01:18:46] server my SQL Oracle and Postgress those
+[01:18:47] are the top four database relational
+[01:18:49] database systems in the world right and
+[01:18:52] by default none of them give you
+[01:18:54] serializable by default right case of my
+[01:18:58] SQL gives you my SQL is actually better
+[01:19:00] than the than uh than the others because
+[01:19:02] it's actually giving you repeatable
+[01:19:03] reads
+[01:19:05] which is higher than
+[01:19:07] >> what's that
+[01:19:08] >> right the question is what is SN
+[01:19:09] isolation that's next class. So when
+[01:19:12] they defined the SQL standard in 1992,
+[01:19:15] they forgot about this multiverging self
+[01:19:18] class and there's a anomaly that can
+[01:19:22] occur with snapshot isolation that
+[01:19:24] doesn't occur with two-phase locking. Uh
+[01:19:26] and the isolation level therefore is
+[01:19:28] classified as different. It's called
+[01:19:30] isol snapshot isolation. It just means
+[01:19:32] that I see a snapshot of the database
+[01:19:34] that that was created by any trans
+[01:19:36] transactions that committed before I
+[01:19:37] started.
+[01:19:39] >> Yes.
+[01:19:52] The question is do all J systems have
+[01:19:53] some version of OC? Now some some
+[01:19:55] systems will do uh 2PL
+[01:19:59] locking
+[01:20:01] >> it's it's one or the other.
+[01:20:03] Multi- versioning is going to be you can
+[01:20:05] do multi- versioning
+[01:20:07] uh with CNS class you can do it with
+[01:20:09] two-phase locking or you can do it with
+[01:20:11] OCC but the way you also do
+[01:20:13] multi-verging is with time stamps but
+[01:20:16] like the time stamps will just tell you
+[01:20:18] in which what version when was a version
+[01:20:21] created doesn't tell you who's allowed
+[01:20:22] to do what and when OCC or 2PL tell
+[01:20:25] defines that pro that that ordering
+[01:20:29] >> question which one's the most common 2PL
+[01:20:31] >> yeah All
+[01:20:34] right. So,
+[01:20:35] right, we're jumping ahead. Okay. Sorry.
+[01:20:38] So, step we'll cover next class. There's
+[01:20:40] a few systems that that do serializable,
+[01:20:43] right? In ingress was was what
+[01:20:44] Stoneburgger built before. Postgress.
+[01:20:46] Kro DB is a distributed system out of
+[01:20:48] New York City. Serial or BTB is a system
+[01:20:50] I helped build when I was in grad
+[01:20:51] school, right? By default, you get
+[01:20:53] serializability. You can't run anything
+[01:20:54] lower.
+[01:20:56] Google Spanner and I guess DSQL also as
+[01:20:59] well. Actually, I'm not sure about DC,
+[01:21:00] but Google Spanner is one of the few
+[01:21:02] systems that support strict
+[01:21:03] serializability, also known as external
+[01:21:05] consistency, meaning the order in which
+[01:21:07] transactions are committed is the order
+[01:21:09] in which they arrive in the system. So,
+[01:21:11] they're getting timestamps of when they
+[01:21:12] show up, and that's the order that's
+[01:21:13] going to use to determine when they
+[01:21:14] commit. Then he's like, what is cursor
+[01:21:16] stability?
+[01:21:18] So, that's this other weird thing.
+[01:21:20] Again, there's a whole bunch of
+[01:21:21] different isolation levels beyond the
+[01:21:22] four basic I told you. And you can sort
+[01:21:24] of think of like the the sort of chart
+[01:21:26] here at the bottom. You have read
+[01:21:27] commit, read uncommitted. I think you
+[01:21:29] there's even one below this but SQL
+[01:21:31] doesn't support this and so now you have
+[01:21:32] sort of two branches you have above
+[01:21:34] recommitted you think of like what
+[01:21:36] you're getting fewer anomalies cursor
+[01:21:38] stability is something that IBM DB2 does
+[01:21:40] basically you hold a read lock uh a
+[01:21:42] shared lock on the cursor that's reading
+[01:21:45] the data and that guarantees that within
+[01:21:47] like as I'm as the cursor is scanning
+[01:21:50] the data I'm holding implicitly a lock
+[01:21:52] on that range but then when I'm done
+[01:21:53] scanning I give it back up. So as I'm
+[01:21:55] reading as as I'm reading the table
+[01:21:56] within my cursor, I'm guaranteed to see
+[01:21:58] a consistent view. But then after that,
+[01:22:00] if I read it again, uh I it won't be
+[01:22:02] repeatable.
+[01:22:05] >> Yeah. There'll be no no inserts or
+[01:22:07] deletes while I'm scanning.
+[01:22:11] >> Yes. Only in the range. Yes. But then as
+[01:22:13] soon as I'm done scanning, I the cursor
+[01:22:15] gives it up again. And then search again
+[01:22:18] is it's the the order in which they
+[01:22:20] arrive. So I'm kind of I'm I'm going
+[01:22:21] fast here. We'll do demos and look at
+[01:22:23] this more in the next class. But the
+[01:22:25] main take I want you to get is like most
+[01:22:27] systems most data systems that are out
+[01:22:29] there today, most workloads are not
+[01:22:31] running with serializable isolation even
+[01:22:32] though I made a big deal about it.
+[01:22:34] Right? So this is a survey we did a few
+[01:22:35] years ago where we asked DBAs for their
+[01:22:37] databases running production. What's the
+[01:22:39] most common isolation level they're
+[01:22:40] using? And you can see the most common
+[01:22:41] one is recommitted because that's the
+[01:22:43] default in in most systems,
+[01:22:47] right?
+[01:22:49] >> What's that? Is that a reasonable
+[01:22:51] default?
+[01:22:51] >> Is it a reasonable default?
+[01:22:54] Nobody knows, right? Because it depends
+[01:22:57] because again it the these these
+[01:22:58] problems might occur. So like if 99.99%
+[01:23:02] of the time you know there's no issue
+[01:23:05] but then there's one time maybe you read
+[01:23:07] something you shouldn't have read, how
+[01:23:08] would you know,
+[01:23:12] right? or like you you know you
+[01:23:14] sometimes you see weird things that like
+[01:23:16] you know
+[01:23:18] anytime you maybe refresh a website and
+[01:23:19] you don't see counters look correctly
+[01:23:21] that's eventual consistency issues not
+[01:23:22] this but like for other things like you
+[01:23:25] wouldn't know all right I'm blazing on
+[01:23:27] all this so I apologize going fast but
+[01:23:29] the the main takeway from all this is
+[01:23:31] that there's basically two categories of
+[01:23:34] protocols pessimistic like two-based
+[01:23:36] locking and optimistic using time stamp
+[01:23:38] warning that we talked about today right
+[01:23:39] there's no one protocol better than
+[01:23:41] another and then next class when we talk
+[01:23:43] about multi- versioning it's actually
+[01:23:44] being a combination of all these
+[01:23:46] techniques put put together and we're
+[01:23:48] going to now instead of maintaining a
+[01:23:50] private workspace we're going to have
+[01:23:52] the the new versions of change or the
+[01:23:54] the objects that we're modifying they're
+[01:23:55] going to show up in the global database
+[01:23:56] and we're use these timestamps to figure
+[01:23:58] out what we're allowed to read or not
+[01:23:59] read. Okay,
+[01:24:02] hit it
+[01:24:05] flips acrobats over
+[01:24:11] [music]
+[01:24:20] [music]
+[01:24:25] the fortune. [music]
+[01:24:26] Get the fortune maintain
+[01:24:30] flow with the grain. Get the fortune
+[01:24:32] [music]
+[01:24:32] maintain flow with the gra.

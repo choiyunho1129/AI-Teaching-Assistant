@@ -1,0 +1,2379 @@
+[00:00:00] [music]
+[00:00:06] [music] I'm still
+[00:00:08] ass.
+[00:00:12] [music]
+[00:00:17] [music]
+[00:00:24] >> Uh, let's get started again. Round of
+[00:00:26] applause for DJ Cash. last class
+[00:00:29] again. Uh, so we missed you on Monday,
+[00:00:32] >> right?
+[00:00:33] >> Text accountant.
+[00:00:34] >> And then what was the dude who showed up
+[00:00:35] my office?
+[00:00:36] >> He's just a crazy fan.
+[00:00:37] >> He said he was like your long lost
+[00:00:39] brother or something stupid.
+[00:00:40] >> Do you know that guy or
+[00:00:41] >> No. No.
+[00:00:42] >> Okay. All right. All right. Again, thank
+[00:00:44] you so much for keeping keeping it fresh
+[00:00:46] this semester. Um, all right, guys. So,
+[00:00:48] a lot to cover today. Uh, plus we have a
+[00:00:50] guest speaker at the end. Uh, so let's
+[00:00:52] jump right into it. Again, project four
+[00:00:53] is due this this Sunday. on Monday or
+[00:00:56] sorry on Saturday we have the office
+[00:00:57] special office hours again three o'clock
+[00:00:59] 3 to 5 in in gates on the fifth floor
+[00:01:01] homework six is also due this this
+[00:01:03] Sunday as well we will then release the
+[00:01:06] solutions to it on Monday the prep for
+[00:01:08] the exam which is going to be on
+[00:01:09] December 11th at 1 p.m. not here but in
+[00:01:12] the student uh university center or the
+[00:01:15] main auditorium. Uh so again we'll cover
+[00:01:17] that immediately after this slide. And
+[00:01:19] then if you want to TA next semester for
+[00:01:21] this class since we're not teaching 721
+[00:01:24] uh please sign up here. Any questions
+[00:01:26] about project 4 the final exam or the
+[00:01:28] homework? Yes.
+[00:01:31] >> Question is can you project four can you
+[00:01:32] use late days? Yes.
+[00:01:36] Other questions?
+[00:01:39] All right let's let's plow through this.
+[00:01:40] Okay. So, um I will post this on Piaza.
+[00:01:43] Uh but the I will have an additional
+[00:01:46] office hours on the Wednesday before the
+[00:01:48] exam in the morning and in the
+[00:01:49] afternoon. Uh all the TAs will have
+[00:01:52] their their their regular office hours
+[00:01:54] up until this Saturday inclusive. Then
+[00:01:56] after that, they won't be available. If
+[00:01:58] you can't meet this time with me, uh
+[00:02:00] please send me an email and we try to
+[00:02:01] make an arrangements. And then I think
+[00:02:03] Will also will be in town as well and
+[00:02:05] I'll see whether he can be available on
+[00:02:07] Monday or Tuesday depending on his
+[00:02:08] schedule. So, as I said, the final exam
+[00:02:11] is going to be this uh next Thursday
+[00:02:14] coming up. You need to bring your senu
+[00:02:16] ID. You need to bring a pencil and an
+[00:02:18] eraser, calculator, cell phone is okay,
+[00:02:21] right? Do basic logs and things like
+[00:02:22] that. And then just like the midterm,
+[00:02:24] you can write a uh a on a regular eight
+[00:02:27] and a half. I love my like sheet of
+[00:02:29] paper, handwritten notes about whatever
+[00:02:32] whatever you want in the uh for you to
+[00:02:35] study. Okay. And then there's a practice
+[00:02:37] exam that's available that I posted on
+[00:02:39] Piaza this week and also available on
+[00:02:41] the website here. Okay. Uh you can bring
+[00:02:45] food if you want. I think that's
+[00:02:46] allowed. Just don't bring weird
+[00:02:48] Like one year somebody brought wet
+[00:02:49] laundry. Don't do that. Uh somebody
+[00:02:51] brought candles one year. Don't do that.
+[00:02:53] Um another I had a friend at another
+[00:02:55] school. They somebody brought a therapy
+[00:02:57] snake to an exam. Don't do that. Right.
+[00:03:00] Be be reasonable. Okay. All right. So
+[00:03:04] the stuff that you need to be aware of
+[00:03:06] uh that we covered in throughout the
+[00:03:07] semester or sorry before the midterm but
+[00:03:10] we've obviously need to build upon it
+[00:03:12] throughout the that everything we talked
+[00:03:13] about after the midterm are right are
+[00:03:15] are listed here. You obviously can't we
+[00:03:17] we will not ask you a in-depth SQL
+[00:03:20] question in the same way that we did in
+[00:03:21] the midterm. You obviously need to be
+[00:03:23] able to understand what select star from
+[00:03:24] table does, right? Especially in the
+[00:03:27] context of understanding the query
+[00:03:28] processing models
+[00:03:31] >> uh like in ter how window functions are
+[00:03:34] implemented or how window functions are
+[00:03:36] uh like the SQL syntax for it.
+[00:03:40] >> Uh
+[00:03:44] I don't so I I have not written the
+[00:03:46] final exam yet. I don't plan to write a
+[00:03:48] window function question. Uh
+[00:03:51] >> yeah, they're not hard. It's just a
+[00:03:53] group eye.
+[00:03:54] >> It's weird.
+[00:03:55] >> It's weird, but it's like it's group
+[00:03:56] eye.
+[00:03:58] Again, my the the
+[00:04:01] idea of the midterms understand is see
+[00:04:02] if you understand the semantics of what
+[00:04:04] the window function is actually doing.
+[00:04:05] That's not what we've covered since in
+[00:04:07] the in the in the since the midterm.
+[00:04:10] We've covered how to build all the stuff
+[00:04:11] to actually run transactions and run
+[00:04:12] queries.
+[00:04:14] All right. And then basic understanding
+[00:04:16] of bus tub again something very light
+[00:04:18] because obviously we can't have you
+[00:04:19] write code and try to compile and debug
+[00:04:20] it in the middle of the of the uh in the
+[00:04:23] final exam. This is just to get a rough
+[00:04:26] understanding of um you know did you
+[00:04:30] actually do the projects right again we
+[00:04:33] can't ask you like what is you on this
+[00:04:35] file what is this line what's this line
+[00:04:36] of code we're not going to ask you those
+[00:04:38] things it's more conceptual things okay
+[00:04:41] all right so the main things we covered
+[00:04:43] uh since before the midterm we had the
+[00:04:44] one class before the the Monday before
+[00:04:46] the midterm we talked about join
+[00:04:47] algorithms and we talked about the the
+[00:04:49] three basic nestloop joint algorithms
+[00:04:51] you can have the naive one where you
+[00:04:53] just go and getting a block for every
+[00:04:54] single tupil that's stupid don't do
+[00:04:55] that. Uh but we talked about how to do
+[00:04:57] block nestloop join index nestloop join
+[00:04:59] talked about how to do sort merge join
+[00:05:01] building upon the external merge sort
+[00:05:02] stuff we talked about before. um hash
+[00:05:05] joins, the simple case, the partition
+[00:05:07] case, and the hybrid hash join where you
+[00:05:09] keep one hash table for the hot sort of
+[00:05:11] hot partition in memory and then you let
+[00:05:13] everything else spell to disk and then
+[00:05:16] basic optimizations for uh using bloom
+[00:05:18] filters and how to cost the the hash
+[00:05:21] sorry the joins in general, right? Sort
+[00:05:23] of given set of tupils and a set of
+[00:05:25] pages, right? All right. And again, am m
+[00:05:27] amount of memory buffers. Can you cost
+[00:05:29] how much it would take to run the join
+[00:05:31] with, you know, start merge join versus
+[00:05:33] a hash join.
+[00:05:36] [clears throat]
+[00:05:38] All right. Then we talk about query
+[00:05:39] execution. Um we we talk about um
+[00:05:43] crapization. Actually, I'm missing a
+[00:05:44] slide here. Grabization. We talked about
+[00:05:47] uh the basic high level architecture of
+[00:05:49] like top down versus bottom up. Again,
+[00:05:50] we can't ask you very anything anything
+[00:05:52] real in depth. But we also spent time
+[00:05:54] talking about how to cost or estimate
+[00:05:56] the cardality selectivity of predicates,
+[00:05:59] right? Uh and using basic histograms. So
+[00:06:02] you expect to see a question like that.
+[00:06:04] Again, it's not that difficult. You just
+[00:06:06] look at the predicate and then you can't
+[00:06:07] we can't ask you anything too too in
+[00:06:09] depth on this. So don't don't freak out
+[00:06:11] about it. For the query execution, we
+[00:06:13] talked about the three different
+[00:06:13] execution models. Iterator or the
+[00:06:15] volcano model. It's calling get next
+[00:06:17] getting a single tup at a time.
+[00:06:18] Materialize is sending all the the
+[00:06:20] tupils from one operator up to the next
+[00:06:22] operator and then vector of batch is
+[00:06:24] sending you know a batch of tupils
+[00:06:26] instead of one at a time. And then we
+[00:06:28] talked about the the difference between
+[00:06:30] a push versus pull query processing
+[00:06:33] model, right? Am I going to invoke at
+[00:06:36] the root call get next and have that
+[00:06:37] percolate down and pull tubless up or I
+[00:06:40] start at the leaf nodes run those
+[00:06:42] operators and send send the data up the
+[00:06:45] plan.
+[00:06:47] We talked about the different access
+[00:06:48] methods, sequential scan, the types
+[00:06:50] optimizations we some of them we'll
+[00:06:51] cover again today. Uh index scan being
+[00:06:54] able to take you know a single index or
+[00:06:56] multiple indexes and run you know get
+[00:06:59] evaluate predicates. Uh and then how to
+[00:07:01] handle update queries in in our system.
+[00:07:04] We talked a little bit about expression
+[00:07:05] valuation. Again we'll talk about it
+[00:07:07] again today. Um just like what does the
+[00:07:09] tree look like and how would you
+[00:07:11] actually apply that on a per tupal basis
+[00:07:13] when you run your queries.
+[00:07:19] for uh query execution. We talked about
+[00:07:21] the the process models. There's there is
+[00:07:23] a single process per worker, single
+[00:07:25] thread thread per worker. What are the
+[00:07:27] pros and cons of those? Uh we talked
+[00:07:30] about the different variations of doing
+[00:07:31] parallel query execution, right?
+[00:07:33] Interquery parallelism means that I can
+[00:07:35] run multiple queries at the same time.
+[00:07:37] Intra query parallelism means that I can
+[00:07:40] have for a single query multiple workers
+[00:07:42] working together to process it. And then
+[00:07:45] the difference between the the
+[00:07:47] horizontal versus vertical. The
+[00:07:48] horizontal is when I have the most
+[00:07:51] multiple instances of the operator
+[00:07:53] running on different workers to to read
+[00:07:56] or process data for different subsets of
+[00:07:59] the of a table or subsets of the input
+[00:08:02] data. I can think if I partition it on
+[00:08:04] ranges, I can have different workers
+[00:08:06] work on different r ranges. And then
+[00:08:07] vertical partitioning is more um not as
+[00:08:11] common, but this is where you could have
+[00:08:12] one operator running some, you know,
+[00:08:15] doing some processing and then they're
+[00:08:16] streaming data up to the next operator
+[00:08:18] who could run in parallel at the same
+[00:08:19] time.
+[00:08:21] And then we briefly talked about IO
+[00:08:23] parallelism uh where we talked about the
+[00:08:27] you know
+[00:08:28] what do the data system see when it has
+[00:08:30] multiple discs could be abstracted away
+[00:08:32] with RAID or or or an appliance or
+[00:08:35] should the data system be specifically
+[00:08:36] aware of like here's the different discs
+[00:08:38] that I have and how to take advantage of
+[00:08:40] them and the most obvious thing is is
+[00:08:44] with we didn't talk about it when at the
+[00:08:45] time when we talked about IO parallelism
+[00:08:47] but like with right ahead logging a very
+[00:08:49] common approach systems use is they have
+[00:08:51] one disc for the the regular tables and
+[00:08:54] then another really fast disc dis disclo
+[00:08:56] because I want to get data out to the
+[00:08:58] right head log as fast as possible
+[00:08:59] commit transactions and then tell the
+[00:09:00] outside world that I committed. So I I
+[00:09:02] want my fastest disc to be for the
+[00:09:04] logging.
+[00:09:07] H okay. So I did have a slide is out of
+[00:09:08] order. Sorry. Right. I've already said
+[00:09:10] this already. Great optimization basic
+[00:09:12] heristics. We can apply predicate push
+[00:09:14] down projection push down. Uh
+[00:09:18] let's we won't we won't focus too much
+[00:09:20] on we won't ask you anything about nest
+[00:09:22] subqueries. Don't worry about that. Um
+[00:09:24] but statistics carality missions looking
+[00:09:26] at histograms sketches how to be able to
+[00:09:28] say for a given predicate on my table
+[00:09:30] here's some summarization of the data
+[00:09:32] what's the what's the selectivity
+[00:09:34] estimate for a predicate again we can't
+[00:09:36] ask you anything really complicated
+[00:09:37] because you know
+[00:09:40] we can't give you a giant huge huge
+[00:09:42] histogram
+[00:09:44] all right and then we spent a lot of
+[00:09:46] time talking about transactions right we
+[00:09:48] spent a whole lecture talking about the
+[00:09:49] basics of acid atomicity consistency
+[00:09:51] isolation durability
+[00:09:53] Right. So understand what all those
+[00:09:55] those four attributes mean. What are
+[00:09:56] those guarantees the system is trying to
+[00:09:57] apply or um provide for applications. We
+[00:10:02] talked about conflict serializability.
+[00:10:04] So how do we want to check for
+[00:10:05] correctness to say that a schedule is
+[00:10:07] going to be conflict serializable for
+[00:10:09] the transactions that are inside of it.
+[00:10:11] Um and how can we check whether two
+[00:10:13] schedules are considered equivalent or
+[00:10:15] conflict equivalent. View
+[00:10:16] serializability is again a more fuzzy
+[00:10:18] idea fuzzy concept of of of
+[00:10:20] serializability. just understand what
+[00:10:22] are the distinctions between viewer
+[00:10:24] relizability and conflict certizability.
+[00:10:27] So which one's more flexible like
+[00:10:29] conflict conflict serializability or
+[00:10:31] abuse serializability
+[00:10:33] >> view right but like how to be able to
+[00:10:35] identify that at runtime is impossible
+[00:10:37] unless you understand what the
+[00:10:38] application actually wants. Right? So
+[00:10:40] just just being able to understand that
+[00:10:42] some schedules may be still serializable
+[00:10:45] but they'll be view serializable and not
+[00:10:46] conflict serializable and a real system
+[00:10:49] couldn't actually provide that.
+[00:10:52] Then we talk about talk about isolation
+[00:10:53] levels right the the main ones in the
+[00:10:56] SQL at least anti-SQL standard right
+[00:10:59] serializable is at the top then you have
+[00:11:02] uh repeatable read and below that you
+[00:11:04] have uh read committed and below that
+[00:11:05] you have read uncommitted and then
+[00:11:07] snapshot isolation is this other thing
+[00:11:08] on the side that provides uh certain
+[00:11:11] guarantees that the other ones don't
+[00:11:13] right and so one of the main anomalies
+[00:11:15] that can occur for transactions on these
+[00:11:17] different isolation levels again could
+[00:11:19] occur doesn't mean that always will but
+[00:11:21] they could occur
+[00:11:22] And what are the mechanisms you would
+[00:11:24] use to protect them?
+[00:11:29] >> Say it again.
+[00:11:30] >> Can we ever say that anomaly?
+[00:11:33] >> The question is uh can we ever say that
+[00:11:36] anomaly will occur under isolation
+[00:11:37] level?
+[00:11:39] Uh
+[00:11:41] oh. So basically you're asking whether
+[00:11:43] could we predict for a given isolation
+[00:11:45] level and a maybe set of transactions
+[00:11:47] actually running that you will incur
+[00:11:49] these things. Um often times it's like a
+[00:11:51] race condition like in in a real system
+[00:11:53] be able to say like if I run this
+[00:11:56] you know like maybe one one transaction
+[00:11:59] will get paused because like a disc read
+[00:12:00] or write or something and then it gets
+[00:12:02] stalled and therefore it won't see
+[00:12:04] certain things. It won't see certain
+[00:12:05] anomalies but like that disc isn't there
+[00:12:07] then it does see it. There's a bunch of
+[00:12:09] layers. It's hard to be able to predict
+[00:12:10] this and that's why it's like it says it
+[00:12:13] may occur, right? Because if I run a
+[00:12:15] read uncommitted but I only want one
+[00:12:16] transaction at a time, then like it's
+[00:12:18] technically serizable, right?
+[00:12:21] There's one there's some theory work on
+[00:12:23] how to how to determine I think after
+[00:12:25] the fact whether a transaction
+[00:12:28] uh saw something that it shouldn't have
+[00:12:30] seen and then try to then understand
+[00:12:34] what are the long-term implications of
+[00:12:35] that for data. Like if if you we're off
+[00:12:38] topic, but like if my transaction does
+[00:12:41] it incurs an anomaly, but then I write
+[00:12:43] something to the database, then
+[00:12:44] technically anybody that comes along
+[00:12:46] later that reads and writes based on
+[00:12:47] what I wrote is now kind of incorrect as
+[00:12:50] well like the butterfly effect and how
+[00:12:52] to measure that it's like impossible.
+[00:12:56] All right. So then we spent a lecture on
+[00:12:59] talking about transactions in the
+[00:13:00] context of two-based locking. Uh again
+[00:13:03] the idea of two-phase locking is that I
+[00:13:05] acquire locks either shared locks or
+[00:13:07] exclusive locks while in in in sort of
+[00:13:09] the growing phase and then as soon as I
+[00:13:11] release one lock then I automatically
+[00:13:14] end up in the uh in the shrinking phase.
+[00:13:17] But as we said in in in SQL in real
+[00:13:20] systems there isn't an explicit call to
+[00:13:22] unlock to unlock your locks or give your
+[00:13:25] locks back. And so most systems are
+[00:13:27] going to run either with uh strict 2PL
+[00:13:30] or strong strict UPL. strict PL strict
+[00:13:32] DPL just means that I going to hold my
+[00:13:35] uh exclusive locks until the very end uh
+[00:13:37] and give them up all when I commit but
+[00:13:39] I'm allowed to release the share locks
+[00:13:41] earlier
+[00:13:43] um just you know during the shrinking
+[00:13:45] phase assuming I can know how to get
+[00:13:46] into that shrinking phase or that I'm in
+[00:13:48] the shrinking phase and then strong
+[00:13:50] strict 2PL just I think the textbook
+[00:13:52] might also call this rigorous 2PL this
+[00:13:54] just says that I'm going to hold all my
+[00:13:55] shared locks and exclusive locks till
+[00:13:57] the very end so technically there isn't
+[00:13:59] a there isn't a shrinking phase just the
+[00:14:02] whole thing is a growing phase.
+[00:14:06] All right, we talked about the cascading
+[00:14:07] abort problem. I instruct strong shrink
+[00:14:09] TPL uh can avoid this, right? Because I
+[00:14:12] can't I'm not going to release my
+[00:14:13] exclusive lock until I commit. So
+[00:14:15] therefore, nobody can read my no no
+[00:14:17] other transaction can read my dirty read
+[00:14:19] and therefore I won't have a cascading
+[00:14:20] abort. We talked about how to handle
+[00:14:22] deadlock deadlocks either through
+[00:14:24] deadlock detection or deadlock
+[00:14:25] prevention. A deadlock detection was
+[00:14:27] just identifying of cycles in the
+[00:14:29] weights for graph then killing a
+[00:14:30] transaction to break you know killing
+[00:14:32] some transaction to break the deadlock
+[00:14:34] but you may had to kill multiple
+[00:14:35] transactions to make that happen. And
+[00:14:37] then deadlock prevention was the wound
+[00:14:38] weight and weight die approach where you
+[00:14:41] order the the the the order in which the
+[00:14:45] the the transactions ordering based on
+[00:14:47] the priority of their time stamp
+[00:14:49] determines whether they're allowed
+[00:14:50] allowed or not whether they can wait or
+[00:14:52] not wait for another transaction that
+[00:14:54] holds the the lock that they want and
+[00:14:57] whether you're allowed to kill that
+[00:14:58] other transaction and take their lock or
+[00:15:00] uh you kill yourself.
+[00:15:03] [snorts] Then we talk about the multiple
+[00:15:04] randomity locking. So these are
+[00:15:06] intention locks like in the hierarchy I
+[00:15:08] have at the top I have my my a lock to
+[00:15:09] my database or lock my tables and within
+[00:15:12] below that I have lock for pages or or
+[00:15:14] tupils or even single attributes. So
+[00:15:17] understand when you want to use
+[00:15:18] intention attention locks or shared
+[00:15:21] intention exclusive locks to to minimize
+[00:15:23] the amount of uh back and forth I have
+[00:15:26] between my transaction and the lock
+[00:15:28] manager uh but also still maximize the
+[00:15:31] amount of parallelism I would allow in
+[00:15:32] in the system. So the intention locks
+[00:15:34] are like the hints for us at the higher
+[00:15:35] part of the hierarchy to say what's
+[00:15:37] going on down below.
+[00:15:41] All right. Then we talked about uh
+[00:15:42] timestamp holding transactions or
+[00:15:44] optimistic occurrency control. Right? So
+[00:15:46] understand the what are the three phases
+[00:15:48] in OC. Right? You have the read phase
+[00:15:51] where I'm reading and writing to the
+[00:15:52] database but I'm making changes to my
+[00:15:54] private workspace. And then when the
+[00:15:56] transaction goes to commit there's a
+[00:15:58] validation phase. and assume that for
+[00:16:00] simplicity you're going to run this in
+[00:16:02] in with a single thread and there's a
+[00:16:04] single global latch that you take in the
+[00:16:06] database to do this validation step to
+[00:16:08] avoid weird weird conflicts to make make
+[00:16:10] your life easier but understand what the
+[00:16:12] differences are between backwards
+[00:16:13] validation and forwards validation right
+[00:16:16] backwards is looking back to see
+[00:16:17] transactions that previously committed
+[00:16:19] to determine whether they wrote
+[00:16:21] something that you didn't read and
+[00:16:22] therefore that would violate
+[00:16:23] serializable ordering and you killed
+[00:16:25] yourself and then forwards validation
+[00:16:27] would be did a transaction that hasn't
+[00:16:29] committed yet write to something that
+[00:16:33] sorry read something that I'm going to
+[00:16:34] write to or try to write to and
+[00:16:36] therefore since if they didn't see my
+[00:16:37] update if I commit then again that would
+[00:16:39] violate the serializable ordering
+[00:16:42] then we spent time talking about uh MVCC
+[00:16:45] multi version current we talked about
+[00:16:46] the different ways to to store the
+[00:16:48] diversions right there's the appendon
+[00:16:50] only approach the time travel table and
+[00:16:52] then the delta records right so
+[00:16:54] understand the trade-offs the
+[00:16:55] implications of of these three different
+[00:16:57] approaches
+[00:16:58] Then's the way you would actually
+[00:17:00] maintain the version chain. You go
+[00:17:01] oldest to newest or newest to oldest.
+[00:17:04] Your pendul can go in both directions.
+[00:17:05] And what are the pros and cons of those?
+[00:17:07] Delta storage typically goes uh newest
+[00:17:10] to oldest. You just you put the old the
+[00:17:13] old version goes in that roll back
+[00:17:14] segment or the delta storage area.
+[00:17:17] Understand what happens in garbage
+[00:17:18] collection. How we how we find the
+[00:17:21] tupils that that that are reclaimable
+[00:17:22] and remove them. What happens when we
+[00:17:25] remove tupils that need to update
+[00:17:26] indexes? when does that happen and how
+[00:17:28] do we make sure that we don't have any
+[00:17:30] conflicts when we do those things
+[00:17:34] and then there was a question on pata
+[00:17:35] asking about MVCC with 2PL so I quickly
+[00:17:39] just go over that again I think the
+[00:17:40] textbook is saying one thing and I'm
+[00:17:42] saying something something else um so
+[00:17:45] this is the setup we have before we have
+[00:17:46] two transactions T1 and T2 and they get
+[00:17:48] timestamps in the beginning right t1 is
+[00:17:50] going to read on A and uh then it's
+[00:17:53] going to write on A and so the The way
+[00:17:56] this works is that there's no
+[00:17:59] uh you don't take shared locks
+[00:18:02] uh on on tupils because you want to
+[00:18:05] allow the a writer writing transaction
+[00:18:08] to to create a new version. But you can
+[00:18:11] only allow one transaction create a new
+[00:18:12] version at a time, right? So there's an
+[00:18:15] exclusive lock, but it's it's it's on
+[00:18:18] the the new version that's being
+[00:18:19] created,
+[00:18:21] right? So this transaction T1 is going
+[00:18:23] to create a new version here, right? Add
+[00:18:25] to this
+[00:18:26] We set it, you know, the beginning time
+[00:18:27] stamp to our current time stamp. The end
+[00:18:29] time stamp is currently infinity. And
+[00:18:30] since the previous time stamp, since
+[00:18:32] we're going oldest to newest is also
+[00:18:34] infinity, we'll set that to be our time
+[00:18:36] stamp. This is sort of bounding the the
+[00:18:39] the visibility of this of this uh of
+[00:18:42] this record. So now if any transaction
+[00:18:45] comes along with a time stamp less than
+[00:18:47] one uh they would see they would be able
+[00:18:50] to read a z
+[00:18:55] right then we do a contact switch t2
+[00:18:57] starts running right it reads a and
+[00:19:00] again since the time stamp is two is is
+[00:19:02] two it's in the future you know and
+[00:19:05] logically it's in the future from from
+[00:19:07] t1 so therefore it's going to it hasn't
+[00:19:10] can't see the the update yet because t
+[00:19:12] t1 hasn't committed yet. So it's going
+[00:19:15] to be able to read a Z because again
+[00:19:16] readers don't block the writers and then
+[00:19:18] when it tries to write to it and once it
+[00:19:21] try to get the exclusive lock on
+[00:19:23] creating the new version for the new
+[00:19:25] physical version for the single logical
+[00:19:27] tupil and therefore it has to stall and
+[00:19:29] wait rights assuming we're doing TPL
+[00:19:32] with deadlock detection. If it was doing
+[00:19:34] TPL with wound, weight, weight or die,
+[00:19:36] again that would T1 T sorry, T2 could
+[00:19:39] potentially steal the lock from T T T T
+[00:19:41] T T T T T T T T T T T T T T T T T T T T
+[00:19:41] T T T T T T T T T T T T T T T T T1 and
+[00:19:42] and have to roll back his changes. But
+[00:19:44] assum we're just doing simple uh TPL
+[00:19:47] with deadlock detection.
+[00:19:49] So then now when T1 comes back, it reads
+[00:19:52] an A, it'll read its own read its own
+[00:19:54] right that it did before. That's fine.
+[00:19:56] when it goes ahead and commits uh then
+[00:19:59] now that now it's it's um status in the
+[00:20:03] transaction table gets updated it's now
+[00:20:04] committed so now it would know that
+[00:20:06] anybody coming along could should be
+[00:20:08] able to read this uh if they wanted to
+[00:20:12] right and then now in this case here it
+[00:20:14] can can create the new version so to
+[00:20:16] your point here yes and this this here
+[00:20:17] would be a um this is an example of a of
+[00:20:23] a what's that
+[00:20:25] >> so it's It's technically right skew
+[00:20:27] because I'm reading something um
+[00:20:30] I'm reading something that in the past
+[00:20:32] where they were both seeing the same
+[00:20:34] thing but then I was allowed to
+[00:20:35] overwrite it.
+[00:20:38] >> There's
+[00:20:39] >> what's that?
+[00:20:39] >> There is an
+[00:20:42] >> Yeah. So there's an Yes. Yes. And that's
+[00:20:44] the whole point of like like [snorts]
+[00:20:46] the
+[00:20:49] you to make it fully serializable. The
+[00:20:51] extra step would then be like identify
+[00:20:53] that you wrote you're trying to write to
+[00:20:55] the same thing and that you read
+[00:20:56] something in the past that that you
+[00:20:57] should have read the other version and
+[00:20:59] you have to go kill that transaction. So
+[00:21:00] there's a you if you want to get full
+[00:21:02] serialized there's a dependency at the
+[00:21:04] graph you have to maintain as well.
+[00:21:05] That's what postgress does.
+[00:21:08] >> Just be care it's not config
+[00:21:12] >> in this example. No. Yeah.
+[00:21:15] [snorts] Even with regular MCC without
+[00:21:17] Yeah. with with snapshot isolation
+[00:21:19] without the extra check you make sure am
+[00:21:22] I violating uh do I have a right anomaly
+[00:21:25] you're not you're not serializable like
+[00:21:27] if the fact you incur the right to
+[00:21:28] anomaly means you're not serializable
+[00:21:42] >> the question is what does the effect of
+[00:21:43] MCC have on 2PL meaning the what is the
+[00:21:48] like the what is the performance
+[00:21:49] overhead of maintaining versions
+[00:21:52] um I mean there's
+[00:21:55] there's pros and cons right the fact
+[00:21:56] that I can read something with without
+[00:21:59] having to I can read something I can
+[00:22:01] read an older version like I can have my
+[00:22:03] readers not be blocked by the writers
+[00:22:05] there's advantage to that right like is
+[00:22:08] so is that worth it versus paying the
+[00:22:09] overhead of maintaining the the rollback
+[00:22:11] segments and things like that right or
+[00:22:13] maintaining the different versions
+[00:22:15] >> you still have to maintain
+[00:22:17] versions like with regl I got to
+[00:22:20] maintain versions anyway but it's like
+[00:22:22] it's almost like where it's my private
+[00:22:24] workspace because I have to have my my
+[00:22:25] undo buffer if I'm overwriting because
+[00:22:27] it's a single version I got to be able
+[00:22:29] to go back and remove that right so I
+[00:22:32] got to store the old version somewhere
+[00:22:34] anyway
+[00:22:35] >> and so you could store that in the right
+[00:22:37] head log but then now like if if that
+[00:22:40] gets flushed to disk and I don't have it
+[00:22:42] in memory now when I board and roll back
+[00:22:44] I go back to disk read back the right
+[00:22:46] log and replay it, right? It's, you
+[00:22:49] know, there's no free launch.
+[00:22:56] >> All right. Um,
+[00:22:59] >> my second question was,
+[00:23:05] >> the question is, the statement is that
+[00:23:06] the textbook says that, yeah, I saw that
+[00:23:08] the textbook says that um, MVCC with 2PL
+[00:23:12] always uses strict 2PL. Um,
+[00:23:17] so like
+[00:23:20] I think the textbook is wrong. So I'll
+[00:23:22] I'll I'll post on Piaza. There's the So
+[00:23:25] I'm going by this there's this famous
+[00:23:26] textbook uh on nothing but transactions
+[00:23:29] from Jim Gray and Reuter the guy that
+[00:23:31] coined acid and Jim Gray the wer from
+[00:23:34] the 80s that talk about how they do MBCC
+[00:23:36] and I don't like on their definition it
+[00:23:38] doesn't have to be stripped
+[00:23:41] >> Huh. So no we should not assume strict
+[00:23:45] >> the question should we assume strict any
+[00:23:46] question on the exam will be very
+[00:23:48] explicit like what the protocol it is
+[00:23:50] right to avoid any ambiguities
+[00:23:53] um but like
+[00:23:56] [clears throat] like Postgress does MVCC
+[00:23:58] with 2PL and I I'm pretty sure they're
+[00:24:01] not using strict QPL
+[00:24:03] um SQL server does strong strict I think
+[00:24:07] um yeah I'll I'll I'll post a link
+[00:24:10] afterwards
+[00:24:12] >> [snorts]
+[00:24:13] >> again and the main takeway is for any
+[00:24:15] question I would be very explicit about
+[00:24:16] like it's this protocol with this
+[00:24:18] versioning uh and this concurrent stream
+[00:24:21] and this like this ver uh here's the
+[00:24:23] version chain ordering like we'll lay
+[00:24:25] out things very uh in in full detail so
+[00:24:28] there's not like oh what's you know
+[00:24:29] there's not like oh it could be this but
+[00:24:30] if it's this like I want to avoid all
+[00:24:33] that
+[00:24:34] all right then after transactions we
+[00:24:36] talk about how to how to recover our
+[00:24:37] transactions if there's a crash right we
+[00:24:39] talked about the the two main policies
+[00:24:41] you have in your bufferable
+[00:24:42] implementation. Steel versus no steel.
+[00:24:45] Steel means that I can write out dirty
+[00:24:47] pages from transactions that haven't
+[00:24:48] committed yet out to disk. No steel says
+[00:24:51] you cannot. Force says that when a
+[00:24:54] transaction commits, all its dirty pages
+[00:24:55] that are in the buffer pool have to be
+[00:24:57] written to disk before you tell the
+[00:24:58] outside what your transactions
+[00:24:59] committed. No force says you don't have
+[00:25:00] to do that. So write a head log is using
+[00:25:03] what?
+[00:25:06] Steal no force, right? Because redhead
+[00:25:09] log allows us to flush out the dirty
+[00:25:11] pages from uncommitted transactions. As
+[00:25:13] long as the log records that correspond
+[00:25:16] to the changes to those pages, long as
+[00:25:19] that's flush to disk, then then that's
+[00:25:20] okay.
+[00:25:22] We talked about shadow paging. Again,
+[00:25:24] understand the pros and the cons of this
+[00:25:25] approach relative to write ahead
+[00:25:27] logging. Uh and then we talked about
+[00:25:30] again how how write ahead log the the
+[00:25:32] notion of these log sequence numbers
+[00:25:34] permeate all throughout our
+[00:25:35] implementation of our database system
+[00:25:37] including the buffer man manager and
+[00:25:39] it's it's what I just said I can't flush
+[00:25:41] a dirty page until the the the page LSN
+[00:25:45] or the the the last the newest LSN that
+[00:25:48] modified that page till that's been
+[00:25:50] written out to disk and once that's
+[00:25:52] flushed then I can flush the dirty page.
+[00:25:56] [snorts] Then we talked about how to
+[00:25:57] handle uh crash recovery and based on
+[00:25:59] redhead logging like there's nothing to
+[00:26:01] recover in shadow paging there's nothing
+[00:26:02] to do when you come back you just the
+[00:26:04] database is guaranteed to be in a
+[00:26:05] consistent state so you don't do
+[00:26:06] anything right ahead logging we need to
+[00:26:08] do extra work and we choose to use right
+[00:26:12] ahead logging over shadow paging because
+[00:26:13] the runtime performance is faster with
+[00:26:14] right ahead logging versus shadow paging
+[00:26:17] but if you care about instant recovery
+[00:26:18] then you would do shadow paging we
+[00:26:21] talked about the different notions of
+[00:26:22] checkpoints so fuzzy versus non-fuzzy
+[00:26:26] Right. And then within the the the fuzzy
+[00:26:29] checkpoints, we talked about the dirty
+[00:26:30] page table, the active transaction
+[00:26:32] table, all the components we need to do
+[00:26:34] the areas based recovery based on
+[00:26:36] checkpoints and and the redhead log.
+[00:26:42] Then again, we went through very quickly
+[00:26:44] at the end of the semester talking about
+[00:26:45] distributed databases. So again, we
+[00:26:47] can't ask you too many too many too low
+[00:26:49] level details. It's the high level
+[00:26:50] concepts that we care about. So what are
+[00:26:52] the different system architectures?
+[00:26:53] basically shared disk versus shared
+[00:26:55] nothing. uh how we can do replication
+[00:26:58] multi- primary versus uh primary primary
+[00:27:00] replica or leader follower
+[00:27:03] different partitioning schemes
+[00:27:04] horizontal partitioning then we talk
+[00:27:06] about two-phase commit and paxos again
+[00:27:08] that was last class we can't we
+[00:27:09] obviously went through it pretty quickly
+[00:27:10] so we can't ask you any lowle detail
+[00:27:12] questions how we do query execution in
+[00:27:14] particular how to do distributed joins
+[00:27:17] uh in our system and then the semi- join
+[00:27:19] optimization of just passing along
+[00:27:21] balloon filters instead of the actual
+[00:27:23] entire data
+[00:27:26] So last class there was a question about
+[00:27:29] in the context of Paxos uh in comparison
+[00:27:32] with uh two-phase commit how do we
+[00:27:34] handle integrity constraint violations
+[00:27:37] and
+[00:27:39] the
+[00:27:40] what I sort of messed up in the in the
+[00:27:42] description of it is the thing to
+[00:27:44] understand about like two-phase commit
+[00:27:46] is that you're kind of you can have all
+[00:27:48] of the um in two-phase commit all the
+[00:27:51] nodes have to agree the partitions have
+[00:27:53] to agree we want to commit this
+[00:27:54] transaction and in a paxos you need the
+[00:27:56] majority that means that if you're going
+[00:27:58] to use paxos or raft you have to have
+[00:28:01] the decision of whether this transaction
+[00:28:04] has violated any integrity constraints
+[00:28:06] has to be figured out before you allow
+[00:28:09] begin the commit process. So another way
+[00:28:11] to think about it is like it has to be a
+[00:28:13] deterministic operation that like we
+[00:28:16] want to do this yes or no. Uh and it
+[00:28:19] can't be any any ambiguity between the
+[00:28:21] different nodes to say like one guy says
+[00:28:23] no because they're checking things at
+[00:28:25] the moment I be after I've started the
+[00:28:27] commit process
+[00:28:30] right so in two-based commit again it's
+[00:28:32] all everyone has to agree to commit. So
+[00:28:34] when this guy says hey we're going to go
+[00:28:35] to commit prepare and this guy says okay
+[00:28:38] this guy says not okay right this is
+[00:28:40] allowed to happen under two base commit
+[00:28:42] because every node can independently
+[00:28:44] decide whether this thing is allowed to
+[00:28:45] commit or not right uh and so this this
+[00:28:48] where you would check for integrity
+[00:28:49] extreme violations in paxos what would
+[00:28:52] happen or in raft what would happen is
+[00:28:54] the the coordinator node or I think the
+[00:28:56] the proposer node or the leader they
+[00:28:58] would determine at that point when we we
+[00:29:01] begin the commit process this
+[00:29:03] transaction has not violated any of the
+[00:29:04] integrity constraints. Therefore, I'm
+[00:29:06] allowed to commit and therefore just
+[00:29:08] getting everyone else to agree that this
+[00:29:10] is the order in which we're going to
+[00:29:11] commit this transaction that has already
+[00:29:13] passed our validation steps.
+[00:29:20] >> Question when particip if somebody else
+[00:29:23] tries to commit another transaction
+[00:29:25] another and it says I want to go next in
+[00:29:27] the log. So again, it's a state machine.
+[00:29:29] You're just trying to order the the the
+[00:29:31] commits and If if there's like a split
+[00:29:34] brain where, you know, there's a network
+[00:29:36] partition,
+[00:29:38] each side wants to start, you know,
+[00:29:39] committing transactions on their own and
+[00:29:41] then when they form back together and
+[00:29:43] and it gets reconnected, somebody else
+[00:29:45] thinks they're the leader and they try
+[00:29:46] to propose to commit a transaction. But
+[00:29:47] now you would have, if you allow that to
+[00:29:49] happen, then one node would say it's
+[00:29:50] transaction one followed by two, another
+[00:29:52] one say it's two followed by one. You
+[00:29:54] can't allow that to happen. And that's
+[00:29:56] why you have to determine you have to be
+[00:29:57] deterministic in the decision that this
+[00:30:00] thing is allowed to commit at the
+[00:30:02] moment. you commit.
+[00:30:04] >> Yes.
+[00:30:11] >> Doesn't the process of checking the
+[00:30:14] conraints already involve all the nodes.
+[00:30:22] The question is if the constraints are
+[00:30:24] very complicated uh aren't the nodes
+[00:30:27] going to have to coordinate with each
+[00:30:28] other to uh which would just be the same
+[00:30:31] amount of overhead of going running
+[00:30:32] Paxos. So the dirty secret is in
+[00:30:35] distributed systems oftent times they
+[00:30:37] don't have the full uh integrity and
+[00:30:39] referential constraints that a single
+[00:30:41] node system would have. Often times you
+[00:30:43] don't get foreign key constraints in a
+[00:30:45] distributed database because that
+[00:30:47] checking is expensive.
+[00:30:49] >> What's that? What about
+[00:30:50] >> questions? What about Spanner? Uh I
+[00:30:52] think I know Spanner gives you primary
+[00:30:55] keys. Uh Spanner gives you unique keys.
+[00:30:58] I think I think they'll give you also
+[00:30:59] foreign keys as well because if what's
+[00:31:02] that?
+[00:31:04] >> Say it again.
+[00:31:05] >> Check.
+[00:31:05] >> Would they check it for you?
+[00:31:08] >> Oh, the check the check keyword in SQL.
+[00:31:11] Uh
+[00:31:12] I mean for the like check not null.
+[00:31:15] Sure. Right. Um
+[00:31:20] like the talking about when you call
+[00:31:22] like alter table create table those
+[00:31:23] checks aren't that complicated though I
+[00:31:25] mean you you can you can't it's the it's
+[00:31:27] the asserts that's what nobody supports
+[00:31:30] you can do a global asserts that says
+[00:31:31] anytime I commit to this table run this
+[00:31:33] full query and if it returns I think if
+[00:31:37] it returns anything then I think it's a
+[00:31:39] violation so like as long as query
+[00:31:42] returns null then uh then I my
+[00:31:45] constraint is not violated nobody
+[00:31:47] supports that in the shipment
+[00:31:48] environment because that could just be a
+[00:31:50] broadcast query to everyone for every
+[00:31:51] single transition you commit. So no one
+[00:31:53] does that
+[00:31:55] but spanner I think I mean we double
+[00:31:56] check spanner is going to be foreign
+[00:31:57] keys primary keys basic check
+[00:32:00] constraints but often times the foreign
+[00:32:02] keys is the first thing to go most
+[00:32:03] systems in shipping environments. Yeah.
+[00:32:06] So they have foreign keys that
+[00:32:11] >> the statement is spanner has foreign
+[00:32:13] keys that involves some internet
+[00:32:14] communication depends on how the how the
+[00:32:17] the tables are partitioned.
+[00:32:19] >> Yeah.
+[00:32:19] >> If like if if you have a a student table
+[00:32:21] and you have ID and then I have a enroll
+[00:32:23] table with student ID and the foreign
+[00:32:24] key reference to the student ID. If I
+[00:32:26] partition both tables so that like
+[00:32:29] student ID 1 123 and enrolled records
+[00:32:31] for student ID 123 are in the same box,
+[00:32:33] that's not a big deal. It's the
+[00:32:35] broadcast ones that cause problems.
+[00:32:36] >> Yeah.
+[00:32:41] >> For partitioning or for the foreign
+[00:32:42] keys.
+[00:32:45] >> Yeah. So, so like often times some
+[00:32:48] systems will say like if you don't
+[00:32:49] partition, if you don't set the
+[00:32:50] partition key to be the same as the the
+[00:32:52] foreign key, we're not going to check it
+[00:32:54] for you.
+[00:32:54] >> Okay.
+[00:32:55] >> And there, you know, whether or not
+[00:32:57] that's okay for your application depends
+[00:32:58] on your system. Okay.
+[00:33:02] All right. So again, quickly the the
+[00:33:04] things that aren't going to be the exam,
+[00:33:05] any of the flash talks, any of the
+[00:33:07] seminar talks we've had on Mondays or
+[00:33:09] Tuesdays, those aren't the final exams.
+[00:33:11] And then like again, sometimes I go off
+[00:33:13] the rails and we just had this, you
+[00:33:14] know, diet tribe about Spanner.
+[00:33:17] >> No, no, no. It's fine. Um I mean Spanner
+[00:33:20] is a fascinating system. It's like I I'm
+[00:33:23] not going to cover it today, but like we
+[00:33:24] can talk about it uh another time. Um
+[00:33:27] but anything that like oh SQL server
+[00:33:29] does this or my SQL does that post that
+[00:33:31] that's obviously not going to be in the
+[00:33:32] exam because again that's just like a a
+[00:33:35] an example of a implementation of the
+[00:33:38] concepts that we talked about throughout
+[00:33:39] the semester. Okay.
+[00:33:42] All right. Any final questions about the
+[00:33:44] final.
+[00:33:48] Okay. So let's try to get through uh
+[00:33:53] 7:21
+[00:33:54] uh in we have what 45 minutes. Let's see
+[00:33:59] what we can do. Okay.
+[00:34:01] So I showed this slide I think in
+[00:34:04] lecture 13 or so where I said here's all
+[00:34:06] the ways uh you can make squal scans go
+[00:34:09] faster. Right? We we've covered all
+[00:34:12] these uh except for materialized views
+[00:34:14] and result caching. Result caching is
+[00:34:15] basically says if my same SQL query
+[00:34:18] shows up uh multiple times and the data
+[00:34:20] hasn't changed, I just cache a result
+[00:34:22] and give it back to you. So I don't
+[00:34:23] actually run the queries, give you back
+[00:34:24] a cache result and some systems will do
+[00:34:26] that. Materialized view um these are
+[00:34:29] more complicated. If you want to do
+[00:34:30] incremental uh maintenance, this is like
+[00:34:32] if I define a materialized view, I
+[00:34:34] define a SQL query. I want to cache the
+[00:34:36] result, but then anytime the data
+[00:34:38] changes, rather than rerunning rerunning
+[00:34:40] the entire query, I can do like an
+[00:34:41] incremental update. For some things it's
+[00:34:43] easy like a like a count with a group by
+[00:34:46] on a key. Every time I I add a new key
+[00:34:48] for that I just increment the counter by
+[00:34:49] one. It's the joins are when things get
+[00:34:51] complicated. Yes.
+[00:34:55] >> The question is will the exam take full
+[00:34:57] three hours? No. You can sit around for
+[00:34:59] three hours you want but it'll be the
+[00:35:02] same roughly the same length of of
+[00:35:05] material as the midterm. So hour what 20
+[00:35:09] right. And I would say the um because we
+[00:35:12] chart this because I I love data. Uh
+[00:35:15] there does not seem to be a correlation
+[00:35:16] between how long it takes somebody to
+[00:35:18] complete the exam and their grade. So
+[00:35:20] the person usually finishes first
+[00:35:22] sometimes gets the highest grade,
+[00:35:23] sometimes gets the lowest grade. Uh and
+[00:35:26] the person that finishes fast, the one
+[00:35:27] year the person got perfect score
+[00:35:28] because they and they finished the very
+[00:35:30] end, right? So uh you take as long as
+[00:35:34] you want.
+[00:35:36] >> Say again.
+[00:35:37] solution type or it just go
+[00:35:40] >> uh no like we would write on the exam
+[00:35:42] when someone turns it in. Yeah. Um
+[00:35:47] okay so again these are all the things
+[00:35:48] we talked about the entire semester
+[00:35:50] again materialized views again these are
+[00:35:52] hard to do like postgress you can
+[00:35:53] declare materialized view it won't
+[00:35:56] increment it for you got to call
+[00:35:57] manually refresh right in some systems
+[00:35:59] that can actually maintain them
+[00:36:00] incrementally so I want to focus on this
+[00:36:03] down here so we're we're 721 is
+[00:36:05] typically about analytical systems how
+[00:36:07] to make a uh how to you know build a
+[00:36:10] system that run OLAP queries as fast as
+[00:36:11] possible so let's talk about code
+[00:36:13] specialization and compilation
+[00:36:16] All right. So they they we have a really
+[00:36:17] simple select query like this. Select
+[00:36:18] star from table where key is greater
+[00:36:20] than uh greater than low value and key
+[00:36:22] is less than high value. So the first
+[00:36:24] thing is like how do we want to organize
+[00:36:26] our code to make this run as fast as
+[00:36:28] possible uh without doing any special
+[00:36:30] hardware tricks, right? And so we want
+[00:36:32] to be mindful of what modern CPUs look
+[00:36:35] like and what they do for us. And then
+[00:36:37] we can actually design and write code in
+[00:36:39] such a way that maybe is not intuitive
+[00:36:41] for us as humans to write but it
+[00:36:43] actually turns out to be the best thing
+[00:36:44] to do for a modern supercaler CPU.
+[00:36:48] Right? So this is you know rough code
+[00:36:50] that you would have seen in bustop right
+[00:36:52] get it for every single tube on the
+[00:36:53] table go look up the key and then apply
+[00:36:55] our predicate here right and if the key
+[00:36:58] satisfies our predicate then we'll copy
+[00:37:00] the tupil in our output buffer assume
+[00:37:02] we're doing uh vectorized query
+[00:37:04] processing right [snorts]
+[00:37:07] but you know if you take an architecture
+[00:37:09] class there's a there's a problem here
+[00:37:12] right assume I have a billion tupless
+[00:37:13] I'm ripping through this what's what's
+[00:37:16] going to be the slow thing for
+[00:37:19] branching the if clause, right? Because
+[00:37:21] how does a supercaler CPU work? It tries
+[00:37:23] to predict whenever sees a jump, right?
+[00:37:26] Or a branch, it tries to predict what
+[00:37:28] branch you're going to go down, right?
+[00:37:29] Is this thing going to satisfy to true
+[00:37:31] or not? And then it specly executes the
+[00:37:34] the instructions because they're all
+[00:37:36] within, you know, within its pipeline.
+[00:37:38] It expectly execute the instructions
+[00:37:40] assuming you're going to go down a
+[00:37:41] certain path in the branch, right? And
+[00:37:43] if you get it wrong, it's like OC. you
+[00:37:45] abort the changes you made, roll back
+[00:37:48] and then reexecute things again. We got
+[00:37:49] to flush your pipeline to to roll back.
+[00:37:52] So what you want to write in a modern
+[00:37:54] day system for superless CPU CPUs is
+[00:37:57] code like this where I go get every
+[00:37:59] single tupole in my table and the first
+[00:38:01] thing I'm going to do is I'm going to
+[00:38:02] copy into my output buffer, right? And
+[00:38:05] then later on I'm going to check my uh
+[00:38:08] predicate. And now I'm just going to do
+[00:38:09] a turnary operation and and between ones
+[00:38:11] and zeros. And that's going to determine
+[00:38:13] if both these are satisfied to true then
+[00:38:15] delta is equal to one. And that's going
+[00:38:17] to increment my counter of where I'm
+[00:38:19] writing to my output buffer by one.
+[00:38:22] Right? I'm ignoring things when you
+[00:38:23] break out of the loop like check to see
+[00:38:25] whether the last thing should even be
+[00:38:26] there or not. But like you know that's
+[00:38:27] true code to write too.
+[00:38:31] >> Uh yeah question is why you
+[00:38:34] Why even need to turn a do key less than
+[00:38:36] one zero and it? Yes, it would give you
+[00:38:38] one and zero. Just being just being more
+[00:38:40] explicit. The compiler will take care of
+[00:38:42] that. Yes.
+[00:38:44] >> Question. Aren't you still branching?
+[00:38:45] No.
+[00:38:49] >> Assuming the compiler gets rid of that.
+[00:38:51] Right.
+[00:38:55] Right.
+[00:38:56] And again, this seems counterintuitive
+[00:38:58] to us as humans. Like I'm like I'm
+[00:39:00] copying every single time and then check
+[00:39:02] to see whether I should have copied the
+[00:39:03] last thing I copied. And then if it
+[00:39:05] doesn't satisfy true, then I loop back
+[00:39:06] around and just overwrite the last one.
+[00:39:08] And again, when I break out of the loop,
+[00:39:09] I got to check the the delta the last
+[00:39:11] one to see whether I should keep it or
+[00:39:12] not.
+[00:39:15] >> The question is the copy might be really
+[00:39:17] expensive as well. Again, assuming I'm
+[00:39:19] operating on vectors of data on in a
+[00:39:22] columnar format, I'm ripping through
+[00:39:24] columns.
+[00:39:27] So, this is a a a graph from a from the
+[00:39:30] paper from the the CW guys from a few
+[00:39:32] years ago, but this is showing you the
+[00:39:34] the performance difference between these
+[00:39:36] two approaches. So, it's kind of hard to
+[00:39:38] see. The blue line that loops at the
+[00:39:39] top, that's the branching one. And the
+[00:39:41] yaxis, sorry, the x- axis here is the is
+[00:39:44] the selectivity of a predicate,
+[00:39:47] right? So when the selectivity is zero
+[00:39:49] or less than five uh 5% then most of the
+[00:39:53] tupils aren't satisfying my predicate
+[00:39:55] and the CPU's uh branch predictor is
+[00:39:57] doing a good job figuring out I'm not
+[00:39:58] going to need to go down to the branch
+[00:40:00] but then above some threshold as as it
+[00:40:02] goes up as the productivity goes up it's
+[00:40:04] getting more predictions wrong and so
+[00:40:07] now you're paying this overhead of
+[00:40:08] having to you know roll back the changes
+[00:40:10] in your pipeline and go back and whereas
+[00:40:13] the red line the no branching one it's a
+[00:40:15] fixed cost so no matter what I'm doing
+[00:40:17] that copy assuming I can do that
+[00:40:19] efficiently and then I don't pay the
+[00:40:21] penalty of of of uh of any branch or
+[00:40:25] jumps because I'm just always doing it
+[00:40:27] and whether or not I overwrite the last
+[00:40:28] one or not depends on whether the
+[00:40:29] predicate gets satisfied to true.
+[00:40:33] All right.
+[00:40:35] So we're going to design code in this
+[00:40:36] way. Again it seems counterintuitive as
+[00:40:38] humans and the compiler isn't going to
+[00:40:40] do this for you. This is something you
+[00:40:42] know we would have to write and most of
+[00:40:44] the modern OB systems are going to do
+[00:40:46] this.
+[00:40:47] All right. So the next thing we got to
+[00:40:48] do is how can we speed this up even
+[00:40:50] further? Taking advantage of modern CPU
+[00:40:53] instructions. SIMD.
+[00:40:55] Who here doesn't know what SIMD is?
+[00:40:59] Who here knows what SIMD is? S. All
+[00:41:02] right. Everyone does. Fantastic. Good.
+[00:41:03] All right. So here's our our simple
+[00:41:07] branchless version of the code before
+[00:41:08] and then now I'm going to vectorize it
+[00:41:10] using CID right and again this is pseudo
+[00:41:12] code but whatever like you you load in a
+[00:41:14] vector of tup of tupils I load them into
+[00:41:16] my CID registers and then I'm going to
+[00:41:18] apply my my predicate and I'm not
+[00:41:20] defining how I'm going to do this in in
+[00:41:21] CID I'll do that in a second and then
+[00:41:23] I'm going to take the output of that
+[00:41:26] that uh those predicates that are
+[00:41:28] sitting in SIM registers and I'm going
+[00:41:30] to convert that back into my uh to my
+[00:41:33] something I put I can put my output
+[00:41:35] buffer right so give more specific
+[00:41:38] example here so say that I want to run
+[00:41:40] this query select start from table where
+[00:41:41] key is greater than n and less than u
+[00:41:43] and then my my table looks like this
+[00:41:45] like simple vector right so what I'm
+[00:41:48] going to do is I'm going to take the the
+[00:41:49] keys I want to evaluate I'm going to
+[00:41:51] load them into a to a cd register and
+[00:41:54] there's instructions explicitly to do
+[00:41:55] that and there's different size of cyd
+[00:41:57] registers like 1024 or the new AVX 10 or
+[00:42:02] whatever from from Intel goes is a 1024
+[00:42:04] AVX 512 is probably more common. So 512
+[00:42:07] bits, but you can say I'm storing um you
+[00:42:11] I can store either you four byt values,
+[00:42:14] eight byt values, sometimes they go down
+[00:42:15] to to to two byt values, right? I can
+[00:42:17] have I have different lanes I I can
+[00:42:19] store things in. Right? So I'm going to
+[00:42:21] do my cyd compare based on the constant
+[00:42:23] that I'm trying to look up here. I'm
+[00:42:24] going to get a mask there vector that
+[00:42:27] says here's the, you know, for each lane
+[00:42:29] in my CID register whether the predicate
+[00:42:31] evaluated the true or not. So I'll do
+[00:42:33] that for the first part where key is
+[00:42:35] greater than equal to n and I'll do that
+[00:42:38] same thing for now the second part the
+[00:42:39] key less than than zero. Now I have two
+[00:42:41] bit vectors that correspond to whether
+[00:42:44] that the predicate evaluated to true. So
+[00:42:46] those are both of these are going to be
+[00:42:47] sitting in CID registers. And now I have
+[00:42:49] a SIMD instruction to do an and again
+[00:42:51] cross the lanes,
+[00:42:53] right? And then that's going to
+[00:42:55] determine now which which the which
+[00:42:57] offsets in my in my input vector satisfy
+[00:43:00] the predicate.
+[00:43:03] So then now I need again I need to
+[00:43:04] convert this to something I can then use
+[00:43:06] for identifying which tupils in my input
+[00:43:08] vector satisfy the predicate. So I'll
+[00:43:11] just maintain a a vector of offsets like
+[00:43:14] in this case here 0 to 7 just
+[00:43:16] corresponds to offsets here in my my
+[00:43:18] input data and then now I use a CID
+[00:43:21] compress instruction that converts
+[00:43:23] basically the where any of the ones or
+[00:43:26] any one that's set to to true in my
+[00:43:28] input vector mask three corresponds to
+[00:43:30] the offset into the in my offset array.
+[00:43:33] And then now I get a an align vector
+[00:43:36] that tells me here's the offsets that
+[00:43:37] satisfy the predicate.
+[00:43:40] So I can rip through this super fast.
+[00:43:44] And so now again with that's now why we
+[00:43:46] want to do the vectorz
+[00:43:48] uh query processing model. The naming's
+[00:43:50] bad, right? I'm using vectorized
+[00:43:52] instructions to do this vectorzed
+[00:43:53] processing. But I'm also doing this in
+[00:43:55] the vectoring vectorzed query processing
+[00:43:57] model or the batch model. So I can take
+[00:43:59] a batch of these tupless rip through it
+[00:44:01] with SIMD. So my predicates can all be
+[00:44:03] cindified. Uh and I can do this very
+[00:44:06] very quickly.
+[00:44:07] And this what this is what the um the
+[00:44:10] the co-founder Snowflake this is one of
+[00:44:12] the cool the big things that he helped
+[00:44:14] developed uh when he built a system
+[00:44:16] called Vector Wise that came out of CWI.
+[00:44:19] Again, same place where Duck DB is. And
+[00:44:20] then Vector Wise got bought by Ingress
+[00:44:23] for like pennies. And then he so he quit
+[00:44:26] that and then he hooked up with the two
+[00:44:28] dudes from Oracle and they they found a
+[00:44:30] Snowflake and Snowflake is doing
+[00:44:32] Snowflake sort of was one of the leading
+[00:44:34] systems that did this but everyone does
+[00:44:36] this now.
+[00:44:38] All right. So another cool thing you can
+[00:44:40] do with Cindy is
+[00:44:42] all the other different operations we
+[00:44:44] talked about throughout the semester.
+[00:44:45] There's SIMD versions of them. Not all
+[00:44:47] of them are as good at not all of them
+[00:44:49] can be easily vectorized with SIMD
+[00:44:51] because oftentimes when you fall out of
+[00:44:54] the CPU cache things get super slow
+[00:44:56] because you have to go do go loads and
+[00:44:57] store gets memory. Um but there's if you
+[00:45:00] can align things nicely you can you can
+[00:45:02] do a lot of cool things. All right. So
+[00:45:04] we talked we talked about how to do
+[00:45:05] probing in a hash table before right. So
+[00:45:07] the scalar version the cydi version for
+[00:45:09] a single key hash it then do a single
+[00:45:12] probe and just you can just do our
+[00:45:13] linear scan till we find our match.
+[00:45:15] Right? So if you want to sdify
+[00:45:19] or vectorize it this is using what's
+[00:45:20] called horizontal vectorzation. There's
+[00:45:22] a vertical one where you sort of look at
+[00:45:24] things uh top to down but the this one's
+[00:45:26] more common. So now I'm going to have in
+[00:45:29] my hash table with every single sort of
+[00:45:32] row I'm going to have four keys and that
+[00:45:34] are packed together and I'm going to
+[00:45:36] have my my four values and the keys
+[00:45:40] themselves I could store the you know I
+[00:45:42] I need to have the original key because
+[00:45:43] I have to do my check to see whether
+[00:45:44] this thing matches uh when I land in my
+[00:45:46] hash table. But
+[00:45:49] since you have variable length uh keys,
+[00:45:53] often times what you'll do is also store
+[00:45:55] as another vector in here the actual the
+[00:45:58] fingerprint of the hash. So your hash
+[00:46:00] might be 32 bits or 64 bits. Maybe I'll
+[00:46:02] keep it like eight bits around. Uh so I
+[00:46:05] can just do in SIMD very quickly is my
+[00:46:08] 8bit prefix of my hash match the 8 bit
+[00:46:10] prefix of this other hash. That's a
+[00:46:11] single you know you can do that very
+[00:46:13] quickly. It's just integer comparison.
+[00:46:15] If it doesn't match, then you know the
+[00:46:16] full key is never going to match anyway.
+[00:46:17] So you just ignore it. So now when I
+[00:46:20] want to do a a lookup here,
+[00:46:23] I'll take my single key hash it just
+[00:46:25] like before. But then now when I land in
+[00:46:28] a in in a in a slot in my hash table,
+[00:46:31] I'm getting back four keys in my example
+[00:46:33] here. And now I just use SIMD to do do
+[00:46:36] the comparison I did before. Get back a
+[00:46:38] uh a bit mask that tells me which one is
+[00:46:40] matched. And then based on those I can
+[00:46:42] then go find the thing that I'm actually
+[00:46:44] looking for.
+[00:46:46] >> Why is that faster?
+[00:46:47] >> Why is this faster?
+[00:46:48] >> Yeah,
+[00:46:49] >> because so the question is why is this
+[00:46:50] faster? Because when I go probe in the
+[00:46:52] hash table, I'm, you know, that's a
+[00:46:54] cache line lookup. I'm gonna go get 64
+[00:46:57] bytes, right? And so for that 64 bytes,
+[00:47:01] if I can put more things in there, do
+[00:47:03] then do SIMD comparison instead of
+[00:47:04] having to do, you know, for loop one at
+[00:47:06] a time, this is way faster
+[00:47:10] because otherwise it's like say if it's
+[00:47:12] a cyd loop like a for loop, I'm going to
+[00:47:14] go for each element. Let's say I need to
+[00:47:17] look at four keys. I got to look at each
+[00:47:19] key separately. That's one instruction.
+[00:47:22] Whereas in SIMD, I can do all four in a
+[00:47:24] single instruction. Yeah. Yes, you have
+[00:47:26] to load in registers, right? But like
+[00:47:28] also too, I'm showing like four, you
+[00:47:31] know, four lanes. With AX 512, assuming
+[00:47:33] you have like 32-bit integers, you can
+[00:47:35] put a lot more, right? This would be
+[00:47:37] like 128 bit registers, which is like
+[00:47:39] Intel had in the 90s.
+[00:47:46] The question is like uh you're
+[00:47:47] advertising the cost because all most of
+[00:47:49] these are fail.
+[00:47:50] >> Yes.
+[00:47:58] >> Yeah. So like it's it's way faster way
+[00:48:01] faster to use versus for this.
+[00:48:04] And again the trick is instead of just
+[00:48:05] trying to like my example I was trying
+[00:48:07] to match going back here. I'm trying to
+[00:48:09] match on the on on on single keys at a
+[00:48:12] time, right? Or single elements of of a
+[00:48:15] of a key like a single character. So my
+[00:48:18] keys might be kind of large. So I'll I
+[00:48:20] instead of doing the CID comparison on
+[00:48:22] the full key, which if their variable
+[00:48:24] length may not be the same for every,
+[00:48:27] you know, for all the elements in my my
+[00:48:29] bucket of four that I'm getting within
+[00:48:30] the slot, I use the hash prefix and that
+[00:48:33] guarantees they're always this fixed
+[00:48:34] length.
+[00:48:37] All right. So what I've shown so far of
+[00:48:39] how we take the data out from one
+[00:48:41] operator or one sort of step of an
+[00:48:43] operator and pass it along to the next
+[00:48:44] one. This is called using what are
+[00:48:46] called selection vectors. Right? And the
+[00:48:48] idea here is that the when the operator
+[00:48:51] is going to spit out it would be offsets
+[00:48:54] into my input vectors that correspond to
+[00:48:57] these are the tupils that I want to pass
+[00:48:58] up to the to the next operator. Right?
+[00:49:00] So be like fixed length offsets within
+[00:49:03] so my my input array. Right?
+[00:49:06] You can also some systems will do bit
+[00:49:07] maps instead. So think of this as like
+[00:49:10] there's a one or zero corresponding to
+[00:49:11] whether a tupil within a batch that's
+[00:49:13] being passed up from one oper whether
+[00:49:15] they've satisfied the predicate and they
+[00:49:16] should be continued processing as you go
+[00:49:18] up. So maybe the case in a in a and you
+[00:49:22] saw this in in in in the bus stop
+[00:49:23] projects maybe the case I pass up a
+[00:49:26] vector and I apply some predicate but
+[00:49:28] only one of them is going to match. So I
+[00:49:30] need a way to represent how I then pass
+[00:49:32] up that batch and say ignore all the
+[00:49:34] other ones that are that that don't
+[00:49:36] match because they didn't match down
+[00:49:37] below only look at this one. And then
+[00:49:39] sometimes what you want to do is have a
+[00:49:41] staging buffer to say I get you know I
+[00:49:43] get up 1024 tupils but only one of them
+[00:49:46] match. So instead of me passing up a
+[00:49:47] 1024 tupil or 1024 buffer that only has
+[00:49:51] one to a matching, I'll just wait for
+[00:49:53] more things come below me, then fill
+[00:49:55] fill up the buffer and then send up a a
+[00:49:57] dense buffer going up. And different
+[00:49:59] systems do different things. There's
+[00:50:00] trade-offs for all of these.
+[00:50:03] >> Yes.
+[00:50:06] >> Question are systems that do this
+[00:50:07] adaptively.
+[00:50:10] you could but like you basically have to
+[00:50:12] implement two of them like twoations.
+[00:50:15] [snorts]
+[00:50:16] All right. So that's that's using uh
+[00:50:19] SIMD and and to to
+[00:50:22] you know in modern hardware to speed
+[00:50:24] things up. Um we're not we don't talk
+[00:50:26] about GPUs. We in in in the previous
+[00:50:29] version 721 that is actually becoming a
+[00:50:30] hot area now. Uh there was a bunch of
+[00:50:33] GPU databases last decade. they kind of
+[00:50:36] didn't go anywhere because they had to
+[00:50:37] store all of them. You had to store the
+[00:50:38] entire database down down in the in the
+[00:50:40] the GPU card, right? With the NV link
+[00:50:43] and some of the newer stuff Nvidia is
+[00:50:44] doing in in newer versions of PCIe, uh
+[00:50:47] this is changing and I can't say too
+[00:50:49] much, but there's some major things
+[00:50:50] happening within next year. You'll see a
+[00:50:52] bunch of GPU more GPU databases coming
+[00:50:54] out.
+[00:50:56] So, uh but
+[00:50:59] basically it's the [clears throat] the
+[00:51:01] same principles they talked about with
+[00:51:02] SIMD will apply in the GPU world as
+[00:51:04] well. That's that's what I mentioned is
+[00:51:07] all right. So I'm going to talk about a
+[00:51:09] how we do code specialization now
+[00:51:11] through code generation. So the you know
+[00:51:15] in [clears throat] bus hub the way it
+[00:51:16] works is like you're given a query plan
+[00:51:18] you basically walk the tree and then
+[00:51:19] within that you get a an expression tree
+[00:51:22] and you have to walk that to produce you
+[00:51:23] know to evaluate predicates and so forth
+[00:51:25] right so there was a very famous project
+[00:51:27] called haiku out of the university of
+[00:51:28] Edinburgh in the early 2010s um where
+[00:51:32] for a given SQL query they would
+[00:51:34] generate the plan and then they would
+[00:51:35] convert that plan tree into actual
+[00:51:38] machine code sorry C code they would
+[00:51:41] then invoke GCC C to then compile that
+[00:51:44] function for the run that query into a
+[00:51:45] shared object, link it in and then and
+[00:51:48] invoke that. So you don't do that in the
+[00:51:50] interpretation you would do in bus hub
+[00:51:51] or like post and other systems. Now I
+[00:51:53] basically have a hard-coded program that
+[00:51:55] executes exactly what my query wants to
+[00:51:56] do. And that's going to be way faster
+[00:51:58] because I don't have to do jumping. I
+[00:52:00] don't have to do traversals or follow
+[00:52:02] pointers in a query plan tree. It's it's
+[00:52:05] hardcoded baked for doing exactly what
+[00:52:06] the query wants. So here's what again
+[00:52:09] this is what bus would normally look
+[00:52:10] like. If I scan through my table, I got
+[00:52:13] to go get a tupil. I got to go figure
+[00:52:14] out what the tub looks like. I go to the
+[00:52:15] catalog, get some stuff, and then I
+[00:52:16] apply my predicate by running all these
+[00:52:18] steps. So, instead, what I want to do is
+[00:52:20] I want to have a a a program that
+[00:52:23] basically hardcodes in. Here's the the
+[00:52:25] tupils I'm looking at. Here's the
+[00:52:26] predicates I I want to consider, and
+[00:52:28] here's the offsets to go find that the
+[00:52:30] attributes that I want. And then now I'm
+[00:52:33] just running CPU instructions to to do
+[00:52:35] these computations and not worry about
+[00:52:37] like you know trying to interpret what's
+[00:52:39] the size of the table or what size of a
+[00:52:41] tupil and how to jump to my slot arrays
+[00:52:43] to find things that I want. I can rip
+[00:52:44] through things way more efficiently this
+[00:52:46] way.
+[00:52:48] >> What's that?
+[00:52:52] >> The question is can we just use an
+[00:52:53] offshelf compiler GCC in this example?
+[00:52:56] Yes. Um, in in most database systems,
+[00:53:00] except for the Germans, they're gonna
+[00:53:02] you use use an offtheshelf compiler.
+[00:53:09] >> The question is, is that is this fast
+[00:53:10] enough? No. So, we'll fix that in a
+[00:53:14] second. Maybe I can jump to that now.
+[00:53:16] Yes. Question.
+[00:53:23] >> Is any system try to use a jet system?
+[00:53:25] uh the Germans. Yes. And what they do I
+[00:53:28] don't I should have this. What they do
+[00:53:30] is the first version they they in hyper
+[00:53:33] they would uh query shows up instead of
+[00:53:35] emitting C++ code or C code they would
+[00:53:38] emit LLVM IR
+[00:53:41] and then they would let the LM compile
+[00:53:42] that into machine code and run that
+[00:53:44] because it was it was you know it was
+[00:53:45] faster to run to generate the IR rather
+[00:53:47] than C because then you GCC and that's
+[00:53:50] slow right in the newer version in Umbra
+[00:53:53] which now also is commercialized as
+[00:53:54] Cedar DB and I don't have slides for
+[00:53:55] this what they do is they emit their own
+[00:53:58] IR R and then they have a another pass
+[00:54:02] that can convert that IR into assembly
+[00:54:05] that they roll by hand. Then they run
+[00:54:08] the assembler which is fast and cheap to
+[00:54:09] do and they then they start running the
+[00:54:11] query based on the assembled version.
+[00:54:13] Then in the background they run LLVM to
+[00:54:16] compile their IR into like machine code
+[00:54:19] with like 03 turned on which that can
+[00:54:21] take sec you know second or
+[00:54:22] milliseconds. And the idea is that if
+[00:54:25] the query finishes with the assembled
+[00:54:26] version assembler version, then you're
+[00:54:29] done, right? But if it's still running
+[00:54:30] by the time LLM finishes, then they
+[00:54:33] slide out the the assembled version and
+[00:54:35] plop in their their compile shared
+[00:54:37] object.
+[00:54:40] >> Like like how does it like the way they
+[00:54:43] orchestrate the system to get work done
+[00:54:45] like the schedule tasks
+[00:54:47] like when it goes says all right, I want
+[00:54:48] to run this task. It would say, "All
+[00:54:50] right, I need I need to do this
+[00:54:52] operation on this piece of data. Is my
+[00:54:55] compiled version ready? If yes, invoke
+[00:54:57] that. If not, invoke the assembler."
+[00:55:00] Insane, right? So, this sounds amazing.
+[00:55:02] I would say though, we built an LM based
+[00:55:05] uh query engine that did this just in
+[00:55:06] time compilation stuff. It's a nightmare
+[00:55:08] to debug. And we'll see this when we
+[00:55:10] talk about data bricks in a second.
+[00:55:11] Like, you got to have people that know
+[00:55:12] about compilers and they got to know
+[00:55:14] about databases. And then now when you
+[00:55:17] crash in these systems because it's it's
+[00:55:19] like dynamic code being generated for a
+[00:55:21] query you're not landing in like well if
+[00:55:25] you generate C you can you can you can
+[00:55:27] do this but like if you're doing the JIT
+[00:55:28] compilation going directly for lm IR
+[00:55:30] then compiling that when you crash you
+[00:55:32] land there with with symbols or sorry
+[00:55:35] without symbols to know exactly here's
+[00:55:36] the line of code in your C++ application
+[00:55:38] that generated this IR that caused this
+[00:55:40] crash. It's a nightmare to debug. So the
+[00:55:43] Huh. what what generated the IR that's
+[00:55:47] the part you got to fix from the data
+[00:55:49] set right and so the Germans they wrote
+[00:55:52] their own debugger so that they can
+[00:55:54] reverse back based on masilla RR to
+[00:55:56] reverse back like here's here's the line
+[00:55:58] of code that generated this this IR for
+[00:56:00] me like you would think the guy's on
+[00:56:02] cocaine but he's not it's insane right
+[00:56:04] like like his his his vice is apple
+[00:56:07] juice right and it's one guy sorry um
+[00:56:12] all right so to the point like is is
+[00:56:14] this compilation thing expensive. Yes,
+[00:56:15] this is actually not a new idea. IBM did
+[00:56:17] this back in the 1970s with system R.
+[00:56:20] They would generate the assembly for a
+[00:56:21] query plan uh and they would run that.
+[00:56:24] But again, they had the same problem
+[00:56:25] that any time that the system crashed,
+[00:56:27] you had to go figure out what assembly
+[00:56:28] created this assembly to figure out what
+[00:56:30] what was the mistake. Actually, I think
+[00:56:32] system was written in C. The same idea.
+[00:56:35] Or the other problem is every single
+[00:56:36] time you change the API, the storage the
+[00:56:38] storage system, then you got to go
+[00:56:39] change all the compiler code, right?
+[00:56:42] Because again, it was it was early days.
+[00:56:43] they didn't have good good abstractions.
+[00:56:45] So an alternative is to what what vector
+[00:56:48] wise came out with and again what what
+[00:56:49] snowflake does uh and what a lot of
+[00:56:51] systems follow along is do what are
+[00:56:53] called pre-ompile primitives and the
+[00:56:55] idea is that in your data system source
+[00:56:57] code in your repository you pre-bake and
+[00:57:00] automatically generate all these these
+[00:57:03] primitives for different predicates you
+[00:57:05] may evaluate uh for any particular query
+[00:57:08] like integer column equals integer
+[00:57:11] integer column less than integer right
+[00:57:14] think of all those separate operations a
+[00:57:16] separate function that you then have you
+[00:57:18] you can autoerate generate all these
+[00:57:20] through templates in your codebase and
+[00:57:22] then when you you compile the binary
+[00:57:24] then that binary itself is now all these
+[00:57:26] different primitives that you then
+[00:57:28] stitch together at runtime uh based on
+[00:57:30] what the the query wants to do and then
+[00:57:32] now you don't about jitting things
+[00:57:35] because you have basically things all
+[00:57:36] together and you're kind of assembling
+[00:57:37] the the building blocks for a query plan
+[00:57:39] just through pointers
+[00:57:44] >> the statement is the orchestration cost
+[00:57:45] is going to be high. Yeah. So the jump
+[00:57:46] call is expensive. Aha. But if you do
+[00:57:49] batches of tupils, then that amortizes
+[00:57:52] the jump call.
+[00:57:54] That's how you get if it's doing tupil
+[00:57:55] at a time. No. If it's if it's a batch
+[00:57:58] tupils again, what what the snowflake
+[00:58:00] guy would he he figured out like this?
+[00:58:03] This is how you can do this. All right.
+[00:58:05] So say in my query like this again, I'm
+[00:58:07] doing a string column lookup on ADC and
+[00:58:09] integer column look up on four, right?
+[00:58:11] So I would have a separate primitive to
+[00:58:14] do a take a vector tupils in to do
+[00:58:16] string column equals something you know
+[00:58:19] constant and in this case here I would
+[00:58:21] have another one for the integer column
+[00:58:22] but now you see now I'm passing along
+[00:58:24] the positions offset right so I can I
+[00:58:26] can chain these things together take the
+[00:58:28] output of one and then feed it into
+[00:58:29] another one and then it would know that
+[00:58:32] you know should I should I this this
+[00:58:34] position thing is is if it's not my
+[00:58:36] position vector then I know I should
+[00:58:37] ignore it in my input column.
+[00:58:40] So even though the number couple the
+[00:58:42] number of possible permutations you can
+[00:58:44] have in a query plan for these
+[00:58:45] predicates is infinite
+[00:58:48] uh but in actuality it's actually a
+[00:58:50] finite number right there's only like so
+[00:58:52] many different data types so many
+[00:58:55] different things you can do with them
+[00:58:56] right something equals something
+[00:58:57] something less than something so forth
+[00:58:59] right something equals a column two
+[00:59:01] columns the same right so this is what
+[00:59:04] this is what snowflake does this is what
+[00:59:07] um this is what uh photon does data
+[00:59:10] bricks, right? The the current research
+[00:59:12] says this is the right way to build your
+[00:59:14] systems, not do the jet compilation
+[00:59:16] stuff. Yes.
+[00:59:20] >> Question. Do you need a codegen
+[00:59:21] framework? Yeah, but it's not hard.
+[00:59:25] >> No, it's not like like here's two right
+[00:59:27] here, right? Like something equals
+[00:59:29] something, something less than
+[00:59:29] something. It's not you again, you only
+[00:59:31] have certain number of data types. And
+[00:59:33] the reason why this is better than JIP
+[00:59:34] compilation because now if there's a bug
+[00:59:36] in this primitive, if it crashes, then
+[00:59:38] I'm I'm in, you know, I can go through
+[00:59:40] GDB or whatever and go walk through and
+[00:59:41] figure out how to reproduce the crash.
+[00:59:46] All right, we got 10 minutes. Um, I
+[00:59:49] can't cover all these. Um, let's do a
+[00:59:51] vote.
+[00:59:53] We'll pick two. Uh,
+[00:59:56] I'm going to keep count. Raise your hand
+[00:59:57] if you want BigQuery.
+[01:00:00] Raise your hand if you want Snowflake.
+[01:00:03] A little more original want red shift.
+[01:00:06] Very few. Okay. Want yellow brick.
+[01:00:10] I might override you because yellow
+[01:00:11] brick is insane. Ra want data bricks
+[01:00:13] photon. All right. That's a clear
+[01:00:14] winner. And went click house. All right.
+[01:00:18] We'll do we'll do data bricks.
+[01:00:20] >> Oh
+[01:00:25] All right. We'll do data bricks yellow
+[01:00:27] brick and I'll try to get click quickly.
+[01:00:29] I'll click click is a quick thing to
+[01:00:30] mention. lot people already gave a talk.
+[01:00:32] All right,
+[01:00:36] I just let me show one thing about
+[01:00:37] Snowflake.
+[01:00:38] The dude that wrote again I keep
+[01:00:40] mentioning this guy Marcen who like
+[01:00:41] invented all the stuff invented like the
+[01:00:43] vector stuff that stuff. This is how
+[01:00:46] hardcore he is about databases. This is
+[01:00:47] a this is a photo I took. This is his
+[01:00:49] leg. He got the snowflake tattoo because
+[01:00:51] he loves his database so much. That's
+[01:00:53] how serious people are about these
+[01:00:54] things. You think I'm crazy about
+[01:00:55] databases? Like he's he's he's in there
+[01:00:57] with me. Okay, databicks.
+[01:01:01] So, databicks is based on spark. What
+[01:01:03] was spark written in? Anybody know what
+[01:01:04] query language or so what programming
+[01:01:06] language?
+[01:01:06] >> Scala.
+[01:01:07] >> Scola. What does Scola run in?
+[01:01:09] >> JVM. JVM is terrible. Don't use it.
+[01:01:11] Right. So, they had this problem where
+[01:01:13] like they had this original version of
+[01:01:15] um of uh this this thing Spark SQL that
+[01:01:19] was doing the the JIT compilation stuff.
+[01:01:21] They would emit Scola bte code that
+[01:01:24] would then compile to the JVM. But then
+[01:01:25] they found themselves struggling with uh
+[01:01:28] getting good performance because you got
+[01:01:30] to get people again who know compilers
+[01:01:32] and know databases and also know how to
+[01:01:34] deal with the JVM. So they spent more
+[01:01:36] time trying to modify the code to
+[01:01:38] generate the you do instrumentation the
+[01:01:40] JVM rather than making the query engine
+[01:01:42] go faster right because again spark was
+[01:01:44] originally written as a tuple at a time
+[01:01:46] row based system. And obviously again
+[01:01:48] with snowflake and all these other stuff
+[01:01:50] we talked about the entire semester we
+[01:01:51] know we don't want to do this. So what
+[01:01:53] photon is is a is a runtime written in
+[01:01:56] C++ that integrates connects into the
+[01:01:59] JVM through JNI the Java native
+[01:02:00] interface and then at certain points
+[01:02:02] when they execute a query they they
+[01:02:04] recognize I have a C++ version of the
+[01:02:06] thing you want to do like something
+[01:02:07] equals something they can then hand it
+[01:02:09] off to the C++ code who then could do
+[01:02:12] the run that more efficiently and then
+[01:02:14] send the data back into to to the JVM
+[01:02:17] right so there's a paper called Photon
+[01:02:19] I'm just pointing out here there's a
+[01:02:21] bunch of my former students students
+[01:02:22] have taken uh 721 or sorry 445 like you
+[01:02:25] guys they're all a lot of students at
+[01:02:27] snowflake a lot of people work on this
+[01:02:28] project all right so what is photon it's
+[01:02:31] shared disc executive storage uh it's
+[01:02:34] doing pbased vectorized processing
+[01:02:35] pre-ompile primitives expression
+[01:02:36] function we talked about before um we
+[01:02:38] won't talk about the operator too much
+[01:02:40] but again the core idea that photon is
+[01:02:42] doing is this these pre-ompile operator
+[01:02:45] primitives or kernels the same thing I
+[01:02:47] just talked about with vector wise and
+[01:02:48] snowflake right they generate all the
+[01:02:50] possible things you could want to do on
+[01:02:51] data
+[01:02:52] they pre-ompile them and then at runtime
+[01:02:54] they're stitching them together and to
+[01:02:55] recognize these are the things I can and
+[01:02:57] fall out into the C++ and if they don't
+[01:02:59] have a C++ version of it then it just
+[01:03:01] falls back and runs the regular the JVM
+[01:03:02] version as they normally would right and
+[01:03:05] they comment how again in their
+[01:03:07] experience it was much much easier to
+[01:03:10] build a uh this the C++ based engine
+[01:03:13] that these pre pre-ompile primitives
+[01:03:16] than it was to instrument the GVM and do
+[01:03:18] just time compilation so even though the
+[01:03:19] first version of this of their
+[01:03:22] implementation wasn't as fast as the the
+[01:03:24] JIT version was, but they spent all
+[01:03:26] their time now actually making the the
+[01:03:28] pre-ompiled stuff actually faster and
+[01:03:31] they can get uh they would get they get
+[01:03:34] bigger improvements and got faster than
+[01:03:35] than they would have if they were still
+[01:03:37] mucking around the GVM.
+[01:03:41] >> Uh I don't for the numbers here. I mean
+[01:03:42] it's quite significant. There's there's
+[01:03:44] other tricks they do like if you they
+[01:03:46] assume that you know it even though
+[01:03:49] column may not be declared as not null.
+[01:03:51] Sorry column might be declared as
+[01:03:52] supporting nulls. They assume maybe it
+[01:03:54] doesn't it's not null. So they there's a
+[01:03:55] bunch of checks they avoid and then if
+[01:03:56] they get it wrong they roll back.
+[01:03:57] There's some things like that do as
+[01:03:58] well.
+[01:04:04] >> The question is can I just keep the
+[01:04:05] summary summary that they don't see any
+[01:04:07] nulls. If I'm reading a bunch of paret
+[01:04:08] files or CSV files that I've never seen
+[01:04:10] before, I don't have that. So I got to
+[01:04:13] guess. There's there's other tricks you
+[01:04:15] can use like JSON like since JSON's
+[01:04:17] untyped or barely typed. you can say,
+[01:04:19] "Oh, I I know that like most of these
+[01:04:20] times in this this field, it's going to
+[01:04:22] be an an integer and then only if you
+[01:04:25] see a string, then you fall back and do
+[01:04:26] something else."
+[01:04:29] All right. So, they're going to do a
+[01:04:30] technique called also expression fusion.
+[01:04:32] So, this is we talked about operator
+[01:04:34] fusion before. We can kind of take the
+[01:04:36] um
+[01:04:37] uh you know, if I have like a a a scan
+[01:04:41] with a predicate, instead of having them
+[01:04:43] be two separate operators, I can put the
+[01:04:44] the the predicate inside the scan
+[01:04:46] operator, right? Right. So that's that's
+[01:04:47] operator fusion. They're doing
+[01:04:49] expression fusion because they're doing
+[01:04:50] the these predefined uh these
+[01:04:52] pre-ompiled primitives. So instead of
+[01:04:53] having the two functions I showed before
+[01:04:55] where I'm I'm one predicate is doing the
+[01:04:58] the check on the you know on the on the
+[01:05:00] first part of the conjunct and the
+[01:05:01] second one's doing the second part, they
+[01:05:03] can just pre-generate a bunch of these
+[01:05:04] ones that can do both together. Like
+[01:05:07] they could rewrite this query into being
+[01:05:09] a between clause and then now it's one
+[01:05:11] less function call to go process all the
+[01:05:14] data, right?
+[01:05:17] Another cool thing they do with the the
+[01:05:19] shuffle phase that we talked about
+[01:05:20] before is that they can they can
+[01:05:23] determine whether one partition gets too
+[01:05:27] full because the data is skewed. Then
+[01:05:29] they can after the shuffle completes
+[01:05:30] they can go back and and repartition it
+[01:05:32] again. Kind of like the recursive
+[01:05:34] partition we talked about with hash
+[01:05:35] joints. So say that I have my worker
+[01:05:37] filling up all these these these
+[01:05:40] partitions, right? And then I recognize
+[01:05:43] that these two guys these three these
+[01:05:44] three partitions are underutilized and
+[01:05:46] the the one in the middle over there and
+[01:05:48] the one in the end are kind of getting
+[01:05:49] too full. So what I can do is I can
+[01:05:51] dynamically say, all right, I'm going to
+[01:05:52] start rewriting uh the data that I have
+[01:05:55] in these guys into this other one and
+[01:05:56] fill that up and just pass along the the
+[01:06:00] the the next the next three. So then I
+[01:06:02] can down I can sort of automatically
+[01:06:04] downsize or upsize the number of workers
+[01:06:06] I have after each shuffle phase based on
+[01:06:08] the data I see going in.
+[01:06:12] All right, let me talk about yellow
+[01:06:13] brick just because I find it super again
+[01:06:16] this this super fascinating. So it's a
+[01:06:18] new engine written in C++. They forked
+[01:06:21] it about 10 years ago. Um, and I said
+[01:06:24] this in a class. I said this about them
+[01:06:26] in one of one of these lectures at some
+[01:06:28] point and I forgot I said it. And then
+[01:06:29] when I went to go visit them in London a
+[01:06:32] few uh a few months ago, they told me
+[01:06:34] what I said. And then their marketing
+[01:06:36] people love it because they they they
+[01:06:38] actually sell it to customers based on
+[01:06:39] what I said. So Yellow Brick does things
+[01:06:42] like the Germans you would you would
+[01:06:44] only do if you if you were on cocaine.
+[01:06:46] The amount of system optimization
+[01:06:48] they're doing, you would not want to do
+[01:06:49] if you're a brand new startup, but this
+[01:06:51] is what they did. So what is it? It's a
+[01:06:53] shared disc storage system. They're
+[01:06:54] doing pushbased vectorization. They're
+[01:06:56] doing transpolation the the codegen
+[01:06:58] stuff we talked about. Instead of
+[01:06:59] generating LM the IR, they're generating
+[01:07:01] C++ and then GCC compiling that. But
+[01:07:03] they can they can hash that. But then
+[01:07:05] the engineering stuff they do is insane.
+[01:07:07] So it's so they have a row store that's
+[01:07:10] based on post the front end query shows
+[01:07:11] up. If they have the cache uh query
+[01:07:14] plan, they reuse it. Otherwise, they'll
+[01:07:16] they'll compile in the background and
+[01:07:17] then run it when it's available. What's
+[01:07:19] insane though is the the communication
+[01:07:22] channels that they have in between the
+[01:07:24] the object store which is like S3 and
+[01:07:27] the different workers themselves. So
+[01:07:30] these guys said that the like the MVME
+[01:07:35] drivers and the the Harvard drivers that
+[01:07:37] Linux gives you or the Harvard vendors
+[01:07:39] give you were way too slow. So not only
+[01:07:42] they they have to build the runtime
+[01:07:43] engine for the database system, they
+[01:07:44] wrote their own kernel drivers for the
+[01:07:46] MVME drive drives they were running on
+[01:07:48] and for the nicks. And then TCP was too
+[01:07:51] slow. So they rewrote they wrote their
+[01:07:53] own network protocol based on UDP uh to
+[01:07:56] make that go fast. But then copying data
+[01:07:58] from the nick down, you know, down the
+[01:08:00] hardware through the kernel up into user
+[01:08:03] space, that's too slow, too, because the
+[01:08:05] kernel is slow for us. So they're going
+[01:08:07] to use what's called SPDK or DPDK to do
+[01:08:10] kernel bypass where you basically
+[01:08:12] they're managing their own TCP IP stack
+[01:08:14] in user space and don't let the OS do
+[01:08:17] anything. So when yellow brick turns on
+[01:08:19] they call Maloc get a bunch of memory
+[01:08:21] take control of the hardware and they
+[01:08:23] never talk to the operating system ever
+[01:08:24] again because the operating system is
+[01:08:26] going to ruin your life. And these guys
+[01:08:27] took took that to the extreme right? If
+[01:08:29] you're a brand new startup you would not
+[01:08:31] do this. This is insane. But this is
+[01:08:33] what they did 10 years ago and because
+[01:08:34] they were coming from the the fintech
+[01:08:36] world
+[01:08:38] >> question how's it different RDMA I mean
+[01:08:39] RDMA is sort of the same thing but you
+[01:08:41] need specialized hardware for this for
+[01:08:42] DBDK and SPDK you don't need specialized
+[01:08:45] hardware right you can you can run that
+[01:08:46] on Amazon yes
+[01:08:51] >> uh question really quick there's another
+[01:08:52] one from Stanford as well but like
+[01:08:54] there's other they did they did this 10
+[01:08:56] years ago yeah it's not standard but
+[01:08:59] like so that if you need specialized
+[01:09:01] hardware it's not going to work in the
+[01:09:02] cloud
+[01:09:04] Right. For you can do you can use UDP
+[01:09:07] everywhere. All right. The last one you
+[01:09:09] guys wanted was was click.
+[01:09:11] All right. So I want to say quickly
+[01:09:14] about click house. So this came out of
+[01:09:16] Yandex. I think they started building
+[01:09:17] actually 2009. And I when the guy came
+[01:09:20] gave a talk like as I said like when
+[01:09:22] when when this came Click House became
+[01:09:24] public. I thought it was fake because
+[01:09:27] not because it was Russian because it
+[01:09:28] was like the things that they were
+[01:09:29] listing that they were doing was
+[01:09:31] actually kind of at par or a little more
+[01:09:35] advanced than what Snowflake was doing
+[01:09:36] at the time back in like 2016. And it
+[01:09:39] seemed insane that this company I've
+[01:09:41] never heard of or sorry, I heard of
+[01:09:43] Yandex, but this system I've never heard
+[01:09:44] of just showed up on the on the on the
+[01:09:46] block having all these amazing features.
+[01:09:48] Um, but again, it's something I've been
+[01:09:50] working on on for a while. So again,
+[01:09:52] they're doing pull-based uh vector query
+[01:09:54] processing. There's a share
+[01:09:55] architecture, although you can support
+[01:09:56] the cloud stuff, the S3 stuff as well.
+[01:09:58] They're doing uh they'll compile the
+[01:10:00] expressions the same way Postgress does.
+[01:10:01] Um, their query optimizer is not very
+[01:10:03] good. Uh, they know this. They publicly
+[01:10:05] say this is something to work on. query
+[01:10:08] merge is actually terrible. The postest
+[01:10:09] one is probably better. Um, but for the
+[01:10:11] things, you know, they're doing single
+[01:10:13] table queries, it's okay. It's the joins
+[01:10:15] that cause the problems. Um, [snorts] I
+[01:10:17] want to talk about what they do for hash
+[01:10:20] joins, but in particular the on the
+[01:10:22] hashts. So, Click House comes with 24
+[01:10:25] different implementations of hashts.
+[01:10:28] Nobody does that in in their system.
+[01:10:30] Even the yellow brick guys aren't aren't
+[01:10:31] that crazy, right? because they have
+[01:10:33] specialized
+[01:10:35] uh hash tables for every single possible
+[01:10:36] data type that you have. So I'm going to
+[01:10:38] show one graph here, right? This is
+[01:10:40] doing a join with the group eye. Um this
+[01:10:42] from a paper from from few years ago,
+[01:10:44] but this ended up making it into the uh
+[01:10:46] into the real clickout system. It's just
+[01:10:49] showing that like the
+[01:10:52] like they have all these different
+[01:10:53] actually they don't have all of these
+[01:10:54] but like the one that they added here is
+[01:10:56] like if you have uh you're trying to do
+[01:10:58] join on strings a linear probe hash
+[01:11:01] table just off the shelf one is not
+[01:11:03] going to perform that well but if you
+[01:11:04] have different hash table
+[01:11:05] implementations think of like you know
+[01:11:07] doing compile time optimizations how to
+[01:11:08] pack the data into the slots based on
+[01:11:11] different sizes whether you exceed a
+[01:11:12] cache line or not then you can get much
+[01:11:15] much better performance. So this is sort
+[01:11:16] of like the pre-ompiled primitives that
+[01:11:18] we saw like if I'm doing a comparison on
+[01:11:20] like this key on this type or this this
+[01:11:22] this constant, I can have a a
+[01:11:24] specialized version of that function to
+[01:11:26] do that comparison. They're basically
+[01:11:27] doing the same thing but for hash tables
+[01:11:30] for all the different possible data
+[01:11:30] types and the lookups you want want to
+[01:11:32] do on that. And that part's super
+[01:11:34] amazing. They do a bunch of SIM stuff as
+[01:11:36] well where they they try to have
+[01:11:38] different versions of of different
+[01:11:40] operators that areified for different
+[01:11:43] different versions of SIM on Intel. So
+[01:11:45] there's in there's AVX 512, AVX 256.
+[01:11:48] Sometimes the fivetail one doesn't is
+[01:11:50] not as fast as the 256 one because the
+[01:11:54] the older CPUs would actually throttle
+[01:11:56] down the the frequency because they
+[01:11:57] overheated. So they would they would be
+[01:11:59] able to detect and say I'm going to run
+[01:12:00] the AVX2 version, the 256 version
+[01:12:02] instead of the 512 based on what
+[01:12:03] hardware they're running on. It's it's
+[01:12:05] amazing. All right, so let me switch
+[01:12:07] over to the Rational I speaker way over
+[01:12:08] time. But again, the the the main take
+[01:12:11] away from from all I want you guys from
+[01:12:12] all this is that like these systems are
+[01:12:14] doing um
+[01:12:17] you know it's it's amazing stuff and you
+[01:12:18] try to get things run as fast as
+[01:12:20] possible is really challenging to do.
+[01:12:22] Got it. All right. So remember the haiku
+[01:12:23] system we talked about before they did
+[01:12:24] that early compilation stuff. This is
+[01:12:25] the same school. They're very strong in
+[01:12:26] databases. Lennon, thank you so much for
+[01:12:28] being here. The floor is yours. Go for
+[01:12:29] it.
+[01:12:30] >> Okay. So I'm I'm starting right.
+[01:12:33] >> Yes. Go for it.
+[01:12:34] >> Yeah. Okay. Right. Okay. So uh do we
+[01:12:38] understand SQL and if not why? Right.
+[01:12:41] Okay. So I'm spending uh just a tour
+[01:12:45] couple of things about myself. So I'm
+[01:12:47] spending
+[01:12:48] uh most of my time at relational AI um
+[01:12:51] and uh I represent relational Paris and
+[01:12:54] I'm also parttime at the University of
+[01:12:55] Edinburgh where I was full-time for two
+[01:12:58] decades prior to relational AI. Okay. So
+[01:13:01] last time relational I was here in uh
+[01:13:04] you know presenting CMU. So uh we talked
+[01:13:07] about real which is a programming
+[01:13:09] language that we develop in relational
+[01:13:10] AI
+[01:13:12] programming language for relational
+[01:13:13] data. uh if you're interested in that
+[01:13:16] you can see there was a recorded talk by
+[01:13:17] Martins about 10 15 minutes and there
+[01:13:20] was a paper in Sigmot with details of
+[01:13:22] the language and but we did not in that
+[01:13:25] talk we didn't fully explain what were
+[01:13:27] the SQL problems that we tried to fix
+[01:13:30] and that by itself would require a very
+[01:13:33] long talk but what I'll try to do today
+[01:13:35] in the short time that I have I'll try
+[01:13:36] to give you a taste of SQL problems that
+[01:13:38] we are uh that that we're trying to fix
+[01:13:42] okay so you all know what SQL is Right.
+[01:13:44] Okay. So it's like the language for
+[01:13:46] relational database. It was a standard
+[01:13:47] since ' 86 international standards since
+[01:13:49] 87 implemented all over the place. If
+[01:13:52] you look at the top programming
+[01:13:53] languages according to it E. So this
+[01:13:56] year it's at number four. If you look at
+[01:13:59] the uh job ads and which which jobs
+[01:14:03] which jobs require knowledge of SQL last
+[01:14:06] year it was number one. This year it
+[01:14:08] fell just below Python at number two.
+[01:14:10] Right. So now SQL has been with us since
+[01:14:15] ' 86. It was standardized and there were
+[01:14:17] like several standard went through
+[01:14:19] several iterations. Uh uh 92 was when it
+[01:14:22] was um basically reached its current
+[01:14:25] state and after that uh we we now leave
+[01:14:29] with SQL 2023. Uh we are on the way to
+[01:14:31] produce SQL 2027. There are a whole
+[01:14:33] bunch of editions in between. It's not
+[01:14:35] free. If you want to buy it, it will
+[01:14:37] make you about $2,000 per. And it
+[01:14:39] consists of 11 parts uh which are
+[01:14:42] numbered by random numbers between 1 and
+[01:14:44] 16. So don't expect it to be
+[01:14:46] consecutive. Uh there are actually
+[01:14:48] reasons for this but not for this talk.
+[01:14:50] And what all DBMS implement is
+[01:14:52] essentially the core which is the part
+[01:14:54] two that's called SQL foundation. There
+[01:14:57] are some discrepancies plus something
+[01:14:59] else from the standard plus something
+[01:15:00] else not from the standard but that's
+[01:15:02] the world we live in. All right. who
+[01:15:05] designs it. It's a committee with this
+[01:15:08] fantastic name ISOIC JTC1623.
+[01:15:12] Again, each part of this name actually
+[01:15:14] has a meaning. So that's the picture of
+[01:15:18] the committee from its last meeting in
+[01:15:20] Barcelona uh just a couple months ago,
+[01:15:24] right? And uh the way it works uh is
+[01:15:27] that uh so most of the technical work
+[01:15:29] happens inside uh another organization
+[01:15:31] called insights which stands for
+[01:15:33] international committee on information
+[01:15:35] technology standards despite the name
+[01:15:37] international in it it's actually very
+[01:15:39] UScentric
+[01:15:41] uh though half of the committee is from
+[01:15:42] Europe and Asia but you only can be in
+[01:15:44] this committee if you're representing US
+[01:15:46] registered entity so discussions in this
+[01:15:48] committee lead to papers that are then
+[01:15:50] forwarded to the international committee
+[01:15:52] that meets a few times a year Then
+[01:15:54] basically decisions are made in that
+[01:15:56] committee. People vote first in the
+[01:15:58] committee and then the papers get
+[01:15:59] incorporated into draft standards and
+[01:16:02] then the national body. So each nation
+[01:16:05] will have its own uh standards
+[01:16:07] committee. They'll vote to approve those
+[01:16:09] standards. This vote happens in several
+[01:16:11] stages and eventually that's why there's
+[01:16:13] such a clock usually four five years
+[01:16:15] between additions of standards and
+[01:16:17] eventually the standard is approved and
+[01:16:19] then the fun begins. Okay, let's start
+[01:16:22] with a little fun. you know something
+[01:16:24] that you all know about SQL or learn
+[01:16:25] about SQL I have two relations RNS uh
+[01:16:30] all both have single attribute A and I
+[01:16:32] ask you to compute the difference
+[01:16:33] between those two relations let's not
+[01:16:35] worry about multisense let's not worry
+[01:16:36] about bag semantics let's say everything
+[01:16:39] is a set
+[01:16:41] okay there are three ways you can do it
+[01:16:43] you can just directly use SQL except
+[01:16:45] operator to compute the difference or
+[01:16:48] you can use the sub query you can say
+[01:16:49] give me everything in the relation R
+[01:16:51] that's not in the relation
+[01:16:53] Or you can use exists for a sub query.
+[01:16:56] You can say give me everything from
+[01:16:57] relation r such that there does not
+[01:16:58] exist something in relation s that's
+[01:17:01] equal to it.
+[01:17:03] So if you ask you you students uh to
+[01:17:06] write this type of query you will write
+[01:17:08] one of those and you would expect to get
+[01:17:10] full marks because you run it over the
+[01:17:12] set and say okay well same answer
+[01:17:14] they're equivalent queries. In fact,
+[01:17:17] lots of SQL programmers think that they
+[01:17:18] in queries. But let me change a little
+[01:17:22] bit. Let me replace two with a null in
+[01:17:25] this query. And then suddenly what I get
+[01:17:29] is three different answers,
+[01:17:31] right? And I can assure you that huge
+[01:17:34] number of people who write SQL queries,
+[01:17:37] they fall into similar traps, right? you
+[01:17:41] know the change not in not exists and
+[01:17:44] you know suddenly you can see that
+[01:17:45] there's a very dramatic difference
+[01:17:46] between writing is not in and not exists
+[01:17:51] all right so we have a bit of a problem
+[01:17:54] right but let me tell you that we have
+[01:17:56] even a bigger problem with understanding
+[01:17:58] SQL what is simpler in SQL and select
+[01:18:01] star right the first thing that you do
+[01:18:02] like you learn SQL select star from R
+[01:18:05] right from some table this is a table
+[01:18:08] okay so I'll make a claim that absolute
+[01:18:10] Majority of SQL programmers actually
+[01:18:11] don't know what select star does, right?
+[01:18:14] So let me explain this on an example. So
+[01:18:17] okay, so let's say we have a relation R
+[01:18:19] against single attribute A value one and
+[01:18:22] I write this query like repeat attribute
+[01:18:24] A twice in the output, right? Okay, so
+[01:18:27] that's going to give me this relation
+[01:18:29] with attribute A repeated twice. Every
+[01:18:31] DBMS will give you the same thing.
+[01:18:34] Now I say this let's use it as a sub
+[01:18:36] query and say let's select star from
+[01:18:39] that sub query like I literally plug
+[01:18:41] this query Q from above I just plug it
+[01:18:43] into this line in front
+[01:18:46] and I ask you what this query returns
+[01:18:50] and in my experience actually of talking
+[01:18:52] to people directly I asked this and even
+[01:18:54] like talking to students when I teach in
+[01:18:56] front of the class and people start
+[01:18:58] guessing and say well maybe it will
+[01:19:00] return the same as before maybe not
+[01:19:01] maybe it will give an error what's going
+[01:19:03] to happen. I mean this is one line
+[01:19:05] query. We select star a relation has one
+[01:19:07] tpple and people start scratching their
+[01:19:09] heads and there's a very good reason why
+[01:19:12] they scratch their heads because the
+[01:19:13] answer to this question is depends on
+[01:19:15] which system you run this query.
+[01:19:17] Posgress and SQL light will give you one
+[01:19:19] star will give you basically as above
+[01:19:22] but Oracle SQL server my scale and z2
+[01:19:25] will all give a compile time and db now
+[01:19:27] will all give a compile time error.
+[01:19:30] Okay. Already like one line queries
+[01:19:33] select star. We are getting into
+[01:19:35] trouble. But now let's let's get into
+[01:19:38] more trouble.
+[01:19:40] Okay. Uh I ask okay let's run this
+[01:19:43] query. Give me everything from R where
+[01:19:46] the condition is that this query Q prime
+[01:19:48] the one that we just saw that sometimes
+[01:19:50] run sometimes gives a compile time time
+[01:19:52] error. And when this query returns
+[01:19:54] something
+[01:19:57] what will this do? You know most people
+[01:19:59] say oh well probably you know it will
+[01:20:00] give you R if it runs on posgress and
+[01:20:03] SQL light maybe compile time error if it
+[01:20:05] runs if it doesn't run the answer is no
+[01:20:08] it will always give it relation
+[01:20:11] right so you see the the thing is that
+[01:20:15] like with this super super simple
+[01:20:17] queries I can get uh I can start like
+[01:20:20] with super simple devices in SQL I can
+[01:20:22] start writing queries that even
+[01:20:24] experienced SQL programmers will start
+[01:20:27] questioning What's going on? Okay, let's
+[01:20:29] come back more fun business. Let's say I
+[01:20:32] have a database that has orders and
+[01:20:34] payments, right? We have order and we
+[01:20:36] know that sometimes some of the orders
+[01:20:38] have been paid and I ask you to write a
+[01:20:39] query. Give me unpaid orders. Okay, give
+[01:20:42] me all the orders for there is no
+[01:20:43] payment. Fine. You know, this is very
+[01:20:45] very simple query. You know, let's run
+[01:20:48] it in SQL. What we going to get? Well,
+[01:20:50] in this database, we are going to get
+[01:20:51] that order two and order three are not
+[01:20:53] paid.
+[01:20:55] Right? We know intuitively it's wrong
+[01:20:57] because we know that there are two
+[01:20:58] payments, right? It's uh you know how do
+[01:21:01] we know that both of these order two and
+[01:21:02] order three are not paid. We don't know
+[01:21:05] this. It's quite possible that one of
+[01:21:06] them is uh is actually paid. But SQL
+[01:21:09] will tell you that order two and order
+[01:21:11] three are unpaid. Imagine then then you
+[01:21:13] go and chase the customer and say you
+[01:21:14] didn't pay. The customer say I paid and
+[01:21:16] then you know then the customer never
+[01:21:17] comes back.
+[01:21:19] So we get what's called false positives,
+[01:21:22] right? So answer that we know it's not
+[01:21:23] true and actually this false positives
+[01:21:26] they're fairly common right so we try to
+[01:21:28] experiment a little bit with TPCH like
+[01:21:30] queries and populate database with nulls
+[01:21:32] and this false positives pop up all the
+[01:21:34] time right and uh yeah I also would like
+[01:21:39] to point out that you know most of the
+[01:21:41] time you see graphs coming from sigma
+[01:21:42] papers but this is a very unusual
+[01:21:44] creature it's a graph that comes from a
+[01:21:45] pods paper from a school paper okay so
+[01:21:50] nulls are all over the is right you know
+[01:21:53] if you if you are European and you want
+[01:21:55] to go to Texas and you ask for the
+[01:21:57] weather they tell you don't ask about
+[01:21:59] Celsius only Fahrenheit you know you can
+[01:22:02] be ask for a payment on your multiple
+[01:22:04] nulls and this is actually a screenshot
+[01:22:06] of a real database of a big retailer
+[01:22:09] right and you can see the love nulls
+[01:22:11] and nulls cause problems like you know
+[01:22:14] there are like all the stories about
+[01:22:15] actually it's a real story about a
+[01:22:17] person whose last name is null and who
+[01:22:18] cannot do anything in this life anymore
+[01:22:21] Now that everything has to be recorded
+[01:22:22] in the database in not null fields and
+[01:22:26] uh so when nulls appear we know that
+[01:22:28] things kind of go bad right you know
+[01:22:31] like in textbooks that add that you know
+[01:22:33] well null treatment is fundamentally at
+[01:22:35] odds with the way the world behaves.
+[01:22:37] books for sick database professionals
+[01:22:40] tell you you get wrong answers to
+[01:22:41] queries you cannot trust answers and
+[01:22:44] like there are even like headlines like
+[01:22:46] you know this is this is from BBC that
+[01:22:49] children heart surgery halted by
+[01:22:51] incomplete data right so it could be
+[01:22:52] quite dramatic
+[01:22:55] okay
+[01:22:57] uh so there's one other question I want
+[01:23:00] to briefly address and this is how
+[01:23:02] standard is the standard right we have
+[01:23:04] the standard we assume that everybody
+[01:23:06] has to do the same stuff but actually if
+[01:23:08] we run multiple queries on different
+[01:23:11] databases we we know sort of from
+[01:23:13] experience that some of them will give
+[01:23:15] you different results. So we try to
+[01:23:18] quantify that and from a random query
+[01:23:21] generator about 2% of queries for the
+[01:23:23] most basic fragment they behave
+[01:23:25] differently. Some issues admittedly are
+[01:23:28] just minor and very syntactic but some
+[01:23:29] some are serious. So, I'll give you two
+[01:23:32] examples of serious issues, right? Of
+[01:23:35] things that could be unexpected.
+[01:23:39] >> We're kind of a little over time. We're
+[01:23:41] over time. Sorry.
+[01:23:43] >> Ah, okay. It's 10 minutes. Okay. I'll uh
+[01:23:46] Yeah, I'll just I'll just I'll just wrap
+[01:23:48] up with this, right? So, and basically
+[01:23:51] and say, you know, why we find this
+[01:23:52] questions problematic in SQL? Because
+[01:23:54] SQL standard has been growing crazily,
+[01:23:56] right? It started with 10 page quotes
+[01:23:58] paper, then 100 pages per SQL standard.
+[01:24:00] Now we at 4,500 pages. There's not a
+[01:24:03] single person in the world who knows
+[01:24:04] everything and what we are trying to do
+[01:24:07] in relational is to have a different
+[01:24:08] approach to have a small well-
+[01:24:10] definfined core language with a clear
+[01:24:12] semantics and then extended by
+[01:24:13] libraries. So this is what this is our
+[01:24:15] approach. This is what language sh is.
+[01:24:18] >> All right. So again for the two things
+[01:24:21] again this is last class. See you guys
+[01:24:23] on Thursday next week. Uh, and then the
+[01:24:25] last thing also too is that we got a
+[01:24:27] announcement from Farnum this morning
+[01:24:30] and the good news is that DJ Cash won
+[01:24:33] most dank DJ at Carnegie Melon
+[01:24:35] University this year. It's a round of
+[01:24:36] applause.
+[01:24:39] Can you get a photo here?
+[01:24:43] So, [laughter]
+[01:24:45] here.
+[01:24:47] Yeah. Hey, handshake.
+[01:24:51] You got it. Awesome.
+[01:24:52] >> Awesome. All right, guys. Give a round
+[01:24:54] of applause to you cash. Thank you,
+[01:24:55] Lennon. And then good luck with your
+[01:24:56] final exams and everything else. And
+[01:24:57] then again, Saturday office hours,
+[01:25:00] Sunday project due Thursday next week is
+[01:25:03] the final exam. Okay. [music]
+[01:25:08] Acrobats over
+[01:25:12] [music]
+[01:25:13] a track.
+[01:25:17] [music]
+[01:25:22] That's what [music]
+[01:25:24] we're track
+[01:25:27] for. Get [music] the fortune
+[01:25:29] maintain flow with the
+[01:25:32] grain. Get the fortune [music]
+[01:25:34] maintain flow with the gra.

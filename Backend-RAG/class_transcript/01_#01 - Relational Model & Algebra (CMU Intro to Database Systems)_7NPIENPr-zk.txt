@@ -1,0 +1,2019 @@
+[00:00:00] [Music]
+[00:00:06] I'm still
+[00:00:08] ass
+[00:00:11] [Music]
+[00:00:28] 15.5 6.5 All right. All right. Before we
+[00:00:30] get started, again, apologize for
+[00:00:32] running late waiting for us uh whenever
+[00:00:34] time and we had everything set up and we
+[00:00:36] weren't working at the last moment. So,
+[00:00:38] I apologize. Uh so, quick shout outs to
+[00:00:40] people who help us get where we are
+[00:00:42] today. Uh if the Greek out in
+[00:00:44] California, JL in Seattle, my main man
+[00:00:47] easy in Brooklyn, and then I also want
+[00:00:50] to recognize the people that aren't with
+[00:00:51] us anymore. Uh so, it's been a year
+[00:00:53] since DJ got tables passed away. RIP to
+[00:00:55] him. And then DJ Mushu is still in
+[00:00:58] lockdown in Cook County. We hope to get
+[00:01:00] him out uh this year. DJ GPL is still in
+[00:01:03] Pittsburgh. I still think he still is
+[00:01:05] dating the same girl as before, so he's
+[00:01:07] doing fine. Um but uh the good news is
+[00:01:10] that we have a DJ again. So give it up
+[00:01:12] for DJ Cash.
+[00:01:16] So DJ Cash is not just a DJ, you're also
+[00:01:19] a producer, right? Right.
+[00:01:21] >> So show us a little something what you
+[00:01:23] can do. Go for it.
+[00:01:40] [Music]
+[00:01:48] about this like all those uh samples we
+[00:01:50] can clear whereas before we can always
+[00:01:52] play everything we wanted on the air.
+[00:01:54] How you doing that? I'm doing great. How
+[00:01:55] are you?
+[00:01:56] >> Well, I was died last semester. That
+[00:01:58] sucks. But I'm not dead. I'm here.
+[00:02:01] >> Everything's okay with you.
+[00:02:02] >> Um it would be nice if I had a lot more
+[00:02:04] cash with me.
+[00:02:05] >> What?
+[00:02:06] >> Um I'm just looking for that money, man.
+[00:02:09] Just here to get that money.
+[00:02:11] >> Okay, that's a weird thing to say. Okay.
+[00:02:12] Uh
+[00:02:15] we'll we'll take care of it. We'll be
+[00:02:16] fine. Okay. We'll figure something. Uh
+[00:02:18] you should have told me this before.
+[00:02:19] That's weird. All right. Sorry. Um All
+[00:02:22] right. So, uh, today's lecture, we're
+[00:02:24] going to go quickly through the, uh,
+[00:02:26] some course logistics, uh, and then
+[00:02:28] we'll go jump right into all the course
+[00:02:31] material again. So, if you're not
+[00:02:32] enrolling the class, you're currently on
+[00:02:34] the wait list. Uh, I think that if I
+[00:02:37] checked this morning, I think we're like
+[00:02:40] 28 or something like that. I think the
+[00:02:42] total enrollment is 130 or 140,
+[00:02:43] something like that. Um, so we don't
+[00:02:46] control the weight list anymore because
+[00:02:47] in the previous years, we've had too
+[00:02:48] many students trying to get on uh, and
+[00:02:50] the weight list got too long. to the
+[00:02:51] admins in uh SCS control list. So they
+[00:02:55] will add people off the wait list as
+[00:02:56] spots become available. I can't promise
+[00:02:58] you whether you're on the wait list,
+[00:03:00] whether uh you just go get in and this
+[00:03:02] is not official, but it doesn't go by
+[00:03:04] your position for reasons I can't get
+[00:03:06] into, but there's a lot of background
+[00:03:07] politics between different programs. Uh
+[00:03:09] and it doesn't always go by the uh your
+[00:03:12] position. Okay. So the good news is that
+[00:03:15] if uh if you can't make it this
+[00:03:16] semester, then it's offered every
+[00:03:18] semester. Uh so if you can't get this
+[00:03:20] year it'll be in the spring. Um if you
+[00:03:23] want to make sure that when you if you
+[00:03:25] do get off the wait list that you're
+[00:03:26] caught up to speed uh project zero which
+[00:03:28] I'll talk about in a second should make
+[00:03:30] sure you do that and follow the lectures
+[00:03:32] because that project will leave the
+[00:03:33] determination whether you're not taking
+[00:03:34] class or not as well even if you are
+[00:03:36] bored. All right so this class will be
+[00:03:38] about the designation of database
+[00:03:40] management systems right how do you
+[00:03:42] actually build this this software but
+[00:03:44] what's going on on the inside. Um, so
+[00:03:47] it's not a course about how to use or
+[00:03:49] administer a database system. So some
+[00:03:51] people say like why am I in upgrading
+[00:03:53] system like I just want to use Oracle
+[00:03:54] just use my SQL post whatever that's not
+[00:03:57] this class that's taught over in Heines
+[00:03:59] College and information systems and this
+[00:04:01] is really about computer science level
+[00:04:03] understanding what's going on inside the
+[00:04:05] software to understand what the uh what
+[00:04:08] these systems are actually trying to do
+[00:04:09] for you. It's okay. If that's what you
+[00:04:11] want, go go over there.
+[00:04:15] What's going on there?
+[00:04:19] All right. Um the all the course
+[00:04:22] logistics uh to the syllabus and the
+[00:04:24] schedule are now posted online. So
+[00:04:26] please go read that. Make sure we
+[00:04:27] understand what's be expected of you as
+[00:04:29] a student in this class. All the
+[00:04:31] discussion and announcements for the
+[00:04:32] course will be on through piaza. If
+[00:04:35] you're enrolled, everything should be
+[00:04:36] everyone should have been added uh as of
+[00:04:38] a couple days ago. I think I can refresh
+[00:04:40] it for the new students. Uh and the same
+[00:04:42] thing grades scope that'll sync with
+[00:04:44] Canvas. So everything will be the roster
+[00:04:46] there will be added are you enroll
+[00:04:48] there. Uh and then final grades and the
+[00:04:51] total grades throughout the spectrum
+[00:04:52] that'll be done through through campus
+[00:04:53] as well. So we say this every year if
+[00:04:55] you're not a CFU and you really want to
+[00:04:57] be taking the class uh because we post
+[00:04:59] everything online. Uh we know there's a
+[00:05:02] non team student ratio. Use that code.
+[00:05:04] Make sure you put your university as
+[00:05:05] part of your university. uh and then you
+[00:05:07] can follow along and get all the things
+[00:05:08] we have uh in the class uh except for
+[00:05:11] obviously posting PASA. If you're not a
+[00:05:13] student in the class, please don't email
+[00:05:14] the students or the TAs or myself. Uh
+[00:05:17] don't post your solutions on GitHub. If
+[00:05:19] you are in normal class, you don't want
+[00:05:20] to be in this grade scope. You should be
+[00:05:21] automatically added to the real one.
+[00:05:23] Okay.
+[00:05:25] All right. So, for in the lectures today
+[00:05:28] are throughout the rest of the semester,
+[00:05:29] I get very excited when I talk about
+[00:05:30] databases because I I love databases.
+[00:05:33] They're the best thing in the world.
+[00:05:35] Number two in my life. Uh, I'll talk
+[00:05:36] about number one in a second. Um, but
+[00:05:39] when I get excited, I start talking very
+[00:05:41] fast and I know that can be hard for
+[00:05:42] international students. So, if I'm going
+[00:05:44] too fast and you need me to slow down,
+[00:05:45] just raise your hand and tell me like, I
+[00:05:47] don't understand that. Can you repeat
+[00:05:48] yourself or slow down? Okay. Uh, and if
+[00:05:51] you have any questions lately that goes
+[00:05:53] on in the lectures, again, please
+[00:05:55] interrupt. Raise your hand and say, "I
+[00:05:56] don't understand what you're talking
+[00:05:57] about on that slide as we're going
+[00:05:58] along." And I'll stop and repeat myself
+[00:06:00] because if you have questions, then it's
+[00:06:02] very likely that somebody else is going
+[00:06:03] to have questions, too. So please go
+[00:06:05] ahead and interrupt me. So what I won't
+[00:06:08] do is that at the end of this end of
+[00:06:10] each class I won't allow you to come up
+[00:06:12] and say hey on slide one 123 you said
+[00:06:14] this or what did that actually mean? So
+[00:06:16] immediately after the lecture you can't
+[00:06:17] ask me questions about that lecture
+[00:06:19] because I want you to interrupt me as
+[00:06:20] we're going along. Okay? So you can ask
+[00:06:23] me about anything else after the name of
+[00:06:24] the class like how to get a jobless how
+[00:06:26] to deal with the cops or whatever you
+[00:06:27] want like that you can do but I won't
+[00:06:29] answer questions about the lecture.
+[00:06:30] Okay? Because again if you have
+[00:06:31] questions other people do. I don't want
+[00:06:33] this to be sort of a back and forth
+[00:06:35] collaborative.
+[00:06:36] All the projects in the special will be
+[00:06:38] on this uh educational data system we've
+[00:06:40] been building for several years now at
+[00:06:41] Carnegie Melon called busub. Uh it's in
+[00:06:44] C++ 20. You can probably get by C++ 17
+[00:06:47] if you're not familiar with the the new
+[00:06:49] features in the 20. Um but the main
+[00:06:51] thing is going to be in C++. There is no
+[00:06:53] class at CMU that teaches you C++. So
+[00:06:55] you kind of have to pick it up on on
+[00:06:57] your own. Um, and so if you think if you
+[00:07:01] don't know C++ and you think you're
+[00:07:03] going to learn it as we go along, that's
+[00:07:05] probably going to be a bad idea. Uh,
+[00:07:07] especially when it comes to debugging
+[00:07:09] the system. Um, because you think about
+[00:07:11] you're trying to learn C++ and travel
+[00:07:13] databases. It can be challenging to do
+[00:07:15] this at the same time. So every year
+[00:07:17] every student comes along, there's
+[00:07:18] always students saying, "Hey, I know C++
+[00:07:20] and I know C, I know Java, I can pick up
+[00:07:22] C++." And that's not always the case.
+[00:07:24] So, uh, we had this assignment at the
+[00:07:27] beginning of the semester that we
+[00:07:29] implemented today. I had to fix up some
+[00:07:31] things in the latest version of Clang
+[00:07:32] last night, but should be out, uh, in a
+[00:07:34] few hours. Um, called project zero. It's
+[00:07:37] basically implementing a simple data
+[00:07:39] structure that has to be multi-threaded.
+[00:07:41] Uh, and you don't get any grade for it
+[00:07:44] because it's not meant to take a long
+[00:07:45] time, but it's it's meant for you to
+[00:07:47] come to realization what you actually
+[00:07:49] know enough to get by in the class. So,
+[00:07:52] you have two weeks to complete it. you
+[00:07:54] have to finish and get a complete 100%
+[00:07:56] uh in in that two weeks or you'll be
+[00:07:58] asked to drop the course because again
+[00:08:00] when we start doing more complicated
+[00:08:02] things like a you know multi-threaded
+[00:08:04] data structures C++ is going to be very
+[00:08:07] challenging for you if you you don't
+[00:08:08] have the experience okay
+[00:08:11] this also force you get access to your
+[00:08:12] dev environment all that good stuff as
+[00:08:13] well so any questions about project zero
+[00:08:16] we'll post information about this on the
+[00:08:17] side and the code will go out later
+[00:08:19] today
+[00:08:22] and again we try to people to uh get
+[00:08:25] through this student rather later before
+[00:08:27] we get past the ad drop deadline. So now
+[00:08:30] I have to show this every time in the
+[00:08:33] beginning of the class warning about
+[00:08:34] plagiarism, right? So everything you do
+[00:08:36] for homeworks and the project should be
+[00:08:37] your own work. Um means we don't want
+[00:08:40] you to copy from other people on the
+[00:08:42] internet or other people uh in the
+[00:08:43] class. Um, but I'm going to say you are
+[00:08:46] allowed to use generate AI tools flaw
+[00:08:49] check pick your favorite one to help you
+[00:08:51] write the the project right because this
+[00:08:54] is the future like it's stupid to say
+[00:08:56] don't use these tools be ask you like
+[00:08:58] not use debugger to debug your code be
+[00:09:00] stupid like this is the way the world is
+[00:09:01] now um so you the lines get blurred you
+[00:09:05] know what's actually plagiarism versus
+[00:09:06] not plagiarism when using LLM and if
+[00:09:09] you're not sure ask us use your best
+[00:09:10] judgment but by all means you should be
+[00:09:12] using these tools to help you write
+[00:09:14] The tricky thing is going to be you you
+[00:09:16] can have it you know check will generate
+[00:09:18] a bunch of code for you but if you don't
+[00:09:20] understand the fundamentals what we're
+[00:09:21] trying to teach in this semester and
+[00:09:22] understand systems you're screwed
+[00:09:24] because you don't know whether the thing
+[00:09:25] it's going to put out is going to be
+[00:09:26] correct or not and we'll talk about the
+[00:09:29] leaderboard in once we release project
+[00:09:31] one but there's ways to get extra credit
+[00:09:33] and by based on how fast your code
+[00:09:35] actually can actually run and I'll be
+[00:09:37] honest I play and claw other ones and
+[00:09:41] it's the sometimes correct. It's
+[00:09:43] definitely not going to be performant
+[00:09:44] versus stuff, right? Writing assembly
+[00:09:47] versus writing C code in the compil.
+[00:09:51] Okay.
+[00:09:52] The other thing we're doing this
+[00:09:53] semester is that we have uh on every
+[00:09:56] Wednesday, we'll have inclass lectures
+[00:09:58] that resume from all our friends in the
+[00:09:59] data industry. So we'll have these
+[00:10:01] little flashing lectures that'll cover
+[00:10:02] quickly some some particular data system
+[00:10:05] or project that's out in the real world
+[00:10:07] to get you to understand what uh how the
+[00:10:09] things are talked about during the
+[00:10:10] semester relate to uh to real systems.
+[00:10:14] We're also having all these companies
+[00:10:16] come give uh uh recruiting talks in in
+[00:10:19] two weeks or three weeks in September.
+[00:10:21] Uh every class will be invited to
+[00:10:23] companies things and we can talk to them
+[00:10:25] about internships and full-time
+[00:10:26] positions. That'll be on September 15th
+[00:10:28] and 16th. We kind of restricted this
+[00:10:31] just to be the data classes this this
+[00:10:32] semester and maybe previous semesters
+[00:10:34] and then also the advanced class
+[00:10:35] teaching being taught at the same time.
+[00:10:37] So it's not like the career fair with
+[00:10:39] everyone showing up uh you know they
+[00:10:42] took a shower that morning they're
+[00:10:43] trying to hand their resume. This is
+[00:10:44] specifically just for databases
+[00:10:47] and we'll post on kiosk about how to do
+[00:10:48] this and then we've also asked the
+[00:10:50] companies to provide us uh with
+[00:10:51] information about their intern and
+[00:10:53] fulltime positions directly for these
+[00:10:56] students and that again that'll be
+[00:11:01] all right if you want to go beyond the
+[00:11:02] things we're talking about in the class
+[00:11:04] uh we're also having a seminar series
+[00:11:05] starting in uh September this is
+[00:11:07] optional for students uh and every
+[00:11:09] semester we always try to do a different
+[00:11:11] topic this topic or this semester will
+[00:11:13] be about data lake systems. If you don't
+[00:11:16] know what that is, don't worry about it.
+[00:11:17] We'll cover it later on. Uh but this is
+[00:11:19] sort of the hot trend right now where
+[00:11:21] people are building cloud-based systems
+[00:11:23] where they do SQL on top of files and
+[00:11:26] Amazon S3
+[00:11:28] cloud storage. So iceberg is probably
+[00:11:30] the most famous one of all these.
+[00:11:32] Anybody know who bought iceberg recently
+[00:11:35] or last year?
+[00:11:38] Data bricks. Anybody knew what data
+[00:11:40] bricks paid for them?
+[00:11:42] I think it was two billion or a billion
+[00:11:45] B. We're talking about a shitload of
+[00:11:47] money here. Um so uh bunch of people are
+[00:11:50] probably going to come talk about what
+[00:11:51] they're building. Uh and again this will
+[00:11:53] be on uh on Mondays after class at 4:30
+[00:11:56] and it'll be on Zoom on YouTube as well.
+[00:11:58] Right. I mean this option for students
+[00:12:00] if you you're like me you really love
+[00:12:02] databases uh you know spend more time
+[00:12:04] and this is one way to do that.
+[00:12:06] >> Is there a reason why we don't have data
+[00:12:08] bricks on these slides? question is do
+[00:12:10] we is the reason why we don't have data
+[00:12:11] bricks in the slide we do uh twice I've
+[00:12:14] already said one they bought iceberg
+[00:12:16] they bought tager there's one more in
+[00:12:18] there from data bricks everybody know
+[00:12:19] what it is
+[00:12:21] >> delta lake yes
+[00:12:22] >> absolutely yes so delta lake was uh
+[00:12:27] databicks's version of iceberg uh and
+[00:12:30] then they bought the iceberg guys the
+[00:12:32] story is they the snowflake was trying
+[00:12:33] to buy by the iceberg guys and then they
+[00:12:36] offered him 600 billion uh and then dat
+[00:12:38] Swin and offered them like you know two
+[00:12:40] billion might have been a billion might
+[00:12:42] be off but still a lot of money and then
+[00:12:46] uh snow snowflake put out Polaris which
+[00:12:48] is the catalog version it's iceberg
+[00:12:50] compatible hoodie came out of um Uber I
+[00:12:54] think uh and so iceberg came out of
+[00:12:58] Netflix Uber came out of uh Hoodie came
+[00:13:00] out of Uber and then now that's being
+[00:13:02] commercialized by a company called
+[00:13:03] OneHouse um you'll see throughout
+[00:13:07] there's a lot put a data system out
+[00:13:09] there because there's a lot of money in
+[00:13:10] this and every year everyone's trying to
+[00:13:11] build a new system to try to solve some
+[00:13:13] problem that existing systems don't
+[00:13:14] solve and sometimes it's a good idea and
+[00:13:16] often times it's a bad idea and what
+[00:13:19] this class is going to teach you how to
+[00:13:20] spell out which one's the bad ideas and
+[00:13:23] not because I said so because you
+[00:13:24] understand the fundamentals of
+[00:13:25] consistent trying to do okay
+[00:13:30] all right uh now this doesn't relate to
+[00:13:33] the class but this is something because
+[00:13:34] we're going to put this on YouTube um I
+[00:13:37] sort of mentioned before that, you know,
+[00:13:38] DJ uh Mushu is is in is in jail in in
+[00:13:42] Illinois. Uh there's actually somebody
+[00:13:44] else we know who's actually in jail
+[00:13:46] right now in prison. Um there's this guy
+[00:13:48] named Preston Thorp. Uh so if you read
+[00:13:51] Tech Fun Hacker News, you might have
+[00:13:52] seen this a few few weeks ago, right?
+[00:13:55] And he's got a blog article on um
+[00:13:58] torso's website about how he's in
+[00:14:00] currently in jail right now. He he got
+[00:14:03] caught dealing pink or smothering pink
+[00:14:04] in uh from um you know up in in New
+[00:14:08] England. Uh so if you read this blog
+[00:14:10] article, you got this little blurb here.
+[00:14:12] It says that uh while he was in jail, he
+[00:14:15] started watching these classes and he
+[00:14:16] became fell in the databases and he
+[00:14:19] actually currently in prison right now.
+[00:14:21] We are trying to find a lawyer to get
+[00:14:22] him out. Uh and he's doing databases,
+[00:14:26] right? That's awesome, right? So I
+[00:14:28] realize that there's other people maybe
+[00:14:29] in the same boat. Again, everyone's here
+[00:14:30] and hopefully don't end up being in
+[00:14:31] prison. But it's not just through. Uh so
+[00:14:34] this semester starting, if you're not uh
+[00:14:37] if you're currently in prison or you
+[00:14:38] know somebody that's in prison, you send
+[00:14:40] us an email and we'll send you a package
+[00:14:42] up version of this course. Uh it'll be
+[00:14:45] like, you know, if you don't have a
+[00:14:46] computer, we're pronouncing things, but
+[00:14:48] like you'll get sent like a thumb drive,
+[00:14:50] the videos. So obviously we can't send
+[00:14:52] you this semester because this semester
+[00:14:54] hasn't happened yet. So it'll be like in
+[00:14:55] the previous semester. Okay. And we
+[00:14:57] thank our friends at Convex uh which is
+[00:15:00] a database company uh for for sponsoring
+[00:15:02] this. Okay. All right. Any questions
+[00:15:05] about about the logistics of the course?
+[00:15:06] What's expected? Again, the course sale
+[00:15:08] list tells you the breakdown for the
+[00:15:09] grades for the projects, all the the
+[00:15:12] assignment list when all the projects
+[00:15:13] will be released and how much released
+[00:15:14] and when they're actually going to be
+[00:15:15] due. And then you post all the questions
+[00:15:17] on the other. Okay.
+[00:15:21] All right. Let's talk to this. So, as I
+[00:15:24] said before, I love databases, but
+[00:15:26] they're the second most important thing
+[00:15:28] in my life. Uh, number one is my wife
+[00:15:30] and my biological daughter. Uh, number
+[00:15:34] two is is databases. Like everything
+[00:15:36] else doesn't matter. And you'll see this
+[00:15:38] throughout your life that pretty much
+[00:15:39] everything is going to be not just
+[00:15:40] computer science and tech. Everything
+[00:15:42] can be thought of as a database problem,
+[00:15:44] right? So, I don't have any friends
+[00:15:46] outside databases. I don't talk to my
+[00:15:47] family because they're Trump supporters.
+[00:15:49] Like it they they don't like databases.
+[00:15:50] It's just obsessively about databases.
+[00:15:53] So what I'm going to hopefully impart
+[00:15:56] from you in today's class and throughout
+[00:15:57] the rest of the semester is how awesome
+[00:15:59] databases are and why they're so
+[00:16:01] important and why again you should
+[00:16:03] pursue what I would call a database
+[00:16:04] system lifestyle which is every day you
+[00:16:06] wake up how can I work on databases or
+[00:16:08] how can I run my database so in today's
+[00:16:10] class we're talk about data systems
+[00:16:11] background but I'm making mistakes being
+[00:16:13] database and database systems because
+[00:16:14] they're equally important and then I'll
+[00:16:16] talk about the relational model which is
+[00:16:18] the best data model you could have for a
+[00:16:20] database system we'll talk about
+[00:16:22] relational algebra which is how you can
+[00:16:23] actually end up write queries and the
+[00:16:25] fundamentals of building blocks of how
+[00:16:27] you write queries and manipulating
+[00:16:28] databases and then I'll finish up
+[00:16:30] talking about some alternative data
+[00:16:32] models that are out there you might come
+[00:16:33] across in the real world and why they
+[00:16:36] are inferior or just subsets of what the
+[00:16:39] relational data model can do. Okay. And
+[00:16:41] as I said I love data so much I get
+[00:16:43] really excited. So please tell me to
+[00:16:45] stop and slow down if you have
+[00:16:46] questions. Okay.
+[00:16:48] All right. Let's make try to start with
+[00:16:49] easy question. Anybody name a database?
+[00:16:54] Just shout that out.
+[00:16:56] >> Postgress one. What's that?
+[00:17:00] >> SQL
+[00:17:01] >> like SQL server
+[00:17:05] >> SQLite. My SQL. Yes.
+[00:17:10] >> You said you said SQLite. That's fine,
+[00:17:12] right? For my SQL.
+[00:17:13] >> Click house. Yes. One more.
+[00:17:16] >> Microsoft.
+[00:17:18] >> Microsoft server. There's actually two
+[00:17:21] there's two product there SQL server and
+[00:17:23] Microsoft SQL server different things.
+[00:17:24] Yes, right there last one.
+[00:17:29] >> Reddit monitor. We'll cover that later.
+[00:17:31] Um
+[00:17:33] you're all wrong.
+[00:17:36] So what did they list? Database systems.
+[00:17:39] I asked for a database. So again this is
+[00:17:42] the word about databases. We can be very
+[00:17:44] pedantic about what what our definitions
+[00:17:46] are because we have to understand what
+[00:17:47] we talk about when we say what's a
+[00:17:49] database and a database system. You have
+[00:17:50] to go to data systems to manage it. So
+[00:17:52] you're not wrong if you go to a bar
+[00:17:54] anywhere and you know your tech people
+[00:17:56] and say hey I'm using this database
+[00:17:58] they'll know what you mean but I
+[00:17:59] understand what the data we actually
+[00:18:01] want to store and what the system is
+[00:18:03] we're going to build actually managing
+[00:18:04] right so databases can be a sort of a
+[00:18:08] collection of data that's interrelated
+[00:18:11] in some way uh that's meant to model the
+[00:18:14] real world is so we listed click post my
+[00:18:17] single single like again these are all
+[00:18:18] data systems that we use to host and
+[00:18:20] store and query a database. A database
+[00:18:24] would be like the list of students that
+[00:18:26] are enrolled in this class. You have a
+[00:18:28] name, you have an email address, right?
+[00:18:29] You have a date of birth and so forth.
+[00:18:32] And what is that trying to do? Trying to
+[00:18:34] represent you guys that are taking this
+[00:18:36] class in the sort of digital world
+[00:18:38] inside of a database, right? And as said
+[00:18:41] before, these can be the most important
+[00:18:42] computer application that you'll see for
+[00:18:44] the rest of your life. Even if you don't
+[00:18:46] take this class and go off and actually
+[00:18:47] build data systems at all these various
+[00:18:48] companies that we just mentioned, uh I
+[00:18:51] guarantee you for the rest of your life,
+[00:18:52] you're going to come across data data
+[00:18:54] systems. And what this class can
+[00:18:55] hopefully teach you is like when you you
+[00:18:57] send a query to your data system and
+[00:18:59] it's slow or something weird and doesn't
+[00:19:01] behave the way you want to behave. This
+[00:19:03] class will help you understand why is
+[00:19:04] that that's the case. The end of the
+[00:19:07] day, what is computer science? Computer
+[00:19:09] science is just like taking some inputs,
+[00:19:11] doing some kind of manipulation on it,
+[00:19:13] and then producing some output.
+[00:19:15] That's a database at a high level. What
+[00:19:17] is a possible possible database? What is
+[00:19:18] LLM? It's basically a database.
+[00:19:21] Everything is going to be a database,
+[00:19:23] right? Compilers, I mean, it's kind of
+[00:19:26] rules inside that thing, but it seems
+[00:19:27] some input producing output. You could
+[00:19:28] argue compiler is a database.
+[00:19:31] A game's a database. Everything is a
+[00:19:33] database. Trust me.
+[00:19:35] Okay.
+[00:19:37] So, let's look at a simple example and
+[00:19:39] we'll see one way we can actually
+[00:19:40] implement a data system actually to
+[00:19:42] maintain it and run it. And then we'll
+[00:19:44] see why sort of the
+[00:19:47] straw main idea is a bad idea and we'll
+[00:19:49] see again we'll help motivate why they
+[00:19:50] actually built something more
+[00:19:51] sophisticated why we need to do this
+[00:19:53] course. So let's say we're going to
+[00:19:55] build a clone of Spotify or iTunes and
+[00:19:57] we want a database that keeps track of a
+[00:19:59] bunch of albums that are out there,
+[00:20:01] music albums, and then the artists that
+[00:20:02] are on them, right? So what basic things
+[00:20:05] we need to track is like the name of the
+[00:20:07] artist, maybe the year that that they
+[00:20:09] that the album released, right? And then
+[00:20:11] what artists appear in different albums,
+[00:20:13] right? You think about what what are we
+[00:20:14] trying to model? The data is trying to
+[00:20:16] model a real music store where you
+[00:20:18] actually go in and see records and CDs
+[00:20:20] and tapes and things like that. But here
+[00:20:23] we're trying to do it in inside of the
+[00:20:24] database. We're trying to keep track of
+[00:20:26] all the attributes we have for that for
+[00:20:28] those real world entities inside of our
+[00:20:30] database.
+[00:20:32] So what's one easy way we could we could
+[00:20:34] do this?
+[00:20:36] >> Yeah. Go ahead. Yes.
+[00:20:44] >> He said put an RC in each row.
+[00:20:47] >> Yes. So basically a way more specific to
+[00:20:50] say let's just say we have a bunch of
+[00:20:51] CSV files comma separated value files
+[00:20:53] text files you have on your laptop or
+[00:20:55] your your computer and I have one file
+[00:20:58] for the artist and one file for the
+[00:21:00] albums and as they said I'll just have
+[00:21:03] every line is going to be a different
+[00:21:05] artist every line of that file you know
+[00:21:07] separated by a new line character is
+[00:21:09] going to be an album and then I'll have
+[00:21:12] commas separate what they are have one
+[00:21:14] one file for artist and one file for app
+[00:21:17] Right. So now anytime I want to query
+[00:21:19] this database, this is a database. Now
+[00:21:22] I'm just going to write some code that
+[00:21:23] to open up a file call f
+[00:21:27] the each line by the new line, split by
+[00:21:29] the new line and then split it by the
+[00:21:31] comma and find the data I'm looking for.
+[00:21:34] Right? So let's say that I want to write
+[00:21:37] a query that says give me the year that
+[00:21:38] Jiza went solo. Right? So I have this
+[00:21:42] artist uh uh file and I can write some
+[00:21:45] pseudo Java code or JavaScript code that
+[00:21:47] just opens the file reads line by line
+[00:21:50] parses each line and then I know that
+[00:21:52] the the first offset is going to be the
+[00:21:55] name of the artist Jiza. So the first
+[00:21:58] offset when I split them on the comma is
+[00:22:00] Jiza and I know I have the match and I
+[00:22:02] just output the the the second line
+[00:22:05] record offset one. You notice here I'm
+[00:22:09] I'm the in the CSV file everything's
+[00:22:11] treated as a string. If I want to
+[00:22:13] produce the actual integer of the year
+[00:22:15] that came it went so well I I cast it to
+[00:22:17] an integer.
+[00:22:20] So is this a good idea or
+[00:22:23] I've already said maybe why
+[00:22:27] >> yes
+[00:22:31] >> you said it's a linear time every time
+[00:22:33] you look at one entity. Yes. We never
+[00:22:35] know where the next line is.
+[00:22:39] >> They said you uh in order to find any
+[00:22:40] line you got to parse the previous line
+[00:22:42] to a sort of related a linear scan or
+[00:22:44] sequential scan to the file.
+[00:22:46] >> There's no
+[00:22:48] >> there's no typing. Yes.
+[00:22:51] >> The logic and variable field names are
+[00:22:54] hardcoded.
+[00:22:55] >> They said the first
+[00:22:58] >> you said the logic and the name or the
+[00:23:00] off the fields are hardcoded in the
+[00:23:01] code. Yes.
+[00:23:03] >> One more. Yes. No consistency
+[00:23:04] guarantees.
+[00:23:05] >> He said no consistent guarantees. What
+[00:23:06] do you mean by that?
+[00:23:14] >> He said no acid.
+[00:23:16] >> Give us give us like 10 weeks before we
+[00:23:19] get to that. Uh maybe another way to say
+[00:23:21] is like there's no guarantees that the
+[00:23:24] data I put in is going to be correct and
+[00:23:26] no guarantees that when I write the data
+[00:23:28] that's going to be safe and no
+[00:23:30] guarantees that uh the the data across
+[00:23:34] the two different files will be uh
+[00:23:35] consistent meaning like I I could put a
+[00:23:38] album that has an artist that doesn't
+[00:23:40] exist in the artist the artist platform
+[00:23:42] that's basically assess
+[00:23:48] right so you can sort of think of like
+[00:23:50] the
+[00:23:52] different levels like the integrity of
+[00:23:54] the data maybe like if I put data in is
+[00:23:56] it going to is because I'm trying to
+[00:23:59] model the real world can I manipulate
+[00:24:01] and and change the data in such a way
+[00:24:03] that I can put it into an invalid
+[00:24:06] invalid state that doesn't match what
+[00:24:08] the real world looks like right so as I
+[00:24:12] said before how do we make sure that the
+[00:24:15] uh if I if I add an album I put an
+[00:24:17] artist name that artist name actually
+[00:24:19] appears and it's correct in the artist
+[00:24:21] file or what if I have an artist has
+[00:24:23] multiple albums the Wuen clan must have
+[00:24:25] a bunch of albums how do I make sure
+[00:24:27] that the the artist name isn't like you
+[00:24:30] know you know I don't sometimes use a
+[00:24:33] hyphen don't use the hyphen so I have
+[00:24:34] two different versions of the Wuang clan
+[00:24:36] even though logically I know they're the
+[00:24:38] same thing but the actual bits I'm
+[00:24:39] storing are actually going to be
+[00:24:40] different so I don't think they're not
+[00:24:42] going to match
+[00:24:45] my sort of simple example here I was
+[00:24:47] assuming that there's a one to one
+[00:24:48] correspondence between an artist and an
+[00:24:50] album and an album would only have one
+[00:24:52] artist because there's only one field
+[00:24:54] for it or people people put out mixtapz
+[00:24:56] all the time or with collaborators do
+[00:24:59] you have multiple artists on the album
+[00:25:00] but I can't represent that in that
+[00:25:02] database
+[00:25:04] then what happens again if I delete an
+[00:25:06] an artist but I don't think the album
+[00:25:07] that they're they're involved in now I
+[00:25:09] have basically a dangling pointer
+[00:25:13] the imotation going to suck as well
+[00:25:14] right how do I find a record as we
+[00:25:16] already said I got to parse every single
+[00:25:18] line and then jump to the offset
+[00:25:20] hardcoded in my my program to find the
+[00:25:23] data that that I'm looking for. That's
+[00:25:25] going to suck. But then what I want to
+[00:25:28] write a new application that I want to
+[00:25:29] use the same database and this one's in
+[00:25:31] Python. Maybe I write the next one in
+[00:25:33] SQL or Rust, right? I got to run all the
+[00:25:36] same logic I had before to parse these
+[00:25:38] files now in a new program and how to
+[00:25:40] make sure that these things are in sync.
+[00:25:42] Be really hard to do because one's in
+[00:25:43] they're different languages.
+[00:25:46] And then what happens now if I have two
+[00:25:47] threads try to open up the file and try
+[00:25:49] to write a new record at the same time.
+[00:25:50] What would happen?
+[00:25:52] Who would win? Right? Is it the last
+[00:25:54] writer wins or should the second guy
+[00:25:56] fail? Right? That's sort of related to
+[00:25:58] the assets we just talked about. We'll
+[00:26:00] cover that later.
+[00:26:03] Then the last one that's super important
+[00:26:05] because people get really pissed off if
+[00:26:06] you lose data. Like think of your bank
+[00:26:08] account. If you put money in, you know,
+[00:26:09] deposit money in the bank and they lost
+[00:26:11] that deposit, you'd be pissed, right?
+[00:26:13] Because it's money. So the bank does a
+[00:26:15] bunch of stuff in their database to make
+[00:26:16] sure they don't use those records. So in
+[00:26:19] our example, you know, it's not the end
+[00:26:23] of the world. We miss an album, but
+[00:26:24] people would get pissed off pretty
+[00:26:25] quickly if the application didn't work
+[00:26:26] as expected,
+[00:26:28] right? So what happens if we start
+[00:26:30] pending new records to the file and then
+[00:26:31] then we crash the computer crash the
+[00:26:34] power? What should happen?
+[00:26:37] What should you see when you come back?
+[00:26:40] What happens if you want to duplicate
+[00:26:41] the data so that instead of having on
+[00:26:43] one machine and that one machine goes
+[00:26:44] down we lose everything if we want to
+[00:26:46] you know running a real website a real
+[00:26:48] service it's got to be always available
+[00:26:50] so I want to start duplicating the data
+[00:26:53] and how to make sure those are things
+[00:26:54] are in sync
+[00:26:57] and so this is be basically why you
+[00:26:59] don't want to write a database system
+[00:27:00] yourself in your application code people
+[00:27:03] do it all the time it's a terrible idea
+[00:27:04] you want to use a database system
+[00:27:06] because these this is you know highly
+[00:27:09] vetted software part that is uh where
+[00:27:11] people spending a lot of time you know
+[00:27:13] not worrying about the high level things
+[00:27:14] like you know how do I actually store uh
+[00:27:16] represent a music music site but
+[00:27:18] actually how do I store data and make
+[00:27:20] sure you don't lose anything
+[00:27:22] right so you data manage systems are
+[00:27:26] going to be important piece of software
+[00:27:27] that going to be sort of the bedrock for
+[00:27:29] pretty much every application that
+[00:27:30] exists today now that said just because
+[00:27:33] you're using data system doesn't mean
+[00:27:34] the people building that system have
+[00:27:36] done that correctly and you can
+[00:27:38] guarantee that you're not going to lose
+[00:27:39] any data or have other problems. This
+[00:27:41] blog article actually came out two days
+[00:27:42] ago. Uh so there's a company out of the
+[00:27:45] UK called Surreal DB and without going
+[00:27:49] into details. Basically they they turned
+[00:27:52] off uh safe rights by default makes
+[00:27:54] themselves look like that faster than
+[00:27:57] they actually really are. So they're
+[00:27:58] they're storing data very fast for you
+[00:28:00] but it's not actually safe safely being
+[00:28:02] stored. So you can crash or lose power
+[00:28:04] if something happened and you can
+[00:28:05] corrupt your database and you lose data.
+[00:28:08] So I'm just I'm pointing this one out
+[00:28:10] because this was two days ago. MongoDB
+[00:28:12] had a long history. We'll cover
+[00:28:13] throughout the semester, but they were
+[00:28:15] kind of playing the same kind of games.
+[00:28:16] But this is not a new trend. This is not
+[00:28:17] just pointing these guys out. I'm just
+[00:28:19] pointing out to say that again what this
+[00:28:21] class will do is teach you why what
+[00:28:23] they're doing is a bad idea. Uh and you
+[00:28:27] should really understand what the system
+[00:28:28] is is claiming what what they're trying
+[00:28:30] to claim that they can provide and see
+[00:28:32] whether it's actually real or not. This
+[00:28:33] is something when you're hiding
+[00:28:34] something in the documentation that
+[00:28:35] nobody realized they need to turn on
+[00:28:37] until it was too late.
+[00:28:40] All right. So now make distinction
+[00:28:42] between the the data systems that we
+[00:28:44] mentioned at the beginning versus the
+[00:28:46] database. The data benefit system is
+[00:28:48] this category of software that is meant
+[00:28:51] to be for storing application data in
+[00:28:54] such a way that it makes it easy to
+[00:28:56] store data and to analyze it and ask
+[00:28:59] questions about that data at some later
+[00:29:01] point. So a general purpose database
+[00:29:03] system like the various systems we've
+[00:29:04] all mentioned today like click house my
+[00:29:06] postgress and so forth right these
+[00:29:09] are these are designed such that any
+[00:29:13] application that comes along could start
+[00:29:15] storing their data in it without uh
+[00:29:17] having to write everything from scratch
+[00:29:19] right you you define schema we'll cover
+[00:29:22] in a second you you tell the what you
+[00:29:24] want your data to actually look like
+[00:29:26] recording some data model which we need
+[00:29:28] the the next slide um and then these
+[00:29:30] systems will actually store this for
+[00:29:32] you. As I said, this is not something
+[00:29:34] you want to build yourself. Almost
+[00:29:36] always the case from you almost never
+[00:29:38] want to build this yourself. Um, often
+[00:29:40] times people say like, oh, there was no
+[00:29:42] new system that met my needs. I had to
+[00:29:44] start building my own. 99% of the time
+[00:29:46] that's actually not true, right? You can
+[00:29:48] get very very far starting with
+[00:29:49] Postgress or even something like SQLite.
+[00:29:52] And that should usually be the first
+[00:29:53] choice uh for building any new
+[00:29:55] application. Actually, if you get
+[00:29:56] nothing out of this course, remember
+[00:29:58] your first choice should be Postgress.
+[00:30:00] They have amazing front end, terrible
+[00:30:02] back end. I'll explain why for that.
+[00:30:05] Okay.
+[00:30:08] All right. So, a data data system is
+[00:30:11] going to provide you with uh expose you
+[00:30:13] what's called a data model, which is a
+[00:30:16] high level abstraction that sort of
+[00:30:18] specifies how you're going to represent
+[00:30:20] data in the database. Right? So,
+[00:30:22] relational model is is one example of a
+[00:30:24] data model. The document data model in
+[00:30:26] in Mong, that's another example. Cover
+[00:30:28] that in a second. Right? Think of these
+[00:30:30] like the rules that that you would rules
+[00:30:33] that can define what types of things can
+[00:30:35] exist and their relationships between
+[00:30:38] each other in in a database.
+[00:30:41] Outside of like computer science, you
+[00:30:43] can think of like a um a data model is
+[00:30:46] like the the rules for architecture.
+[00:30:48] Like you're going to build a building,
+[00:30:50] right? A a building would have things
+[00:30:52] like a room and a doors. like these are
+[00:30:54] the types of things you're allowed to
+[00:30:55] have within a architectural diagram or
+[00:30:58] or specification for a building.
+[00:31:02] And then a schema is going to be a
+[00:31:04] description of a particular database or
+[00:31:07] a collection of data uh according to
+[00:31:09] some some data model. It's just like a
+[00:31:12] way to define here's the things I'm
+[00:31:13] actually going want to store in my
+[00:31:15] database according to the data model
+[00:31:17] that I'm required to specify things as.
+[00:31:20] So going back to my building example,
+[00:31:22] you can think of the the the schema an
+[00:31:24] actual blueprint diagram of a building,
+[00:31:27] right? Say here's where the doors are.
+[00:31:29] Here's the size and dimensions of the
+[00:31:30] room, right? And I can take that schema
+[00:31:33] and I can I can make different versions
+[00:31:35] or different um uh different instances
+[00:31:38] of that house or whatever that building
+[00:31:40] is according to that blueprint. But the
+[00:31:43] data model defines what the blueprint is
+[00:31:45] allowed to have. It has windows and so
+[00:31:47] forth, right?
+[00:31:49] So the relational model is one example
+[00:31:51] of a data model. It wasn't the first
+[00:31:52] one. We'll cover the the struggle ones
+[00:31:54] in a second. Um but pretty much today
+[00:31:57] most data systems are going to be the
+[00:31:59] follow the relational data model. So
+[00:32:01] pretty much all the systems everyone
+[00:32:02] mentioned except for Reddus and uh
+[00:32:05] are relational database systems
+[00:32:10] for simple things like key value
+[00:32:11] systems. Uh think of like it's most
+[00:32:13] simplest data you can have database you
+[00:32:15] can have. You have a key call live value
+[00:32:17] associative array like a hashmap you can
+[00:32:19] drop in program languages a key value
+[00:32:22] pair it's pretty basic you see this in
+[00:32:25] like a lot of caching systems
+[00:32:27] uh key follow or a chunk of data you
+[00:32:31] kind of cache um for several things it
+[00:32:34] looks like this there's a whole another
+[00:32:36] category of systems called new SQL
+[00:32:37] systems raise your hand if you're ter
+[00:32:42] getting less and less each year this is
+[00:32:43] good Um
+[00:32:45] I was I was not saying I was very
+[00:32:48] impression but I was I was um I was
+[00:32:52] going to say an early critic of NoSQL
+[00:32:55] systems and turns out they're right
+[00:32:57] pretty much all of them are adding model
+[00:32:58] now but um you'll see these wrapped
+[00:33:01] databases they're not dead yet they're
+[00:33:02] around the dock database JSON database
+[00:33:04] XML databases these are ones people
+[00:33:06] mostly think about in the world yes
+[00:33:09] >> so is key value not no SQL
+[00:33:12] >> question is is key value not SQL.
+[00:33:16] I mean there is not a academic
+[00:33:19] scientific definition of NoSQL. You
+[00:33:21] could throw them in there as well. Yes,
+[00:33:23] those would be like Reddit would be a no
+[00:33:25] system. That would be a key dive. But
+[00:33:27] when most of the think they usually
+[00:33:29] think the things like that,
+[00:33:32] right? All these other data models we
+[00:33:34] don't we don't care about except for the
+[00:33:36] documents that we'll cover in a second.
+[00:33:38] Then there's uh array databases
+[00:33:41] like you know one-dimensional vectors,
+[00:33:43] two dimensional tensors uh and matrices.
+[00:33:46] You typically see this in machine
+[00:33:47] learning workloads and scientific
+[00:33:49] workloads except the vector stuff I'll
+[00:33:51] talk about I'll talk about at the end
+[00:33:52] but this is very common now in databases
+[00:33:55] to build rag applications do semantic
+[00:33:58] search and your favorite things. We'll
+[00:33:59] talk what that looks like. Um and then
+[00:34:01] there's these guys at the bottom higher
+[00:34:03] core network semantic and relationship.
+[00:34:05] These are all the ones you've seen
+[00:34:06] really old systems from like the 1970s,
+[00:34:08] 1980s. Uh high pilot was the first one.
+[00:34:12] Network is another one that's around
+[00:34:14] like you would nobody would no new start
+[00:34:17] saying I'm going to build my database or
+[00:34:18] I'm going to build my application
+[00:34:19] running off a highle database. Like
+[00:34:22] that's like IBM IMS they built that to
+[00:34:24] keep track of the all the parts of the
+[00:34:26] moon that they use. That thing is still
+[00:34:29] around. IBM still makes a ton of money
+[00:34:30] on it. Every bank still runs it. uh but
+[00:34:33] they put a relational veneer on top of
+[00:34:34] that so it doesn't look like it did back
+[00:34:36] in the day. Uh so think of like 1960s
+[00:34:39] 1970s early 1980s. We don't have to
+[00:34:41] worry about these except we'll see why
+[00:34:43] they're a bad idea and then it'll help
+[00:34:45] motivate why we want to do the data
+[00:34:46] model. For this whole course it's going
+[00:34:48] to be a relation data model. Uh because
+[00:34:50] again pretty much in the same way that
+[00:34:54] like 1 plus 1 equals 2 is the basic for
+[00:34:56] arithmetic and math. Relational data
+[00:34:58] model in my opinion is is the basic
+[00:35:00] building blocks of how you want to build
+[00:35:02] any given.
+[00:35:04] The only time relational data models
+[00:35:05] will make completely sense is when you
+[00:35:07] start doing matrices because you can
+[00:35:09] model them in a relational database or
+[00:35:11] stop them. Not always the best way to do
+[00:35:12] that. Again, we'll cover these later on.
+[00:35:17] All right. So, let's go back to 1960s.
+[00:35:20] None of us none of us were born yet. And
+[00:35:23] none of us were alive, but people were
+[00:35:25] building,
+[00:35:27] right? So in the early early or mid
+[00:35:29] 1960s people started donating um the
+[00:35:33] some of the first systems the first one
+[00:35:35] was actually built by General Electric
+[00:35:36] GE in 1965
+[00:35:39] uh system called ID IDM integrated data
+[00:35:42] management uh it's written in assembly
+[00:35:46] uh they built this to to to host the
+[00:35:50] some Seattle chamber companies uh you
+[00:35:53] know their data to keep track of all the
+[00:35:55] logs or something Um but IDS so IDM was
+[00:35:59] the early ones IMS mentioned they built
+[00:36:01] this for the Apollo moon mission before
+[00:36:03] NASA was actually called NASA and so the
+[00:36:06] in these early systems they they so
+[00:36:09] before SQL formational model it was very
+[00:36:12] hands-on about how you would actually
+[00:36:13] write code to query the database I think
+[00:36:16] they were like this even before C
+[00:36:18] existed you know people were running
+[00:36:19] assembly they do everything and then
+[00:36:21] cobalt came along and it was sort of a
+[00:36:24] higher level language to a higher level
+[00:36:26] in assembly but it was still pretty low
+[00:36:28] level for how you'd actually interact
+[00:36:30] with database and so there's this paper
+[00:36:33] uh from 1973
+[00:36:35] I think or 72 or 73 by Charles Bachmann
+[00:36:40] he won the touring award for databases
+[00:36:41] in 1973 um because he built IBM and then
+[00:36:45] uh IDS and Anthony kodil and it was his
+[00:36:49] way of how he thought the how database
+[00:36:51] should look like so the name of caper is
+[00:36:53] the the programmer as a navigator so He
+[00:36:55] has this whole little step step-by-step
+[00:36:57] process here is how someone would
+[00:36:59] interact with it, you know, could write
+[00:37:01] queries against the database system. I
+[00:37:03] don't care about the details of it. Just
+[00:37:04] pointing out there's one it's sexist
+[00:37:06] everything, but two also like he can do
+[00:37:09] this, he can do that. The paper talks
+[00:37:10] about like you know you as a programmer
+[00:37:12] being like capernicus or like sailing
+[00:37:14] the seas as you navigating through your
+[00:37:16] database to find all the data that you
+[00:37:17] want, right?
+[00:37:20] It's a terrible idea because it's
+[00:37:21] essentially you as the programmer have
+[00:37:23] to understand exactly how the data is
+[00:37:25] being stored in the system and write
+[00:37:27] code against that those data structures.
+[00:37:29] So it's got this little blurb here
+[00:37:30] talking about the some BS like the
+[00:37:32] synergistic usage of the collection of
+[00:37:34] which gives the programmer a great
+[00:37:36] expanded powers to come and go within a
+[00:37:38] large database while assessing only
+[00:37:39] those records of interest.
+[00:37:42] This sounds like a terrible idea.
+[00:37:44] But why?
+[00:37:46] Right. Well, so again, this guy was a
+[00:37:49] big proponent of something called
+[00:37:50] Kodasil. Nobody here has ever heard of
+[00:37:52] Kodasil. Probably never heard of code
+[00:37:54] ball, but this is what how they were
+[00:37:56] defining it in the early 1970s on what
+[00:37:58] data should look like and how you
+[00:37:59] program against them.
+[00:38:01] So what does it look like? Well, I I've
+[00:38:03] never written code. So check that. So
+[00:38:06] say you want to write a query that says
+[00:38:07] give me all the artists that appear on
+[00:38:09] DJ's tribute album that we want to put
+[00:38:11] out this year. Right? This is basically
+[00:38:14] what it looks like. We're running a
+[00:38:15] bunch of nested for loops to look at all
+[00:38:17] the artists and this artist they all the
+[00:38:20] albums all the albums and artists
+[00:38:22] basically writing traversals in the data
+[00:38:24] system of these explicit data structures
+[00:38:26] to find the thing you want. You're
+[00:38:28] essentially telling the data exactly how
+[00:38:29] you want to navigate the data to find
+[00:38:31] the thing you're looking for.
+[00:38:34] You think it's a good idea or bad idea?
+[00:38:36] I've already said it's bad idea. Why?
+[00:38:42] depends on which data
+[00:38:48] they say it depends on what data
+[00:38:49] structure you're using underlying
+[00:38:50] system.
+[00:38:52] Uh
+[00:38:54] I mean it's one of those AI wasn't
+[00:38:56] exposed but in this case here for code
+[00:38:57] of sale it's high level enough that the
+[00:39:00] don't know what data structure is but
+[00:39:01] you need to know that there's data
+[00:39:03] structures or collections you have to
+[00:39:05] traverse.
+[00:39:07] So in my example before I had what? I
+[00:39:10] had two two tables or two files. I have
+[00:39:12] artists and albums. Is it better to do
+[00:39:15] the for loop on the artists first or the
+[00:39:16] albums first?
+[00:39:20] You don't know,
+[00:39:22] right? Well, maybe you know because you
+[00:39:24] always ask how many how many lines or
+[00:39:26] how many how many records are in each
+[00:39:27] file. But that may be true today, but
+[00:39:29] what about tomorrow or a year from now?
+[00:39:32] And then now this is the code you're
+[00:39:33] writing queries on. And now maybe
+[00:39:35] whatever assumptions you made at the
+[00:39:36] beginning when you wrote this query is
+[00:39:38] not the same as it is now. But because
+[00:39:40] you hardcoded exactly what execution
+[00:39:42] plan you want, this computer has to run
+[00:39:44] this.
+[00:39:46] This is a bad idea for a whole bunch of
+[00:39:49] reasons. We'll see in a second. But the
+[00:39:51] equivalent SQL query would be something
+[00:39:52] like this like joining the artist and
+[00:39:55] album cable by just the the
+[00:39:59] album name.
+[00:40:01] Notice here it's if you never seen this
+[00:40:04] before, I hope you have. I'm not telling
+[00:40:06] you what how to actually pick the answer
+[00:40:08] I want. I'm telling you what the answer
+[00:40:09] I want. And then the data system gets up
+[00:40:12] their responsibility to go figure out
+[00:40:13] how to actually generate that answer for
+[00:40:15] you.
+[00:40:17] Right? It seems obvious now, but back
+[00:40:20] then this was like a mind-blowing idea
+[00:40:22] and codill was considered the hot thing.
+[00:40:25] So I don't want to know too much details
+[00:40:26] of this but there was this meeting of
+[00:40:28] the minds in 1974 at University of
+[00:40:31] Michigan in Ann Arbor where all the code
+[00:40:34] guys came along were there and all the
+[00:40:36] relational data model guys were there
+[00:40:38] and they thought about it and it's all
+[00:40:40] public everything's written down what
+[00:40:41] they were uh talking about uh and they
+[00:40:44] were pointing out all the reasons why a
+[00:40:47] a hierle or navigation data model is
+[00:40:50] inferior to something like a relation
+[00:40:52] data model and this was considered
+[00:40:54] considered a major pivotal point in
+[00:40:56] databases where now people realize oh
+[00:40:59] data model is the right way to go
+[00:41:00] forward but at the time there weren't
+[00:41:02] any systems that could actually
+[00:41:03] implement this and then after this point
+[00:41:05] people started building them so the guy
+[00:41:08] that proposed the the rich data model is
+[00:41:10] named Ted Cod uh and so he was at at
+[00:41:13] this conference along with the code of
+[00:41:15] sale guy I just mentioned Charles
+[00:41:16] Bachmann
+[00:41:18] uh as well as Jim Gray the guy locking
+[00:41:22] built one of the early systems at uh at
+[00:41:24] IBM called systemr we'll cover next
+[00:41:26] slide as well as Mike Stoner the guy who
+[00:41:29] built ingress the later built postgress
+[00:41:32] you ever wonder why postgress is called
+[00:41:33] Postgress because it's post ingress he
+[00:41:35] built first ingress and he built
+[00:41:37] Postgress as the following right there
+[00:41:41] have been four Tony worthy databases
+[00:41:44] these the four right here firstly Cod
+[00:41:47] Bach and Gray are all dead still kicking
+[00:41:50] it he's like 81 he's awesome right uh
+[00:41:53] he's helping was trying to find a lawyer
+[00:41:54] for the guy getting out of get him out
+[00:41:56] of jail. Uh, right. But this was like a
+[00:41:59] big big conference, big big deal back in
+[00:42:01] 1974. And so the Kota guys were saying,
+[00:42:04] "Oh, we should model because the paper
+[00:42:05] came out in 70 1970s early 169. You
+[00:42:09] couldn't build a system like this. It's
+[00:42:11] way too complicated. Nobody nobody can
+[00:42:12] reason about relation database." And
+[00:42:16] then the the relational database guys
+[00:42:17] are saying all the crap they're talking
+[00:42:19] about code like navigating your database
+[00:42:21] that's a terrible idea. It's going to
+[00:42:23] make your data really brittle and it
+[00:42:25] again you're basically hard coding
+[00:42:27] exactly what the query is going to be
+[00:42:29] and again it's you know 30 40 years here
+[00:42:33] 50 years later uh and relational data
+[00:42:36] model guys have won because you all
+[00:42:38] listed relational databases at the
+[00:42:39] beginning no one listed a a uh cod
+[00:42:44] they still exist still can pay money to
+[00:42:48] somebody maintain it for you but no
+[00:42:49] startup is going to do system all right
+[00:42:52] so what is about the coreation data
+[00:42:53] model. Three basic key ideas that are
+[00:42:56] really simple to understand. The first
+[00:42:59] is that the way you define your data
+[00:43:02] through the data model is just these
+[00:43:04] highle
+[00:43:06] uh collections of data called relations
+[00:43:08] is in sets
+[00:43:11] and that you would then represent the uh
+[00:43:15] you then represent the connection
+[00:43:17] between data at the logical level
+[00:43:20] through values. Say like this album is
+[00:43:22] part of this this artist this album by
+[00:43:25] saying like keeping track of like
+[00:43:27] identifiers between those two relations
+[00:43:29] rather than low-level physical pointers
+[00:43:31] like this memory address or this disc
+[00:43:34] offset say things are related.
+[00:43:37] Everything is done at sort of a high
+[00:43:38] level logical level. You also be able to
+[00:43:41] specify constraints now in your data to
+[00:43:42] say what data is allowed to be stored in
+[00:43:44] it to make sure that nobody's allowed to
+[00:43:46] put invalid data. Like in my file before
+[00:43:49] it gives a file disc. I could open a
+[00:43:51] text editor and start changing years and
+[00:43:53] certain email addresses and that would
+[00:43:55] break all my programs. A relational
+[00:43:57] database won't me from doing that
+[00:43:59] because it'll say this column with this
+[00:44:01] attribute has to be this data type and
+[00:44:03] doesn't let you store anything that
+[00:44:04] would viate that not always true. Some
+[00:44:07] systems will see like single let you
+[00:44:09] store bunch of crap in there you
+[00:44:10] shouldn't have but data model is is sort
+[00:44:13] of separate from implementation.
+[00:44:16] And then the last one is the way you
+[00:44:18] would manipulate or query the data is
+[00:44:20] through a high level API
+[00:44:22] that you declare what answer you want
+[00:44:24] defined through relations. Think of like
+[00:44:27] sets
+[00:44:29] and then I don't care about the actual
+[00:44:31] implementation of the database system in
+[00:44:34] my query. I say this is the answer I
+[00:44:36] want. Now it's left up to the database
+[00:44:38] system to decide the most efficient
+[00:44:40] query plan, the most efficient way to
+[00:44:41] store that data and execute that query
+[00:44:43] for you. So any assumptions you made
+[00:44:45] during you know the time you wrote that
+[00:44:47] query as the data changes over time and
+[00:44:50] the same query shows up if I wrote it in
+[00:44:52] SQL or whatever high level language I
+[00:44:53] want then the database system say oh my
+[00:44:56] data actually looks like this before it
+[00:44:58] look like that so here's actually the
+[00:44:59] right way to run the query instead of a
+[00:45:01] faster way to run the query rather than
+[00:45:02] before here's the best way to store the
+[00:45:04] data you're actually storing uh that you
+[00:45:07] want right now rather than what what I
+[00:45:09] what I thought it looked like before so
+[00:45:11] we have this nice independence between
+[00:45:12] the physical level and the logical level
+[00:45:14] which I'll show real quick in a second
+[00:45:16] allows it a bunch of freedom to the data
+[00:45:18] system implementation to do the most
+[00:45:20] efficient way to store things question
+[00:45:24] all right so let's talk about this
+[00:45:25] independent thing
+[00:45:27] again so this this is in the 1970s
+[00:45:30] computer science was still in the early
+[00:45:31] days so this is like this is obvious to
+[00:45:33] us now but back then this was mind
+[00:45:37] like in IMS that that sit from IBM they
+[00:45:39] mentioned about the API in IMS you
+[00:45:42] declared I want to store this this table
+[00:45:44] and it's either going to be a tree data
+[00:45:46] structure or a hash table or hashmap and
+[00:45:48] then depending on what those those two
+[00:45:51] data structures I chose I got a
+[00:45:53] different API because I can't do range
+[00:45:55] stands on a hashmap and I can't do uh uh
+[00:45:59] certain kind of lookups on on on the on
+[00:46:01] the tree but then if I decide oh that
+[00:46:04] was a mistake I actually want to store
+[00:46:05] my tree structure and in a hash
+[00:46:06] structure the reverse I got to go back
+[00:46:08] and rewrite all the code to reflect that
+[00:46:10] change that the API has changed
+[00:46:13] But in a relation data model in SQL
+[00:46:15] right language relation relational data
+[00:46:18] model I don't have that problem because
+[00:46:19] I don't know what the data structure is
+[00:46:21] and it's saying I want to access this
+[00:46:22] data at the logical level of of a
+[00:46:25] relation or a table
+[00:46:29] right so at the lowest level we have
+[00:46:30] this thing called a database storage uh
+[00:46:33] and then above that we would have the
+[00:46:34] system keep track of like the physical
+[00:46:37] schema like I have a bunch of files a
+[00:46:39] bunch of pages I have a bunch of extents
+[00:46:40] I declare on on this this storage
+[00:46:42] medium. I'm keeping track of where all
+[00:46:44] the information is and where the bits
+[00:46:45] are stored and how they're being laid
+[00:46:47] out. And then above that, I have the
+[00:46:49] logical scheas that define what my
+[00:46:52] tables are, what my collections are,
+[00:46:53] what attributes they have, their names
+[00:46:55] are, what their data types are, right?
+[00:46:57] And I have a nice separation between the
+[00:46:59] two of them. So if I change one versus
+[00:47:01] change the other, uh, I can change one
+[00:47:04] without necessarily changing the other.
+[00:47:05] I can change the physical layer without
+[00:47:07] changing the logical layer.
+[00:47:10] I go even crazier. I can have another
+[00:47:12] level called the external schema. This
+[00:47:14] is a way to expose or extract way
+[00:47:16] further what the actual logical schema
+[00:47:18] would be. So that maybe so that I can do
+[00:47:21] certain things or have uh certain data
+[00:47:24] exposed a certain way without actually
+[00:47:26] changing the logical level or the
+[00:47:27] physical level. So say I have a uh a
+[00:47:30] table of everyone's uh every student in
+[00:47:33] this class. Maybe there's a column for
+[00:47:35] like your password or something like
+[00:47:37] that. But I don't want to expose that
+[00:47:38] password column to every single
+[00:47:40] application. They want to access that
+[00:47:41] table. So I can declare a view to say
+[00:47:44] this is what you're about to see. You
+[00:47:46] hide certain things. It's just another
+[00:47:48] level abstraction. And above that is
+[00:47:50] what the application is going to see.
+[00:47:53] You would access it through a high level
+[00:47:55] declarative language something like SQL.
+[00:47:59] So you think of this this this point
+[00:48:01] here in our graph that's the physical
+[00:48:03] data independence because I can declare
+[00:48:05] my my schema that here's the columns
+[00:48:08] that I want but I'm not defining how I
+[00:48:10] actually want to store them and the data
+[00:48:12] is free to change this this lower level
+[00:48:14] all at once and it doesn't break your
+[00:48:15] application
+[00:48:19] and then logical data will be up here
+[00:48:20] because so we won't cover this too much
+[00:48:23] in this semester but it's basically a
+[00:48:24] way to say yes I have this schema but
+[00:48:26] for certain applications they see
+[00:48:27] certain things and certain applications
+[00:48:28] should see other things and I can change
+[00:48:31] all things without uh without having to
+[00:48:33] rewrite any problem.
+[00:48:37] All right. So I've been going on the
+[00:48:38] last 10 minutes about how great data
+[00:48:40] model is what it actually what it
+[00:48:41] actually is. So at its core, it's going
+[00:48:45] to represent everything as relation.
+[00:48:47] Just think of relations as as like a set
+[00:48:49] an unordered set where we keep track of
+[00:48:51] the relationship not between the
+[00:48:52] different collections. There's actually
+[00:48:55] the relationship between the attributes
+[00:48:56] within a single single collection.
+[00:48:59] Right? So you have a student, a student
+[00:49:01] has a name, student has an email
+[00:49:02] address. The relation represents those
+[00:49:04] relationship between those those
+[00:49:05] attributes for that high level entity as
+[00:49:08] a student.
+[00:49:09] Um in the previous slide what what part
+[00:49:13] of of this uh hierarchy is a database uh
+[00:49:19] database management system
+[00:49:23] question is what in this slide here what
+[00:49:24] part of the system handling everything
+[00:49:26] before the application everything
+[00:49:30] right we'll go throughout the semester
+[00:49:32] but like down here maybe say like is
+[00:49:34] like the operating system opposite is
+[00:49:36] terrible we always get in our way we
+[00:49:38] hate it
+[00:49:40] is that uh we need it to to survive not
+[00:49:44] always but we need it like to do certain
+[00:49:46] things for us but we almost as a data
+[00:49:48] system we always always want to do
+[00:49:49] things without the operating system so
+[00:49:51] you can think of like maybe the OS is
+[00:49:53] kind of in here but it's always going to
+[00:49:55] be a big problem for us we try to get
+[00:49:56] around it we'll cover that as well but
+[00:49:58] this everything below the application
+[00:50:00] down is a data system
+[00:50:05] uh
+[00:50:07] if I sometimes you can put the whole
+[00:50:09] application to the ACC2. Uh not always a
+[00:50:12] good idea. Those are going to write
+[00:50:14] write code that way. But you could do
+[00:50:15] that. It could be the whole thing. For
+[00:50:16] this message, we'll say it's the
+[00:50:18] application.
+[00:50:24] All right.
+[00:50:26] All right. So relation is going to be
+[00:50:27] unordered set of data. Uh and then we'll
+[00:50:30] say is a tuple. Sometimes people call
+[00:50:32] them tpples because this was around a
+[00:50:34] couple. I say tuple. um a table is going
+[00:50:38] to be the set of the attributes within a
+[00:50:40] sole entry within the the the
+[00:50:44] within a relation right and then for
+[00:50:47] every act you could have it would be
+[00:50:48] something called domain that specifies
+[00:50:50] what the range or allowed types allowed
+[00:50:52] value instances allow to happen so if I
+[00:50:55] have an integer 32 integer the domain
+[00:50:58] would specify like 0 to 2 to 32 minus
+[00:51:00] one or if it's unsigned right
+[00:51:04] if it's a name it string field and so
+[00:51:06] forth, right? It's basically defined
+[00:51:08] with this.
+[00:51:10] We'll have a special value called null
+[00:51:12] that's going to represent uh remember
+[00:51:15] every domain if it's allowed you can't
+[00:51:17] have null but it's a way to represent
+[00:51:19] that the data is unknown
+[00:51:22] right and it be very similar to nulls in
+[00:51:26] C code but it's at the logical level
+[00:51:29] where
+[00:51:31] there is a value we're storing for null
+[00:51:33] but we can't reason about anything about
+[00:51:34] it so we can't ask questions about what
+[00:51:37] that value actually is if it's null
+[00:51:38] because the answer is unknown
+[00:51:41] Does it make more sense next class?
+[00:51:42] We'll see it. But the main thing is like
+[00:51:44] you think of like a relation as a tuple
+[00:51:47] or table with n columns.
+[00:51:50] And most of the time people refer to
+[00:51:52] them as relations. People refer to them
+[00:51:54] as tables and columns and rows. But when
+[00:51:57] we talk about different storage models,
+[00:51:59] what a column is and a row is doesn't
+[00:52:01] always line up exactly like this. But
+[00:52:03] for now, this is fine.
+[00:52:05] And so in relational model we have
+[00:52:07] important primary keys is a way to us to
+[00:52:09] uniquely identify a single tuple in a
+[00:52:12] relation. I think it's a unique value
+[00:52:15] that uniquely identifies that that a
+[00:52:18] single record and you can define unique
+[00:52:20] values in other columns but it's not
+[00:52:22] always considered like the the
+[00:52:24] identifying
+[00:52:26] that is going to be the primary. So in
+[00:52:29] this case here for our artist table we
+[00:52:30] have Wuang clan we have notoriiz but
+[00:52:33] certainly there's bands that come along
+[00:52:34] that have the same name as the previous
+[00:52:36] bands right sometimes we try to be
+[00:52:39] tricky and you know remove vowels and
+[00:52:41] make sure the names don't match but
+[00:52:42] often times it doesn't exist so in this
+[00:52:45] case here using the name would not be a
+[00:52:47] good primary key because two artists
+[00:52:48] didn't have the same name right so often
+[00:52:52] times you see uh or databases introduce
+[00:52:55] synthetic primary keys or identifying
+[00:52:57] columns
+[00:52:58] Sometimes they're called uh they're
+[00:53:00] called identity columns. Uh things like
+[00:53:03] it's a unique number assigned to uh you
+[00:53:06] know to to some record. often times when
+[00:53:08] you see your websites look at the URLs
+[00:53:11] it'll say when you see like a number
+[00:53:13] represented with an order number almost
+[00:53:15] always gonna be something like this it's
+[00:53:18] a counter every single
+[00:53:24] identification you prefer natural
+[00:53:27] identifier
+[00:53:32] uh we didn't find what a natural key is
+[00:53:33] natural would be like
+[00:53:34] >> for example the name
+[00:53:35] >> yeah the name would be like a natural
+[00:53:36] key but in this it it would be a bad
+[00:53:38] example here. Uh at CMU a natural peak
+[00:53:41] would be that your email address unique.
+[00:53:44] Um sometimes there's programing
+[00:53:46] frameworks like OMS they'll
+[00:53:48] automatically generate you these
+[00:53:51] identity columns. Um I always just use
+[00:53:54] that right I think it's fine it's fine
+[00:53:59] right so in this case the primary key
+[00:54:01] now is the ID column because we're going
+[00:54:03] to say every time we insert a new record
+[00:54:05] just think there's some counter call
+[00:54:06] sequence we add one to it every single
+[00:54:08] time we add a new record so it's
+[00:54:10] guaranteed
+[00:54:13] we can also have foreign keys and this
+[00:54:15] is how we're going to allow us to
+[00:54:16] identify the relationship between
+[00:54:18] different pupils within different
+[00:54:19] collections or relations these cells
+[00:54:22] So going back here for artist and um
+[00:54:25] an artist and artist album artist and
+[00:54:27] album right so now I've added the the ID
+[00:54:30] column that's uniquely identifies each
+[00:54:32] each record as it primary key but now in
+[00:54:35] the case of the album I want to keep
+[00:54:36] track of what artist appears on it
+[00:54:39] and for certain albums this is fine if
+[00:54:42] there's only one artist right I could
+[00:54:43] have a mapping between I basically store
+[00:54:46] the the artist ID within the album
+[00:54:48] itself and I know how to map that back
+[00:54:50] But as I said, the challenge is going to
+[00:54:52] be is when I have albums that have
+[00:54:53] multiple multiple artists on them like
+[00:54:55] in this case here the same.
+[00:54:58] So to represent and model this, I can
+[00:55:00] introduce new sort of cross reference or
+[00:55:02] uh dependency tables that allow us to
+[00:55:05] basically store the relationships
+[00:55:06] between records or tupils across
+[00:55:08] different collections or different
+[00:55:10] relations. So in this case here I would
+[00:55:12] have a uh I would have a separate table
+[00:55:15] now keep track of the artist ID and
+[00:55:17] album ID and I would I have a record in
+[00:55:19] this table any time an artist appears on
+[00:55:21] a given album. So this allows me now the
+[00:55:24] freedom to represent to have multiple uh
+[00:55:27] multiple artists appear on multiple
+[00:55:29] albums
+[00:55:31] um and not assume that there's a one to
+[00:55:33] one correspondence. Basically I can do
+[00:55:34] many many uh representations through and
+[00:55:38] now I don't need to store the artists ID
+[00:55:39] in the album itself. I just represent
+[00:55:41] that as separate.
+[00:55:46] All right I'm going to skip constraints
+[00:55:49] for the sake of time. I apologize.
+[00:55:51] Basically, it's a way to specify what
+[00:55:53] values are allowed in uh additional
+[00:55:56] constraints beyond the data type. So, I
+[00:55:59] can say things like no name can be null.
+[00:56:01] I put a not null there. I have other
+[00:56:03] constraints that say like no artist can
+[00:56:05] be born or can go solo after before 1950
+[00:56:08] or 1900. It's a bad example. We can
+[00:56:10] imagine other things like no email
+[00:56:12] address at CMU can can not contain
+[00:56:15] andrew.cu.edu
+[00:56:17] something like that. You can declare
+[00:56:19] this when you find the table. You also
+[00:56:21] have global assertions missing every
+[00:56:23] single time you insert a record. It runs
+[00:56:26] a SQL query here and here to check this
+[00:56:28] out val
+[00:56:31] because it's slow. Uh but it's a way to
+[00:56:34] model more complex constraints and data
+[00:56:37] restrictions and the basic one
+[00:56:41] for
+[00:56:42] >> question. What is the foreign key?
+[00:56:43] Sorry, thank you for stopping. So
+[00:56:45] foreign key is going to be the uh the
+[00:56:49] foreign key would in this example would
+[00:56:50] be over here. So you have a relation
+[00:56:52] that's defining values but you're saying
+[00:56:56] that the for a given column or attribute
+[00:56:58] it really is a value that has to exist
+[00:57:01] in some other relation here. So you
+[00:57:03] would say I would say I'm declaring this
+[00:57:06] relation called artist album. I have an
+[00:57:08] album ID and artist ID. for any album ID
+[00:57:11] in this column here, that album ID has
+[00:57:13] to exist in in this column or this
+[00:57:16] table. And that way I avoid the problem
+[00:57:18] like if I delete a record here, then I
+[00:57:20] don't want to have a dangling pointer
+[00:57:22] where I have now an album that has an
+[00:57:24] artist. I have an artist on album
+[00:57:26] doesn't exist anymore. The data sync
+[00:57:28] would know, okay, you're trying to
+[00:57:30] delete an artist, but I know that I have
+[00:57:32] a foreign key reference to the artist ID
+[00:57:33] here, and this has a foreign key
+[00:57:35] reference to an album over here. So that
+[00:57:37] prevents me from deleting one and not
+[00:57:39] the other.
+[00:57:40] >> Yes.
+[00:57:45] >> The question is what is the primary key
+[00:57:46] for the uh for this table here relation
+[00:57:49] here. So anytime I have the underline
+[00:57:50] that's the that's the primary key. So
+[00:57:52] it's actually the combination of the two
+[00:57:54] columns together is the primary key.
+[00:57:57] >> Can you do it in SQL? Absolutely. Yeah.
+[00:57:59] Why not?
+[00:58:03] >> Question is can I can I have can I
+[00:58:05] declare a primary key with multiple
+[00:58:06] columns? Absolutely. Yeah,
+[00:58:07] >> why not?
+[00:58:09] >> Yeah,
+[00:58:10] >> we can see that next class.
+[00:58:15] >> Okay,
+[00:58:17] so
+[00:58:19] what I'm talking about so far again is
+[00:58:21] the high level uh concepts of relational
+[00:58:23] models, how to define a relation or a
+[00:58:25] table, right? Again, the ter the terms
+[00:58:28] used interchangeably like in SQL you say
+[00:58:31] create table, right? you refer to things
+[00:58:34] as tables, but in the in the sort of
+[00:58:36] research literature or in the original
+[00:58:38] definition of the paper of the
+[00:58:40] relational data model, they weren't
+[00:58:41] called tables, they were called
+[00:58:42] relations. They're basically the same
+[00:58:44] thing. So we now we have to find what
+[00:58:46] our relations look like. Now we want to
+[00:58:49] actually run queries on that. So this is
+[00:58:51] called the DML, the data manipulation
+[00:58:53] language. Even though also too we're not
+[00:58:55] going to be uh we have read only queries
+[00:58:58] like select statements, they still fall
+[00:59:00] under the category of of the DML.
+[00:59:02] manipulating the data to perform it
+[00:59:04] somehow.
+[00:59:05] So there's basically two ways to do
+[00:59:07] this. There is a procedural uh language
+[00:59:12] and a nonprocedural language or
+[00:59:13] declarative language.
+[00:59:15] So what I'm going to teach you today
+[00:59:16] will be relational algebra which should
+[00:59:18] be a procedural language where I'm
+[00:59:19] defining the exact steps I want the data
+[00:59:23] system to use to execute my query and
+[00:59:26] I'm actually defining the order in which
+[00:59:28] I'm going to execute them which actually
+[00:59:30] goes against what I said before where
+[00:59:32] you don't want to be doing that you want
+[00:59:33] to have things be high levels decide the
+[00:59:37] best way to execute that and this is
+[00:59:39] what so tech cod defined
+[00:59:42] model with algorith at the very
+[00:59:43] beginning and then the high level
+[00:59:45] languages that allow you to do the have
+[00:59:47] that declarative interface that came
+[00:59:49] later on
+[00:59:51] the the declarative way using what's
+[00:59:54] called relational calculus right SQL
+[00:59:57] basically maps like this so we'll cover
+[00:59:59] that next class you don't really need to
+[01:00:01] know relational calculus unless you put
+[01:00:02] into a query optimizer which is not this
+[01:00:03] class for the most part uh we used to
+[01:00:06] teach relational calculus in this class
+[01:00:07] but you go out in the real world nobody
+[01:00:09] uses it so you don't really need to know
+[01:00:10] it but you already need to know
+[01:00:12] relational algorithm that's going to be
+[01:00:14] the the fundamental building blocks of
+[01:00:16] how power
+[01:00:21] and should be pretty straightforward to
+[01:00:23] understand
+[01:00:28] right so relational algebra the original
+[01:00:30] definition from pod seven operators
+[01:00:34] listed here we go through each one one
+[01:00:35] by one uh we'll say at the end this has
+[01:00:38] been extended over here for things you
+[01:00:39] actually need in in different runfield
+[01:00:41] queries
+[01:00:42] There's no notion of sorting in these
+[01:00:44] operators. There's no notion of uh doing
+[01:00:47] aggregations like think of like the
+[01:00:49] average of a
+[01:00:51] right that all came later as extensions
+[01:00:54] but the original ones these seven here
+[01:00:57] and you can think of like you can build
+[01:00:58] more complex queries from just these
+[01:01:00] seven operators by chaining them
+[01:01:02] together where you allow the output of
+[01:01:04] one operator be set as the input to the
+[01:01:06] next operator and you can use that to
+[01:01:07] build uh larger more complex next
+[01:01:12] right
+[01:01:14] we'll go through each one by and I'll
+[01:01:15] show you what the corresponding SQL
+[01:01:16] looks like. And then that'll segue us
+[01:01:18] into next class. All right. The most
+[01:01:22] basic operator you can have is called
+[01:01:23] select statement. Uh and this is just
+[01:01:25] like you're you're filtering out the
+[01:01:27] tuples you don't want based on some
+[01:01:29] predicate. You're defining the the first
+[01:01:31] order predicate logic to say these are
+[01:01:32] the tuples that are allowed to be
+[01:01:34] emitted as the output for this select
+[01:01:35] operator. So say we have a simple
+[01:01:38] relation here R. It has two attributes a
+[01:01:41] ID and B ID. So I can have a select
+[01:01:43] operator that says give me all the
+[01:01:45] records from the material from R where a
+[01:01:48] idals
+[01:01:50] a2
+[01:01:51] right and then there's some the data is
+[01:01:55] somehow filtering out that data
+[01:01:57] according to that predicate producing
+[01:01:59] producing the output
+[01:02:01] I can do more complicated things I can
+[01:02:02] start combining together through
+[01:02:04] junctions and disjunctions I can have
+[01:02:06] multiple predicates be evaluated so in
+[01:02:08] this case here I'm saying all the the r
+[01:02:11] a A ID equals 2 and B ID is greater than
+[01:02:14] 102 and that produces the output
+[01:02:18] again in SQL it's basically equivalent
+[01:02:20] to the wear
+[01:02:22] right and it's just it's just fully in
+[01:02:25] logic to find what predicates or sorry
+[01:02:27] what tool match according to the values
+[01:02:29] of whatever is in my expressions
+[01:02:34] one more time so that's pretty easy to
+[01:02:36] understand right
+[01:02:39] I can also have projection
+[01:02:42] projection allows me to manipulate what
+[01:02:45] the output of those attributes have
+[01:02:46] select them on uh in such a way that
+[01:02:50] that I need them the way that I want
+[01:02:52] them produced as part of my output. So I
+[01:02:54] can rearrange the ordering of the
+[01:02:55] attributes, right? I can I put one
+[01:02:57] column first before another one. I can
+[01:03:00] remove columns I don't I don't care
+[01:03:01] about as part of my output. Remember I
+[01:03:03] said filtering out things like the the
+[01:03:05] the password of a table. I don't want
+[01:03:08] somebody else to be able to see that. I
+[01:03:10] can do that through low projection
+[01:03:13] and I also manipulate the the values of
+[01:03:15] the attributes produce to derive new
+[01:03:17] values according to whatever it is that
+[01:03:19] that I want for my application.
+[01:03:22] So you define something like this. This
+[01:03:24] here I have my uh select operator where
+[01:03:26] I'm printing out all the uh all the
+[01:03:29] records with a a equals 2 and then I
+[01:03:32] find my projection that says take the b
+[01:03:34] attribute for any that matches that to
+[01:03:36] my select that's being fed as the input
+[01:03:39] and take the b attribute subtract 100
+[01:03:41] from it and then produce the the also
+[01:03:44] the the attribute a id.
+[01:03:48] So again in a select statement
+[01:03:50] projection is just this front part here
+[01:03:52] the after the select you're defining the
+[01:03:54] projection list defining the attributes
+[01:03:56] and what comes as the output.
+[01:03:57] >> Yes.
+[01:03:57] >> So the previous slide was called select
+[01:03:59] like the title of the previous slide was
+[01:04:01] select.
+[01:04:02] >> Yes. Really we were talking about the
+[01:04:04] where keyword previous is the word
+[01:04:07] select and relational
+[01:04:11] say it is um is the select operator
+[01:04:14] English operator is that different than
+[01:04:16] the select operator in in SQL
+[01:04:21] think of like a select as uh the select
+[01:04:25] algorith it's a way for you to
+[01:04:29] yeah to you Think of these relation
+[01:04:32] algebra as the building blocks to build
+[01:04:34] a larger language like SQL.
+[01:04:37] So you need a wear clause and so the
+[01:04:40] relation operator and the select
+[01:04:42] operator will give you that wear clause.
+[01:04:44] You need projection out list project
+[01:04:46] operator will give you that and then the
+[01:04:48] from clause will be joins
+[01:04:51] as a follow
+[01:04:53] that operation instead of
+[01:04:58] that operation. question is uh instead
+[01:05:00] of using pi if I say sigma for select
+[01:05:04] with the reordering of the attributes
+[01:05:06] >> the same
+[01:05:10] comm
+[01:05:12] that work with a select operator
+[01:05:14] >> if I replace
+[01:05:19] no
+[01:05:21] uh
+[01:05:23] question is if I if I instead of using a
+[01:05:25] projection if I do a select operator
+[01:05:26] with the same expression is that still
+[01:05:29] valid Well, in this case, no, because I
+[01:05:31] have a comma separated list where I
+[01:05:33] can't evaluate whether a a tuple
+[01:05:35] evaluates to true for for that
+[01:05:38] expression list. If I only had B I less
+[01:05:42] minus 100, what does it mean to evaluate
+[01:05:44] that from boolean logic? B B B B B B B B
+[01:05:46] B B B B B B B B B B B B B B B B B B B B
+[01:05:47] B B B B B B B B B B B B B B B B B B B B
+[01:05:47] B B B B B B B B B B B B B The idus 100
+[01:05:49] it equals whatever that value is. But is
+[01:05:51] that true? Technically, yes, because
+[01:05:53] it's not zero boolean logic. So that
+[01:05:56] that would always value true. But the
+[01:05:59] semantics are not the same. You just
+[01:06:00] can't swap them out.
+[01:06:02] >> Yes.
+[01:06:15] Yes.
+[01:06:29] >> Give me like for more slides and then
+[01:06:31] we'll come to that. The question is
+[01:06:32] basically I made a big deal about how
+[01:06:34] you want to compare a language like SQL.
+[01:06:35] Now I'm showing you like you know the
+[01:06:38] defining the order of the steps based on
+[01:06:40] relation algebra. relation alpha will be
+[01:06:42] the building blocks for how we then
+[01:06:43] build a recover language alpha. Another
+[01:06:46] way to think about this is like when I
+[01:06:47] build the execution engine for for
+[01:06:49] database the thing that actually runs
+[01:06:50] the queries it's going to look a lot
+[01:06:52] like relational alpha because I'm going
+[01:06:54] to find a project operator.
+[01:06:56] >> Yes.
+[01:07:05] Uh the statement is
+[01:07:08] so
+[01:07:10] are these all these operators commutive?
+[01:07:13] Not always but sometimes yes.
+[01:07:15] >> Uh actually you know relational they're
+[01:07:18] always uh
+[01:07:20] if you start projecting things that you
+[01:07:22] haven't produced output yet that they're
+[01:07:23] not communive but in general yes they
+[01:07:25] are communitive. Um the point I'm trying
+[01:07:28] to make is like when I build the
+[01:07:29] execution engine to run a SQL query it's
+[01:07:32] going to the operators the actual
+[01:07:33] implementation of the execution engine
+[01:07:35] it's going to local
+[01:07:38] but you we'll see decision in a second
+[01:07:40] but to to
+[01:07:43] the point maybe point out is like if I
+[01:07:46] took the relation algorith as my input
+[01:07:47] and actually started executing it I
+[01:07:49] would execute exactly the way that's
+[01:07:51] defined algorith which is not what we
+[01:07:52] want when and have all the freedom we
+[01:07:54] want and that's what SQL does not SQL is
+[01:07:57] not going to have that problem.
+[01:07:59] >> Yes.
+[01:08:00] >> So this SQL that's on the screen is that
+[01:08:02] is that a selector?
+[01:08:04] >> Question is what is this? What is this
+[01:08:06] select statement here?
+[01:08:07] >> Uh it's a high level sorry it is a
+[01:08:10] select statement in SQL that contains a
+[01:08:13] projection called projection call
+[01:08:16] and you can think of like a bus 100 is
+[01:08:19] equivalent to the pi operator with the
+[01:08:21] this expression above that. So that's
+[01:08:23] not being
+[01:08:27] >> uh question the like the output here
+[01:08:32] >> does it correct any output of a single
+[01:08:33] statement it's going to be a table or
+[01:08:35] relation any output of a relational
+[01:08:37] operator integration operator it's going
+[01:08:38] to be another relation so you can daisy
+[01:08:41] chain them together and produce take the
+[01:08:42] output of one produce that input from
+[01:08:44] another
+[01:08:48] okay
+[01:08:49] uh union for you know basic accessory
+[01:08:52] your teach as a basic mathematics
+[01:08:55] prerequis
+[01:08:58] you uh you can union together two
+[01:09:00] relations and concatenate all that it uh
+[01:09:03] it removes two things. So for this in
+[01:09:06] union operator intersection uh and
+[01:09:09] difference you have to have the same
+[01:09:11] attributes in in the two relations
+[01:09:13] because otherwise it doesn't match up
+[01:09:16] because the output needs to be have the
+[01:09:19] output relation of the operator needs to
+[01:09:20] have the exact number of the same
+[01:09:22] relation same attributes as as its
+[01:09:25] inputs.
+[01:09:27] You can do this in SQL. Basically
+[01:09:28] something like this, right?
+[01:09:31] I'm going through this fast. I
+[01:09:33] apologize. Intersection is basically the
+[01:09:34] same thing, right? They have to have
+[01:09:36] both input relations have to have same
+[01:09:38] attributes. Same for difference. Again,
+[01:09:40] this is all basic set theory. This
+[01:09:42] should not be anything new. You can do
+[01:09:44] the same thing in SQL.
+[01:09:48] Reason I'm rushing is I want to get to
+[01:09:49] joins and and
+[01:09:51] product. So up until now, what have you
+[01:09:54] done? We've taken one relation as our
+[01:09:55] input, manipulated and taken as the
+[01:09:58] output and send it along to a
+[01:10:01] the next time I look up. And then for
+[01:10:05] union and intersection and difference,
+[01:10:06] I'm combining together multiple
+[01:10:09] relations, but I'm not really leveraging
+[01:10:12] any of the uh relation between the
+[01:10:14] values within those those relations. I'm
+[01:10:17] not leveraging the foreign key stuff
+[01:10:18] before.
+[01:10:20] Um
+[01:10:22] kind of running out of battery. There we
+[01:10:24] go. So with joins with the cartisian
+[01:10:27] product the idea is that we can now
+[01:10:28] combine them together and do some some
+[01:10:30] lookup to say what tools should actually
+[01:10:33] satisfied uh in my when I combine these
+[01:10:36] records together. So cartisian product
+[01:10:38] is literally just mashing together the
+[01:10:40] two uh two attributes the attributes two
+[01:10:43] relations producing a new a large has
+[01:10:47] all the attributes from one relation all
+[01:10:48] the attribute the other relation right
+[01:10:51] you can do this in SQL you pass the
+[01:10:53] cross join uh or you don't specify cross
+[01:10:55] join you get that by default right but
+[01:10:58] this is not actually what we want
+[01:10:59] because we want to say things like for a
+[01:11:01] given album give me all the artists that
+[01:11:02] are on that album you don't want to get
+[01:11:04] all combinations of artists and albums
+[01:11:05] that's kind
+[01:11:06] It's a bunch of noisy ideas that I don't
+[01:11:08] care about. So this is where the join
+[01:11:10] comes in. And you can kind of think of
+[01:11:12] join as like a cartisian product. You
+[01:11:14] have a filter to say I have a or have a
+[01:11:18] select predicate say these are the the
+[01:11:20] tuples that should match according to
+[01:11:22] some value of one relation and the value
+[01:11:24] in another relation. So I can do things
+[01:11:26] like this. Um I don't specify what the
+[01:11:29] join calls it. It's called a natural
+[01:11:30] join. And in this case here it's going
+[01:11:32] to take all the attributes that that are
+[01:11:34] in one relation. all the other relation
+[01:11:36] that have the same name, the same type
+[01:11:38] and I look for matches and I lose my
+[01:11:40] output,
+[01:11:41] right? And I'm gonna include all the
+[01:11:45] I'm going to include all the columns
+[01:11:47] that are two relations as it were the
+[01:11:49] product just I remove all any of the
+[01:11:52] duplicates here. So I only get the I
+[01:11:54] only get the the address that are unique
+[01:11:56] from one column from one relation and
+[01:11:58] the other relation.
+[01:12:00] So you can declare this single through a
+[01:12:02] natural join. I don't recommend doing
+[01:12:04] that because it's implicitly doing a
+[01:12:06] look up between the different relations
+[01:12:07] to see what where the matching
+[01:12:08] attributes are. You said you want to use
+[01:12:10] a join clause where you specify either
+[01:12:13] what attributes you want to join on or
+[01:12:15] actually what I would recommend is
+[01:12:16] explicitly saying what the join
+[01:12:18] predicate should be. So it it knows how
+[01:12:21] to do that match
+[01:12:24] >> in this case question is this in join?
+[01:12:26] Yes,
+[01:12:28] >> we can cover joins later.
+[01:12:31] All right, we're almost out of time. So,
+[01:12:32] I'm going to quickly just say there's
+[01:12:33] other operators
+[01:12:35] that exist. Uh the
+[01:12:39] I'll finish this last few slides and
+[01:12:40] that'll segue into next class. But the
+[01:12:44] as they pointed out the relation
+[01:12:46] relation oper I showed you so far that's
+[01:12:48] specifying the order in which I want
+[01:12:50] things to apply. Right? And so I want to
+[01:12:52] say give me all the uh
+[01:12:55] join relation ration S and do a look up
+[01:12:58] for uh filter on the the B equals 102. I
+[01:13:02] can have wildly different performance uh
+[01:13:06] of these query. If I do the join on RNS
+[01:13:08] first then do the filter versus the uh
+[01:13:13] do the filter on S first and then do the
+[01:13:16] the join.
+[01:13:18] Right? Always think of extremes.
+[01:13:19] something I say throughout the entire
+[01:13:20] semester. If I have like think of like a
+[01:13:22] table with like five records, think of a
+[01:13:24] table with a trillion records. So, does
+[01:13:27] it make do I want to do a join between
+[01:13:29] RNS
+[01:13:30] of of two tables with a trillion records
+[01:13:32] and then filter out the ones I actually
+[01:13:34] want because what if only two match and
+[01:13:37] I I did a bunch of join a bunch of
+[01:13:38] tables I didn't I didn't actually I
+[01:13:40] didn't actually need and I'm better off
+[01:13:42] maybe doing the filter first then do the
+[01:13:44] join. So this is what the high level
+[01:13:47] language of of something like language
+[01:13:48] what SQL is going to do for us. I'm
+[01:13:50] going to say this is the answer that I
+[01:13:51] want and I'll figure out that's what
+[01:13:55] actually is. So I'll stop here and say
+[01:13:58] this is where we're going to go next
+[01:13:59] class now we're going to say instead of
+[01:14:01] writing procedural code Python lang
+[01:14:06] we're going to be writing SQL. Okay.
+[01:14:12] That's money
+[01:14:14] over
+[01:14:19] [Music]
+[01:14:33] the fortune. Get the fortune
+[01:14:35] maintain flow with the
+[01:14:38] grain. Get the fortune
+[01:14:42] maintain flow with the grain.

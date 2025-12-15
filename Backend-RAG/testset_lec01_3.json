@@ -1,0 +1,14 @@
+[
+  {
+    "question": "DBMS(Database Management System)의 정의는 무엇인가요?",
+    "ground_truth": "DBMS는 애플리케이션이 데이터베이스에 정보를 저장(store)하고 분석(analyze)할 수 있도록 해주는 소프트웨어입니다. 범용적이고 독립적인 소프트웨어 계층을 제공합니다."
+  },
+  {
+    "question": "초기 데이터베이스 모델(Hierarchical, Network)의 한계점은 무엇이었나요?",
+    "ground_truth": "초기 모델들(IMS, CODASYL 등)은 하드웨어와 물리적 저장 방식에 너무 밀접하게 결합(Tightly coupled)되어 있었습니다. 이로 인해 데이터 구조를 변경하면 애플리케이션 코드도 함께 수정해야 하는 문제가 있었습니다."
+  },
+  {
+    "question": "관계형 모델(Relational Model)을 처음 제안한 사람은 누구이며, 핵심 아이디어는 무엇인가요?",
+    "ground_truth": "1970년 IBM Research의 Ted Codd가 제안했습니다. 핵심 아이디어는 데이터베이스의 물리적 표현(Physical representation)과 논리적 구조를 분리하여 데이터 독립성(Data Independence)을 확보하는 것입니다."
+  }
+]

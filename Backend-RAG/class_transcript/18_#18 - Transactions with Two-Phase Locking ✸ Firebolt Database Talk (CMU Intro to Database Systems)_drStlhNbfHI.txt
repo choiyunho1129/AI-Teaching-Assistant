@@ -1,0 +1,2289 @@
+[00:00:00] [music]
+[00:00:06] [music] I'm still
+[00:00:08] associ
+[00:00:12] [music]
+[00:00:17] [music]
+[00:00:26] if you make money you got to pay taxes.
+[00:00:28] He's learning the hard way. So that he's
+[00:00:30] he's there today with his accountant. Uh
+[00:00:33] I don't that's his problem. Um all
+[00:00:35] right, a lot to cover. Um and plus we
+[00:00:39] have the guest speaker today. So I I
+[00:00:40] want to get through as much as I can. Um
+[00:00:42] all right, so last class we were talking
+[00:00:43] about beginnings of concurrency control
+[00:00:46] protocols in our database system. And
+[00:00:48] the we talked about acid of course, but
+[00:00:50] then we spent a lot lot of time on the
+[00:00:52] isolation portion of ACID where we were
+[00:00:55] distinguishing between different levels
+[00:00:58] of of correctness or serializability
+[00:01:00] within schedules of transactions. We
+[00:01:02] made the point that there's basically
+[00:01:04] two that we care about in this class,
+[00:01:06] although there's others we don't care
+[00:01:08] about. There's two sort of main
+[00:01:10] categories of sterilizability. Conflict
+[00:01:12] serializability and view
+[00:01:13] sterilizability. Complex serializability
+[00:01:14] is what you get in pretty much any
+[00:01:16] system they where they truly do support
+[00:01:18] serializable transactions. Uh this is
+[00:01:20] what what this is what what you get
+[00:01:22] right and we would verify that they were
+[00:01:25] that schedules were conflict
+[00:01:27] serializable if we created a dependency
+[00:01:30] graph and we didn't have any cycles.
+[00:01:32] We'll see the notion of cycles
+[00:01:33] corresponding to issues and transactions
+[00:01:36] when we talk about deadlock detection in
+[00:01:38] a second. Um and then view
+[00:01:39] civilizability was this higher level
+[00:01:41] notion of civilizability where where it
+[00:01:44] was okay for certain conflicts to occur
+[00:01:46] that would not be allowed under conflict
+[00:01:48] civilizability but they they are allowed
+[00:01:50] in view serializability if we understand
+[00:01:52] the semantics of what the application
+[00:01:54] actually wants to do with data like what
+[00:01:56] does it mean to to read something and
+[00:01:58] write something um and that's not
+[00:02:00] something that we can easily derive
+[00:02:02] automatically from just looking at read
+[00:02:04] and write requests to the data system.
+[00:02:05] we have to actually examine the
+[00:02:07] application code or again worst case
+[00:02:09] scenario ask a human uh about what data
+[00:02:12] means in their application and therefore
+[00:02:14] no system is going to support this. All
+[00:02:15] right.
+[00:02:17] All right. So the other important thing
+[00:02:19] to talk about last class is that I said
+[00:02:22] I think I said this multiple times in
+[00:02:24] all those examples when we had those
+[00:02:26] schedules those were those sort of
+[00:02:29] setups of of the problem were when I had
+[00:02:32] all of the read and write operations
+[00:02:34] that transactions were going to do ahead
+[00:02:37] of time right that the the schedule was
+[00:02:40] static there wasn't like you know when a
+[00:02:42] transaction began you knew everything
+[00:02:43] was going to do uh until it actually
+[00:02:45] committed or rolled back [snorts]
+[00:02:47] and So we could we could look at the
+[00:02:49] schedules you know you know in in in
+[00:02:53] their totality and say okay yes the
+[00:02:54] these are going to be serialized or not
+[00:02:56] but now we need to build build a real
+[00:02:58] system where we can assume we cannot
+[00:03:00] assume we will have that schedules ahead
+[00:03:03] of time. Some systems do. We can ignore
+[00:03:05] that for now. And therefore, we need to
+[00:03:07] be able to still provide
+[00:03:09] conflexizability guarantees
+[00:03:12] even if transactions are starting them.
+[00:03:14] You know, starting a transa transactions
+[00:03:15] are starting and then sending query
+[00:03:17] requests where we don't know what the
+[00:03:18] additional queries are, the later
+[00:03:19] queries are going to be later on. And
+[00:03:21] the mechanism we're going to use to make
+[00:03:23] this work today is going to be using
+[00:03:25] locks, right? Hence the title of the
+[00:03:28] lecture, two-based locking. So I briefly
+[00:03:31] mentioned locks earlier in the semester
+[00:03:33] when we talked about index concurrency
+[00:03:35] show protocols and we made this
+[00:03:37] distinction between locks and latches.
+[00:03:38] So this is the same table that I showed
+[00:03:40] before where on the guess your your left
+[00:03:43] hand side we had all the locks but we
+[00:03:45] only focused on the right hand side when
+[00:03:46] we talk about indexes to do latches. So
+[00:03:48] now we're going to go back and look at
+[00:03:49] all all these things right. So the way
+[00:03:52] to understand locks is that they are
+[00:03:54] going to be protecting uh uh database
+[00:03:57] objects higher level database objects in
+[00:04:00] in in in our system like tables and and
+[00:04:02] tupils and um and and databases
+[00:04:06] themselves. And we're going to allow
+[00:04:08] multiple transactions to interle their
+[00:04:10] operations and operate on these rewrite
+[00:04:12] to these uh on these um excuse me on
+[00:04:16] these these these objects as they go
+[00:04:18] along. The key thing that is going to be
+[00:04:21] different about locks and transactions
+[00:04:23] versus latches and indexes even though
+[00:04:25] the transactions take latches as they
+[00:04:26] update the indexes is that transactions
+[00:04:29] will typically hold the locks for the
+[00:04:32] entirety lifetime of the transaction.
+[00:04:34] Whereas memory say with latches we were
+[00:04:36] like trying to do something in a single
+[00:04:38] page in index or a single node. So I was
+[00:04:40] trying to acquire the latch do something
+[00:04:41] and then get out of it real quick and
+[00:04:42] release the latch. In this world, we're
+[00:04:45] gonna allow transactions to hold locks,
+[00:04:47] you know, until they commit or finish.
+[00:04:49] And the way we're going to have to
+[00:04:50] handle deadlocks is through having this
+[00:04:53] higher level these these protocols that
+[00:04:55] can assure that we don't have deadlocks
+[00:04:57] or having a sort of overseer or
+[00:05:00] coordinator understand what transactions
+[00:05:02] hold what locks at what time and what
+[00:05:04] are they trying to do and then we can
+[00:05:06] arbitrate and decide how to break
+[00:05:07] deadlocks. Whereas in case of latches,
+[00:05:09] we said there wasn't going to be any
+[00:05:10] doll detection. We had to make sure we
+[00:05:12] wrote good code and didn't have these
+[00:05:14] problems. In the locking world, we'll
+[00:05:15] have to do this. We'll have to, you
+[00:05:17] know, have the the resolution stuff
+[00:05:19] written by us, the database system
+[00:05:20] developers, because we're dealing with
+[00:05:22] the application sending random queries,
+[00:05:24] making random requests. You know, we
+[00:05:26] can't assume they're going to know what
+[00:05:27] they're doing and avoid deadlocks. We
+[00:05:28] have to make sure they don't shoot
+[00:05:30] themselves in the foot. and the metadata
+[00:05:32] we're going to maintain about what the
+[00:05:35] what locks are being held by what
+[00:05:36] transactions at what time. This is going
+[00:05:38] to be kept in a centralized coordinator,
+[00:05:40] centralized data structure called the
+[00:05:41] lock manager where now we have a single
+[00:05:44] location where we're keeping track of
+[00:05:45] here's all the locks transactions are
+[00:05:46] holding whereas in the case of latches
+[00:05:48] we were going to embed the latches
+[00:05:50] directly in the data structure itself.
+[00:05:53] Right?
+[00:05:55] So again we we'll go through all this
+[00:05:56] this make more sense as we go along but
+[00:05:58] the key thing to understand is like
+[00:05:59] again this is what I was saying there's
+[00:06:00] a distinction between the OS world and
+[00:06:02] our world like in the OS world a lock is
+[00:06:05] really what they mean as a latch in the
+[00:06:07] database world locks are these higher
+[00:06:09] level things that are actually managing
+[00:06:11] the contents of of a database itself
+[00:06:14] within the database system.
+[00:06:17] So let's look to see how how this would
+[00:06:19] work. So now we're going to have our
+[00:06:20] schedules on the on the side here,
+[00:06:22] right? We have T1, T2. T1's going to
+[00:06:24] read A, write A, and read A again. And
+[00:06:25] then T2 is going to uh read A and and
+[00:06:29] write A. And now I'm introducing
+[00:06:31] explicit lock commands like lock and
+[00:06:33] unlock. And you're passing in what
+[00:06:34] object you want to acquire, release the
+[00:06:36] lock for. And we have now this this
+[00:06:38] centralized lock manager that everyone
+[00:06:39] has to talk to when they want to get a
+[00:06:42] lock or release a lock. So at the
+[00:06:44] beginning, T1 starts and says, I want to
+[00:06:46] lock object A. So goes to the lock
+[00:06:48] manager say, "Hey, can I have the lock
+[00:06:49] on on A?" And no, assuming that nobody
+[00:06:52] else holds that lock right now, the lock
+[00:06:54] manager grants access to that and it's
+[00:06:55] given a lock. And then now T1 can go and
+[00:06:58] uh read A. But then now when T2 starts
+[00:07:01] running, it wants to acquire the lock on
+[00:07:02] A, it goes to the lock manager. Lock
+[00:07:04] manager says, "Oh, T1 already has this
+[00:07:06] lock. You're not T1, you're T2.
+[00:07:08] Therefore, I can't give you this request
+[00:07:09] right now. And therefore, T2 is going to
+[00:07:11] have to stall and wait until the the
+[00:07:15] lock that it that's asking for is
+[00:07:17] released. Then T2 or T1 starts running
+[00:07:19] again, does the right on A, read on A.
+[00:07:21] Then it unlocks A here. And then now at
+[00:07:24] this point, the lock manager knows, hey,
+[00:07:26] there's also this transaction T2 that
+[00:07:27] was waiting for this lock on A, but I
+[00:07:29] told them that they weren't allowed to
+[00:07:30] have it. So now I can grant the access
+[00:07:33] to to A to T2, and then it's allowed to
+[00:07:36] do whatever it wants and then release
+[00:07:37] the lock when it commits. So this is
+[00:07:40] roughly the high level what we're going
+[00:07:41] to talk about today and obviously the
+[00:07:42] devil's in the details. How do we make
+[00:07:43] sure that we don't have problems while
+[00:07:45] we're doing this right and and you know
+[00:07:47] this is sort of toy example we'll see
+[00:07:49] other problems that can come up uh as we
+[00:07:51] go along. So today we're start first
+[00:07:53] talk about what kind of lock types you
+[00:07:54] can have in our data system. Uh and then
+[00:07:57] we'll use uh then we'll describe the
+[00:07:58] two-phase locking protocol which is the
+[00:08:00] first provably correct or provably uh
+[00:08:02] serializable concurrency to protocol
+[00:08:04] developed by Jim Gray in the 1970s that
+[00:08:06] you can to execute transactions and
+[00:08:09] generate serializable schedules. Then
+[00:08:11] we'll talk about how to handle deadlocks
+[00:08:12] either through detection or prevention.
+[00:08:14] Then we'll finish up talking about uh
+[00:08:16] hierarchal locking where now I can
+[00:08:18] expand the scope of of locks. and then
+[00:08:20] we'll finish up with the flash talk from
+[00:08:22] the from uh from from a German at at
+[00:08:24] Firebolt. Okay.
+[00:08:27] All right. So, when we talked about
+[00:08:28] latches,
+[00:08:30] uh there was basically two type of
+[00:08:32] latches, right? It was either in read
+[00:08:33] mode or write mode in with locks. Now,
+[00:08:37] we're instead of calling them read and
+[00:08:38] writes, we're going to call them shared
+[00:08:39] and exclusive, right? And and the
+[00:08:41] compatibility matrix looks very similar
+[00:08:43] to what we had before with with latches,
+[00:08:46] right? If you have a shared lock,
+[00:08:47] another shared lock can take the same
+[00:08:48] lock at the same time. But as soon as I
+[00:08:50] have an exclusive lock, no other lock
+[00:08:52] type uh can take that lock at the same
+[00:08:54] time as I am. Right now, this is a gross
+[00:08:59] simplification of how real systems
+[00:09:01] actually work. If you go read the
+[00:09:02] documentation for any any data system
+[00:09:04] that supports locking, you're going to
+[00:09:06] see there's a lot more uh lock types
+[00:09:08] that they have. Now, for the MySQL one,
+[00:09:11] these there's these intention locks.
+[00:09:13] We'll get to those end of the semester
+[00:09:14] or end of this lecture. But now you see
+[00:09:17] in the case of like Oracle, you can have
+[00:09:19] locks on tables. You can have different
+[00:09:21] like row exclusives or not like like it
+[00:09:23] it gets gets way more complicated. Uh
+[00:09:26] and so I'm not going to go through other
+[00:09:28] than the intention locks at the end end
+[00:09:30] of this class. We'll go through those.
+[00:09:32] But all these other lock types that are
+[00:09:34] maybe specific to a different database
+[00:09:35] system, right? They're going to have
+[00:09:37] their own nuances, their own
+[00:09:38] characteristics. But the two-phase
+[00:09:40] locking protocol and the higher code
+[00:09:42] locking technique I'll show you at the
+[00:09:43] end. This all still works with these
+[00:09:46] extra lock types. It just sort of
+[00:09:47] complicates how you actually would
+[00:09:49] implement this. But the the basic
+[00:09:50] two-phase protocol, two-phase locking
+[00:09:52] protocol will be the same.
+[00:09:56] [snorts]
+[00:09:56] All right. So now when transactions are
+[00:09:58] going to execute, right before we can do
+[00:10:01] any read or write to an object in the
+[00:10:03] database, we have to request that we
+[00:10:05] want to lock from the lock manager on
+[00:10:07] that object. We can support upgrades. So
+[00:10:09] if I have a shared lock on an object and
+[00:10:11] I I know I'm going to need to update it,
+[00:10:13] I can say go back to lock managers. I
+[00:10:15] already have the shared lock. Can I
+[00:10:16] upgrade it to an exclusive lock? And
+[00:10:18] it'll know whether any transaction
+[00:10:20] already holds a shared lock and can
+[00:10:22] would have to deny or allow that upgrade
+[00:10:24] request.
+[00:10:26] And then as transactions uh keep
+[00:10:28] running, they can decide to release the
+[00:10:30] locks, return them back to the lock
+[00:10:31] manager. And then implicitly when they
+[00:10:33] commit, all the locks are are released
+[00:10:35] or when they when they abort, all the
+[00:10:36] locks are released.
+[00:10:38] So the lock manager is going to be
+[00:10:39] maintaining its own basically hash table
+[00:10:42] that keeps track of what locks exist and
+[00:10:44] who holds them and cues for for who's
+[00:10:47] waiting to acquire a lock that's being
+[00:10:49] held by somebody else right now. Right?
+[00:10:51] But the key thing is going to have a
+[00:10:52] global view of of what all the
+[00:10:55] transactions that are running in the
+[00:10:56] system and what locks they do they hold
+[00:10:59] and what locks are they waiting for.
+[00:11:02] Again, in all my examples here, right,
+[00:11:05] anything I open up in a in in a
+[00:11:07] terminal, you know, I can show maybe two
+[00:11:09] or three transactions at a time. In real
+[00:11:11] high-end transactional systems, you can
+[00:11:13] imagine like doing a 100,000 or even a
+[00:11:15] million transactions per second. So, you
+[00:11:16] got to maintain all this metadata for
+[00:11:18] them, which can can get quite expensive.
+[00:11:21] But when we crash and come back, we
+[00:11:23] don't have to worry about uh reviving
+[00:11:26] the state of the lock table, right?
+[00:11:28] Because every transaction that was
+[00:11:29] running is dead anyway. So, you just
+[00:11:30] wipe everything. It's not like we need
+[00:11:32] to persist anything like in a page
+[00:11:33] directory or the actual data itself.
+[00:11:36] [snorts]
+[00:11:38] All right. So let's look at an example
+[00:11:39] here again. So now we're going to have
+[00:11:41] uh instead of just lock and unlock we
+[00:11:42] now we'll have the lock type. It's
+[00:11:43] either exclusive lock or shared lock. Uh
+[00:11:46] so T1 starts it gets exclusive lock on
+[00:11:48] A. That's allowed. So the lock manager
+[00:11:50] grants it. Then it does the read on A
+[00:11:51] the right on A. Then it unlocks A,
+[00:11:54] right? And then just say it's released
+[00:11:56] and then keeps on running. But then now
+[00:11:58] T2 is going to start. It's going to do a
+[00:12:02] give acquire the exclusive lock on A,
+[00:12:03] then do the write on A and then return
+[00:12:06] the the lock back on A to the lock
+[00:12:08] manager. But then now T1 starts running
+[00:12:11] again the bottom here and it goes gets
+[00:12:13] gets the share lock on A reads A.
+[00:12:17] But what's it going to see
+[00:12:20] when it reads A?
+[00:12:23] The different value than it saw before,
+[00:12:24] right? So it's going to see the value
+[00:12:26] that T2 wrote when it started running,
+[00:12:29] right? And not the value that it wrote
+[00:12:31] when it had the lock before,
+[00:12:35] right? So what is this called? We did
+[00:12:37] this last class.
+[00:12:42] >> Unre repeatable read, right? Like I I
+[00:12:45] expected read something again to see the
+[00:12:48] same value, but I didn't get it.
+[00:12:51] Right? So the point I'm trying to find
+[00:12:53] out here is that just because we have
+[00:12:54] locks doesn't mean we magically get
+[00:12:56] serializability,
+[00:12:57] right? We got to be careful in how we
+[00:12:59] give out the locks and when we actually
+[00:13:01] release them.
+[00:13:04] So this is what two-phase locking
+[00:13:05] protocol does for us. This it's a it's
+[00:13:08] the the way in which it defines how
+[00:13:10] we're going to determine when a
+[00:13:13] transaction can acquire lock and what
+[00:13:15] happens when they start releasing those
+[00:13:16] locks and what can they do during that
+[00:13:18] during that period. And as you'd expect
+[00:13:21] in the name two-phase locking, it has
+[00:13:23] two phases, right? And this is the this
+[00:13:26] is the contraio protocol we would use if
+[00:13:28] we don't know what transaction what the
+[00:13:30] transactions are going to do ahead of
+[00:13:31] time. We don't know what queries they're
+[00:13:32] going to run. We don't know what data
+[00:13:34] they're going to read and write to. So
+[00:13:35] this locking protocol would be handled,
+[00:13:37] you know, that that dynamic environment.
+[00:13:38] We don't have everything ahead of time.
+[00:13:42] So the first phase in two days locking
+[00:13:43] is called the growing phase. And this is
+[00:13:45] where a transaction is allowed to uh
+[00:13:47] request to the lock manager all the
+[00:13:49] locks that it wants in any any mode that
+[00:13:51] it wants. And the lock manager can grant
+[00:13:53] and deny the request. If it denies it
+[00:13:55] again, it'll just stall and wait until
+[00:13:57] that lock is available or there's a it
+[00:14:00] gets aborted because of a deadlock or
+[00:14:01] something else. [snorts]
+[00:14:03] But then soon as a transaction releases
+[00:14:05] one lock, it now automatically enters
+[00:14:08] the shrinking phase where you're not
+[00:14:10] allowed to acquire any more locks. only
+[00:14:12] thing you can do is give back the locks
+[00:14:13] you got during the during the growing
+[00:14:16] phase.
+[00:14:19] Right now the spoiler is going to be
+[00:14:21] again I'm showing all these schedules
+[00:14:22] with like lock and unlock as commands
+[00:14:24] within the schedules. In actuality you
+[00:14:27] don't in SQL you can't manually acquire
+[00:14:30] locks and unlock them. uh I'll explain
+[00:14:33] that what the implications of this in a
+[00:14:35] second but you know you can I mean for
+[00:14:38] for certain things you can in some
+[00:14:39] systems call like lock database and
+[00:14:41] things like that but like typically when
+[00:14:43] you run queries you don't say like lock
+[00:14:45] lock object fu and then run a query on
+[00:14:47] object fu it implicitly happens for you
+[00:14:49] automatically when you run a select
+[00:14:51] query or any query you want the data
+[00:14:52] system says I know what you're trying to
+[00:14:53] do because it's SQL and I I can it's
+[00:14:55] declarative I know exactly what command
+[00:14:57] you want so therefore it acquires the
+[00:14:58] locks for you automatically
+[00:15:01] unlocking is tricky We'll cover that in
+[00:15:02] a second. So again, the way to think
+[00:15:05] about it visually uh is think of this as
+[00:15:07] like the the lifetime of a transaction,
+[00:15:09] right, from beginning to end. And in the
+[00:15:12] first phase, I'm I'm uh I'm allowed to
+[00:15:14] grow and acquire new locks. And think of
+[00:15:16] like the the height in in the chart
+[00:15:18] here, the y- axis is the number of locks
+[00:15:20] being held by a transaction. So I can
+[00:15:22] grow grow grow at acquire more locks but
+[00:15:24] then at some point I release a lock and
+[00:15:28] then I enter the shrinking phase and the
+[00:15:31] only thing I can do is is give locks
+[00:15:33] back to the lock manager. Right? I can't
+[00:15:36] do something like this where I release a
+[00:15:38] bunch of locks and then go back and ask
+[00:15:39] for more locks because then that that
+[00:15:41] can cause uh cause problems and so the
+[00:15:44] protocol would would not allow this.
+[00:15:48] So if I go back to my example that I had
+[00:15:50] before, right now using proper two-phase
+[00:15:52] locking, T1 starts, it gets exclusive
+[00:15:55] lock on A, that's allowed to happen. So
+[00:15:56] then it can do the read on A and then
+[00:15:58] write on A and then it doesn't give up
+[00:16:00] the lock that it has on A, right?
+[00:16:03] Because it still has to be able to read
+[00:16:04] it down below. So I can't again I don't
+[00:16:05] want to have that problem where like I
+[00:16:06] unlock it and then try to relock the
+[00:16:08] same object. So now when T2 tries to get
+[00:16:10] the exclusive lock on A, that gets
+[00:16:12] denied and has to stall and wait until
+[00:16:14] T1 finishes whatever it wants to do. And
+[00:16:16] then soon as T1 unlocks A, that releases
+[00:16:20] the lock to T2 and then T2 can do the
+[00:16:23] right on A uh and and commit.
+[00:16:37] You're waiting. Stalled. Yeah. You can't
+[00:16:40] do anything.
+[00:16:43] I mean, for simplicity, yes. There's
+[00:16:46] tricks to get around that. Yes. Yes.
+[00:16:48] >> You don't [snorts] know the schedule.
+[00:16:56] >> Uh their statement is and they are
+[00:16:57] correct. If you can't explicitly say you
+[00:17:00] want to unlock and you don't know
+[00:17:01] everything you need ahead of time, how
+[00:17:03] can you actually unlock?
+[00:17:06] We'll cover this in a second. this in
+[00:17:07] actuality
+[00:17:09] there isn't really going to be a locking
+[00:17:11] phase as we know it as we described
+[00:17:12] before they're going to use a more
+[00:17:14] stricter form and we'll cover that in a
+[00:17:15] second so when systems say they're used
+[00:17:17] to based locking like SQL server you're
+[00:17:19] you're going to have something more
+[00:17:20] right [snorts]
+[00:17:24] okay
+[00:17:26] so by itself two locking is is enough to
+[00:17:31] guarantee that the the the the schedules
+[00:17:35] of the transactions you will generate
+[00:17:37] in in real time at runtime at running
+[00:17:38] the system will be conflicts or lizable,
+[00:17:42] right? Meaning because if you define the
+[00:17:43] pre the precedence graph or the
+[00:17:45] dependency graph, you'll have no cycles.
+[00:17:47] So you can guarantee that it'll be
+[00:17:48] conflicts or liable, but it is going to
+[00:17:50] be subject to another problem called
+[00:17:52] cascading aborts. That isn't a
+[00:17:54] correctness issue. So it's not one of
+[00:17:55] the anomalies like unre repeatable read,
+[00:17:57] dirty reads, uh and uh loss updates we
+[00:18:00] talked about last time. It's more of a
+[00:18:02] performance issue where if you implement
+[00:18:04] it in in as defined in two basic locking
+[00:18:08] not not talking about the at least at
+[00:18:10] the end as he's talking about they were
+[00:18:12] talking about the
+[00:18:15] if if you allow transactions to unlock
+[00:18:19] objects in the middle of the
+[00:18:20] transactions and still do more stuff
+[00:18:22] they can't acquire new locks but they
+[00:18:23] still can do more stuff then we can have
+[00:18:26] this problem of cascading boards so it
+[00:18:28] looks like this. So say now T1 wants to
+[00:18:31] do a lock on A, lock on A, then switch
+[00:18:34] lock on B, read A, write A, unlock A,
+[00:18:37] then go read B and write B, and at the
+[00:18:39] bottom here, it's going to abort and
+[00:18:41] roll back all it changes. Right? So the
+[00:18:44] problem is going to be if T with T2,
+[00:18:47] soon as A releases the T1 releases the
+[00:18:49] lock on A, T2 can get the lock on lock
+[00:18:52] on A, then it can read it and it can
+[00:18:54] write it and it's going to read the
+[00:18:55] change that was made by T1. But then
+[00:18:58] later on T1 aborts and then now we have
+[00:19:01] again a dirty read here right where we
+[00:19:05] read something that uh we we shouldn't
+[00:19:08] have seen because technically because
+[00:19:09] the transaction has committed but it's
+[00:19:10] still allowed under two-phase locking
+[00:19:13] right there's this additional metadata
+[00:19:14] we would keep track of in our system to
+[00:19:16] say well T2 read something from T1 that
+[00:19:19] T1 modified but T1 hasn't committed yet
+[00:19:21] so I can't let T2 commit to I know
+[00:19:23] whether T1 commits
+[00:19:25] in this case here T1 does not commit.
+[00:19:27] MIT T2 therefore and T1 aborts therefore
+[00:19:30] T2 has to abort. So this is what I mean
+[00:19:32] by cascading roll back where a a roll
+[00:19:35] back of one transaction may cause other
+[00:19:37] transactions to have to abort and roll
+[00:19:39] back as well because they read something
+[00:19:40] from that uncommitted transaction.
+[00:19:42] Right? And the reason why we can't allow
+[00:19:44] T2 to commit here we'd have to actually
+[00:19:46] wait until you find out what happens
+[00:19:47] about T1 is again we can't leak any
+[00:19:49] information to the outside world about
+[00:19:52] an uncommitted transaction. Right? I
+[00:19:54] can't tell the client, here's what your
+[00:19:55] data actually looks like. Uh,
+[00:19:59] and and then have it do something based
+[00:20:02] on that information
+[00:20:05] >> in the back. Yes.
+[00:20:15] >> The question is how how is this two-ace
+[00:20:17] locking example? What what
+[00:20:20] >> how does that solve the problem you did
+[00:20:21] in the earlier earlier in the lecture?
+[00:20:23] So the the let's go back to the first
+[00:20:25] example.
+[00:20:29] In the first example,
+[00:20:33] right, the problem was I was acquiring a
+[00:20:35] lock on a and then releasing lock on a
+[00:20:38] in T1. Go back here, right? And then
+[00:20:43] T1 did whatever like it it it prompted
+[00:20:47] an LLM and has to wait whatever, right?
+[00:20:49] And then now control switch over to T2.
+[00:20:51] T2 starts running. It gets the exclusive
+[00:20:53] lock on A, which is allowed to do
+[00:20:54] because nobody holds the lock on A right
+[00:20:55] now. It does it right, then unlocks A.
+[00:20:58] Control goes back to T1. Now T1 gets the
+[00:21:00] shared lock on A, which is allowed to do
+[00:21:02] because nobody holds that. And then now
+[00:21:04] when it reads it, it reads something
+[00:21:06] that it didn't didn't expect to see. If
+[00:21:08] they were running in true serial order,
+[00:21:10] it'd either be T1 followed by T2 or T2
+[00:21:12] followed by T1. In this scenario here
+[00:21:14] with my interle, I'm seeing something
+[00:21:16] from an intermediate state that I
+[00:21:18] shouldn't see. Right? So with two-phase
+[00:21:20] locking, we avoid this problem because
+[00:21:23] T1 would not be allowed to unlock A up
+[00:21:26] above and then acquire it again. As soon
+[00:21:29] as you enter the shrinking phase, you
+[00:21:30] can never acquire new locks.
+[00:21:41] >> The statement is you cannot release
+[00:21:42] locks in the growing phase. Soon as you
+[00:21:44] release one lock, you're now in the
+[00:21:45] growing phase automatically.
+[00:21:49] Sorry, what I say? Soon as you release a
+[00:21:50] lock in the growing phase, you're now in
+[00:21:52] the shrinking phase automatically.
+[00:21:54] Yes.
+[00:22:01] [snorts]
+[00:22:01] >> Yeah. To the point. Yes. Yes, they are
+[00:22:03] correct. But like what it really should
+[00:22:04] be is like I just put it in the middle,
+[00:22:07] but like it really should be as soon as
+[00:22:08] I release one thing, it goes down. Yes.
+[00:22:09] That that you're the first person to
+[00:22:12] point that out in in five years. So yes,
+[00:22:14] we should fix that. Um, think of it like
+[00:22:18] really like this again without the hump
+[00:22:19] going up, right? That can't happen. But
+[00:22:22] as soon as I release one, the number
+[00:22:23] locks goes down. And now now I'm in the
+[00:22:24] tricky phase. But you know, this one's a
+[00:22:26] violation. You can't do this.
+[00:22:30] Okay.
+[00:22:32] So again this this problem here where if
+[00:22:35] we uh under two-based locking you can
+[00:22:39] read data from uncommitted transactions
+[00:22:41] because you again you're maybe you
+[00:22:42] assume that they're going to commit but
+[00:22:44] again you have to maintain metadata and
+[00:22:45] say this transaction read something from
+[00:22:47] a transaction that hasn't committed
+[00:22:48] therefore I can't commit until I find
+[00:22:50] out whether they commit and and
+[00:22:52] therefore if the transaction that I read
+[00:22:54] their uncommitted read from aborts I
+[00:22:58] have to abort as well. So this is the
+[00:23:00] cascading roll back problem.
+[00:23:02] And so the challenge is going to be
+[00:23:04] again for two transactions no big deal.
+[00:23:06] But in a real system if I now have like
+[00:23:08] thousands of transactions that depend on
+[00:23:10] this other transaction and that other
+[00:23:11] transaction aborts I have to abort all
+[00:23:13] those other transactions and it's a
+[00:23:15] bunch of wasted work and you're
+[00:23:16] basically burning cycles uh and doing IO
+[00:23:19] for things that never actually commit
+[00:23:20] and get anything any real work done.
+[00:23:22] Yes.
+[00:23:27] The question is in my example here, how
+[00:23:29] does transaction T2 know that T1 that
+[00:23:32] knows it needs to roll back because it
+[00:23:33] read something from T1? There's extra
+[00:23:35] metadata you're maintaining in the
+[00:23:36] system for this which is not showing in
+[00:23:38] the PowerPoint
+[00:23:39] in the back.
+[00:23:48] So the question is uh how did T1 T2
+[00:23:52] acquire the lock on A because should
+[00:23:53] shouldn't T2 be shrinking? Yes, but it
+[00:23:57] released the lock on A, not the lock on
+[00:23:58] B. Still has the lock on B,
+[00:24:01] right? So it's it can still do whatever
+[00:24:04] it wants after that point. I can still
+[00:24:06] do reads and writes. Just because you're
+[00:24:07] in the shrinking phase doesn't mean you
+[00:24:08] can't do other things. You can do things
+[00:24:09] on on the locks you hold. You just can't
+[00:24:12] acquire new locks.
+[00:24:21] [snorts]
+[00:24:22] >> Yeah. So their statement is this the the
+[00:24:25] notion of what phase I'm in is in a per
+[00:24:28] transaction basis not globally in the
+[00:24:30] system. Correct. Yes. So T1 is is is has
+[00:24:33] its own am I in the growing phase or the
+[00:24:35] shrinking phase? T2 and whatever
+[00:24:36] transaction they have their own phases.
+[00:24:37] it isn't for the entire system.
+[00:24:44] Okay.
+[00:24:47] So
+[00:24:48] the thing to point out here now though
+[00:24:50] this means that
+[00:24:52] if we
+[00:24:54] um what is this there are maybe
+[00:24:58] scenarios where we could actually have
+[00:25:02] um schedule schedules of transactions
+[00:25:05] that are actually serializable but
+[00:25:08] because the two-phase locking protocol
+[00:25:11] is pessimistic meaning if they assume
+[00:25:13] they're going to have aborts and so you
+[00:25:16] assume they're going to have conflicts
+[00:25:16] And therefore you require require
+[00:25:18] everyone to acquire locks before they
+[00:25:19] can do anything. There there there may
+[00:25:22] actually be scenarios where you can you
+[00:25:24] you could actually have better parallels
+[00:25:26] and better performance. But if you
+[00:25:28] follow two-phase locking as defined you
+[00:25:30] you end up giving up giving that up.
+[00:25:33] Again, that's okay because if if it's,
+[00:25:35] you know, running anything that's super
+[00:25:37] critical like like with money like your
+[00:25:39] bank account, uh you don't want to have
+[00:25:43] you don't really care the database is
+[00:25:44] faster if it ends up losing money like
+[00:25:46] your money, right? So that's why
+[00:25:48] transactional systems that are going to
+[00:25:51] be doing two phase locking or the other
+[00:25:52] protocol we'll talk about next class,
+[00:25:53] right? They're going to choose uh
+[00:25:56] correctness typically over performance.
+[00:26:01] The default though isn't again when we
+[00:26:03] talk about isolation levels the default
+[00:26:04] isn't actually going to be serializable
+[00:26:06] in most systems it's going to be a lower
+[00:26:07] form where you can have some problems
+[00:26:10] and it turns out sometimes that's okay
+[00:26:12] and banks really don't do updates like
+[00:26:14] in place they always have a ledger where
+[00:26:16] you're you're running all the
+[00:26:17] transactions and then they they do
+[00:26:18] summations. So banks are not the perfect
+[00:26:20] example for this but just think anything
+[00:26:22] with money uh you know you don't you
+[00:26:24] don't want to have uh incorrect issues.
+[00:26:27] All right. So with two-phase locking
+[00:26:30] again we can still have dirty reads but
+[00:26:32] again we have to maintain metadata about
+[00:26:35] what transactions read from what data
+[00:26:37] from what other transactions so that if
+[00:26:38] one transaction aborts we roll back and
+[00:26:40] that's the cascading abort problem. Um
+[00:26:42] one solution to that will be the strong
+[00:26:44] strict two-phase locking which is what
+[00:26:46] they they were asking about. And then of
+[00:26:47] course we can still have deadlocks
+[00:26:48] because now we're allowing transactions
+[00:26:51] to acquire locks any for any object they
+[00:26:53] want and you may have dependencies
+[00:26:55] between two of them and we have to
+[00:26:56] handle that. So we'll tackle the first
+[00:26:58] problem. How do we how do we handle
+[00:26:59] dirty reads and this cascading abort
+[00:27:01] problem and then we'll talk about how we
+[00:27:02] want to handle deadlocks.
+[00:27:04] So the again bringing back up the point
+[00:27:07] they they brought up the
+[00:27:10] the way every system that I'm aware of
+[00:27:14] uh that does two-phase locking the way
+[00:27:16] it's actually going to be implemented is
+[00:27:18] not the protocol where you have this
+[00:27:19] notion of a shrinking phase uh that you
+[00:27:23] can still uh you can incrementally
+[00:27:25] unlock things as you go along. Instead,
+[00:27:28] they're going to be implementing what's
+[00:27:29] called strong strict two-phase locking
+[00:27:31] where the shrinking phase basically just
+[00:27:34] happens at the end. Meaning, at some
+[00:27:36] point, I say, "All right, I've acquired
+[00:27:38] all the locks that I need." And then I
+[00:27:40] hold all those locks until I go commit,
+[00:27:42] and then all of them are released. And
+[00:27:45] this avoids the dirty read problem
+[00:27:47] because I I'm never going to release a
+[00:27:50] lock uh on I'm never going to release a
+[00:27:53] lock on something that I modified and
+[00:27:54] therefore someone else can go read it.
+[00:27:56] They can't read anything until I fully
+[00:27:58] have committed. So that at the end is
+[00:28:00] when everything gets released.
+[00:28:05] >> Like the shrinking phase is just like
+[00:28:07] this little blip at the end. Yes. But
+[00:28:08] I'm just trying to visually show what it
+[00:28:09] looks like.
+[00:28:12] >> So there is a uh a less restrictive form
+[00:28:16] of of this protocol called strict
+[00:28:18] two-based locking. So not strong strict
+[00:28:20] just strict. I'll explain what strict is
+[00:28:22] in next slide. um where you're allowed
+[00:28:24] to release the exclusive locks before
+[00:28:27] transaction commits, but you still hold
+[00:28:28] all the shared locks.
+[00:28:30] And again, that allows you to release
+[00:28:32] things uh and um to maybe sort of free
+[00:28:37] up more more opportunities for other
+[00:28:38] transactions to run, but it still has
+[00:28:40] the the dirty read problem.
+[00:28:43] So strictest means that if a value is is
+[00:28:46] written by a transaction then it's not
+[00:28:49] going to be read or overwritten by any
+[00:28:51] other transaction until the last transa
+[00:28:54] the transaction that modified that
+[00:28:55] object has committed. So again this
+[00:28:58] avoids the cascading abort problem and
+[00:29:00] it actually makes undoing changes of
+[00:29:03] aborted transactions really easy because
+[00:29:05] you don't have to worry about this
+[00:29:07] dependency chain of like undoing this
+[00:29:08] followed by undoing this followed by
+[00:29:09] undoing this. you just say here's the
+[00:29:12] here's here's the last here's the last
+[00:29:14] version last value of this object that's
+[00:29:16] transaction modified and you just undo
+[00:29:18] just undo that one
+[00:29:20] and so any data system that's doing
+[00:29:22] two-phase locking uh and supports
+[00:29:24] serializable transactions is going to be
+[00:29:26] doing strong strict 2PL right because
+[00:29:28] there's no explicit way to unlock things
+[00:29:30] in in SQL
+[00:29:32] >> uh strong means you hold everything the
+[00:29:35] right locks sorry the exclusive locks
+[00:29:36] and the shared locks if it's just strict
+[00:29:39] you just you You can release the
+[00:29:40] exclusive but keep the shared
+[00:29:43] I think uh
+[00:29:51] >> so uh for your right yes so strong trick
+[00:29:54] avoids cascading boards strict
+[00:29:58] strict TPL
+[00:29:59] >> still can have them
+[00:30:01] >> a schedule
+[00:30:03] you can only guarantee that your
+[00:30:05] schedule is good if you have strong
+[00:30:08] >> correct Yes. And I think a textbook
+[00:30:11] might also call them rigorous. Uh but
+[00:30:14] they all it all means the same thing.
+[00:30:16] [snorts]
+[00:30:21] >> Strict strict pupl by itself. You keep
+[00:30:24] the share locks to the end. You can
+[00:30:26] release the exclusive locks in the
+[00:30:27] shrinking phase.
+[00:30:32] >> Uh
+[00:30:34] [snorts]
+[00:30:35] yes.
+[00:30:37] Let me follow PA. I might I might be
+[00:30:39] flipping the order, right? But then the
+[00:30:41] main thing I I want you to understand is
+[00:30:42] like
+[00:30:44] with strong strict you definitely hold
+[00:30:45] everything to the end and then in a
+[00:30:48] lesser form of strong strict strict 2PL
+[00:30:50] you're releasing one type of lock and I
+[00:30:52] might have that reversed. I apologize.
+[00:30:54] Let me follow up on that.
+[00:30:57] [snorts] All right. So let's look at an
+[00:30:58] example here of doing strong TPL. So, we
+[00:31:01] want to take $100 out of DJ uh DJ Cash's
+[00:31:03] account and move it to his bookiey's
+[00:31:05] account or his tax tax accountant's
+[00:31:07] account. Um, and then in another
+[00:31:10] transaction, we're going to do that
+[00:31:11] summation we had before. We're just
+[00:31:12] going to read A, read B, and then just
+[00:31:15] spit out the the summation of the two.
+[00:31:19] So, I'm going to show example how to if
+[00:31:20] you don't do this with TPL, what
+[00:31:22] happens? And then if we don't if we use
+[00:31:23] regular TPL, what happens? And then what
+[00:31:25] happens when we use strong strict TPL?
+[00:31:27] So, we don't do any TPL. We could have a
+[00:31:29] schedule like this where we start T1,
+[00:31:32] right? It gets exclusive lock on A, then
+[00:31:34] it does a read on A, then T2 tries to
+[00:31:37] get the shared lock on A, but because T1
+[00:31:39] holds the exclusive lock on A, it's
+[00:31:41] going to get blocked and wait. And then
+[00:31:43] control goes back to T1. It does does
+[00:31:45] the the update on A and writes it to the
+[00:31:47] database. And then it unlocks A, at
+[00:31:50] which point this now releases the lock
+[00:31:52] to T2. So T2 can read A, right? Okay.
+[00:31:56] And now it's going to read the the
+[00:31:57] change that T1 made. Then it unlocks A,
+[00:32:00] takes a share lock on B, reads B, but
+[00:32:04] then now when T T1 tries to get the
+[00:32:06] exclusive lock on B to update it to put
+[00:32:08] the $100 back into the B's account, it
+[00:32:11] gets paused and blocked because it can't
+[00:32:12] get the exclusive lock on B, control
+[00:32:14] goes back to T2. T2 releases that that
+[00:32:17] lock, right? Spits out the output of A
+[00:32:20] plus B. And then now we do the update on
+[00:32:23] the um uh on update on B, unlock it,
+[00:32:27] commit. But then again, just like before
+[00:32:29] in our example, we had we were missing
+[00:32:31] money. We're missing $100 in our
+[00:32:33] summation from T2's output because we
+[00:32:35] read A after we took the money out, but
+[00:32:37] and we read B before the money was put
+[00:32:38] in. Right? So this again, this this
+[00:32:41] would not have happened if it was
+[00:32:43] running T1 followed by T2 or T2 followed
+[00:32:45] by T1 in a in a serial ordering. So now
+[00:32:48] if I do two-based locking same thing
+[00:32:51] starts I get the T2 sorry T1 starts gets
+[00:32:54] exclusive lock on A does a read on A and
+[00:32:56] then when T2 tries to get the share lock
+[00:32:58] on A it gets paused and waited waits uh
+[00:33:01] now I get the exclusive lock or sorry
+[00:33:03] update A do the right to A get the
+[00:33:05] exclusive lock on B and now I can unlock
+[00:33:08] A which I'm allowed to do in two-phase
+[00:33:10] locking because now I'm in the shrinking
+[00:33:12] phase for T1. So then T2 could start
+[00:33:14] running, does the read on A, tries to
+[00:33:16] get the share lock on B, that gets
+[00:33:18] blocked because T1 has that. So then
+[00:33:20] control goes back to T T T T T T T T T T
+[00:33:22] T T T T T T T T T T T T1, does the read
+[00:33:23] on A, adds the $100 to it, writes it
+[00:33:25] out, unlocks B, and then T2 can can run
+[00:33:28] and produces the correct result.
+[00:33:31] Right.
+[00:33:34] Right. The key thing is again the T1
+[00:33:37] acquired all the locks that it needed
+[00:33:39] and as soon as unlocked A, then it can't
+[00:33:41] acquire a new one.
+[00:33:44] Now, a strong streak 2PL, this one is
+[00:33:46] basically comes down to being serial
+[00:33:49] ordering, at least for this example
+[00:33:51] here, right? Because T2 is going to try
+[00:33:53] to get the shared lock on A, but it's
+[00:33:55] not it's going to get denied because T1
+[00:33:57] got it first and T1's not going to
+[00:33:58] release that shared lock until it
+[00:34:00] commits, right? And then it does the
+[00:34:03] read on A, then it tries to get the
+[00:34:05] share lock on B. At this point, T1 has
+[00:34:07] already released that lock, so it's
+[00:34:08] allowed to get it uh and then finish it
+[00:34:12] processing and then produce the correct
+[00:34:13] result.
+[00:34:16] Yes.
+[00:34:20] >> The question is shouldn't the unlock
+[00:34:21] happen after the commit? Like
+[00:34:26] how is this in I'm starting in
+[00:34:28] PowerPoint, but yes. And again, this is
+[00:34:29] why there's no explicit unlock command.
+[00:34:31] when you call commit then like it h
+[00:34:34] unlocking happen is all part of it it's
+[00:34:35] part of the commit
+[00:34:41] so the way to go think about again what
+[00:34:44] the
+[00:34:46] the the 2PL stuff provides for us in the
+[00:34:49] context of the the universe of schedules
+[00:34:51] we could possibly have remember we had
+[00:34:52] serial in the middle and around that
+[00:34:54] encompassing it is conflict serializable
+[00:34:56] schedules and around that are few
+[00:34:57] serializable schedules so then now this
+[00:34:59] region here are going to schedules that
+[00:35:02] do not allow for cascading aborts and
+[00:35:04] some of them will be you know viewizable
+[00:35:07] conflictizable or even or even serial
+[00:35:09] and some of them just aren't right and
+[00:35:13] then more narrowly inside of conflict
+[00:35:15] serializable is going to be where strong
+[00:35:17] strict 2PL exists and around that you
+[00:35:19] can think of like even even more broadly
+[00:35:21] would be where 2PL exists
+[00:35:24] but in case of strong 2PL
+[00:35:27] none of those schedules will have
+[00:35:28] cascading aborts
+[00:35:33] Okay.
+[00:35:38] All right. So now we go back to the the
+[00:35:41] second issue we we talked about of you
+[00:35:44] know we we now know how to handle the
+[00:35:45] dirty read problem with strong GPL. Now
+[00:35:47] we have to handle for hand to hand
+[00:35:49] handle deadlocks. Right?
+[00:35:52] Again this is the classic concurrent
+[00:35:53] programming 101 stuff. Right? T1 starts
+[00:35:56] get exclusive lock on A. That's allowed
+[00:35:57] to happen. T2 wants to get a share lock
+[00:35:59] on B. That's allowed to happen. But now
+[00:36:02] when T2 tries to get the share lock on
+[00:36:04] A, that gets denied because T1 already
+[00:36:07] holds it. But then later on T1 tries to
+[00:36:09] get the share lock on B and that gets
+[00:36:11] denied because T2 holds it. So of course
+[00:36:14] now we have again a classic deadlock. We
+[00:36:16] have two transactions that are both hold
+[00:36:18] locks and they're waiting for locks held
+[00:36:19] by the other transaction and therefore
+[00:36:22] they're never going to get released.
+[00:36:26] So deadlock obviously is just again a
+[00:36:27] cycle in our dependencies between the
+[00:36:29] locks that that transactions hold and
+[00:36:30] the locks that they want to acquire uh
+[00:36:33] and they're just waiting for the other
+[00:36:34] one to to release it. So the two ways
+[00:36:37] we're going to handle this is through
+[00:36:38] either deadlock detection where we have
+[00:36:39] an active mechanism goes and says I find
+[00:36:42] I'm finding the deadlocks let me go kill
+[00:36:44] something to go go break it
+[00:36:46] or deadlock prevention where when a
+[00:36:49] transaction tries to acquire a lock
+[00:36:52] based on an ordering protocol or
+[00:36:55] priority protocol we will determine
+[00:36:57] who's allowed to wait for a lock and who
+[00:36:59] has to give up a lock and and and abort
+[00:37:01] and restart
+[00:37:04] and the the thing I'll say is like this
+[00:37:06] is where again another distinction
+[00:37:08] between the high-end expensive systems
+[00:37:10] like the oracles like the DB2s
+[00:37:12] uh these systems are actually support
+[00:37:14] both of these methods versus like my SQL
+[00:37:17] I think only has has one of them
+[00:37:20] and you can as as a human operator
+[00:37:22] administrator of these systems you can
+[00:37:23] toggle the the the runtime knobs or
+[00:37:25] parameters to determine which of these
+[00:37:27] ones you want to use for your
+[00:37:28] transactions because it's going to
+[00:37:29] depend on what the workload is what the
+[00:37:30] hardware is which one of these is
+[00:37:32] actually going to be better.
+[00:37:35] >> [snorts]
+[00:37:36] >> All right. So for deadlock detection,
+[00:37:37] the way this is going to work is that
+[00:37:38] the the lock manager is going to
+[00:37:40] maintain what's waits for graph is
+[00:37:43] basically equivalent to like the
+[00:37:45] dependency graph of what what
+[00:37:47] transactions are waiting for locks held
+[00:37:49] by other transactions.
+[00:37:52] And you would if now then the system
+[00:37:55] detects that there's a cycle in this
+[00:37:57] graph you know there's a deadlock and
+[00:37:59] therefore it has to then deploy some
+[00:38:02] mechanism to decide or protocol to
+[00:38:04] decide which transaction does it want to
+[00:38:07] abort and kill so that it breaks the
+[00:38:09] deadlock and then transactions can keep
+[00:38:11] on running. And so the the the challenge
+[00:38:14] is going to be how aggressive you want
+[00:38:16] the data system to be in looking for
+[00:38:18] these for these deadlocks. Again, for
+[00:38:21] two transactions, three transactions, no
+[00:38:22] big deal. But think of like tens of
+[00:38:24] thousands of transactions with very
+[00:38:26] complex dependency graphs or weight
+[00:38:28] source graphs, right? You can pick your
+[00:38:30] favorite cycle detection algorithm. Uh
+[00:38:33] but sometimes those aren't cheap to run.
+[00:38:35] So if you're trying to check for a
+[00:38:37] deadlock every millisecond, you're
+[00:38:38] basically burning cycles looking for
+[00:38:39] deadlocks where you could be using those
+[00:38:41] resources to actually execute
+[00:38:42] transactions. But if I only run it every
+[00:38:45] five minutes, then I may have
+[00:38:46] transactions sitting around for, you
+[00:38:48] know, 4 minutes 59 seconds because of a
+[00:38:51] deadlock and waiting for the next time
+[00:38:52] the the the cycle detector goes through
+[00:38:54] and finds a deadlock. So, how to balance
+[00:38:56] the the how aggressive you want to be in
+[00:38:59] breaking the deadlocks versus how
+[00:39:01] quickly you want to um
+[00:39:04] uh how quickly you want to release them
+[00:39:06] and release and get get transactions
+[00:39:08] running again. You know, there there
+[00:39:10] isn't one answer and this is what again
+[00:39:11] the high-end systems allowed to tune
+[00:39:13] tune these things. [snorts]
+[00:39:15] All right. So, so the basic protocol is
+[00:39:17] pretty straightforward, right? Every
+[00:39:19] time that there's a transaction that's
+[00:39:20] waiting for a lock being held by another
+[00:39:22] transaction, uh I just add an edge for
+[00:39:25] my weight for graph here, right? And I
+[00:39:27] know what locks transactions hold
+[00:39:29] because it's in my transaction uh to my
+[00:39:31] my lock manager in that hash table and I
+[00:39:33] know what transactions they're trying to
+[00:39:35] trying to I know what locks transactions
+[00:39:37] are requesting because again I have my
+[00:39:39] cues in my in my lock manager keeps
+[00:39:40] track of what they're waiting for. So
+[00:39:42] again say here T2 wants to lock on C but
+[00:39:45] T1 T3 holds that. So you have an edge
+[00:39:46] from two to three, T2 to T3. And then
+[00:39:49] now T3 has once a lock on A, but that's
+[00:39:53] being held by T1. So again, I have a
+[00:39:56] deadlock.
+[00:39:58] So when we detect this, I'll say also
+[00:40:01] too, like a simple way you would do this
+[00:40:02] is uh the the the detection algorithm
+[00:40:06] could do something really simple like
+[00:40:06] just look for two transaction cycles
+[00:40:08] like T1 and T2 are deadlocked. Run that
+[00:40:12] first because that's cheap to do. find
+[00:40:14] any deadlocks and maybe clean those up
+[00:40:16] and then but if you don't find anything
+[00:40:17] or if you did the two two transaction
+[00:40:20] cycle check and breaking them or killing
+[00:40:24] transaction didn't release other
+[00:40:26] transaction didn't release the the major
+[00:40:27] bottleneck then you run the more
+[00:40:29] expensive cycle detection algorithm.
+[00:40:31] So you sort of do a quick fix and see
+[00:40:33] whether that solves problems because
+[00:40:34] most problems will be will be like that
+[00:40:36] but then you can run the more expensive
+[00:40:37] one afterwards.
+[00:40:40] All right. So when we detect a deadlock
+[00:40:42] now the data system has to decide which
+[00:40:44] transaction to kill to abort and and and
+[00:40:47] to break that deadlock. Remember I said
+[00:40:49] last class that you know every
+[00:40:50] transaction starts with begin and then
+[00:40:52] they can either say commit or they can
+[00:40:54] say abort to you know tell the
+[00:40:57] transaction itself wants to abort but
+[00:40:58] the JSON could also decide on its own
+[00:41:00] that it has to board as well. So that
+[00:41:02] that's that's what this this one is.
+[00:41:05] So when the
+[00:41:07] when the the system says all right tell
+[00:41:09] the transaction to abort right it
+[00:41:11] releases all the locks undo un undoes
+[00:41:13] all its changes um to provide the
+[00:41:16] atomicity guarantees and then it can
+[00:41:18] either restart itself
+[00:41:21] uh or we throw an exception back to the
+[00:41:24] uh to the to the application saying this
+[00:41:26] transaction aborted and rely on the
+[00:41:28] application to restart it for us right
+[00:41:30] if it's a store procedure think of like
+[00:41:32] a RPC call we just invoke the RPC again
+[00:41:35] inside our data system. But if we have
+[00:41:36] to go back to the application code, they
+[00:41:37] might not have exception handling to be
+[00:41:39] able to restart things.
+[00:41:42] So the decision of what you know what
+[00:41:47] transaction should be the victim that
+[00:41:48] you're going to kill off and and and
+[00:41:50] release all their locks depends on a lot
+[00:41:52] of different factors that the data
+[00:41:54] systems can take into consideration that
+[00:41:58] uh can have a pretty significant
+[00:41:59] difference in performance.
+[00:42:02] So, a common thing would be like you
+[00:42:04] just pick whatever transaction is either
+[00:42:05] the oldest or the newest and you go
+[00:42:08] ahead and and kill them, right?
+[00:42:09] Typically, you pick the newest because
+[00:42:11] you would say maybe they haven't been
+[00:42:13] around long enough and I'm not starving
+[00:42:14] them if I kill them. Of course, now when
+[00:42:16] they come back, you make sure that they
+[00:42:17] have maybe the same time stamp uh so
+[00:42:20] they have this, you know, a higher
+[00:42:21] priority than they had before. It could
+[00:42:24] also be how much work the transactions
+[00:42:26] already done so far, right? Maybe
+[00:42:28] they've they've updated a billion
+[00:42:30] records. you have two transactions that
+[00:42:31] are conflicted and they have a deadlock.
+[00:42:33] One transaction updated a billion
+[00:42:34] records. One transaction updated one
+[00:42:36] record. I'm better off killing the one
+[00:42:38] record transaction because I don't want
+[00:42:39] have to undo all the work that that the
+[00:42:41] that the other transaction did because
+[00:42:43] that was expensive to do and I don't
+[00:42:45] want to waste, you know, waste the time
+[00:42:46] of it. You can also look at how much how
+[00:42:49] many items the transaction has locked so
+[00:42:51] far. It's sort of like the work. How
+[00:42:53] much work have I have I done? How much
+[00:42:55] how many how much data has the
+[00:42:57] transaction read or modified? locks are
+[00:42:59] kind of the same thing. Um because again
+[00:43:02] going to the lock manager and acquiring
+[00:43:03] the the locks is not for not free,
+[00:43:05] right? We have to protect it with
+[00:43:06] latches like we did in the page table in
+[00:43:08] the bufferable manager. So that's an
+[00:43:09] expensive operation to go acquire locks.
+[00:43:11] And so if someone has a billion locks
+[00:43:13] held versus somebody has one lock held,
+[00:43:15] maybe better off killing off the the one
+[00:43:17] the one lock transaction.
+[00:43:20] If we allow for cascading aborts, we can
+[00:43:21] also keep track of how many transactions
+[00:43:23] are going to have to get rolled back if
+[00:43:24] we kill one of those transactions.
+[00:43:26] Right? Strong strict TPL doesn't have
+[00:43:28] this problem, but other other protocols
+[00:43:29] do. All right. So again, there's a lot
+[00:43:32] of different things we we can consider
+[00:43:34] when we want to decide when a
+[00:43:36] transaction which transaction to abort.
+[00:43:38] And this is where again the high-end
+[00:43:40] systems where you're paying millions of
+[00:43:41] dollars for them. They're going to
+[00:43:42] maintain all these kind of statistics
+[00:43:44] internally and try to figure out the the
+[00:43:47] best choice for you. Whereas
+[00:43:50] I I at least for my SQL I think it's
+[00:43:52] just like you know whatever transaction
+[00:43:53] is the newest they just kill that. So
+[00:43:55] it's it's pretty basic, pretty simple,
+[00:43:59] right?
+[00:44:01] [snorts]
+[00:44:02] All right. So now when a transaction
+[00:44:03] rolls back, question be how far do we
+[00:44:05] roll it back? Now I've sort of assuming
+[00:44:08] so far when I say I'm going to kill a
+[00:44:09] transaction, it it gets completely
+[00:44:10] aborted. But it doesn't have to be that.
+[00:44:13] So we can show demos of this next class.
+[00:44:16] Um, but there's these things called save
+[00:44:18] points where while my transaction is
+[00:44:20] running, I call begin, but then I can
+[00:44:22] also kind of establish a checkpoint
+[00:44:24] called a save point within that
+[00:44:26] transaction and I could potentially roll
+[00:44:28] back to that save point uh to break a
+[00:44:31] deadlock without having to roll the
+[00:44:32] entire transaction back. So I can maybe
+[00:44:35] update, you know, five records, take a
+[00:44:38] save point, then try to update the sixth
+[00:44:40] record, but then I can't acquire the
+[00:44:43] lock for that. So rather than just
+[00:44:44] killing, you know, avoiding the
+[00:44:46] transaction entirely, I'll just roll it
+[00:44:48] back for some some some amount of work
+[00:44:50] up to the save point and then that
+[00:44:52] breaks the deadlock, but then I don't
+[00:44:53] have to roll everything back.
+[00:44:56] I potentially don't have to tell the
+[00:44:58] application server that they've that
+[00:44:59] there's a deadlock for it as well.
+[00:45:02] >> What's that?
+[00:45:04] >> The question is how do you decide where
+[00:45:05] to take a state point? It's application
+[00:45:07] code. So the application code has to say
+[00:45:09] I want to take a state points. It's not
+[00:45:10] something it does automatically.
+[00:45:13] for some things like if the say a single
+[00:45:17] update query um it updates two records,
+[00:45:22] it gets the the lock for the first
+[00:45:23] record, tries to get the lock for the
+[00:45:25] second record. That causes a deadlock
+[00:45:27] for that one. You could you could break
+[00:45:29] the deadlock by
+[00:45:31] uh undoing the change of the first the
+[00:45:34] the the first tupil that updated that
+[00:45:38] release of the deadlock and then you can
+[00:45:39] re-execute that query once you know once
+[00:45:42] things are dislodged without having to
+[00:45:43] go back back to the application server.
+[00:45:45] So some things you can do implicitly
+[00:45:47] other things require explicit commands
+[00:45:49] in SQL to create state pointsity
+[00:45:54] at a table level or cell level.
+[00:45:56] >> The question is is the granular to lock
+[00:45:58] at a row level, table level or something
+[00:46:00] else. At this point here we're not we're
+[00:46:03] not defining I mean my example I said
+[00:46:05] tuples
+[00:46:07] when we talk about hyper locking it
+[00:46:08] could be anything.
+[00:46:10] The question is again what am I locking
+[00:46:12] when I say an object a in most system
+[00:46:14] it's going to be a single record a tupil
+[00:46:16] doesn't have to be and again we we'll
+[00:46:19] see how we do that handle that in a
+[00:46:21] second
+[00:46:23] all right so deadlock prevention is is
+[00:46:26] rather than relying on a background
+[00:46:28] worker to go look for deadlocks in the
+[00:46:29] lock manager and and and and break them
+[00:46:31] up uh instead what we're going to do is
+[00:46:33] when a transaction tries to require a
+[00:46:35] lock that's being held by another
+[00:46:37] transaction already then the data It has
+[00:46:40] to decide which one to kill at that
+[00:46:42] moment to avoid having a deadlock. And
+[00:46:46] for this one, we don't need to wait for
+[00:46:47] a graph. We just need to know who waits
+[00:46:48] for what and we need to know timestamps
+[00:46:50] of when you know when transactions
+[00:46:52] started.
+[00:46:54] So there be two methods of data
+[00:46:55] prevention. And again, the high-end
+[00:46:57] systems can support both. So every
+[00:47:00] transaction it's going to be assigned a
+[00:47:01] time stamp of when they started
+[00:47:04] u and then that's used to determine
+[00:47:06] their priority over other transactions.
+[00:47:09] And then the two protocols are going to
+[00:47:10] say who's allowed to wait for what uh
+[00:47:14] what what transactions whether
+[00:47:16] transaction is allowed to wait for
+[00:47:17] another transaction to release a lock or
+[00:47:19] not. Uh and if we guarantee that that
+[00:47:21] waiting only happens in sort of one
+[00:47:23] direction of priorities we can be we can
+[00:47:26] ensure that we don't have deadlocks. So
+[00:47:29] the wait for die or wait die which is
+[00:47:31] the old ways for the young. This means
+[00:47:33] that if the transaction that's trying to
+[00:47:35] acquire the lock has a higher priority
+[00:47:37] than the holding transaction uh meaning
+[00:47:39] it's it's older uh like the time stamp
+[00:47:43] is is less then the requesting
+[00:47:46] transaction is allowed to to wait for
+[00:47:48] that that other transaction to give up
+[00:47:49] the lock. But if the the transaction
+[00:47:52] that's trying to acquire the lock is
+[00:47:54] younger than the transaction that holds
+[00:47:55] the lock then that requesting
+[00:47:57] transaction has to kill themselves.
+[00:48:00] Win for weight is the opposite like the
+[00:48:02] young waits for the old. So if the
+[00:48:03] requesting transaction is uh younger
+[00:48:06] than the transaction that holds the lock
+[00:48:08] then it's allowed to wait. If it's older
+[00:48:10] then it has to kill itself.
+[00:48:13] So let's look at explicit examples here
+[00:48:16] right? So we have two transactions two
+[00:48:18] two sorry two schedules for two
+[00:48:19] different transactions t1 and t2. So the
+[00:48:22] first one here at the top T1 starts but
+[00:48:25] so it has a time stamp be less than T2
+[00:48:28] the time stamps are one and two. So T1
+[00:48:31] starts, gets time stamp one. T2 starts,
+[00:48:32] it gets time stamp two. T2 gets to use
+[00:48:35] the lock on A. But then T1 tries to get
+[00:48:38] that same lock on A. And under wait for
+[00:48:41] die, where the old waits for the young
+[00:48:43] because T1 is older than T2, it's
+[00:48:46] allowed to wait for T2 to finish to
+[00:48:47] acquire that lock. Under wound and
+[00:48:50] weight, T2 will end up getting uh
+[00:48:52] aborted because the basically saying,
+[00:48:55] I'm not waiting for you. I'm older than
+[00:48:56] you. I'm going to go, you know, ste
+[00:48:59] steal your lock and kill you. Right
+[00:49:03] in now this other example here again T1
+[00:49:05] starts gets exclusive lock on A. T2 then
+[00:49:08] starts tries to get the exclusive lock
+[00:49:09] on A and under wait and die. All right,
+[00:49:13] T2 has to abort because in wait and die
+[00:49:15] the old weights for the young because T2
+[00:49:18] is younger than T1.
+[00:49:20] It's not allowed to wait and it has to
+[00:49:22] kill itself.
+[00:49:23] In the case of wound weight where the
+[00:49:25] the young waits for the old T2 is
+[00:49:27] allowed to wait for T1.
+[00:49:36] All right. So why does this guarantee
+[00:49:37] that there's no deadlocks?
+[00:49:40] Because all the waiting is going to
+[00:49:41] happen in one direction. Again, you
+[00:49:42] would implement just one either wound
+[00:49:44] weight or weight die. You don't
+[00:49:45] implement both of them. I mean, you can,
+[00:49:46] but you can only run one at a time. So
+[00:49:49] it's like when we talked about latching
+[00:49:51] in the the B pus trees along the leaf
+[00:49:53] nodes or noting leases in the in just
+[00:49:57] traversal itself all our workers were
+[00:49:59] starting from the top going to the
+[00:50:00] bottom. We didn't have anybody else
+[00:50:01] going in the other direction. So you
+[00:50:03] can't have deadlock. So it's all the
+[00:50:04] waiting is sort of going in in one
+[00:50:06] direction. So weight die wound weight
+[00:50:08] basically the same thing but at more
+[00:50:10] nuance because now you're dealing with
+[00:50:12] you know coming at different directions
+[00:50:14] but you only allow one of them to
+[00:50:16] actually occur and that guarantees that
+[00:50:18] you you don't have any deadlocks.
+[00:50:21] So when a transaction restarts we have
+[00:50:24] to give it a a new priority but we're
+[00:50:27] just going to use the same time stamp of
+[00:50:29] when they started before the first time
+[00:50:31] they were boarded. So that guarantees
+[00:50:32] that eventually they'll be like, you
+[00:50:34] know, an old person that just gets gets
+[00:50:37] whatever they want,
+[00:50:39] right?
+[00:50:41] And it doesn't doesn't get starved.
+[00:50:44] [snorts] And like I said, the in some
+[00:50:46] workloads wound weight is better, other
+[00:50:48] workloads weight die is better. And then
+[00:50:49] the high-end systems allow you to toggle
+[00:50:51] on which one you want to use. [snorts]
+[00:50:55] All right. So now coming up to their
+[00:50:57] question earlier, all my examples here,
+[00:51:00] we're just assuming that we have a one
+[00:51:01] to one mapping of database objects and I
+[00:51:04] didn't find exactly what they were to to
+[00:51:07] locks,
+[00:51:08] right? But the challenge with this one
+[00:51:10] is it's not going to be scalable. So if
+[00:51:11] I if I have a transaction that wants to
+[00:51:13] update a billion tupils and everything
+[00:51:15] I've told you so far, I got to go to the
+[00:51:17] lock manager and get a billion locks.
+[00:51:19] And again, it's a page table or it's
+[00:51:21] it's a hash tree like the page table,
+[00:51:23] but I have to protect it with latches.
+[00:51:25] uh because it's a centralized data
+[00:51:27] structure and if I got to go in and get
+[00:51:30] a billion locks, chances are that the
+[00:51:33] cost of going acquiring the locks is
+[00:51:35] going to be more expensive than just
+[00:51:36] updating whatever the records is
+[00:51:38] whatever the records that I wanted to
+[00:51:39] update, right?
+[00:51:42] It's not like a latch where I'm flipping
+[00:51:43] a 64-bit integer and I can do that in a
+[00:51:45] single instruction in the CPU. I gota I
+[00:51:48] got to traverse the you know hash hash
+[00:51:50] what I'm looking for do my search into
+[00:51:53] the hash table then acquire latches for
+[00:51:55] whatever the things I want to modify.
+[00:51:57] [snorts]
+[00:51:59] So we can get around this problem by
+[00:52:00] introducing different kind of lock
+[00:52:01] granularities and now we can define
+[00:52:04] locks to have scope or the the the thing
+[00:52:07] that they're locking can encompass
+[00:52:11] larger and larger logical parts of of of
+[00:52:14] a database itself. So now when I say
+[00:52:17] acquire lock I can acquire lock on a a
+[00:52:19] database a table a page in the table a
+[00:52:23] tupil and then in in the lowest case I
+[00:52:25] can on a single column or a single
+[00:52:27] attribute within a within a uh within a
+[00:52:29] tupil and in an ideal scenario we want
+[00:52:33] our data system to acquire the smallest
+[00:52:34] number of locks that has actually needs
+[00:52:36] to do whatever it is the transaction
+[00:52:37] wants to do because then we go into that
+[00:52:39] lock manager in fewer times but the
+[00:52:42] trade-off's going to be if I have if I'm
+[00:52:44] only acquiring you coarse grain locks
+[00:52:46] that like for the entire database then
+[00:52:48] that's going to block out other
+[00:52:49] transactions from running at the same
+[00:52:50] time and I and I get bad parallelism.
+[00:52:54] So we can introduce this this notion of
+[00:52:56] a lock hierarchy and what this means is
+[00:52:59] that think of at the very top you have a
+[00:53:01] database and within that it has tables.
+[00:53:03] So if I acquire a lock on the database
+[00:53:07] that implicitly acquires the lock on
+[00:53:08] everything down below within that
+[00:53:10] database.
+[00:53:12] And so now if I want to do certain
+[00:53:13] things, if I would update a billion
+[00:53:15] tupils in a table, instead of acquiring
+[00:53:17] a billion locks on individual tupils, I
+[00:53:20] need to acquire the lock on the table
+[00:53:22] and that guarantees that I'm protected
+[00:53:24] from other transactions. So all the
+[00:53:25] transactions have to sort of enter this
+[00:53:27] tree and acquire the locks in the same
+[00:53:29] direction. [snorts] So T1 shows up and
+[00:53:31] again I want to update the entire table.
+[00:53:34] So if I just get the the lock on the
+[00:53:36] table at the top, implicitly I have the
+[00:53:37] locks for everything down below.
+[00:53:41] So MongoDB, the first version of MongoDB
+[00:53:42] when it came out, they only had database
+[00:53:45] locks. So anytime you had a writer, uh,
+[00:53:47] they would lock the entire database.
+[00:53:51] It's sort of what how SQLite works. Now,
+[00:53:52] SQLite only allows for one writer
+[00:53:54] thread. Now they allow for multiple
+[00:53:56] readers and you can potentially read
+[00:53:58] other parts of the the the of the data
+[00:54:00] at the same time you're writing to it.
+[00:54:02] But they sort of have this this model
+[00:54:04] where like you only lock you you have a
+[00:54:06] sort of single lock for the entire
+[00:54:08] database for for writers. Readers can
+[00:54:10] read different things.
+[00:54:12] So the way to think about how different
+[00:54:14] systems implement this the tuple level
+[00:54:16] locks are very very common pretty much
+[00:54:18] anybody that's doing face or anybody
+[00:54:19] that's doing two-phase locking is going
+[00:54:21] to be doing this. The next one would be
+[00:54:23] table locks are very common. page locks
+[00:54:26] they're more nuance we'll see that uh in
+[00:54:29] two more two more lectures but like some
+[00:54:31] systems can do that
+[00:54:34] you can do database locks uh in some
+[00:54:36] systems you can like post you can lock
+[00:54:38] the entire table I don't know if you can
+[00:54:40] lock the entire database um you can put
+[00:54:42] the database in readon mode and that's
+[00:54:43] sort of like the same thing [snorts]
+[00:54:45] I only know one system that does
+[00:54:47] attribute level locks and that's
+[00:54:48] yugabyte
+[00:54:49] uh which is pretty impressive and the
+[00:54:52] challenge is going to be when we talk
+[00:54:53] about multiverging is
+[00:54:54] In order to put this, I got to put
+[00:54:57] information in the in the header of
+[00:54:59] every single attribute or every single
+[00:55:01] tupole. What locks are being held by
+[00:55:03] that that tupil for within its
+[00:55:05] attributes? And again, it opens up more
+[00:55:07] parallelism, but it's more it's it's
+[00:55:10] it's a more complicated protocol to
+[00:55:11] implement and there's more metadata you
+[00:55:13] have to maintain.
+[00:55:14] [snorts] All right. All right. So now
+[00:55:16] the problem is if I just have only two
+[00:55:18] lock modes shared and exclusive then it
+[00:55:21] becomes kind of challenging to start do
+[00:55:23] anything more sophisticated using this
+[00:55:25] hierarchy because you know someone could
+[00:55:27] take an exclusive lock on the table and
+[00:55:29] maybe only to update a small number of
+[00:55:30] tupils and that would be good. So I want
+[00:55:32] a way to be able to hint to other
+[00:55:34] transactions what's going belong going
+[00:55:37] on below me in the tree without having
+[00:55:39] to go in the tree and traverse
+[00:55:41] everything to find what I need. Because
+[00:55:42] again under two-based locking I have to
+[00:55:44] acquire locks on objects before I'm
+[00:55:46] allowed to do anything on those objects.
+[00:55:48] So I have to check this thing first
+[00:55:49] before I can do anything.
+[00:55:52] So this is where intention locks are
+[00:55:53] going to help us. Intention locks me
+[00:55:55] hints for us in this hierarchy tree uh
+[00:55:57] of the lock granularities that convey
+[00:56:00] information about what's going on below
+[00:56:02] me in the tree without having to go down
+[00:56:05] into the tree and look at everything.
+[00:56:08] Right? It's just a hint for other other
+[00:56:09] other uh other transactions.
+[00:56:12] And the three basic types we're going to
+[00:56:14] have are intention shared, intention
+[00:56:15] exclusive, and shared intention
+[00:56:16] exclusive. So attention shared basically
+[00:56:18] says a hint to say, hey, down below me
+[00:56:21] in the tree, I'm going to be taking
+[00:56:23] things. There's going to be some some
+[00:56:25] object will be taken in uh in uh in shar
+[00:56:28] shared mode. Tent inclusive says some
+[00:56:30] things down below me are be in exclusive
+[00:56:32] mode. And then shared intention
+[00:56:34] exclusive means that I'm going to take
+[00:56:37] that object and everything below it in
+[00:56:39] shared mode. But then down below within
+[00:56:42] that I'll upgrade my locks and take
+[00:56:43] something in exclusive mode but not at
+[00:56:46] the level where this lock is being
+[00:56:47] defined.
+[00:56:50] All right. So what does this look like
+[00:56:51] for now? Our compatibility matrix. Now
+[00:56:53] it's getting more complicated, right?
+[00:56:54] Because again now we have these intent
+[00:56:56] intention locks plus the original shared
+[00:56:58] and exclusive locks. Again exclusive
+[00:57:00] locks block everything else. So you
+[00:57:01] can't do anything with that. But like
+[00:57:03] with a intention shared you can start
+[00:57:06] sharing this. Sorry, it's compatible
+[00:57:08] with everything but exclusive because
+[00:57:10] again it's just a hint to say hey down
+[00:57:12] below me I'm doing something but not
+[00:57:14] exactly at the level that I'm at you're
+[00:57:15] at right now.
+[00:57:18] So the locking protocol becomes a bit
+[00:57:20] more complicated where now before I go
+[00:57:23] and you do whatever reader write I want
+[00:57:25] to do on the object in the database. I
+[00:57:27] go into my hierarchy
+[00:57:29] figure out at the high level what
+[00:57:31] intention locks I maybe need to hold
+[00:57:33] because I'm trying to reduce the number
+[00:57:35] of total number of absolute locks I'm
+[00:57:36] taking for my transaction and then the
+[00:57:40] at the lowest level then I'll either
+[00:57:41] take things in either uh either
+[00:57:44] exclusive mode or shared mode again
+[00:57:45] depending on what my operation is
+[00:57:46] actually going to be.
+[00:57:48] Right. And now me standing here with
+[00:57:50] waving my hands does probably not
+[00:57:51] helping. So let's look at let's look at
+[00:57:53] a bunch of examples. So it's the same
+[00:57:55] one we had before. We're going to check
+[00:57:56] the balance of DJ cash's bank account.
+[00:57:59] And then we're going to increase his
+[00:57:59] bookies account balance by 1%.
+[00:58:03] So for this one, we're going to take
+[00:58:05] explicit exclusive and shared locks for
+[00:58:06] the leaf nodes in our lock tree
+[00:58:08] hierarchy, but then we'll have the
+[00:58:11] intention hit locks up above to tell the
+[00:58:13] transactions what's going on down below.
+[00:58:16] >> [snorts]
+[00:58:16] >> So for to keep it simple, we only have
+[00:58:19] two levels. We have table locks and
+[00:58:20] tubal locks. Again, you have page locks,
+[00:58:22] you can have attribute locks, you can
+[00:58:23] have database locks. It's all, you know,
+[00:58:25] it all still works the same. So when T1
+[00:58:28] starts, it wants to read uh a single
+[00:58:31] record in in the in the in the table. So
+[00:58:34] it only wants to get this lock in in
+[00:58:37] shared mode. So in my hierarchy as I go
+[00:58:40] down I'm going to give a take an
+[00:58:42] intention shared lock at this at the
+[00:58:45] table level and then traverse now down
+[00:58:48] and get the shared lock that I want uh
+[00:58:50] explicit shared lock on the on the two
+[00:58:52] I'm going to going to read and for T2
+[00:58:55] that's going to update a record in in
+[00:58:57] the table we we want to get a uh we want
+[00:59:00] to take this bottom block in exclusive
+[00:59:02] mode again in our compatibility matrix
+[00:59:05] intention shared is compatible with an
+[00:59:08] intention exclusive lock, right? But not
+[00:59:11] exclusive lock. So I don't want to take
+[00:59:13] an exclusive lock on the table because
+[00:59:14] that's going to block every everything
+[00:59:16] uh any any reads and rights on the table
+[00:59:19] and it's going to get denied too because
+[00:59:20] T1 already held the intention shared
+[00:59:22] lock. So instead I'm going to take an
+[00:59:24] intention exclusive lock on on the table
+[00:59:27] again giving hint to other transactions
+[00:59:28] say hey down below me I'm taking
+[00:59:30] exclusive lock and I get the exclusive
+[00:59:32] lock on the one tool I want to modify
+[00:59:33] and therefore these two transactions can
+[00:59:35] run in parallel and they don't interfere
+[00:59:37] with each other
+[00:59:43] more complex example so now we'll do
+[00:59:45] three transactions T1's going to scan
+[00:59:47] all the tupils in R and update one of
+[00:59:49] them T2 is going to read a single tupil
+[00:59:51] in R and then T3 three is going to read
+[00:59:53] all the tupils in R but not update any
+[00:59:55] of them [snorts] and assume they're
+[00:59:57] they're showing up in you know T1
+[00:59:59] followed by T2 followed by T3 and I'm
+[01:00:01] not defining whether I'm doing deadlock
+[01:00:03] detection deadlock prevention it doesn't
+[01:00:05] matter at this point right I'm just
+[01:00:06] trying to explain how we're actually
+[01:00:07] taking the locks in the hierarchy
+[01:00:11] so T1 wants to read all the tupils in R
+[01:00:13] and update one of them right so I'm
+[01:00:16] going to read a bunch of these and then
+[01:00:18] write this last one here so for this I
+[01:00:20] could take a shared intention exclusive
+[01:00:22] lock at the table level and then I only
+[01:00:27] need to take an exclusive lock on the
+[01:00:29] one tuple I need to modify because it's
+[01:00:31] shared in exclusive the shared part is
+[01:00:33] is explicit. So that means t2 tuple one
+[01:00:36] and tupil two and every other tupil
+[01:00:38] below this table are going to be in
+[01:00:40] shared mode or locked in shared mode for
+[01:00:42] this transaction and then the one lock
+[01:00:44] the one two I want to modify I take that
+[01:00:46] in explicit exclusive mode
+[01:00:49] then now when t2 wants to come along and
+[01:00:52] it wants to read a single tupole in the
+[01:00:54] table say this one over here I can again
+[01:00:57] look at my compatibility matrix and know
+[01:00:58] that shared intention exclusive is
+[01:01:00] compatible with a intention shared
+[01:01:03] Right? Because then saying like, "Hey,
+[01:01:06] down below me, I'm going to read
+[01:01:06] something." So I get intention shared on
+[01:01:08] the table and then take the shared lock
+[01:01:10] on the first tupil here. And again,
+[01:01:13] that's compatible with shared intention
+[01:01:15] exclusive because
+[01:01:17] because again implicitly T1 has all the
+[01:01:20] tupils in shared mode and only this one
+[01:01:22] the the end in exclusive mode.
+[01:01:25] But then now when T3 shows up, it wants
+[01:01:28] to get scan all the tupless in R. And
+[01:01:31] for this instead of going get every
+[01:01:34] single tupil in shared mode it wants to
+[01:01:36] get a shared lock on the table because
+[01:01:38] again I'm trying to minimize the number
+[01:01:39] of times I'm going to the lock manager.
+[01:01:40] So I get the shared lock on R then
+[01:01:42] implicitly get all the other tupils in R
+[01:01:44] in in shared mode. But because that
+[01:01:47] conflicts with the shared intention
+[01:01:49] exclusive lock uh being held by T T T T
+[01:01:54] T T T T T T T T T T T T T T T T T T T T
+[01:01:54] T T T T T T T T T T T T T T T T T T1.
+[01:01:55] Therefore, T3 has to wait.
+[01:01:59] T T T T T T T T T T T T T T T T T T T T
+[01:01:59] T T2 then commits, releases the uh
+[01:02:03] tension shared lock that still doesn't
+[01:02:05] block us, unblock us T3. Only when T1
+[01:02:07] commits, then we can get the share lock
+[01:02:10] on R and we can we we can then read
+[01:02:13] everything we want.
+[01:02:18] So you can also go back too. You you can
+[01:02:20] say like say for T3 it's going to read
+[01:02:23] all the tupils, but uh maybe it doesn't
+[01:02:26] know the number of tupils there are,
+[01:02:27] right? Maybe the statistics are wrong.
+[01:02:29] So it could say things like, well, I
+[01:02:30] think there's a thousand tupils, so I'll
+[01:02:32] just get a thousand tupal locks. That's
+[01:02:34] fine. But then it keeps going now
+[01:02:35] realizes there's a billion tupils. You
+[01:02:37] can then go back in the hierarchy and
+[01:02:39] say upgrade my you my tension shared
+[01:02:41] lock at the table level and put it into
+[01:02:44] uh you know into shared mode.
+[01:02:49] Right? Again, this is just repeating
+[01:02:50] what I said that you can you can switch
+[01:02:52] to more quer locks when you realize
+[01:02:54] you're requiring too many low-level
+[01:02:55] locks or explicit locks down below. Yes.
+[01:03:03] >> Question is why does T3 take a share
+[01:03:04] lock here instead intention shared?
+[01:03:06] Because say that it knows there's a
+[01:03:08] billion tuples down below that it
+[01:03:10] doesn't require a billion locks for all
+[01:03:12] those individual tubless. It's better
+[01:03:13] off to take the shared lock at the table
+[01:03:15] level.
+[01:03:24] >> Yeah. Yes. The statement is well the
+[01:03:26] question is why did T1 take a shared
+[01:03:28] intention exclusive? Because it's going
+[01:03:30] to do a mix but it knows it needs to
+[01:03:32] read everything and it's going to only
+[01:03:34] update one of them. So the shared intent
+[01:03:35] exclusive gets everybody in read mode
+[01:03:37] down below implicitly and then I take
+[01:03:39] the one explicit exclusive lock on the
+[01:03:41] two I'm going to modify.
+[01:03:47] >> Yeah, the statement is and they're
+[01:03:48] correct. If I if it knew it was going to
+[01:03:49] update everything down below it would
+[01:03:50] just take lock an entire table. Yes.
+[01:03:56] You see that in things like um
+[01:03:59] uh like when when you modify the schema
+[01:04:02] of a table and I'm going to add a column
+[01:04:03] or drop a column. I'll take an exclusive
+[01:04:05] lock on the table so I can I can make
+[01:04:07] that change and prevents anybody else
+[01:04:08] from from reading or writing anything
+[01:04:10] while while I'm making that change.
+[01:04:12] That's the easy way to do schema
+[01:04:14] changes.
+[01:04:16] All right.
+[01:04:18] So, as I said before, you don't you
+[01:04:21] typically don't manually acquire locks
+[01:04:23] in in in SQL in your application code.
+[01:04:26] It's only, you know, when you go try to
+[01:04:27] run a SQL query, the data figures out
+[01:04:29] for you which level of the hierarchy you
+[01:04:31] want you want to acquire and what locks
+[01:04:33] you're actually going to need. But
+[01:04:35] there's sometimes in in SQL you actually
+[01:04:38] can give hints to the database server
+[01:04:41] that what you actually want what locks
+[01:04:43] you want to acquire and in what mode uh
+[01:04:46] as part of the SQL command itself right
+[01:04:49] an example I said before you could take
+[01:04:50] a lock on when you know on a database or
+[01:04:52] a table and you're going to make major
+[01:04:54] changes update all the tupless rather
+[01:04:56] than you know having the lock manager
+[01:04:58] fig out you just lock the entire table
+[01:04:59] and make your change that's very common
+[01:05:03] one of the most common techniques you
+[01:05:04] can are what's called four update hints.
+[01:05:07] And so
+[01:05:09] in my SQL query, I have you know select
+[01:05:11] star from whatever table with a wear
+[01:05:12] clause. And if I don't have this four
+[01:05:15] update piece, when I run this query, the
+[01:05:17] data center is going to take your locks
+[01:05:19] in shared mode, right? But if I put this
+[01:05:21] four update thing at the end, it says
+[01:05:23] it's basically saying, hey, I'm going to
+[01:05:25] read this and the very next thing I'm
+[01:05:27] going to do is write to it. So don't
+[01:05:29] acquire it in shared mode. just
+[01:05:30] immediately acquired it in exclusive
+[01:05:32] mode because the next query is coming at
+[01:05:33] you is going to be an update query or a
+[01:05:35] delete or something like that right and
+[01:05:39] the in I don't forget whether this is in
+[01:05:42] the SQL standard but the for update one
+[01:05:44] is very common my SQL has different
+[01:05:46] syntax lock and share mode or lock on
+[01:05:47] whatever mode you want right for for
+[01:05:49] select statements but you can see here
+[01:05:51] from the postest documentation there's a
+[01:05:52] bunch of variations of it like for key
+[01:05:54] share for share for no key update or for
+[01:05:56] update and it shows you the
+[01:05:57] compatibility matrix with with with with
+[01:06:00] a bunch of them. So this is super common
+[01:06:02] when you have like read modify write
+[01:06:03] workloads like read someone's bank
+[01:06:05] account and then take money out of it.
+[01:06:06] You would you would run queries using
+[01:06:08] for update and that avoids the problem
+[01:06:11] of like I read something get the shared
+[01:06:13] lock in lock manager I got to go in lock
+[01:06:15] manager for that then next query is
+[01:06:16] going to try to update it and I'm going
+[01:06:17] to go back in lock manager and try to
+[01:06:18] upgrade that. So, so rather than doing
+[01:06:20] the read and not then later on realizing
+[01:06:23] you can't get the the exclusive mode
+[01:06:24] lock just read it and get the exclusive
+[01:06:26] mode lock while you're reading it and
+[01:06:28] that way if it fails you're not you know
+[01:06:30] you didn't read data you didn't run the
+[01:06:32] read query that you end up rolling back
+[01:06:33] unnecessarily. Yes.
+[01:06:35] running.
+[01:06:42] >> The question is uh if you're running
+[01:06:44] your your your transaction at a lower
+[01:06:46] isolation level, which we will cover
+[01:06:47] next class, does this change the
+[01:06:49] semantics? No.
+[01:06:51] >> No.
+[01:06:53] >> Uh hold up. Uh let me think about that.
+[01:06:58] Uh exclusive locks.
+[01:07:02] Yeah. for the transaction if you take I
+[01:07:04] mean if you're taking exclusive lock
+[01:07:06] mode you're basically
+[01:07:08] you're putting things in serial order
+[01:07:09] potentially
+[01:07:11] we'll cover that next class yeah we
+[01:07:13] haven't talked about isolation levels
+[01:07:14] yet [snorts]
+[01:07:15] another cool trick you can do is this
+[01:07:17] little hint which I know works in
+[01:07:18] postgress I I don't I forget what's in
+[01:07:20] the SQL standard um but a bunch of
+[01:07:22] systems support this it's called skip
+[01:07:24] locked basically you say run my select
+[01:07:26] query and any time that you come across
+[01:07:30] an a a tupil
+[01:07:32] that you can't get the shared lock for,
+[01:07:34] just skip it. Ignore it. Don't have it
+[01:07:35] be part of its output.
+[01:07:38] Right?
+[01:07:40] And this is kind of weird because like
+[01:07:43] you say, oh well that means I could
+[01:07:44] potentially run the same query on the
+[01:07:46] same data um
+[01:07:49] you know multiple times and actually get
+[01:07:51] different results. Yeah, you can. And
+[01:07:54] for some applications, some scenarios
+[01:07:55] that's okay. So this is common in when
+[01:07:58] you use data systems for or databases
+[01:08:00] for cues like work cues. So you say you
+[01:08:02] have a single queue or here's all the
+[01:08:04] tasks I want the jobs I want to run in
+[01:08:06] my system and you have a bunch of
+[01:08:07] workers outside the system like
+[01:08:09] application code pulling the queue and
+[01:08:11] saying what's the next task I I should I
+[01:08:12] should run. And so when you pull the
+[01:08:15] queue you don't you don't want to wait
+[01:08:18] for a lock to be released by another
+[01:08:20] worker who's pulling the queue. if
+[01:08:21] they're pulling something out, I'm going
+[01:08:22] to start running it. Like they're going
+[01:08:23] to update the status, say I, you know,
+[01:08:25] job is taken. So you just now with skip
+[01:08:27] lock, you just skip whatever you can't
+[01:08:29] acquire the locks for. And that way you
+[01:08:30] can get the next thing in the queue,
+[01:08:33] which is pretty cool, right? It's a
+[01:08:35] weaker form for update. It just prevents
+[01:08:37] you from seeing things that like um it's
+[01:08:41] like it's like preventing things you
+[01:08:43] just can't acquire the lock for, right?
+[01:08:45] Whereas for update is trying to force
+[01:08:46] you to acquire the lock when you try to
+[01:08:47] read it. [snorts]
+[01:08:48] All right, before we slip flip flip over
+[01:08:50] to the firebolt talk, um again,
+[01:08:52] two-phase locking or some some some
+[01:08:54] variant of two-phase locking is used in
+[01:08:55] pretty much every single data system
+[01:08:56] around even for the multiverging ones,
+[01:08:59] which we'll cover in in next week. And
+[01:09:01] we talked about how there's different
+[01:09:02] variations, two-phase locking, strict
+[01:09:04] strong straight two-phase locking. I'll
+[01:09:06] I'll follow up on Piaza about the
+[01:09:08] distinction between strict versus strong
+[01:09:09] and rigorous. Um but we'll follow
+[01:09:12] whatever whatever's in the textbook. And
+[01:09:13] we showed how to deal with deadlocks
+[01:09:15] either through detection or prevention.
+[01:09:17] And then we showed how to you can
+[01:09:19] acquire different locks as different
+[01:09:20] levels in the hierarchy. We didn't talk
+[01:09:22] about nested transactions. We didn't
+[01:09:23] talk about save points more detail. We
+[01:09:24] can go over that more next class. Next
+[01:09:26] class we'll spend more time talking
+[01:09:27] about the sorry we'll spend talking
+[01:09:29] about optimistic concurrency protocols
+[01:09:31] whereas two-phase locking is a
+[01:09:32] pessimistic one and we'll see variations
+[01:09:34] of that and then that'll lead us into
+[01:09:36] multi-versioning and then we'll bring up
+[01:09:37] the thing that they mentioned about
+[01:09:39] different isolation levels where you can
+[01:09:41] actually run it at sort of you you run
+[01:09:43] at lower you run the transactions with
+[01:09:45] lower guarantees about about the
+[01:09:47] anomalies that we're trying to avoid
+[01:09:48] with serializability.
+[01:09:50] >> Okay, question. Yes.
+[01:10:01] question is can this produce in results?
+[01:10:03] Yes. So you [snorts] wouldn't want to do
+[01:10:05] it for your regular application. It's
+[01:10:06] like for certain scenarios like pulling
+[01:10:08] a queue where I don't care about the
+[01:10:10] things I can't get access to. I only
+[01:10:12] care about, you know, fresh things. This
+[01:10:14] this does that.
+[01:10:17] >> This is Ben. As I said, he's German, uh,
+[01:10:20] and the good kind. Uh he he's from TU
+[01:10:23] Munich. He's he was a protege of Thomas
+[01:10:26] Morgan which is one of the best database
+[01:10:27] researchers in the world. And now he you
+[01:10:29] started you VP engineering at age like
+[01:10:32] 24 right?
+[01:10:34] >> Um no I'm 26 now. So
+[01:10:37] >> no when you started at firewall.
+[01:10:39] >> Uh when I started at firewall I was like
+[01:10:41] 22 I think.
+[01:10:43] >> Even very impressive. The Germans are
+[01:10:45] very good. This is Ben. He's very smart.
+[01:10:47] Go for it. [laughter]
+[01:10:49] >> Thank you for the kind introduction
+[01:10:50] Andy. you're being too nice. Um, cool.
+[01:10:53] So, I know all of you learned about uh
+[01:10:55] kind of query planners over the last
+[01:10:57] couple of weeks and we thought maybe
+[01:10:58] it's interesting to you to get our
+[01:11:00] industry perspective uh on query
+[01:11:02] planners and very specifically cardality
+[01:11:04] estimates. So, we decided to talk uh
+[01:11:07] title the talk be weary of cardality
+[01:11:09] estimates.
+[01:11:11] And one thing that I think is important
+[01:11:13] context um wait a second I can't skip
+[01:11:16] slides right now.
+[01:11:20] Oh, something broke on my end. Ah,
+[01:11:23] perfect. Is that whenever you build a
+[01:11:25] query optimizer, it's really important
+[01:11:28] important to put it in the context of
+[01:11:30] the workload you're going to run in the
+[01:11:31] system, right? Like different types of
+[01:11:32] database systems will require different
+[01:11:35] types of optimizers. Um, and so I wanted
+[01:11:37] to tell you a bit about the workloads we
+[01:11:39] care most about running at Firebolt.
+[01:11:41] First of all, it's an analytical
+[01:11:43] database and it's scale out. So it's
+[01:11:45] postquest compliant but we usually run
+[01:11:47] on terabytes of data, pabytes of data
+[01:11:50] and in many cases customers build
+[01:11:53] basically missionritical real-time
+[01:11:55] applications on top of firebolt. So what
+[01:11:58] that means is that individual queries
+[01:12:00] need to run really really quickly. We're
+[01:12:03] talking about tens of milliseconds,
+[01:12:04] maybe hundreds of milliseconds if they
+[01:12:06] touch more data and there's very high
+[01:12:08] concurrency. So we have cases where you
+[01:12:10] have maybe thousands of QPS, hundreds of
+[01:12:13] QPS. Um and usually as I said these
+[01:12:16] workloads are mission critical. Now the
+[01:12:19] other thing which is quite interesting
+[01:12:21] about these workloads is you usually
+[01:12:23] have pretty predictable and repetitive
+[01:12:25] query patterns. Think about someone for
+[01:12:27] example I don't know building out like a
+[01:12:30] customerf facing observability solution
+[01:12:32] that gives metrics into their
+[01:12:34] application. You will see the same types
+[01:12:37] of dashboards over and over again. Maybe
+[01:12:39] our customer has 10,000 customers or
+[01:12:41] 100,000 customers looking at that
+[01:12:43] application, but fundamentally it's the
+[01:12:45] same dashboards being run over and over
+[01:12:47] again.
+[01:12:50] If we run these workloads and we have
+[01:12:52] predictable and repetitive query
+[01:12:54] patterns, we must have predictable query
+[01:12:56] performance. Kind of this is the most
+[01:12:58] important thing for us and this is
+[01:13:00] ultimately what our customers pay us for
+[01:13:02] and what they expect from our service
+[01:13:04] given that for them firebolt is a
+[01:13:05] mission critical piece of
+[01:13:06] infrastructure. And so now the question
+[01:13:09] becomes when you're building a database
+[01:13:12] in industry or also in academia, what
+[01:13:14] can actually make SQL performance
+[01:13:16] unpredictable? And there's a few things
+[01:13:18] you might think about right away. So
+[01:13:20] maybe the ingestion pattern changed,
+[01:13:22] right? Like they are ingesting three
+[01:13:24] times as much data now, four times as
+[01:13:26] much data and queries are just becoming
+[01:13:28] heavier. The reality is this doesn't
+[01:13:31] usually happen, especially when kind of
+[01:13:34] customers of ours are building out their
+[01:13:35] mission critical production workloads,
+[01:13:38] they take great care to make sure that
+[01:13:40] things are very predictable, right? Is
+[01:13:41] we're usually working with platform
+[01:13:43] engineering teams, infrastructure
+[01:13:44] engineering teams. they are experts on
+[01:13:46] running data infrastructure and they are
+[01:13:49] making sure that their ingestion
+[01:13:50] patterns are very predictable. Now the
+[01:13:53] other thing you might say is maybe query
+[01:13:55] patterns are changing here as well. This
+[01:13:58] doesn't usually happen. So with agents
+[01:14:01] running SQL queries it's actually a bit
+[01:14:03] different and there's a lot of
+[01:14:04] interesting things happening there right
+[01:14:05] now. At least for this talk kind of
+[01:14:07] let's skip that part and focus on more
+[01:14:09] maybe traditional workloads which in our
+[01:14:11] case often have predictable query
+[01:14:13] patterns.
+[01:14:15] you're not you're just never in a
+[01:14:17] situation where you see a query pattern
+[01:14:18] that you haven't seen before. It doesn't
+[01:14:20] happen.
+[01:14:22] The other thing that might happen is a
+[01:14:23] load spike, right? Okay, there's now
+[01:14:25] 10,000 users signing into the
+[01:14:26] application. Everyone wants to look at
+[01:14:29] their customerf facing data app. Now,
+[01:14:32] this does happen. It doesn't happen that
+[01:14:34] often, but when it happens, there are
+[01:14:36] safeguards you should just build into
+[01:14:38] your systems. It's not rocket science.
+[01:14:40] First of all, you should have a robust
+[01:14:41] queueing system. Um, and you should also
+[01:14:43] have autoscaling, right? You should be
+[01:14:45] able to basically handle the low spike
+[01:14:47] by provisioning more compute. Um, and
+[01:14:49] just getting through that backlog that
+[01:14:52] may be built up. Now, the last thing is
+[01:14:56] maybe you overengineered your system and
+[01:14:57] you thought you're really making it
+[01:14:59] better. And in our experience, that's
+[01:15:01] actually usually what's happening. Um,
+[01:15:04] and so you're kind of taking a component
+[01:15:07] kind of you think you're building this
+[01:15:08] amazing algorithm kind of making it
+[01:15:10] super smart, but ultimately you're maybe
+[01:15:12] making it very smart and is helping in
+[01:15:14] 90% of cases, but you're also making
+[01:15:16] things very unpredictable.
+[01:15:18] And this is especially important for
+[01:15:21] query planners because fundamentally
+[01:15:24] your query planner can do the most good
+[01:15:26] in your database systems. Having a good
+[01:15:29] planner maybe gives you a 100x a
+[01:15:31] thousandx query performance improvements
+[01:15:33] in many cases. That's very hard to do
+[01:15:35] with just having a faster database
+[01:15:37] runtime for example. However, if you
+[01:15:40] have all of that power and you can do
+[01:15:41] the most good, usually you can also do
+[01:15:43] the most hard. And now for the remainder
+[01:15:46] of the talk, let's actually touch
+[01:15:48] through what that means for the way
+[01:15:49] we're building our query planner at
+[01:15:51] Firebolt.
+[01:15:53] Now ah by the way one thing I wanted to
+[01:15:55] mention is just now at VLDB 2025 uh
+[01:15:59] there was the test of time award given
+[01:16:01] to the paper how good are query
+[01:16:03] optimizers really and you can already
+[01:16:05] see in the abstract basically that
+[01:16:07] they're saying cardality estimates can
+[01:16:09] be wildly off uh and that makes query
+[01:16:11] plans a lot worse for many systems. This
+[01:16:14] is a great paper to read again just got
+[01:16:16] this great award at VLBB uh so take a
+[01:16:18] look at it. Um, all right, moving back
+[01:16:21] to Firebolts world. So, our planner is
+[01:16:25] Postgress compliant. Um, however, we
+[01:16:27] actually don't have Postgress code
+[01:16:29] inside of it. So, that's an important
+[01:16:31] distinction. Even though dialect wise
+[01:16:33] we're compliant with Postgress, it's
+[01:16:34] basically built from scratch all in C++.
+[01:16:37] We modeled a lot of things after Cali.
+[01:16:40] Um, and if you look at the core
+[01:16:42] optimization stack, there's at this
+[01:16:44] point, I think more than 170 rules that
+[01:16:47] do rule-based optimization, right?
+[01:16:50] Filter push down, kind of expression
+[01:16:52] optimization, uh, removing redundant
+[01:16:55] aggregates, removing redundant joins,
+[01:16:57] all of the things you learned about in
+[01:16:58] the last couple of classes. Um, and one
+[01:17:01] set of rules we're especially proud of
+[01:17:03] is I think we did a great job building
+[01:17:05] rules that eliminate redundancy in
+[01:17:07] machine generated queries. And we for
+[01:17:09] example just published a paper at BTW
+[01:17:12] this year. Uh if you if you want to read
+[01:17:14] more about that and learn about some
+[01:17:16] maybe interesting industry rules in
+[01:17:18] industry systems.
+[01:17:20] The other thing we're doing is costbased
+[01:17:21] join reordering. So this is bottom up
+[01:17:24] using a join graph using dynamic
+[01:17:26] programming. Uh I think you learned
+[01:17:28] about that at the end of last week. And
+[01:17:31] all of this works on iceberg tables as
+[01:17:33] well which is just an important thing to
+[01:17:35] point out. Iceberg is becoming
+[01:17:36] mainstream. Kind of every good modern
+[01:17:39] analytical database system should have
+[01:17:40] great iceberg support and we've done a
+[01:17:42] lot of work wiring iceberg throughout
+[01:17:44] our query planner.
+[01:17:47] Now what does this mean in terms of kind
+[01:17:50] of being weary of cardality estimates?
+[01:17:52] And usually when we onboard an engineer
+[01:17:54] into the planner team kind of this is
+[01:17:56] the slide I would show them and this is
+[01:17:57] the thing I would talk them through.
+[01:17:59] First of all for us predictable query
+[01:18:01] plans are more important than finding
+[01:18:03] the perfect plan. I would rather have a
+[01:18:06] plan that is not perfect but very
+[01:18:07] predictable and where a user can really
+[01:18:10] rely on very consistent performance for
+[01:18:12] their production workload. Now if we
+[01:18:15] don't always find the perfect plan, we
+[01:18:17] want to give users control. And this is
+[01:18:19] something we've been actually working a
+[01:18:21] lot on over the course of this year. At
+[01:18:23] this point, we allow users to fix a
+[01:18:25] specific join order. We allow them to
+[01:18:27] fix their distributed aggregation
+[01:18:29] strategy, whether there should be a
+[01:18:30] pre-agregation or not. and and we have a
+[01:18:33] few other levers as well that we give to
+[01:18:35] our customers if they really want to
+[01:18:37] force a specific query plan.
+[01:18:41] The other rule is avoid using cardality
+[01:18:43] estimates at all cost. Our rule is
+[01:18:45] basically we only use cardality
+[01:18:47] estimates for join ordering because the
+[01:18:50] payoff can be that big. Right? This is
+[01:18:51] what I meant earlier with if you get
+[01:18:53] cost your join ordering right, it can
+[01:18:56] easily be 100x or a,000x. But we think
+[01:18:58] in most other places using cardality
+[01:19:01] estimates is not worth it. Um and does
+[01:19:03] more harm than good. And one last thing
+[01:19:06] and this is actually important to think
+[01:19:08] through. You'll probably have to solve
+[01:19:10] the same problem on iceberg one day. And
+[01:19:12] the reality is you have a lot of control
+[01:19:14] on your managed formats over what
+[01:19:16] statistics you collect. With iceberg
+[01:19:18] things are becoming a lot harder. In
+[01:19:20] many cases you really only have the
+[01:19:22] table row count.
+[01:19:24] If we look under the hood of Firebolt, I
+[01:19:26] wanted to share one really simple
+[01:19:29] example with you that actually shows how
+[01:19:31] hard all of this gets. So here we're
+[01:19:33] doing a join between two iceberg tables.
+[01:19:36] One iceberg table is 70,000 rows. That's
+[01:19:38] the one on the right side, the build
+[01:19:40] side of the join. And one iceberg table
+[01:19:43] has 5 billion rows. That's the events
+[01:19:45] table to the left. Um and that's on the
+[01:19:48] probe side. Now the iceberg scan to the
+[01:19:51] left on the large table is filtered and
+[01:19:53] we have this filter called tracker
+[01:19:55] equals RB080.
+[01:19:58] Now the question is what cardality
+[01:20:00] estimate do we actually put above this
+[01:20:02] filter if we only have the base table
+[01:20:05] row count from that iceberg table? And
+[01:20:08] to give a concrete example basically we
+[01:20:11] want to estimate the selectivity of this
+[01:20:12] tracker filter. And the intuition here
+[01:20:14] often is if you have a lot of rows, you
+[01:20:17] probably have more distinct values. And
+[01:20:19] there's this well-known SQL Server
+[01:20:21] formula, which is basically a magic
+[01:20:23] number or kind of a formula someone came
+[01:20:25] up with um that gives you the
+[01:20:27] selectivity. And if you apply this
+[01:20:29] formula, you get 70,000 rows as your
+[01:20:32] cardality estimate. Now this is terrible
+[01:20:35] because this is exactly the same
+[01:20:36] estimate as you have on the other table
+[01:20:39] which basically means that if the tables
+[01:20:41] change a bit and you have some inserts
+[01:20:43] happening
+[01:20:45] uh your plans will start flapping like
+[01:20:47] crazy. You insert a few rows to the
+[01:20:49] right, put that on the build side,
+[01:20:50] insert a few rows to the left, put that
+[01:20:52] on the build side. And one thing we've
+[01:20:55] been working on over the past couple of
+[01:20:56] months and that's kind of making its way
+[01:20:58] into production right now is actually
+[01:21:00] we're carrying estimation bounds through
+[01:21:02] our plans. And this is also the last
+[01:21:04] slide I want to end with. And I think
+[01:21:06] this is pretty cool and just something
+[01:21:07] you maybe haven't seen so far. We
+[01:21:10] propagate through our entire query plan
+[01:21:13] basically guaranteed lower and upper
+[01:21:15] bounds. What this means is for your base
+[01:21:17] table, we know the exact number from
+[01:21:19] iceberg metadata. We know left side is 5
+[01:21:21] billion to 5 billion rows. Right side is
+[01:21:23] 70k to 70k rows. And then on the filter
+[01:21:26] on top on the left side we do our
+[01:21:29] basically expected value estimation.
+[01:21:31] let's say based on the SQL server
+[01:21:32] formula, but we also carry that it could
+[01:21:35] actually be between zero and 5 billion
+[01:21:38] rows. And then during join ordering we
+[01:21:41] do traditional costbased bottom-up join
+[01:21:44] reordering but we also do a risk
+[01:21:46] minimization pass and we basically take
+[01:21:49] a look at the join order we chose
+[01:21:50] costbased and if we can guarantee with
+[01:21:53] the bounds that certain tables are going
+[01:21:56] to be small or certain subplans are
+[01:21:58] going to be small we put those on the
+[01:22:00] build side. And so what this means in
+[01:22:02] our planner, even though we might not be
+[01:22:04] able to estimate the filter, we will
+[01:22:07] always put the small side on the build
+[01:22:09] side, uh the smaller table on the build
+[01:22:11] side just to minimize risk for our
+[01:22:13] customers. Um and so yeah, can if that's
+[01:22:16] one concrete example, we're doing a lot
+[01:22:17] more under the hood. Uh feel free to
+[01:22:19] shoot me an email or whatever. I'm
+[01:22:21] excited to talk about these things. Um
+[01:22:24] thanks for your attention.
+[01:22:27] [music]
+[01:22:29] Acrobats over
+[01:22:33] [music] the clicks
+[01:22:35] over trash
+[01:22:38] [music]
+[01:22:40] over
+[01:22:42] [music]
+[01:22:48] the [music]
+[01:22:49] fortune maintain flow with
+[01:22:53] the brain.
+[01:22:55] >> [music]
+[01:23:02] [music]

@@ -1,0 +1,2178 @@
+[00:00:00] [Music]
+[00:00:06] I'm still
+[00:00:08] ass.
+[00:00:11] [Music]
+[00:00:25] >> Let's get started. Uh, lot to cover.
+[00:00:27] Round of applause for DJ Dash. Again,
+[00:00:31] thank you for keeping everything fresh.
+[00:00:32] All right, so I said a lot to cover
+[00:00:34] today. Uh, plus we have a guest speaker,
+[00:00:36] so I'm going to jump right into it and
+[00:00:38] try to get much as we can uh cover as
+[00:00:40] much as we can today.
+[00:00:42] All right, so
+[00:00:46] last class was the last lecture we did
+[00:00:47] or the the previous lecture we we sort
+[00:00:50] of wrapped up our discussion on what the
+[00:00:52] storage layer of the database system
+[00:00:53] looks like. Right down on disk. We
+[00:00:56] already talked about buffer pools and
+[00:00:57] how to bring bring those into memory. So
+[00:00:59] now we're going to start going up the up
+[00:01:01] the stack. You remember this diagram
+[00:01:03] from the beginning of the semester where
+[00:01:04] now we're going to start talking about
+[00:01:05] how we're going to build the support
+[00:01:08] infrastructure in a database system to
+[00:01:10] start executing queries. So we're going
+[00:01:12] to be sort of this middle layer here
+[00:01:14] what I call sort of call access methods.
+[00:01:16] It's basically what the API the API
+[00:01:18] we're going to expose to the operator
+[00:01:21] execution the execution end up above to
+[00:01:23] get down get access to the data that we
+[00:01:25] want. So today and uh for the next next
+[00:01:28] week as well, we're actually talk about
+[00:01:30] data structures. We're going to build on
+[00:01:32] top of our buff pool manager pages now
+[00:01:35] that we can use to store data for a
+[00:01:37] variety of reasons. So today's class
+[00:01:39] will be about hash tables uh so
+[00:01:41] unordered data structures and then all
+[00:01:43] next week will be about trees or order
+[00:01:45] data structures. So again we're going to
+[00:01:47] talk about the background about why we
+[00:01:48] want to do this, why we need our own
+[00:01:49] data structures, why you don't want to
+[00:01:50] use STL vector for the stuff that we
+[00:01:53] want to do. Um and then we'll quickly
+[00:01:55] talk about what hash functions look
+[00:01:56] like. Uh the then we'll talk about two
+[00:02:00] approaches to do hashts. The first will
+[00:02:02] be static hashing schemes where you
+[00:02:03] assume the size of the hash table is
+[00:02:05] fixed. Uh and then there'll be dynamic
+[00:02:07] hashing schemes will be uh a data
+[00:02:10] structure that can grow and shrink
+[00:02:12] depending on the number of keys that
+[00:02:13] you're going to put in it. And in a
+[00:02:15] database system, you're typically going
+[00:02:16] to need both of these, right? Because as
+[00:02:18] we'll see in a second, we're going to
+[00:02:19] use these data structures for uh a bunch
+[00:02:22] of things. and then we'll finish off
+[00:02:24] with a uh guest lecture from the
+[00:02:26] Yugabyte co-ounder.
+[00:02:28] Okay,
+[00:02:31] sorry. Um
+[00:02:33] these data structures we're going to
+[00:02:34] build here are going to be used again
+[00:02:35] all throughout the database system for a
+[00:02:37] variety of things. Obviously, we can use
+[00:02:39] them for table indexes. That's probably
+[00:02:40] what you're most familiar with at this
+[00:02:42] point. Like how do I take a primary key
+[00:02:44] or a secondary key, do a lookup to then
+[00:02:47] find the record ID that's going to be on
+[00:02:49] some uh some, you know, table page. But
+[00:02:52] we're also going to use it for internal
+[00:02:54] things like the the metadata like the
+[00:02:56] catalog of of the database. We talked
+[00:02:58] about the page directory is this hash
+[00:03:00] table structure we use to look up to
+[00:03:01] find the location of of pages within
+[00:03:04] files. We can also use this for the core
+[00:03:06] data storage itself. We saw this before
+[00:03:08] when we talked about index organized
+[00:03:10] storage. We said that instead of having
+[00:03:11] these unordered heap pages for our
+[00:03:13] tupils, we're actually going to store
+[00:03:14] the tupils in the leaf nodes of of a
+[00:03:17] tree data structure. Typically a boss
+[00:03:19] tree. And then another one that we'll
+[00:03:22] that we're going to uh see as well, but
+[00:03:24] we'll see mostly when we talk about
+[00:03:25] query execution, we actually we can use
+[00:03:27] these data structures for temporary data
+[00:03:29] storage. So when we do a hash join,
+[00:03:32] we're going to join two tables. If we're
+[00:03:34] doing a hash join, we're going to build
+[00:03:35] a hash table, one of the hash tables
+[00:03:36] we're talking about today, populate it,
+[00:03:39] do the join, and then immediately throw
+[00:03:40] it away. But because we may end up
+[00:03:44] building a hash table that's larger than
+[00:03:45] the amount of memory that's available to
+[00:03:46] us because we're trying to join uh some
+[00:03:49] large tables then we're going to back
+[00:03:51] that you know that hash table by the
+[00:03:53] buffer manager. So it can spill to disc
+[00:03:54] if we run out of space.
+[00:03:57] Right? So again the data structure we'll
+[00:04:00] come out the next two weeks are going to
+[00:04:01] be all all throughout our system. And
+[00:04:03] we're not going to want to use in many
+[00:04:05] cases the things you can get off the
+[00:04:07] shelf like a third party library or the
+[00:04:08] STDL or pick your favorite Rust Crate
+[00:04:11] because those are going to be typically
+[00:04:13] not backed by the buffer pool manager,
+[00:04:15] right? They're going to be backed by
+[00:04:16] Malo.
+[00:04:18] Uh we can't override Malo, but it's
+[00:04:19] still going to be OS memory that's
+[00:04:21] ephemeral. System crashes, you lose
+[00:04:23] whatever is in there. And if you're not
+[00:04:24] in memory, it's going to start thrashing
+[00:04:26] on its own. Uh the OS is going to do
+[00:04:27] that for you. And that's not and we
+[00:04:29] don't want that to happen. we'll take we
+[00:04:30] want we want to control everything.
+[00:04:33] So there'll be two main decisions that
+[00:04:35] we have and in how we're going going to
+[00:04:37] design these data structures because
+[00:04:39] it's going to be slightly different than
+[00:04:40] maybe you've seen in your previous
+[00:04:41] algorithms class because we're going to
+[00:04:42] make trade-offs again about how we're
+[00:04:44] going to choose what data structure the
+[00:04:46] internals of the data structure based on
+[00:04:48] the properties we said we cared about
+[00:04:50] earlier in the semester where we want to
+[00:04:52] maximize the amount of sequential IO
+[00:04:53] rather than random IO. So that means
+[00:04:56] there'll be some things may seem more
+[00:04:57] inefficient
+[00:04:59] uh to do versus versus if something was
+[00:05:01] entirely in memory but we're going to do
+[00:05:04] that because we can convert uh you know
+[00:05:07] random writes and random reads to
+[00:05:08] sequential rights and sequential reads
+[00:05:10] and that's going to be faster for us. So
+[00:05:12] today's class is we're going to mostly
+[00:05:13] focus on the data organization side like
+[00:05:15] basically how we're going to represent
+[00:05:17] the data structure internally like the
+[00:05:19] actual physical thing we're going to
+[00:05:21] store in memory on disk pages.
+[00:05:23] There's another challenging thing we
+[00:05:24] have to worry about, but we'll cover
+[00:05:25] this in in two weeks of how do we make
+[00:05:28] sure that our data structures are thread
+[00:05:30] safe, right? How do we how do we allow
+[00:05:32] for concurrent access multiple threads
+[00:05:34] reading and writing to our data
+[00:05:35] structure at the same time and doing in
+[00:05:38] such a way that it's safe to to do these
+[00:05:40] operations and not worry about you know
+[00:05:42] you changing some the some pointer
+[00:05:44] address and then all a sudden some other
+[00:05:45] thread reads that and goes off to the
+[00:05:46] middle of nowhere and you seg. So we for
+[00:05:50] today's uh today's discussion and then
+[00:05:52] ne Monday's next class we're we're going
+[00:05:54] to assume that our data structures are
+[00:05:56] single threaded and there's only one
+[00:05:58] thread going to access the time. So
+[00:05:59] understand the basics and then we'll see
+[00:06:00] how to add latches and protect things
+[00:06:03] later on. But there'll be other weird
+[00:06:05] things that come up too why we don't
+[00:06:06] want to talk about concurrency uh stuff
+[00:06:08] at this point because there's a higher
+[00:06:10] level notion of correctness that we're
+[00:06:12] not going to worry about just yet. But
+[00:06:13] like say if I my one thread deletes
+[00:06:15] something I I sorry I insert a key
+[00:06:18] somebody else some other thread deletes
+[00:06:19] that key now I go back and try to read
+[00:06:22] that same key and I don't see it. Is
+[00:06:23] that correct?
+[00:06:26] At the lowest level at the physical
+[00:06:27] level yes at a logical level maybe not
+[00:06:30] that if that doesn't make sense don't
+[00:06:32] worry we'll cover that later. That's not
+[00:06:33] this class.
+[00:06:36] All right so the h the I said the the
+[00:06:38] the data structure we're going to focus
+[00:06:39] on today is hash tables. And again,
+[00:06:42] everyone should have taken basic CS
+[00:06:44] classes that that I've described this
+[00:06:45] before. So nothing I'm saying here
+[00:06:46] should be uh should be brand wildly new
+[00:06:50] to anyone. But it's basically an
+[00:06:51] unordered associate array that allows us
+[00:06:54] to map arbitrary keys to arbitrary
+[00:06:56] values. And at its core, the way this is
+[00:06:59] going to work is there be some kind of
+[00:07:00] hash function, which I'll talk about in
+[00:07:02] a second, that we're going to use to
+[00:07:04] take our key, which could be any of any
+[00:07:06] arbitrary length, run through a hash
+[00:07:08] function. It's then going to compute
+[00:07:10] some some integer representation of that
+[00:07:12] data and then we're going to use that to
+[00:07:14] figure out where where would we want to
+[00:07:16] jump to in our hash table to find the
+[00:07:17] data that we're looking for. Right?
+[00:07:22] So the space complexity of a hash table
+[00:07:24] is going to be n where n is the defined
+[00:07:26] as the the the number of keys that I
+[00:07:29] expect to store in my data structure.
+[00:07:33] Now in many cases I may actually not
+[00:07:34] store exactly n, right? I actually want
+[00:07:36] to be less than that. Sometimes you you
+[00:07:38] say you just double the size you expect
+[00:07:40] to store and that's what you want to
+[00:07:41] allocate it as. So N could be like the
+[00:07:42] 2N which of reality
+[00:07:45] for the time complexity on average it's
+[00:07:48] going to be 01
+[00:07:49] because we're going to assume that we
+[00:07:50] have a way to take our our key that we
+[00:07:52] want to find hash it and then we we jump
+[00:07:55] some some offset in our data structure
+[00:07:57] and lo and behold there's the data that
+[00:07:58] we're looking for. So average case is
+[00:08:00] 01. Worst case is O. Meaning I had to
+[00:08:04] scan all the keys individually one by
+[00:08:06] one to find the thing that that I'm
+[00:08:08] looking for. Right? So now if you've
+[00:08:11] taken an algorithms class, all the
+[00:08:13] theoreticians see that 01 and they start
+[00:08:15] salivating like oh man that's great. Oh,
+[00:08:17] I don't care about anything else. And I
+[00:08:19] think we sort of mentioned this early in
+[00:08:20] the semester. In the database world, we
+[00:08:22] do care about these constants. And even
+[00:08:25] though it is 01, there's going to be a
+[00:08:27] big difference in performance based on
+[00:08:29] how you actually implement these things.
+[00:08:32] Right? So if I do if it takes me my hash
+[00:08:34] function is something really stupid and
+[00:08:35] it takes me 100 milliseconds to compute
+[00:08:38] the hash to find out where to jump to
+[00:08:39] find the data that I want. Uh yeah, it's
+[00:08:42] 01, but like I have a faster hash
+[00:08:44] function that do this in one
+[00:08:45] millisecond, right? And that's two
+[00:08:47] orders of magnitude difference for one
+[00:08:49] look lookup. Maybe not a big deal. But
+[00:08:50] again, think always in larger scales. If
+[00:08:52] I'm doing a billion lookups, then that,
+[00:08:55] you know, that extra 99 milliseconds is
+[00:08:57] going to add up. So in the database
+[00:09:00] world, we care about constants because
+[00:09:01] at the end of the day, that's going to
+[00:09:02] equal money because if I can have a more
+[00:09:05] efficient data structure where even
+[00:09:07] though it's still 01 theoretical, but
+[00:09:09] the constant time it is to do these
+[00:09:11] operations is smaller and smaller, then
+[00:09:14] I can store more data. I I can uh run my
+[00:09:17] workload on a smaller machine. And at
+[00:09:19] large scale again this you save real
+[00:09:22] money.
+[00:09:24] All right. So let's look at a sort of
+[00:09:25] straw man proposal. Most simplest hash
+[00:09:27] table you can imagine of what I'll call
+[00:09:29] a static hash table. All right. Think
+[00:09:31] it's just again it's a giant array of
+[00:09:33] memory. Uh and instead of calling them
+[00:09:36] frames like we did in the buffer pool,
+[00:09:37] we'll call them slots and they'll be
+[00:09:39] locations where in our in our array
+[00:09:41] where where we can store data.
+[00:09:43] And so to to make this work, we're going
+[00:09:46] to we're going to assume that we know
+[00:09:47] the number of keys ahead of time. So say
+[00:09:50] big n. And to now find any key that we
+[00:09:53] want, assuming we're going to be storing
+[00:09:55] integers, right? We're just going to
+[00:09:57] take whatever that key is, mod it by the
+[00:09:59] the n the number of uh the number of
+[00:10:02] slots that we have. Actually, that could
+[00:10:04] be yeah, it's little n at the top, big n
+[00:10:06] at the bottom. They're the same. So just
+[00:10:08] just ignore the difference there. Right.
+[00:10:11] So I can take any key that I want, hash
+[00:10:13] it, and then it'll tell me where that
+[00:10:15] that location is uh in in uh my slot
+[00:10:18] array and then now I can maintain a uh
+[00:10:22] in the slot array itself. I'll have
+[00:10:24] basically just pointers to some other
+[00:10:26] location uh in memory or other pages
+[00:10:29] with the actual data that I want,
+[00:10:32] right? Right? And I have to store the
+[00:10:34] original key and the value because if I
+[00:10:36] start jumping into the array I and I
+[00:10:39] land at some location uh in my my sort
+[00:10:41] of data payload area, I got to know
+[00:10:43] whether I'm actually having looking at
+[00:10:45] the same same key or not,
+[00:10:48] right?
+[00:10:50] So this is unrealistic for a couple
+[00:10:51] reasons. One is I assume that I know
+[00:10:55] exactly the number of elements or the
+[00:10:57] number of keys ahead of time. And in
+[00:10:59] real world systems, that's almost never
+[00:11:01] the case.
+[00:11:02] Right. The way to get around that, you
+[00:11:05] could do one pass of the data, c count
+[00:11:07] the number of records, then do another
+[00:11:08] pass and then populate your hash table.
+[00:11:11] Some systems do that. Uh but in general,
+[00:11:15] we can't assume that's the case. And we
+[00:11:17] can also maybe assume in some cases that
+[00:11:19] the the number of keys isn't going to
+[00:11:21] shrink or grow over time.
+[00:11:26] The other big assumption here is that
+[00:11:27] we're assuming that each key is unique
+[00:11:30] and therefore when I do my hash uh and I
+[00:11:33] land in my my slot array and it tells me
+[00:11:35] where to go find the data that I want uh
+[00:11:37] I know that there isn't going to be
+[00:11:39] something else in my slot array for for
+[00:11:41] another record that need to find right
+[00:11:45] and to make that work I got to have
+[00:11:48] actually basically allocate all of the
+[00:11:50] the possible key space that I could ever
+[00:11:52] have so n even though I may not actually
+[00:11:55] have it all or may estate may be wrong
+[00:11:58] but that's going to avoid having any any
+[00:12:00] collisions.
+[00:12:02] And the last one is a uh some more
+[00:12:06] slightly theoretical discussion but the
+[00:12:09] when we run these hash functions often
+[00:12:12] times we're we're not going to end up
+[00:12:13] with uh like two distinct keys could end
+[00:12:16] up hashing to the same same value.
+[00:12:20] And so
+[00:12:22] there is a sort of class of algorithms
+[00:12:23] or class of methods called perfect
+[00:12:25] hashing where you have a hash function
+[00:12:27] that guarantees that there there will
+[00:12:29] never be any conflicts and think of like
+[00:12:31] if I have a number from one to a
+[00:12:33] thousand a hash function could just be
+[00:12:35] returned that number because you know
+[00:12:38] because I won't have any conflicts right
+[00:12:40] but if I'm trying to map a a larger key
+[00:12:43] space into a smaller one
+[00:12:46] then I can't assume that be a perfect
+[00:12:47] hash
+[00:12:49] Right. So the way you do a perfect hash
+[00:12:50] is you basically have to pass over the
+[00:12:52] data once, make sure that there's no
+[00:12:54] conflicts uh and then sort of maintain
+[00:12:56] another hash table uh that maps the
+[00:13:00] original key to its location in the
+[00:13:02] slot. So like I'm building a hash table
+[00:13:03] for my hash table and that's not
+[00:13:04] entirely practical. You can cheat in
+[00:13:07] some cases. You can say like if I know
+[00:13:08] the top 10 keys then I'll have like if
+[00:13:10] then else's that that sort of bypass the
+[00:13:12] hash function. But as far as I know, no
+[00:13:15] system does that.
+[00:13:18] Okay.
+[00:13:20] So at its core, what is when what is a
+[00:13:22] hash table? Most people think it's like
+[00:13:25] it's the actual data structure itself,
+[00:13:27] but it's actually a combination of
+[00:13:28] things.
+[00:13:30] The first is going to be what the hash
+[00:13:31] function we're going to use again to
+[00:13:33] take the arbitrary key space and map it
+[00:13:35] to a smaller domain. And we'll see in a
+[00:13:38] second. And there'll be this trade-off
+[00:13:39] between how fast we want our hash
+[00:13:40] function to be versus how how how many
+[00:13:43] collisions I could potentially have. And
+[00:13:45] then the second piece will be the
+[00:13:46] hashing scheme. So within my data
+[00:13:49] structure now, if I have keys hashed to
+[00:13:52] the same location in my hash table, what
+[00:13:55] do I do? Like what's the protocol to
+[00:13:57] decide how to resolve this that that
+[00:13:59] conflict, right?
+[00:14:02] And we'll see we'll see sort of two
+[00:14:03] examples how to do this, but there's
+[00:14:05] there's a bunch of ones people have
+[00:14:06] developed over the years.
+[00:14:08] So once you add sort of the hash
+[00:14:09] function, you have a hashing scheme,
+[00:14:10] then you have the storage space you want
+[00:14:11] to put the things, then you have your
+[00:14:13] your hash table. Okay.
+[00:14:17] All right. So let's quickly talk about
+[00:14:18] hash functions. Um I'll just give you
+[00:14:21] the basics of what you need to know as
+[00:14:23] as when you build a data system, but the
+[00:14:25] truth be told, we don't actually don't
+[00:14:26] care what the algorithm is going to be.
+[00:14:29] And I don't think it's worth our time to
+[00:14:30] even discuss, you know, how to build a
+[00:14:31] good hash function. There's other
+[00:14:33] classes that do that. So for us, we're
+[00:14:35] actually just use something that's off
+[00:14:36] the shelf, right? And most systems are
+[00:14:40] most of the newer systems are going to
+[00:14:41] do this. Very few newer systems build
+[00:14:43] their own hash functions, right? So
+[00:14:45] again, a hash function is pretty basic.
+[00:14:46] It's the idea is it's a a one-way hash.
+[00:14:50] So given some key of arbitrary length,
+[00:14:52] we want to do some some computation on
+[00:14:54] it to then generate a random 32 or
+[00:14:57] 64-bit integer, right?
+[00:15:00] And again, the thing that we care about
+[00:15:02] is we want to something to be fast as
+[00:15:04] possible and have a low collision rate.
+[00:15:08] What's the fastest hash function you
+[00:15:10] could build?
+[00:15:11] >> Identity faster
+[00:15:15] >> one or zero and return a constant
+[00:15:17] because that's going to sit in a
+[00:15:18] register, right? So if I pass you a
+[00:15:20] string, I got to send you back the
+[00:15:21] string. Sending back zero one would be
+[00:15:23] way faster than that. But the collision
+[00:15:25] rate is terrible, right? No matter what
+[00:15:26] key I give you, no matter what email
+[00:15:27] address I give you, the value is going
+[00:15:28] to return zero or one. So that's not a
+[00:15:31] good one. The opposite end of the
+[00:15:33] spectrum would be that perfect hash
+[00:15:34] function where I have a bunch of
+[00:15:36] elaborate infrastructure to guarantee
+[00:15:38] that no matter what key you give me, I'm
+[00:15:39] going to give you a unique hash.
+[00:15:42] Right?
+[00:15:44] So again, the idea is that we're trying
+[00:15:46] to convert these arbitrary length
+[00:15:47] strings or whatever these keys we're
+[00:15:49] putting in. We want to always then
+[00:15:50] generate a fixed length value.
+[00:15:53] So we don't care about any cryptographic
+[00:15:55] properties of this hash function and we
+[00:15:57] don't care about the hash being
+[00:15:58] reversible. So I don't care about taking
+[00:16:00] whatever you hash me the hash you give
+[00:16:02] me and giving back the original value.
+[00:16:05] Right? This is all for the internals of
+[00:16:06] the database system. We're not leaking
+[00:16:08] any information on the outside. We're
+[00:16:10] not worried about people uh you know
+[00:16:13] trying to do like an attack on us to
+[00:16:15] like uh o overload something or give me
+[00:16:17] keys that always hash at the same
+[00:16:19] location so I I slow things down. Right?
+[00:16:21] That's not our problem. We're not
+[00:16:22] worried about those things. This is all
+[00:16:23] in the inside. We're not we're not going
+[00:16:25] to expose these hash values to the
+[00:16:26] outside world. Yes.
+[00:16:35] >> Yes.
+[00:16:35] >> So if you have the page and the stop
+[00:16:36] number you already know
+[00:16:40] >> statement is earlier before we talked
+[00:16:42] about if we had the record ID uh and
+[00:16:46] that from that we can get like the page
+[00:16:47] number and the offset.
+[00:16:49] >> Why do we need the page numbers or can
+[00:16:52] we get the
+[00:16:53] is that or you can't get the page set
+[00:16:57] >> the record ID in in some systems are
+[00:16:59] typically going to be the the page
+[00:17:01] number and the offset.
+[00:17:02] >> So then
+[00:17:05] >> you don't need a hash table.
+[00:17:06] >> I'm asking you already
+[00:17:10] >> you don't. So hold on. So so going back
+[00:17:12] here
+[00:17:13] um we're going to use this hash table
+[00:17:15] for a bunch of things this right. So
+[00:17:18] table indexes just using that that's the
+[00:17:20] simplest one to think about. If think of
+[00:17:24] something like a like a higher level key
+[00:17:26] like a secondary key or like a primary
+[00:17:28] key and the primary key is your email
+[00:17:29] address. So I do a query select star
+[00:17:32] from table where email address equals
+[00:17:34] yours. How do I then get the record ID
+[00:17:36] that the table edx will give me that?
+[00:17:38] >> Yes. But I also want to emphasize that
+[00:17:40] the things we're talking about today
+[00:17:42] this data structure isn't just for that.
+[00:17:44] We're going to use it to do joins. We're
+[00:17:45] going to use it to maintain other
+[00:17:46] internal metadata. You're a buffer pool
+[00:17:48] manager in project one. You guys are
+[00:17:50] using what? STL unordered map or
+[00:17:52] something, right? Well, again, if you
+[00:17:54] crash, what happens? That map is gone.
+[00:17:56] But say you wanted to make sure that
+[00:17:58] this the um well, you could replace that
+[00:18:03] SDL map with one of these hash tables
+[00:18:06] that we're talking about here today and
+[00:18:07] not use the SDL one because you think
+[00:18:08] you can do a better job than that. You
+[00:18:10] usually can.
+[00:18:13] Although the Google uh data structure
+[00:18:16] library up cell is actually pretty good.
+[00:18:17] The Facebook follow one's pretty good
+[00:18:18] too. But again, that's not going to be
+[00:18:20] backed by our full manager.
+[00:18:22] All right. So again, we don't care about
+[00:18:25] cryptography. We don't care about denial
+[00:18:26] service attacks. This is all in the
+[00:18:27] internal. We're not exposed in the
+[00:18:28] outside world. So I just want to quickly
+[00:18:31] talk about what options are available to
+[00:18:32] you. Um and it's almost 20 years now,
+[00:18:36] but there's sort of this new there was
+[00:18:38] this resurgence interest in hash
+[00:18:39] functions for database systems uh in
+[00:18:41] 2008 started by murmurash. and it was
+[00:18:43] like some random guy on on GitHub or
+[00:18:45] something just posted like here's my
+[00:18:46] really good hash function and a bunch of
+[00:18:48] data systems picked it up and started
+[00:18:49] using it and over the years there's been
+[00:18:51] improvements to it. Um the main takeaway
+[00:18:54] is going to be the uh the the
+[00:18:57] state-of-the-art one that's considered
+[00:18:58] the fastest right now is Rapid Hash. Uh
+[00:19:01] but as far as I know, no data system
+[00:19:03] uses Rapid Hash yet because it's like
+[00:19:04] too new. Most of the newer systems are
+[00:19:07] use XS hash or XS hash3, right? So in
+[00:19:10] general, this is going what what you're
+[00:19:12] going to want to use.
+[00:19:14] And that's it. That's all you know about
+[00:19:16] hash functions. String in or data bite
+[00:19:19] array in 64-bit integer out xx hash
+[00:19:22] would be fast. Let's use that.
+[00:19:25] Okay.
+[00:19:27] >> You could use rabbit hash. I'm saying
+[00:19:28] sorry
+[00:19:30] their statement is why can't we use
+[00:19:31] rabbit hash? You can. Uh I Yeah. So
+[00:19:34] maybe state of the art is both of them,
+[00:19:35] but nobody use nobody uses this one yet
+[00:19:37] as far as I know. I I haven't gpped all
+[00:19:40] of GitHub of like to see where it shows
+[00:19:42] up in any data system because we have
+[00:19:44] all the GitHub accounts. Uh we have all
+[00:19:46] the GitHub URLs for every data system
+[00:19:48] that's open source. So we could check
+[00:19:50] but I think we checked last year and
+[00:19:51] nobody was using it.
+[00:19:54] All right. So again assuming we have
+[00:19:55] some hash function for our purposes
+[00:19:57] going forward in this rest of this
+[00:19:58] lecture. We don't care how it's actually
+[00:20:00] being implemented. We just know if we
+[00:20:01] give it some bite array we'll get some
+[00:20:02] integer out. Okay.
+[00:20:06] All right. So first we're going to talk
+[00:20:07] about static hashing schemes. Again the
+[00:20:09] idea here is that you specify when you
+[00:20:12] allocate the data structure the the
+[00:20:14] number of potential locations where you
+[00:20:16] could want to store uh store records for
+[00:20:19] information uh you know the number of
+[00:20:21] slots that you want in in your
+[00:20:22] implementation. Right? We'll see dynamic
+[00:20:25] hashing in a second and again that'll be
+[00:20:26] a hash table that can grow and shrink uh
+[00:20:29] with more or less keys o over time. With
+[00:20:31] static hashing you sort of allocate
+[00:20:32] things at the very beginning and that's
+[00:20:34] it. So we're going to talk about
+[00:20:36] basically the the two most common
+[00:20:39] approaches linear pro hashing and cuckoo
+[00:20:41] hashing. Linear pro hashing is used
+[00:20:42] everywhere. Uh it's the most common one.
+[00:20:44] It's actually the most simple one and
+[00:20:46] this is going to be a good example where
+[00:20:47] simple is actually better. Uh it's
+[00:20:49] actually more performant than than all
+[00:20:51] these other fancy ones. So if you take
+[00:20:53] the advanced base class we'll cover all
+[00:20:54] the again all the various things people
+[00:20:56] developed over the years. Robin Hood
+[00:20:57] hashing, hopscot hashing, twist tables.
+[00:21:00] Um there's another category of hash
+[00:21:02] tables we're not talking about in this
+[00:21:03] class called concise hash tables or
+[00:21:04] memory efficient hash tables and this is
+[00:21:06] where again you know you're going to be
+[00:21:07] doing a say doing a hash join uh and I'm
+[00:21:11] going to build my data structure they
+[00:21:12] immediately throw it away so I want
+[00:21:14] something that is compact as small as
+[00:21:16] possible because I'm not worried about
+[00:21:18] you know building the hash table and
+[00:21:19] then an hour later someone coming
+[00:21:21] someone come along and try to insert
+[00:21:22] something into it or delete things right
+[00:21:25] so the one thing I understand is that
+[00:21:27] the the
+[00:21:30] the terminology starts to overlap and
+[00:21:31] gets kind of confusing with these
+[00:21:32] things. So, I'm gonna be talking about
+[00:21:34] linear probe hashing and there'll be
+[00:21:36] another hash table called linear hashing
+[00:21:38] that I'll cover at the end of the the of
+[00:21:41] the class. That's a dynamic hashing
+[00:21:43] scheme. Linear probe hashing is a uh
+[00:21:46] static hashing scheme. And these are
+[00:21:47] also used in a category called open
+[00:21:49] addressing or open open addressing
+[00:21:51] algorithms for hashts. And this just
+[00:21:54] basically means that the location of a
+[00:21:57] key in my hash table is open. Meaning it
+[00:22:00] could be anywhere. There's no guarantee
+[00:22:02] that if I insert the same key uh
+[00:22:05] multiple if I insert the same key in my
+[00:22:07] data structure at different times, it's
+[00:22:09] always going to be in the exact same
+[00:22:10] location. It's allowed to move. It's
+[00:22:12] allowed to be in different locations.
+[00:22:14] And so the hash function is basically
+[00:22:16] going to give us a way to jump into the
+[00:22:18] hash table at least as a starting point.
+[00:22:20] And then we may have to look around, do
+[00:22:22] some scan some data to find the the the
+[00:22:24] key that we're actually looking for. Uh
+[00:22:27] there's no guarantee it's exactly in
+[00:22:28] that location. It'll make more sense
+[00:22:30] when I show examples. Again, LED pro
+[00:22:32] hashing is the most basic one, but it's
+[00:22:34] it's used in a lot of systems.
+[00:22:37] All right. So the way think about the
+[00:22:38] hash table, it's just again it's a giant
+[00:22:40] table of fixed length slots and it can
+[00:22:43] be backed by pages in our bufferable
+[00:22:45] manager. And so what's going to work how
+[00:22:47] it's going to work is that the when we
+[00:22:49] hash into our hash table, if there's
+[00:22:52] another key in the location where our
+[00:22:54] key wants to go into,
+[00:22:56] then we know that space is being
+[00:22:57] occupied and we have to scan down
+[00:22:59] linearly like looking at one one one
+[00:23:02] slot after other till we find a free
+[00:23:04] slot. And once we find the free slot,
+[00:23:06] then we can put our key in and then
+[00:23:07] we're done,
+[00:23:09] right?
+[00:23:11] And assertions are basically the
+[00:23:13] deletions are basically assertions and
+[00:23:14] deletions and searches all sort of work
+[00:23:16] the sort of the same way. We do have to
+[00:23:18] keep track when we start scanning
+[00:23:20] through where we started when we enter
+[00:23:22] the hash table. So because we'll loop
+[00:23:23] back around and we come back to the
+[00:23:24] original location, we don't want to get
+[00:23:26] stuck in an instant loop because we know
+[00:23:27] the hash table is full. And then
+[00:23:28] depending on what our operation is, uh
+[00:23:31] we may may have to stop what we're doing
+[00:23:32] and resize things.
+[00:23:34] So the in most implicitations there'll
+[00:23:37] be this notion of the load factor which
+[00:23:39] is basically the number of actively used
+[00:23:42] slots divided or over the number of
+[00:23:45] total slots and when that gives above
+[00:23:47] gets above some threshold then the
+[00:23:49] system will say well I think I'm getting
+[00:23:50] too big and I'm going to run out of
+[00:23:52] space let me halt all any operations
+[00:23:55] again assum you take a global latch on
+[00:23:56] the whole data structure allocate a new
+[00:23:59] hash table that's twice the size of the
+[00:24:00] original one take all the keys out and
+[00:24:02] put it to the new
+[00:24:04] That sucks. That's really slow. Uh this
+[00:24:06] is again why you typically allocate that
+[00:24:08] the the hash rate would be a little bit
+[00:24:09] larger than what you expect to actually
+[00:24:11] put in it. So you don't have to do that.
+[00:24:13] And then but some systems allow you to
+[00:24:15] play around with this uh this load
+[00:24:17] factor to say like ah I allow myself to
+[00:24:19] be allow myself to be 99% full before I
+[00:24:21] have to resize.
+[00:24:24] All right. So let's go for a simple
+[00:24:25] example. So I'm showing this on
+[00:24:26] PowerPoint. Again, it's it's it's a
+[00:24:29] diagram, but assume that these page this
+[00:24:31] data is being stored in in bufferable
+[00:24:33] pages that are being backed by disk.
+[00:24:36] So, I have my hash function and then I
+[00:24:38] have the uh N defined as the number of
+[00:24:41] slots that I have. So, if I want to
+[00:24:43] insert key A, I'm going to hash it,
+[00:24:45] modify number n, and it's going to land
+[00:24:47] in that slot there. And in this case
+[00:24:49] here, my hash table is empty, the slot
+[00:24:51] is empty, so my key A can go right in
+[00:24:53] there. And again, I have to store the
+[00:24:55] key and the value together. Uh the value
+[00:24:59] actually may be a pointer to something
+[00:25:00] else. We'll cover that in a second. But
+[00:25:01] like I need the original key because if
+[00:25:03] now I start having collisions and I
+[00:25:04] start changing the location of where the
+[00:25:06] key I'm actually inserting is, not the
+[00:25:07] original one where I started off, then I
+[00:25:09] need to know whether the the slot I'm
+[00:25:11] looking at contains the thing that I
+[00:25:12] want.
+[00:25:15] I insert B hash at the top. That's fine.
+[00:25:18] Now I insert C. Now I have a collision.
+[00:25:21] C wants to go where A is, but it can't
+[00:25:22] because A is sitting there. So, we
+[00:25:25] basically recognize that the slot is is
+[00:25:27] occupied. Do a linear scan to the next
+[00:25:31] free slot. We see that it's empty or the
+[00:25:33] next slot. See that it's empty. And then
+[00:25:35] we uh we can go ahead and start our key
+[00:25:36] there.
+[00:25:38] Same thing for D. D wants B where C is.
+[00:25:41] It's occupied. Uh so it has to scan down
+[00:25:44] and put D there. E wants to go where A
+[00:25:46] is. Can't go where C is. Can't go where
+[00:25:48] D is. We finally find a free slot there.
+[00:25:50] And just to finish off, we'll put F
+[00:25:52] wants to go over where E is and it goes
+[00:25:53] to the bottom,
+[00:25:55] right?
+[00:25:59] Pretty easy, right?
+[00:26:02] And because we're doing a bunch of
+[00:26:03] linear operate or sequential operations,
+[00:26:06] right? If I have to read multiple pages
+[00:26:10] from disk, I can read these pages in
+[00:26:12] squal order till I find the free slot
+[00:26:14] that I want.
+[00:26:19] All right. So, how do I make sure that
+[00:26:21] uh
+[00:26:23] you know that that my entries or the
+[00:26:25] data I'm storing is only fixed length,
+[00:26:27] right? So, if the data I want to store
+[00:26:31] is is is fixed length, then I can just
+[00:26:33] inline it in with the data structure
+[00:26:35] itself. So, I have I can also store the
+[00:26:37] hash. It sort of makes things go faster,
+[00:26:39] right? Because I want to compare the
+[00:26:40] hash whatever I have in there plus the
+[00:26:42] the hash to the thing I'm trying to put
+[00:26:44] in there. I can store the hash there,
+[00:26:45] but space versus compute trade-off,
+[00:26:48] right? You take takes more takes more
+[00:26:49] space, but makes the the lookup go
+[00:26:51] faster. But if my value fit fits in just
+[00:26:54] fine, that and it's uh I can destroy
+[00:26:56] this inline. Obviously, I don't want it
+[00:26:58] too wide now because now the size that
+[00:27:00] I'm jumping from slot to slot gets
+[00:27:01] really big and it can become wasteful.
+[00:27:03] Yes.
+[00:27:09] This is stoing it.
+[00:27:15] >> Yeah. His question is this is doing
+[00:27:18] inserts. How do you find things? This is
+[00:27:19] the same thing, right? So say I I was I
+[00:27:22] have F. I want to look for F. I hash it.
+[00:27:25] I land where E is. E is not what I want.
+[00:27:28] I keep scanning till I find the value
+[00:27:30] that I want or a free slot, an empty
+[00:27:33] slot. Meaning because I know my key
+[00:27:34] can't be in there because if it existed,
+[00:27:35] I would have seen it when I was scanning
+[00:27:37] through.
+[00:27:39] That's as we said in the beginning. O
+[00:27:41] worst case scenario I read everything
+[00:27:43] keep track where I started so I don't
+[00:27:45] keep going.
+[00:27:46] >> Yeah.
+[00:27:50] All right. So uh if if our data is small
+[00:27:52] and it's fixed length we just store it
+[00:27:53] in the hasht itself. If our uh data is
+[00:27:57] is variable length or too big, then we'd
+[00:28:01] end up basically store some kind of
+[00:28:02] record ID or a pointer or something to a
+[00:28:04] temp page
+[00:28:06] uh and just have the the the data we
+[00:28:09] want be chucked in there. If we're
+[00:28:12] storing this as an index like a table
+[00:28:14] index, then the record ID would just be
+[00:28:16] to the original tupil. But if again
+[00:28:18] building a hash sorry building a hash
+[00:28:20] before a join I don't want to maybe
+[00:28:22] reference the original data because I
+[00:28:23] might have may have manipulated or done
+[00:28:25] some other joins prior to that. So I
+[00:28:26] need to sort of tempt pages to put data
+[00:28:28] that I want. But it's the same mechanism
+[00:28:30] to have a pointer to say okay you want
+[00:28:31] the value after you find a match here's
+[00:28:33] where to go find it.
+[00:28:34] >> Yes.
+[00:28:48] This question is if you have a JSON
+[00:28:49] field in a tuple when you
+[00:28:55] >> Yes. Yes.
+[00:28:58] But like if it's if it's variable
+[00:29:00] length, I don't want it in the
+[00:29:03] I don't want it I can't put it in the in
+[00:29:05] my slot array because that breaks the
+[00:29:08] whole mechanism of taking the hash of
+[00:29:09] the key and then modify the number of
+[00:29:10] slots. So it's variable length. I'm
+[00:29:12] going to jump to random locations. I
+[00:29:13] can't do that. So I can't put it in
+[00:29:15] there. I got to put it somewhere else.
+[00:29:16] So I'm just saying here is like you just
+[00:29:18] have this sort of temp thing where the
+[00:29:20] key that you trying to you look up on is
+[00:29:23] now in this other temp space that could
+[00:29:25] be variable length be slotted pages
+[00:29:26] whatever you want doesn't matter and
+[00:29:28] then now in my hash table I'm storing
+[00:29:30] fixed length record ids
+[00:29:36] >> you see statement is and he's correct
+[00:29:37] like wouldn't you want to store the keys
+[00:29:39] in the hash table to make it fast as
+[00:29:41] possible yes but if they're var length
+[00:29:42] you can't do that because now now all
+[00:29:44] your slots Yes. So you the trick you
+[00:29:47] could do would be uh say you're storing
+[00:29:50] var strings. I could take the first like
+[00:29:53] eight characters store that in my hash
+[00:29:56] table. Right. Still need the record ID
+[00:29:58] to get the original one. But at least
+[00:30:00] now I can just look for the prefix and
+[00:30:02] see whether that matches.
+[00:30:04] >> What's that?
+[00:30:05] >> This is German strings. Yes. Uh
+[00:30:08] uh German
+[00:30:11] uh German strings basically says like
+[00:30:12] instead of when we had that um the
+[00:30:14] overflow page we had the uh you know we
+[00:30:18] didn't want to inline the variable link
+[00:30:20] data we had a pointer to it but in order
+[00:30:22] to see if I have a match on that var
+[00:30:24] link data I got to follow that pointer
+[00:30:25] so I can just store a prefix to do the
+[00:30:28] early matching right and it was invented
+[00:30:30] by the Germans I called it German
+[00:30:32] strings and apparently that's the the
+[00:30:33] term everyone using now uh but yeah
+[00:30:36] German strings.
+[00:30:38] All right. So, not all the hash tables
+[00:30:40] in our systems don't won't care about
+[00:30:42] deletes. But again, if they're table
+[00:30:43] indexes, you do. So, how are we going to
+[00:30:46] handle that? So, the idea again, so say
+[00:30:48] I want to delete key C. So, I do my
+[00:30:51] hash. I mod it. I land where A is. A is
+[00:30:53] not the key that I'm looking for. I jump
+[00:30:55] down to C. Here's C. I want to go ahead
+[00:30:57] and delete it. And I can just remove it.
+[00:31:01] >> Yes.
+[00:31:04] large expand the size.
+[00:31:08] >> Uh the question the same is uh when the
+[00:31:10] load factor gets too large without
+[00:31:12] deleting just deterine in general or or
+[00:31:15] this example here
+[00:31:19] >> yeah the state the question is uh when
+[00:31:21] the load factor gets too large do I have
+[00:31:23] to resize the table? Yes, you you
+[00:31:24] allocate a whole second table scan
+[00:31:27] through and hash hash put back in the
+[00:31:30] new one. Yes, dynamic hashing won't do
+[00:31:34] that. We'll see that in a second.
+[00:31:36] All right. Is this a good idea or a bad
+[00:31:38] idea? What did I do here? I deleted key
+[00:31:39] C. I just removed it from my slot.
+[00:31:48] >> Yes, he's he's pathetic here.
+[00:31:50] The statement is if now something wants
+[00:31:52] to do a lookup on D. Well, D is going to
+[00:31:54] hash where C was because it was occupied
+[00:31:57] when when we try to insert D, uh, it had
+[00:32:00] to go to the slot below it. So, it's
+[00:32:01] going to hash here now, land to where C
+[00:32:03] used to be. See that it's empty. And
+[00:32:05] again, the protocol for deciding whether
+[00:32:07] key exists or not is I keep scanning
+[00:32:08] till I find it or I see an empty slot,
+[00:32:11] then I'm done. So, it's going to see an
+[00:32:12] empty slot right away and think that
+[00:32:14] nothing's there and we're screwed,
+[00:32:16] right?
+[00:32:17] So there's two approaches to handle
+[00:32:18] this. One is basically what what we
+[00:32:22] talked about before, but like resizing
+[00:32:23] the table. You basically just move
+[00:32:25] everything around. So you figure out
+[00:32:27] with the key that you deleted, scan
+[00:32:29] everything afterwards until you find the
+[00:32:30] the first free slot and rehash
+[00:32:33] everything you see to figure out where
+[00:32:34] it actually should go. So you're kind of
+[00:32:36] like dumping out uh a portion of the
+[00:32:39] table and insert it back in. Right? You
+[00:32:43] could be stupid and start moving things
+[00:32:44] around. uh you could just move things
+[00:32:47] but that's not going to work because
+[00:32:48] things not may not you have to rehash
+[00:32:50] decide whether it it actually should go
+[00:32:51] where we want to point things. So in
+[00:32:54] this case here, looking up D would be
+[00:32:55] fine. Uh it would still work. E would
+[00:32:58] work uh as well as as well as F, right?
+[00:33:04] Uh but then the tricky one of course
+[00:33:06] what would you with B? Do you wrap B
+[00:33:08] around or not? Right? Doesn't matter.
+[00:33:10] Okay. So nobody does this. Don't do
+[00:33:13] this. This is just way too expensive
+[00:33:14] because again you you don't know how
+[00:33:16] many things you're going have to rehash
+[00:33:17] at the moment you do this, right? So,
+[00:33:20] what you really want to do is just use
+[00:33:22] tombstones
+[00:33:23] and you basically maintain a little
+[00:33:25] marker uh to to denote that the key that
+[00:33:29] used to be here has been deleted. It's
+[00:33:30] not physically removed, right? I mean,
+[00:33:32] you could zero out the the bits if you
+[00:33:34] want. Doesn't matter. But the when you
+[00:33:38] do a scan, the sort of the the thread's
+[00:33:41] going to see that the space used to
+[00:33:43] contain something, but it's not there
+[00:33:44] anymore. And it knows to treat that as
+[00:33:46] if it was occupied and not really a
+[00:33:47] truly empty space. So, keep scanning to
+[00:33:49] find the thing that you want. Right? So,
+[00:33:51] I delete C. Uh, hash to A, go down here,
+[00:33:55] mark a little tombstone. Now, when I do
+[00:33:58] a look up on D, D lands where C used to
+[00:34:00] be, sees that there's a tombstone and
+[00:34:03] says, "All right, well, I just something
+[00:34:05] used to be here and it's not anymore.
+[00:34:06] Let me just go ahead and keep scanning
+[00:34:07] till I find the thing that I want and
+[00:34:09] then I'm done."
+[00:34:11] And occasionally there'll be some
+[00:34:12] background thread if you wanted to go
+[00:34:14] ahead and prune these up and in which
+[00:34:16] case you would have to do rehashing if
+[00:34:17] you wanted that. Uh or if now someone
+[00:34:19] wants to insert something into the space
+[00:34:21] that is occupied by a tombstone you just
+[00:34:24] use it and that that's still considered
+[00:34:26] valid and correct
+[00:34:29] >> what's that if I if I do what
+[00:34:33] >> the question is what would happen if I
+[00:34:35] query to get C. Well, it would in this
+[00:34:38] case here you would see what hashes to
+[00:34:40] A. So you land at A. Say this is not
+[00:34:43] delete. This is a get. I would see A is
+[00:34:45] not what I want. I'd keep scanning. I
+[00:34:48] would see that the the tombstone spot on
+[00:34:50] C is. I know that's not what I want
+[00:34:53] either because it's it's considered
+[00:34:55] deleted. Then I have to keep scanning
+[00:34:57] down D, E, F, wrap around to B. Then I
+[00:35:00] get to that first free slot up there.
+[00:35:02] It's empty at this point. I didn't see
+[00:35:04] C. And I would have seen it if it was if
+[00:35:06] it was uh as I did my scan. So I would
+[00:35:08] say it's not found.
+[00:35:10] >> Yes.
+[00:35:20] somewhere else.
+[00:35:21] >> The question is if I do it do an update
+[00:35:24] to D or insert a new D.
+[00:35:28] >> So same as what would I do if I update
+[00:35:30] the value of D? Um
+[00:35:33] I mean for for this we wouldn't for
+[00:35:36] updates
+[00:35:38] you scan the key they're looking for. If
+[00:35:41] it doesn't exist, you don't update it.
+[00:35:42] If you do see it, then you just could
+[00:35:44] just overwrite it and you wouldn't need
+[00:35:45] to move where D is.
+[00:35:49] We're not really worried about updates.
+[00:35:51] We're not worried about here. It's
+[00:35:52] insert, update, deletes or sorry,
+[00:35:54] insert, deletes, and get and selects
+[00:35:55] gets.
+[00:35:58] All right. So now let's say I want to
+[00:35:59] insert a new key. G hashes to where C
+[00:36:02] used to be. Again, it's a tomb. The
+[00:36:04] tombstone's there. It's know it. It
+[00:36:06] knows that logically the space is
+[00:36:08] unoccupied. So let's go ahead and put
+[00:36:10] the thing we want in there. So you
+[00:36:12] wouldn't typically store the tombstone
+[00:36:14] in line on the in the every slot.
+[00:36:17] Typically in the it'll be like in the
+[00:36:18] page header uh you would say here's all
+[00:36:21] the slots and whether they're considered
+[00:36:23] uh occupied or not in in a simple bit
+[00:36:26] map
+[00:36:27] and that ensures that all your data is
+[00:36:29] aligned. Yes.
+[00:36:38] >> The question is
+[00:36:40] >> question is am I going to maintain a map
+[00:36:42] about tombstones or what?
+[00:36:49] The question is uh would I do I need to
+[00:36:51] maintain a separate data structure that
+[00:36:53] says for a given key it's been deleted.
+[00:36:57] This is the data structure right?
+[00:37:00] >> So so
+[00:37:04] the question is like would I do I need
+[00:37:06] to record that this tombstone
+[00:37:07] corresponds to a previous value? But
+[00:37:10] like the
+[00:37:12] I suppose you could do that. That would
+[00:37:14] that would help prevent the problem I
+[00:37:15] said before. Like if I look for C, I
+[00:37:17] then have to wrap around. I I could just
+[00:37:19] see the tombstone. Ah, see used to be
+[00:37:21] here. That's what I'm looking for. I
+[00:37:22] guess it's not here anymore, right? The
+[00:37:23] problem with that one is though, you
+[00:37:25] don't know whether someone else inserted
+[00:37:27] C after later on. And I and and I would
+[00:37:31] miss that if I saw the tombstone
+[00:37:32] immedely jumped out.
+[00:37:38] We have
+[00:37:59] >> I think you're saying like are we
+[00:38:01] relying on information that be stored in
+[00:38:02] the tombstone to help optimize certain
+[00:38:04] things? I think that's what you're
+[00:38:05] saying. Uh, I suppose you could. Nobody
+[00:38:09] does that because it's extra complexity
+[00:38:11] and this is so simple. It just makes it
+[00:38:13] so fast. Like the extra checks you're
+[00:38:15] talking about are just not probably not
+[00:38:17] worth it, right?
+[00:38:20] I might be wrong with that, but if
+[00:38:22] you're
+[00:38:24] Yeah, most people don't do that because
+[00:38:26] most people are still going to not
+[00:38:27] support deletes anyway because they're
+[00:38:29] going to use these for hash tables,
+[00:38:30] right? I'm just inserting and then
+[00:38:31] reading and then throwing it away. But
+[00:38:33] if you want to support deletes, that's
+[00:38:34] an additional oposition I think you
+[00:38:35] could do, but I don't think anybody does
+[00:38:37] it because it's just it's just more
+[00:38:38] machinery.
+[00:38:41] Okay, let me jump through uh because
+[00:38:44] we're short on time because we haven't
+[00:38:46] got the dynamic stuff. But um if you
+[00:38:50] want to handle non-unique keys, you
+[00:38:51] basically have this you can store them
+[00:38:52] either in separate link lists or you uh
+[00:38:56] just store the key multiple times.
+[00:38:58] That's what the most systems do. Second
+[00:39:00] one, the tricky thing of course is going
+[00:39:02] to be that uh if depending on the
+[00:39:05] operation I'm doing, I may see you know
+[00:39:07] say go give me key uh xyz. I may hash
+[00:39:10] into it, land it, see key xyz. I have to
+[00:39:12] keep going till I see the the first free
+[00:39:16] slot in my lookup because at that point
+[00:39:18] then I know that I I'm not going to see
+[00:39:20] any more xyzs,
+[00:39:22] right? Same for deletes. If I if I
+[00:39:23] remove all the xyz, I I have to do that.
+[00:39:25] Again, most systems do that because you
+[00:39:27] don't need to maintain the separate data
+[00:39:28] structure up above. Just store my keys
+[00:39:31] in the giant hash table,
+[00:39:33] right?
+[00:39:36] Uh let me skip optimizations. Um just to
+[00:39:39] say like you you could have specialized
+[00:39:43] hash tables based on the keys. So in in
+[00:39:46] clickouts for example, they have hashts
+[00:39:48] for strings, have the separate hashts
+[00:39:50] for integers, they have separate hashts
+[00:39:52] for large strings, right? you have 20
+[00:39:53] different hash tables in their in their
+[00:39:55] implementation which is crazy. Uh so
+[00:39:57] they have amazing blog article talks
+[00:39:58] about a lot of these things.
+[00:40:00] All right, I'm going to talk about
+[00:40:01] alternative uh to linear pro hashing um
+[00:40:05] called cuckoo hashing. And this idea
+[00:40:08] should be pretty simple but it's it's
+[00:40:09] it's again breaking this conceived
+[00:40:10] notion that like we're going to have one
+[00:40:12] hash function tell me one location where
+[00:40:13] I could find my uh find the key I'm
+[00:40:16] looking for. I'm actually have multiple
+[00:40:17] hash functions and my key could be in
+[00:40:20] multiple locations and it may change
+[00:40:22] over time uh because again the open
+[00:40:24] addressing allows me to do that to over
+[00:40:27] time as the keys the keys that I'm
+[00:40:29] inserting changes. So the lookouts and
+[00:40:33] deletions are always going to be 01
+[00:40:36] guaranteed.
+[00:40:37] Uh because I'm going to uh if I hash it,
+[00:40:42] I'm either going to find exactly the key
+[00:40:43] I'm looking for, may have to hash it
+[00:40:45] multiple times, still constant factor,
+[00:40:47] but again, it's not that's not free, or
+[00:40:49] I'm not going to see it at all. The
+[00:40:51] inserts are going to be more expensive
+[00:40:52] because I may have to take a splot
+[00:40:54] somebody else, remove the key, and then
+[00:40:56] insert it back in.
+[00:40:58] Let's look at an example. See what I
+[00:41:00] mean. So I want to put a I have a single
+[00:41:02] hash fun hash table like I before a
+[00:41:03] bunch of slots but in this case here I'm
+[00:41:05] going to have two hash functions
+[00:41:07] right it's going to be the same
+[00:41:09] implementation like same rapid hash or
+[00:41:11] xx hash3 just you give it a different
+[00:41:13] seed so that they guarantee to produce
+[00:41:15] or not guarantee they're going to
+[00:41:16] produce different hash values so I'm
+[00:41:18] going to hash both of them uh the key
+[00:41:20] twice both the hash functions and I'm
+[00:41:22] going to end up with two different slots
+[00:41:24] and I'm going to look to see which one's
+[00:41:25] empty in this case here I'm completely
+[00:41:27] empty I'm going to flip a coin and
+[00:41:29] choose the first And that's where my key
+[00:41:31] is going to go.
+[00:41:33] Now I'm going to do the same thing. I'm
+[00:41:34] going to hash B. Uh two different
+[00:41:37] locations. The first one, the first hash
+[00:41:39] function is occupied by A. So I'm not
+[00:41:41] I'm going to ignore that. Instead, I'm
+[00:41:43] going to choose the the free slot that
+[00:41:45] the second hash function has or points
+[00:41:47] to and I'll get B.
+[00:41:50] Now let's see example where I have
+[00:41:52] collisions at both locations. So hashing
+[00:41:54] C, the first hash function is where A
+[00:41:56] is, second hash function goes where B
+[00:41:58] is. Both are occupied.
+[00:42:00] So, the way this is going to work is I'm
+[00:42:02] going to choose a victim. I'm going to
+[00:42:03] choose one of the the the slots that I'm
+[00:42:05] hashing to. I'm going to steal their
+[00:42:07] location, kick them out of the house,
+[00:42:09] put my in there, right? And then
+[00:42:12] they got to go find a new place to live.
+[00:42:14] It's called cuckoo hatching because
+[00:42:15] there's there's a cuckoo bird. That's
+[00:42:17] what they do. They go find other birds
+[00:42:18] nests, kick them out, and then plant
+[00:42:20] their own eggs, right? Um basically,
+[00:42:23] what's that? But
+[00:42:26] the question is, where did the victim
+[00:42:27] entry go? Let's keep going. It's this.
+[00:42:29] All right. So, we're gonna take the
+[00:42:31] first one. Uh, so C is going to kick out
+[00:42:34] B. Put his stuff in there. And then now
+[00:42:36] we got to put B in, right? So, with B,
+[00:42:40] I'm showing for simplicity, I'm showing
+[00:42:41] only hashing uh with the first hash
+[00:42:44] function because back here, right, we
+[00:42:46] decided to choose the the second hash
+[00:42:48] function. In actuality, you don't really
+[00:42:50] you're not going to record what hash
+[00:42:52] function you use to to insert it because
+[00:42:54] there's extra space is unneeded. You you
+[00:42:55] would end up hashing it again and then
+[00:42:57] see which one is occupied or which one
+[00:42:59] points you the pack the place you just
+[00:43:00] got kicked out of. Right? So now we hash
+[00:43:03] B again for the first hash function. It
+[00:43:05] goes where A is. So same thing. It's
+[00:43:07] going to take its its slot, kick A out.
+[00:43:10] Now we get A back in. We're going to
+[00:43:11] hash A and it's gonna land here. And
+[00:43:13] that was the free slot that one of the
+[00:43:14] free slots we had in the very beginning.
+[00:43:17] >> How does what?
+[00:43:18] How to prevent cycles? You just keep
+[00:43:20] track of like, hey, is this the key I
+[00:43:21] just inserted? I'm trying to that I
+[00:43:23] started off with
+[00:43:26] >> statement. The list was quite long. Yes.
+[00:43:30] >> In fact, no, it's not a list. You don't
+[00:43:31] need a list. I don't care about how I
+[00:43:33] got there. I just care what he has
+[00:43:34] started with.
+[00:43:37] >> A cycle.
+[00:43:40] >> Uh to to his point, yeah, right. So, I
+[00:43:44] don't know exactly. I don't think you
+[00:43:45] need you don't need the full list
+[00:43:46] though. I think you need where you
+[00:43:48] started and the most recent one. Yeah.
+[00:43:50] Know you can have I don't know the
+[00:43:52] answer but it's going to be it's if you
+[00:43:55] have to maintain list it's unavoidable.
+[00:43:59] >> Yes.
+[00:44:00] >> So what they all hash
+[00:44:02] >> same as delay on all hash functions the
+[00:44:04] hash table was full double the size and
+[00:44:07] and rebuilt it. Yep. No free lunch. You
+[00:44:10] always have to do something. So now I do
+[00:44:13] a lookup. I want to get B. I'm going to
+[00:44:15] hash it twice. Again, I'm showing this
+[00:44:17] to be in parallel because it's
+[00:44:18] PowerPoint. Actual out. You hash the
+[00:44:19] first one, see where that has the thing
+[00:44:21] you want. If it's there, you're done.
+[00:44:22] Then h if if not, then hash the second
+[00:44:24] one to see it, right? But in this case
+[00:44:26] here, I would hash the the first one,
+[00:44:28] look for B, and I would find it my slot
+[00:44:30] there. But I could also look at look in
+[00:44:32] the other one. That's why it's 01
+[00:44:34] because I'm guaranteed to either see it
+[00:44:36] immediately my first sort of step into
+[00:44:38] the the data structure or or it's or
+[00:44:41] doesn't exist.
+[00:44:45] Yes.
+[00:44:47] >> Go back here.
+[00:44:52] >> So, we were here. C collided. Uh, so
+[00:44:54] >> yeah, sorry. We want to start C.
+[00:44:56] Collided with both A and B. We got We
+[00:44:58] got to pick a victim.
+[00:45:00] >> We B. Yes. C goes in there. B pops out.
+[00:45:03] We got to put it back in.
+[00:45:08] either
+[00:45:14] of them are the same.
+[00:45:16] >> So hash now.
+[00:45:19] >> Yeah.
+[00:45:21] >> Uh well, so the the the second hash
+[00:45:24] function is where I came from. Yes. So
+[00:45:26] you would do both of them when you come
+[00:45:27] back out and try to go back in because
+[00:45:29] it's this the the protocol is the same
+[00:45:32] if you're inserting a key for the first
+[00:45:34] step versus like I got invicted, I got
+[00:45:35] to go back in. It's the same for
+[00:45:38] PowerPoint reasons. I'm just not
+[00:45:39] showing. Yeah, but you you would do
+[00:45:41] both. Yes.
+[00:45:47] The question is how do you know how many
+[00:45:48] hash functions to use? Yeah. So, um
+[00:45:51] there's I think there's been theoretical
+[00:45:53] work done on this. You can prove that
+[00:45:55] like for hash table of this size of this
+[00:45:58] many expected keys uh you want this
+[00:46:01] number of of hash functions. And then
+[00:46:05] there's a trade-off also too of like if
+[00:46:06] I have a lot of hash functions then I
+[00:46:09] may uh it's more work but I I can maybe
+[00:46:14] not hit a cycle as quickly right I
+[00:46:17] forget the the default one so the the
+[00:46:19] most the mo the best open source
+[00:46:21] implementation of a coug hash table was
+[00:46:24] actually from CMU from Dave Anderson
+[00:46:26] they still maintain it and I think the
+[00:46:27] default is like six hash functions
+[00:46:33] other questions
+[00:46:38] So this is a neat little trick. Uh it's
+[00:46:41] a cool idea.
+[00:46:43] It's slower than than a linear pro hash
+[00:46:45] table because it's liner probing is so
+[00:46:48] simple uh that you can rip through it
+[00:46:50] quickly. So very few systems do this.
+[00:46:54] All right. So in the two schemes I just
+[00:46:57] showed you got to know the number of
+[00:46:58] keys ahead of time. All right. Uh, and
+[00:47:01] then if we our load factor gets too much
+[00:47:03] or we get stuck in a in an infinite loop
+[00:47:06] in the cuckoo hashing or we run out of
+[00:47:08] free slots in our linear probe hash
+[00:47:10] table, we got to stop what we're doing
+[00:47:13] uh reallocate space and and and uh
+[00:47:17] resize it, right? So dynamic hash tables
+[00:47:20] are going to have a mechanism built in
+[00:47:22] that allows them to grow and shrink
+[00:47:23] incrementally as needed as you as you're
+[00:47:26] inserting things.
+[00:47:28] So the hash table you're probably most
+[00:47:29] familiar with is change hasht. Uh I
+[00:47:32] think this is what uh python gives you
+[00:47:34] or java hashmap gives you right but in
+[00:47:37] the data world there's two more
+[00:47:38] sophisticated ones extendable hashing
+[00:47:40] and and linear h uh linear hashing. And
+[00:47:42] again I was saying the confusing part is
+[00:47:44] I just talked about the linear probe
+[00:47:45] hash table and there'll be now a linear
+[00:47:48] hashing hash table and they're they're
+[00:47:50] separate things. One's static one is
+[00:47:52] dynamic. I I don't make up these names
+[00:47:54] right I don't think control. All right.
+[00:47:57] So chain hashing, right? This is what
+[00:47:58] you get in Java hashmap. Uh actually
+[00:48:01] Python, I don't know if Python gives you
+[00:48:03] this by default, but this is what this
+[00:48:04] is what Java gives you. So you're
+[00:48:06] basically going to maintain a link list
+[00:48:08] of of buckets
+[00:48:10] uh for for a given slot where you can
+[00:48:13] insert keys. So it's kind of like a
+[00:48:15] partition version of the linear probe
+[00:48:16] hash table where you still have to do a
+[00:48:18] sequential scan potentially to find the
+[00:48:19] thing you're looking for. Um but at
+[00:48:21] least now you don't have to scan the
+[00:48:22] entire table. it's just scoped into the
+[00:48:25] you know some some portion of the table
+[00:48:29] and you resolve collisions by just
+[00:48:30] placing elements at the that collide
+[00:48:32] with each other. You're going to append
+[00:48:34] them to the end of this this bucket link
+[00:48:35] list. Right? You define the keys you're
+[00:48:38] looking for. You just you hash them some
+[00:48:40] some link list and then you scan through
+[00:48:41] and find the see whether the key exists
+[00:48:43] or not.
+[00:48:45] So now we're going to have this this
+[00:48:47] separate data structure of bucket
+[00:48:48] pointers
+[00:48:50] and here's all our buckets, right? So I
+[00:48:53] want to do a put on a I hash it mod n by
+[00:48:56] the number of bucket pointers I have. Uh
+[00:48:58] and that's going to then give me a
+[00:49:00] pointer now to the starting location of
+[00:49:02] the bucket chain. And now I just do my
+[00:49:04] linear linear scan uh linear probe to
+[00:49:08] find a free first free slot. Soon as I
+[00:49:10] find one, I can put the key that I want.
+[00:49:12] So I'll put a there. Same thing I I I
+[00:49:14] want to insert B hash hash hash hash in
+[00:49:18] the bucket point array find a location
+[00:49:19] and we put it there. Now we want to do
+[00:49:22] put C. C ends up in the same bucket uh
+[00:49:25] list or bucket chain as A, but it scans
+[00:49:28] through and sees A's occupying the first
+[00:49:30] slot. Jumps down to the next one till it
+[00:49:32] gets it right. And then same thing with
+[00:49:34] D. D goes where A and C are. But at this
+[00:49:37] point our bucket for simplicity only has
+[00:49:40] two two slots. Uh so we have to make a
+[00:49:42] new bucket
+[00:49:44] uh and just have a pointer from that
+[00:49:46] bucket to the the next one. All right.
+[00:49:49] So obviously these this this bucket
+[00:49:51] chain can grow infinitely. And so if I'm
+[00:49:54] if I'm unlucky and my my my hash
+[00:49:56] function is terrible, they're all
+[00:49:58] mapping to the same uh same location,
+[00:50:02] then it's going to be again on lookup
+[00:50:04] for for everything and that's be bad.
+[00:50:07] But the hash function if it has low
+[00:50:08] collision rate then it'll have some more
+[00:50:10] randomness and things will be more
+[00:50:11] evenly spread out. Same thing put E so
+[00:50:14] forth goes in here put F goes down here.
+[00:50:17] Right? So one little optimization you
+[00:50:20] can do that some systems do is you put a
+[00:50:22] little filter in the bucket point array
+[00:50:24] similar to that prefix in the German
+[00:50:25] strings that I just mentioned where like
+[00:50:27] I can check this this filter to say hey
+[00:50:29] is the key I want did it even could it
+[00:50:31] even exist in my bucket chain uh that
+[00:50:35] I'm going to point to? If yes, then I do
+[00:50:37] the scan. If no, then I know don't even
+[00:50:39] bother doing the scan.
+[00:50:41] So, typically you're gonna use something
+[00:50:42] like a bloom filter. It's okay if you
+[00:50:45] don't know what a bloom filter is. We'll
+[00:50:46] cover that next week. But it's basically
+[00:50:48] it gives you like set membership. It
+[00:50:49] just tells you does this thing even
+[00:50:50] exist or not. And it may give you
+[00:50:53] actually a false positive. It may tell
+[00:50:55] you ex it exists when it doesn't
+[00:50:56] actually exist, but it'll never give
+[00:50:58] give you a false negative. And it'll
+[00:50:59] never say this thing doesn't exist when
+[00:51:00] it actually truly does.
+[00:51:05] All right.
+[00:51:06] Let me try to plow through in uh in in
+[00:51:11] 13 minutes one of the two hardest data
+[00:51:13] structures, but we can re we can revisit
+[00:51:15] this again on Monday next week again.
+[00:51:18] Um, all right. So, extendable hashing is
+[00:51:21] a more sophisticated uh dynamic hashing
+[00:51:23] scheme that extends or built upon the
+[00:51:25] chain hashing approach I just saw before
+[00:51:27] where
+[00:51:29] I want to when I want to start uh
+[00:51:32] resizing the data structure, I'm going
+[00:51:34] to split buckets.
+[00:51:36] uh instead of just letting this link
+[00:51:38] list grow forever, which I could be end
+[00:51:41] up being O. When my bucket gets full,
+[00:51:44] I'm going to split it and redistribute
+[00:51:47] the keys inside that bucket. So at at
+[00:51:50] most the bucket chain the bucket chain
+[00:51:52] can't grow forever. Every now every
+[00:51:54] chain can only have one bucket in it,
+[00:51:56] right?
+[00:51:58] But the game they're going to play is to
+[00:51:59] make this all work is they're going to
+[00:52:01] allow in our uh our bucket array
+[00:52:05] multiple locations in that bucket array
+[00:52:07] could point to the same bucket and
+[00:52:09] that's be okay.
+[00:52:12] Right? So this is not widely used. Uh
+[00:52:16] it's an it's an older technique. Uh it
+[00:52:18] was in um it's like a new database
+[00:52:21] management system. is an think of like
+[00:52:23] an embedded key value store uh for that
+[00:52:27] like the GNU environment provides you.
+[00:52:29] It's also using asterisk DB which is a a
+[00:52:31] big data system at UC Irvine from 10
+[00:52:35] years ago. Uh but I think got merged
+[00:52:37] into Couchbase and Couchbase uses a lot
+[00:52:39] of these techniques now.
+[00:52:41] All right. So let's let's let's see how
+[00:52:43] this what this looks like. Okay. So for
+[00:52:47] for every bucket there's going to be
+[00:52:50] this sort of this this uh local
+[00:52:52] indicator say how many how many bits
+[00:52:54] we're going to do you have to use to get
+[00:52:55] to that bucket and there's going to be
+[00:52:57] this global bit counter thing that's
+[00:53:00] going to tell me globally how many bits
+[00:53:01] do I need to consider at this point in
+[00:53:03] time based on the size of my hashable to
+[00:53:06] find the the a particular bucket for a
+[00:53:08] given key. So basically determine that
+[00:53:11] just the maximum number of of bits we
+[00:53:12] have to consider in our hash. So again,
+[00:53:15] the hash function is going to return
+[00:53:16] like a 32-bit integer or a 64-bit
+[00:53:18] integer. But the way this scheme works
+[00:53:19] is at least as as you start building it
+[00:53:21] up as growing and resizing things, you
+[00:53:24] only need to look at a small portion of
+[00:53:26] those bits at the very beginning,
+[00:53:30] right?
+[00:53:32] So in this case here, so the global bit
+[00:53:34] counter is two. So that means that I
+[00:53:36] only need to look at two bits in my hash
+[00:53:39] hash value, right? And so this global
+[00:53:41] thing is going to increase anytime I'm
+[00:53:43] going to start doing uh splits. I need
+[00:53:44] to res resize things. But then the local
+[00:53:47] bit counter, it's just sort of keeping
+[00:53:49] track of like for this bucket, how many
+[00:53:51] bits did I actually use to get there?
+[00:53:55] But the way we're going to get into it,
+[00:53:56] we we need to use the global one and and
+[00:53:58] the hash bits on the and the bucket
+[00:53:59] array on the side here, right?
+[00:54:03] All right. So let's uh so sort of think
+[00:54:06] it like this, right? for the if I for
+[00:54:08] these first two elements or first two
+[00:54:10] locations in the in the bucket array I
+[00:54:11] only need the first the first bit but
+[00:54:13] for the other two I need to look at all
+[00:54:14] two bits
+[00:54:17] okay so let's first do a lookup on a
+[00:54:21] right so the first thing I do is I hash
+[00:54:23] A I get back now a uh you know
+[00:54:28] 64 integer made of 64 bits but I look at
+[00:54:31] my global counter my bit counter and
+[00:54:33] it's set to two so I know I only need to
+[00:54:35] look at two bits
+[00:54:36] define in my hash table uh the bucket I
+[00:54:40] want for have this potential key right
+[00:54:42] so the first two bits are 01
+[00:54:45] so I look at my my bucket array for 01
+[00:54:48] follow whatever that pointer is and I
+[00:54:50] land in that bucket that I want
+[00:54:53] right that's pretty easy
+[00:54:57] if I want to do a put now I'm put on B
+[00:54:59] same thing hash it look at the first two
+[00:55:01] bits right it's one zero that takes me
+[00:55:05] to this bucket here. And because I had a
+[00:55:07] free slot, I can go ahead and insert it
+[00:55:10] without spilling. And that's fine.
+[00:55:13] Right
+[00:55:15] now, let me do a put on C. And now when
+[00:55:18] I hash it, the first two bits are one
+[00:55:19] zero again. And that's going to take us
+[00:55:22] to this bucket. But there's no more free
+[00:55:25] slots for it inside the bucket. So now I
+[00:55:27] have to overflow it.
+[00:55:30] So, the way this is going to work is
+[00:55:32] that I'm going to increase my global bit
+[00:55:34] counter to now three. And now I'm going
+[00:55:37] to create a new uh slot array here
+[00:55:40] that's going to be double the size that
+[00:55:42] I had before because I'm I'm now going
+[00:55:44] to include an extra bit in in the
+[00:55:46] addressing scheme for it. Right? So,
+[00:55:48] this thing is not that big. This is not
+[00:55:50] like resizing the giant hash table of
+[00:55:52] all all my keys. This is, you know, this
+[00:55:54] is a small operation. This is no big
+[00:55:56] deal. Right?
+[00:55:58] So now I'm going to re resize it. And
+[00:55:59] now I the global bit counter is three.
+[00:56:01] But but I have a bunch of other uh and I
+[00:56:05] have that still that that middle guy
+[00:56:07] that middle bucket I need I need to
+[00:56:08] split. But for the other the one at the
+[00:56:10] top and one at the bottom I'm going to
+[00:56:11] leave them alone because they're not
+[00:56:14] being modified by by this insert, right?
+[00:56:16] It's only that one in the middle. So I'm
+[00:56:18] going to go ahead and split the middle
+[00:56:20] guy, right? and then go through and
+[00:56:24] rehash the the the keys that are in it
+[00:56:27] to decide where they where they need to
+[00:56:28] go next. Right?
+[00:56:31] So now in my
+[00:56:34] in my uh in my bucket array, I know that
+[00:56:38] I have a bunch of locations here where I
+[00:56:40] only need to look at the first bit and
+[00:56:42] that's going to take me to that that
+[00:56:43] first location here. So bit is zero is
+[00:56:45] go there. Then I have these other ones
+[00:56:47] here. you need you need to look at two
+[00:56:49] bits
+[00:56:50] uh and that's going to take me to this
+[00:56:51] one uh the one down here um and then the
+[00:56:56] for three bits those will be separated
+[00:56:58] into those separate ones here right
+[00:57:03] >> yes question number just how much how
+[00:57:07] many times it's been
+[00:57:08] >> yes question is is the number next to
+[00:57:10] the bucket keeping track of how many
+[00:57:11] times it's been split more or less yes
+[00:57:13] >> yeah yes yes
+[00:57:17] that
+[00:57:19] makes
+[00:57:22] >> the question is could you come up with a
+[00:57:23] pathological case where this thing just
+[00:57:26] grows exponentially because everything's
+[00:57:28] hashing in the same location. Yes.
+[00:57:32] So like try to say this if you have a if
+[00:57:35] you have a table that has a billion
+[00:57:36] records and you're trying to build a
+[00:57:38] hash table on one column and that one
+[00:57:42] column only stores the value one. It's a
+[00:57:45] billion records that all have value one.
+[00:57:47] Yeah, this this this is gonna be
+[00:57:48] terrible for us. Right. Don't do that.
+[00:57:52] Right.
+[00:58:03] >> The question is am I keeping track of
+[00:58:04] like which one is is a two bucket one or
+[00:58:07] what? Three bucket one. No. So you you
+[00:58:09] implicitly get that. So I'm showing like
+[00:58:10] you know these numbers here the 1 33 32
+[00:58:14] >> but this isn't for demonstration purpose
+[00:58:16] the pointers themselves because I'm
+[00:58:17] allowing uh multiple slots to point to
+[00:58:20] the same thing right so because I
+[00:58:22] haven't split the first bucket yet then
+[00:58:25] if anything hashes to any of those slots
+[00:58:29] here implicitly I know I only need to
+[00:58:32] look at the first bit and that takes me
+[00:58:33] to to that one and they're all pointing
+[00:58:34] to the same thing.
+[00:58:36] >> Yes.
+[00:58:37] >> So I have two questions. First you said
+[00:58:39] when we overflow we don't want to touch
+[00:58:41] one we want to split three but must we
+[00:58:44] split three like can't we just redirect
+[00:58:46] like one half of three into one and the
+[00:58:48] other half of
+[00:58:50] >> so his statement is in this case here
+[00:58:52] when I want when I want to I have to
+[00:58:53] overflow split two instead of splitting
+[00:58:56] it you're proposing to do what to
+[00:58:58] >> redirect
+[00:59:02] >> uh what do you mean redirect
+[00:59:04] >> like like the second array
+[00:59:08] >> like like this thing this thing here.
+[00:59:11] >> Yeah. Like well okay the first one the
+[00:59:14] top
+[00:59:16] the first array number three then
+[00:59:18] >> yes
+[00:59:18] >> can't we just merge it with number one
+[00:59:20] for example and not any
+[00:59:23] >> I say is can't you just merge statement
+[00:59:24] is could you just take the I see take
+[00:59:27] the second from the top merge it back
+[00:59:30] into one no because the the hash value
+[00:59:34] to get into that second one
+[00:59:36] >> you would still change the left hand
+[00:59:37] part you would still like have more bits
+[00:59:40] now that you look
+[00:59:41] It's just
+[00:59:43] Yeah, I just say um
+[00:59:47] I'd have to think about whether it's
+[00:59:48] correct. You could do it, but like
+[00:59:51] you
+[00:59:55] >> So, so this goes back to what I was
+[00:59:57] saying before. It isn't like an
+[00:59:59] algorithms class where you assume
+[01:00:00] everything's in memory. That top page,
+[01:00:02] right? Like the one with the one on it,
+[01:00:04] that may be out on disk. So to do what
+[01:00:07] you're proposing, I got to go uh create
+[01:00:09] the still create the new page, right? So
+[01:00:12] there's one allocate there. Then I got
+[01:00:13] to go read that other page, bring it
+[01:00:15] back in and do a right to it again. It's
+[01:00:17] just that extra machinery is not worth
+[01:00:18] it.
+[01:00:19] >> My second question was to look at the
+[01:00:21] least bit
+[01:00:24] more random.
+[01:00:25] >> See, is don't you want to look at least
+[01:00:27] submit bits? Wouldn't that be more
+[01:00:28] random? Um depends depends on the hash
+[01:00:31] function. Okay. It means hashed, right?
+[01:00:34] to the hashes hash is supposed to
+[01:00:36] generate a
+[01:00:38] u
+[01:00:39] >> so those are the results of the hash
+[01:00:41] function
+[01:00:41] >> yes yeah it's it's random so his
+[01:00:45] statement is and he's correct like when
+[01:00:46] we talk about bit packing memory he said
+[01:00:47] like oh like you sort of think as a 32
+[01:00:49] bit integer but most of the most of the
+[01:00:50] front of the bits are going to be zero
+[01:00:52] and therefore that's sort of wasteful
+[01:00:54] you're basically with a hash function
+[01:00:56] you're taking you're generating random
+[01:00:59] integers
+[01:01:00] for for arbitrary keys so
+[01:01:03] the the string A and the string B those
+[01:01:07] are pretty close to each other if you
+[01:01:09] just look at the bit sequence but if I
+[01:01:10] take a good hash function they need
+[01:01:12] completely different hash values
+[01:01:14] therefore the bit sequences are be
+[01:01:15] completely random so I'm just showing
+[01:01:17] you whatever the the most significant
+[01:01:18] ones here
+[01:01:21] okay
+[01:01:23] so all right let me get through this
+[01:01:25] last one linear hashing um and then
+[01:01:27] we'll switch over to the to the the
+[01:01:28] guest speaker so the same that is the
+[01:01:32] that we want to be able to resize our
+[01:01:33] hash table without having to rehash
+[01:01:34] everything. Um, this is going to be
+[01:01:37] slightly different now where we're going
+[01:01:39] to allow uh we're going to trigger a
+[01:01:42] resizing when a when a um is this when a
+[01:01:47] a a bucket overflows, but the bucket
+[01:01:49] we're not going to split is not is is
+[01:01:52] not potentially not be the one that
+[01:01:53] overflowed. In extendable hashing, the
+[01:01:56] one that overflowed, that's the one I
+[01:01:57] split. In linear hashing, it may not be
+[01:02:00] the one. We'll see why in a second.
+[01:02:04] So the this is actually what Postgress
+[01:02:07] uses. I think they called it the the
+[01:02:08] Dina hash table or dynamic hash table
+[01:02:10] something like that. Uh the code that
+[01:02:12] was written in this was written by uh
+[01:02:14] one Mike Stoneberger the inventor of
+[01:02:16] Postgress students back in Berkeley in
+[01:02:19] uh early 90s late late 1980s. She then
+[01:02:22] went off and re-implemented a linear
+[01:02:24] hash table in uh in this thing called
+[01:02:26] Berkeley DB that Oracle bought in 200 uh
+[01:02:30] 2006.
+[01:02:31] Um and then this is actually an internal
+[01:02:34] data structure that Dynamo DB uses as
+[01:02:36] well. All right. So just like before we
+[01:02:38] have we have bucket pointers and they're
+[01:02:39] going to point to to buckets. But now I
+[01:02:42] have this this extra thing called the
+[01:02:44] split pointer. And that's basically just
+[01:02:47] be pointing to some uh to some some
+[01:02:50] bucket that's going to be the next
+[01:02:52] bucket I'm going to split whenever any
+[01:02:54] bucket in my hash table overflows.
+[01:02:58] So at the very beginning I'm always
+[01:03:00] going to have uh a uh powers of two
+[01:03:05] number of buckets. In this case here
+[01:03:06] it'll be four. And I'll have a hash
+[01:03:09] function that the I could have multiple
+[01:03:11] hash functions that I'm going to use to
+[01:03:13] decide where in my uh bucket pointer I
+[01:03:17] want to jump into based on the location
+[01:03:19] of the split pointer.
+[01:03:22] Does it make more sec make more sense in
+[01:03:24] a second? So I want to say I want to get
+[01:03:26] six. I take six I hash it. Say we're
+[01:03:30] just doing identity hash so it's the
+[01:03:31] same value. Uh and I'm going to mod it
+[01:03:34] by the number of buckets that I have.
+[01:03:35] stays four and I end up getting two. And
+[01:03:38] so when I do my look at my bucket array,
+[01:03:41] I would see that the that bucket is
+[01:03:44] below the where the split pointer is
+[01:03:47] pointing at. So I know I I only need one
+[01:03:49] hash function to find the thing that I'm
+[01:03:51] looking for. So then I just jump along
+[01:03:54] do end in a bucket do linear scan to
+[01:03:56] find the thing that I want. Now let's
+[01:03:58] say I want to do a put on 17. I I mod it
+[01:04:01] by four. I get one. Now I I I I when I
+[01:04:05] land in this location here using the
+[01:04:06] single hash function, I see that the
+[01:04:08] bucket is full. So now I got to do a uh
+[01:04:12] an I have to build an add an extra
+[01:04:14] bucket to my chain and keep track that I
+[01:04:17] overflowed.
+[01:04:18] So that means I got to split something.
+[01:04:21] But the thing I'm going to split isn't
+[01:04:22] the thing that just overflowed. I'm
+[01:04:24] going to split whatever the split point
+[01:04:25] is pointing at. In this case here, it's
+[01:04:28] pointing to the top top uh the top
+[01:04:30] bucket bucket zero. So, I'm going to go
+[01:04:33] ahead and split this guy. Even though it
+[01:04:35] has a free slot,
+[01:04:38] and it could absorb another insert, I'm
+[01:04:40] still going to split it,
+[01:04:42] right? So now to do this, I'm going to
+[01:04:45] add an extra entry into my bucket
+[01:04:48] pointer array. So now be there'll be
+[01:04:50] slot four. But now I can't address that
+[01:04:53] if I do mod n what it was before, which
+[01:04:55] is uh when I had four, right? Now I'm
+[01:04:58] going to mod it by 2n, whatever I had
+[01:05:00] before. So even though I haven't added
+[01:05:03] any entries into my bucket pointer
+[01:05:04] beyond just this fourth one here, uh I
+[01:05:08] know I'm going to keep growing. So I I
+[01:05:11] may I have to add new entries as my
+[01:05:12] split pointer moves down.
+[01:05:15] So in this case here, I I have my new
+[01:05:17] hash function. Now I got to go figure
+[01:05:19] out where to go put all of the uh the
+[01:05:22] keys that exist in in the first first
+[01:05:23] bucket that I split. So I take key
+[01:05:26] eight, mount it by now two n. So this
+[01:05:29] going to get by by eight. So 8 mod 8 is
+[01:05:32] zero. So that's going to stay where it
+[01:05:34] started. But then 20 mod 8 is four. So
+[01:05:37] that's going to now point to this one
+[01:05:38] down here. Right? So I got to move 20
+[01:05:40] down here.
+[01:05:44] And I move the split pointer down by
+[01:05:46] one.
+[01:05:47] Now I do a look up on 20. First I'm
+[01:05:50] gonna do is take the first hash
+[01:05:51] function, right? So take take whatever
+[01:05:53] the value is mod by n. And that's going
+[01:05:55] to land me in uh in a in location zero
+[01:06:00] because that again that's where it was
+[01:06:01] before with the first hash function. But
+[01:06:03] here now I check to see is the location
+[01:06:06] with the first hash function above the
+[01:06:08] split pointer. If yes then I know that
+[01:06:12] the bucket has had been split. So
+[01:06:15] therefore, I have to hash it again using
+[01:06:16] the second hash function to find where
+[01:06:18] its current real location actually is
+[01:06:22] because I don't know after I do the
+[01:06:24] first hash function whether it remained
+[01:06:27] at the top or got moved down to the one
+[01:06:28] at the bottom. In this case, K20 got
+[01:06:30] moved to the bottom. You're shaking your
+[01:06:32] head. No, as if this is terrible.
+[01:06:49] This is not the one.
+[01:06:52] >> Yes.
+[01:07:02] >> So, yeah. So, this sounds crazy. Like,
+[01:07:03] why would you do this? The idea is that
+[01:07:05] eventually if I overflow again then I'll
+[01:07:08] split the one that that I built the
+[01:07:09] chain on. So eventually it all evens out
+[01:07:11] and you can sort with a balanced data
+[01:07:13] structure.
+[01:07:15] >> Yes.
+[01:07:21] >> By two and yes so yeah
+[01:07:25] >> whenever you split something else. I
+[01:07:26] last question. Sorry.
+[01:07:37] >> A question. The question is how would
+[01:07:38] you ever get out of bounds? Like
+[01:07:42] the array actually exists. You just you
+[01:07:43] just haven't allocated buckets for the
+[01:07:45] things below it yet. Yeah. All right.
+[01:07:47] Sorry. We can come back to this on class
+[01:07:49] next week. Uh just we'll pick up on on
+[01:07:51] again. Let's switch over to uh Caric.
+[01:07:54] All right. This is Cararthik. He's the
+[01:07:56] co-founder of uh Gigabyte. It's been 10
+[01:08:00] years, right?
+[01:08:02] >> It's about It's getting there. Almost 10
+[01:08:04] years. Nine and a half. Yes. It takes 10
+[01:08:06] years to build a database. So,
+[01:08:08] >> which is finding it is right
+[01:08:10] >> which is insane. All right. Floor is
+[01:08:11] yours. Thank you for being here.
+[01:08:13] >> Uh so folks that are not um familiar
+[01:08:16] with Yugabyte DB, we uh convert
+[01:08:19] Postgress SQL. We it's a new database.
+[01:08:20] We've taken Postgress as the source code
+[01:08:22] and we made it a distributed database
+[01:08:25] and uh you know we're fully open source
+[01:08:27] under Apache 2.0 And you know we've had
+[01:08:29] quite a few uh like you know members in
+[01:08:32] the community contributing a lot of
+[01:08:33] deployments etc etc and we are a
+[01:08:36] distributed cloudnative version of
+[01:08:37] postpress right uh these are some of the
+[01:08:39] things we focus on distributed
+[01:08:41] transactions multi-API cloudnative and
+[01:08:44] getting you know supporting AI workloads
+[01:08:46] we look at a few of these things right
+[01:08:48] so what are we really as I said
+[01:08:50] distributed fully postgress compatible
+[01:08:52] database we're built for business
+[01:08:53] critical applications right and u we
+[01:08:56] focus on bringing resilience scalability
+[01:08:58] and geo distribution or multi-reion
+[01:09:00] deployments to Postgress. Uh and this
+[01:09:02] helps people build modern applications.
+[01:09:04] You can think of multi-reion, genai,
+[01:09:06] edge, these type of applications or to
+[01:09:08] modernize their existing applications
+[01:09:10] that are high value but want to come
+[01:09:12] into the cloudnative world.
+[01:09:14] Um our thesis why like it's always
+[01:09:17] important to ask yourselves if you know
+[01:09:18] why a database exists. We ask ourselves
+[01:09:20] that and what is the differentiation. So
+[01:09:22] if you think of y-axis as how Postgress
+[01:09:25] compatible a database is and the x-axis
+[01:09:28] as truly how cloudnative a database is
+[01:09:31] uh we were born to be at the
+[01:09:34] intersection of those two. There's a
+[01:09:36] line on the yaxis after which you're
+[01:09:39] reusing Postgress code and those
+[01:09:41] databases continue to benefit from
+[01:09:42] Postgress and inherit most of the
+[01:09:44] Postgress innovations. There's a line on
+[01:09:47] the x-axis, the cloudnative uh database
+[01:09:50] innovation threshold to the right of
+[01:09:52] which you can truly go and build
+[01:09:53] cloudnative systems, right? To put names
+[01:09:55] to faces, this is our thesis of the
+[01:09:58] market. You can test it out yourself.
+[01:09:59] You obviously shouldn't trust me. I'm a
+[01:10:01] founder, so you should trust only so far
+[01:10:03] as it goes and extend your own uh you
+[01:10:05] know ideas to this. But anyways, uh the
+[01:10:07] ones above the PG innovation threshold
+[01:10:09] reuse Postgress code, therefore can
+[01:10:11] build along with the Postgress
+[01:10:13] innovation. Otherwise, you're building
+[01:10:14] to it. Um, and those to the right of the
+[01:10:17] cloudnative innovation threshold are
+[01:10:20] architected from the ground up to be
+[01:10:21] shared nothing, cloudnative, highly
+[01:10:23] resilient and available, right? And so
+[01:10:25] we were born after most of these
+[01:10:27] databases. So hopefully we got something
+[01:10:28] right which was to hybridize the best of
+[01:10:30] those two into a single product.
+[01:10:33] Okay, these are again our areas of
+[01:10:35] innovation. Uh, you know, Postgress,
+[01:10:37] distributed, enterprisegrade AI, right?
+[01:10:40] We have a lot of customers. Won't bore
+[01:10:42] you with this. Um I' I'd like to talk
+[01:10:44] about one just one customer here NPCI uh
+[01:10:47] which is the National Payment
+[01:10:48] Corporation of India. So all mobile
+[01:10:50] payments in India are going through a
+[01:10:52] Yogabyte database. Very proud of the
+[01:10:54] achievement as a product as a company.
+[01:10:56] Um but anyways just something to show
+[01:10:58] that you know the level to which it
+[01:11:00] waxes and waines the level to which you
+[01:11:02] need resilience. It is truly uh the case
+[01:11:04] there that resilience availability
+[01:11:06] uptime and scalability equals money
+[01:11:08] right in this example. Um okay so with
+[01:11:11] that let's jump right into uh some of
+[01:11:14] the design principles we wanted to build
+[01:11:16] everything in Postgress no questions
+[01:11:18] asked. So all the Postgress isolation
+[01:11:20] levels the Postgress transactional
+[01:11:22] semantics all of the advanced features
+[01:11:24] and extensions and the ability to do
+[01:11:27] rolling upgrades and downgrades across
+[01:11:28] major Postgress versions. Uh that last
+[01:11:31] one was really hard. It's not something
+[01:11:33] that like as far as I know anyone else
+[01:11:35] really does and it's something that you
+[01:11:37] know we're pretty proud of having
+[01:11:38] implemented. It took a lot of work to to
+[01:11:40] really like you know to bring it to
+[01:11:42] fruition. Uh anyway so these are some of
+[01:11:44] the Postgress features that we support
+[01:11:46] like on the right like all the way to
+[01:11:48] stored procedures and triggers and
+[01:11:49] everything right. So we pretty much our
+[01:11:51] goal is to support everything. Um we
+[01:11:54] also go beyond Postgress we address some
+[01:11:56] of its architectural limitations. there
+[01:11:58] are architectural limitations when it
+[01:12:00] comes to the core database uh features
+[01:12:03] when it comes to scalability your
+[01:12:05] resilience availability DR disaster
+[01:12:07] recovery and multi-reion deployments and
+[01:12:09] security so these are some of the areas
+[01:12:11] that we go ahead and look at in in more
+[01:12:13] detail as it relates to modern
+[01:12:15] applications right and um the same thing
+[01:12:19] when you look at it when you flip the
+[01:12:20] coin and look at it like things like
+[01:12:22] connection pooling and observability and
+[01:12:24] perf tuning when folks come from other
+[01:12:26] systems or build services today like
+[01:12:29] lambda systems they expect a lot of
+[01:12:30] these things right so these are the
+[01:12:32] things we're putting into postgress at
+[01:12:34] an architectural level so uh and I'll be
+[01:12:36] I'm breezing through this section
+[01:12:38] because we can get to the really like
+[01:12:39] you need to know the layout of what
+[01:12:41] we're building in order to talk about
+[01:12:43] some of the details right uh the other
+[01:12:46] piece that we did and this was a
+[01:12:47] foundational thesis like as a way of a
+[01:12:49] quick background I used to work at meta
+[01:12:52] before and at meta what we learned and
+[01:12:55] what we felt was building cloudnative
+[01:12:56] applications is not about SQL and NoSQL.
+[01:12:59] It's about relaxing constraints and
+[01:13:02] driving value by going faster in certain
+[01:13:04] types of scenarios. So it's not SQL or
+[01:13:07] NoSQL. It is about how can you
+[01:13:08] operationalize and get those workloads
+[01:13:10] that are being built to really run well
+[01:13:13] in the cloud or in cloudnative
+[01:13:14] infrastructure. Right? So to that
+[01:13:16] effect, we started with two APIs on top
+[01:13:18] because everybody we spoke to said don't
+[01:13:20] build another goddamn database. So when
+[01:13:23] we really looked into it, we we figured
+[01:13:25] out they meant what they meant to say
+[01:13:27] was don't build a new API. No one
+[01:13:29] understands what a new API will do.
+[01:13:32] However, existing databases like
+[01:13:33] Postgress, like um like you know like
+[01:13:36] say Oracle, all of these things,
+[01:13:38] you have an intuition as to when to pick
+[01:13:40] them. Uh and so that's how the industry
+[01:13:42] operates. So you know we started out
+[01:13:45] with two um one was Apache Cassandra
+[01:13:48] based and the other is obviously
+[01:13:50] Postgress and now the document DB folks
+[01:13:52] at Azure are building a API um
+[01:13:55] like uh on top of Postgress so this is
+[01:13:57] something we inherit and we can
+[01:13:59] obviously being a scalable and resilient
+[01:14:01] version of Postgress that's pretty
+[01:14:02] exciting there's uh Oracle as well that
+[01:14:05] we're working with some folks on and and
+[01:14:06] the industry in general is building more
+[01:14:08] and more of these emulation layers uh
+[01:14:10] presumably because GI is making it
+[01:14:12] faster to go in that direction. Right?
+[01:14:14] So this is something that we're just
+[01:14:15] seeing as a trend.
+[01:14:17] Okay. So let's take a look at the
+[01:14:19] architecture at a glance. Um at the
+[01:14:21] highest level we wanted to achieve
+[01:14:24] Postgress functionality, right? So the
+[01:14:26] way we did this was we took the left and
+[01:14:28] moved it to the right. Left is a very
+[01:14:30] very high level view of what Postgress
+[01:14:32] is. Uh think of the query processing
+[01:14:35] engine of Postgress as the green box and
+[01:14:37] the storage components as the blue box
+[01:14:40] below. So we retained the green box,
+[01:14:43] right, and made it stateless and to be
+[01:14:45] able to run on any node and replaced the
+[01:14:48] blue box with our own storage layer,
+[01:14:50] which is a distributed transactional
+[01:14:52] storage layer, right? So that means
+[01:14:54] you're now the blue the the blue box now
+[01:14:57] is distributed and replicated and it
+[01:14:59] gives the information to the green boxes
+[01:15:01] above in the way that Postgress expects
+[01:15:04] it as a tupil. So green box just does
+[01:15:06] its thing and fires off queries. the the
+[01:15:08] the storage layer does its um you know
+[01:15:11] all of the the filtering fetching all of
+[01:15:13] that stuff and presents the data in the
+[01:15:15] way the green boxes would have had them
+[01:15:17] in the left right like the the postgris
+[01:15:19] query processing engine obviously if you
+[01:15:21] do this you get into uh it works but the
+[01:15:24] problem is it doesn't work very well
+[01:15:25] from a performance standpoint because
+[01:15:27] you're now reading all the data up to a
+[01:15:29] single node and then doing a bunch of
+[01:15:31] processing there so that doesn't work
+[01:15:33] really well so the next step immediately
+[01:15:36] that comes up is to start doing these
+[01:15:38] pushouts, how can you push more and more
+[01:15:41] operations to where the data is? How can
+[01:15:43] you be smarter about how little data you
+[01:15:46] can transfer between these uh nodes,
+[01:15:48] right? That becomes the name of the
+[01:15:50] game. And so that's something that we
+[01:15:52] focused on quite a bit. And and I'd say
+[01:15:54] all of these things are still going on
+[01:15:55] because Postgress is improving and we're
+[01:15:58] we're still bringing more of the
+[01:15:59] Postgress features into Yugabyte. So
+[01:16:01] these are all like a continuum, right?
+[01:16:02] This is the way it continues to work.
+[01:16:05] And u another aspect that we look at is
+[01:16:08] how can we match the performance of
+[01:16:10] Postgress and you know this is where it
+[01:16:12] gets into really interesting stuff. Uh
+[01:16:15] Yugabyte DB is a log structured uh
+[01:16:18] storage engine and uh Postgress uses a B
+[01:16:20] tree format to write into disk. Um I
+[01:16:23] hope folks are familiar if not like you
+[01:16:25] know maybe ask Andy he'll tell you at in
+[01:16:27] a different class but uh uh log
+[01:16:31] structured is really good for SSDs and
+[01:16:33] uh it has a lot of good properties.
+[01:16:35] However, the Postgress costbased
+[01:16:37] optimizer and its performance is tied at
+[01:16:39] the hip to the way it stores data on
+[01:16:41] disk. Right? So this is something that
+[01:16:43] we've been looking at and this is almost
+[01:16:44] a two-year journey for us where think of
+[01:16:47] this as the different um access patterns
+[01:16:50] that Postgress exposes and we started
+[01:16:52] out at a pretty low number and you know
+[01:16:54] we're working our way to a pretty pretty
+[01:16:55] high number right in terms of what we're
+[01:16:57] able to support uh the number of uh
+[01:17:00] comparable operations we're able to
+[01:17:03] support with respect to Postgress as
+[01:17:05] well as the costbased optimizer. In this
+[01:17:08] case Postgress works on a single node.
+[01:17:09] So the way it sets up a query plan and
+[01:17:11] the way it executes any simple query
+[01:17:13] that a any query that a user does is
+[01:17:16] often optimized for a single node and we
+[01:17:20] are a distributed database which goes
+[01:17:22] after a distributed plan. However, a lot
+[01:17:24] of our users complain that look this was
+[01:17:26] a simple query that was just a couple of
+[01:17:28] gigabytes on Postgress. It would run on
+[01:17:29] my laptop. It doesn't really work. It's
+[01:17:31] like a 100 times worse on Yugabyte.
+[01:17:33] Well, the problem is we sharted it and
+[01:17:35] moved it all over the different nodes.
+[01:17:37] And if you're f fetching a thousand rows
+[01:17:39] and you're returning one, fetching a
+[01:17:41] thousand rows from local disk, you know,
+[01:17:42] your order of access is in the
+[01:17:44] microsconds. So thousands or thousand
+[01:17:46] rows would be in the order of
+[01:17:47] milliseconds and you filter it down to
+[01:17:49] one row and you return it. Great.
+[01:17:51] Fetching a thousand rows over the
+[01:17:52] network is in the order of milliseconds.
+[01:17:54] So that would be in the order of
+[01:17:56] hundreds of milliseconds to a second. So
+[01:17:58] your performance sucks, but no use
+[01:18:00] telling the user that cuz they're
+[01:18:01] thinking it's just a thousand rows. How
+[01:18:02] bad can it be? Right? So we had to do an
+[01:18:05] adaptive thing where we're able to match
+[01:18:07] Postgress at the lower you know ends of
+[01:18:10] scale when scale isn't big with while
+[01:18:12] providing resilience but be able to
+[01:18:14] adapt to how to automatically shard and
+[01:18:17] scale right and we had to build a whole
+[01:18:19] framework for it to estimate what
+[01:18:20] percentage of the time we picked the
+[01:18:22] best plan versus Postgress and we use
+[01:18:24] the taco uh framework like there's a
+[01:18:26] there's a academic paper on it we use
+[01:18:28] that paper to build a framework to then
+[01:18:30] go test it and so this is one of the
+[01:18:31] parts of our testing suite
+[01:18:34] Okay, Postgress is a single node and if
+[01:18:37] you put two nodes of Postgress, people
+[01:18:38] will tell you why don't you deploy PG
+[01:18:40] bouncer. Simple, right?
+[01:18:42] >> We're kind of short of time. You have
+[01:18:43] like a last slide or something you want
+[01:18:44] to show.
+[01:18:45] >> Yeah. So, um, so I wanted to say
+[01:18:47] connection manager, building it in um,
+[01:18:50] sharding vector indexes and attaching it
+[01:18:52] to the data. These are some of the
+[01:18:53] topics that we work on. Looking forward,
+[01:18:56] we're looking at a whole bunch of uh,
+[01:18:58] you know, future things like, you know,
+[01:19:00] putting in BM25, other types of indexes,
+[01:19:02] so on and so forth. A whole bunch of
+[01:19:03] stuff. I had something interesting that
+[01:19:06] maybe if you had five minutes, Andy,
+[01:19:08] I'll share. If not, it's okay. It was
+[01:19:09] about a few interesting architectural
+[01:19:11] war stories. I just have three, four of
+[01:19:13] them, but if it's interesting, I'll show
+[01:19:14] it. Otherwise, I'll skip.
+[01:19:16] >> I mean, it's interesting to me. We're
+[01:19:17] out of time. The students have other
+[01:19:19] classes. They got to run through. So,
+[01:19:20] got it. Got it. Okay. No worries. We'll
+[01:19:22] do that another time. Yeah.
+[01:19:23] >> Any questions for Karthik?
+[01:19:26] And again that we posted on on Piaza for
+[01:19:29] their interest and things like that.
+[01:19:30] They're two of my best students master
+[01:19:33] student undergrad are are currently at
+[01:19:35] uh at Yugabyte. I had some of my best
+[01:19:37] students do internship there and they've
+[01:19:39] all been very happy. Okay. All right.
+[01:19:41] Give a round of applause.
+[01:19:44] Thank you, man. Thank you so much for
+[01:19:45] being here. All right. Have a good
+[01:19:47] weekend. Remember homework 2 is due on
+[01:19:50] Sunday.
+[01:19:53] That's when clips acquat
+[01:20:00] [Music]
+[01:20:15] the fortune maintain flow
+[01:20:19] with the brain.
+[01:20:21] [Music]

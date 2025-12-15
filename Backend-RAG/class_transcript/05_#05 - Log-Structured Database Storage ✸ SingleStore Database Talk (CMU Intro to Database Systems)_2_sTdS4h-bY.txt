@@ -1,0 +1,2125 @@
+[00:00:00] [Music]
+[00:00:06] I'm still
+[00:00:08] ass.
+[00:00:11] [Music]
+[00:00:25] >> All right, give it up for uh DJ Cash.
+[00:00:28] Uh,
+[00:00:30] you looks well.
+[00:00:32] >> Thank you. Thank you.
+[00:00:33] >> Uh, why?
+[00:00:34] >> Uh, I'm just coming back from court. Um,
+[00:00:37] trying to get back payments on my
+[00:00:39] royalties.
+[00:00:40] >> Court.
+[00:00:41] >> Yeah.
+[00:00:41] >> Did you win or you don't know yet?
+[00:00:43] >> I'm not too sure. I'll let you know next
+[00:00:44] week.
+[00:00:44] >> Okay. Uh, well, there's there's a lot of
+[00:00:47] announcements. Um, actually announcing
+[00:00:50] for you as well. Uh, you have a radio
+[00:00:52] show starting this week.
+[00:00:53] >> I do. I do on Sunday. this Sunday from 1
+[00:00:56] to 2 p.m. I have a show starting from um
+[00:01:00] WRCT.
+[00:01:01] You guys should all walk in.
+[00:01:03] >> All right. This Sunday, DJ Cash is on
+[00:01:05] the radio. Uh are they paying you or No.
+[00:01:08] >> No.
+[00:01:09] >> All right. You got to work on that.
+[00:01:10] Okay. Um for you guys in the class, uh
+[00:01:14] homework 2 is going to go out today. Uh
+[00:01:16] that'll be on the 21st. Project one got
+[00:01:19] released yesterday. Uh and that's going
+[00:01:21] to be due on September 29th. Has anybody
+[00:01:24] looked at project one yet?
+[00:01:26] Any questions about project one?
+[00:01:30] So, we'll announce the resitation
+[00:01:31] that'll be next week. Uh, but all the
+[00:01:33] files and everything should be should be
+[00:01:35] uh on GitHub. So, pull down latest
+[00:01:37] version and make sure you're working off
+[00:01:38] that that codebase.
+[00:01:40] And then as I said uh last class uh next
+[00:01:43] Monday and Tuesday on the 16th and 17th
+[00:01:46] we are having our uh industry affiliates
+[00:01:48] visit day. So a bunch of database
+[00:01:49] friends from various companies are
+[00:01:51] coming to campus uh to give talks and
+[00:01:53] meet with you guys. So 15th will be
+[00:01:55] research talks and poster sessions with
+[00:01:57] students and other researchers at CMU.
+[00:01:59] Um and then on the 16th in the morning
+[00:02:02] before like 12:30 there'll be about
+[00:02:04] three sessions of different talks from
+[00:02:06] the companies. You can talk to them
+[00:02:07] about you know internships and full-time
+[00:02:09] positions. And like I said we'll send
+[00:02:10] them your resumes uh if you fill out the
+[00:02:12] spreadsheet that that I posted on Patza.
+[00:02:14] Okay. Yes. questions
+[00:02:17] and times
+[00:02:18] >> question is is a list of research talks
+[00:02:19] and times. Yes, that link uh in the
+[00:02:22] slides that link will take you to the
+[00:02:24] page. We don't have every the finalized
+[00:02:26] schedule is not a not ready yet, but
+[00:02:28] that'll be posted uh probably tomorrow
+[00:02:30] and then for the uh company sessions
+[00:02:33] once everyone fills out the form
+[00:02:34] tomorrow, we'll do we'll we'll figure
+[00:02:36] out what the actual optimal uh ordering
+[00:02:39] will be.
+[00:02:40] Okay,
+[00:02:42] any other questions?
+[00:02:45] All right. So,
+[00:02:48] this is very unusual. Uh, but there was
+[00:02:50] very, very, very huge news today in
+[00:02:53] databases like two hours ago.
+[00:02:56] Anybody know what it is? Like
+[00:02:57] groundbreaking news, like the biggest
+[00:02:59] news story in your lifetime.
+[00:03:02] Nobody.
+[00:03:05] Larry Ellson, the founder of Oracle, is
+[00:03:07] now the officially the the richest
+[00:03:09] person in the world. He dethroned uh uh
+[00:03:13] Elon Musk.
+[00:03:16] >> What's that?
+[00:03:18] >> Who?
+[00:03:21] >> I don't I don't know. He doesn't do
+[00:03:22] databases, right? This guy does, right?
+[00:03:24] All right. Larry Ellison is like the
+[00:03:27] like the OG of database money, right?
+[00:03:30] He's again now he's the richest person
+[00:03:31] in the world. It's all paid for by
+[00:03:33] databases. He owns a Hawaiian island
+[00:03:35] paid for by databases and like a big
+[00:03:37] one, right? Not the one that had all the
+[00:03:38] lepers, right? one you could actually
+[00:03:39] see from like Maui. Uh he bought his son
+[00:03:42] a from his
+[00:03:45] fourth marriage. He bought a son from
+[00:03:46] his fourth marriage uh a movie studio,
+[00:03:49] right? He got married last year to new
+[00:03:51] uh the woman she's 36, he's 80,
+[00:03:54] whatever. Like that's his thing, right?
+[00:03:56] This is a big deal. Like I know he's
+[00:03:58] worked so hard for it. Um and it really
+[00:04:00] means a lot to him and I sent an email
+[00:04:02] congratulating him. Um but this is it.
+[00:04:04] This is why we do databases. This right
+[00:04:06] here, right? So, I mean, I I would do a
+[00:04:09] round of applause for him, but he's not
+[00:04:10] here, so that'd be kind of weird. But
+[00:04:12] this is again, he he's been bumping back
+[00:04:14] and forth between fifth and seventh, and
+[00:04:16] then earlier in the year, he went to
+[00:04:17] third to second. So, this is this this
+[00:04:20] is a big deal. And I mean, I'm
+[00:04:24] I get emotional, but this this is this
+[00:04:27] means a lot. Okay. All right. So, we're
+[00:04:30] not there yet. We're not at Larry's
+[00:04:31] level. Um, but we'll we'll get there.
+[00:04:36] All right. So last class we spent time
+[00:04:38] talking about the buffer manager, right?
+[00:04:40] We said that this was this component
+[00:04:41] inside of every database system. If
+[00:04:43] you're not using MAPAP, you shouldn't
+[00:04:44] be, right? If you're going to manage
+[00:04:45] your own memory in your database system,
+[00:04:47] it's the component that is responsible
+[00:04:49] for uh storing pages database pages from
+[00:04:53] disk into memory, handing off pointers
+[00:04:55] out to other parts of the system,
+[00:04:57] keeping track of like the reference
+[00:04:58] count or who's whether they're dirty or
+[00:05:00] not, right? doing all the all the the
+[00:05:02] the the the machinery that allows allow
+[00:05:06] us to have the illusion that our
+[00:05:07] database is actually can fit memory even
+[00:05:09] though it may not. Right? So today's
+[00:05:12] class I want to quickly go over some uh
+[00:05:15] three optimizations we missed at the end
+[00:05:16] of last class. Then we're going to jump
+[00:05:18] back now to the disk level and refresh
+[00:05:21] your memory about what tuple oriented
+[00:05:22] storage looks like. And then we're look
+[00:05:23] at two alternative methods, index
+[00:05:25] oriented storage and log structure
+[00:05:27] storage. And then end of class today
+[00:05:28] we'll finish up with a talk from the
+[00:05:31] single store guys. All right, which
+[00:05:33] actually is not a dis started off not as
+[00:05:35] a discordant database was an inmemory
+[00:05:37] database uh where the primary storage
+[00:05:39] location is the database was inmemory.
+[00:05:41] They switched that but um but it you
+[00:05:44] know it's it's a pretty pretty
+[00:05:46] state-of-the-art system and the founder
+[00:05:48] of single store was actually the founder
+[00:05:49] of Neon uh as well who got bought by
+[00:05:52] data bricks for a billion dollars last
+[00:05:55] year. Uh so again
+[00:05:58] Larry's not Larry Ellis is not the only
+[00:05:59] one who makes a lot of money to do
+[00:06:00] bases. Okay. So all right so last class
+[00:06:03] again we were trying to quickly go over
+[00:06:05] the buffer stuff at the end or the dis
+[00:06:06] disculing stuff and I want to come back
+[00:06:08] and talk about buffer optimizations.
+[00:06:09] Again these are going to be examples of
+[00:06:10] things your data system can do because
+[00:06:13] it has full control of the memory and
+[00:06:14] what's what's being read and written
+[00:06:16] from disk. Again these are things that
+[00:06:18] the operating system is not going to be
+[00:06:19] able to do very easily because it
+[00:06:20] doesn't know what queries are running
+[00:06:22] and what the queries want to do. But we
+[00:06:24] as the data system, we know, right?
+[00:06:26] Because because SQL is declarative. We
+[00:06:27] know what the the query plan is going to
+[00:06:29] look like. Therefore, there's a bunch of
+[00:06:30] tricks we can do to make things better.
+[00:06:34] So the first one is is maintain multiple
+[00:06:36] buffer pools. So I talked about this
+[00:06:38] buffer pool being like this this region
+[00:06:39] of memory and every we're going to put
+[00:06:40] our database pages in there. It doesn't
+[00:06:42] have to be logically organized as a
+[00:06:44] single block of memory. We actually
+[00:06:46] could break it up into to sort of sub
+[00:06:48] subarrays and have a page table per per
+[00:06:52] subarray. and have different policies
+[00:06:55] and algorithms used to optimize those
+[00:06:56] different uh buffer pools. Right? So you
+[00:06:59] can have one per for per database, one
+[00:07:01] for per for table, you can have one per
+[00:07:03] like page type. If it's going to be
+[00:07:05] indexes versus versus table pages, you
+[00:07:07] split those up, right? And so the the
+[00:07:11] benefit that we're going to get is that
+[00:07:12] because now we can tailor the buffer
+[00:07:13] pool's internal algorithms based on how
+[00:07:15] we know the the rest of the system wants
+[00:07:18] to use the data that's going to put in
+[00:07:19] that buffer pool, we can make better
+[00:07:21] decisions about what to evict and when
+[00:07:22] to evict. And we're actually going to
+[00:07:24] reduce latch contention uh when we have
+[00:07:26] multiple workers trying to access the
+[00:07:28] same data structures at the same time
+[00:07:29] because now things are are split across.
+[00:07:31] So this is something you'll see in the
+[00:07:33] high-end systems, the enterprise systems
+[00:07:35] like in DB2 you can go crazy like from
+[00:07:37] IBM system like you can declare a buffer
+[00:07:39] pool per table, per index, per uh per
+[00:07:42] blob type like you you do a lot of very
+[00:07:44] sophisticated things. Um my SQL has a
+[00:07:47] pretty simple one. We we'll see that in
+[00:07:48] a second.
+[00:07:51] So there's basic two ways to do this.
+[00:07:53] You can just say, "All right, well, if I
+[00:07:55] have a so I know I got to do lookups on
+[00:07:58] record IDs or object IDs, um, like the
+[00:08:01] object could be like a table or or or
+[00:08:03] index. Then when I do my my lookup to
+[00:08:07] try to get that page that this object
+[00:08:09] belongs to, I'm showing some arbitrary
+[00:08:11] command get record whatever." Like it's
+[00:08:13] not really it's not really SQL
+[00:08:15] obviously. Um, but you can pick apart
+[00:08:17] this record ID, look at maybe the first
+[00:08:20] portion of it, that's the object ID, and
+[00:08:22] use that to decide which of these
+[00:08:24] different uh buffer pools are going to
+[00:08:25] have the data that you want. And the
+[00:08:27] thing about the guarantee if you have
+[00:08:28] multiple buffer pools is that any page
+[00:08:30] that we want, any like physical page can
+[00:08:33] only exist in only one one and only one
+[00:08:36] buffer pool at a time, right? You don't
+[00:08:37] want to have two copies because then if
+[00:08:39] you do two writes, how do you keep those
+[00:08:40] in sync, right? We don't want to do
+[00:08:41] that, right? So again with a simple
+[00:08:44] mapping we can say okay this is the this
+[00:08:46] is what we want for this object ID and
+[00:08:47] we know it's in bufferful one and go get
+[00:08:49] it over there.
+[00:08:51] Another simple trick and this is what my
+[00:08:52] SQL does is that you can just take
+[00:08:54] whatever the record ID is that it's
+[00:08:55] trying to find like I want page one two
+[00:08:57] three uh or record one 123 just hash it
+[00:09:01] and modify the number of buffer pools
+[00:09:03] that you that you allocate in the
+[00:09:04] beginning and then modify that and it
+[00:09:06] just tells you where to go find it.
+[00:09:08] Again, this has the same property
+[00:09:09] guarantee that any page that we're
+[00:09:11] looking for can only be in one of these
+[00:09:12] buffer pools at a time,
+[00:09:15] right? I'm showing two buffer pools. You
+[00:09:17] could have hundreds,
+[00:09:19] right? And then there's a disculer
+[00:09:21] underneath to make sure that if you're
+[00:09:22] trying to all these buffer pools
+[00:09:24] instances are trying to write data, read
+[00:09:26] and write data at the same time. You
+[00:09:27] don't want to do random uh have a bunch
+[00:09:29] of random IO. The disculer can see all
+[00:09:31] the requests and then sort things and
+[00:09:33] try to do it in a more efficient manner.
+[00:09:36] Another
+[00:09:37] trick we can do is prefetching. So
+[00:09:39] again, we haven't really talked about
+[00:09:40] what query plans look like. Just assume
+[00:09:41] that it's the it's the the the program
+[00:09:44] that we know we're going to execute in
+[00:09:45] order to run some some query, right? So
+[00:09:47] we know everything ahead of time what's
+[00:09:48] going to happen. So if we see a scan
+[00:09:52] occurring on on data, right? So query
+[00:09:54] one's going to start. First thing it
+[00:09:55] needs is page zero and then it starts
+[00:09:58] reading uh page one and go read that.
+[00:10:00] But if you recognize that we had this
+[00:10:02] scentual access pattern, then the
+[00:10:04] database system can say, "Okay, well,
+[00:10:06] you just read page zero and you read
+[00:10:07] page one. I know your query is also
+[00:10:09] going to need page two and page three.
+[00:10:11] So, let me go ahead and prefetch that
+[00:10:13] for you. Put that in the buffer pool
+[00:10:15] while while you're crunching on page
+[00:10:17] page one." Right. Right. Run whatever
+[00:10:20] eviction policy that that we want to
+[00:10:21] run. Put put those pages in there. So
+[00:10:24] then now when the query says, "All
+[00:10:25] right, I'm done with page one. Now we go
+[00:10:27] look at page page two." It doesn't stall
+[00:10:29] and wait to go while you're going
+[00:10:30] fetching from disk. The data you need is
+[00:10:32] already there,
+[00:10:34] right? And you do that for for the rest
+[00:10:35] of pages all the way down.
+[00:10:38] Now, MAPAP can do that. Actually, the OS
+[00:10:40] can do this, right? OS has a way to do
+[00:10:42] you can pass hints to say I want to
+[00:10:44] prefetch as as I'm reading a file. Um,
+[00:10:48] but it can only can prefetch
+[00:10:49] sequentially, right? It can't do
+[00:10:51] anything more sophisticated because it
+[00:10:52] doesn't know what's in these pages.
+[00:10:54] Doesn't know how they're related to each
+[00:10:55] other.
+[00:10:57] So, you can do tricks like this. So say
+[00:10:58] I have a query wants to get uh data
+[00:11:00] within a range and the data system
+[00:11:02] decides okay well I have an index for
+[00:11:04] this I can use that to find the data
+[00:11:06] that I want right assuming some tree
+[00:11:08] dash data structure it's most likely
+[00:11:10] going to be a B+ tree we'll cover that
+[00:11:11] in a few weeks but it doesn't have to be
+[00:11:13] right and along the leaf nodes the data
+[00:11:16] is be sorted in that key order we want
+[00:11:19] so now as my query starts running I read
+[00:11:21] index page zero that's the route that's
+[00:11:23] going to tell me what I want to go left
+[00:11:24] and right now I go down here I go to
+[00:11:26] page one I fetch that in And that that
+[00:11:28] just happened to be sequential in my
+[00:11:30] database file. So yeah, you could
+[00:11:31] potentially prefetch that. But when I
+[00:11:33] get down here to the bottom, I can see
+[00:11:36] that I'm going to scan across the leaf
+[00:11:37] nodes and I know I'm going to need page
+[00:11:38] three and page five and they're not
+[00:11:40] sequential.
+[00:11:42] So if the OS was doing this for us, it
+[00:11:44] would blindly say, "Okay, well, you just
+[00:11:46] read page two, page page one, page two.
+[00:11:48] Let me go get page three for you and
+[00:11:51] three and four." But we actually want
+[00:11:53] three and five. But because we know the
+[00:11:55] content of these pages, we can we can
+[00:11:57] peek ahead and we'll talk about in two
+[00:11:59] weeks few weeks how we do that. Say, oh,
+[00:12:01] we don't actually want four. We actually
+[00:12:02] want five because we're scan log leaf.
+[00:12:04] And we go ahead and prefetch those guys.
+[00:12:08] Right? So again, there's an example
+[00:12:10] because the the data knows what you're
+[00:12:12] trying to do the queries, it's in a
+[00:12:14] better position to make decisions about
+[00:12:15] how to optimize things.
+[00:12:18] All right, the last one I'll talk about
+[00:12:19] is scan sharing. Um, and the idea here
+[00:12:22] is that if we have a query that's
+[00:12:25] running and it's scanning some table and
+[00:12:28] then some other query comes along and
+[00:12:29] wants to scan the same table,
+[00:12:32] rather than just having that second
+[00:12:33] query start from the beginning and just
+[00:12:35] read all the same pages that the first
+[00:12:37] guy just read, we actually can piggyback
+[00:12:40] and ride along the the first query, see
+[00:12:43] all the pages that it sees, and then
+[00:12:44] make a determination whether we want to
+[00:12:46] quit or not or or come back around and
+[00:12:47] find the data that we're looking for.
+[00:12:50] These are sometimes called synchronized
+[00:12:51] scans
+[00:12:53] and again this is done at the lowest
+[00:12:55] level of the system like as as there's
+[00:12:57] some cursor reading pages from page
+[00:12:59] directory or scanning along a table.
+[00:13:01] This is not the same as result caching.
+[00:13:03] Result caching is like I take a query I
+[00:13:05] run a query I produce some output. If
+[00:13:07] that same query shows up I just reuse
+[00:13:08] the same output.
+[00:13:10] This is actually done at the lowest
+[00:13:12] level actually while we're running
+[00:13:13] queries. So this is actually rare few
+[00:13:16] systems support this. again the high-end
+[00:13:18] ones like DB2 uh SQL server terror data
+[00:13:21] and postgress do this postgress is the
+[00:13:23] the exception Oracle again despite him
+[00:13:26] now being the the richest person in the
+[00:13:28] world doesn't have this feature they
+[00:13:29] have something that almost looks like
+[00:13:31] this uh but has this limitation where it
+[00:13:34] the queries have to be exactly the same
+[00:13:36] in order to do to do this piggyback
+[00:13:38] mechanism right so meaning this is from
+[00:13:40] the documentation if you have a query
+[00:13:42] like select star for employees if the
+[00:13:44] next query comes along says select star
+[00:13:46] for employees with capital E, right? Or
+[00:13:48] there's an extra space in there, it
+[00:13:50] doesn't match it. Even though
+[00:13:52] semantically they're the same, the way
+[00:13:54] they're doing this matching is basically
+[00:13:55] hashing the string and seeing whether
+[00:13:56] it's it's identical, right? But high
+[00:13:59] level idea is still the same,
+[00:14:01] right? So say we have this query select
+[00:14:03] select the sum from from a it starts at
+[00:14:06] the beginning. It's going to scan
+[00:14:07] through and read read all the pages that
+[00:14:09] it needs. And then say at at this point
+[00:14:11] we get here, we we we need to read page
+[00:14:13] three. We only have three frames in our
+[00:14:15] buffer pool. So we're going to throw out
+[00:14:16] page page zero. And then while we're
+[00:14:19] doing this now, another query shows up,
+[00:14:21] but basically wants to do uh another
+[00:14:23] sequential scan on the entire table, but
+[00:14:25] now comput a different aggregation. So
+[00:14:27] the so the computation is different, but
+[00:14:28] the data it needs to access is the same.
+[00:14:31] So we could do the stupid thing and just
+[00:14:34] start this second query from the very
+[00:14:36] beginning of of the table, but it's
+[00:14:39] going to read page zero. And that's
+[00:14:40] that's actually the the the the last
+[00:14:43] page we just evicted. So we just go back
+[00:14:45] and now fetch it back in in our buffer
+[00:14:47] pool. But if we're smart about it, we
+[00:14:50] can say, okay, well, these are both
+[00:14:52] doing a sequential scan on A. So I'll
+[00:14:54] just have Q2 tag along Q1. As the cursor
+[00:14:58] reads the table and gets all these these
+[00:15:00] pages, it can do whatever computation it
+[00:15:02] wants. Then at the bottom, Q1 says, I
+[00:15:05] scan the entire table, it goes away. But
+[00:15:07] Q2 says, "Well, I know I I started at
+[00:15:10] the beginning some the sort of halfway
+[00:15:11] point of this table and there's a bunch
+[00:15:13] of more pages I need to go back and
+[00:15:14] read. So, let me start and scan through
+[00:15:16] those all over again."
+[00:15:18] Right?
+[00:15:20] Again, it's we we talked about this
+[00:15:22] thing last class like we want to
+[00:15:24] maximize the amount of computational
+[00:15:25] work we can do on on data pages when we
+[00:15:29] bring them uh from disk into memory. So
+[00:15:32] if I can run two queries or satisfy two
+[00:15:34] queries uh operations uh for one single
+[00:15:38] page fetch that's a huge win for us.
+[00:15:40] Yes.
+[00:15:47] >> Like here
+[00:15:48] >> at this point hasn't seen page one or
+[00:15:51] page two, right?
+[00:15:52] >> Question is so question is at this point
+[00:15:55] here query one has not seen page one or
+[00:15:57] two
+[00:15:58] >> one has. Yes.
+[00:16:02] >> Yes.
+[00:16:06] >> Yeah. So so his statement here is Could
+[00:16:10] could we be more sophisticated and and
+[00:16:12] have QG recognize I need page one and
+[00:16:14] two that's already in memory by going
+[00:16:16] peek in the buffer pool and then say
+[00:16:17] okay let me read those and then
+[00:16:18] piggyback yes in this in this PowerPoint
+[00:16:21] example I'm not showing that but yes
+[00:16:22] that you could do that now who does that
+[00:16:25] I don't think postest does I don't know
+[00:16:27] what the enterprise guys are closed
+[00:16:28] source so I don't know what they do yes
+[00:16:35] >> question is how do you know what pages
+[00:16:36] correspond to what what table page
+[00:16:38] directory tells
+[00:16:40] Yeah, page directory is basically a
+[00:16:41] catalog and says, "Okay, if I want to
+[00:16:42] read table A, here's the directory or
+[00:16:44] here's the pages the file that here's
+[00:16:46] the directory with the files that have
+[00:16:47] the pages that you want to read this."
+[00:16:49] Yeah, we have to know that
+[00:16:54] >> the statement is uh this is a sequential
+[00:16:56] scan. If there's an index scan, it might
+[00:16:58] not do the same read same pages. Yes, if
+[00:17:00] there's a predicate there from a from a
+[00:17:03] where something you you might not want
+[00:17:06] to read everything if there's an index.
+[00:17:07] Sure.
+[00:17:09] Keep it simple. Central scan,
+[00:17:12] right?
+[00:17:15] All right.
+[00:17:16] All right. So again, that that's that's
+[00:17:18] the again the three optimizations I
+[00:17:19] wanted to cover in the buffer pool. So
+[00:17:20] let's jump back now uh and talk about uh
+[00:17:24] the you disk storage again the the
+[00:17:27] database storage on disk. So we said at
+[00:17:29] the beginning of the semester that we're
+[00:17:31] going to focus on what I'll call a disk
+[00:17:32] oriented architecture. Again, we we
+[00:17:34] assume that the primary location of the
+[00:17:35] database when it it is at rest is is on
+[00:17:38] nonvontile storage like a disk. And then
+[00:17:41] we talked about a uh way to break up a
+[00:17:44] database. It's the the entire database
+[00:17:46] in a bunch of these database pages and
+[00:17:48] represent them in in uh as slotted pages
+[00:17:52] where we could stick in tupils and then
+[00:17:54] do lookups later later on.
+[00:17:57] Right? And so we discussed the page
+[00:17:58] layout like so that page layout would be
+[00:18:01] again what are actually in the the pages
+[00:18:03] so what's in the pages that we're
+[00:18:04] storing in in our in our in our database
+[00:18:07] files right and we talk again oriented
+[00:18:09] storage that was the slotted page
+[00:18:11] architecture where the the pages are
+[00:18:14] really all about storing tupils and we
+[00:18:17] have this indirection layer within uh
+[00:18:19] each page allows us to move data or
+[00:18:22] tupils around with within a single page
+[00:18:23] itself.
+[00:18:25] So today I want to now look at two
+[00:18:26] alternatives. Again we'll refresh what a
+[00:18:28] tuporned storage looks like. Um but then
+[00:18:31] we'll we'll jump into the the the new
+[00:18:33] stuff for today. Right? And these again
+[00:18:36] these are going to be alternative ways
+[00:18:37] to store data uh for tables in a
+[00:18:40] database.
+[00:18:42] So again slotted page I said this is the
+[00:18:44] most common layout for uh for databases
+[00:18:47] that that are row oriented. Next class
+[00:18:49] we'll discuss what that means in more
+[00:18:51] detail. Basically, we're going to take
+[00:18:52] any tupil and assuming we can sit fit it
+[00:18:55] to this page and we're going to sort
+[00:18:57] from beginning to end inside that page.
+[00:18:59] And then inside that page, we have this
+[00:19:01] header that tells us some metadata about
+[00:19:03] what's in the page like a check sum, a
+[00:19:04] version number, so forth. Uh then
+[00:19:07] there'll be a slot array at the
+[00:19:09] beginning that uh and the all the tupal
+[00:19:12] data at the bottom. And the slot array
+[00:19:13] is going to have basically just record
+[00:19:14] offsets inside the page that tells us
+[00:19:18] where to jump to to find the beginning
+[00:19:19] the beginning point for every single
+[00:19:20] tupil. And we said the slot array is
+[00:19:23] allowed to grow from the from the
+[00:19:26] beginning to the end. And the the the
+[00:19:28] tupil data is going to grow from the end
+[00:19:30] to the beginning. This is way Postgress
+[00:19:33] does this. Uh this is way I think the
+[00:19:35] textbook might describe this. Other
+[00:19:36] textbooks might might reverse it. In the
+[00:19:39] end it doesn't matter whether the slot
+[00:19:40] array or the tupal data is on the top or
+[00:19:42] the bottom the the high level ID is the
+[00:19:44] same right and again and the slot array
+[00:19:47] is providing us indirection that allows
+[00:19:49] us to change the position of of tupil so
+[00:19:52] then within the page itself right we
+[00:19:55] don't want to move it to another page um
+[00:19:57] because that we may have to but that's
+[00:19:59] not we're not focusing on that yet and
+[00:20:01] this allows us to then be able to like
+[00:20:02] do things like oh I'll delete this tupil
+[00:20:05] here and then I can do compaction and
+[00:20:08] slide this tupil over here to fill in
+[00:20:09] the the space, right? And all I have to
+[00:20:11] do now is update the slot array to tell
+[00:20:13] me where the offset is for that tupole I
+[00:20:14] just moved. And I don't have to update
+[00:20:16] anything else outside the system or
+[00:20:18] outside this page itself.
+[00:20:23] Then we talked about record IDs and this
+[00:20:26] was the way that we were going to
+[00:20:28] physically find a a tupil with within
+[00:20:32] our database, right? And it's going to
+[00:20:34] be some combination of like a file name
+[00:20:36] or file ID uh a page ID and then a slot
+[00:20:40] number within that page.
+[00:20:42] Right? So the the page directory thing
+[00:20:45] he was asking about before they were
+[00:20:46] asking about before that'll store the uh
+[00:20:50] the file ID
+[00:20:52] uh for for some object like if I want
+[00:20:54] table fu here's the file where to go
+[00:20:56] find it and then if I if I want page one
+[00:20:59] two three depending on the addressing
+[00:21:01] scheme the data system uses it could
+[00:21:03] just be an offset within the file or
+[00:21:05] could just be the file name itself might
+[00:21:06] have the page number right all that's
+[00:21:09] within the page directory yes
+[00:21:10] >> or if you have like more rows The
+[00:21:16] >> question is what if you have more rows
+[00:21:18] than the size of the ID? Um I mean it's
+[00:21:21] a 64-bit number. Well, hold up.
+[00:21:24] >> In in Oracle, it's a 10 byt number,
+[00:21:27] right? That's pretty big.
+[00:21:29] >> Well,
+[00:21:31] >> so ingress is a conversational system
+[00:21:33] from like 1974.
+[00:21:36] >> Postgress is Yeah. So six bytes
+[00:21:42] >> s is would you run out of six it's a
+[00:21:44] pretty big that would be a pretty big
+[00:21:45] table. Yeah,
+[00:21:47] >> but in theory, yes, you you could
+[00:21:48] there's other limitations too, right? So
+[00:21:50] like
+[00:21:53] >> uh the is not just for one table, it's
+[00:21:55] the whole database. Now, this would be
+[00:21:56] for depending on the scheme you're
+[00:21:58] using. This could be the for the entire
+[00:22:01] database. It could be for a single
+[00:22:03] table, right? I know I want table foo
+[00:22:06] and here's the page ID for it.
+[00:22:07] Therefore, I know how to find that.
+[00:22:10] Right?
+[00:22:11] There's other limitations we're not
+[00:22:12] going to talk about. Like in in
+[00:22:14] Postgress, you can only have two to the
+[00:22:15] 16 uh columns in a table. Oracle
+[00:22:19] famously only lets you have a thousand
+[00:22:20] because somebody hardcoded it, right? It
+[00:22:22] used to be like 200 and then they they
+[00:22:24] they spent a year trying to fix it to to
+[00:22:26] go to a thousand, but that was 10 years
+[00:22:28] ago. No one's going to change it again.
+[00:22:29] Like it's like stupid things like that.
+[00:22:30] Um but yeah, you you you're very
+[00:22:33] unlikely to run out of space for this.
+[00:22:35] Um there's other tricks you do if you
+[00:22:37] get around this. Like in case of
+[00:22:38] Postgress, you can you can have a you
+[00:22:41] can partition a table. It's like make
+[00:22:43] here's like here's a parent table and
+[00:22:45] then within that I have like sub table.
+[00:22:46] So logically it looks like a single
+[00:22:48] table but each one has their own right
+[00:22:50] there. There's ways to get around it.
+[00:22:55] >> Say it again.
+[00:22:58] >> Question is for a row store data system
+[00:23:00] would it make sense to have a thousand
+[00:23:00] columns? People do it. Sure. Why not?
+[00:23:06] Right. There's easily applications that
+[00:23:09] have a thousand columns. Yeah.
+[00:23:11] Enterprise stuff is nasty. Like anything
+[00:23:13] from like the SAP enterprise resource
+[00:23:16] ERP thing, the thing they make a lot of
+[00:23:18] money on. That thing is insane, right?
+[00:23:20] Because think of like an application
+[00:23:21] running for like 30 years. Every two
+[00:23:24] years someone's got to add like 10
+[00:23:25] columns because something gets else
+[00:23:26] added. Then before you know it, you're
+[00:23:27] at a thousand easily.
+[00:23:29] To your point, I mean like it's it's a
+[00:23:32] long tail, right? There's gonna be most
+[00:23:34] most tables going to have maybe I don't
+[00:23:35] know 20 30 columns but there's easily
+[00:23:38] stuff out there that that'll have that
+[00:23:39] many.
+[00:23:44] >> The same is at that point you would have
+[00:23:45] a single row across multiple pages. Uh
+[00:23:49] depends on what the columns are.
+[00:23:55] >> There are multiple pages.
+[00:23:59] >> Sure. Like but the data system can
+[00:24:00] handle that.
+[00:24:03] Yeah, for our discussion here, we we've
+[00:24:05] simplified it and say like we assume
+[00:24:06] it's all going to sit in a single page,
+[00:24:08] but actually we talked about large large
+[00:24:09] data record or large attributes. Now you
+[00:24:11] just have a pointer to something else to
+[00:24:13] another page and then at runtime the D
+[00:24:16] knows how to stitch it back together.
+[00:24:20] All right, so
+[00:24:22] in this tuple oriented storage reads are
+[00:24:24] pretty simple.
+[00:24:26] All right. If I want to get an existing
+[00:24:29] tupil,
+[00:24:31] then I'm gonna get its record ID. I'm
+[00:24:33] not saying how to get that just yet, but
+[00:24:35] assume there's some index. There's
+[00:24:36] something that's going to tell me for,
+[00:24:37] you know, I want I want your email for
+[00:24:39] your email address. Here's the record ID
+[00:24:40] that has your student record. There's
+[00:24:42] something there. It's the index that's
+[00:24:43] going to tell us how to find that. But
+[00:24:44] for our purposes right here, we don't
+[00:24:45] care. So again, how do we find this? We
+[00:24:47] go look in the page directory. Go get
+[00:24:50] the the find the location of the page we
+[00:24:51] want. retrieve that that page we want
+[00:24:54] from that location on disk if it's not
+[00:24:55] already in memory and then now we use
+[00:24:57] the record ID's offset uh that's
+[00:24:59] embedded inside it to jump inside the
+[00:25:01] page within the slot array to find the
+[00:25:02] data we're looking for rights are reads
+[00:25:05] are pretty simple
+[00:25:08] the
+[00:25:11] in this case here we have to do the
+[00:25:14] lookup in the index to find the data
+[00:25:17] that we're looking for so we kind of do
+[00:25:19] a lookup in this index that's going to
+[00:25:21] tell
+[00:25:22] the for a given logical key like your
+[00:25:24] email address when we when we look at
+[00:25:26] the index it's going to come back and
+[00:25:27] say here's the record ID then we do a
+[00:25:29] lookup to go find the data that we want
+[00:25:31] given that record ID within the within
+[00:25:33] the page but what if we didn't have to
+[00:25:36] do that what if we didn't have to do a
+[00:25:38] separate look lookup in the index and a
+[00:25:40] separate lookup in the the table heap
+[00:25:44] so this is called index organized
+[00:25:45] storage and the basic idea is that we're
+[00:25:48] going to use the index as the storage
+[00:25:50] for the table itself
+[00:25:53] So again what is what is index doing for
+[00:25:55] us? It's it's a mapping from a key to a
+[00:25:57] value. In this case here would be a
+[00:25:58] logical key like your email address like
+[00:26:00] the primary key or something and then
+[00:26:01] the value is going to be the record ID
+[00:26:03] if it was a tuple storage. With index or
+[00:26:06] organized storage in the leaf nodes
+[00:26:08] instead of storing a record ID we're
+[00:26:10] just going to store the tupil itself.
+[00:26:13] So again I'm not telling you what data
+[00:26:15] structure this is going to be but
+[00:26:16] typically it's going to be a B+ tree
+[00:26:18] could be a skip list. Could be a try. It
+[00:26:19] could be you know what whatever your
+[00:26:20] favorite uh tree data structure you
+[00:26:22] want. So then now within again within
+[00:26:25] the pages sorry the leaf nodes it's
+[00:26:27] going to look a lot like the slot array
+[00:26:30] from the two oriented storage
+[00:26:33] but in the beginning the the header
+[00:26:35] we're going to have this key to offset
+[00:26:36] array mapping
+[00:26:38] that we have to keep in sorted order
+[00:26:40] based on the key and these are just
+[00:26:42] going to again be offsets within the
+[00:26:43] page that gives us the the tupil that we
+[00:26:45] want.
+[00:26:46] So now when I do that lookup based on
+[00:26:48] your email address, I would scan down
+[00:26:50] through the the inner nodes in the the
+[00:26:52] data structure, land on a leaf node,
+[00:26:55] then do a binary search inside this key
+[00:26:58] offset array, and then that'll find the
+[00:27:00] the record that you're looking for. And
+[00:27:02] I don't have to do that separate lookup
+[00:27:03] in like the page directory to go find uh
+[00:27:06] your your tupil for given a record ID.
+[00:27:09] Everything's right there in in the leaf
+[00:27:10] node.
+[00:27:13] So SQLite famously or SQLite and my SQL
+[00:27:15] with InnoDB famously give you this to
+[00:27:17] you. Uh like that's basically how they
+[00:27:20] organize it is how they organize the
+[00:27:21] data in their system. Um
+[00:27:24] the with Oracle and SQL server by
+[00:27:27] default you get the slot slot of page
+[00:27:29] architecture that I said before. Uh but
+[00:27:31] when you create a table you can tell it
+[00:27:32] I want to do index organized storage.
+[00:27:34] All right. So they'll support this as
+[00:27:37] well.
+[00:27:39] And just like again just like before the
+[00:27:40] the the key offset grows one way and the
+[00:27:42] tub grows another way.
+[00:27:46] Okay. Well,
+[00:27:48] so that solves the the problem we had in
+[00:27:50] reads before where I wanted to do a
+[00:27:53] uh I want to find a record or a tupil
+[00:27:56] based on the record ID. I have to go
+[00:27:58] look in the index and I then have to
+[00:28:00] find the two the the
+[00:28:03] for given key look up the index and the
+[00:28:04] index tells me the record ID and from
+[00:28:06] the record ID I can go the the page that
+[00:28:08] has the two data
+[00:28:10] uh but it's still we still have to worry
+[00:28:12] about rights.
+[00:28:15] So to do an insert, it's pretty
+[00:28:18] straightforward,
+[00:28:19] right? We just go check the page
+[00:28:21] directory to see whether there's a free
+[00:28:23] page for us where we has enough space
+[00:28:25] where or if there's a there's a page
+[00:28:27] that has enough free space for the the
+[00:28:29] tupil we want to store. Again, we know
+[00:28:31] the size of the data we're storing
+[00:28:33] because SQL is declarative. We know
+[00:28:34] exactly what you're telling us to store.
+[00:28:36] So we can figure out at the moment you
+[00:28:37] try to insert it, how much how much
+[00:28:39] space we need. Then we go retrieve that
+[00:28:42] page from disk if it's not already in
+[00:28:44] memory and go check the slot array,
+[00:28:47] define a free slot insert into it,
+[00:28:50] right? Ignoring the index organized
+[00:28:51] storage like rebalancing the tree. We'll
+[00:28:53] we'll worry about that later. So
+[00:28:55] inserting is pretty straightforward and
+[00:28:57] say we run out of pages uh there's no
+[00:29:00] free space and the current pages we
+[00:29:01] have, we just allocate a new page and
+[00:29:03] then insert our record in there. No
+[00:29:05] problem.
+[00:29:08] But now if we want to update a tupil, go
+[00:29:10] through the same process before go uh
+[00:29:13] find its uh find its page from its
+[00:29:17] record ID. uh go see whether the page
+[00:29:19] exists.
+[00:29:21] Then assuming we're going to overwrite
+[00:29:23] the the data, which is not always the
+[00:29:25] case in most systems, but assuming we
+[00:29:27] are, then I'm going to check to see
+[00:29:29] whether the size of the t the new value
+[00:29:31] of the tupil that I'm trying to insert
+[00:29:33] or update. If it if it's larger in than
+[00:29:37] the original value, do I have any space
+[00:29:40] in my my page? Now, because with the
+[00:29:43] slotted array, I can reorganize things
+[00:29:45] to try to free up space within the page.
+[00:29:47] Uh, and if I if I can do that and I can
+[00:29:50] get in the same page, great. I'm done.
+[00:29:54] But if there's no space in the current
+[00:29:55] page that I have where the the tupil
+[00:29:58] currently exists, then I basically have
+[00:30:00] to treat that as a delete removing the
+[00:30:02] old the original tupil followed by an
+[00:30:05] insert with the new tupil.
+[00:30:08] And that gets that's expensive, right?
+[00:30:12] So tuple oriented storage is really
+[00:30:14] great for reads because again it's
+[00:30:16] really easy to go find the thing that
+[00:30:17] I'm looking for. For inserts not so bad
+[00:30:20] either, right? Because I I can just
+[00:30:21] insert a page page to page over and over
+[00:30:23] again. But for updates they can be
+[00:30:27] actually quite expensive,
+[00:30:30] right? So part of the problems we're
+[00:30:32] going to have is that there's going to
+[00:30:33] be fragmentation, right? because we're
+[00:30:34] not we can't guarantee that we're going
+[00:30:36] to be able to fully utilize every single
+[00:30:37] page or there's that little space in the
+[00:30:39] middle where the slot array goes one way
+[00:30:42] and the tuple data goes one way and if I
+[00:30:44] don't exactly line up perfectly uh which
+[00:30:47] you almost never do then you're going to
+[00:30:48] have a little space in the middle that's
+[00:30:49] just wasted
+[00:30:52] then now anytime I want to go update a
+[00:30:55] tupil I got to go fetch that page uh
+[00:30:58] into memory
+[00:31:00] in order just to update one tupil inside
+[00:31:02] of it right depending on the page size.
+[00:31:05] If if my pages are really large, then I
+[00:31:07] might be really reading 16 kilobytes to
+[00:31:09] go update a five five byt value or eight
+[00:31:12] byt value like something really small.
+[00:31:14] So there's a lot of wasted I/IO
+[00:31:15] potentially depending on what my
+[00:31:17] workload is, what my data looks like.
+[00:31:20] Their problem is going to be is that
+[00:31:22] because now tupils could be stored
+[00:31:24] across multiple pages.
+[00:31:27] That means if I want to update a batch
+[00:31:28] of tupils at the same time, I may have
+[00:31:30] to go fetch all those individual pages,
+[00:31:32] bring them into memory and then update
+[00:31:34] them.
+[00:31:36] Right? If I had 10 tupils across 10
+[00:31:37] different pages, I have to bring in
+[00:31:39] those 10 10 pages into memory before I
+[00:31:41] can update anything.
+[00:31:44] And then lastly, this is not so much an
+[00:31:46] issue with two. Storage, but it's a way
+[00:31:48] to think about how to design systems is
+[00:31:50] that well, what if we actually can't do
+[00:31:52] any in place updates in our in our
+[00:31:55] nonvolatile storage, right? I can't
+[00:31:57] bring a page into memory, jump to some
+[00:31:59] offset within it, and then write out a
+[00:32:01] new new values to that at that offset,
+[00:32:05] right? There's some storage systems that
+[00:32:06] actually don't let you do this. The
+[00:32:08] Hadoop file system is is one, probably
+[00:32:10] one of the earliest ones that did this.
+[00:32:12] Uh Google has their own internal file
+[00:32:13] system called Colossus.
+[00:32:16] Uh if you ever use Amazon S3, other
+[00:32:17] other object stores, some of them
+[00:32:19] provide these semantics. So you can't do
+[00:32:21] in place updates. You can only do
+[00:32:22] appends. You can only create new data.
+[00:32:25] You can't overwrite existing ones. If
+[00:32:26] you want to get rid of the old stuff,
+[00:32:27] you got to actually it's a delete and
+[00:32:29] then you do more appends.
+[00:32:34] So because of this the these issues
+[00:32:37] uh there's a different way to store data
+[00:32:40] called log structured storage sometimes
+[00:32:42] these are called log structure merge
+[00:32:43] trees or LSMS
+[00:32:46] and the idea here is that instead of
+[00:32:47] storing tupils and pages and then
+[00:32:49] updating them in place
+[00:32:52] multi-verging we'll cover later that
+[00:32:54] what I'm saying is not exactly true for
+[00:32:56] multivering but what we're talking about
+[00:32:57] today is going to look like multi-
+[00:32:59] versioning but not in the way that we'll
+[00:33:00] talk about later for current control but
+[00:33:02] the high level idea is still the same
+[00:33:04] that instead of dialing it to do in
+[00:33:06] place updates, the only thing we can do
+[00:33:09] is append new records to data pages.
+[00:33:16] And the idea is that because now we're
+[00:33:17] going to only do appends, of course, we
+[00:33:20] have to handle deletes, remove things,
+[00:33:22] then that makes some of the algorithms
+[00:33:24] to go read and write data more efficient
+[00:33:27] or less efficient, but it's going to
+[00:33:29] make our updates be really really uh go
+[00:33:31] really fast.
+[00:33:33] Inserts go really fast as well because
+[00:33:35] you're just appending new records. And
+[00:33:36] then that's that thing we talked about
+[00:33:38] before where we want to be able to
+[00:33:39] minimize amount of disc random IO in
+[00:33:41] exchange for more sequential IO because
+[00:33:43] so now if we only do appends that's all
+[00:33:45] sequential IO and that's be much faster
+[00:33:48] for us.
+[00:33:50] So the LSMS are an old idea uh goes back
+[00:33:53] to 1996. Actually the guy that invented
+[00:33:55] the LUK stuff I talked about last class
+[00:33:57] also was the inventor of uh this LSMS.
+[00:34:02] Uh the paper came out in 96. There was
+[00:34:04] earlier work done on log structured file
+[00:34:05] systems in the late 80s early 90s right
+[00:34:08] and so this is a this is a successor to
+[00:34:11] that in the file system board but
+[00:34:12] applying to databases
+[00:34:15] so there's essentially going to be two
+[00:34:16] main data structures in a log structure
+[00:34:18] storage system there'll be a mem table
+[00:34:21] we s inmemory data structure where we do
+[00:34:25] all our writes uh and make all our
+[00:34:27] changes and that one because it's in
+[00:34:28] memory uh we can make in place updates
+[00:34:32] and then as this mem table gets too big,
+[00:34:34] then we're going to write it out to this
+[00:34:36] immutable file called an SS table. I
+[00:34:39] think it's called stands for sorted
+[00:34:40] string table or sometimes uh static
+[00:34:43] string or sorted static table. Whatever
+[00:34:47] it's the same idea, but it's going to be
+[00:34:49] a sort of compact form of what the mem
+[00:34:51] table is that's going to have the the
+[00:34:54] changes that are made to the database.
+[00:34:56] So there's only two operations to to to
+[00:34:59] modify a log structure system. It's we
+[00:35:02] put where you add add a new entry and
+[00:35:05] delete.
+[00:35:07] Right? There's there's no overwrite,
+[00:35:08] there's no uh there's no update, there's
+[00:35:11] no upserts, right? Puts basically the
+[00:35:13] same thing as insert, but it may not be
+[00:35:15] you may put would be physically putting
+[00:35:17] a new record in, but logically it might
+[00:35:18] be updating an existing one. We'll see
+[00:35:21] that mean looks like in a second.
+[00:35:24] So again, now we bring again the the the
+[00:35:26] demarcation line between disk and
+[00:35:28] memory. Again, we have our MEM table up
+[00:35:30] above. It's some tree data structure
+[00:35:32] that's going to record changes that
+[00:35:34] we're going to make to the database. I'm
+[00:35:35] not saying what the data structure is.
+[00:35:37] Again, it could be a B+ tree. Skit lists
+[00:35:39] are pretty common. Uh could be a try. It
+[00:35:42] doesn't matter.
+[00:35:44] So, say now my operation is I want to
+[00:35:46] put a uh a new value in for key 101. I'm
+[00:35:52] not defining how I'm determining what
+[00:35:53] key 101 is. You can think of the same
+[00:35:55] way we did that uh like the row ID in
+[00:35:57] the SQL lights like a sequential counter
+[00:35:59] right where the systems is maintaining
+[00:36:00] for every new record or every new uh
+[00:36:03] every new record you just add add a new
+[00:36:04] key you increment a counter by one. So
+[00:36:07] I'm going to put this uh put this put
+[00:36:10] into my MIM table and I'm going to
+[00:36:12] basically add a new entry for it. Same
+[00:36:15] thing now I want to do a put for key 102
+[00:36:18] the new value B1. I'll put that in my me
+[00:36:20] table as well.
+[00:36:22] And then now if I want to go back and
+[00:36:24] modify key 101 again now with a value A2
+[00:36:29] again because the mem table is in memory
+[00:36:32] by its name I can do an in place update
+[00:36:34] inside of that. I actually don't need to
+[00:36:37] record the history of of the the
+[00:36:39] previous changes that were made. There's
+[00:36:41] a separate log file. We're not going
+[00:36:43] about in today's class, but basically
+[00:36:45] because this is in memory, if you crash,
+[00:36:46] you you could lose data. But basically,
+[00:36:48] we are appending the the puts to a
+[00:36:50] separate file and that'll get flushed
+[00:36:52] before we say the the the transaction is
+[00:36:55] committed. But for now, we could ignore
+[00:36:57] that. Just be aware that we have a way
+[00:36:59] to keep keep the mem table durable.
+[00:37:03] Same thing if I do another put on key
+[00:37:05] 103, right? I'll update my mem table and
+[00:37:08] so forth. So at some point the mem cable
+[00:37:10] is going to get full right we're going
+[00:37:12] to run out of space
+[00:37:14] like you think you know think couple
+[00:37:15] hundred megabytes or something like
+[00:37:16] that. So at which point we're going to
+[00:37:19] take the scan on the leaf nodes of the
+[00:37:21] mem table right that's because that's
+[00:37:24] all the entries of of the actual values
+[00:37:25] for the different keys that we have and
+[00:37:27] we're going to store that now into a
+[00:37:29] different form of the SS table. Again,
+[00:37:31] think of this is like almost like the
+[00:37:33] right ahead log in the logs. Like here's
+[00:37:35] all the the the changes that were made
+[00:37:38] uh that this mem table recorded. So
+[00:37:39] again, if I made multiple multiple
+[00:37:41] changes to a key, like I changed key 101
+[00:37:43] multiple times because I'm doing in
+[00:37:45] place updates on the mem table when I
+[00:37:47] write out the SS table, I only see
+[00:37:48] whatever the latest version of that was.
+[00:37:53] So at this point once it's in my SS
+[00:37:55] table has been uh uh initialized with
+[00:37:57] the data the mem table I'm storing the
+[00:38:00] the the the data within the the the
+[00:38:04] lowest key to the highest key. So this
+[00:38:05] is in a sorted order based on whatever
+[00:38:06] the key that we want. I'm going to go
+[00:38:09] ahead and write this out to disk to
+[00:38:11] nonvolatile storage. Do a flush. Make
+[00:38:14] sure it's there.
+[00:38:16] And then I'll just pop populate a new
+[00:38:18] mem table. Just keep doing this over
+[00:38:20] over and over again. making new uh
+[00:38:22] making new SS tables and these are now
+[00:38:25] going to be basically sorted now from
+[00:38:27] the in time stamp order from newest to
+[00:38:29] oldest
+[00:38:31] right within one file it's it's sorted
+[00:38:33] from key low to high with across
+[00:38:35] multiple files I'm going to sort them
+[00:38:37] keep track of them in uh in newest to
+[00:38:40] oldest order like you put the file name
+[00:38:42] have a time stamp right and the time
+[00:38:44] stamp is always incrementing as things
+[00:38:45] go forward
+[00:38:48] so I'm going to show one type of
+[00:38:49] compaction uh that's most common one,
+[00:38:51] but I'll show another one and I'll go
+[00:38:52] more into detail what this compaction
+[00:38:53] scheme looks like. Um, but at some point
+[00:38:56] this this uh this level is going to get
+[00:38:59] full. So then I actually want to combine
+[00:39:02] SS tables that are in disk. This the
+[00:39:04] first level zero and I'll combine them
+[00:39:06] into uh a new SS table and then I can
+[00:39:09] blow away the old ones. The idea is that
+[00:39:11] you keep going as you keep going down
+[00:39:12] these things get bigger and bigger. Uh,
+[00:39:15] right. And the idea is that I I'm I'm
+[00:39:18] throwing away things that I don't need
+[00:39:20] anymore and I always try to have like
+[00:39:21] whatever the latest version is at each
+[00:39:23] level for a given key.
+[00:39:25] >> Yes.
+[00:39:25] >> I don't understand why we want multiple
+[00:39:27] levels like why not always merge.
+[00:39:30] >> Question is why why do we want multiple
+[00:39:32] levels? Why why not just merge levels
+[00:39:35] there within itself? Give me two slides.
+[00:39:36] We'll come to that.
+[00:39:39] But so the one would be better for
+[00:39:40] reads, one would be better for writes.
+[00:39:44] I'm not showing key ranges here and that
+[00:39:46] that's why it's it's maybe confusing.
+[00:39:48] Give me a few few slides.
+[00:39:50] >> Yes.
+[00:39:52] >> These are I assume these are operations.
+[00:39:57] [Music]
+[00:40:01] >> Yes. And
+[00:40:03] two slides, right? So his question is
+[00:40:04] and he's correct like is the is this
+[00:40:07] compaction is are we throwing out um are
+[00:40:11] we throwing out operations for that we
+[00:40:13] don't need anymore? Yes. So if I do a
+[00:40:15] bunch of puts and then on a key then I
+[00:40:17] delete that key I don't need to keep the
+[00:40:18] puts. I just need to know that I deleted
+[00:40:20] it.
+[00:40:23] Right? So you basically end up with sort
+[00:40:24] of this tier structure like this where
+[00:40:26] you have big longer SS tables at the
+[00:40:28] bottom uh and progressively smaller ones
+[00:40:30] as you go up.
+[00:40:33] All right. So that's how we do puts and
+[00:40:37] deletes.
+[00:40:39] We need to handle reads. Now, so if I
+[00:40:43] want to do a read, the key 101, the
+[00:40:46] first thing I'm going to do is go check
+[00:40:47] my mem table to see if if I have any
+[00:40:49] entries inside that because the mem
+[00:40:50] table is going to have the latest
+[00:40:51] version or latest changes that were made
+[00:40:53] to uh to a key. So I go check my mem
+[00:40:56] table. If it's in there, great. Take
+[00:40:58] whatever the value is and and and return
+[00:40:59] that back. I'm also not saying what the
+[00:41:01] value is. I'm kind of being vague here,
+[00:41:03] but it's typically going to be the tupil
+[00:41:05] itself,
+[00:41:06] right? Just in sort of serialized form.
+[00:41:10] But if the key that I want is not in the
+[00:41:12] mem table, then I I now got to go check
+[00:41:15] all these different SS tables, different
+[00:41:17] levels,
+[00:41:19] and that's going to suck now because I
+[00:41:20] got to go do a bunch of reads to go find
+[00:41:22] some, you know, basically a needle in a
+[00:41:23] haststack,
+[00:41:26] right?
+[00:41:28] So the way to deal with this is that you
+[00:41:29] basically maintain what's called a
+[00:41:30] summary table in memory that provides
+[00:41:34] some additional metadata about what's
+[00:41:36] actually in these files. Right? So I
+[00:41:39] could say uh for a given key 101 I could
+[00:41:43] check at does this key even exist at the
+[00:41:46] different levels. So I start at level
+[00:41:47] zero because again the levels are going
+[00:41:49] um depending on my package scheme could
+[00:41:51] be going forward to time. could be also
+[00:41:52] going across keys, but like I want to
+[00:41:54] see what level has my key. And then if I
+[00:41:58] know that a uh the key exists maybe at
+[00:42:01] this bottom level here, but also exists
+[00:42:03] in a higher level there, I always want
+[00:42:04] to choose the higher one because I know
+[00:42:07] I know that one's more recent.
+[00:42:11] So again, we're we're we're making this
+[00:42:13] trade-off to make our writes go faster
+[00:42:16] in exchange for slower reads, but we can
+[00:42:18] add some additional data structures to
+[00:42:20] make sure the reads aren't aren't as
+[00:42:21] bad.
+[00:42:25] >> Wait, say again?
+[00:42:30] >> The question is the key filter a bloom
+[00:42:32] filter or what was question
+[00:42:36] >> question like what is the filter? Um it
+[00:42:40] could be a range filter to say like
+[00:42:41] within this range this key doesn't exist
+[00:42:42] or not because that would handle range
+[00:42:44] scans could be like a single key does
+[00:42:46] this key exist in this this this level
+[00:42:48] or not that your bloom filter lookup. So
+[00:42:51] that could give you a we'll talk about
+[00:42:52] bloom filters in a few weeks like that
+[00:42:54] could give you a false positive. It
+[00:42:55] might tell you the key exist level then
+[00:42:57] you got to actually look and check to
+[00:42:58] see whether it's there or not.
+[00:43:02] >> Yes. So the way I imagine it
+[00:43:10] like let's say I say I want to update
+[00:43:12] this field for ID
+[00:43:15] >> then I only have
+[00:43:19] the field I'm changing but there are
+[00:43:21] many other fields
+[00:43:23] >> the statement is again this why I was
+[00:43:24] trying to be vague about what the value
+[00:43:26] is the statement is is the
+[00:43:31] if I update If I update a record,
+[00:43:34] uh,
+[00:43:36] if it's a blind write, I don't need to
+[00:43:38] look to see what actually was. I just I
+[00:43:40] just put a put and I'm done. If it's
+[00:43:42] like, uh, update Andy's salary or Andy's
+[00:43:45] age where age equals current age plus
+[00:43:47] one, I got to go read whatever the
+[00:43:49] virtual value was, then I got to do an
+[00:43:51] update. And then what do I actually
+[00:43:52] putting in the mem table? In the case of
+[00:43:55] Rox DB, I think it's or most systems,
+[00:43:56] it's going to be the full tuple all over
+[00:43:58] again.
+[00:43:59] >> But my point is like, let's It's just
+[00:44:01] right. I don't care what it was before.
+[00:44:03] I'm saying like in this page
+[00:44:04] >> a blind right.
+[00:44:05] >> Yes.
+[00:44:06] >> So if I do that and later on I want to
+[00:44:09] read your record. It's not enough to
+[00:44:11] like find your age. I need to find
+[00:44:13] everything like your record may appear
+[00:44:16] in multiple SS table.
+[00:44:18] >> Yes. So his statement is you're
+[00:44:20] basically asking is is there a given
+[00:44:21] record that has multiple attributes is
+[00:44:23] that those attributes broken across
+[00:44:24] multiple SS tables? No. you would always
+[00:44:26] have the full tupil with all its
+[00:44:29] attributes in the record that you're
+[00:44:31] storing as part of the value in the mem
+[00:44:32] table or an S an SS table.
+[00:44:34] >> So like there's this sense like
+[00:44:36] internally you're going to
+[00:44:38] >> a blind rate would be like an insert but
+[00:44:39] to your point like you um yeah so his
+[00:44:42] point is like you'd have to do a read
+[00:44:44] modify right you go fetch the tupil then
+[00:44:46] update depends on like what the query
+[00:44:48] is. If it's an update where you're
+[00:44:49] you're up if it's update where you're
+[00:44:51] like you're changing all the attributes,
+[00:44:53] then yeah, you don't need to see what
+[00:44:54] the original ones were. You just do an
+[00:44:56] update in place.
+[00:44:57] >> Yeah. Or not update in place. You can do
+[00:45:00] an update without actually reading it.
+[00:45:04] Other questions?
+[00:45:08] All right. So again, what are we doing?
+[00:45:10] It's it's a basic key value storage uh
+[00:45:13] architecture where again the value is
+[00:45:15] going to represent the the the contents
+[00:45:16] of the tupil. Um the the if we do a
+[00:45:21] delete we don't actually need to go find
+[00:45:23] the data that we want and actually
+[00:45:24] delete it which is kind of nice again in
+[00:45:27] a tuporiented architecture on a slot of
+[00:45:30] pages I got to go fetch the page then
+[00:45:32] mark go you know mark it as deleted in
+[00:45:35] this case here if I have the key of the
+[00:45:37] thing I want to delete I just put a
+[00:45:39] delete key record in my my log in the me
+[00:45:42] table and then I'm done with it then
+[00:45:45] anybody else that comes along wants to
+[00:45:46] read that tupil We got to, you know,
+[00:45:48] have to make sure that it sees that
+[00:45:49] delete record notifying it that the
+[00:45:52] record no longer logically exists. Even
+[00:45:53] though physically might be in still a
+[00:45:55] bunch of SS tables, we know we need we
+[00:45:57] should ignore it if we try to do a
+[00:45:58] lookup.
+[00:46:03] >> Yeah. Sorry. Yes.
+[00:46:05] >> Yeah. So
+[00:46:11] question the question is when do merges
+[00:46:13] get merged?
+[00:46:15] Next slide. Okay, so
+[00:46:19] at some point I'm making all these SS
+[00:46:21] tables running out the disk. Uh, and
+[00:46:26] the, you know, if I delete a tupil, if I
+[00:46:28] update a tuple like a thousand times,
+[00:46:29] then then I delete it, I'm going to have
+[00:46:31] a thousand1 records corresponding to
+[00:46:32] that one tupil, but I only really need
+[00:46:34] the latest one. So the there'll be this
+[00:46:38] background process that gets triggered
+[00:46:40] based on the size of the SS tables,
+[00:46:42] based on the number of overlapping r key
+[00:46:44] ranges. We'll see that in in next second
+[00:46:46] next slide. Like there's a bunch of ways
+[00:46:48] bunch of mechanism to trigger when
+[00:46:50] compaction should kick in. And again,
+[00:46:52] there's this trade-off between uh using
+[00:46:56] doing background maintenance and
+[00:46:58] actually just running queries. Remember
+[00:46:59] we talked about the background writer or
+[00:47:00] the page cleaner and the buffer pool
+[00:47:02] that we could have a thread run through
+[00:47:03] our buffer pool manager, find our dirty
+[00:47:05] pages and start proactively writing them
+[00:47:07] out so that they get marked clean and
+[00:47:09] they can get evicted. But if I'm
+[00:47:10] spending all my time doing that, then
+[00:47:12] I'm I'm going to slow down queries
+[00:47:14] actually trying to do real work. So I
+[00:47:16] could spend all my time doing compaction
+[00:47:18] to clean up all these SS tables, but
+[00:47:20] that's going to make query execution run
+[00:47:22] slower. So there really isn't a good way
+[00:47:24] to to there's there's not a sort of
+[00:47:26] one-sizefits-all solution to determine
+[00:47:28] when you should trigger a compaction.
+[00:47:31] But things like Roxb have a bunch of
+[00:47:33] different policies.
+[00:47:35] All right. So say in the most simple
+[00:47:36] form, say I have two SS tables. I I want
+[00:47:38] to merge them.
+[00:47:40] And in this case here, I I'm assuming
+[00:47:42] that the order of the two SS tables from
+[00:47:45] newest to oldest. So the one on all the
+[00:47:47] way over here is the late the the newest
+[00:47:48] one. The one after that is older than
+[00:47:50] that. So the way I'm going to do
+[00:47:52] basically merge is the same way you're
+[00:47:54] going to do sort merge. If you know that
+[00:47:56] algorithm, we'll talk about that again
+[00:47:57] in two weeks. There's a join algorithm
+[00:47:59] on sort merge as well, right? You
+[00:48:02] basically just have two cursors that
+[00:48:04] start at the beginning of both these
+[00:48:05] files. Again, I'm showing two SS tables.
+[00:48:07] You could have multiple ones. You
+[00:48:08] typically you want to merge multiple
+[00:48:09] ones at the same time, right? But for
+[00:48:12] our our illustration, it's just two. So
+[00:48:14] now what's going to happen is I'm going
+[00:48:15] to look at whatever the key is being
+[00:48:17] referenced at the uh wherever my cursor
+[00:48:20] is pointing at. In this case here, the
+[00:48:22] the the first person the first cursor is
+[00:48:25] looking at a delete on key 100. This guy
+[00:48:28] has a put on key 101. says 100 is less
+[00:48:31] than 101. I know that there isn't going
+[00:48:33] to be a reference to key 100 in in this
+[00:48:37] SS table. Uh so therefore I can just
+[00:48:39] take whatever that that record is and
+[00:48:41] put it in my new SS table. And then I I
+[00:48:44] move that cursor down, but I keep the
+[00:48:45] previous the other cursor at the same
+[00:48:47] location that that is that that it was
+[00:48:49] pointing at before.
+[00:48:52] So now at this point here we have a uh a
+[00:48:56] put on key 101 in the first the in the
+[00:48:59] first one and then a put on key 101 as
+[00:49:02] well in the second one. But since this
+[00:49:04] SS table is newer than this one, we know
+[00:49:07] we don't care about whatever that put
+[00:49:08] was. We only care about the latest one.
+[00:49:10] So we go ahead and remove or ignore that
+[00:49:13] that put and put the first SS tables
+[00:49:16] into uh the new one. Then same thing the
+[00:49:18] both of the cursors move down. We have a
+[00:49:20] put put on key 102. Another put on key
+[00:49:22] 102 in both of them. I don't care about
+[00:49:24] the second one. I only put the first
+[00:49:26] one. Keep moving down. Now I have a put
+[00:49:28] in key 103. Uh but I also have a delete
+[00:49:31] on key 103. Same thing. They're
+[00:49:34] operating on the same. They're doing
+[00:49:35] some modification to the same key, but I
+[00:49:36] only care about the latest one. So I go
+[00:49:38] ahead and ignore the second one, put in
+[00:49:41] the first one. The first cursor is done.
+[00:49:44] So now I keep scanning along and
+[00:49:45] whatever comes after that I know I want
+[00:49:47] to copy into my new SS table, right? So
+[00:49:51] I would I I'd put the put for 104 there.
+[00:49:55] That's basically what compaction is
+[00:49:56] doing. Now the the tricky thing is going
+[00:49:58] to be how do I organize multiple SS
+[00:50:00] tables and what am I what's the how I'm
+[00:50:04] deciding what SS tables to merge and we
+[00:50:07] said the when it gets triggered based on
+[00:50:09] a bunch of different policies.
+[00:50:12] So what I showed before was an example
+[00:50:14] called level compaction where I'm going
+[00:50:16] to maintain different levels of of SS
+[00:50:19] tables of different sizes. And the goal
+[00:50:22] here is actually to have non-over
+[00:50:24] overlapping key ranges within our our
+[00:50:27] levels except for level zero because
+[00:50:29] that's the special one where as me
+[00:50:32] tables get full we SS tables. We we just
+[00:50:34] append them to to disk. So in that case
+[00:50:37] they will have overlapping key ranges
+[00:50:38] but everything below that will not.
+[00:50:42] So again so assuming that the the SS
+[00:50:44] tables are going to go from newest to
+[00:50:45] oldest. Our first SS table we're get
+[00:50:47] written out is going to have key range
+[00:50:48] from A to R, right? Arbitrary letters.
+[00:50:51] The next one is going to have key ranges
+[00:50:53] from E to T. And then the third one here
+[00:50:55] will have key ranges from B to Q.
+[00:50:58] So some point I'm going to run out of
+[00:51:00] space or somebody gets triggered says I
+[00:51:02] want to now do compaction on level zero.
+[00:51:06] So, I'm now going to make a new level,
+[00:51:08] level one. And I'm going to take these
+[00:51:10] three SS tables, and I'm combine them in
+[00:51:13] two two larger SS tables. And I'll do
+[00:51:16] the the the compaction I just showed in
+[00:51:18] the previous slide where I'll have a
+[00:51:20] cursor go through each one and remove
+[00:51:22] whatever the the oldest entry is for a
+[00:51:25] given key, and it'll only keep the
+[00:51:26] latest one.
+[00:51:28] So,
+[00:51:29] but then in my my new asset tables I'm
+[00:51:32] going to generate now I have non-over
+[00:51:34] overlapping keys within this level.
+[00:51:37] So, if I'm looking for key key uh key X
+[00:51:42] for example, if I have to look at level
+[00:51:44] zero, I have to potentially look at all
+[00:51:46] these all the SS tables uh to find key
+[00:51:49] X. Well, actually I would wouldn't be in
+[00:51:51] any of them, but like say I'm looking
+[00:51:52] for key key Q. I would actually have to
+[00:51:56] look at uh all three again all three SS
+[00:51:59] tables to find that given key because
+[00:52:01] each of them have uh that key could fit
+[00:52:03] in each of their ranges. But now when I
+[00:52:04] do the compaction down to the second
+[00:52:06] level or level one since now they're
+[00:52:08] non-over overlapping key ranges. If I
+[00:52:10] need key Q, I know I only have to go
+[00:52:12] look in the second SS table. It may not
+[00:52:15] exist. And again, I can use a filter to
+[00:52:17] tell me whether it's going to exist or
+[00:52:19] not. But if if I if it could exist then
+[00:52:22] I know so I only need to look at one SS
+[00:52:24] table.
+[00:52:27] >> Yes.
+[00:52:27] >> Can you repeat why do we have multiple
+[00:52:29] levels multiple tables?
+[00:52:32] Why did you get
+[00:52:34] >> question why do we end up with multiple
+[00:52:35] SS tables in level two? It could be just
+[00:52:38] one giant one. Basically the size of the
+[00:52:41] SS table is is growing. Sorry size SS
+[00:52:44] table grows per a level. And so the the
+[00:52:49] cumulative size of the SS tables up
+[00:52:51] above that I'm merging down may be
+[00:52:53] larger than what I can fit into a single
+[00:52:54] SS table. So I drew two, but it could
+[00:52:56] just be one. I just want to show too
+[00:52:58] that that you would have these non-over
+[00:53:00] overlapping ranges.
+[00:53:04] So once this is done again, I can blow
+[00:53:06] away the all the tables at at level zero
+[00:53:09] and keep doing the same thing just keep
+[00:53:11] adding more and more um right doing
+[00:53:14] depends. Now I I again I now I have
+[00:53:16] different ranges
+[00:53:18] and at some point I want to do a merge
+[00:53:19] and again these are going to be
+[00:53:21] overlapping ranges in level zero but
+[00:53:23] when I put when I create SS tables in
+[00:53:25] level one uh they have to be non-over
+[00:53:27] overlapping.
+[00:53:29] So I may actually end up recreating all
+[00:53:32] the files again to read them all in to
+[00:53:34] memory using my buffer manager and then
+[00:53:37] write them all back out. uh because the
+[00:53:39] keys that are in the level zero might be
+[00:53:42] in any of the files might have to go in
+[00:53:44] any of the files. I may have to generate
+[00:53:45] a bunch more files.
+[00:53:49] So if I have like 10 gigabytes of data
+[00:53:52] on level one, I run compaction. I'm
+[00:53:54] gonna have to read 10 gigabytes in and I
+[00:53:56] might be writing out another 10
+[00:53:57] gigabytes.
+[00:54:00] >> Yes.
+[00:54:02] >> Number
+[00:54:03] question. The question is is the number
+[00:54:05] levels fixed? Uh, no. I I they can go
+[00:54:09] forever.
+[00:54:10] In practice though, like I I forget the
+[00:54:12] default is in Rox DB, you just end up
+[00:54:14] with like really big files at the
+[00:54:15] bottom.
+[00:54:22] >> Uh, question is is for any set of what?
+[00:54:25] Sorry. for like
+[00:54:38] >> uh the question is uh for
+[00:54:41] for would you have would you have a
+[00:54:44] setting for a data system that say I'm
+[00:54:45] I'm gonna have 10 levels of in my
+[00:54:48] compaction scheme and then you always
+[00:54:50] have 10 levels. No, the the very
+[00:54:52] beginning I could have I could set this
+[00:54:54] thing to have 10 levels, but right here
+[00:54:55] at this point you only have two
+[00:54:58] >> it grows. Yeah. So never exceed that.
+[00:55:01] You just end up with really large SS
+[00:55:02] tables. A lot of them at the lowest
+[00:55:04] level.
+[00:55:05] >> So why is this good for read?
+[00:55:08] >> Question. Why is this read heavy uh why
+[00:55:11] is this um better for read heavy
+[00:55:13] workloads? Because when we see universal
+[00:55:15] pure next slide, if I want to go find a
+[00:55:18] key
+[00:55:19] at a lower level, I only have to look at
+[00:55:22] the the SS tables that that where my key
+[00:55:24] fits in that range. Can if you go back
+[00:55:27] just to when we only had level level
+[00:55:29] zero and this is fresh from fresh from
+[00:55:31] memory into disk. These are overlapping
+[00:55:33] ranges. So if I want key Q, it can exist
+[00:55:36] in the first one, the second one or the
+[00:55:37] third one. So I have to check all of
+[00:55:39] them.
+[00:55:40] Now, in this case here, like it would be
+[00:55:43] since they're ordered based on time. If
+[00:55:46] I see it in the first one, I know I
+[00:55:47] don't care about the other two. But in
+[00:55:49] the worst case, I have to scan all
+[00:55:50] three.
+[00:55:54] >> Yep.
+[00:55:56] Other questions.
+[00:56:06] >> The question is, can the same key exist
+[00:56:08] in level zero and level one? Yes.
+[00:56:21] The question is because the at level
+[00:56:24] zero the it's sorted by newest to oldest
+[00:56:26] it does not impact the search speed. Uh
+[00:56:30] that
+[00:56:31] meaning like well no no so if I if I
+[00:56:34] want Q if I only if I'm only at level
+[00:56:36] zero and I want Q key Q if it's not in
+[00:56:41] the first one I got to check the second
+[00:56:42] one so that's slow it's not in the
+[00:56:43] second one I got to check the third one
+[00:56:44] that's slow right so worst case scenario
+[00:56:47] I have to check everything at level zero
+[00:56:50] the summary table helps me to helps to
+[00:56:53] uh
+[00:56:55] maybe not do look up some tables that or
+[00:56:58] SS tables that aren't going to have the
+[00:56:59] data that I want. But in the worst case,
+[00:57:00] I I may have to check. So yeah, so read
+[00:57:03] the reads will get slower. Um
+[00:57:07] but that's why they have the additional
+[00:57:08] levels because now when I when I start
+[00:57:11] compacting going down the levels, I can
+[00:57:13] guarantee that again for key key Q, it's
+[00:57:17] only going to exist in one SS table at
+[00:57:19] this at level one.
+[00:57:22] Likewise, if I if I you know, if I keep
+[00:57:24] adding more, same thing. Q can only
+[00:57:26] exist in one SS table. Whereas in if it
+[00:57:29] was just me just writing SS as a table
+[00:57:31] straight from memory like I do in level
+[00:57:32] zero, it could be in any
+[00:57:37] again and I do the same thing. I do
+[00:57:39] compaction down to uh to this level and
+[00:57:42] I can blow away things here again and
+[00:57:43] now I have again non-over overlapping
+[00:57:45] ranges within
+[00:57:47] uh as ex exists now but again as I add
+[00:57:50] more things it may it may there may be
+[00:57:52] overlapping.
+[00:58:02] question is similar to the one they
+[00:58:04] asked before like what triggers
+[00:58:05] compaction depends on the system depends
+[00:58:07] how you set it up. So it could be the
+[00:58:10] that if I have
+[00:58:13] a a max number of max size of all the
+[00:58:16] files within a level when that exceeds
+[00:58:17] something then that triggers compaction.
+[00:58:24] Say it again.
+[00:58:24] >> In this particular example,
+[00:58:28] >> the question is like why did I do for
+[00:58:30] this one here? Why did I merge one to
+[00:58:32] level two? Why did
+[00:58:35] >> all right question is why did I merge in
+[00:58:37] this case here? Why did I merge um only
+[00:58:40] two SS tables from level one down level
+[00:58:42] two? It's just the example, right?
+[00:58:46] >> What's that?
+[00:58:48] one.
+[00:58:49] >> Yeah, like you would merge more than
+[00:58:52] two, right? I'm trying to make this work
+[00:58:53] on PowerPoint, so like for simplicity,
+[00:58:55] yeah, you you can be very But going back
+[00:58:58] and forth, you can be very aggressive
+[00:58:59] and try to merge everything, but like
+[00:59:00] that's going to be you're just spending
+[00:59:02] your time doing compaction, not not
+[00:59:04] running queries.
+[00:59:06] All right, so let me show universe
+[00:59:08] compaction real quickly. Universe
+[00:59:10] compaction only has one level, and
+[00:59:12] again, it's the SS tables as they exist,
+[00:59:14] as they're being written out. uh you
+[00:59:18] know from the me from the mem table in
+[00:59:19] memory to disk. So we want to do
+[00:59:21] compaction on them but again we don't
+[00:59:23] want to maintain multiple levels because
+[00:59:25] we don't we don't have this right for
+[00:59:26] ramplication problem where every single
+[00:59:28] time we want to do compaction we got to
+[00:59:30] read a bunch of things in and then write
+[00:59:31] it all back out. Um so instead we're
+[00:59:34] going to be more more targeted
+[00:59:36] compactions. So in this case here, like
+[00:59:38] I say, I'm take these three SS tables.
+[00:59:40] Again, they all have sort of non-over
+[00:59:42] overlapping uh key ranges uh but they're
+[00:59:45] ordered through time. And then now I'm
+[00:59:46] going to take these three and merge them
+[00:59:48] into a single SS table, compact them and
+[00:59:50] and reclaim the space. And I can do this
+[00:59:53] again for the the next two here. Compact
+[00:59:55] them and put them into a larger one.
+[00:59:58] So this is great for uh for for
+[01:00:02] workloads where you're inserting data
+[01:00:03] very quickly, do a lot of updates. Uh,
+[01:00:06] it's great for workloads where I I
+[01:00:09] typically only want the latest data that
+[01:00:12] I just inserted. Like if I'm inserting
+[01:00:13] time series information, like the
+[01:00:14] temperature of this room, I only care
+[01:00:16] about the last five minutes, 10 minutes.
+[01:00:17] I don't care about what the temperature
+[01:00:19] was, you know, a year ago. And so in
+[01:00:22] that case, I'll be able to look up very
+[01:00:23] quickly and find the data that I want in
+[01:00:25] the newest SS tables that are on disk,
+[01:00:30] right? classic trade-off in computer
+[01:00:32] science of like I'm spending more time
+[01:00:35] more energy to make the
+[01:00:38] um when I write things to make the
+[01:00:40] rights more expensive but my reads will
+[01:00:42] be faster in exchange for uh or as
+[01:00:46] opposed to making my rights go really
+[01:00:48] fast but my reads a little bit slower.
+[01:00:53] Right? So this is making the rights go
+[01:00:56] faster uh but the reads could
+[01:00:59] potentially be slower based on what
+[01:01:00] you're looking up.
+[01:01:02] Okay. So to finish up log structure
+[01:01:05] storage in the last 15 years has become
+[01:01:08] super common and partly this this is
+[01:01:09] because of Rox DB. Rox DB is a log
+[01:01:12] structure merge tree key value store
+[01:01:14] that actually supports both these
+[01:01:16] compaction schemes. You can set whatever
+[01:01:17] you want. I think default is level level
+[01:01:19] compaction. Uh but that is the been used
+[01:01:22] as the starting point for or the the
+[01:01:25] built-in storage manager for many many
+[01:01:27] new systems.
+[01:01:29] Um Rox DB was not was created by
+[01:01:32] Facebook or Meta whatever it is now. Uh
+[01:01:34] but they weren't the original authors of
+[01:01:36] it. It's actually a fork of something
+[01:01:37] called level DB that came out of Google.
+[01:01:40] This is built by Jeff Dean and the
+[01:01:42] people working on bigtable. They built
+[01:01:44] this this uh local structure storage uh
+[01:01:47] embedded key value store called level
+[01:01:48] DB. Facebook forked that and made Roxyb.
+[01:01:52] What's the first thing Facebook did when
+[01:01:53] they forked level DB to Roxy DB?
+[01:01:56] >> What was that?
+[01:01:58] >> No, not copyright it. No, no, I think it
+[01:01:59] was Apache license maybe. So, it wasn't
+[01:02:01] an issue. What non-legal thing? What's a
+[01:02:04] technical What's the first technical
+[01:02:05] thing they did?
+[01:02:06] >> Change. No, that's that's a legal thing.
+[01:02:09] He said change license. No, leg
+[01:02:11] technical. They wrote they changed the
+[01:02:12] code in what way? Okay, what do they do?
+[01:02:15] Removed MAPAP,
+[01:02:17] right? That is the very first thing they
+[01:02:19] did was get rid of MAP because it's
+[01:02:20] garbage and switch to a bufferable
+[01:02:22] manager the same way that we talked
+[01:02:23] about last class, right? And like I
+[01:02:25] said, a bunch of the different systems,
+[01:02:27] you start off using Rox DB as their own
+[01:02:29] internal storage manager. Cockroach did
+[01:02:31] this and and then over time they rewrite
+[01:02:33] it. This is again a small smattering of
+[01:02:34] of of log structure storage systems.
+[01:02:36] There's there's a lot more. And as we
+[01:02:39] said, the challenge of this approach is
+[01:02:41] it's going to be really great for for
+[01:02:43] doing uh writes, but the the compion is
+[01:02:47] expensive. Uh and we may have this right
+[01:02:51] amplification issue where we do one
+[01:02:52] update to a single tupil and even though
+[01:02:55] we never update it to ever again, we're
+[01:02:57] going to read it in, write it out, read
+[01:02:58] it in, write it out over and over again
+[01:02:59] multiple times in because of the
+[01:03:01] compaction process. Whereas like in a
+[01:03:04] tupal or oriented architecture, if I
+[01:03:06] write something to a to a page, it gets
+[01:03:10] written out to disk. I never run, you
+[01:03:12] know, I never read it again. I never,
+[01:03:14] you know, I never write it out over and
+[01:03:15] over again.
+[01:03:17] >> Yes.
+[01:03:18] >> So does this mean that
+[01:03:23] heavy
+[01:03:23] >> question is are are all these bad for
+[01:03:25] right heavy work read heavy workloads?
+[01:03:27] No. Like things like click house really
+[01:03:29] really good for it.
+[01:03:30] >> So
+[01:03:30] >> because
+[01:03:36] There's a bunch of extra stuff you can
+[01:03:38] do to to mitigate the issues.
+[01:03:40] >> Then that'll be next class.
+[01:03:43] >> Okay. So next class and we're actually
+[01:03:46] going to we're going to break your
+[01:03:48] preconceived notion of what a a database
+[01:03:49] looks like. Like for now we've been
+[01:03:51] talking about oh these rows that are
+[01:03:53] that are just continuously in in disk or
+[01:03:55] in memory. We're going to flip that and
+[01:03:56] talk about column stores. We actually
+[01:03:58] store data as columns not rows. So that
+[01:04:00] that'll be uh that'll be next class. Um
+[01:04:04] for project one, I'm gonna quickly go
+[01:04:05] over this before we jump to to the the
+[01:04:07] speaker. So this has been posted on uh
+[01:04:10] on piaza and the code is on GitHub,
+[01:04:12] right? You're going to build your own
+[01:04:13] bufferable manager in in the bus hub
+[01:04:15] system. So you're going to build a uh
+[01:04:18] replacement policy algorithm based on
+[01:04:19] arc. Again, we'll have a recitation next
+[01:04:21] week that goes over the algorithm more
+[01:04:22] detail, but it's it's pretty
+[01:04:23] straightforward. Then you build a
+[01:04:25] disculer and then a buffer pool instance
+[01:04:27] and it'll be due on September 29th.
+[01:04:30] So the replacement policy is is the just
+[01:04:33] just the algorithm itself that actually
+[01:04:34] decides what to evict uh when you need
+[01:04:37] need a page. Um you're allowed to use
+[01:04:41] the bu built-in STL containers for the
+[01:04:43] ghost lists and the most frequently used
+[01:04:45] most recently used list. So you don't
+[01:04:47] need to make build your own separate
+[01:04:48] vector indexes or things like that
+[01:04:50] inside your not vector indexes your
+[01:04:52] vectors or lists inside C++ just use the
+[01:04:55] SDL ones because it's in memory right
+[01:04:58] the the buffer pools in memory we don't
+[01:04:59] care if we lose the data well what's in
+[01:05:01] our these lists if we crash right it's
+[01:05:05] okay to use the the built-in uh data
+[01:05:07] structures for the disculer you're
+[01:05:09] basically going to support asynchronous
+[01:05:11] IO through uh SDL sedd promise callbacks
+[01:05:15] and the basic idea is that other parts
+[01:05:17] of the system are going to ask the disc,
+[01:05:19] hey, I want this this page. Uh, and then
+[01:05:22] it's going to be this. You're going to
+[01:05:23] build the P piece of the system that's
+[01:05:25] responsible for scheduling the reads,
+[01:05:26] fetching those into memory, and then
+[01:05:29] handing them off to the buffer manager,
+[01:05:31] right? And you can put this all together
+[01:05:33] and now actually build the the frame
+[01:05:35] storage and the buffer manager and the
+[01:05:37] page table that actually takes the
+[01:05:38] requests for the pages from other parts
+[01:05:39] of the system goes to the disculer tries
+[01:05:42] to find the pages you want brings it
+[01:05:43] into memory and if you don't have any
+[01:05:45] space it runs your arc replacement
+[01:05:46] algorithm to decide how to remove
+[01:05:48] things. Okay.
+[01:05:51] So super important, don't change any
+[01:05:53] file other than the ones we tell you to
+[01:05:54] change because when it runs on grade
+[01:05:56] scope, it wipes away whatever you give
+[01:05:57] us uh for anything else but those files
+[01:06:00] and if you make any changes in there, it
+[01:06:02] it won't it won't run. And then the
+[01:06:05] projects are all cumulative. So project
+[01:06:07] one is the is the first start of this,
+[01:06:08] but two, three, and four will be based
+[01:06:09] on your buffer rule uh implementation
+[01:06:12] for this this project. So we want to
+[01:06:14] make sure that you we have a bunch of
+[01:06:16] tests to make sure you don't you don't
+[01:06:16] screw things up. Uh but you don't want
+[01:06:18] to fall behind because if you're trying
+[01:06:19] to fix your buff manager two months from
+[01:06:21] now, it's gonna make all the other
+[01:06:23] projects a lot harder. If you have
+[01:06:25] questions, please come post some piaza
+[01:06:26] or come to office hours, but we won't
+[01:06:28] sit there with GDB and tell you how to
+[01:06:30] debug things, right? We assume you know
+[01:06:32] how to do that in C++ because of project
+[01:06:33] zero. Just like a project zero, do a
+[01:06:36] bunch of checks to make sure that your
+[01:06:37] code looks good. And then for extra
+[01:06:39] credit this year, we will have a
+[01:06:41] leaderboard. So we have a version of bus
+[01:06:43] tub that runs on grade scope and whoever
+[01:06:46] has the fastest buffer pool notation
+[01:06:47] actually for all the projects going
+[01:06:48] forward we'll have a ranked order on the
+[01:06:50] leaderboard and the top 20 gets uh extra
+[01:06:53] credit and then this year we're going to
+[01:06:55] do we're actually going to try to get a
+[01:06:57] trophy made like the Stanley Cup or not
+[01:06:59] not that big but like whoever has the
+[01:07:01] highest uh leaderboard scores and at the
+[01:07:03] end of the semester we'll put your name
+[01:07:05] uh and year at the bottom of it and that
+[01:07:07] way over the years we can get this thing
+[01:07:08] and start growing it. Okay. Don't
+[01:07:11] plagiarize because you'll get it messed
+[01:07:13] up. Uh and then ask questions. All
+[01:07:16] right. So, let me jump to the
+[01:07:19] the speaker. Oh, you All right. This is
+[01:07:22] This is Joseph. He's been at Single
+[01:07:24] Store for a while. Uh he's gonna get
+[01:07:26] You're coming next week as well, right?
+[01:07:29] >> I'm gonna be here next week. Yeah.
+[01:07:30] >> Right. He's awesome. He's super smart.
+[01:07:32] Uh he's come next week. The floor is
+[01:07:34] yours, man. Go for it.
+[01:07:37] All right. Cool. So, yeah. I'm going to
+[01:07:39] tell you guys a little bit about Single
+[01:07:40] Store. Um, Single Store is kind of a
+[01:07:43] unique database in the industry. I I
+[01:07:46] think it's probably one of the most
+[01:07:47] unique databases in the industry. And
+[01:07:49] so, let's just dive right in. So, this
+[01:07:50] can be kind of a rapid fire talk. So,
+[01:07:52] I'm going to talk a little bit about the
+[01:07:54] two types of database workloads and how
+[01:07:56] single store presents itself as a sort
+[01:07:58] of hybrid option. And I'm going to
+[01:08:00] switch gears completely and talk about
+[01:08:02] uh modern cloud systems and the kind of
+[01:08:04] benefits Single Store gets from running
+[01:08:06] in the cloud. Um so let's get started.
+[01:08:10] Um so the two types of database
+[01:08:12] workloads. So you've maybe seen this in
+[01:08:15] your class so far or you will later in
+[01:08:16] the semester but there's basically two
+[01:08:20] broad categories of database workloads.
+[01:08:22] The first is OLTP online transactioning
+[01:08:25] proc uh transaction processing. So it's
+[01:08:28] characterized by a large number of
+[01:08:29] transactions super high concurrency
+[01:08:32] small reads and writes stuff like that.
+[01:08:34] And so it's like, you know, any row you
+[01:08:37] need to be able to fetch at any given
+[01:08:39] moment and you might need to be able to
+[01:08:41] update it at any given moment. So
+[01:08:43] everything is is kind of optimized to be
+[01:08:46] able to find stuff, index stuff, do
+[01:08:49] transactions, change things around. And
+[01:08:52] so you typically will have very high
+[01:08:54] concurrency, lots of queries that are
+[01:08:57] small hitting the database all at once,
+[01:09:00] very short SLAs's. you expect things to
+[01:09:02] return in milliseconds and you really
+[01:09:05] care about acid. You really care about
+[01:09:08] your transactions being atomic and not
+[01:09:11] seeing any weird um side effects of you
+[01:09:14] know isolation and and and you don't
+[01:09:17] want your you know rights to be lost. So
+[01:09:19] you you care about these kinds of things
+[01:09:21] with with that kind of workload.
+[01:09:23] So you can think about running
+[01:09:25] applications. Um you know you can think
+[01:09:28] about uh like running literal
+[01:09:32] transactions at a bank or you know if I
+[01:09:34] click on something on my website and it
+[01:09:36] says you pay me and I'm going to send
+[01:09:39] you this you know thing that you just
+[01:09:41] bought. Um
+[01:09:44] and so typically these kind of databases
+[01:09:47] will use row oriented data structure
+[01:09:49] right because every row has to be
+[01:09:52] findable and updatable very fast. Um so
+[01:09:57] they'll typically use B trees and skip
+[01:09:59] lists which uh allow you to find one row
+[01:10:02] very fast. Um and you've probably
+[01:10:04] learned about that in this class.
+[01:10:06] Um so examples of this Postgress is
+[01:10:09] Postgress is basically synonymous with
+[01:10:11] OLTP these days. Um older databases
+[01:10:14] Oracle and SQL server are of course
+[01:10:16] there cockroach uh spanner um these
+[01:10:20] things being the kind of modern
+[01:10:22] largecale
+[01:10:24] uh
+[01:10:26] transactional databases.
+[01:10:30] The other type of database broad
+[01:10:33] category is analytical databases, OLAP
+[01:10:35] databases. Um so these are characterized
+[01:10:38] by large bulk processing queries and
+[01:10:42] sometimes the queries will take minutes,
+[01:10:44] hours or even days to run. Maybe maybe
+[01:10:46] these days that's not considered
+[01:10:48] acceptable, but these large reporting
+[01:10:50] queries can take a long time and you
+[01:10:53] will often run on huge scales of data.
+[01:10:56] terabytes or pabytes are not uncommon.
+[01:10:59] Um, so you should think large reporting
+[01:11:03] queries, analytics, dashboards, your
+[01:11:05] loads or big bulk loads that you do um
+[01:11:08] periodically. You're not updating one
+[01:11:10] row. And so the data structures used to
+[01:11:14] build these kinds of things are very
+[01:11:17] different. You do these column oriented
+[01:11:19] data structures and um you're going to
+[01:11:22] learn about that in this class. I assume
+[01:11:24] I hope. I love column stores. I think
+[01:11:26] they're so cool and um you know they're
+[01:11:30] they're one of these data structures
+[01:11:31] that just makes me so happy. So um
+[01:11:33] you're uh it's going to be fun to learn
+[01:11:35] about those. Um but yeah, so they use
+[01:11:39] these column oriented data structures
+[01:11:40] that are really really good at scanning
+[01:11:42] really fast, really really fast. Um and
+[01:11:48] so examples of this kind of database are
+[01:11:50] Snowflake, Clickhouse, Redshift, Big
+[01:11:52] Query, Vertica. um you know there's
+[01:11:55] different flavors within this thing but
+[01:11:57] they're all pretty much distributed
+[01:11:59] column store systems and they're good at
+[01:12:02] big data analytics.
+[01:12:05] So the question is why why are there
+[01:12:07] hard to do both? And like why are there
+[01:12:10] these two different data structures and
+[01:12:12] I can't just have one data structure
+[01:12:13] that does both? And so you know you
+[01:12:16] could talk about like oh row stores will
+[01:12:18] cause you know write amplification and
+[01:12:21] you're doing a bunch of random IO and so
+[01:12:23] their scan speed is limited and that's
+[01:12:25] like kind of true but really the reason
+[01:12:27] is that column stores are really really
+[01:12:30] really fast. So when column stores do
+[01:12:33] scans, they just, you know, they just
+[01:12:36] blow through your data and and it's it's
+[01:12:39] really impressive and it's a really cool
+[01:12:41] technology. Um, but column stores are
+[01:12:45] the updates are generally not fast. So
+[01:12:47] if you want to scan huge amounts of
+[01:12:49] data, you're kind of forced into this
+[01:12:51] column store world and your updates will
+[01:12:53] suck because of it. Um,
+[01:12:57] the questions of what other data
+[01:12:59] structures do are almost irrelevant. you
+[01:13:00] just the column store is just so good.
+[01:13:03] Um so you know there's a fundamental
+[01:13:07] fact of the universe no column store
+[01:13:09] will ever be as fast as row store
+[01:13:10] onpoint queries and so like if you have
+[01:13:13] a database it's either a column store
+[01:13:15] for analytics or a row store for
+[01:13:17] transactional workloads and typically
+[01:13:19] it's not both
+[01:13:21] but that's what single store is. It's a
+[01:13:23] hybrid row store column store thingy.
+[01:13:27] So what is single store? What is single
+[01:13:29] store as a hybrid option? Why do we
+[01:13:31] exist? Um, we're not really a hybrid
+[01:13:35] option. It's it's I it it would not be
+[01:13:38] fair to say that we're some kind of
+[01:13:40] franken thing. We're a column store with
+[01:13:43] tricks is what we are. Um, we're we're a
+[01:13:47] column store with a row store bolted
+[01:13:49] onto it that is kind of considered the
+[01:13:51] first segment of that column store and
+[01:13:54] it's used to store the hot rows. And
+[01:13:57] then we optimize our column stores in a
+[01:14:00] way that don't negatively affect the um
+[01:14:05] the scan performance but make it so that
+[01:14:08] they're decent, not as good as row
+[01:14:11] store, but decent at transactional
+[01:14:14] workloads. And the way we do that is
+[01:14:16] first of all you change the column store
+[01:14:18] encoding so that they're seekable which
+[01:14:20] by itself doesn't give you much but you
+[01:14:23] add these secondary hash indexes that
+[01:14:25] tell you the offsets and so it's like oh
+[01:14:27] I know all the offsets I can seek in
+[01:14:28] real fast and you kind of use that row
+[01:14:32] store to do to kind of manage the
+[01:14:34] locking virtual locks for the stuff in
+[01:14:36] the column store. Um and I I don't have
+[01:14:39] a ton of time. I could give an hour
+[01:14:41] presentation on each of these things,
+[01:14:43] but somehow it's a column store that
+[01:14:47] doesn't fall over when you try to do
+[01:14:49] transactional stuff. And that is very
+[01:14:52] unique in the industry. Um, and yeah, so
+[01:14:56] the the column stores are not generally
+[01:14:58] good at concurrent writes, but this one
+[01:14:59] is.
+[01:15:01] And you know, for those things that
+[01:15:02] really need transactional workloads, we
+[01:15:04] do offer dedicated in-memory row store
+[01:15:06] tables as well. We used to be called
+[01:15:08] memsql. We used to be mostly focused on
+[01:15:11] that in-memory row store thing that we
+[01:15:15] changed our name because we're not
+[01:15:16] really mostly focused on that anymore.
+[01:15:18] But um we do still have those.
+[01:15:21] What is this bias? What is what kind of
+[01:15:23] workloads can we do that other
+[01:15:25] competitors can't?
+[01:15:28] Well,
+[01:15:30] analytical databases love these
+[01:15:31] analytical benchmarks. TPCH, TPCDS,
+[01:15:34] there's a ton of them. And these
+[01:15:36] analytical benchmarks that they kind of
+[01:15:38] have the flavor of, you know, they'll
+[01:15:39] give you a hundred queries or whatever,
+[01:15:41] and you know, Snowflake's better on one,
+[01:15:44] you know, BigQuery is better on a
+[01:15:45] different one, ClickHouse is better on
+[01:15:46] on another one, single store is better
+[01:15:48] on one. And it's it's just like it's a
+[01:15:51] bag of tricks. It depends on, you know,
+[01:15:52] does your optimizer have this thing?
+[01:15:54] Does your query execution have this
+[01:15:56] thing? Does your column store execution
+[01:15:58] have this thing? Um, and so single store
+[01:16:02] is competitive with the best, you know,
+[01:16:04] data warehouses on these analytical
+[01:16:05] benchmarks.
+[01:16:07] OOLTB databases do not finish these. If
+[01:16:09] you're not column store, you don't stand
+[01:16:10] a chance. Don't even bother. So, single
+[01:16:13] store can do these things and we're just
+[01:16:15] as good as anyone else.
+[01:16:17] But we can also do the transactional
+[01:16:19] benchmarks. we can do TPCC
+[01:16:21] uh and you know we can do the you know
+[01:16:24] other sorts of point workloads and you
+[01:16:28] know Snowflake just it doesn't work. It
+[01:16:31] it just doesn't work. So um you know
+[01:16:35] we're we're the we're the only it's not
+[01:16:37] about being better than anyone else.
+[01:16:39] It's like we're the only one that can
+[01:16:41] actually finish all of these and that's
+[01:16:43] very cool. Um so we're the only system
+[01:16:46] that I'm aware of that can finish all
+[01:16:48] three. at least the only commercially
+[01:16:50] available one. I I think that there's
+[01:16:51] some academic ones that can do it as
+[01:16:52] well. Um, and that's pretty cool.
+[01:16:58] So, are we a hybrid database?
+[01:17:02] Maybe our marketing will tell you we're
+[01:17:03] hap or something, but I I think of us as
+[01:17:05] an analytical database that doesn't fall
+[01:17:07] over under high concurrency or or point
+[01:17:10] workloads.
+[01:17:11] uh we can do a wide variety of mixed
+[01:17:14] workloads like dashboards, logistics,
+[01:17:16] manufacturing, streaming AI, that kind
+[01:17:18] of stuff. And you know, it's mostly
+[01:17:20] analytical with enough transaction
+[01:17:22] processing the other systems can't keep
+[01:17:23] up.
+[01:17:28] Cool. So, I'm flying through this. I got
+[01:17:30] a couple more slides that are on a
+[01:17:32] completely different topic of modern
+[01:17:34] cloud systems, but maybe uh I'm also
+[01:17:37] over time already, so maybe I should
+[01:17:39] stop for questions and just let that be
+[01:17:41] the presentation.
+[01:17:43] >> Yes. Any questions for Joe?
+[01:17:46] >> Yes.
+[01:17:51] >> His question is would using worse
+[01:17:52] encoding means higher storage
+[01:17:53] requirements?
+[01:17:55] >> Uh
+[01:17:57] yes.
+[01:18:00] I I I couldn't.
+[01:18:03] >> Yeah, the question is um he's asking
+[01:18:06] about encodings. Let's hold your
+[01:18:07] question next class. Joe's like his
+[01:18:10] setup is basically the intro for next
+[01:18:12] next lecture. This is fantastic. So, a
+[01:18:14] bunch of stuff may not make sense now.
+[01:18:16] It it'll make sense on Monday and plus
+[01:18:18] he's coming to campus and he'll talk you
+[01:18:19] talk to him again about it. Okay.
+[01:18:23] All right, guys. Let's thank Joe
+[01:18:28] And like I said, uh DJ Cash's uh radio
+[01:18:31] show is this Sunday at 1 o'clock. And
+[01:18:33] then uh see everyone at the um at the
+[01:18:37] visit day on Monday. Hit it.
+[01:18:42] [Music]
+[01:18:52] asset
+[01:18:58] [Music]
+[01:19:02] get the

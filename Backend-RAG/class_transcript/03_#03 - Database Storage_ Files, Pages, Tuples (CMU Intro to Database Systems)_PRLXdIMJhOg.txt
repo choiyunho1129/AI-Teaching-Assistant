@@ -1,0 +1,2108 @@
+[00:00:00] [Music]
+[00:00:06] I'm still
+[00:00:08] associate.
+[00:00:11] [Music]
+[00:00:25] as I said in class last week. Um I can't
+[00:00:29] be on campus this week. I'm in London.
+[00:00:31] Um and actually right now we are
+[00:00:34] actually in the emergency room here in
+[00:00:38] in London. Um
+[00:00:41] so Fatface Rick uh did a micro data of
+[00:00:44] LSD last night. Went walking around and
+[00:00:47] then he got beat up by a bunch of like
+[00:00:49] 12-year-olds. Uh he basically beat that
+[00:00:52] up. Um,
+[00:00:54] so we had to bring him to the hospital
+[00:00:55] and I'm out here in the waiting room
+[00:00:57] waiting him to get cleaned up, stitched
+[00:00:59] up. Um, and then we can go back. So I
+[00:01:02] figured while I'm sitting here, we have
+[00:01:04] to teach about databases cuz that's, you
+[00:01:05] know, it's super important life. So
+[00:01:07] let's jump into this. So last class we
+[00:01:10] were talking um about SQL and then today
+[00:01:14] we're not going to talk start talking
+[00:01:15] about the how to actually build the
+[00:01:17] system. So as a reminder, project zero
+[00:01:19] is due this coming Sunday coming up.
+[00:01:21] Again, you're required to pass that if
+[00:01:23] you want to get into the class and
+[00:01:24] homework one is also due this coming up
+[00:01:26] Sunday um at the at the same time.
+[00:01:31] So now that we understand what SQL looks
+[00:01:34] like at the sort of logical level like
+[00:01:36] how to define tables, how to run queries
+[00:01:38] on it and you know what are the
+[00:01:40] properties of uh relational algebra and
+[00:01:43] how that fit into relational model.
+[00:01:46] That's sort of the the last time we're
+[00:01:48] going be looking at uh the application
+[00:01:51] level of a database uh for for most of
+[00:01:54] the semester. Now we're going to really
+[00:01:56] start talking about how you had to build
+[00:01:57] the software to run the queries that we
+[00:02:00] saw or store the data that we want to
+[00:02:02] put in the database. And so that's
+[00:02:04] really what's going forward this point
+[00:02:05] semester went forward is like actually
+[00:02:06] how do we actually build build that
+[00:02:08] system
+[00:02:09] and so the outline of the course is
+[00:02:11] roughly looks like this. So, we've
+[00:02:12] already sort of covered what the first
+[00:02:14] week of the relational database looks
+[00:02:15] like and we're now going to go sort of
+[00:02:18] at a level by level basics and start
+[00:02:20] looking at like, okay, here's how you
+[00:02:22] build the different layers that you need
+[00:02:23] to put together and interact them to
+[00:02:25] actually build a full-fledged database
+[00:02:27] system. And so, this is sort of the
+[00:02:29] rough outline of where the course is
+[00:02:31] going for this semester. Um, you know, a
+[00:02:34] lot of the things we'll be getting to
+[00:02:35] the very beginning will be like how to
+[00:02:37] build a single node system. Then once we
+[00:02:39] understand that then we'll finish up and
+[00:02:40] talk about how can you how can you scale
+[00:02:42] it out and run across multiple nodes.
+[00:02:46] And so the way to think about this is a
+[00:02:47] database system is essentially a bunch
+[00:02:49] of layers where there's a it's a well-
+[00:02:52] definfined API that one layer exposes to
+[00:02:55] the next layer in order to provide
+[00:02:57] certain guarantees or certain operations
+[00:02:58] on on data what whatever the um
+[00:03:03] whatever the the level of uh
+[00:03:07] the the level that they're trying to
+[00:03:09] interact with. So you can figure at the
+[00:03:12] very bottom you have this disk manager
+[00:03:13] the thing that actually reads and writes
+[00:03:14] data from disk. It's essentially a
+[00:03:16] database is just files on disk. And then
+[00:03:19] above that you have the buffer manager
+[00:03:20] that's going to be responsible for
+[00:03:21] bringing in pages from disk, bringing
+[00:03:22] them to memory uh and then handing them
+[00:03:25] out correctly to the other components
+[00:03:27] such as access methods for then
+[00:03:29] accessing data on behalf of operators
+[00:03:31] that are executing queries and above
+[00:03:33] that we have a query planner optimizer
+[00:03:35] to try to then take SQL queries and
+[00:03:37] convert it to physical plans that we can
+[00:03:39] then execute our system. So again, you
+[00:03:41] just think of the data system as a bunch
+[00:03:43] of layers. And what we're going to be
+[00:03:44] going through this semester is actually
+[00:03:46] we're going to go start at the bottom
+[00:03:48] and work our way up with the stack. So
+[00:03:50] the application is up here. This is what
+[00:03:52] we talked about before like the relation
+[00:03:53] database and SQL, right? And it
+[00:03:56] interacts with the front end that's
+[00:03:57] going to do query planning. And then
+[00:03:59] we're just going to again we're going to
+[00:04:00] talk about how to go up the stack now
+[00:04:02] and be able to execute those queries. So
+[00:04:04] today's class we're actually start at
+[00:04:05] the very bottom. We're going talk about
+[00:04:07] storage. Max class next week uh when I
+[00:04:09] come back in town we'll actually go back
+[00:04:11] up uh to the Buffalo manager talk about
+[00:04:14] how to bring some pages in memory but
+[00:04:15] then we actually need to go back down
+[00:04:17] and talk about different alternatives
+[00:04:18] storing things on desk. So that'll be
+[00:04:20] where we're at on um that for the next
+[00:04:23] two weeks.
+[00:04:25] So today again we're going to start
+[00:04:26] talking about what the background is of
+[00:04:27] what what the database is going to see
+[00:04:29] interact with in terms of hardware. Then
+[00:04:32] we'll talk about the lowest level
+[00:04:33] actually how you store things in files.
+[00:04:35] How you then divide those files into
+[00:04:37] pages and how you then divide those
+[00:04:39] pages into tupils. So today's class is
+[00:04:42] be a
+[00:04:44] row oriented centric view. Meaning we're
+[00:04:46] assume we're going to organize the data
+[00:04:48] uh as tupil says in rows. We'll see in
+[00:04:52] uh in two weeks how we actually flip
+[00:04:54] that on its head and actually store
+[00:04:55] things in an alternative way. So today
+[00:04:57] is going to be a classical database
+[00:04:58] system architecture, how the original
+[00:05:00] ones were built in the 1970s and then
+[00:05:02] we'll go from there and um talk about
+[00:05:05] how you know alternative methods the
+[00:05:07] more modern methods in in a few weeks.
+[00:05:08] We kind of understand the basics first
+[00:05:09] before we get to the other ones. Okay.
+[00:05:13] >> So the other thing about this class too
+[00:05:15] I guess bring up is that the
+[00:05:19] we'll be focusing on what I'll call a
+[00:05:21] disk based or disoriented system
+[00:05:23] architecture.
+[00:05:25] And what I mean by that is that the the
+[00:05:27] software the software system the
+[00:05:28] database system is going to assume that
+[00:05:30] the primary storage location of a
+[00:05:32] database will be on nonvolatile disk
+[00:05:35] like an SSD network storage it doesn't
+[00:05:38] matter but it's considered volatile and
+[00:05:41] then it's a classic vonomic architecture
+[00:05:44] where you can't operate on anything that
+[00:05:47] well exists in disk. and said you have
+[00:05:49] to bring thing bring pages from disk or
+[00:05:52] the files from disk into memory into
+[00:05:55] volatile storage like something like
+[00:05:56] DRAM and then that's where you read and
+[00:05:59] write to the data that you want and the
+[00:06:01] data system is is then responsible for
+[00:06:03] writing up those changes to the vol the
+[00:06:05] nonvolatile disk at
+[00:06:08] >> at some later point.
+[00:06:10] So this is really going to be focusing
+[00:06:12] on and then all of the uh components
+[00:06:15] that we're going to talk about the
+[00:06:16] outwards we're talk about is really be
+[00:06:17] predicated on on this architecture
+[00:06:20] assumption.
+[00:06:22] So the way to think about how we're
+[00:06:24] going to interact with nonvolatile and
+[00:06:26] volatile storage is so this classic
+[00:06:27] hierarchy like this. You've probably
+[00:06:29] seen this in classes, right? This is
+[00:06:30] should not be anything new. Um but you
+[00:06:33] sort of think of the the the bottom
+[00:06:36] layer you have the the the very large
+[00:06:39] and but slower storage and the very top
+[00:06:40] you have the very fast and cheaper one.
+[00:06:43] Right? So the top would be things like
+[00:06:44] CPU registers because it's the smallest
+[00:06:46] amount of data you can store or access
+[00:06:48] on a CPU. Um, and obviously it's gonna
+[00:06:51] be really, really fast, but it's also be
+[00:06:53] really expensive. It's gonna be very
+[00:06:54] limited. Then as you go down the stack,
+[00:06:56] things get bigger. Um, the capacity is
+[00:06:58] larger. Uh, they're going to get slower
+[00:07:01] and they're going be actually much
+[00:07:02] cheaper to store per, you know, per bite
+[00:07:04] or per gigabyte. So, this is the sort of
+[00:07:07] way we want to think about and how these
+[00:07:09] different storage layers are going to
+[00:07:10] work with each other.
+[00:07:11] But there's also this division line that
+[00:07:13] I'll draw here between DRAM and SSDs.
+[00:07:16] And basically say at the top you have
+[00:07:18] again what I call volatable storage um
+[00:07:21] where again if you lose the power on
+[00:07:23] whatever the the computing device you're
+[00:07:24] using to store this everything is blown
+[00:07:26] away. Um, but they're going to be
+[00:07:29] they're going to support what I'll call
+[00:07:30] random access or bite addressable
+[00:07:32] access, meaning we can jump to
+[00:07:35] individual bite offsets without worrying
+[00:07:38] about bringing in a bunch of other data
+[00:07:39] that maybe we don't actually need. Now,
+[00:07:42] with cache lines on the CPU, that's not
+[00:07:44] entirely true, but for our purposes in
+[00:07:46] this semester, uh, we can ignore that.
+[00:07:49] And then below this demarcation line, we
+[00:07:51] have uh nonvolatile storage. So this
+[00:07:54] will be things like spinning disc hard
+[00:07:55] drives or SSDs or network stores like
+[00:07:58] like S3 on Amazon or Google cloud
+[00:08:00] storage and so forth. So these devices
+[00:08:03] will be uh nonvolatile meaning if we
+[00:08:06] write to them and we can send a command
+[00:08:09] to say flush the data to this storage
+[00:08:11] device and then we be guaranteed if
+[00:08:13] power is lost that we come back and data
+[00:08:16] will be there. Again if obviously if the
+[00:08:18] machine catches a fire and the discs
+[00:08:19] melt, we can't do that. But there's ways
+[00:08:21] to get around that we'll cover later in
+[00:08:22] the semester.
+[00:08:24] These devices are also going to be what
+[00:08:26] are called block adjustable. And that
+[00:08:27] means that the the smallest granularity
+[00:08:31] in which we can access data is going to
+[00:08:33] be through a block. And typically this
+[00:08:35] can be 4 kilobytes, sometimes larger,
+[00:08:37] sometimes smaller. We can't do the bite
+[00:08:39] addressable access that we can do in
+[00:08:41] DRAM or CPU caches. Meaning if we want
+[00:08:44] to access a single bite, we have to
+[00:08:46] bring in the whole page or block where
+[00:08:49] that bite exh resides. Even if you don't
+[00:08:51] need that need that other data,
+[00:08:53] right? That's sort of the trade-off we
+[00:08:55] have to make in in in our system design
+[00:08:57] when we actually want to start storing
+[00:08:59] things on nonvocal storage.
+[00:09:02] So for the purposes of this semester,
+[00:09:04] what we're going to say is that anything
+[00:09:06] below this this demarcation line here
+[00:09:08] between nonvolves and volatile storage,
+[00:09:10] we're just going to say that's just
+[00:09:11] called disk, right? Well, it doesn't
+[00:09:13] matter whe it's an SSD or spinus hard
+[00:09:15] drive or network storage. Even below
+[00:09:18] network storage, you can have things
+[00:09:19] like tape drives, but people wouldn't
+[00:09:21] you people really only use that for
+[00:09:23] archival stuff like Amazon Glacier. So
+[00:09:25] everything down below is block
+[00:09:27] addressible and um and nonvolatile.
+[00:09:31] We'll just call that disk. And then
+[00:09:33] above that line, we're going to say that
+[00:09:34] we're just call whatever is in DRAM.
+[00:09:36] We're just going to call that that
+[00:09:37] memory. Um and then above that will be
+[00:09:40] anything that's like directly on the
+[00:09:41] CPU, like on the actual die of the
+[00:09:43] socket itself, uh like CPU caches and
+[00:09:46] CPU registers, right? We're just going
+[00:09:48] to say that's CPU storage. And so for
+[00:09:50] the purposes of this semester, uh we're
+[00:09:53] actually going to ignore CPU related
+[00:09:55] stuff. We can talk a little bit about
+[00:09:57] more efficient ways to
+[00:10:01] go to
+[00:10:03] >> more efficient ways to to store the
+[00:10:04] stuff, but like um for our purposes
+[00:10:06] here, we can use all that, right? We'll
+[00:10:09] cover these things in the advanced
+[00:10:10] class. That's where we really care about
+[00:10:11] like you know cache locality and things.
+[00:10:14] for for this semester it's really about
+[00:10:16] is it in memory or is it in disk and
+[00:10:18] then how do we move back and forth.
+[00:10:21] >> Now the other thing to be mindful of too
+[00:10:23] and this is going to be where we're
+[00:10:24] going to deviate from maybe traditional
+[00:10:26] algorithm classes you've taken uh in in
+[00:10:29] in you know computer science classes
+[00:10:31] before where we actually need to be
+[00:10:32] aware of how long it's going to take for
+[00:10:34] us to access data at these different
+[00:10:36] levels. And so there's this great table
+[00:10:38] here um that comes from this this
+[00:10:40] website you see in the corner. Uh Jeff
+[00:10:42] Dean has a version of this that actually
+[00:10:44] predates him goes back to Jim Gray uh
+[00:10:46] from the early 1990s. But basically it's
+[00:10:48] a table like here's all the the time it
+[00:10:50] takes to access different uh levels of
+[00:10:53] storage right from the nonvolatile ones
+[00:10:55] sorry the volatile ones down to the
+[00:10:57] nonvolatile ones. And here I'm showing
+[00:10:59] these numbers in measured in nanconds.
+[00:11:02] So basically just shows like if I'm
+[00:11:03] going to read something from DRAM it's
+[00:11:05] going to take 100 nconds. Um, but if I
+[00:11:07] read an SSD now, it's going to take me
+[00:11:10] 16 maybe 50 50,000 nconds, right? So,
+[00:11:14] it's like two orders of magnitude slower
+[00:11:16] than reading from DAM. So, obviously, we
+[00:11:18] want to be mindful of like when we're
+[00:11:20] going to read things from disk and try
+[00:11:22] to minimize the the the amount of time
+[00:11:24] you have to how many times you have to
+[00:11:25] do that. Then, once you get below an
+[00:11:28] SSD, that's when things just get like
+[00:11:29] super super slow. So I realize as humans
+[00:11:32] it's it's hard for us to to wrap our
+[00:11:35] heads around um
+[00:11:37] you know times in terms of nanconds. So
+[00:11:40] there's a really easy trick that Jim
+[00:11:41] Gray came up with where if you just
+[00:11:43] replace nancond with second then you
+[00:11:46] really start to see how uh how expensive
+[00:11:49] these things are are going to be
+[00:11:51] relative to like reading data that could
+[00:11:52] be in memory. So if you read something
+[00:11:53] like L1 cache that would take a second.
+[00:11:55] So that's like if I want to read a book,
+[00:11:57] I just go over to that chair there and
+[00:11:59] read a page in the book and it would
+[00:12:00] take me a second or 4 seconds. But then
+[00:12:02] if I want to read something in a tape
+[00:12:04] drive, um it's going to take 31 years.
+[00:12:07] That's equivalent of like me flying to
+[00:12:08] Pluto and back to to read a single page
+[00:12:10] in a book. It be ridiculously long. Um
+[00:12:13] you want to try to avoid that as much as
+[00:12:16] possible, right? So again, as I said,
+[00:12:18] most systems are not going to be stored
+[00:12:19] tape drives. So that's not you have to
+[00:12:22] worry about you know that that level of
+[00:12:24] latency but certainly there's a lot of
+[00:12:26] systems and risk systems today are
+[00:12:27] certainly these SSDs spinning hard
+[00:12:29] drives and network storage at S3 and so
+[00:12:31] we got to be mindful of like when are we
+[00:12:33] going to read and write uh data from
+[00:12:34] disk and try to avoid having to block
+[00:12:37] the system while we're waiting for those
+[00:12:38] things.
+[00:12:41] The other thing we need to be also be
+[00:12:42] mindful of in our uh implementation our
+[00:12:45] algorithms is the difference between
+[00:12:46] sequential and random access or random
+[00:12:48] IO. So again when you assume you're
+[00:12:52] you're talking about quicksort
+[00:12:53] algorithms in intro classes and so forth
+[00:12:56] you just assume oh read write anything
+[00:12:58] in memory and the time it takes to read
+[00:12:59] any any object or entity takes the same
+[00:13:02] amount of time. But in reality on real
+[00:13:05] hardware the latencies between random
+[00:13:08] access and sequential access uh can be
+[00:13:10] quite significant. So random access
+[00:13:12] would be like I'm jumping around to
+[00:13:14] different locations and reading uh
+[00:13:15] different bits as I needed or bytes as I
+[00:13:17] need where sequential access would be
+[00:13:20] read like a stride of data that is
+[00:13:22] contiguity with each other and you know
+[00:13:25] so I can just do one look up and get
+[00:13:26] multiple bytes kilobytes that are all
+[00:13:29] close to each other.
+[00:13:31] So just give you some ballpark numbers
+[00:13:33] here. Random IO would be on a fast SD um
+[00:13:38] maybe 80 to 100 microsconds. So you know
+[00:13:42] let's speed on the high end um for like
+[00:13:44] a like a consumer grade drive where
+[00:13:47] sequential IO would be you know you can
+[00:13:50] read a bunch of data in in terms of you
+[00:13:52] know 10 to 100 nic and again depends on
+[00:13:55] like how much data you're reading how
+[00:13:56] many threads are reading. This is a
+[00:13:58] whole bunch complicated uh that we're
+[00:13:59] not going to really cover in this class.
+[00:14:01] But the main thing to be going to be
+[00:14:02] awareful mindful of is that like there
+[00:14:04] is a huge difference between sequential
+[00:14:06] and uh random IO especially on spinning
+[00:14:09] hard drives and we want to try to
+[00:14:11] maximize the amount of sequential access
+[00:14:14] we can do whenever we have to read and
+[00:14:16] write anything from disk. And that means
+[00:14:18] that we'll make certain choices in our
+[00:14:19] algorithms that try to reduce the number
+[00:14:21] of writes uh to random pages so that um
+[00:14:26] >> so that we store data in continuous
+[00:14:27] blocks and then certain
+[00:14:30] >> certain systems will be certain things
+[00:14:31] that seems like crazy to do but again if
+[00:14:33] you're aware of like access is much
+[00:14:36] faster than random access you would that
+[00:14:39] sort of makes sense. So like my SQL for
+[00:14:40] example will uh they'll store their uh
+[00:14:44] when when they write dirty pages to disk
+[00:14:46] they'll first write it to this double
+[00:14:47] writeback buffer and that's a sequential
+[00:14:49] write where they put all the the the all
+[00:14:51] the dirty pages they want to flush out
+[00:14:53] they write it those sequentially then in
+[00:14:55] the background uh
+[00:14:58] then the background they'll do the
+[00:14:59] random writes at a later point but at
+[00:15:01] that you know you're not blocked waiting
+[00:15:03] for that dirty pages to be written uh
+[00:15:05] because you've written that sequentially
+[00:15:07] the first All
+[00:15:10] right. So, the ultimate goal for a
+[00:15:13] database system we're going to try to
+[00:15:15] build this semester is a system that um
+[00:15:18] can manage a database system that's
+[00:15:22] larger than the amount of memory that's
+[00:15:24] available to the system. So, if you only
+[00:15:26] have 8 gigs of RAM, you can run a
+[00:15:28] database handle database that's 16
+[00:15:31] kilobytes or 32 kilobytes or uh or
+[00:15:34] gigabytes or larger.
+[00:15:36] So the the challenge of course is going
+[00:15:39] to be to provide this illusion is that
+[00:15:41] we have to move data back and forth
+[00:15:43] between disk and and to memory, right?
+[00:15:44] As I saying sort of the bonom
+[00:15:46] architecture and so we want to do this
+[00:15:48] in in a clever way and take advantage as
+[00:15:50] many optimizations as we can where we
+[00:15:54] want to avoid large stalls while we're
+[00:15:55] fetching things in disk and have the
+[00:15:57] system sort of grind to a halt just
+[00:15:59] because we're waiting to go go fetch IO.
+[00:16:02] And so there'll be a bunch of things
+[00:16:03] we'll go do as we see go go go along
+[00:16:06] about allowing multiple queries to run
+[00:16:09] at the same time. Um reusing data that
+[00:16:12] we bring into memory, being clever about
+[00:16:14] what we write out, you know, get from
+[00:16:16] from memory into disk. So there's a
+[00:16:18] bunch of things we're going to want to
+[00:16:19] do and we're design certain algorithms
+[00:16:22] in such a way that we can reduce that
+[00:16:25] that burden that cost of having to read
+[00:16:27] my data from disk and again make it look
+[00:16:29] like we have enough memory to handle
+[00:16:30] everything. And of course at some point
+[00:16:32] if the working set size of of the data
+[00:16:34] of all the queries that are running
+[00:16:37] meaning all the things that you need to
+[00:16:38] be in memory is larger than minimum
+[00:16:40] memory you have that's going to be a
+[00:16:41] problem there's no way to get around
+[00:16:43] that but for other sort of in the in the
+[00:16:46] general case will be okay.
+[00:16:52] >> All right so everything I've said here
+[00:16:53] is kind of handy and vague. So let's
+[00:16:55] actually go into more details of like
+[00:16:56] look look at a high level picture of
+[00:16:58] like what a discordated data system
+[00:17:00] could look like and then we'll see what
+[00:17:03] we're trying to then design and build uh
+[00:17:06] as as we go along through the rest of
+[00:17:07] the semester. So as I said before the
+[00:17:11] database and a discarding system it's
+[00:17:12] just files on disk. Sometimes it's it's
+[00:17:15] one file like some systems like duct DB
+[00:17:17] and SQLite they pride themselves on
+[00:17:20] storing every the entire database as a
+[00:17:22] single file but most systems are going
+[00:17:24] to store the database across multiple
+[00:17:25] files on disk. These files aren't
+[00:17:28] special in terms of the operating
+[00:17:29] system. Meaning it's like the operating
+[00:17:31] system just use a bunch of files that is
+[00:17:33] created with you know f fright or f
+[00:17:35] open. Um it's really the data system
+[00:17:38] interpreting what those files are where
+[00:17:40] the the sort of important stuff the
+[00:17:42] magic happens in the system. So we have
+[00:17:45] one on our basel disc. We have some kind
+[00:17:47] of databases file and we're going to
+[00:17:49] break this up into a bunch of bunch of
+[00:17:51] pages and these will be sort of fixed
+[00:17:53] length size uh uh segments or divisions
+[00:17:57] of the file uh and at the header or at
+[00:18:02] the at some special location usually
+[00:18:04] it's usually the header there'll be what
+[00:18:05] call page directory and that's just a
+[00:18:08] kind of internal database of keeping
+[00:18:10] track of like here's all the pages that
+[00:18:12] I have on the disc
+[00:18:15] and then now I in memory for my data
+[00:18:17] system. I have what I call buffer pool.
+[00:18:19] Sometimes it's called the buffer cache
+[00:18:21] or uh the memory cache or something.
+[00:18:24] They're all different systems call them
+[00:18:26] different things, but it's basically the
+[00:18:27] same thing. And this is going to have a
+[00:18:29] bunch of uh um frames, we'll call them,
+[00:18:32] where I can store pages I'm going to
+[00:18:34] bring in memory. Um so again the data
+[00:18:37] systems job is really about managing the
+[00:18:39] movement of of disk pages back and forth
+[00:18:41] between disk and and and memory in order
+[00:18:44] of the service whatever the the the
+[00:18:45] queries are that I'm executing
+[00:18:47] >> number
+[00:18:49] 157 please go to position 4
+[00:18:53] >> it's not us okay um so uh I have my
+[00:18:56] execution engine right I'm not defining
+[00:18:58] what this is for now assume there's
+[00:19:00] something that wants queries and so it's
+[00:19:03] executing something that says I want to
+[00:19:04] get page number two. So at the very
+[00:19:06] beginning assuming that nothing's in
+[00:19:08] memory. So the very first thing we need
+[00:19:10] to do is that they're bringing the
+[00:19:11] directory to memory because the
+[00:19:12] directory is going to tell us what pages
+[00:19:13] we have and where to go find them. And
+[00:19:15] again for us right now in this example
+[00:19:17] here we assume it's a single file but it
+[00:19:18] could be spread across multiple files
+[00:19:20] and multiple directories or even across
+[00:19:21] multiple machines. But at this point it
+[00:19:24] doesn't matter.
+[00:19:26] So,
+[00:19:29] >> so we bring the the directory in and
+[00:19:30] we'll look inside that and that's going
+[00:19:32] to tell us where to go find page two,
+[00:19:34] right? So, simplicity assume we can just
+[00:19:36] compute where offset is in this file and
+[00:19:38] it finds it for us. Then we go fetch
+[00:19:40] that page into memory and then now we
+[00:19:42] then hand back to the execution engine a
+[00:19:45] pointer to that page in memory and the
+[00:19:48] the buffer pool is going to guarantee
+[00:19:49] that this that that pointer is not going
+[00:19:51] to get replaced or swapped out with
+[00:19:52] another page until the execution engine
+[00:19:54] says they're done with it. So now it
+[00:19:57] also notice here that we didn't say
+[00:20:00] anything about what's inside these
+[00:20:01] pages. It's up for it's up to whatever
+[00:20:04] up above and the system to then
+[00:20:05] interpret what's in these pages is to
+[00:20:06] decide what the bites actually mean. But
+[00:20:08] this this lowest level here we don't
+[00:20:10] know and we don't we don't actually care
+[00:20:11] right now.
+[00:20:14] So then the execution does does whatever
+[00:20:16] it does interprets the page layout and
+[00:20:17] let's say that's doing update. So wants
+[00:20:19] to update the contents of page number
+[00:20:20] two. So then it writes back the change
+[00:20:23] to page
+[00:20:24] and then it can then say I completed and
+[00:20:27] at some later point the buffer bulb is
+[00:20:29] going to write out that dirty page to
+[00:20:31] disk and update the files files and it
+[00:20:33] does it in a way that's safe so that if
+[00:20:35] we crash and come back we don't lose any
+[00:20:38] of those changes that the the execution
+[00:20:40] engine made to that page.
+[00:20:43] So we're not going to go into the
+[00:20:45] details of all these things in this
+[00:20:46] lecture. We'll discuss these other
+[00:20:47] lectures, but we'll discuss some of what
+[00:20:49] these pages actually look like at the
+[00:20:50] files in this lecture. And then we'll
+[00:20:53] come back to this in five and six. And
+[00:20:55] then we're going to spend in lecture
+[00:20:56] four, we're going to spend time
+[00:20:57] discussing what this buffer pool manager
+[00:20:59] looks like uh in in memory and how it
+[00:21:02] does some of the writing out to disk. We
+[00:21:04] won't discuss everything how to do this
+[00:21:05] in a transaction safe manner. That'll be
+[00:21:07] later in the semester after the midterm,
+[00:21:09] but we'll just have a general idea of
+[00:21:10] how the the mechanism is actually going
+[00:21:12] to work. Um so we'll cover that in next
+[00:21:15] week in lecture four because also too
+[00:21:17] that'll be what you'll need in the first
+[00:21:19] project and then for what the execution
+[00:21:21] engines go look like we'll cover that in
+[00:21:23] lectures 13 14 uh in a few weeks. Okay.
+[00:21:29] All right. So there's two big questions
+[00:21:30] we have to deal with in our system. The
+[00:21:32] first is how we're going to represent
+[00:21:34] the the databases which are files on
+[00:21:36] disk. And then the second question we
+[00:21:38] have to deal with is how we're going to
+[00:21:39] move that that those pages back and
+[00:21:41] forth into from disk into memory and
+[00:21:43] then hand them off to other parts of the
+[00:21:46] system in order to interpret their
+[00:21:48] bites.
+[00:21:49] So for today's class we're going to
+[00:21:51] focus on this. As I said next class
+[00:21:52] we'll then come back to problem number
+[00:21:54] two uh and understand what the buff
+[00:21:56] manager is actually doing for us and how
+[00:21:58] it works.
+[00:22:01] So as I said the the database is just
+[00:22:04] files on disk. Um and there's nothing
+[00:22:08] special about them in terms of again
+[00:22:09] what the operating system sees. It's
+[00:22:11] just as if I you know create a bunch of
+[00:22:12] files in any application and then the
+[00:22:14] data system is up to interpret what's in
+[00:22:16] them. Now historically uh these file
+[00:22:20] formats has always within the files has
+[00:22:22] always been proprietary meaning like
+[00:22:24] they are what the
+[00:22:27] they're specific to whatever the
+[00:22:28] database system that created them. Um
+[00:22:30] and they're not usually interpreted by
+[00:22:32] other other database systems. So like
+[00:22:34] you can't take a Postgress file like
+[00:22:36] it's file format and then open it up in
+[00:22:38] my SQL or Oracle right it's not going to
+[00:22:40] know how to interpret those bytes
+[00:22:41] because it doesn't mean anything to to
+[00:22:43] the other system right there are there's
+[00:22:46] a newer trend in building what are
+[00:22:48] called portable file formats things like
+[00:22:49] parquet where it's a file format that is
+[00:22:53] open like an open spec
+[00:22:56] >> and that any system we read right to
+[00:22:59] them but we're not going to discuss that
+[00:23:00] in this class we'll cover that when we
+[00:23:02] in a few talk our column stores.
+[00:23:05] The other thing I also point out too is
+[00:23:06] that the the database system is
+[00:23:08] typically going to go run on offtheshelf
+[00:23:11] file system like ext4
+[00:23:14] uh WinfS what whatever your the
+[00:23:16] operating system installs and that's
+[00:23:18] going to be typically good enough for
+[00:23:20] what we need. Um there was
+[00:23:23] uh some systems in the 1980s
+[00:23:26] that uh would actually build custom file
+[00:23:28] systems on top of raw block storage. So
+[00:23:30] you'd buy like a storage device. It's
+[00:23:32] just raw blocks and then they would they
+[00:23:34] the Davis would install its own custom
+[00:23:36] uh file system inside of that. You
+[00:23:39] typically don't see that uh certainly
+[00:23:41] not open source systems. Um and you only
+[00:23:44] really see this in like sort of really
+[00:23:45] high-end enterprise systems like Oracle
+[00:23:48] and Terod data. Most people aren't going
+[00:23:50] to do this. So if you look at Oracle's
+[00:23:52] documentation,
+[00:23:53] you could have a they have this thing
+[00:23:55] called Oracle ASM. It basically says
+[00:23:57] like instead of having the operating
+[00:23:58] system manage the the file system for
+[00:24:02] you with a logical volume manager or
+[00:24:04] whatever
+[00:24:06] instead the data system is going to do
+[00:24:07] that for you. Um it's basically
+[00:24:10] injecting a custom file system to the
+[00:24:11] operating system. You know that still
+[00:24:13] exposes the what the standard posics API
+[00:24:16] the operating system expects but it lays
+[00:24:19] out data in such a way that it's very
+[00:24:21] specific to what the data system wants.
+[00:24:25] There has been a study on this for a
+[00:24:27] while, but you get roughly about a 15%
+[00:24:28] improvement in performance for this. Um,
+[00:24:30] it's it's a major engineering effort and
+[00:24:32] most systems aren't going to do this.
+[00:24:38] All right. So then the data at the
+[00:24:40] lowest level is going to have this thing
+[00:24:40] called storage manager. Um,
+[00:24:44] again, sometimes it's called the disk
+[00:24:45] manager, but it's usually the same
+[00:24:46] thing, but it's the it's the component
+[00:24:49] of the system that's responsible for
+[00:24:51] reading and writing data out to disk.
+[00:24:53] Um, so again, you could rely on the OS
+[00:24:56] to do some things, but not you don't
+[00:24:58] want to have to do everything. Um,
+[00:25:01] and most of the the higher end systems,
+[00:25:03] the better systems are actually do their
+[00:25:04] own scheduling for reasons and writes
+[00:25:06] and figure out where they're actually
+[00:25:08] going to put data uh on their own. Don't
+[00:25:10] let the OS kind of just figure crap out
+[00:25:12] for you because it's going to it's
+[00:25:13] always going to do do a bad job.
+[00:25:16] All right. And then there's files that
+[00:25:18] we're storing as I said can be broken up
+[00:25:19] into pages usually fixed length um
+[00:25:23] within the file and then some systems
+[00:25:25] will allow you to define a different
+[00:25:28] page size per table like IBM DB2 you can
+[00:25:31] do this and there but still within the
+[00:25:33] the single um the file itself the
+[00:25:36] collection of files for a table they'll
+[00:25:38] be all the same side size
+[00:25:40] >> number
+[00:25:42] 159 please go to position
+[00:25:46] And then the storage manager is going to
+[00:25:48] responsible for um
+[00:25:51] uh keeping track of these pages reading
+[00:25:54] and writing to them um and it keeps
+[00:25:56] track of available space and then when
+[00:25:58] there's a request up above that says hey
+[00:26:00] I need to store so many bytes it'll you
+[00:26:03] can then figure out where's the free
+[00:26:04] space to actually store this.
+[00:26:07] Now the other thing we be mindful of is
+[00:26:08] that the
+[00:26:11] within a single like files on disk for
+[00:26:15] like a single instance running on a box
+[00:26:17] by itself um we're not going to maintain
+[00:26:19] multiple copies of a single page on disk
+[00:26:22] um like like a physical level at a
+[00:26:25] logical level we may have multiple
+[00:26:26] copies of data within a tupil because we
+[00:26:29] might store them in heat files talk
+[00:26:31] about in a second or like and then store
+[00:26:32] it again in the log file but it's it's
+[00:26:35] not the storage manager responsibility
+[00:26:36] ility to like, oh, I got to write this
+[00:26:37] page out. I'm going to make multiple
+[00:26:39] copies of it. That's either going to
+[00:26:40] happen at the level below it, like in
+[00:26:43] the file system. Um, like with something
+[00:26:45] like RAID or like a storage appliance, I
+[00:26:47] can make multiple copies uh or have, you
+[00:26:50] know, replicas in S3 or it's going to
+[00:26:52] happen up above the storage manager
+[00:26:54] where there'll be something that says I
+[00:26:56] I have to have logical copies of this
+[00:26:58] data across multiple uh multiple nodes.
+[00:27:01] All right, at the lowest level in the
+[00:27:03] storage manager, it's not going to do
+[00:27:04] that. It's really about I got to write
+[00:27:05] data to a single um you know a single
+[00:27:09] instance or a single location of the
+[00:27:11] first single page.
+[00:27:14] All right. Then as I said the page is
+[00:27:16] going to be a fixed size block of data
+[00:27:18] and that's going to basically contain
+[00:27:19] everything that's in our database
+[00:27:21] system. Right. So it's contain the
+[00:27:22] tupils that are in the data. It's
+[00:27:23] contain metadata about those data. The
+[00:27:25] catalog of what tables I have what what
+[00:27:28] information I have. The page directories
+[00:27:30] basically stored as pages as well
+[00:27:32] indexes records. All this is going to be
+[00:27:34] stored uh and broken up to divid
+[00:27:37] internally as pages.
+[00:27:40] Now, most systems are not going to mix
+[00:27:42] the page types. Um, meaning like you're
+[00:27:45] not going to have within a single file
+[00:27:48] pages for table X and table Y or index X
+[00:27:52] and table together. It's typically going
+[00:27:53] to be like here's one file has data just
+[00:27:55] for this one one page, right?
+[00:27:58] Some systems are also going to require
+[00:28:00] uh systems the pages to be
+[00:28:02] self-contained. Meaning everything you
+[00:28:04] need to know about what's inside the
+[00:28:05] page uh has to be stored in the page
+[00:28:08] itself. So you can imagine things like
+[00:28:10] if it's a it's a data page for a table,
+[00:28:14] you would say here's all the the
+[00:28:15] metadata I need to have know like that
+[00:28:17] this page is for this table, right? You
+[00:28:19] would do that for like crash recovery,
+[00:28:21] but you only see that in like Oracle um
+[00:28:23] whatever, you know, paranoid about not
+[00:28:25] losing people's data and rightfully so.
+[00:28:28] The other important thing to know is
+[00:28:29] also that the u each page is given a
+[00:28:32] unique identifier called a page ID. Um,
+[00:28:35] and a page ID is going to be this unique
+[00:28:38] number that the data system is going to
+[00:28:40] to maintain to keep track of like here's
+[00:28:42] how to address and find this this
+[00:28:44] particular page I'm looking for. And it
+[00:28:46] could be unique per the database
+[00:28:47] instance, per table, per database, but
+[00:28:49] it's it's going to be some number that's
+[00:28:51] going to tell us where to go find how
+[00:28:53] it, you know, address that single page.
+[00:28:55] Now, it could be an offset in the file
+[00:28:57] as well, but it could just be also a
+[00:29:00] logical location that would then use the
+[00:29:01] page directory to go then find out where
+[00:29:04] that thing's actually being located.
+[00:29:10] So now important thing to understand
+[00:29:12] also is there's there's actually three
+[00:29:13] notions of pages in in a system. So at
+[00:29:17] the lowest level you have what's called
+[00:29:19] a hardware page, right? This is the um
+[00:29:22] this is typically 4 kilobytes and it's
+[00:29:25] the
+[00:29:27] >> it's the smallest atomic unit of data
+[00:29:29] that the hardware can guarantee that it
+[00:29:32] can write out to to to the storage
+[00:29:34] device actual the actual physical medium
+[00:29:37] of the storage uh that's done atomically
+[00:29:40] right so this would be uh if I have to
+[00:29:43] write out say two 4 kilob pages or 8
+[00:29:45] kilobytes the hardware can only
+[00:29:47] guarantee that it can write the 4 kilob
+[00:29:50] one atomically. So it can't guarantee
+[00:29:52] that it's going to write up both pages
+[00:29:55] or none of them. It has to guarantee
+[00:29:56] that it can only guarantee it can write
+[00:29:57] one of them.
+[00:30:00] All right. So then now above that you
+[00:30:02] have the the OS page and by default in
+[00:30:06] Linux uh this is 4 kilobytes. um in some
+[00:30:10] in new versions of Linux and you can get
+[00:30:12] what are called huge pages and then you
+[00:30:13] can be like 2 megabytes to one gigabyte
+[00:30:15] but this is basically the mapping of the
+[00:30:18] of a hardware page to a so
+[00:30:22] a logical page that the OS is going to
+[00:30:24] keep track of in its own its own
+[00:30:25] internal page directory.
+[00:30:29] Then now above that we have the database
+[00:30:31] page and this is going to be what the
+[00:30:34] database is how the database is going to
+[00:30:35] organize it own pages. Um so again the
+[00:30:40] hardware pages is always going to be 4
+[00:30:42] kilobytes and that's the the largest
+[00:30:44] block being guaranteed to write
+[00:30:45] atomically but then the OS can have its
+[00:30:47] own page sizes and the data system have
+[00:30:49] its own page sizes as well and we just
+[00:30:51] have to be mindful of how we're going to
+[00:30:53] do this mapping from a database page to
+[00:30:56] to a hardware page and be aware of that
+[00:31:00] if we have to write more data that we
+[00:31:02] can do atomically in a page we have to
+[00:31:04] do a bunch of extra steps to make sure
+[00:31:05] that things are written safely before we
+[00:31:08] tell the outside world before everything
+[00:31:10] is uh has been has been uh has been
+[00:31:13] flushed.
+[00:31:15] So the database page size is going to
+[00:31:17] vary per system right uh on the smallest
+[00:31:21] actually with something like SQL light I
+[00:31:23] know for some embedded devices it can go
+[00:31:24] down down to 512 bytes by default it's
+[00:31:27] it's 4 kilobyt um Oracle by default is
+[00:31:31] is 4 kilobytes the DBT is 4 kilobytes
+[00:31:34] Rox DD which is a embedded storage
+[00:31:37] engine that's used in a lot of systems
+[00:31:39] that's 4 kilobytes wire tiger is the
+[00:31:41] storage engine for MBD that's 4
+[00:31:43] kilobytes
+[00:31:45] Then you have things like SQL server and
+[00:31:47] uh and Postgress, right? They're 8
+[00:31:49] kilobytes. Then my SQL famously can go
+[00:31:51] up to uh 16 kilobytes.
+[00:31:55] So the the size of a database page
+[00:31:59] uh what you actually want to use in your
+[00:32:00] system depends on many different factors
+[00:32:02] like the environment that the hardware
+[00:32:04] environment the system is running in,
+[00:32:06] what the data it is you're actually
+[00:32:07] storing, like are they really wide
+[00:32:09] tables that have a lot of columns or
+[00:32:11] small number of columns? Are they are
+[00:32:13] they big blobs of data or are they just
+[00:32:15] small integers? Right? And it actually
+[00:32:17] depends on the workload you expect to
+[00:32:19] run in your database system. So in
+[00:32:22] general for data systems that are doing
+[00:32:23] read heavy workloads. Um and let's see
+[00:32:26] more about this in in a week or two. Uh
+[00:32:29] where these ones you actually want to
+[00:32:30] store things as larger page sizes
+[00:32:33] because you know you're going to do a
+[00:32:34] lot of sequential scans where you're
+[00:32:35] reading a lot of data that it's all
+[00:32:36] contiguous. So for every page I go have
+[00:32:39] to read um I'm going to bring in tupils
+[00:32:41] that I know I'm going to want to you
+[00:32:43] know that I need for my query. So every
+[00:32:45] fetch for a page um get a database page
+[00:32:49] brings in useful data for me. Um we'll
+[00:32:52] see how we handle that when we switch
+[00:32:53] from a row store to column store. That's
+[00:32:54] going to be the big one of the big
+[00:32:55] things they're going to do. And then for
+[00:32:58] systems that are more write heavy
+[00:33:00] meaning like I'm doing a lot of like
+[00:33:02] updates to tupless um like updates and
+[00:33:05] deletes and inserts these ones you
+[00:33:07] typically want a data page in the 46
+[00:33:11] kilobytes because again the nonprofit
+[00:33:14] storage is block adjustable. So that
+[00:33:16] means like I only have to write you know
+[00:33:18] if I'm only writing updating a single
+[00:33:20] bite within a page I have to write that
+[00:33:22] whole page out. So it's a 4 kilobyte
+[00:33:24] page and I update a single bite. I still
+[00:33:26] have to write 4 kilobytes out to disk.
+[00:33:28] So I don't want really massively large
+[00:33:30] database pages because I would have to
+[00:33:32] write all that out. I can't just do like
+[00:33:34] sort of fine updates on things. So for
+[00:33:39] this class we'll start off
+[00:33:41] 40 16 kilob
+[00:33:44] in lecture six. We'll see then how
+[00:33:47] larger pages can make a difference when
+[00:33:48] we do read heavy workloads.
+[00:33:54] All right. So, now there's a bunch of
+[00:33:56] different ways we can we can manage
+[00:33:58] these pages that are on disk. Um,
+[00:34:01] and again, they're all going to have
+[00:34:02] different trade-offs of how we want how
+[00:34:04] we do certain things. So, the the heat
+[00:34:07] file will be the most common one, the
+[00:34:09] basic ones we'll see, and we'll we'll
+[00:34:11] assume we're doing that for this lecture
+[00:34:13] and next lecture. Um, we just we just
+[00:34:16] assume a bunch of pages and address them
+[00:34:17] and bring them in, and they're not
+[00:34:18] ordered anyway. Uh another approach
+[00:34:21] would be a tree file organization where
+[00:34:23] actually I'm storing the the pages in a
+[00:34:26] tree data structure and as I traverse
+[00:34:29] the tree I'm bringing pages as I would
+[00:34:31] need them and um we'll talk a little bit
+[00:34:33] about that later on. Um again for this
+[00:34:36] class we don't need this sequential
+[00:34:38] organization or codify organization
+[00:34:40] sometimes called ISAM. This is an older
+[00:34:42] architecture in the 1970s that people
+[00:34:44] really don't do anymore. Um but it's
+[00:34:47] it's sort of similar to the tree tree
+[00:34:49] one. We don't we don't have to worry
+[00:34:50] about this. And then hashing is another
+[00:34:52] variation similar to a heat file. We
+[00:34:53] just you things aren't older. You can
+[00:34:55] jump around into them. Right? So I said
+[00:34:58] for this lecture we're going to assume
+[00:34:59] we're doing heat files. Um and then for
+[00:35:02] the most part right now for the next few
+[00:35:04] more slides we don't have to care about
+[00:35:05] what's inside the pages and then we'll
+[00:35:07] go into much detail what what they look
+[00:35:09] like. But just understanding what the
+[00:35:10] page structure looks like it doesn't
+[00:35:12] matter what's inside them.
+[00:35:16] So a heat file is going to be a
+[00:35:18] unordered collection of pages uh where
+[00:35:21] again because SQL is unordered models
+[00:35:23] unordered we can store tubables anywhere
+[00:35:25] we want in random order just wherever we
+[00:35:27] have free space um and then it exposes a
+[00:35:30] basic API to create
+[00:35:33] pages because that's the basic
+[00:35:35] operations we need to do at this lowest
+[00:35:37] level in in the storage manager
+[00:35:40] we also need to uh be able to iterate
+[00:35:42] over all the pages meaning like give me
+[00:35:44] all give me the page ids for all the the
+[00:35:46] pages on a given table or given index
+[00:35:48] because we'll need that be able to do
+[00:35:50] sequential scan but when we do like
+[00:35:52] looking up things in indexes um we'll
+[00:35:55] see how we get the page ID from an indic
+[00:35:56] lookup and then we need to be able to
+[00:35:57] get that single page we also need to be
+[00:35:59] able to scan across all the pages as
+[00:36:00] well
+[00:36:02] so for this this means that again we
+[00:36:05] need additional metadata
+[00:36:07] uh essentially what we had in the page
+[00:36:09] directory to keep track of the location
+[00:36:10] of these files and also keep track of
+[00:36:12] where do we have free case um because
+[00:36:15] anytime we need need able to store
+[00:36:16] something we got to say where can we put
+[00:36:18] it and if we since we're going to assume
+[00:36:21] that we're storing things like you know
+[00:36:22] 8 kilobyte pages like it is in Postgress
+[00:36:25] most tupils aren't 8 kilobytes so we
+[00:36:26] need to make sure that uh we can you
+[00:36:29] know fill in free space that we have our
+[00:36:32] data doesn't balloon to be too big
+[00:36:35] so here's a basic uh configuration we
+[00:36:39] assume a database as a single file so
+[00:36:43] Assume something says, "Hey, I want to
+[00:36:44] go get page number two." I'm not
+[00:36:45] defining how I'm doing that just yet.
+[00:36:47] There's some part of the system says,
+[00:36:48] "Give me go page two." I could do basic
+[00:36:50] just do simple arithmetic to say I know
+[00:36:52] the starting location of my file. I know
+[00:36:55] my page number. I know my page size
+[00:36:57] because again, I'm assuming all the page
+[00:36:58] sizes are the same on disk. And I just
+[00:37:02] do simple math to be able to say jump to
+[00:37:04] the offset that I want to find the thing
+[00:37:05] I'm looking for.
+[00:37:07] In cases where the fi the data is uh uh
+[00:37:11] is broken up across multiple files on
+[00:37:13] disk. Right now we want to get something
+[00:37:15] like page number 23
+[00:37:17] again there's this page directory thing
+[00:37:18] which we haven't really defined that's
+[00:37:20] going to have the metadata we need to go
+[00:37:22] find the file that may contain the page
+[00:37:25] and then once we get in there we can
+[00:37:26] then do simple math to say for a given
+[00:37:29] page number um what's the in a given
+[00:37:32] page size what's the what's the offset I
+[00:37:34] should jump to to find the bites that I
+[00:37:36] need. It's a pretty basic architecture
+[00:37:38] and again different data system
+[00:37:39] different things how they implement the
+[00:37:41] page directory but a high level all
+[00:37:42] these systems work basically work this
+[00:37:44] way.
+[00:37:48] So a common architecture is to use
+[00:37:50] what's called a page directory um as I
+[00:37:52] sort of before and this is just like a
+[00:37:55] database within the database that keeps
+[00:37:57] track of here's all my uh pages that I
+[00:38:00] have for sort of logical database
+[00:38:02] objects right you could break it up
+[00:38:03] across uh different ways like you have a
+[00:38:06] your data system supports multiple
+[00:38:07] databases you could have a directory per
+[00:38:09] database you have a directory per per
+[00:38:11] table for index or whatever right
+[00:38:13] different systems will do different
+[00:38:14] things um but the basic idea is that I
+[00:38:17] have a way to say I want to get data
+[00:38:19] from like table X
+[00:38:22] or table Y here's the file or here's the
+[00:38:25] directory here's the location on the
+[00:38:27] network that has this data and then
+[00:38:29] within that I can then jump to the
+[00:38:32] offset that I need that based on the the
+[00:38:34] page directory information about where
+[00:38:36] the where to find the pages that I'm
+[00:38:38] looking for. Now the tricky thing is
+[00:38:40] going to be is making sure that this
+[00:38:42] page directory is synchronized um on
+[00:38:45] disk with the data pages um because you
+[00:38:49] know if we crash and lose this thing
+[00:38:52] we're kind of screwed because now we
+[00:38:53] don't know where to find anything else
+[00:38:55] um and then if we start allocating new
+[00:38:57] new pages for our files we want our page
+[00:39:00] directory sort of reflect that. Now, the
+[00:39:02] truth is it doesn't actually have to be
+[00:39:03] 100% always synchronized because if you
+[00:39:05] crash and come back and this thing gets
+[00:39:07] trashed, if you have enough metadata in
+[00:39:09] your files, you could actually recreate
+[00:39:10] this. It just makes recovery a lot
+[00:39:12] slower. Um, and a bunch of systems going
+[00:39:16] to have, you know, different ways to to
+[00:39:17] do this more efficiently. But in
+[00:39:19] general, it's uh
+[00:39:22] in general, this is something you want
+[00:39:24] to keep synchronized if we can, at least
+[00:39:26] in memory. Certainly in memory. Uh but
+[00:39:28] on disk we can kind of be a little bit
+[00:39:30] looser than we would be maybe other
+[00:39:32] data. All right. Again just it's a
+[00:39:34] trade-off between how fast you want to
+[00:39:35] run at runtime versus how long it takes
+[00:39:37] to recover if there's a crash.
+[00:39:40] So this uh we can keep track of
+[00:39:42] additional metadata about for every file
+[00:39:44] how much free space we have in a given
+[00:39:46] page or a given file. um what are pages
+[00:39:49] that we have that are completely empty
+[00:39:50] that we can jump to them really quickly
+[00:39:52] and they keep track of like are these
+[00:39:54] pages keeping track of metadata about a
+[00:39:56] table or index or whatever or they keep
+[00:39:58] track of like like actual user data like
+[00:40:00] from tupils
+[00:40:02] and the page directory can can maintain
+[00:40:03] all this information for us
+[00:40:07] all right so that's what things look
+[00:40:09] like on disk um
+[00:40:12] uh assume that the davis is a bunch of
+[00:40:15] files are broken into pages so now let's
+[00:40:17] talk actually what the pages actually
+[00:40:18] look like on the inside.
+[00:40:21] So the
+[00:40:23] in general at a high level every page is
+[00:40:26] going to have um what we'll call the
+[00:40:28] header where we keep track of metadata
+[00:40:30] about what's inside the page. So
+[00:40:32] obviously you keep to check things like
+[00:40:34] the page size check some about the
+[00:40:36] contents of the page um the version of
+[00:40:39] the software that that wrote that
+[00:40:41] information right so that way if you
+[00:40:42] upgrade the version and change the
+[00:40:44] layout of pages you know whether this
+[00:40:46] page reflects that new layout or not um
+[00:40:48] there's much information we can maintain
+[00:40:50] about transaction v visibility like what
+[00:40:52] data should be visible for what
+[00:40:53] transactions
+[00:40:55] um uh for that one we don't have to
+[00:40:57] worry about this class we'll cover that
+[00:40:59] again after the midterm uh it could have
+[00:41:02] additional data information about like
+[00:41:03] how the data is actually being
+[00:41:04] compressed what you know what encoding
+[00:41:06] they're using to store things in some
+[00:41:08] cases like like in Oracle we had said
+[00:41:11] they had to be self-contained actually
+[00:41:12] team the table schema in the header of
+[00:41:15] the page as well so if there's a crash
+[00:41:16] you can come back and actually just look
+[00:41:17] at the page and say I know what table
+[00:41:19] this belongs to here's a bunch of
+[00:41:20] different that are inside of it
+[00:41:22] sometimes you'll see also summary
+[00:41:23] information uh or sketches that keep
+[00:41:26] track of like the here's the values that
+[00:41:29] I have on my my in my page So if I don't
+[00:41:32] maybe to scan the entire page, look for
+[00:41:34] certain certain, you know, certain
+[00:41:36] pieces of data. Like I'm looking for all
+[00:41:38] records that uh or all tubs that have
+[00:41:41] the name Andy in it. If I have a summary
+[00:41:43] in my page keeps track of like the
+[00:41:45] number of Andy tupils inside of it, I
+[00:41:47] can just read that and if it's zero,
+[00:41:48] then I know the rest of the tupils.
+[00:41:51] High level idea of how the summary stuff
+[00:41:53] works and you only see that the read
+[00:41:55] heavy stuff we'll cover later. Um the
+[00:41:57] check sum is so important because if you
+[00:41:58] crash come back and read the page back
+[00:42:01] in or actually not even a crash just go
+[00:42:03] read a page in you want to know whether
+[00:42:04] it got corrupted on disc you can trust
+[00:42:06] the bes you're reading the chuck someone
+[00:42:08] tell you that again different systems
+[00:42:10] will do different things and it's the
+[00:42:12] enterprise ones that'll have the more uh
+[00:42:15] safety controls in place to make sure
+[00:42:17] that you're not losing data or
+[00:42:18] corrupting data. Okay. So then now
+[00:42:20] within the page we want to keep figure
+[00:42:23] out how we're actually going to store
+[00:42:24] tupils in it. Right. As I said at the
+[00:42:25] high level, there's always going to be a
+[00:42:26] header. But then now we don't talk about
+[00:42:29] how we actually put tupils inside the
+[00:42:31] page. We'll put data inside the pages,
+[00:42:32] right? Assume we're doing tupless. We
+[00:42:34] won't worry about uh indexes for now. Um
+[00:42:37] that'll come later. Um and then we're
+[00:42:40] also going to assume that we're doing
+[00:42:41] what's called a row oriented storage
+[00:42:43] model. Meaning we're going to organize
+[00:42:45] the each record or each tupil is as a
+[00:42:48] row where all the data is being stored
+[00:42:50] continuously when it's not on the page.
+[00:42:51] And that means also assume that each
+[00:42:54] tupil uh has to fit inside of inside a
+[00:42:56] single page. We'll see how we handle
+[00:42:59] larger values in a second. But for our
+[00:43:00] purposes here in discussion right now,
+[00:43:02] we'll uh we're just every tuple is
+[00:43:05] continuously stored within a single
+[00:43:07] page.
+[00:43:09] So there's actually three ways to do
+[00:43:11] this um
+[00:43:14] uh to organize data into pages. So for
+[00:43:18] this class here today, we're going to
+[00:43:19] assume we're doing tupu orient storage.
+[00:43:21] Meaning the entire dup is stored in
+[00:43:22] entire it's stored in its entire end of
+[00:43:24] page. Um, but there's actually two other
+[00:43:27] methods we'll cover uh in the end next
+[00:43:31] week, next Wednesday
+[00:43:33] called log structure to index storage
+[00:43:35] where we're actually going to store uh
+[00:43:37] not the tupole uh but we're actually
+[00:43:40] going to store the um
+[00:43:43] basically the delta of a tuple and when
+[00:43:45] things get changed um and then have to
+[00:43:47] end up having multiple copies of a tuple
+[00:43:50] uh if it gets updated multiple times and
+[00:43:52] that'll make more sense when we talk
+[00:43:53] about later on index organized storage
+[00:43:55] is basically storing as I said the the
+[00:43:56] data as a tree structure um but we'll
+[00:43:59] come to that later for our purposes here
+[00:44:00] assume that there's only one copy of the
+[00:44:02] single tupil and it's going to be stored
+[00:44:04] in the page in its entirety uh in
+[00:44:07] continuously
+[00:44:11] okay so if you wanted to start doing
+[00:44:12] this how should we keep track of the
+[00:44:14] tuples in a page um well we could just
+[00:44:17] do something really simple where you say
+[00:44:19] all right I'm assuming that the the
+[00:44:22] tupils are all the same length and then
+[00:44:24] I'm just going to pen the tupils do the
+[00:44:26] first relocation that I have in my page
+[00:44:29] and I just have my header I just keep
+[00:44:30] track of the number of tuples that I
+[00:44:31] have. So I can do simple math to say at
+[00:44:33] what offset do I jump at the page to
+[00:44:34] find the the data that I want. So every
+[00:44:38] time insert a new tuple it's appending
+[00:44:39] it one after another in the page like
+[00:44:41] this.
+[00:44:43] So now if I delete a tupil well that
+[00:44:45] comes more tricky right? So if I delete
+[00:44:46] tuple two uh now I have the number
+[00:44:49] tuples equals to two. So I can't just
+[00:44:52] jump to the end anymore um because I
+[00:44:55] make sure I don't overwrite uh tupil 3.
+[00:44:57] Um so maybe I can just do a quick scan
+[00:44:59] and try to find the first free slot and
+[00:45:01] then put my tupil that way. But then
+[00:45:03] this art starts to get kind of
+[00:45:04] expensive. um
+[00:45:07] uh if you know if I if I have to scan
+[00:45:10] every single time and further also too I
+[00:45:12] can't do any compaction now because if I
+[00:45:13] if I move um tupul 3 back to where tupal
+[00:45:17] slot was tuple 2 slot was or location
+[00:45:19] was in the page then I had to update a
+[00:45:21] bunch of other metadata or index data
+[00:45:24] structures because now the physical
+[00:45:25] address of tupil 3 would have changed in
+[00:45:29] my in my page but then also this doesn't
+[00:45:33] work either if I have variable link data
+[00:45:35] because now I may have much of free
+[00:45:36] space that I can't actually use to start
+[00:45:38] a new tuple that I need need or have to
+[00:45:40] start moving things around again pay
+[00:45:42] that penalty of updating indexes or
+[00:45:44] updating other parts of the of the datab
+[00:45:45] system.
+[00:45:48] So to overcome this problem, we're going
+[00:45:49] to use a technique called slotted pages.
+[00:45:52] And so what I'm describing here is
+[00:45:54] basically at a high level how any row
+[00:45:56] oriented
+[00:45:58] row storage or tube oriented system is
+[00:46:00] going to do this. The exact details of
+[00:46:02] what the metadata is storing or whether
+[00:46:04] the slot isn't in the beginning of the
+[00:46:06] end, it varies per system. But at high
+[00:46:07] level, this is how basically how how
+[00:46:09] they work.
+[00:46:11] So what's going to happen is that we're
+[00:46:12] going to have the
+[00:46:14] at the beginning of the page we always
+[00:46:16] have a header because it tells us again
+[00:46:17] the metadata of what's inside the page
+[00:46:18] like a check sum and so forth. But then
+[00:46:21] then I'm going to have what this this
+[00:46:22] slot array and it's going to be a fixed
+[00:46:25] length array that keeps track of a
+[00:46:28] uh offset within the page for a tupil at
+[00:46:31] a given slot. And at the bottom of the
+[00:46:35] uh the page that's where I'm going to
+[00:46:37] actually store all my data. So this is
+[00:46:39] going to be any fixed length or variable
+[00:46:40] length data from the tupil or my tupils
+[00:46:43] they're going to be at at the bottom.
+[00:46:45] And so the the slot array basically is
+[00:46:48] uh giving us pointers or locations or
+[00:46:50] offsets within the page. Like if it's 4
+[00:46:53] kilobyte offsets then the sort of 4
+[00:46:55] kilobyte pages the offsets aren't aren't
+[00:46:57] going to be that big. And it's going to
+[00:46:58] tell me for a given tupil defined by a
+[00:47:01] slot here's the offset within that page
+[00:47:04] to go find it. Right? So as I want to
+[00:47:07] add more tupils, the the slot array is
+[00:47:09] going to grow this way and then the
+[00:47:11] tupil data is going to grow the other
+[00:47:12] way. At some point you reach in the
+[00:47:14] middle where there's no more free space
+[00:47:15] and then the page is considered full.
+[00:47:17] Now is it guaranteed to be 100% full
+[00:47:20] occupancy of data? No. Right? Because
+[00:47:22] the very well linked data down below
+[00:47:25] might have you know might not not fit
+[00:47:27] exactly align exactly within the page
+[00:47:29] and have have you know use all the data.
+[00:47:31] But in general this works good enough.
+[00:47:33] And the advantage of this approach is
+[00:47:35] that now if I uh if I delete like a
+[00:47:39] tupil, if I do like say tupil three
+[00:47:42] here, I can either leave tuple 4 by
+[00:47:45] where it is by itself and then hopefully
+[00:47:48] another tupil that comes along gets
+[00:47:49] inserted could fill in that space or
+[00:47:51] actually I can then just move tupil 4 to
+[00:47:54] be the end of this page or to the end
+[00:47:56] where two ends and then all I need to do
+[00:47:59] is update the slot array to say the
+[00:48:02] location of tupil 4 within and then the
+[00:48:05] slot array is now at this offset
+[00:48:08] and what I get is in direction that
+[00:48:10] allows me to change the location of a
+[00:48:13] tupil within the page without having to
+[00:48:15] go update other parts of the system. So
+[00:48:17] I don't have to go update indexes. I
+[00:48:19] don't have to go tell them you know
+[00:48:20] here's here's the location of 24 has
+[00:48:22] changed. So the the blast radius of the
+[00:48:25] modification I do from this compaction
+[00:48:28] uh is just limited to the single page
+[00:48:30] >> number
+[00:48:32] 165. Please go to position.
+[00:48:36] And as I said before also too that the
+[00:48:38] um
+[00:48:41] the the the
+[00:48:43] cost of bringing things into disk is
+[00:48:45] very expensive versus the cost of
+[00:48:47] manipulating things in memory. So once I
+[00:48:50] bring the page into memory, I can change
+[00:48:52] around the the contents of this um this
+[00:48:55] page doing compaction or not doing
+[00:48:57] compaction. And that's cheap relative to
+[00:49:00] having to read my data from disk uh all
+[00:49:02] over again. So once it's in memory, I'm
+[00:49:05] pretty much free to do whatever I want
+[00:49:06] to reorganize this page. Some systems
+[00:49:08] like my uh like Postgress won't do it.
+[00:49:10] Some systems like SQL server will do it
+[00:49:12] like every time you update a tupil.
+[00:49:15] But having this indirectional layer
+[00:49:17] having this indirectional layer makes a
+[00:49:18] big difference for us because you can we
+[00:49:20] can change things change locations in
+[00:49:22] the page and not worry about updating uh
+[00:49:25] indexes and other things.
+[00:49:29] All right. So the other cool thing is
+[00:49:30] that um the not cool thing that's all
+[00:49:34] cool databases. So another thing we want
+[00:49:36] to uh talk about is how we're going to
+[00:49:39] identify um each logical tubable with a
+[00:49:43] physical location. For this we're going
+[00:49:45] to use what we call record ids. Some
+[00:49:47] systems will call them uh tupal IDs or
+[00:49:49] page ids um but or sorry not page ids
+[00:49:52] tubal I ids record ids or row ids.
+[00:49:55] Essentially, the idea is all the same
+[00:49:57] thing, but it's a unique
+[00:49:59] identifier for a for a logical table
+[00:50:02] that gives the that stores its physical
+[00:50:04] location or represents its physical
+[00:50:06] location within the database.
+[00:50:09] And so an example would be like a record
+[00:50:12] ID could say like here's the file ID and
+[00:50:14] the page ID and then the slot number
+[00:50:16] within that page. Um and then in like
+[00:50:19] other parts of the system if I want to
+[00:50:21] unique I want to be able to say what's
+[00:50:22] the what's the index pointing to what's
+[00:50:24] the record ID or the address I'm
+[00:50:26] pointing to you would represent that
+[00:50:27] through this this record ID. Now most
+[00:50:30] systems don't store this um
+[00:50:34] instead it's derived uh at runtime based
+[00:50:37] on you know as you read the data right
+[00:50:40] so looking at a bunch of different uh
+[00:50:42] implementations right so in ingress has
+[00:50:45] a tupal ID it's four bytes postgress has
+[00:50:47] ct ID it's six bytes right that's going
+[00:50:49] to the page ID and slot number like for
+[00:50:51] these systems they don't actually store
+[00:50:53] this
+[00:50:54] but you can uniquely address tupils uh
+[00:50:58] based on it Um
+[00:51:00] the uh SQL light is an interesting one
+[00:51:03] for its row ID because it doesn't uh it
+[00:51:06] does actually store it for you and it no
+[00:51:10] matter what you declare as the primary
+[00:51:11] key the thing called create table it's
+[00:51:14] going to use the row ID as the primary
+[00:51:16] key um think of like it's like a
+[00:51:19] monotonically increasing value um and it
+[00:51:23] uses that because that guarantees that
+[00:51:24] can uniquely identify any given record
+[00:51:27] even if you
+[00:51:29] UPD we don't provide a a primary key
+[00:51:31] when you uh when you create the table
+[00:51:34] right now it's important to understand
+[00:51:36] that this is something that will be
+[00:51:38] exposed to you uh through a data
+[00:51:41] interface um hopefully maybe I can do a
+[00:51:44] demo um when I go back and come back to
+[00:51:47] this and cut this in the video here but
+[00:51:50] you'll be able to see this through SQL
+[00:51:51] and sometimes you can address the the
+[00:51:52] the the records through this um but it's
+[00:51:56] not actually something you you would
+[00:51:57] want to rely on the application because
+[00:52:00] these ids can change for a logical
+[00:52:03] tubable based on how the data system
+[00:52:05] starts moving data around right
+[00:52:08] um so you could do compaction and and
+[00:52:10] change the physical location of data
+[00:52:12] it's still correct because at a logical
+[00:52:15] level it's since since models unordered
+[00:52:19] I can change the ordering of tupils and
+[00:52:21] everything's still correct the record ID
+[00:52:23] may change but again I shouldn't have
+[00:52:25] relied on that in in my application
+[00:52:32] All right. So, we know what files look
+[00:52:33] like. We know what pages look like.
+[00:52:35] Let's go inside deeper inside the pages
+[00:52:37] and talk about what the tupils actually
+[00:52:39] look like.
+[00:52:41] So, at its core, a tupil is just a bunch
+[00:52:44] of bytes. It's a bite array that have a
+[00:52:46] header inside of it. Just like a page
+[00:52:47] has a header, tupils are going to have a
+[00:52:49] header, too, that contain metadata about
+[00:52:52] what's in the what's in the tupil
+[00:52:54] itself. Now, it's not going to contain
+[00:52:56] meta typically doesn't contain metadata
+[00:52:58] like what the schema is because that
+[00:52:59] done at the page level and this is why
+[00:53:01] you don't mix page types or mix data
+[00:53:03] within a page because you don't want to
+[00:53:05] redundantly store the same schema
+[00:53:06] information over over and over again for
+[00:53:08] every single tuple in the page. The page
+[00:53:09] header just has that for you, right? But
+[00:53:12] this will have information about like
+[00:53:14] the
+[00:53:15] like a a bit map of like what columns
+[00:53:18] are null. uh information about what the
+[00:53:21] what t what transactions can see the
+[00:53:23] data or whether they can see that tuple
+[00:53:25] or not for that purpose we we don't we
+[00:53:27] don't need to worry about um but then
+[00:53:30] the
+[00:53:32] the the data system is going to maintain
+[00:53:34] a catalog that keeps track of the schema
+[00:53:36] for every single page sorry every t or
+[00:53:38] table so that when you go read a page
+[00:53:42] for a given table you know how to then
+[00:53:44] interpret the bytes within these these
+[00:53:46] bite arrays with for a tuple to say what
+[00:53:48] the data actually contains.
+[00:53:50] [Music]
+[00:53:52] So as I said the header it's going to
+[00:53:53] contain basic information like
+[00:53:54] visibility like what what transactions
+[00:53:57] created at what time this data and so
+[00:53:59] forth have a bit map for null values.
+[00:54:02] Uh then everything else have that is is
+[00:54:04] just the attribute data. So typically
+[00:54:08] the the the attributes for a tupole are
+[00:54:10] going to be stored in the order that you
+[00:54:12] apply them. Um, we'll see some ways you
+[00:54:15] you there are some
+[00:54:18] you could reorganize them uh to ensure
+[00:54:21] things are aligned correctly, but most
+[00:54:22] systems don't do that. Instead, they're
+[00:54:24] going to rely on padding to make sure
+[00:54:26] things that are correctly aligned across
+[00:54:29] uh uh typically 64-bit values. So, let's
+[00:54:33] say we have a simple example here. We
+[00:54:34] have a table fu and it has uh five
+[00:54:37] columns,
+[00:54:39] two three integers followed by double by
+[00:54:40] a float. Again, it literally just the
+[00:54:42] the bite array for a tub will just be
+[00:54:44] stored in the order in which is defined
+[00:54:46] by the create table statement.
+[00:54:48] So now the challenge is going to be is
+[00:54:50] when you have things again that span
+[00:54:51] these these boundaries. Uh and you can
+[00:54:53] be clever how you're going to handle it.
+[00:54:56] So for this example here, it's pretty
+[00:54:58] simple, right? I have an ID 32 bits. I
+[00:55:00] have a value that's big and that's 64
+[00:55:02] bits, right? And assuming the header is
+[00:55:04] is 32 bits, this will fit nicely within
+[00:55:07] a 128 bit uh uh se sequence of of bytes.
+[00:55:13] So again, if I want to jump now to get
+[00:55:14] this attribute, I just look at the I get
+[00:55:17] my offset to the tupil by looking up the
+[00:55:20] slot array in the page. And then now I I
+[00:55:23] just do some other arithmetic to jump
+[00:55:24] over the header and then jump to this
+[00:55:26] location to find the the attribute that
+[00:55:29] I want. And then I basically do the
+[00:55:32] equivalent of interpret cast in C++ um
+[00:55:35] to then convert the address that I'm
+[00:55:38] looking at to be a third gig integer.
+[00:55:41] Right? This is something that's done at
+[00:55:42] runtime. Um this is a compiler directed.
+[00:55:45] This is actually there's no computation
+[00:55:46] done here. It's just it's ensuring that
+[00:55:48] the the any code that comes after this
+[00:55:51] interpretation of this casting here is
+[00:55:53] going to operate on you know 32-bit uh
+[00:55:56] 32-bit signed integer.
+[00:56:00] So now the tricky thing is going to be
+[00:56:01] is when you have data that doesn't fit
+[00:56:03] nicely into uh these these sort of word
+[00:56:06] boundaries, right? For simplicity, we'll
+[00:56:08] assume it's 64-bit words. So the
+[00:56:10] challenge is going to be the table might
+[00:56:12] have uh smaller types or larger types
+[00:56:15] that might go across these boundaries
+[00:56:16] and we have problems, right? So this 32-
+[00:56:18] bit integer here fits nicely in the
+[00:56:20] first half 64-bit word, but now I have a
+[00:56:22] 64-bit uh date or time stamp here and
+[00:56:26] that's going to span two words.
+[00:56:28] Likewise, I have now a two byte
+[00:56:30] character 16 bits. Um, and then a zip
+[00:56:34] code like this, right?
+[00:56:38] >> So, if I have things like nicely uh, you
+[00:56:40] know, exactly aligned, I'm going to have
+[00:56:42] this problem where now I try to go
+[00:56:43] access like the
+[00:56:46] uh, like the the date here um, the time
+[00:56:48] stamp, right? I got to go fetch two um
+[00:56:52] 64-bit words to go read feed that in and
+[00:56:56] some you know compiler might complain of
+[00:56:57] CD might freak out depending on what
+[00:56:59] architecture I'm running on this become
+[00:57:00] become problematic.
+[00:57:03] So an easy way to get around this is
+[00:57:05] just to pad to make sure that
+[00:57:06] everything's always right aligned. So
+[00:57:08] it's wasting space but it it just
+[00:57:09] ensures that I don't have these uh
+[00:57:11] problems that I talked about before. So
+[00:57:13] first case the the integer is for the ID
+[00:57:16] is 16 32 bits. So I just put another 32
+[00:57:19] bits of zeros that come after it. The
+[00:57:22] data system knows that anytime it tries
+[00:57:24] to access the data, I only need first 32
+[00:57:26] bits, but and it just ignores what comes
+[00:57:29] after that. But this ensures now when I
+[00:57:30] do a look up on the date, I'm jumping to
+[00:57:33] the right location and it fits nicely
+[00:57:34] within my my word.
+[00:57:37] Another approach, u you could do this,
+[00:57:39] I've only seen this in in the research
+[00:57:40] literature, I don't think any system
+[00:57:42] actually does this, is just to reorder
+[00:57:43] things so that they're they're nicely
+[00:57:45] packed in. Right? So if I if I just move
+[00:57:48] the columns around like this or the
+[00:57:49] attributes around like this then I land
+[00:57:51] with a nice alignment that I that I
+[00:57:52] would want. Now logically still is uh
+[00:57:55] still in defined in the order when they
+[00:57:56] call create table but physically the
+[00:57:59] bits are moved around. Um and then it
+[00:58:01] just knows how to do that uh
+[00:58:04] reinterpretation at the right location
+[00:58:06] to get the data that that I would need.
+[00:58:08] Like I said you could do this. I don't
+[00:58:09] know of any system actually does it. Um
+[00:58:12] at least I I haven't come across any
+[00:58:14] that do do this.
+[00:58:16] And then to make sure that the the next
+[00:58:18] two book comes afterwards is nicely
+[00:58:20] aligned. We just put you know padding
+[00:58:21] after the last one. So again we still
+[00:58:23] have make some space but it's uh
+[00:58:27] this is why I said those systems don't
+[00:58:29] actually do this.
+[00:58:31] All right. So now what are the actual
+[00:58:32] attributes look like? So the for the
+[00:58:36] basic data types like ins, floats, uh
+[00:58:38] strings and timestamps. Um this is
+[00:58:42] roughly how they you know how they
+[00:58:44] system actually implemented the um you
+[00:58:47] know could be some variation based on
+[00:58:49] the hardware which you're actually
+[00:58:50] running on but in general this is what
+[00:58:50] you would do. So like for a 32-bit
+[00:58:52] integer or big 64-bit integer um the
+[00:58:56] same way you would represent things C++
+[00:58:58] or C this is what you would get in in
+[00:59:00] your system and that's going to be
+[00:59:02] hardware uh that would be in general
+[00:59:04] that would be um it'll
+[00:59:08] it'll be the same across hardware you do
+[00:59:11] have to worry about NDNS um but for our
+[00:59:14] purposes we'll assume it's x8 x86 we're
+[00:59:17] not going to worry about that problem
+[00:59:18] light um tled about SQL left for
+[00:59:22] everything is strings and then
+[00:59:23] interprets it at runtime. So that way if
+[00:59:25] you run on a little Indian or big Indian
+[00:59:27] system uh it always comes out to be
+[00:59:29] correct. Um but most systems aren't
+[00:59:31] aren't most systems do not do that. Um
+[00:59:33] and they do a little extra work to keep
+[00:59:35] track of like what is the Indianness
+[00:59:36] when they store things so that if you
+[00:59:37] come back up when a different you know
+[00:59:39] you copy your database to another
+[00:59:40] another machine that that clips things
+[00:59:42] around you end up with the the data as
+[00:59:45] you'd expect. Um but for now we ignore
+[00:59:48] that. So for floats and reels uh for
+[00:59:53] floating boot numbers this will follow
+[00:59:54] the what's called the I 754 standard
+[00:59:57] again this is a hardware spec that says
+[00:59:58] how the the these float boot numbers
+[01:00:01] should be represented in hardware and
+[01:00:03] again most systems follow that numeric
+[01:00:05] and decimals are fixed point decimals
+[01:00:06] these are these are going to be uh data
+[01:00:08] system specific we'll see what they look
+[01:00:11] like in a second for uh text strings
+[01:00:14] either var binary text or blobs um they
+[01:00:18] either have things be in line within the
+[01:00:20] tupil itself. So it'll be like the
+[01:00:22] length of the tupil of the length of the
+[01:00:24] attribute followed by the actual bytes
+[01:00:26] or there'll be a pointer to another
+[01:00:29] location or another page that'll have
+[01:00:30] that data um that you can follow along.
+[01:00:34] We'll see what that looks like in a
+[01:00:35] second. Um if the vars are small enough,
+[01:00:38] you'll store them in line. If they get
+[01:00:39] too big, then you store them uh in
+[01:00:41] overflow uh overflow pages.
+[01:00:44] We're not going to talk about this class
+[01:00:46] uh coalition sorting, but you do have to
+[01:00:47] be super careful about um for text
+[01:00:51] strings about who's actually deciding,
+[01:00:53] you know, with the right way to
+[01:00:55] flexically store data. Um
+[01:00:59] for different languages has different
+[01:01:00] orderings uh and data is worried about
+[01:01:03] that. But for purposes here at this
+[01:01:05] lowest level for these bytes, we're
+[01:01:06] we're not worried about that. We'll talk
+[01:01:07] about that later when it comes to
+[01:01:08] sorting. But it is something we need to
+[01:01:10] be mindful of. Um and most things you
+[01:01:13] know by default some system will store
+[01:01:14] things as ASKI you not have to worry
+[01:01:17] about unic code or UTF8 UTF16s you may
+[01:01:19] store things as that as well like
+[01:01:21] there's there it's gotten more tricky in
+[01:01:25] in recent years or last 20 years um and
+[01:01:29] you can be mindful that people might be
+[01:01:30] storing things that aren't you know
+[01:01:31] English characters
+[01:01:34] all right and then time stamps um and
+[01:01:36] dates
+[01:01:38] often times internally you would
+[01:01:39] represent these things it's the the
+[01:01:42] number of microsconds or milliseconds
+[01:01:44] since the Unix epoch. Um sometimes some
+[01:01:48] systems have their own internal date
+[01:01:49] format or time zone format then keep
+[01:01:51] track of time zones or not. Right? This
+[01:01:53] varies per system. Um, but the one I
+[01:01:56] want to spend a little time talking
+[01:01:57] about is uh is the difference between
+[01:02:00] like a floating reels and numeric
+[01:02:01] because this is a good example where the
+[01:02:04] database systems are going to do a bunch
+[01:02:05] of extra stuff to make sure your data is
+[01:02:07] actually stored correctly in the way you
+[01:02:08] expect even though it may not be as the
+[01:02:11] fastest way to do this because the
+[01:02:12] hardware can do things much faster than
+[01:02:14] we can but guarantee that you know we
+[01:02:16] don't have any loss of data or loss of
+[01:02:19] precision in what we're storing.
+[01:02:22] So the um for variable precision numbers
+[01:02:25] all right this would be like what we
+[01:02:27] call the floatingoint numbers. So these
+[01:02:29] are in think of this just using the
+[01:02:32] native data types you would have in C++
+[01:02:34] like call you call float or you call
+[01:02:36] double right and that's in in the code
+[01:02:38] that's defined by this I74 standard and
+[01:02:42] this is what most architectures are
+[01:02:44] actually going to implement and then
+[01:02:45] because they're also going to have u
+[01:02:48] specific instructions that can operate
+[01:02:50] on these data that is really really fast
+[01:02:53] um but the problem is going to be that
+[01:02:55] again it's they can't guarantee that
+[01:02:57] they can store exact values
+[01:02:59] So the example I always like to give is
+[01:03:01] something like this, right? You have
+[01:03:02] some simple C code. Um, and you want to
+[01:03:05] store two floating point numbers X and Y
+[01:03:07] and 0.1 and 0.2. And so I run this code
+[01:03:10] here, you get output that looks like
+[01:03:12] this, right? It looks like as that I
+[01:03:14] would expect, right? That I can store X
+[01:03:16] + Y, I get 0.3, follow a bunch of zeros.
+[01:03:18] Same with um just storing 0.3 by writing
+[01:03:22] out 0.3 by itself. But if I change the
+[01:03:25] precision of the basically number the
+[01:03:29] number of decimal digits I want the
+[01:03:30] decimal point like this now you see you
+[01:03:34] actually get wildly different numbers
+[01:03:36] right and neither one is exactly 0 to.3
+[01:03:39] right and this is because the way the
+[01:03:40] hardware is going to store these
+[01:03:42] floating point numbers it's using
+[01:03:43] variable precision and it can't exactly
+[01:03:45] store certain decimal values like 0.3
+[01:03:49] right so even though you know with a
+[01:03:52] higher with a less less precision in my
+[01:03:54] output it looks like it's the same but
+[01:03:56] in actuality the actual bits in the
+[01:03:57] hardware are not the same and if I so
+[01:04:00] now if I write this out to disk and I
+[01:04:02] read it back in and based on what
+[01:04:04] calculation I'm trying to do I may end
+[01:04:05] up with incorrect results or unexpected
+[01:04:07] results
+[01:04:09] and this is why data center will
+[01:04:11] maintain um what call fixed precision
+[01:04:13] numbers where the data system can
+[01:04:15] basically keep track of the the
+[01:04:19] where the decimal point is and the scale
+[01:04:21] and other metadata about every single
+[01:04:24] number that it's going to store. And
+[01:04:26] then now I would store maybe like a
+[01:04:27] string representation of the of the of
+[01:04:30] the the decimal and then I know I use
+[01:04:33] that extra metadata I'm storing to be
+[01:04:34] able to interpret the uh what those the
+[01:04:38] bite array actually means to guarantee
+[01:04:41] that any calculation I do I get the
+[01:04:44] expected precision I would want on
+[01:04:45] results. Right? This sometimes called
+[01:04:48] fix point decimals. Right? This
+[01:04:49] basically the same idea. like I'm doing
+[01:04:51] decimal points but I'm managing this
+[01:04:52] everything inside the data system myself
+[01:04:54] because you know we can again guarantee
+[01:04:56] that we end up with with correct values.
+[01:05:00] So this is super important in things
+[01:05:01] like certainly banking um time computing
+[01:05:04] interest you don't want rounding errors
+[01:05:06] anything with like scientific
+[01:05:07] instruments you don't want rounding
+[01:05:08] errors uh especially if you're like
+[01:05:10] sending a rocket to the moon or
+[01:05:11] something right so that's why we want to
+[01:05:13] be able to do this and it's not uh you
+[01:05:16] know they don't take it lightly it's not
+[01:05:17] trigger actually implement these things
+[01:05:19] to guarantee the correctness and under
+[01:05:20] all possible circumstances
+[01:05:22] so the example I always like to show is
+[01:05:24] actually Postgress's implementation of
+[01:05:26] their fixed point decimals they have a
+[01:05:28] data type called numeric
+[01:05:30] And if you actually go look in the
+[01:05:31] postgress code, this is essentially what
+[01:05:33] it looks like, right? That you you have
+[01:05:35] this strct here and it has a bunch of
+[01:05:37] metadata about what the um what you know
+[01:05:42] what's going to be in a in a in a fixed
+[01:05:44] point decimal. And then at its at its
+[01:05:47] core, the decimal will just the value
+[01:05:48] itself is being stored as a bite array.
+[01:05:51] Um and then all this additional metadata
+[01:05:53] is then being used to to interpret that
+[01:05:55] bite array to generate the answer. uh
+[01:05:59] you know to to convert it back into its
+[01:06:02] correct form uh that guarantees the the
+[01:06:06] exact value that you expect. And of
+[01:06:08] course now this means that when we want
+[01:06:09] to do simple things like add two
+[01:06:12] numerics together right it's not just
+[01:06:14] you know calling you know number plus
+[01:06:16] number an instruction in in a register
+[01:06:18] we have to implement all this stuff
+[01:06:20] ourselves. So this is the code from a
+[01:06:22] post a few years ago uh but basically
+[01:06:24] it's the same in the newer versions to
+[01:06:26] add two numerics and you can see here
+[01:06:28] there's a bunch of if then else's where
+[01:06:29] checking to see is the number positive
+[01:06:31] is it negative is it is it is it
+[01:06:33] infinity is it not a number right and
+[01:06:36] this is all code just add two numbers
+[01:06:37] together and certainly this be way more
+[01:06:39] expensive to compute than just again
+[01:06:42] calling the simple addition obstruction
+[01:06:43] on two two data registers this is
+[01:06:46] something that like you have to run all
+[01:06:47] this code but this will guarantee that
+[01:06:50] the um that the value you would get is
+[01:06:53] what you would expect. Right?
+[01:06:57] All right. So the other thing to be
+[01:06:58] mindful is how we're going to handle
+[01:06:59] nulls.
+[01:07:01] So there's basically three approaches
+[01:07:04] and as I said the the most common one
+[01:07:06] would be in the header of every um every
+[01:07:09] tupil you have a bit map that keeps
+[01:07:11] track of uh what values you have within
+[01:07:14] that tupil are null or not. Um, and
+[01:07:17] typically you just store this bit map to
+[01:07:19] be the same size as the number of
+[01:07:20] entries that you have regardless of
+[01:07:22] whether columns could be null or not,
+[01:07:24] right? It's not worth the overhead of
+[01:07:26] checking that um, you know, as you're
+[01:07:29] interpreting. Um, but this is the most
+[01:07:30] common approach people use.
+[01:07:33] One that's more rare is to do special
+[01:07:36] values. You basically say within the
+[01:07:38] domain or the range of values you could
+[01:07:40] have for a given data type, you
+[01:07:42] designate one of them to represent null.
+[01:07:44] Right? So if you're storing things as
+[01:07:45] 32-bit, storing 32-bit integers, you
+[01:07:48] know, 30- bit signed integers, you would
+[01:07:50] say that the smallest value you could
+[01:07:52] have represented by in 32 min, you say
+[01:07:56] that value is considered um is
+[01:07:59] considered uh null. And so you prevent
+[01:08:01] anybody from inserting that value. And
+[01:08:03] of course, this means you have one less
+[01:08:04] possible value you can have in your
+[01:08:05] domain, but now you don't need to store
+[01:08:07] that header um per tupil. So this will
+[01:08:10] be more common in column stores, which
+[01:08:12] we'll cover in a few weeks. Um and this
+[01:08:16] is you sometimes see this in memory
+[01:08:17] databases as well. They're trying to
+[01:08:19] reduce the size of the metadata they're
+[01:08:22] storing for Drupal. But um
+[01:08:24] >> forwards here the top one is more
+[01:08:26] common.
+[01:08:27] >> The last one is to store a
+[01:08:31] flag per attribute in the tupole to keep
+[01:08:35] to tell you whether this tuple this
+[01:08:37] values is null or not. Right? So think
+[01:08:40] of like if I'm storing a 32-bit integer,
+[01:08:42] I had to have a one bit flag in front of
+[01:08:45] that value for that 32- bit integer that
+[01:08:47] tells me whether it's null or not. Of
+[01:08:49] course, now as you talk about alignment,
+[01:08:50] you can't just store things as single
+[01:08:51] bits. You'd have to store an entire
+[01:08:52] bite. So that means that I have to store
+[01:08:55] a 30- bit integer has to be stored as uh
+[01:08:58] 40 40 bits, right? To keep track of the
+[01:09:01] first whether the first one's null or
+[01:09:02] not. So this is a bad idea. I'm only
+[01:09:07] bringing this up to say this is a
+[01:09:08] possibility what you could do, but as we
+[01:09:09] go out the entire semester, I'll try to
+[01:09:11] put this little marker here to tell you
+[01:09:13] like, hey, this exists, but don't do
+[01:09:14] this. So definitely don't do this. I I
+[01:09:16] only know one system that did this. U
+[01:09:18] and they immediately got rid of it and a
+[01:09:20] few years later. Um so this is a bad
+[01:09:22] idea. If you have a row store, you want
+[01:09:23] the first one. If you have a column
+[01:09:24] store, you want the second one here.
+[01:09:27] And then we have actually our own paper
+[01:09:29] actually how to store nulls correctly in
+[01:09:31] column stores. Again, we'll cover that
+[01:09:32] more in in a few weeks, but if you take
+[01:09:34] the advanced class, we'll read this
+[01:09:36] paper and go go into way more detail
+[01:09:38] about how to do it.
+[01:09:41] All right. So,
+[01:09:43] before I set the assumption that we say
+[01:09:44] that a tupal has to fit into a single
+[01:09:47] page, um, of course, now if I have to
+[01:09:50] support really large attributes, this is
+[01:09:53] not going to work, right? If if my
+[01:09:54] attribute I want to store is larger than
+[01:09:56] my page size, what do I actually have to
+[01:09:58] do?
+[01:09:59] So
+[01:10:01] this is where overflow pages come in.
+[01:10:02] The basic idea is that we can have
+[01:10:04] separate pages where if the value of a
+[01:10:07] given tupil is larger than it can fit in
+[01:10:09] that page, then I have a separate page
+[01:10:12] where I put that value in. And now
+[01:10:13] within my tupil, I store a pointer uh
+[01:10:17] basically a record ID um to that other
+[01:10:21] overflow page. And then now as I'm
+[01:10:23] scanning the data, I'm going to
+[01:10:24] interpret this this data within a tupil.
+[01:10:25] I know I had to I've come across one of
+[01:10:27] these these pointers to this overflow
+[01:10:29] page. I know need to follow that
+[01:10:30] original data. Right? So I say this this
+[01:10:32] contents attribute in this this table
+[01:10:34] here is too big. So I have an overflow
+[01:10:36] page where I'm just going to store all
+[01:10:38] this variable data. And then now within
+[01:10:40] my original tupil, I'll store the size
+[01:10:42] of the data and then the the page number
+[01:10:45] and offset like a record ID to where to
+[01:10:47] go find this this overflow page. So
+[01:10:49] different databases do different things
+[01:10:51] to interpret like to trigger when you
+[01:10:53] store things in overflow. So in
+[01:10:55] Postgress by default if the if the um
+[01:10:58] anything try to store is larger than 2
+[01:11:00] kilobytes even though they have 8
+[01:11:01] kilobyte pages they put in the overflow
+[01:11:03] page in my SQL and uh SQL server and I
+[01:11:06] think Oracle as well if the thing you're
+[01:11:08] trying to store is larger than half the
+[01:11:10] page size uh or larger than the page
+[01:11:13] size or larger than half page size then
+[01:11:15] they put it in the overflow page.
+[01:11:17] There's a bunch of optimizations we can
+[01:11:19] do to uh to mitigate the overhead of
+[01:11:22] trying to fetch these pages. Um so we
+[01:11:25] could take these overflow pages and
+[01:11:26] compress them using like snappy or gzip
+[01:11:29] and we'll cover that in in two weeks. Uh
+[01:11:31] another technique is called German
+[01:11:32] strings. Um this obviously comes from
+[01:11:34] the Germans where in addition to the
+[01:11:37] size and offset that I store in the
+[01:11:39] original tupil. Uh I can actually store
+[01:11:41] a prefix of the of the the value. So if
+[01:11:45] I'm just trying to do string matching
+[01:11:46] where like you know find all records
+[01:11:49] find all records where the the contents
+[01:11:51] field starts with with the word andy I
+[01:11:53] could check the prefix in the original
+[01:11:55] tupil uh and see whether I have a match
+[01:11:57] there before even following the the uh
+[01:12:00] the pointer to go catch the overflow
+[01:12:01] page. I can it's this back this idea we
+[01:12:04] said at the beginning of like trying to
+[01:12:05] avoid having to read uh data from disc
+[01:12:07] that I don't actually need. If I sto
+[01:12:09] spend a little storage overhead of
+[01:12:10] storing things a prefix uh can avoid me
+[01:12:13] having to go do that in certain
+[01:12:14] situations,
+[01:12:17] right? And if the the data I'm storing
+[01:12:19] in my overflow page is too larger than
+[01:12:21] the overflow age, I can just again put
+[01:12:23] another record ID at the end of it or
+[01:12:24] the front of it to tell you where the
+[01:12:26] subsequent page could be found. So I can
+[01:12:28] chain these things together to
+[01:12:29] reconstruct large tupils.
+[01:12:32] In some systems also too, you can
+[01:12:34] actually represent uh data in pages that
+[01:12:37] are not managed by the database system.
+[01:12:39] These are called external value storage.
+[01:12:42] So this would be like if I have a you
+[01:12:44] know a 20 gigabyte movie, I don't want
+[01:12:47] to maybe put that in my database system,
+[01:12:48] but I want to still have the data be
+[01:12:50] aware of that this data exists. So I
+[01:12:53] could have a record that has a
+[01:12:57] essentially a URI or pointer to some
+[01:13:00] external storage that's managed outside
+[01:13:02] the database system that if I need to I
+[01:13:04] can suck it in read it and hand it back
+[01:13:06] to queries but the responsibility of
+[01:13:09] maintaining that data making sure that's
+[01:13:11] it's transactionally safe and making
+[01:13:13] sure that it is
+[01:13:15] uh
+[01:13:17] that is going to you know any guarantees
+[01:13:19] would have for making sure the data is
+[01:13:20] durable or safe on the regular data. It
+[01:13:23] can't it's not going to guarantee those
+[01:13:24] things, but it still allows me to stream
+[01:13:26] data out to fetch it, serve it into
+[01:13:28] tupless as needed. So, not every system
+[01:13:31] supports this. Oracle calls them B
+[01:13:32] files, Microsoft file streams. It's
+[01:13:35] basically a way to like, you know,
+[01:13:36] storage large files outside the data
+[01:13:38] system, but then still suck it in if you
+[01:13:39] need to.
+[01:13:41] And there's a paper from a few years
+[01:13:42] ago, actually it's over it's over 20
+[01:13:46] years now. Um that uh from from Jim Gray
+[01:13:51] guy that went to 20 more databases uh
+[01:13:54] where they examined whether you should
+[01:13:55] put things in uh the data system or not.
+[01:13:59] I think their recommendation was like
+[01:14:00] anything larger than uh
+[01:14:03] I think it was like 128 kilobytes should
+[01:14:06] be external less than that internal.
+[01:14:09] I don't know if that's entirely true
+[01:14:10] anymore, but people have thought about
+[01:14:11] this problem like how when should you
+[01:14:12] store large things in the database or
+[01:14:13] not? In general, database systems
+[01:14:15] usually run on more expensive hardware.
+[01:14:17] So, you don't want to store like massive
+[01:14:19] files. Um, and something external value
+[01:14:21] storage is a way to sort of get around
+[01:14:22] that. So, it looks like it's in the
+[01:14:23] database even though it's not. Then you
+[01:14:25] can put it on cheaper storage.
+[01:14:28] All right, so we've covered a lot. Uh,
+[01:14:30] Fat Face Rick is still not out of the
+[01:14:32] hospital yet. So, I I got to go figure
+[01:14:35] out where he is. Um
+[01:14:38] but we've covered data storage the
+[01:14:40] basics of it. So again data system is
+[01:14:42] basically a collection of pages that can
+[01:14:44] be stored on disk or some nonhold
+[01:14:46] storage and then we have different ways
+[01:14:48] to keep track of what's what's where
+[01:14:49] those pages are located and then we'll
+[01:14:51] have different ways to store what's
+[01:14:53] store those pages on disk single file
+[01:14:55] multiple files or whatever and then we
+[01:14:57] have different ways to store the tubils
+[01:14:58] that are inside those pages. Um and then
+[01:15:01] again the because of this layered
+[01:15:03] architecture
+[01:15:04] >> number
+[01:15:05] 169 please go to position to ticket
+[01:15:09] number 35
+[01:15:12] >> that's not fabition
+[01:15:14] the because we have this sort of
+[01:15:16] architecture the other parts of the
+[01:15:18] system don't need to be entirely aware
+[01:15:20] of like oh this is actually how I'm
+[01:15:21] storing things like in a slot page
+[01:15:22] architecture or not uh all that is
+[01:15:25] abstracted away and then we can still
+[01:15:26] you know we can change things out and
+[01:15:28] modify them and extend them and enhance
+[01:15:30] them as needed without worrying about
+[01:15:32] breaking the entire system. It's not
+[01:15:33] always the case. Uh but that ultimately
+[01:15:36] that's the goal. Of course, there's
+[01:15:37] there's a trade-off of having too much
+[01:15:38] abstraction that makes things
+[01:15:40] inefficient. But again, it it depends on
+[01:15:42] the limitation. We'll see when we want
+[01:15:43] to relax certain guarantees uh or
+[01:15:45] certain restrictions later on.
+[01:15:48] All right. So again, today's class was
+[01:15:50] about how to represent data as as a
+[01:15:51] database of files on disk.
+[01:15:54] Next class will be then how we then talk
+[01:15:56] about when we bring things into memory,
+[01:15:57] how do we how do we keep track of that?
+[01:15:59] How do we then hand off those pages of
+[01:16:01] memory, those pages of memory to other
+[01:16:03] parts of the system? Then how do we make
+[01:16:05] sure that we write them out uh in a
+[01:16:07] timely manner, in a safe manner um so
+[01:16:09] that we we don't crash and lose
+[01:16:11] anything. Then after that, we'll come
+[01:16:12] back and talk about uh different ways
+[01:16:14] again store things with disk again. But
+[01:16:16] I'm going to cover the buffer manage the
+[01:16:18] memory stuff first because you're going
+[01:16:19] to need that for project one uh that I
+[01:16:21] go out next week. Okay.
+[01:16:25] That's money
+[01:16:27] over
+[01:16:31] [Music]
+[01:16:45] the fortune. Get the fortune
+[01:16:47] maintain flow with the
+[01:16:51] brain.
+[01:16:52] [Music]

@@ -1,0 +1,2230 @@
+[00:00:00] [Music]
+[00:00:06] I'm still
+[00:00:08] associated
+[00:00:11] [Music]
+[00:00:26] cash. Thank you.
+[00:00:30] How's your radio show going? I heard
+[00:00:31] it's popping off.
+[00:00:33] >> Uh, you know, what can I say?
+[00:00:35] >> People call people call in for requests
+[00:00:36] or
+[00:00:37] >> Yeah, sometimes.
+[00:00:38] >> Okay. Uh, again, that's on Sundays at
+[00:00:40] >> at 100 p.m.
+[00:00:42] >> It's and streaming on the internet, too,
+[00:00:43] right? So, people outside out if you're
+[00:00:45] outside the university, you can check
+[00:00:46] out GG Cash's radio show every Sunday at
+[00:00:48] 1 o'clock Eastern. All right, you guys
+[00:00:50] in the class, we have a lot to cover
+[00:00:52] today. Today's going to be awesome
+[00:00:53] lecture. I I say that every lecture, but
+[00:00:54] this one's super They're all fun. I like
+[00:00:56] this one a lot, though. Um, for you guys
+[00:00:59] again, homework, sorry, project one was
+[00:01:00] due last night. Uh, I think we're
+[00:01:02] missing about still maybe 10 submissions
+[00:01:04] from people. Uh, I haven't checked the
+[00:01:06] leaderboard yet. Um, they look somebody
+[00:01:08] is blowing everyone else out. We have to
+[00:01:10] understand why. Um, so if you haven't
+[00:01:12] finished project one, please do that as
+[00:01:14] soon as soon as possible. Uh, project
+[00:01:16] two is out live today. Uh, the so you
+[00:01:19] want to pull down the latest code, the
+[00:01:20] writeup is available on the website.
+[00:01:22] Homework three came out last week.
+[00:01:24] that'll be due this this Sunday coming
+[00:01:26] up because the goal is for to give you
+[00:01:27] guys graded response uh on the following
+[00:01:30] Monday immediately afterwards because
+[00:01:32] it'll cover things that'll be on the
+[00:01:33] exam uh coming up next week in class on
+[00:01:36] Wednesday the 8th. Okay, any questions
+[00:01:40] about any of these?
+[00:01:43] Again, homework three is due this
+[00:01:44] Sunday. Project two is due after the
+[00:01:46] fall break. Uh but the midterm will be
+[00:01:49] next week and I'll post the study guide
+[00:01:50] and the practice exam after class later
+[00:01:52] today. I just everything's done is
+[00:01:54] haven't I haven't put uh haven't posted
+[00:01:56] on um on Piaza yet. Okay.
+[00:02:01] And then the practice game will look
+[00:02:02] roughly like what the real exam will be
+[00:02:04] a a little bit more longer though than
+[00:02:06] what the live one will be. Okay. All
+[00:02:09] right. So again for additional database
+[00:02:11] talks if you can't get enough of
+[00:02:12] databases uh today we have the creator
+[00:02:15] of Apache Hoodie or HUD uh giving a talk
+[00:02:18] with us after class at 4:30 over Zoom.
+[00:02:20] And then next week we have the mother
+[00:02:22] duck guys giving a talk about duck lake
+[00:02:24] which is an alternative to hoodie and
+[00:02:26] iceberg. And then in two weeks after
+[00:02:28] that we'll have the spyrob guys g talk
+[00:02:30] about a new file format that they've
+[00:02:32] created to replace parquet and orc
+[00:02:34] called vortex. So if you're familiar
+[00:02:36] with parquet it's from 2013 developed by
+[00:02:39] dreo and cloudera. It might be Twitter
+[00:02:42] and might be part of that too. And then
+[00:02:44] orc came out of Facebook. And so these
+[00:02:46] are these are sort of columnar based
+[00:02:48] file formats to follow the pax format
+[00:02:50] stuff we talked about before. Uh but
+[00:02:52] it's like an open source library you can
+[00:02:53] use to rewrite these things. So vortex
+[00:02:55] is is a modern version of all this using
+[00:02:57] like sort of the state of the art
+[00:02:58] encoding techniques. Again this is
+[00:02:59] optional. These are the things you want
+[00:03:01] if you want to go beyond course uh
+[00:03:03] please feel free to join us. All right.
+[00:03:05] So for the last two classes we've talked
+[00:03:08] about data structures. uh again in the
+[00:03:10] context of table indexes or being used
+[00:03:13] internal structures like a page table
+[00:03:15] for your database system. We we made a
+[00:03:18] pretty big assumption that when we
+[00:03:20] discussed these data structures and the
+[00:03:21] algorithms we would use to interact with
+[00:03:23] them or manipulate them, we assume that
+[00:03:25] we were going to have a single thread or
+[00:03:27] single worker accessing the database at
+[00:03:30] a given time because this makes a whole
+[00:03:31] bunch of things a lot easier because
+[00:03:33] you're not worried about concurrency
+[00:03:35] control issues of multiple threads
+[00:03:36] coming in and touching the the data
+[00:03:38] structure at the same time. So now in
+[00:03:40] today's class we need to go sort of
+[00:03:42] break that assumption and say okay well
+[00:03:43] if you do have multiple workers
+[00:03:45] accessing these data structures how are
+[00:03:47] we we're going to protect them and it
+[00:03:49] should sort of obvious why you want to
+[00:03:50] do this because in in you know modern
+[00:03:53] modern architectures
+[00:03:56] the you know the clock speed of a single
+[00:03:58] core is not really going up that much.
+[00:04:00] Instead you're getting a lot more cores
+[00:04:02] and now in actually modern systems you
+[00:04:04] get a variety of heterogeneous cores.
+[00:04:06] We'll have some of like sort of
+[00:04:07] performance ones and and low power ones
+[00:04:09] that have different clock speeds and
+[00:04:10] different performance capabilities.
+[00:04:12] Nevertheless, we need to take care of of
+[00:04:14] using all these these cores that are
+[00:04:16] available to us because then that'll
+[00:04:18] help us maximize the performance of the
+[00:04:20] system. And as we see later on, we'll
+[00:04:22] we'll be able to use these extra workers
+[00:04:24] or extra cores to hide disk stalls. It's
+[00:04:26] like as you sort of did in project one,
+[00:04:27] you could have one thread block while it
+[00:04:30] was trying to go fetching some disc and
+[00:04:31] then another thread can can can run and
+[00:04:34] you know make use of the the the system
+[00:04:36] and and still make forward progress. So
+[00:04:39] pretty much what we're talking about
+[00:04:40] today is how almost every single data
+[00:04:42] system that's out there is is going to
+[00:04:43] going to be implemented. There is a
+[00:04:45] small subset of these systems that don't
+[00:04:47] actually do any of the stuff that we're
+[00:04:49] talking about today and instead have
+[00:04:51] what are called singlethreaded execution
+[00:04:52] engines. Meaning they assume that there
+[00:04:55] is one and only one thread accessing
+[00:04:58] these data structures at any time. So
+[00:05:00] therefore they can do all the stuff we
+[00:05:01] were basically talking about before
+[00:05:02] without bringing in the latching stuff
+[00:05:03] that we'll talk about today. Most famous
+[00:05:05] of these is Reddus, right? It's a single
+[00:05:08] threaded execution engine that we
+[00:05:09] there's only one thread can do anything
+[00:05:11] in the system at any given time. There's
+[00:05:13] a fork of Reddus called Valky from
+[00:05:15] Amazon because Reddus got a little
+[00:05:16] frisky with their licensing. And so now
+[00:05:19] there is actually multiple threads to
+[00:05:20] handle networking. Uh and then you can
+[00:05:22] hand that off to then a single threaded
+[00:05:24] uh execution engine thread which still
+[00:05:26] doesn't have the lashing stuff we're
+[00:05:27] talking about here today. Um but the the
+[00:05:29] basic idea is like again if you assume
+[00:05:31] there if there's only one thread you
+[00:05:33] don't have to worry about concurrency
+[00:05:34] issues because nobody else could be
+[00:05:36] touching the data structure at the same
+[00:05:37] time as you. So some systems do this you
+[00:05:39] they do mostly do it for performance
+[00:05:40] reasons and engineering reasons. it
+[00:05:42] simplifies the the implementation. Um,
+[00:05:45] but most of the systems we'll talk about
+[00:05:46] in this class aren't going to do this. I
+[00:05:48] just I just want to bring up to say
+[00:05:49] these things do exist.
+[00:05:51] So now the thing we need to introduce in
+[00:05:53] our database system is what is called a
+[00:05:55] concurrency control protocol. And you
+[00:05:58] sort of think of this as like the the
+[00:05:59] rules of the road, the traffic laws for
+[00:06:02] how workers
+[00:06:05] can access parts of our system at the
+[00:06:07] same time. And I'm using the term worker
+[00:06:09] instead of a thread or or process
+[00:06:12] because different systems will do
+[00:06:13] different things like Postgress has
+[00:06:14] multipprocess most other systems are
+[00:06:17] multi-threaded but it's a high level
+[00:06:18] concept is still the same. You'd want to
+[00:06:20] protect these data structures using a
+[00:06:22] concier protocol. The basic idea is that
+[00:06:25] this is how the system is going to to
+[00:06:27] guarantee that any changes that we're
+[00:06:30] going to make to a shared object in our
+[00:06:33] system will be will be correct. And I'm
+[00:06:37] putting the word correct in quotes here
+[00:06:38] because it can mean different things to
+[00:06:40] different parts of the system depending
+[00:06:42] on who's doing what.
+[00:06:44] So one notion of correctness will be
+[00:06:47] logical correctness. And this just means
+[00:06:48] that can I see the data that I should
+[00:06:51] see? Like if I have a query that inserts
+[00:06:53] record, you know, ABC,
+[00:06:56] if I come back and try to read that ABC,
+[00:06:58] should I be able to see it? Sometimes
+[00:07:01] yes, right? And if somebody else deletes
+[00:07:04] it, then sometimes no.
+[00:07:06] And so what that that terms of
+[00:07:07] correctness we'll cover after the
+[00:07:09] midterm um just have there's this notion
+[00:07:12] of there's a higher level uh criteria we
+[00:07:16] may want to use to determine whether
+[00:07:18] something is actually correct or not.
+[00:07:19] The thing that we care about in this
+[00:07:21] lecture is physical correctness. Meaning
+[00:07:23] the internal representation of whatever
+[00:07:25] data structure we're using and
+[00:07:26] manipulating in our system uh will be
+[00:07:30] I'll use the term sound. Meaning if I if
+[00:07:32] I follow a node in my B+ tree and has a
+[00:07:35] pointer to some other node, that pointer
+[00:07:37] better go to actually what I expect it
+[00:07:38] to go to it and not some random location
+[00:07:40] in memory where I would have a seg fault
+[00:07:42] or reads some part of the the the the
+[00:07:44] you know some part of memory that I
+[00:07:45] shouldn't be reading. So this is what we
+[00:07:47] care about today. How to make sure that
+[00:07:49] the data structure itself is correct
+[00:07:51] even though the contents of the data
+[00:07:53] structure may have a different notion of
+[00:07:56] correctness like if I insert my record
+[00:07:57] can I see my own record? Right? That
+[00:08:00] part we're not worrying about till
+[00:08:01] later. This is like how do we make sure
+[00:08:02] that the thing doesn't seg fault as
+[00:08:04] we're flipping bits and going down
+[00:08:06] inside of the data structure.
+[00:08:08] So to do this we're first going provide
+[00:08:10] some overview about what the latching
+[00:08:12] mechanisms will look like. Uh we don't
+[00:08:14] really care about how the low level
+[00:08:16] details of how all these are actually
+[00:08:17] implemented. We maybe don't care so much
+[00:08:19] but at least be good to be aware of what
+[00:08:20] actually going underneath the covers for
+[00:08:22] these things. We touch in advanced class
+[00:08:24] more sophisticated implications uh but
+[00:08:26] I'll just highlight some of them. Then
+[00:08:28] we'll talk about how to do hasht l l l l
+[00:08:29] l l l l l l l l l l l l l l l l l l l l
+[00:08:29] l l l l l l l l l l l l l l l l latching
+[00:08:30] this is the most simp simplest protocol
+[00:08:31] and how to make sure our hash table is
+[00:08:33] is physically correct and then we'll
+[00:08:35] spend a lot of time talking how to
+[00:08:36] handle this in bust trees first we'll go
+[00:08:38] with latching going from the top to the
+[00:08:40] bottom and then we'll deal with doing
+[00:08:42] scans along the leaf nodes and then
+[00:08:44] we'll finish up with announcement on on
+[00:08:46] project two okay
+[00:08:50] all right so I sort of alluded this
+[00:08:52] early in the semester about this notion
+[00:08:54] of locks and latches and the OS people
+[00:08:55] are going to call what we call latches
+[00:08:57] they're going to call them locks. The
+[00:08:59] reason why we're not going to use the
+[00:09:00] term locks for for latches and keep them
+[00:09:02] separate is because these locks are
+[00:09:03] going to represent higher level
+[00:09:05] protection mechanisms for again for
+[00:09:07] logical concepts or logical entities in
+[00:09:10] our in our database system. So locks are
+[00:09:12] going to use to control transactions and
+[00:09:15] think of a transaction as like a I I
+[00:09:18] want to run multiple queries in my
+[00:09:20] application and I want all those queries
+[00:09:22] to be atomic. Okay, we'll cover this
+[00:09:25] later in the semester. Uh but just think
+[00:09:27] of like it's a high level thing where
+[00:09:29] the application is trying to do multiple
+[00:09:31] operations that has to define across
+[00:09:32] multiple queries and we need to make
+[00:09:34] sure those multiple queries occur in
+[00:09:36] some in proper some proper ordering so
+[00:09:39] that we produce correct results
+[00:09:42] and for this for transactions we're
+[00:09:44] going to hold these locks for the length
+[00:09:46] of the transaction typically uh if you
+[00:09:48] care about uh strict correctness um and
+[00:09:52] then the database itself is also
+[00:09:54] responsible for rolling back any changes
+[00:09:56] from queries that got executed on behalf
+[00:09:58] of a transaction. If that transaction
+[00:10:00] ends up having to abort, meaning if I
+[00:10:02] insert 10 records and then I try to
+[00:10:05] insert an 11th record and I violate some
+[00:10:07] integrity constraint that's defined in
+[00:10:08] my table, then my transaction has to
+[00:10:10] abort and the database system is
+[00:10:12] responsible for rolling back any of
+[00:10:14] those those first 10 things I inserted,
+[00:10:16] not the application. So everything sort
+[00:10:18] of happens transparently.
+[00:10:20] Again, the details of this we'll worry
+[00:10:21] about later. Just be aware that the the
+[00:10:23] rollback mechanisms implemented by the
+[00:10:25] system because we're dealing with crappy
+[00:10:26] JavaScript code. We don't rely on people
+[00:10:29] to do that roll back for us. We have to
+[00:10:30] do everything ourselves.
+[00:10:32] The thing we're talking about in this
+[00:10:33] class today is the latches. We're we're
+[00:10:35] protecting the internal workers of the
+[00:10:37] database system that again are
+[00:10:39] manipulating the low-level data
+[00:10:40] structures we're using to to to run our
+[00:10:43] action system and store data. So the way
+[00:10:45] to think of this is that we're we want
+[00:10:46] to protect the critical sections of the
+[00:10:48] various data structures we have using
+[00:10:49] these latches. And because these are
+[00:10:52] meant to be really fast operations like
+[00:10:55] go and change some node then pop out
+[00:10:57] right away that we're you're not going
+[00:10:59] to hold them for long periods of time.
+[00:11:00] We're going to hold them for nanconds or
+[00:11:03] microsconds in some cases.
+[00:11:06] And because now these are all internal
+[00:11:08] operations,
+[00:11:09] um
+[00:11:11] we want to be we we we're responsible
+[00:11:15] for making sure that if we can't do
+[00:11:16] something that we don't put the data
+[00:11:19] structure in an invalid state or
+[00:11:20] impartial state. That's actually
+[00:11:22] mistakes do not need to roll back
+[00:11:23] changes. We do need to roll back
+[00:11:26] changes. um the the the worker itself
+[00:11:30] responsible for keeping track of what
+[00:11:31] changes it made and then it's the one
+[00:11:33] has to go and and roll back things. It
+[00:11:36] can't do all everything that it wants to
+[00:11:37] do. Yeah, that should be do need to roll
+[00:11:39] back changes.
+[00:11:41] So there's this great table from uh the
+[00:11:44] book I mentioned before about from this
+[00:11:45] guy G's graphy about modern B+3
+[00:11:47] techniques and he has this distinction
+[00:11:49] between the locks and the latches and
+[00:11:51] what they're actually used for. So way
+[00:11:52] to sort of read this is going from the
+[00:11:54] top to the bottom. You would say like
+[00:11:56] latches are a a some kind of primitive
+[00:11:59] we're going to use to protect workers,
+[00:12:01] threads or processes from the inary data
+[00:12:03] structures. Uh during the critical
+[00:12:05] sections and the only two modes we're
+[00:12:07] going to have are read and writes
+[00:12:09] whereas in in locks for transactions
+[00:12:10] we'll have share we have these intention
+[00:12:13] locks and shared locks higher level
+[00:12:14] concepts. Again we'll worry about all
+[00:12:16] that later. And the only way we're going
+[00:12:18] to be able to handle deadlocks with
+[00:12:20] latches is through coding discipline or
+[00:12:23] and through avoidance. Meaning that
+[00:12:25] there isn't going to be some highlevel
+[00:12:28] uh coordinator understanding what all
+[00:12:30] the different threads are doing in these
+[00:12:32] critical sections and said, "Oh, you got
+[00:12:33] a deadlock. Let me go ahead and break it
+[00:12:34] apart." Right? It's off it's up to us in
+[00:12:37] our code to make sure we don't have
+[00:12:39] deadlocks. And I'll say how show how we
+[00:12:41] do that to avoid any problems because
+[00:12:42] there isn't someone going to come along
+[00:12:44] and and and fix it for us. Whereas in
+[00:12:46] locks for transactions, if you have two
+[00:12:48] transactions try to acquire locks that
+[00:12:50] the other guy holds, the database system
+[00:12:52] is responsible for figuring out there's
+[00:12:53] a deadlock and and go ahead in these
+[00:12:55] killing killing transactions to free up
+[00:12:57] free up the break the deadlock because
+[00:13:00] again we're assuming the transactions
+[00:13:01] are coming from queries from the outside
+[00:13:03] world external to the system. It's some
+[00:13:05] JavaScript program that that is poorly
+[00:13:07] written, maybe doing bad things and it's
+[00:13:09] our job to make sure that we we don't
+[00:13:11] let them uh cause too many problems.
+[00:13:14] So again for for this class today we're
+[00:13:16] worried about latches and therefore we
+[00:13:18] have to do all of this when we talk
+[00:13:20] about locks that'll be later in the
+[00:13:21] semester when we talk about configure
+[00:13:22] protocols uh in at a higher level in
+[00:13:25] lecture 15. Okay.
+[00:13:30] All right. So our latches since again
+[00:13:32] there's these low-level uh protection
+[00:13:34] pit primitives synchronization
+[00:13:35] primitives only have two modes
+[00:13:39] read mode and and write mode right and
+[00:13:41] it should be sort of obvious if you take
+[00:13:42] any OS class or systems class in read
+[00:13:45] mode you can allow multiple threads or
+[00:13:46] workers to access uh whatever this
+[00:13:49] critical section is you're trying to
+[00:13:50] protect at the same time as long as they
+[00:13:52] don't make any changes to it. So they
+[00:13:53] can read the contents and be guaranteed
+[00:13:56] that there won't be uh intermittent
+[00:13:58] changes while this occurs, but it can't
+[00:14:00] can't change anything. Write mode
+[00:14:03] basically puts whatever the critical
+[00:14:04] section in in is into single threaded
+[00:14:06] mode because only one worker can hold a
+[00:14:10] latch in right mode at any given time
+[00:14:12] and it's allowed to make any changes
+[00:14:13] that it wants and it can guarantee that
+[00:14:16] no other there's no other reader or
+[00:14:18] writer uh thread or worker inside that
+[00:14:20] critical section at at the same time.
+[00:14:23] So the compatibility matrix is pretty
+[00:14:25] simple, right? If I have a read latch
+[00:14:27] and somebody else wants to acquire the
+[00:14:28] read latch, those are compatible. You
+[00:14:30] can you allow these to uh you allow the
+[00:14:32] other thread to acquire that latch at
+[00:14:34] the same time. But if at least one of
+[00:14:35] the latches is a right latch, then
+[00:14:37] they're incompatible and you have to you
+[00:14:39] deny the request for the for the other
+[00:14:42] worker to acquire the latch.
+[00:14:46] And then we'll talk about in a second
+[00:14:47] what do we do when that request gets
+[00:14:49] denied? like what should that worker do
+[00:14:52] if it says I try to get a latch and I
+[00:14:53] can't get it.
+[00:14:57] So in our implementation of a latch we
+[00:14:59] have sort of four main goals. We one
+[00:15:02] want our latch to be have a small memory
+[00:15:04] footprint. I think like in in bytes if
+[00:15:08] possible uh because again we're going to
+[00:15:11] store these now inside the data
+[00:15:12] structures that we're implementing like
+[00:15:14] in every page for a B+ tree we're going
+[00:15:17] to put our latches inside of that page.
+[00:15:19] So we don't want this you know a 10
+[00:15:20] kilobyte data structure to maintain a
+[00:15:22] latch uh inside of our page because it's
+[00:15:26] it's space we could be using for storing
+[00:15:29] keys and values right we want our latch
+[00:15:32] to have a fast execution path when
+[00:15:33] there's no contention meaning I don't
+[00:15:35] have to go through a jump a bunch jump
+[00:15:37] through a bunch of hoops in order to
+[00:15:38] acquire a latch if nobody else is trying
+[00:15:41] to acquire that latch at the same time
+[00:15:42] or nobody else holds the latch at the
+[00:15:43] same time.
+[00:15:45] I also want to make sure that that the
+[00:15:48] management my latches is completely
+[00:15:50] decentralized because again I don't want
+[00:15:52] to have to build a centralized
+[00:15:53] coordinator that's keeping track of all
+[00:15:55] the different workers I have running my
+[00:15:56] system and what latches they hold and
+[00:15:58] what what they're doing because that's
+[00:16:00] be really expensive for me to now to go
+[00:16:02] update that information anytime I I want
+[00:16:04] to acquire a latch. Think of like the
+[00:16:06] page table in your buffer pool, right?
+[00:16:08] It's a centralized data structure that
+[00:16:10] everyone has to go to in order to get
+[00:16:11] pages and that be that that can become a
+[00:16:14] hot spot in in our system. So that's why
+[00:16:18] we want our latch management to be
+[00:16:19] completely decentralized and we're going
+[00:16:20] to store the latches inside directly
+[00:16:22] inside our data structure at the
+[00:16:23] different locations of the critical
+[00:16:25] sections we want to protect. And last
+[00:16:27] but not least, which goes again the
+[00:16:29] major theme throughout the entire
+[00:16:30] semester, at all costs, we want to avoid
+[00:16:32] having to talk to the operating system
+[00:16:34] because as soon as you have to make a
+[00:16:35] SIS call, now it's now going to the
+[00:16:37] kernel. It's going into protective mode.
+[00:16:39] It's a bunch of security mechanisms that
+[00:16:40] has to make sure to make sure you're not
+[00:16:42] doing malicious things. Going to the
+[00:16:44] operating system is always going to be
+[00:16:45] more expensive and ideally we want to do
+[00:16:48] as much as we can in in user space. So
+[00:16:51] if we can we we want to avoid SIS calls.
+[00:16:54] So now everything I'm telling you here
+[00:16:56] seems reasonable. Again, if you come
+[00:16:58] from a database systems perspective,
+[00:16:59] like people actually building the actual
+[00:17:01] system, we care about all of these
+[00:17:03] things. You talk to the
+[00:17:05] building operating systems and they
+[00:17:06] think we're all idiots and they should
+[00:17:08] not be doing any of these things. So
+[00:17:09] this is a famous post from Lionus uh
+[00:17:11] from the mailing list. This is what this
+[00:17:13] is 2020 so five years ago. And he's
+[00:17:15] making a he's he's he's banging on about
+[00:17:18] people particular database people uh
+[00:17:21] running their own latches which again he
+[00:17:23] calls spinbox. And he has this little
+[00:17:25] blurb here that basically says, I
+[00:17:26] repeat, do not use spin locks in user
+[00:17:28] space, which is what we're going to do.
+[00:17:29] Uh, unless you know actually know what
+[00:17:31] you're doing and and be aware that the
+[00:17:32] likelihood that you know what you're
+[00:17:33] doing is basically no, right? He's
+[00:17:36] wrong. We're right. Nobody in the right
+[00:17:39] mind would do it the way he's proposing
+[00:17:41] because you lose complete control over
+[00:17:43] the the system if you have to go down to
+[00:17:46] the operating system. We'll see why this
+[00:17:49] is going to happen in a second. So this
+[00:17:51] is why most database systems will not do
+[00:17:53] what he's proposing here and will not
+[00:17:55] rely on the operating system to manage
+[00:17:58] our latches.
+[00:18:00] Again give me a few few more slides and
+[00:18:01] I'll explain why this is the case.
+[00:18:03] Right?
+[00:18:07] So how can we implement our latches? So
+[00:18:08] the most simple one is going to be a
+[00:18:10] test and set spin lock. It's basically
+[00:18:11] what Lionus is talking about and is what
+[00:18:14] is actually is in the kernel uh now when
+[00:18:16] you call P3 mutab. So that in a second.
+[00:18:19] Um but then we'll look at another
+[00:18:21] mechanism using a blocking OS mutex. Um
+[00:18:24] or say spin spin spin test and set spin
+[00:18:27] lock is what Linus says not to use. He
+[00:18:29] says use a blocking OS mutx. But we'll
+[00:18:31] see what that looks like. And then we're
+[00:18:33] going to talk about what a a reader
+[00:18:34] writer lock is. Again, there's a bunch
+[00:18:36] of more advanced techniques you can use.
+[00:18:38] People have been researching this kind
+[00:18:39] of stuff for a long long time. Um
+[00:18:42] there's an adaptive spin lock from from
+[00:18:44] Apple's parking lot a API or a library.
+[00:18:47] There's MCS locks. uh cubase spin locks.
+[00:18:50] There's optimistic lock coupling that's
+[00:18:51] used in some of the German systems. Um
+[00:18:54] the I think the latest the the latest
+[00:18:56] number says there's one called uh
+[00:18:58] Cosmopolitan that uses a library from
+[00:19:00] Google called NSync and with the letter
+[00:19:02] N sync that has a bunch of its own
+[00:19:04] internal synchronization primitives.
+[00:19:05] Some of them rely on the OS stuff. Some
+[00:19:07] of them relies on the uh and usually
+[00:19:10] it's based off but in general you don't
+[00:19:12] want to have to write this yourself.
+[00:19:14] there's existing libraries you want to
+[00:19:15] use again like the one from from Apple
+[00:19:18] and then this is this is a blog article
+[00:19:20] from almost a decade ago from a you know
+[00:19:23] a locking library for now world a
+[00:19:25] latching library that they built for uh
+[00:19:28] for I think for the uh what is their
+[00:19:31] Safari browser uh but they had this
+[00:19:34] little micro benchmark here just showing
+[00:19:35] how in some workloads you know you can
+[00:19:37] get about a 10 10 to 5% uh improvement
+[00:19:40] over you know the standard template
+[00:19:42] library threads
+[00:19:43] Right. And the data and and the the
+[00:19:46] metadata they're maintaining per latch
+[00:19:48] is much smaller than it would be using
+[00:19:50] again pthread mutex.
+[00:19:53] All right. So the most simple lock or
+[00:19:55] sorry most simple latch you can write is
+[00:19:56] called a test spin latch or test set
+[00:19:59] spin lock. Um this is very very
+[00:20:02] efficient because you only need to store
+[00:20:05] maybe eight bits to keep track of
+[00:20:07] something uh you know keep track of the
+[00:20:09] latch. The pal challenge though it's not
+[00:20:12] going to be very scalable and certainly
+[00:20:13] not cache friendly because our thread is
+[00:20:16] just spinning on uh trying to acquire
+[00:20:18] this latch and over and over again and
+[00:20:21] the OS is going to think oh you're doing
+[00:20:22] useful work let me keep scheduling you
+[00:20:24] but in actuality you're kind you're just
+[00:20:25] burning cycles
+[00:20:27] but in some cases this is okay some
+[00:20:29] cases this is not okay so a realist
+[00:20:32] implementation will look like this so in
+[00:20:34] C++ we can we we can use the center
+[00:20:36] template array we have this atomic flag
+[00:20:39] uh this is just an alias for the atomic
+[00:20:41] boolean and it has a really simple API
+[00:20:44] where if I want to acquire the latch
+[00:20:47] assuming if it's if it's currently set
+[00:20:49] then when I call a test and set try to
+[00:20:51] set it to true it's going to return uh
+[00:20:54] it'll return true because I haven't set
+[00:20:55] it yet. Uh and so I'll just spin this
+[00:20:58] loop over and over again until I I can
+[00:21:01] then set it to true in which case it
+[00:21:02] comes back as false because that was the
+[00:21:04] previous value and then I b pop out of
+[00:21:06] this this while loop. So it's basically
+[00:21:08] me trying to acquire a latch and I'm
+[00:21:10] just going to spin this while loop
+[00:21:11] infinitely until I can actually get it.
+[00:21:14] So you can be a little more
+[00:21:15] sophisticated inside your while loop.
+[00:21:16] You can say like, oh, I've tried 10
+[00:21:18] times, so let me let me yield to the OS,
+[00:21:21] deschedu my thread, and then that way if
+[00:21:23] I come back, maybe it'll be available. I
+[00:21:25] could kill myself after a certain amount
+[00:21:27] of time if I can't acquire it. But
+[00:21:28] there's some there's some intelligence
+[00:21:30] you can put in here, but the end of the
+[00:21:31] day, the the the implementation is
+[00:21:33] pretty basic.
+[00:21:35] So the reason why this is not going to
+[00:21:37] be so great is one I've already said is
+[00:21:39] that you we're burning cycles here uh
+[00:21:42] because the technically we're doing
+[00:21:44] work. We're just not doing useful work
+[00:21:46] in our database system and the the OS
+[00:21:47] doesn't know that. The other challenge
+[00:21:49] is going to be in non-uniform memory
+[00:21:52] architectures or NUMA architectures.
+[00:21:54] Think of like a multi multi multiCPU
+[00:21:56] socket machine.
+[00:21:58] Each of those sockets is going to have
+[00:22:00] its own local DRM. So if the latch I
+[00:22:01] want to acquire is over this DRAM here,
+[00:22:03] then this thread or this worker running
+[00:22:06] on this CPU is basically spinning and
+[00:22:08] trying to read this memory address over
+[00:22:09] and over again. And because this memory
+[00:22:12] is on another another node inside or
+[00:22:15] socket in my CPU, I got to go over this
+[00:22:17] interconnect between the different sock
+[00:22:18] sockets and that's much slower than
+[00:22:20] reading like local local DRAM or local
+[00:22:23] uh L3 cache. So in a multiCPU
+[00:22:26] architecture, this is actually terrible
+[00:22:29] if you just do this incessantly.
+[00:22:32] Does everybody know how test and set
+[00:22:34] works?
+[00:22:38] I'm getting no. Okay, so test and set
+[00:22:40] compare and swap. The idea is pretty
+[00:22:42] basic. It's a specialized CPU
+[00:22:44] instruction. It's been around I think
+[00:22:46] since since the 80s uh that allows you
+[00:22:49] to do to check the the value of some
+[00:22:52] memory address and if it's a value you
+[00:22:55] expect it to be then you're allowed to
+[00:22:56] update it and change it to a new value
+[00:22:59] and you can do this atomically so you're
+[00:23:00] not worried about like you know think of
+[00:23:02] like if you had to do like if the value
+[00:23:04] equals this then change it right if you
+[00:23:06] just write that C code someone could
+[00:23:08] come in between the the if check and
+[00:23:10] then the the update and modify the thing
+[00:23:12] before you get to it right So with a
+[00:23:15] compare and swap instruction or test and
+[00:23:16] set instruction, it allows you to do all
+[00:23:18] of that atomically and you know that no
+[00:23:20] one no one's going to squeak in and
+[00:23:22] change something before you do. So this
+[00:23:24] is a really simple notation uh to do a
+[00:23:27] parent swap on a single memory address.
+[00:23:29] So this this is for this is for GCC
+[00:23:32] running on x86. Anytime you see like a
+[00:23:34] double underscore in front of a function
+[00:23:36] name in in C++ or C, it's called an
+[00:23:39] intrinsic. Think of like a macro for the
+[00:23:41] actual assembly instructions that'll
+[00:23:42] that'll do this for you. Right. So it
+[00:23:44] sort of fits in it sort of looks more
+[00:23:47] natural like C code uh but underneath
+[00:23:49] the cover that the compiler just
+[00:23:51] converts this to assembly to do exactly
+[00:23:52] the the assembly that does this. All
+[00:23:55] right. So here we're going to we're
+[00:23:56] going to pass in the memory address. We
+[00:23:58] have the compare value. Then we want to
+[00:23:59] check to see whether this current value
+[00:24:01] is the is set to some some what we
+[00:24:03] expect it to be. And if it is in this
+[00:24:06] case here we check to see whether it's
+[00:24:07] 20. And since it is 20 then within again
+[00:24:10] the same instruction we can then change
+[00:24:11] it to 30.
+[00:24:13] So this again this guarantees that
+[00:24:15] nobody else can squeak in before we do
+[00:24:16] after we do the check that that that
+[00:24:17] it's 20 and change to some value uh
+[00:24:20] before we do. So so this is the basic
+[00:24:22] primitive that all these latching
+[00:24:24] schemes are going to use that we can
+[00:24:25] then build upon and do more
+[00:24:27] sophisticated things.
+[00:24:32] All right. So we talked about the issues
+[00:24:33] with the the spin latch. Um the what
+[00:24:37] lions would say for you to use is a
+[00:24:39] blocking OS mutx and this is what you
+[00:24:41] get basically with uh sedd mutx. Um and
+[00:24:45] so the way it basically works is you
+[00:24:46] declare mutx you call lock on it do
+[00:24:48] something in your critical section and
+[00:24:50] then when you're done with it you can
+[00:24:51] call unlock right the guards are
+[00:24:54] basically doing the same thing when they
+[00:24:55] fall out of scope then then the lock
+[00:24:57] gets released.
+[00:24:59] So on Linux if you call std mutex what
+[00:25:02] do you actually get?
+[00:25:05] P thread mutx. Exactly right. What is a
+[00:25:07] P thread mutex? How is that actually
+[00:25:08] implemented?
+[00:25:11] >> You have a fast
+[00:25:14] he says there's a fast path that's a
+[00:25:15] spin lock and then
+[00:25:18] >> so what is that called?
+[00:25:21] >> Uh close
+[00:25:24] fast user mutx. So he's right. So you
+[00:25:27] have a a futex is actually two d two
+[00:25:29] data structures. You have a user space
+[00:25:31] latch which is just the spin latch I
+[00:25:33] just showed in the last slide where you
+[00:25:34] just try to conditionally try to set
+[00:25:36] something with an atomic compare and
+[00:25:38] swap. But then if you can't acquire it
+[00:25:40] then you fall back down to the OS and
+[00:25:43] try to acquire a latch on inside the the
+[00:25:46] operating system. And then if you can't
+[00:25:48] acquire that latch the OS is going to
+[00:25:50] schedule you uh in its own internal
+[00:25:53] schedule table and make sure that and
+[00:25:55] only notify you through a conditional
+[00:25:56] variable when this thing actually
+[00:25:57] becomes available. So think it like
+[00:25:59] this. So I have my two two workers. They
+[00:26:01] both are trying to acquire this. The
+[00:26:02] first thing then they try to acquire is
+[00:26:04] the user space latch. The the first guy
+[00:26:06] gets it. The second guy can't get it. So
+[00:26:08] then it falls down to the OS latch and
+[00:26:10] then it goes to sleep because the OS
+[00:26:12] says like you can't run until this latch
+[00:26:13] gets available. Then when it becomes
+[00:26:15] available, it notifies it and it wakes
+[00:26:17] it up. So this is what Linus wants you
+[00:26:19] to do.
+[00:26:22] I've already said why it's a bad idea
+[00:26:23] because again you're going going down to
+[00:26:25] the OS. It's a SIS call. That sucks.
+[00:26:27] There's one more thing reason why this
+[00:26:28] sucks.
+[00:26:32] How is the OS figuring out or
+[00:26:33] maintaining the metadata or keeping
+[00:26:35] track of what threads it has to should
+[00:26:38] be desc and what threads are waiting for
+[00:26:40] this data structure?
+[00:26:42] It has its own hash table down there.
+[00:26:44] How is it protecting that? It has its
+[00:26:46] own latches,
+[00:26:48] right? So, in order for me to acquire
+[00:26:50] this latch, I had to first try to
+[00:26:51] acquire the first one. I can't get that.
+[00:26:52] Then I have to go down now into the the
+[00:26:55] the the scheduling table acquire latches
+[00:26:58] inside of that data structure and then
+[00:27:00] put myself to sleep inside that and then
+[00:27:02] the OS has to then kick up you know the
+[00:27:04] schedule up the things available and you
+[00:27:06] start running. So this is way more
+[00:27:08] expensive to do because again we're
+[00:27:09] relying on the OS mechanisms and the OS
+[00:27:11] has to protect its own data structures
+[00:27:13] or we just want something more simple uh
+[00:27:16] that protect ourselves and the memory
+[00:27:18] location for these things uh or the
+[00:27:21] future text that'll sit in user space
+[00:27:23] but the OS has it own data structures
+[00:27:24] that's somewhere else in kernel memory
+[00:27:26] and and now we're jumping around to
+[00:27:28] different parts of memory where if you
+[00:27:30] keep everything code located together
+[00:27:31] that's going to be much faster for our
+[00:27:33] workers to rip through for modern CPUs.
+[00:27:39] So a more uh sophisticated thing you can
+[00:27:41] build on top of this. Again, these two
+[00:27:42] latches just have basically one mode.
+[00:27:45] It's either write mode or read mode. Um
+[00:27:47] if you want to be sophisticated and have
+[00:27:49] what are called a reader writer latches,
+[00:27:50] this allows us to have multiple
+[00:27:51] concurrent readers uh access the
+[00:27:54] critical section at the same time. And
+[00:27:56] then when a writer thread or writer
+[00:27:58] worker shows up, it converts the the
+[00:28:00] latch to write mode and that blocks
+[00:28:02] everything else out. So this is what you
+[00:28:04] get using uh standard shared mutx and
+[00:28:07] this is just a wrapper or an alias on
+[00:28:09] Linux for pthread uh readwrite lock and
+[00:28:12] then this is just a combination of a
+[00:28:14] pthread mutex and a pthread conditional
+[00:28:17] variable. So the way it basically works
+[00:28:19] is that your latch now has has a modem
+[00:28:21] my read mode or write mode and then it
+[00:28:23] has a queue for uh or counter the number
+[00:28:26] of threads that are accessing the the
+[00:28:28] critical section holding the latch in
+[00:28:30] this given mode at a given time and then
+[00:28:31] a counter for the number of threads that
+[00:28:33] are waiting to acquire it. So if the
+[00:28:35] first worker shows up wants to do a read
+[00:28:38] on the data structure the critical
+[00:28:39] session acquires the latch in read mode
+[00:28:42] we just update the counter uh by one and
+[00:28:44] then the thread can do whatever it
+[00:28:45] wants. Another thread comes along, tries
+[00:28:47] to try to acquire the ratchet in read
+[00:28:49] mode. We're already in read mode. So we
+[00:28:51] can allow this. We give it the latch,
+[00:28:53] set the mode to two or set the counter
+[00:28:54] to two. So then now if this worker shows
+[00:28:58] up, wants to acquire the latch in right
+[00:28:59] mode, it would it would look in the
+[00:29:01] counter and see that the the read
+[00:29:03] counter is set to two or greater than
+[00:29:05] zero. So it can acquire the latch in
+[00:29:07] right mode because we don't want it
+[00:29:09] going inside the critical section and
+[00:29:10] start mcking around and changing
+[00:29:11] changing bits or bytes to to pointers or
+[00:29:14] whatever because these guys are reading
+[00:29:16] it and and not expecting it to change
+[00:29:19] underneath them. So this thread has to
+[00:29:21] pause and wait and then from fairness
+[00:29:23] when the next thread comes along uh that
+[00:29:26] wants to cry the latch in read in read
+[00:29:27] mode since we know that this guy is
+[00:29:30] waiting for it we don't want to starve
+[00:29:31] him out. So therefore, we're gonna we're
+[00:29:33] gonna let that thread now go to sleep
+[00:29:36] and wait to try the latch or either spin
+[00:29:38] or sleep in the OS. And then at some
+[00:29:40] point when the two readers are done, the
+[00:29:43] the latch will switch switch to write
+[00:29:45] mode and then the next thread can start
+[00:29:47] running.
+[00:29:50] So this is a bit more sophisticated
+[00:29:51] because now we have to maintain these
+[00:29:52] data structures and these counters
+[00:29:54] instead of saying like you know now
+[00:29:55] we're sort of making this latch larger
+[00:29:57] and larger. Still it's not too bad for
+[00:29:59] this uh if we rely on the OS mechanisms
+[00:30:02] for some things. Um but this this can be
+[00:30:05] actually you know if we have to store
+[00:30:07] this now for every single record you
+[00:30:09] know every single tupole then this can
+[00:30:11] start to add up and be kind of
+[00:30:12] expensive.
+[00:30:15] >> Yes.
+[00:30:25] >> Yes.
+[00:30:26] His
+[00:30:31] question is the question is why does the
+[00:30:33] OSP not want us to use spin locks in
+[00:30:35] user space
+[00:30:37] >> because it like from his perspective
+[00:30:39] he's at the operating system he they're
+[00:30:42] seeing a bunch of threads and they they
+[00:30:44] want to try to maximize amount of useful
+[00:30:45] work being done but if my thread is
+[00:30:48] spinning on the spin lock or spin trying
+[00:30:50] to acquire it I'm not really doing any
+[00:30:51] useful work I'm just trying to get and
+[00:30:52] get and get over and over again I can't
+[00:30:54] get it so from from the OS perspective
+[00:30:56] the thread looks like it's doing
+[00:30:58] something because it's executing
+[00:30:59] instructions, but it's not actually
+[00:31:00] doing any useful work. So in the OS
+[00:31:03] world, they would say, well, you're not
+[00:31:04] you can't do anything now, so let me
+[00:31:07] actually describe.
+[00:31:12] And all I'm saying is if I go back to um
+[00:31:19] all I'm saying is the database people,
+[00:31:21] we can be smarter about this middle part
+[00:31:23] here. I can't acquire the latch. do
+[00:31:25] something
+[00:31:27] and we're not talking about co- routines
+[00:31:30] we're not talking about different other
+[00:31:31] architectures but like you can imagine
+[00:31:33] in some systems where I try to acquire
+[00:31:36] the latch I can't get it but I'm do I'm
+[00:31:38] using uh uh nonpreceptive uh scheduling
+[00:31:42] where I say all right I can't get this
+[00:31:45] latch let me go yield the co- routine
+[00:31:48] goes back and the thread can then be
+[00:31:49] handled off to some other co- routine to
+[00:31:51] process work right I can't do that if
+[00:31:54] I'm using the OS mutex because as soon
+[00:31:56] as I try to acquire the latch and I
+[00:31:57] don't get it, I'm going to fall down to
+[00:31:58] the kernel and my thread gets scheduled
+[00:31:59] or descheduled. Whereas if I implement
+[00:32:02] my data system correctly, then I can say
+[00:32:05] I can't get it and I know that the the
+[00:32:08] thing I'm trying to get may take a long
+[00:32:10] time.
+[00:32:11] You can't always know that, but you can
+[00:32:13] say all right, let me go back and let my
+[00:32:15] thread be used for something else.
+[00:32:19] Other questions?
+[00:32:25] question. What's a good option? So
+[00:32:27] again, I don't want to go too much deep
+[00:32:28] in the details, but the
+[00:32:32] this thing from the from the parking lot
+[00:32:34] stuff, do I may have a slide on it.
+[00:32:40] Um,
+[00:32:46] yeah, I don't have slides here. Um, in
+[00:32:48] in this class, MCS is probably a little
+[00:32:51] bit better. Um,
+[00:32:54] basically
+[00:32:55] this thing maintains a link list and you
+[00:32:58] can keep track of like
+[00:33:00] um like you're not everyone's not
+[00:33:03] waiting for the same lock. You can kind
+[00:33:05] of put yourself in a queue. This is
+[00:33:06] actually what Linux uses on on the
+[00:33:08] inside which you can then do something
+[00:33:09] better in user space. the parking lot
+[00:33:11] one from Apple they maintain their own
+[00:33:16] like worker pools to keep track of like
+[00:33:18] I this worker can't do anything but so
+[00:33:21] in some cases the thing it's waiting for
+[00:33:24] I know it's not going to be available
+[00:33:25] for a long time so let me actually go
+[00:33:27] yield it back to the OS but other ones
+[00:33:29] might be like a hot pool like I I think
+[00:33:31] I need I think I'm gonna get it back
+[00:33:32] right away so don't like go to sleep
+[00:33:34] there's a bit more logic in there that
+[00:33:35] they're doing the MCS1 is is is a
+[00:33:38] another implication to minimize the um
+[00:33:42] yeah this this is what the the out spin
+[00:33:45] lock is from the parking lot one but I
+[00:33:47] don't I don't want to I don't other than
+[00:33:49] the description here I don't have other
+[00:33:50] slides on it show demonstrations of it
+[00:33:54] okay
+[00:33:58] all right so we now basically we know
+[00:34:01] how to do basic latching again the exact
+[00:34:03] implementation for for what we'll talk
+[00:34:05] about going forward doesn't matter
+[00:34:06] whether we yield to the US or not again
+[00:34:08] it's still about the We're trying to
+[00:34:10] maintain the physical correctness of the
+[00:34:12] data structure. So the first one I want
+[00:34:14] to talk about is hash table latching
+[00:34:16] because this one is again it's much more
+[00:34:17] simple than the B+ trees because
+[00:34:20] all the threads are going to be going in
+[00:34:21] the same direction. Right? Think of like
+[00:34:24] when I was doing linear probe hashing. I
+[00:34:26] hash my key. I landed some somewhere in
+[00:34:28] the hash table and I always scan going
+[00:34:31] down to try to find the key that I want.
+[00:34:34] And therefore I can't have deadlocks
+[00:34:35] because I don't I'm not worried about
+[00:34:36] somebody else coming from the bottom
+[00:34:38] going up. and I I need their latch and
+[00:34:40] they need my lash and get blocked. So in
+[00:34:42] this case here, this is going to be a
+[00:34:44] lot easier to do because we're always
+[00:34:45] going in the same direction. Now, if we
+[00:34:47] have to resize the hash table, that's a
+[00:34:49] bit more tricky. Uh and so the simplest
+[00:34:52] way to do this, you just maintain a a
+[00:34:54] latch for the entire data structure. Uh
+[00:34:57] and so anytime you do a read, uh anytime
+[00:35:00] you want to do a read or write into it,
+[00:35:02] it requires a latch for this. And then
+[00:35:03] if you want if you want to swap out the
+[00:35:06] hashing while resizing it, just take a a
+[00:35:08] right latch on the entire thing and that
+[00:35:10] prevents anybody from coming along and
+[00:35:11] reading it. But again, we can ignore
+[00:35:13] that. But there's basically three
+[00:35:15] approaches. The first one is as I
+[00:35:17] already said like use a global latch
+[00:35:18] that protects the entire data structure.
+[00:35:20] Problem with this again it's it's be
+[00:35:21] simple and implement but now it's
+[00:35:23] basically making my data structure be
+[00:35:25] single threaded. All right. The next
+[00:35:28] could be I have the scope of the latch
+[00:35:30] protect the page or block within my hash
+[00:35:32] table. And that means anytime before I
+[00:35:35] go look inside a a page, I acquire the
+[00:35:39] latch for it in whatever mode that I
+[00:35:40] want. And then before I go down, if I
+[00:35:43] can't find the thing that I want or a
+[00:35:44] free slot to put some data in before I
+[00:35:47] go to the next next page, I release that
+[00:35:49] latch on my page that I'm at right now
+[00:35:51] and then try to acquire it on the next
+[00:35:52] one.
+[00:35:55] And then the alternative is to have more
+[00:35:56] fine grain latches where every single
+[00:35:58] slot in a page will have its own latch.
+[00:36:01] Again, this think something I'm
+[00:36:02] embedding inside of the header,
+[00:36:05] right? And so the advantage of this is
+[00:36:07] that it's going to be since they're more
+[00:36:10] fine grain, I could have in in theory
+[00:36:13] two different threads touching different
+[00:36:14] parts of the same page. Uh and that's
+[00:36:17] okay because they're the latches are,
+[00:36:19] you know, at a slot level. Whereas if I
+[00:36:21] have a page latch, then only one thread
+[00:36:23] can do something make a modification to
+[00:36:25] a page at a time.
+[00:36:28] So let's look at a real simple example
+[00:36:29] here. We have our hash table. All right.
+[00:36:31] First we'll do the the the page based
+[00:36:33] locks or block based locks or latches.
+[00:36:36] So I'm going to find D. So again
+[00:36:39] ignoring whatever sort of global latch I
+[00:36:41] have to protect things or resizing
+[00:36:42] assume that's already taken care of. I'm
+[00:36:44] going to land in uh this page here.
+[00:36:48] So before I can start reading the
+[00:36:49] contents, after I hash it and figure out
+[00:36:51] what page I need to read, I I have to
+[00:36:53] put this latch in in read mode. And
+[00:36:55] since there's no other threads right
+[00:36:56] now, I can go ahead and do that. Now my
+[00:36:58] thread can jump inside the page and
+[00:36:59] actually start reading the contents of
+[00:37:01] of the slots to figure out whether the
+[00:37:03] key D is is there. But then at the same
+[00:37:06] time, T2 comes along, another thread,
+[00:37:09] and it wants to find E or sorry, insert
+[00:37:12] E, and saying it's going to hatch to
+[00:37:13] this location here. So it wants to put
+[00:37:16] the latch the the the page latch into
+[00:37:19] write mode but it can't because the
+[00:37:20] first thread holds it in read mode. So
+[00:37:22] it has to stall and has to wait. T1 then
+[00:37:26] can resume start keep scanning along.
+[00:37:28] And then when it jumps to this next page
+[00:37:30] here, since we know the d the data
+[00:37:33] structure can't be resized or linear
+[00:37:35] program, we're not doing hashing or
+[00:37:37] linear hashing, then I can go ahead and
+[00:37:39] actually release the latch on the the
+[00:37:43] page one uh in the middle here before I
+[00:37:46] get the latch on on page two. Right?
+[00:37:50] Because again, I I I know that the I
+[00:37:52] know the sequence of the pages I need to
+[00:37:53] access that isn't going to get moved
+[00:37:55] around because I'm not going to re
+[00:37:56] reorder reorder them.
+[00:37:59] So then now I get the read latch on on
+[00:38:01] page two. The other thread can then wake
+[00:38:04] up and now get the right latch on page
+[00:38:06] one.
+[00:38:08] Look, scan all the slots. See that it
+[00:38:10] can't insert either way it wants. So it
+[00:38:12] has to go down here. And then the same
+[00:38:13] thing since the first thread holds the
+[00:38:15] read latch on the page. This guy has to
+[00:38:17] wait. The second one has to wait. When
+[00:38:19] then when T1 is done releases the read
+[00:38:22] latch, T2 can then acquire the right
+[00:38:24] latch and then go ahead and make and
+[00:38:26] make its change there.
+[00:38:28] Right. So, this is page page logs. See
+[00:38:30] how like even though one was trying to
+[00:38:32] do a read, one trying to do a write, and
+[00:38:33] they're looking at different things, I
+[00:38:36] had to the second thread had to wait
+[00:38:39] until the first thread finished reading
+[00:38:40] or accessing whatever it was accessing.
+[00:38:44] If I have a slot per latch, then if I
+[00:38:46] try to do that same operation I had
+[00:38:48] before, when T1 hashes into the hash
+[00:38:51] table, lands on the first uh slot here,
+[00:38:53] it takes the read latch on it, goes
+[00:38:56] doesn't, you know, inspects the
+[00:38:58] contents, T2 comes along, it hashes into
+[00:39:00] the same thing, and now it's going to
+[00:39:02] take the right latch on on this because
+[00:39:05] you don't know whether it's empty until
+[00:39:06] you actually read it. Uh, so you take
+[00:39:08] the right latch. Then now when T T1
+[00:39:12] scans along because it's trying to find
+[00:39:13] D, it tries to get to to the next slot,
+[00:39:16] but that the f the second thread holds
+[00:39:18] the right latch on that. So it has it
+[00:39:20] has to wait until that latch is
+[00:39:22] released. So it stalls.
+[00:39:24] T2 comes along, scans along, takes the
+[00:39:26] right latch on on the next page. Then at
+[00:39:29] this point here, T1 can take the read
+[00:39:31] latch on on that slot, doesn't find what
+[00:39:33] it wants, scans along, has to wait for
+[00:39:35] this guy to finish. This guy comes down
+[00:39:37] here, says this this slot is empty. Let
+[00:39:39] me go ahead and insert E. And then at
+[00:39:42] the same time, D can then do a read on
+[00:39:44] on the slot to find the thing that it
+[00:39:46] wants.
+[00:39:53] >> The question is what? Sorry.
+[00:39:59] >> Statement is um
+[00:40:01] in this case here, wouldn't you have to
+[00:40:03] take a a latch on the page itself? As
+[00:40:06] soon as it's backed by disk because you
+[00:40:07] want to mark the the Yeah, dirty bit.
+[00:40:10] True. Yeah. So,
+[00:40:12] and for this one, what I'm assuming it's
+[00:40:13] in memory, but yes, if it was a
+[00:40:18] >> No, because if I'm not writing about the
+[00:40:19] disc, I don't care if it's dirty. If if
+[00:40:21] if it's not backed by like the buffer
+[00:40:23] pool manager, I don't there's no no
+[00:40:25] concept of a dirty page. It's just it's
+[00:40:27] just memory, right? But in in the thing
+[00:40:29] you're proposing, yes, you'd have to uh
+[00:40:32] that one you you could take the you
+[00:40:34] could do the update on the dirty bit uh
+[00:40:37] on the dirty flag after the the changes
+[00:40:39] you made. You still want to pin it so it
+[00:40:40] doesn't get swapped out, right? But you
+[00:40:43] don't have to take the patch the the
+[00:40:44] lash on the whole page if you have
+[00:40:46] different parts reading it because then
+[00:40:47] you just go flip the bit because the the
+[00:40:50] first thread here it doesn't care
+[00:40:51] whether the page is marked dirty. I care
+[00:40:53] that it stays in memory so it's pinned.
+[00:40:55] That's fine. But then setting that flag
+[00:40:57] says I'm not the only the buffer manager
+[00:40:59] is the only one reading it. The
+[00:41:00] different threads accessing it don't
+[00:41:01] need to do that atomically.
+[00:41:05] >> Yes.
+[00:41:06] >> How much
+[00:41:08] slot?
+[00:41:11] >> The question is how much how much
+[00:41:12] performance benefit do you get from
+[00:41:14] having uh slot latches versus page
+[00:41:17] latches? I mean the classic storage
+[00:41:19] versus compute right? If my key value
+[00:41:22] pairs are not that big, then I'm going
+[00:41:24] to have a lot of key values within a
+[00:41:26] page, but everyone now is going to have
+[00:41:27] its own memory location to keep track of
+[00:41:30] the latches, right? And so I'm going to
+[00:41:33] maximize concurrency. Again, it's a
+[00:41:35] copout. It depends on the workload,
+[00:41:37] depends on how fast you're, you know,
+[00:41:38] how many cores you have, what they're
+[00:41:40] actually trying to do, right? So it
+[00:41:42] could be a huge benefit, it could be a
+[00:41:43] small benefit. Depends on what the
+[00:41:44] workload actually is. But
+[00:41:49] >> his question statement is the statement
+[00:41:51] is it it depends on how how large each
+[00:41:54] entry is, how large each slot is
+[00:41:56] relative to the size of the latch.
+[00:41:59] >> Same thing, right? So if if the the key
+[00:42:02] values are really small, your latches
+[00:42:04] your latches always be fixed size. So if
+[00:42:07] the key value is really really small,
+[00:42:08] then the size of the key value could be
+[00:42:10] the same as the latch. So, you're
+[00:42:12] basically storing double the space to
+[00:42:14] store this latch information. So, is
+[00:42:16] that a good trade-off? I mean, again, it
+[00:42:18] depends.
+[00:42:20] There isn't there's So, I'm not trying
+[00:42:21] to like I'm not trying to be evasive,
+[00:42:23] but there isn't a number I can give you
+[00:42:24] and say, "Oh, it's always going to be
+[00:42:25] 10x." It depends.
+[00:42:31] All right. Latching for hash table is
+[00:42:33] pretty straightforward. The good stuff
+[00:42:34] comes along when we start doing latching
+[00:42:35] for B+ trees, right?
+[00:42:39] Again, so the idea is the same. We want
+[00:42:41] to have multiple threads. We got to read
+[00:42:43] and write to our Bless Street at the
+[00:42:44] same time.
+[00:42:46] And we have to protect the problem where
+[00:42:48] we have two workers trying to modify the
+[00:42:50] the node at the same time. And then we
+[00:42:53] have a the other problem is we have
+[00:42:55] nodes or workers traversing our data
+[00:42:58] structure at the same time. We're doing
+[00:42:59] splits and merges because then now we
+[00:43:02] could have pointers going to to nowhere
+[00:43:05] and we could get a seg right.
+[00:43:22] The statement is the question is when
+[00:43:25] I'm talking about B+3 and hashable
+[00:43:27] latching is it using one of the latching
+[00:43:29] implementations I showed before? Yes.
+[00:43:31] But it doesn't matter
+[00:43:33] for like we just have this notion of a
+[00:43:36] protection mechanism that we we can
+[00:43:37] protect a critical section. So whether
+[00:43:39] it's spin latches, OS mutexes, parking
+[00:43:41] lot thing, doesn't matter.
+[00:43:45] All right. So here's what we're trying
+[00:43:46] to trying to avoid. So we say we have
+[00:43:48] our B+ here and we had this key 44 we
+[00:43:51] want to do do a delete on. So when the
+[00:43:53] thread starts, you know, does the scan,
+[00:43:56] looks at the guide post, figures out
+[00:43:57] where to go, traverses down to the
+[00:43:58] bottom, gets to this leave node, and
+[00:44:00] voila, there's key44 that it wants to
+[00:44:01] wants to go ahead and delete. So it goes
+[00:44:04] ahead and deletes that. But now we have
+[00:44:06] the problem where the node is less than
+[00:44:08] half full. So we got to rebalance means
+[00:44:10] we have to do a merge.
+[00:44:12] But then say uh and say for this here we
+[00:44:15] want to move 41 over that'll keep us
+[00:44:17] balanced. And then say for whatever
+[00:44:19] reason the thread gets this worker gets
+[00:44:21] descheduled by the OS there's a pause
+[00:44:24] something right doesn't matter. And then
+[00:44:27] while it's paused asleep the other
+[00:44:31] thread comes along and now wants to find
+[00:44:32] 41 does the same thing. scans along,
+[00:44:35] finds the guidepost, comes along down
+[00:44:37] here to D, looks at the at the the keys
+[00:44:41] inside there, figures out needs to
+[00:44:43] follow this pointer to get to this node
+[00:44:45] here. But let's say now for whatever
+[00:44:47] reason the OSD schedules this thread and
+[00:44:50] it goes to sleep.
+[00:44:52] The first guy wakes up then moves the
+[00:44:54] does the rebalancing, moves moves key 41
+[00:44:57] from H to I, then it's done. The second
+[00:45:01] thread then comes back awake, follows
+[00:45:03] that pointer that I thought was correct
+[00:45:04] before, gets down here, and now it sees
+[00:45:07] that the key that I thought was going to
+[00:45:08] be there is no longer there.
+[00:45:11] So this this is what we're we're trying
+[00:45:13] to avoid, right? This is a best case
+[00:45:15] scenario because this this will get us a
+[00:45:16] false negative. It's better than
+[00:45:18] following a pointer to takes to to a bad
+[00:45:20] memory location. We get a seg fault,
+[00:45:23] right? But still, this is still bad
+[00:45:24] because if if it's your bank account and
+[00:45:26] we can't find it and you're losing
+[00:45:28] money, you would get pissed.
+[00:45:31] So the way we're going to to to avoid
+[00:45:33] this problem is through a technique
+[00:45:34] called latch coupling or sometimes
+[00:45:36] called latch crabbing. I think the
+[00:45:38] textbook calls it latch coupling.
+[00:45:39] Wikipedia calls it latch coupling but
+[00:45:41] sometimes you'll see old order
+[00:45:42] references called latch crabbing.
+[00:45:45] And this is the protocol we're going to
+[00:45:46] use in our pustry implementation that's
+[00:45:48] going to allow multiple threads to
+[00:45:49] access safely access the the data
+[00:45:52] structure at at the same time. And the
+[00:45:55] basic idea is that as we do our
+[00:45:56] traversals for either an a modifi
+[00:45:59] modifying or read operation, a right
+[00:46:01] read or write, we're always going to
+[00:46:03] acquire a latch for some parent or the
+[00:46:05] root node that we start out with. Then
+[00:46:07] acquire the latch for the child that we
+[00:46:09] need to go we need to go down to next.
+[00:46:12] And then if the if we know that based on
+[00:46:15] whatever operation that we're trying to
+[00:46:16] do that the the the
+[00:46:20] child is not going to have to do a split
+[00:46:22] or a merge then the the parent is is
+[00:46:26] deemed as safe and we can go ahead and
+[00:46:28] release release the latch for anything
+[00:46:31] we hold up above in the tree.
+[00:46:34] And the reason why it's called latch
+[00:46:35] crabbing is supposed to be like uh the
+[00:46:36] way crab would walk right it moves it
+[00:46:39] one leg after another right. So again,
+[00:46:41] we're define a safe node is that we know
+[00:46:43] that the based on what operation we're
+[00:46:46] trying to do that if we want to do an
+[00:46:48] insert that we know it's not full and
+[00:46:50] therefore we're going to have to do a
+[00:46:51] split if we you know if if we have to
+[00:46:53] handle keys coming up and then if we're
+[00:46:55] doing delete that we know it's at least
+[00:46:57] more than half full that we're not have
+[00:46:59] to do a merge if we have start deleting
+[00:47:00] things below us.
+[00:47:03] So the basic protocol is again for for a
+[00:47:05] for a search or lookup or get acquire
+[00:47:08] read latches all the way down. Uh and
+[00:47:10] once we reach a child node it's you know
+[00:47:14] in taking that latch in read mode. We
+[00:47:16] can then release its parent in in read
+[00:47:17] mode. Do that till we reach the leaf
+[00:47:19] node read whatever we want and and we're
+[00:47:21] done. For inserts and deletes we start
+[00:47:25] with taking right latches on the way
+[00:47:27] down. Again, as we go down from from a
+[00:47:30] parent to a child, we check whether the
+[00:47:32] child will have to split or merge based
+[00:47:33] on whatever the operation we're going to
+[00:47:35] do uh or it's that it could have to do
+[00:47:38] this because we may not know what comes
+[00:47:39] below us in the in the tree. And if we
+[00:47:42] know it's safe, we can go ahead and
+[00:47:43] release the latch for our parent and
+[00:47:45] actually any other latches we hold going
+[00:47:47] back up to the root, right? And then
+[00:47:50] once we reach the leaf node, we do
+[00:47:51] whatever it is that that we need to do.
+[00:47:54] So the idea is that we don't release our
+[00:47:55] latches as soon as possible because we
+[00:47:57] want to let other threads or other
+[00:47:58] workers run in in our system. Yes.
+[00:48:04] >> His statement is uh I keep saying we
+[00:48:06] want to put things in right mode. If
+[00:48:07] we're if we're doing updates, don't we
+[00:48:09] do everything in read mode and then
+[00:48:10] upgrade. Few more slides. Yes. This is
+[00:48:14] the basic protocol.
+[00:48:18] All right. So let's see if I want to do
+[00:48:20] a find on key 38.
+[00:48:23] And so I started hit the always got to
+[00:48:24] start at the root node. I put this in
+[00:48:26] read mode. I come down down to to B
+[00:48:30] acquire B in read mode, right? Because
+[00:48:32] again going back here like I know that
+[00:48:34] these pointers are all going to be
+[00:48:36] correct at this point because I have it
+[00:48:37] in read mode. So I know nobody else is
+[00:48:39] going to swap them out and change it to
+[00:48:41] something else because because you can't
+[00:48:42] do that in read mode. So it's safe for
+[00:48:44] me to follow this pointer. I land land
+[00:48:47] down here. Put this page or this node in
+[00:48:49] read mode. And at this point, I know
+[00:48:52] it's safe to release A, the latch on A
+[00:48:54] because I'm at B and I hold B's latch.
+[00:48:57] So, I go ahead and do that. Do the same
+[00:49:00] thing. Scan down to D, put that in read
+[00:49:02] mode to release the latch on B. Scan
+[00:49:04] down to H. Uh, to put that in read mode,
+[00:49:07] and release the latch on on D.
+[00:49:11] Read what I want, and then I'm done.
+[00:49:15] So, this is pretty simple.
+[00:49:17] Let's see where we have to do a delete.
+[00:49:20] start off with putting the the the the
+[00:49:22] parent in right mode because again at
+[00:49:25] this point here I don't know what's
+[00:49:27] below me in the tree. So I don't know
+[00:49:29] whether if I delete a key I'm going to
+[00:49:31] have to do a merge and I might have to
+[00:49:32] reorganize all the way up to the root.
+[00:49:34] So I maintain the the right latch on A
+[00:49:36] come down to B. Same thing here. I don't
+[00:49:39] know whether I'm going to have to do uh
+[00:49:42] a merge on B because it's only got one
+[00:49:45] key and I can only store two keys. So if
+[00:49:46] I had to delete something and I delete
+[00:49:48] the the the the key here, I got to do a
+[00:49:50] merge. So I have to hold the right latch
+[00:49:52] for this and right latch on A.
+[00:49:55] But then when I get down to D taking
+[00:49:57] that latch and read right mode, at this
+[00:49:59] point here, I know that even if I delete
+[00:50:02] a key below me that then gets ends up
+[00:50:05] deleting a key in D. Since I I'll be at
+[00:50:08] least half full, I know I can absorb
+[00:50:11] that that delete in D. So therefore, I
+[00:50:14] don't need the latch on on A and B above
+[00:50:17] me. So it's safe for me to go ahead and
+[00:50:19] delete those latches.
+[00:50:23] What order do we do? We want to release
+[00:50:25] them, right? Going back here, do I want
+[00:50:28] to release A then B or B then A?
+[00:50:32] >> Why? He says A then B then why? there's
+[00:50:35] just no reason.
+[00:50:40] >> He said what he said is he's correct is
+[00:50:42] that there's no nothing in the game by
+[00:50:43] by releasing B first because implicitly
+[00:50:48] the the latch on B is being held by the
+[00:50:50] latch on A.
+[00:50:52] So I actually want to release A first
+[00:50:54] because if someone wants to go down to
+[00:50:55] the other side of of the of the tree,
+[00:50:58] they can't do that if I'm holding the
+[00:50:59] latch on it. So if I release A first and
+[00:51:01] that sort of frees up that whole other
+[00:51:03] side and I want to do that before I I
+[00:51:05] release on on B. So I I want to release
+[00:51:08] latches from top down
+[00:51:12] sort of roughly in the same same order
+[00:51:13] that I'm I'm acquiring them uh going
+[00:51:15] going top down. Yes.
+[00:51:24] >> Yeah. So his statement is and he's
+[00:51:26] correct that
+[00:51:27] the order in which we release them
+[00:51:29] doesn't affect correctness. This is this
+[00:51:31] is a performance optimization because
+[00:51:34] again if I release the latch on B,
+[00:51:37] nobody can do anything. Nobody can get
+[00:51:38] to B anyway because I still hold the
+[00:51:40] latch on its parent on A. So I want to
+[00:51:43] release the most sort of the the latch
+[00:51:45] that has the sort of largest scope or
+[00:51:46] most compassing the most part of the
+[00:51:48] tree sooner rather than later. Again,
+[00:51:50] we're talking nanconds here, but again,
+[00:51:52] we'll take anything we can get.
+[00:51:55] All right, so now I get down to here.
+[00:51:58] Uh, again, same thing. I know that H can
+[00:52:00] absorb the delete without rebalancing
+[00:52:02] time to do merge. So, it's safe for me
+[00:52:04] to release the latch on D. I do my
+[00:52:06] delete and I'm done.
+[00:52:09] All right, let's look at another
+[00:52:10] approach where we we do have to do a
+[00:52:12] modification to the structure of the
+[00:52:13] tree. So, I'm going to do an insert on
+[00:52:16] uh 40, key 45, take the right latch on
+[00:52:18] A, scan down, get the right latch on B.
+[00:52:21] Again, at this point, I know that if I
+[00:52:23] do a split and a key comes up into B,
+[00:52:26] then B can handle it. B has a space for
+[00:52:29] it. So, I release the latch on A. I get
+[00:52:31] down here to D, D isn't going to have
+[00:52:33] enough room for it. So, I got to keep
+[00:52:35] the latch up on B. Then, I get down to
+[00:52:37] the bottom and then at I, then I see I
+[00:52:40] can do an insert there. So I can release
+[00:52:42] the latch on B and D and I go ahead then
+[00:52:45] I'll insert my new key
+[00:52:48] and then I'm done.
+[00:52:50] All right, last example. Do insert with
+[00:52:52] that is going to require us to do
+[00:52:53] modification. I insert 25. Same thing.
+[00:52:56] Take the latch on A. Go down to B. Take
+[00:52:58] the latch on on B. B can insert can
+[00:53:01] absorb any new key that comes up. So I
+[00:53:03] can release the latch on A. Follow B
+[00:53:05] down. I go to C. C can do the same
+[00:53:07] thing. Can absorb any new new uh insert
+[00:53:09] that could happen. So I can release the
+[00:53:11] latch on B. Then I get down to F. I see
+[00:53:15] that F is going to have to do a split
+[00:53:16] now because there's no there's no room
+[00:53:18] for this. So I hold maintain the latch I
+[00:53:21] have on C. That's that's its parent. And
+[00:53:23] again, if I put a new key into C, that's
+[00:53:26] not going to get pushed anything push
+[00:53:27] anything up to to B. So that's why I
+[00:53:29] don't need to maintain the latch on it.
+[00:53:33] So again, now I'll I'll create a new
+[00:53:34] node,
+[00:53:36] move my keys around as needed, update
+[00:53:38] the guide post up above in C, and point
+[00:53:41] to the to to the new page I just created
+[00:53:43] here, which again I can do because I
+[00:53:44] hold the right latch on on C.
+[00:53:48] And then now insert my new record and
+[00:53:50] I'm I'm and I'm done
+[00:53:53] in the back. Yes.
+[00:54:00] >> Save it is. And we'll get we'll get in a
+[00:54:02] second. The question is if I have to if
+[00:54:06] since I have these pointers along the
+[00:54:08] leaf nodes, do I have to take latches on
+[00:54:10] the siblings
+[00:54:12] uh in order to update them? So in this
+[00:54:14] example here, I wouldn't when I'm at
+[00:54:17] this point here, right? So for for node
+[00:54:22] C, its siblings are E and F. I
+[00:54:24] implicitly have the latch on E because I
+[00:54:26] have the latch on C. So nobody can get
+[00:54:28] to it. We'll talk about leaf node scans
+[00:54:29] in in a few more slides. But to your
+[00:54:31] point, yes, if I'm here and now I have
+[00:54:35] to update G because this guy is now the
+[00:54:38] new sibling, I will have to keep
+[00:54:40] scanning across this, not go back up and
+[00:54:43] just scan leaf nodes and update G. Now
+[00:54:46] point back to J. I'll I'll show how to
+[00:54:48] do that in a second.
+[00:54:54] All right. So for all my examples,
+[00:54:56] what's the very first thing I did
+[00:54:57] anytime I want to update the data
+[00:54:59] structure? He sort of alluded to this
+[00:55:00] before. What's the very first thing you
+[00:55:02] always have to do in order to make a
+[00:55:03] change to to a B+ tree?
+[00:55:07] >> Exactly. Take take a right latch.
+[00:55:11] >> Right latch on the route. Right.
+[00:55:14] Even though again in some of these
+[00:55:16] operations like for the inserts even if
+[00:55:18] a key came up I would have to you know I
+[00:55:21] I could uh a had an extra free you know
+[00:55:24] slot for it I could could insert
+[00:55:26] something into it. So this is basically
+[00:55:29] making our uh our our data structure
+[00:55:32] singlethreaded because everybody's
+[00:55:34] coming in and trying to do the same
+[00:55:35] thing trying to take a right latch on
+[00:55:38] the on the route and that'll become a
+[00:55:41] bottleneck for us.
+[00:55:44] So the optimization uh that we can do to
+[00:55:47] this, so what he alluded to is instead
+[00:55:50] of taking a right latch because we're
+[00:55:53] going to assume that we may have to do a
+[00:55:55] split and merge, we're going to be
+[00:55:56] optimistic and assume that we're not
+[00:55:57] going to have to split and merge and
+[00:55:59] therefore we're going to take read
+[00:56:00] latches all the way down until we reach
+[00:56:03] the
+[00:56:05] uh to till we reach a uh a leaf node.
+[00:56:09] And then we check to see whether our
+[00:56:10] assumption was correct or not, whether
+[00:56:11] we are going to do a split merge based
+[00:56:13] on our operation.
+[00:56:15] And if we're if we were correct that
+[00:56:17] we're not going to do split merge, then
+[00:56:18] we just take the right latch on on the
+[00:56:20] leaf node. Poof, we're done changes just
+[00:56:22] fine. If we are incorrect about our
+[00:56:25] assumption, then we release any latches
+[00:56:27] that we have, just do the traversal
+[00:56:29] again, taking right latches in the more
+[00:56:32] pessimistic approach. So this technique
+[00:56:34] was uh sometimes called the bearer
+[00:56:37] slotnik algorithm. Bayer was the guy
+[00:56:39] that invented the B+ tree with the other
+[00:56:41] guy from CMU at Boeing in the 19 early
+[00:56:44] 1970s or 1960s. Right? So this is an
+[00:56:46] optimistic algorithm that they developed
+[00:56:49] uh a few years later. And we'll see this
+[00:56:51] idea again when we talk about optimistic
+[00:56:53] control which is another technique
+[00:56:54] invented here at CMU in the 1980s of how
+[00:56:56] we handle transactions where again you
+[00:56:58] assume that things are not going to
+[00:56:59] conflict and therefore you do sort of
+[00:57:01] the fast path and then if you get it
+[00:57:02] wrong you go back and you clean things
+[00:57:04] up.
+[00:57:06] Question. Yes.
+[00:57:08] Is there
+[00:57:15] >> the question is uh is there a upgrade
+[00:57:17] mechanism in latches where you can uh if
+[00:57:20] you hold a right a read latch upgrade it
+[00:57:22] to a right latch
+[00:57:24] if you don't know who the other threads
+[00:57:26] are and whether how many other threads
+[00:57:28] are have it in in in read mode. No.
+[00:57:32] >> If you know there's nobody else holding
+[00:57:34] it in in in read mode right now, you
+[00:57:36] could do that. Yes.
+[00:57:38] I see. So there's no like atomic way to
+[00:57:41] like wait until all others
+[00:57:44] like reading threads have finished.
+[00:57:48] >> So there's no there's no you use the
+[00:57:50] word atomic for that, but I don't think
+[00:57:51] you mean that. So there's there's no way
+[00:57:53] to just wait until all the other threads
+[00:57:56] that have it in read mode finish. So
+[00:57:58] again, if you have a counter for a
+[00:57:59] number of threads currently hold it in
+[00:58:01] read mode, you could do that sort of Q
+[00:58:04] lock thing we before where like you put
+[00:58:06] yourself in a queue and say, "Okay, I
+[00:58:07] actually want this in right mode now."
+[00:58:09] And then when that's free that you go
+[00:58:10] ahead and get it. You could do that, but
+[00:58:12] that's it's it's more machinery.
+[00:58:16] >> It may not be worth it.
+[00:58:25] start.
+[00:58:26] >> So,
+[00:58:28] >> so let me come back to your question.
+[00:58:30] He's basically asking, do I always have
+[00:58:31] to start from the rooe again? Can I just
+[00:58:33] start halfway through or he's saying
+[00:58:35] doing a lock a latch upgrade? You're
+[00:58:37] saying do what? Do same thing or
+[00:58:43] >> Yeah, let's go through example.
+[00:58:46] It may work but like
+[00:58:50] the point of main change and that's
+[00:58:51] that's the tricky part. It depends on
+[00:58:53] whether you still hold the read latch or
+[00:58:54] not.
+[00:58:56] All right. So search the same before
+[00:58:58] insert delete again you take you treat
+[00:59:02] it as if you're doing a a search take
+[00:59:04] latches and once you get to the the
+[00:59:06] level right above the leaf node because
+[00:59:08] again you you maintain in every node
+[00:59:10] what level you're at. So you know the
+[00:59:11] height of the tree. So you know when
+[00:59:13] you're when your your height minus one
+[00:59:16] um then you try to acquire the the right
+[00:59:18] latch on that that leaf node if you get
+[00:59:21] it wrong when you actually then inspect
+[00:59:23] it to see whether you do a split merge
+[00:59:24] then you just restart and take take
+[00:59:26] right right latches all the way down and
+[00:59:28] in some cases as you said you may be
+[00:59:30] able to not have to do the full
+[00:59:31] traversal uh but it's a bit more
+[00:59:33] complicated. So going back here, the
+[00:59:35] same example we had before. I want to
+[00:59:37] delete key 38. So instead of taking the
+[00:59:39] right latch in the route, I'm going to
+[00:59:40] take the read latch, go all the way
+[00:59:42] down, just do the the latch coupling
+[00:59:44] technique as we as we did before, right?
+[00:59:46] Releasing the latch on my parent once I
+[00:59:47] acquired the latch below me. I now get
+[00:59:50] the right latch on H. At this point
+[00:59:52] here, I know that this node can can
+[00:59:54] absorb a deleted key. So I can go ahead
+[00:59:57] and release the read latch above me in
+[00:59:59] D. Make my change
+[01:00:01] to the H at the bottom. And I know it
+[01:00:04] can absorb that. And we're not going to
+[01:00:05] do a merge. So we're we're fine there.
+[01:00:08] All right.
+[01:00:11] In my example here, when I I have to do
+[01:00:12] uh delete insert 25. Same thing. Start
+[01:00:15] start at the root, scan down, taking the
+[01:00:17] read latches as I go along, and
+[01:00:19] releasing up above me when I know it's
+[01:00:21] safe. Then I get the the right latch on
+[01:00:23] this guy here. See that I am going to
+[01:00:25] have to do a split on node F. So in this
+[01:00:28] case here, I'll just have to restart my
+[01:00:30] search taking right latches all the way
+[01:00:32] down. So now his comment is, could I be
+[01:00:35] clever about this and
+[01:00:37] keep track of the nodes I visited,
+[01:00:40] figure out where where would I where
+[01:00:43] could a a
+[01:00:45] split or where could a new key come up
+[01:00:48] or I had to do a split up above. You
+[01:00:51] could do that. The challenge is that
+[01:00:53] there's no guarantee by the time you get
+[01:00:55] here since you release all the relatches
+[01:00:58] up above you that if I then try to come
+[01:01:01] back and say oh I was at B and I know B
+[01:01:04] could absorb anything that came up from
+[01:01:06] C uh or sorry C can absorb anything that
+[01:01:08] comes up from from F. Therefore I don't
+[01:01:10] have to acquire read latches on B. But
+[01:01:12] you don't know whether somebody else has
+[01:01:13] come along by the time you you restarted
+[01:01:15] changed B's layout and now C is
+[01:01:17] somewhere else.
+[01:01:19] So you could do it. It's it's just more
+[01:01:21] tricky because there's no guarantee
+[01:01:23] because otherwise you're just holding
+[01:01:24] latches on everything and then it
+[01:01:25] defeats the whole purpose of any of
+[01:01:26] this. Often times the simplest thing is
+[01:01:29] the easiest thing to do or the best
+[01:01:31] thing to do.
+[01:01:37] All right. So now let's get to the the
+[01:01:39] the last problem that he brought up in
+[01:01:41] the back where in all my examples here I
+[01:01:45] was just doing like point query lookups.
+[01:01:47] Go insert this one key. Go find this one
+[01:01:49] key. But when I have to start doing
+[01:01:51] range scans along leaf nodes, then this
+[01:01:54] becomes more tricky because assuming I
+[01:01:56] have now sibling pointers that can go
+[01:01:58] both directions. Now I can have
+[01:02:00] deadlocks. Again, in the hashep I'm
+[01:02:02] going from top to the bottom. In the in
+[01:02:04] the in the B+ coupling, I'm going from
+[01:02:06] from the bottom top to the bottom.
+[01:02:09] Nobody else is coming up in the other
+[01:02:10] direction. I can't have a deadlock. But
+[01:02:12] now if I have leaf node scans, I could
+[01:02:14] have this problem because people might
+[01:02:16] be coming from different directions.
+[01:02:18] So now we may come to a possibility
+[01:02:21] where I need to acquire a latch on the
+[01:02:24] next node I want to scan along and
+[01:02:27] somebody else holds it and now I got to
+[01:02:29] figure out what I what do I need to do.
+[01:02:33] So say my first thread here wants to
+[01:02:36] find all keys greater than four. Again I
+[01:02:38] start at the leaf the root node. It's a
+[01:02:40] really simple B+ tree. Only has two
+[01:02:42] levels. I take this one in read mode. I
+[01:02:45] scan along down here. take this uh node
+[01:02:47] C in read mode and I'm fine because I
+[01:02:50] can find all the data that I want. But
+[01:02:52] now when I want to come along here and
+[01:02:53] go from C to B because I'm scanning all
+[01:02:54] values less than four, right? I don't
+[01:02:58] want to release the latch on C until I
+[01:03:01] acquire the latch on B because I don't
+[01:03:04] know whether this thing will get swapped
+[01:03:06] out by the time I'm following the
+[01:03:08] pointer to B. Right? Right? Because if I
+[01:03:10] release the latch on on C, some other
+[01:03:12] thread might come in, do a do an update,
+[01:03:15] and now the the location of where C
+[01:03:17] should be and what it's pointing to or
+[01:03:19] where B is now as well could change. And
+[01:03:23] then I could have, you know, invalid
+[01:03:24] memory access follow a bad pointer. So
+[01:03:28] once I know it's safe, I can get over to
+[01:03:30] B, then I can go ahead and release the
+[01:03:32] the latch I have on C.
+[01:03:36] Right?
+[01:03:39] So look at another one. Final key is
+[01:03:40] greater than than than one. So now I
+[01:03:43] have the blue thread wants to go down to
+[01:03:45] to from the root node to B and the red
+[01:03:47] thread wants to go down from from A to
+[01:03:49] C. So they both acquire the read latch
+[01:03:51] on on the route. That's fine. Then they
+[01:03:53] get down to their uh their leaf nodes.
+[01:03:56] Now they're scanning along. They read
+[01:03:58] all the data that they want. And then
+[01:04:00] they want to swap sides because because
+[01:04:02] the red thread wants to go over to B and
+[01:04:03] the blue thread wants to go over to C.
+[01:04:05] In this case here, both nodes are in
+[01:04:08] latched in read mode. So those are
+[01:04:10] commutive. So it's okay for both of them
+[01:04:12] to to share the share these latches. So
+[01:04:15] they just sort of swap sides and read
+[01:04:17] the data they want. And that's just
+[01:04:18] fine. And then at this point here, uh
+[01:04:21] they're both releasing the latches that
+[01:04:23] are being held that they're holding on
+[01:04:24] the other nodes. So at this final stage
+[01:04:26] here, only uh T1 holds the read latch on
+[01:04:28] B and only T2 holds the read latch on C.
+[01:04:34] Right? That's pretty straightforward.
+[01:04:37] So now let's look at how the case we
+[01:04:38] have modification.
+[01:04:40] T1 wants to delete key4 and T2 wants to
+[01:04:44] find all keys greater than one.
+[01:04:47] So in the very beginning they're they're
+[01:04:49] assuming doing optimistic latch
+[01:04:50] coupling. So they're going to both
+[01:04:52] acquire the root node in uh in the latch
+[01:04:56] on the root node in in read mode. That's
+[01:04:58] fine. That's commutative.
+[01:05:00] T2 comes down here to B gets the read
+[01:05:03] latch on B. T1 gets then the right latch
+[01:05:07] on on C and wants to go ahead and
+[01:05:08] because it wants to delete that key
+[01:05:10] right there. So let's say that T2 reads
+[01:05:13] all it wants from B and now wants to
+[01:05:16] follow the sibling pointer to come over
+[01:05:17] and read the contents on C. And so
+[01:05:21] again, we know it's doing a read
+[01:05:22] operation.
+[01:05:24] So it wants acquired the latch on C in
+[01:05:25] read mode, but it's already being held
+[01:05:27] in write mode. That's not compatible. So
+[01:05:30] it can acquire that latch. So now the
+[01:05:34] question is what should happen here?
+[01:05:36] Because T2 doesn't know what T1 is
+[01:05:38] doing. T1 doesn't know that there's
+[01:05:41] another thread trying to acquire the
+[01:05:42] latch because it acquired, you know, it
+[01:05:44] acquired the latch in right mode. It's
+[01:05:45] off doing whatever the right that it
+[01:05:46] wants to do. It's not checking to see
+[01:05:48] who else is waiting for it because that
+[01:05:50] would be slow. Why would you do that? So
+[01:05:52] T2 all it knows is that there's some
+[01:05:54] other thread that holds this latch in in
+[01:05:56] right mode that it's not compatible with
+[01:05:58] it want with what what you know with
+[01:06:00] what it wants to do. So now we have to
+[01:06:02] make a decision of what we want to do
+[01:06:03] with T2.
+[01:06:06] So there's three choices.
+[01:06:09] One is you can just wait.
+[01:06:12] Two you can just kill yourself right
+[01:06:16] whatever latches you have and then just
+[01:06:17] try it again.
+[01:06:19] And then three is you kill the other
+[01:06:21] thread, right? Take its latch,
+[01:06:24] steal it car keys, whatever you want,
+[01:06:26] and then do whatever it is that you want
+[01:06:28] to do.
+[01:06:33] >> What's that?
+[01:06:35] >> The statement is you can't just wait.
+[01:06:38] >> No, it's not a deadlock
+[01:06:40] >> because because this No, T1 only wants
+[01:06:43] to delete T uh four. It's not going to
+[01:06:45] require any latches on B. It's not a
+[01:06:47] deadlock.
+[01:06:58] the statement as the question is how
+[01:06:59] would how would T2 know that it would
+[01:07:01] find what it needs on in that other
+[01:07:04] node.
+[01:07:05] >> Yeah.
+[01:07:13] The question is is it possible that the
+[01:07:15] pointer on uh that where where the
+[01:07:19] location of C would
+[01:07:22] >> no so so statement is is it possible
+[01:07:26] where the say the physical location of C
+[01:07:28] would change therefore that the pointer
+[01:07:29] on B would no longer be valid no because
+[01:07:32] I wouldn't be allowed to change that
+[01:07:34] location without updating all the the
+[01:07:36] sibling pointers and if I can't acquire
+[01:07:38] the the the the the latch on B then I
+[01:07:41] can't make that change.
+[01:07:46] >> Okay. So in this case you don't need to
+[01:07:49] update
+[01:07:51] around but it's like
+[01:07:54] >> very clear we say so T1 since it's only
+[01:07:57] deleting that one key it doesn't have to
+[01:07:59] update any sibling pointers
+[01:08:00] >> because it's not doing a merge.
+[01:08:02] >> Okay.
+[01:08:03] wanted
+[01:08:06] another case it does
+[01:08:10] and it tries to acquire.
+[01:08:16] >> Yep. Sure.
+[01:08:18] >> Yes. In that case, you would have a
+[01:08:19] deadlock. Yes.
+[01:08:19] >> Yeah.
+[01:08:20] >> That's not this example.
+[01:08:22] >> And the protocol, the answer to this
+[01:08:24] will roughly be the same.
+[01:08:29] >> Say it again. does not know.
+[01:08:32] >> T2 does not know that indela. Correct.
+[01:08:36] >> And it actually would never know.
+[01:08:41] >> It says the option is is to wait. Okay.
+[01:08:43] How long?
+[01:08:46] >> What's that?
+[01:08:51] >> All right. So, you said uh T1 would have
+[01:08:53] to adjust it. T2 would adjust its speed
+[01:08:56] or
+[01:09:00] not going to be doing, right?
+[01:09:02] >> Yes.
+[01:09:07] >> Okay. So, so he said T2 should
+[01:09:09] optimistically keep waiting until it
+[01:09:11] acquires the latch. My question would be
+[01:09:13] how long
+[01:09:19] >> cannot
+[01:09:22] do. We're not trying to do deadlock
+[01:09:24] here. All we know here is T2 wants to
+[01:09:26] acquire the latch on on C. T1 holds
+[01:09:29] that.
+[01:09:33] >> Try again later.
+[01:09:34] >> Said just kill itself and try try again
+[01:09:36] later. Do you think it's a good idea?
+[01:09:39] All raise your hand. You say you should
+[01:09:41] wait.
+[01:09:43] All right. Less than half. Ra raise your
+[01:09:45] hand if you want to kill yourself. All
+[01:09:46] right. You want to kill your thread.
+[01:09:50] If you're the thread, you're going to
+[01:09:50] kill yourself. Sorry. Raise your hand if
+[01:09:52] you want to kill yourself. Ra raise your
+[01:09:54] hand if you want to kill the other
+[01:09:55] thread.
+[01:09:58] Nobody wants to kill the other thread.
+[01:09:59] Oh, you do.
+[01:10:02] Gangster, how would you do it
+[01:10:07] >> with that?
+[01:10:08] >> Not sure.
+[01:10:09] >> Not sure.
+[01:10:11] Can we do it?
+[01:10:18] >> David is uh it'd be hard to know which
+[01:10:19] latch is being held by which thread.
+[01:10:21] Yes.
+[01:10:23] some sort of old table that table latch.
+[01:10:26] >> Yes, remember we said before there is no
+[01:10:28] centralized data structure keeping track
+[01:10:29] of what thread holds what latch. So I so
+[01:10:32] all I know is that there's this latch I
+[01:10:34] want. So all T2 knows is that there's
+[01:10:37] some latch I want. It's being held by
+[01:10:39] this other thread. I can't talk to it.
+[01:10:44] All right. So then maybe I could store
+[01:10:45] within the within the latch the list of
+[01:10:48] the threads that hold it. But then how
+[01:10:51] am I going to you kill them,
+[01:10:54] right? Well, if you used Pthread mutex
+[01:10:57] uh and you send an interrupt, it wants
+[01:10:59] to kill the whole thread. The thread
+[01:11:00] wants to terminate some of the use
+[01:11:02] latches we talked about before. You can
+[01:11:03] set interrupts and just kill the weight
+[01:11:05] operation. That's more fine grain.
+[01:11:07] That's what you want to do. But like
+[01:11:10] if I want to basically you know I'd have
+[01:11:12] to have a mechanism where I'm checking
+[01:11:15] to see hey whether your T1 would have to
+[01:11:17] check to say oh yeah somebody wants this
+[01:11:19] latch and I'm holding I should kill
+[01:11:21] myself. But again if I'm trying to do
+[01:11:23] this as quickly as get in a critical
+[01:11:24] section quickly as possible and release
+[01:11:26] it. Not always the case. If if I have to
+[01:11:28] go something from disc yeah I'm screwed
+[01:11:29] because that's going to take
+[01:11:30] milliseconds. But in general if I assume
+[01:11:32] that everything's in memory I be fast as
+[01:11:34] possible. I want to be in and out as
+[01:11:36] quickly as I can.
+[01:11:38] Because again, you can't you can't just
+[01:11:40] blindly kill the thread uh like you know
+[01:11:43] send a sig term because it's in your
+[01:11:45] thread. It'll take take down everything.
+[01:11:46] But like because if if I have a large my
+[01:11:49] data structure much larger I may hold a
+[01:11:51] bunch of latches up above and I got to
+[01:11:54] unwind all that. Furthermore, I may have
+[01:11:56] made a bunch of modifications in my data
+[01:11:58] structure and I just want to I can't
+[01:12:01] just shoot it in the head and let it let
+[01:12:03] it die. it has to roll back all its
+[01:12:05] changes because again I said there isn't
+[01:12:06] this centralized thing that's going to
+[01:12:08] keep track of what changes I made every
+[01:12:10] thread is responsible for cleaning
+[01:12:11] itself up uh if it can't do what it
+[01:12:13] needs to do when when it rolls back.
+[01:12:17] So the correct answer is kill ourselves.
+[01:12:20] We can be a little more you know uh
+[01:12:22] graceful about it and wait a little bit
+[01:12:25] but in general this is the easiest thing
+[01:12:27] to do and sometimes it's the fastest
+[01:12:29] thing to do.
+[01:12:32] Now, when we talk about locking and and
+[01:12:34] and in that world where you want to
+[01:12:36] break deadlock, you want to kill
+[01:12:37] yourself, there's a bunch more metadata
+[01:12:38] we're going to have about what we did in
+[01:12:41] our transaction that we can make better
+[01:12:43] decisions of whether we should kill
+[01:12:44] ourselves or not. And in that case also
+[01:12:45] with locks, we can go kill other people
+[01:12:47] too
+[01:12:48] because like in this simple example
+[01:12:51] here, I only have three nodes in my
+[01:12:52] entire data structure. Um, but let's say
+[01:12:56] this T1 over here, it wants to delete a
+[01:12:58] ton of keys and they say it started over
+[01:13:00] this side and it went in this direction
+[01:13:02] and did a bunch of deletes. Did a
+[01:13:04] million deletes, a billion deletes. I
+[01:13:06] don't want to kill them because I, you
+[01:13:09] know, the amount of work they have to
+[01:13:10] then roll back is going to be huge.
+[01:13:12] Whereas all this guys do is reading a
+[01:13:13] bunch of stuff.
+[01:13:15] So the best decision oftentimes is just
+[01:13:19] kill yourself because you don't then
+[01:13:20] have to reason about or who's more
+[01:13:22] important, me or you, right? And so that
+[01:13:25] logic about when you decide, you know,
+[01:13:28] how quickly you should kill yourself
+[01:13:29] could be a little bit smarter based on
+[01:13:31] what you've done. Like if I if I've had
+[01:13:32] to update a bunch of things, then I'll
+[01:13:34] let myself maybe maybe wait a
+[01:13:36] millisecond or so before I kill myself.
+[01:13:38] >> The other side will kill it faster.
+[01:13:40] Yeah, that's how I kill this faster and
+[01:13:42] then you come back and I mean in the end
+[01:13:44] like it's again there's no free lunch.
+[01:13:47] We can't just magically peer and say,
+[01:13:48] "Oh, I know you're doing this." You got
+[01:13:50] to make some decision and the best you
+[01:13:52] can do is based on what your own
+[01:13:54] knowledge. Yes. Right in the back behind
+[01:13:55] No, behind you. Yes.
+[01:14:03] >> The question is why not skip this node
+[01:14:05] and go to one that doesn't have a latch?
+[01:14:08] So this is again find all keys uh going
+[01:14:11] back here. Find all keys greater than
+[01:14:13] one. So you're right. There may be other
+[01:14:16] nodes over here that like I could have
+[01:14:19] accessed, but like I can't get to them
+[01:14:22] without going through the leaf. I have
+[01:14:24] to go back up and have figure out how to
+[01:14:25] jump back down to some middle point,
+[01:14:27] keep track of the one I didn't see to
+[01:14:29] then then go read it. It's just way more
+[01:14:32] complicated.
+[01:14:34] >> Question. Yes.
+[01:14:44] Yes,
+[01:14:48] >> you you can't kill the you can't kill
+[01:14:49] other threads. It's just way too hard.
+[01:15:01] >> All right, hold up. So, this gets into
+[01:15:03] the logical correctness. So his
+[01:15:06] statement is if I'm doing what what I
+[01:15:08] thought you were going to say is if if
+[01:15:09] I'm doing a write and I need to acquire
+[01:15:11] a right a latch in right mode but it's
+[01:15:13] already in read mode then it'd be nice
+[01:15:17] if I can kill the other one. You can't.
+[01:15:19] Uh so what I thought you were going to
+[01:15:21] say is oh I'll let myself sleep a little
+[01:15:23] bit longer because I know what the work
+[01:15:24] I've done is more you know I'm doing
+[01:15:25] right that's more important. Uh I'll let
+[01:15:27] myself sleep more. The
+[01:15:31] you would do that. Yes. There's also
+[01:15:32] other things you can do like if
+[01:15:34] basically when I want to do any
+[01:15:36] operation there's a while loop around
+[01:15:37] this. So like if I try to do a write I
+[01:15:40] can't acquire the latch I I bail out and
+[01:15:42] then I'll just try try to do that
+[01:15:44] operation again. And then now you can
+[01:15:46] keep track of how many times have I
+[01:15:47] tried this and it failed uh because I
+[01:15:49] don't want to start myself forever. So
+[01:15:51] then if I've tried a bunch of times then
+[01:15:53] maybe I'll I'll sleep a little bit
+[01:15:54] longer because more likely to get to
+[01:15:55] this. Then there's a high level
+[01:15:57] mechanism to say okay if I really can
+[01:15:58] never get to this this right latch I
+[01:16:00] need there's a schedule up above and say
+[01:16:02] okay well pause any from accessing this
+[01:16:04] data structure until this guy goes
+[01:16:05] through and gets what he needs all right
+[01:16:06] but then you were suggesting to do what
+[01:16:09] again
+[01:16:17] >> right so he said if if I the thread is
+[01:16:21] trying to the right latch and send held
+[01:16:23] in read mode you're better off killing
+[01:16:25] the the reader because I'm going to
+[01:16:27] update it now and whatever it read is
+[01:16:30] now out of date. That's a logical
+[01:16:33] correctness thing. Is that actually
+[01:16:35] right right or not? Depends on higher
+[01:16:37] level concepts of the ordering of the
+[01:16:38] transactions which we're not talking
+[01:16:39] about yet. So for example, if if I
+[01:16:42] insert key five, then I go try to back
+[01:16:45] and read key five and in between that
+[01:16:47] someone goes and deletes key five. Is
+[01:16:50] that correct?
+[01:16:53] It depends.
+[01:16:55] What's that?
+[01:16:59] >> Yes. What I'm saying? No, I'm saying
+[01:17:00] ignore deadlocks. Ignore all this this
+[01:17:02] trying to cry latches. I'm saying just I
+[01:17:03] have a data structure. It's single
+[01:17:05] threaded. I insert something. I then go
+[01:17:08] try to read it again. Before I can go
+[01:17:09] read it again, someone else comes
+[01:17:10] through and deletes it. Now I read it
+[01:17:12] and I don't see it. Is that correct or
+[01:17:14] not? Physically it is. Logically, it may
+[01:17:18] not be. That's this higher level concept
+[01:17:20] of correctness for transactions which
+[01:17:22] we're not covering yet. In some cases
+[01:17:25] that may be okay other cases no
+[01:17:30] >> yes
+[01:17:30] >> sorry I just don't at the end of the day
+[01:17:32] what's the reason why we don't want to
+[01:17:34] usually when you talk about
+[01:17:35] synchronization do some form of waiting
+[01:17:38] what's so different about this
+[01:17:39] >> so you can wait but I'm saying you're
+[01:17:41] not going to wait indefinitely
+[01:17:43] >> but then something
+[01:17:45] >> yeah no you you b whatever you've done
+[01:17:46] if if you've updated things or it's a
+[01:17:48] read you bounce out of the data
+[01:17:50] structure and go back and try again
+[01:17:51] because the idea is that by the time you
+[01:17:52] come back and try another time the latch
+[01:17:54] you couldn't quite before may now be
+[01:17:55] available and and it's super simple to
+[01:17:58] implement
+[01:18:00] and and works in works general in
+[01:18:02] practice yes
+[01:18:03] >> practice like are there no problems
+[01:18:06] associated
+[01:18:07] >> the statement is in practice are there
+[01:18:08] starvation problems yes there could
+[01:18:10] absolutely could be this is what I'm
+[01:18:11] saying you that's why you have a higher
+[01:18:12] level mechanism in your system keeping
+[01:18:15] track of like oh I've tried to do this a
+[01:18:17] bunch of times and I can't do it let me
+[01:18:19] pause other workers and prevent them
+[01:18:21] from getting in this data structure
+[01:18:22] until you go do what you need to do.
+[01:18:25] >> Now, if everybody's trying to update the
+[01:18:27] exact same key, I mean, then you're
+[01:18:29] basically single thread. There's nothing
+[01:18:30] you can do. Like, if everyone's trying
+[01:18:31] to update, I don't know, like everyone
+[01:18:34] reads are easy, but like everyone's
+[01:18:36] trying to update, I don't know, Taylor
+[01:18:37] Swift's like message board or something
+[01:18:39] like that, right? I'm trying to write
+[01:18:40] this one record over and over again.
+[01:18:42] That's basically you're just lined up
+[01:18:44] single threaded. Nothing you can do.
+[01:18:47] All right. So, everything I've said so
+[01:18:49] far is basically re reiterated on the
+[01:18:51] slide, right? The simplest thing is
+[01:18:53] again just just killing yourself because
+[01:18:55] again there isn't going to be any
+[01:18:57] mechanism to handle deadlocks you know
+[01:18:59] to detect them and break them
+[01:19:00] automatically when we talk about
+[01:19:02] transactions it'll it'll do that right
+[01:19:05] the best protocol is this no wait mode
+[01:19:08] basically you know don't wait to try to
+[01:19:10] cry the latch if I can't get it
+[01:19:11] immediately kill myself again you can
+[01:19:13] relax that a little bit you wait a small
+[01:19:14] amount
+[01:19:16] uh and then try and then the amount you
+[01:19:18] wait for every single sort of high
+[01:19:20] operation retry will be the
+[01:19:24] So the for rights, we talked about this
+[01:19:28] sort of briefly, but
+[01:19:30] anytime I make a change to a leaf node,
+[01:19:33] I want to hold the right latch on that
+[01:19:35] on that node
+[01:19:37] because I don't know whether I'm going
+[01:19:38] to have to roll back because I can't get
+[01:19:40] a latch on some other node. So to keep
+[01:19:43] track of what changes I made is is
+[01:19:46] basically this thread local storage or
+[01:19:48] worker local storage what I have what
+[01:19:50] called it's called the right set where
+[01:19:52] basically for every every node that I've
+[01:19:54] touched I have the right latch on on on
+[01:19:56] a on a leaf node here's the list of the
+[01:19:58] keys I've inserted and and deleted
+[01:20:01] because now if I go ahead and do a uh if
+[01:20:04] I can't acquire the latch I have to roll
+[01:20:05] back I basically want to undo all those
+[01:20:07] changes and then then jump out of the
+[01:20:09] data structure
+[01:20:11] now split the merge is a bit more tricky
+[01:20:13] because it may be the case that I did an
+[01:20:17] insert or delete and I then re
+[01:20:18] reorganized the data structure. It'd be
+[01:20:21] kind of expensive to go ahead and undo
+[01:20:23] all of that. So sometimes this is what
+[01:20:26] we said uh two lectures ago. Sometimes
+[01:20:29] maybe okay to be slightly unbalanced and
+[01:20:32] not do a complete reversal of a split.
+[01:20:35] the data structure still has the keys
+[01:20:37] sort of pointing in the right direction,
+[01:20:38] but it's really cheap for me then to
+[01:20:39] undo any changes I I needed because I
+[01:20:41] just removed maybe the key I inserted
+[01:20:43] the causal split, but it's still it's
+[01:20:45] still in the sort of that that postsplit
+[01:20:49] uh uh layout and then some at some later
+[01:20:52] point if I you continue inserts and
+[01:20:55] deletes all that sort of get washed away
+[01:20:57] and put back in correct order and that
+[01:20:59] that's okay.
+[01:21:02] Okay.
+[01:21:04] All right. Uh, we're out of time for
+[01:21:06] going over project two, but I can cover
+[01:21:08] that next class. But again, the main
+[01:21:09] take away from all this is the the data
+[01:21:12] structure. Making them threads is super
+[01:21:13] super tricky. This is what you'll be
+[01:21:16] doing in project two. And so the way to
+[01:21:17] get started on project two is start with
+[01:21:19] not making it multi-threaded. Just do
+[01:21:21] single threaded first because it'll make
+[01:21:22] your life easier and then worry about
+[01:21:24] adding those things later on. So next
+[01:21:26] class we're now going to talk about how
+[01:21:28] to build all the stuff we've done the
+[01:21:30] things we've done so far and start
+[01:21:31] actually running real queries. So we'll
+[01:21:32] start with the algorithms run for
+[01:21:34] operators and build up from there to run
+[01:21:35] complete query plans. Okay. All right.
+[01:21:38] Hit it.
+[01:21:42] [Music]
+[01:21:54] over
+[01:21:58] [Music]
+[01:22:02] the fortune. Get the fortune
+[01:22:04] Maintain flow with the
+[01:22:07] grain. Get the fortune
+[01:22:10] Maintain flow with the grain.

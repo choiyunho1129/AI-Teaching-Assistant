@@ -1,0 +1,2227 @@
+[00:00:00] [music]
+[00:00:06] [music] I'm still
+[00:00:08] associ.
+[00:00:12] [music]
+[00:00:17] [music]
+[00:00:27] Thank you for coming. You were here
+[00:00:28] early. Nobody was here. I think yeah, we
+[00:00:30] got here early. The other class before
+[00:00:32] us wasn't here, so we didn't think there
+[00:00:33] was class. Uh, but you still set up your
+[00:00:34] DJ equipment. It shows you dedication to
+[00:00:37] the craft. I appreciate that. All right,
+[00:00:39] guys. A lot to cover. Um, unfortunately,
+[00:00:41] the we would have the speaker from
+[00:00:43] Yellow Brick today. Uh, that got has to
+[00:00:46] get rescheduled to do a scheduling
+[00:00:47] issue. Um, so today is just just me. No,
+[00:00:50] uh, no outside speaker.
+[00:00:53] It's fine because there's a lot we want
+[00:00:55] to cover for multiverging because it's a
+[00:00:56] super cool topic and you're going to see
+[00:00:58] this everywhere. All right, so again for
+[00:01:01] you guys in class, project 3 is going to
+[00:01:02] be due this this Monday coming or sorry,
+[00:01:04] this Sunday coming up. The special
+[00:01:05] office hours will be this Saturday at
+[00:01:08] 3:00 in Gates. Homework 5 is going to be
+[00:01:10] due again was extended for another week.
+[00:01:12] That'll be on the 23rd. And then project
+[00:01:14] four went out earlier this week and
+[00:01:15] that'll be due on Sunday, December 7th.
+[00:01:18] And then we'll announce the recitation
+[00:01:21] probably schedule that for next week
+[00:01:22] obviously before Thanksgiving. So we try
+[00:01:24] to do that next week. Um uh and then
+[00:01:26] again you you want to finish project
+[00:01:29] three make sure you pass all the tests
+[00:01:31] and then do the merge of the latest
+[00:01:33] version of the code from the public repo
+[00:01:35] and you can get started on project four.
+[00:01:37] So any questions about project three?
+[00:01:41] >> Yes.
+[00:01:45] loop or block.
+[00:01:48] >> The question is should the nest loop
+[00:01:50] join be a a naive nestloop join or a
+[00:01:52] block nest loop join? What do you want
+[00:01:54] to do?
+[00:01:57] >> Yes.
+[00:02:00] >> Yeah, you can do that. Yes, it's up to
+[00:02:01] you to decide. Yes.
+[00:02:03] >> Yes. Other questions. [snorts]
+[00:02:07] All right. So
+[00:02:10] last class we were talking about OC and
+[00:02:14] again there was the OCC
+[00:02:18] there's the optimistic contriical
+[00:02:20] protocol category uh and we were
+[00:02:23] contrasting that with the pessim
+[00:02:25] protocols like in two-phase locking and
+[00:02:27] optimistic you assume that there's not
+[00:02:28] going to be conflicts so you let
+[00:02:30] transactions do whatever they want and
+[00:02:31] then only when they go to commit then
+[00:02:33] you see you check to see whether that
+[00:02:35] whether they would have violated any of
+[00:02:37] the serizable monitoring, right? And in
+[00:02:40] the case of the protocol we looked at
+[00:02:41] OC, we talked about how when
+[00:02:44] transactions make changes to the
+[00:02:46] database, they don't apply them to the
+[00:02:49] shared global database that every other
+[00:02:50] transaction can read from. They're
+[00:02:52] instead make a copy of the tool they
+[00:02:54] want to modify, put it in their own
+[00:02:56] private workspace, do whatever
+[00:02:57] manipulation they want on it. Uh, and
+[00:03:00] then when they go to commit, if they're
+[00:03:01] allowed to commit, they pass the
+[00:03:02] validation phase. Uh, in the right
+[00:03:04] phase, we then push that into the global
+[00:03:06] shared database. So we're basically
+[00:03:08] going to see the same thing today in
+[00:03:09] multi- versioning, but instead of
+[00:03:11] putting things in a private workspace,
+[00:03:13] we're going to put things in the global
+[00:03:14] database. But we're still have this idea
+[00:03:16] that like transactions will work on
+[00:03:18] versions of the data that in theory
+[00:03:21] could be uh invisible or not not not
+[00:03:24] visible to to other transactions that
+[00:03:26] are running at the same time. Again,
+[00:03:27] we'll see that in a second. And then we
+[00:03:29] spend time at the end talking about how
+[00:03:30] to handle the fan read problem. Okay,
+[00:03:32] this is additional anomaly that occurs
+[00:03:34] when you have uh reason rights on ranges
+[00:03:37] of data where tupils may be becoming uh
+[00:03:41] maybe appearing or disappearing uh
+[00:03:43] within the same transaction because some
+[00:03:44] other transaction uh made those changes
+[00:03:47] and we said how this this is a problem
+[00:03:50] this could occur in case of OCC and TBS
+[00:03:54] locking because you can't acquire locks
+[00:03:56] you can't check for things they don't
+[00:03:58] exist the first time you run so we
+[00:04:00] showed how to use a bunch of different
+[00:04:02] mechanisms to overcome this. Uh, index
+[00:04:05] locks is probably the most common one.
+[00:04:06] Uh, but there's other variations.
+[00:04:08] Locking the whole table prevents all
+[00:04:09] these problems. That's but that that's
+[00:04:11] obviously a uh a blunt based approach to
+[00:04:14] solving it.
+[00:04:16] So
+[00:04:18] today now we're going to talk about
+[00:04:20] multiverse concurren. The confusing name
+[00:04:21] is going to be it's not going to be even
+[00:04:24] though it says has has concurrent coal
+[00:04:25] in the name it's not going to be a a
+[00:04:29] locking or time stamp ordering protocol
+[00:04:32] in the same way we saw in the last two
+[00:04:33] lectures rather you're still going to do
+[00:04:35] 2PL you're still going to do OC you're
+[00:04:37] still going to do whatever particle you
+[00:04:39] you want to want but now there's going
+[00:04:41] to be the additional concept of
+[00:04:43] versioning in our database system that's
+[00:04:46] going to open up some uh some new
+[00:04:48] opportunities to get some better
+[00:04:48] parallelism than we would if we're just
+[00:04:50] having everything in single version. So
+[00:04:51] all the work you've done in in bus hub
+[00:04:53] so far in the class that's a single
+[00:04:55] version database system. Project 4 will
+[00:04:58] be see we'll see how to make it
+[00:04:59] multi-versioned.
+[00:05:00] All right. So the idea with multi-
+[00:05:02] versioning is that the database system
+[00:05:04] is now going to maintain multiple
+[00:05:06] physical versions of logical tupils that
+[00:05:10] exist in uh in the database. So a
+[00:05:13] logical tool would be like something
+[00:05:15] that you can identify based on the
+[00:05:16] primary key, right? A logical concept
+[00:05:18] that within your application, but then
+[00:05:20] underneath the covers, we're going to
+[00:05:22] create multiple versions of that logical
+[00:05:25] tupil as transactions go ahead and
+[00:05:27] modify them. So we're never going to do
+[00:05:28] updates. We're never going to overwrite
+[00:05:31] the any any tupil, right? Any sort of
+[00:05:34] physical version exists as we did in two
+[00:05:35] case locking or as we did in OC.
+[00:05:37] Instead, we're always going to create
+[00:05:39] new new physical versions.
+[00:05:42] So now when transactions go to read
+[00:05:44] data, they're going to go check to see
+[00:05:46] whether the the they're going to go find
+[00:05:48] for for any logical object or logical
+[00:05:50] tupa they're trying to find. They're
+[00:05:52] going to check the version information,
+[00:05:54] the version metadata we're going to
+[00:05:56] store in every single object to
+[00:05:57] determine which physical version is
+[00:06:00] visible to them. And at any given time,
+[00:06:04] there should be only one physical
+[00:06:05] version that a transaction can see.
+[00:06:09] So now we're now since we're not going
+[00:06:11] to overwrite any existing uh tupils or
+[00:06:14] any any object in our database that
+[00:06:16] means that over time as we update the
+[00:06:19] you know as we update records we're
+[00:06:21] creating a bunch of physical [snorts]
+[00:06:22] versions at some point those physical
+[00:06:25] versions are not going to be viewable
+[00:06:26] anymore by by any active transaction and
+[00:06:30] therefore we need to go through and run
+[00:06:32] a garbage collection mechanism or
+[00:06:33] protocol to go clean up these physical
+[00:06:35] versions and reclaim the space and make
+[00:06:37] things go faster.
+[00:06:39] Right. [snorts] So we'll see this later
+[00:06:42] on, but like one of the things you can
+[00:06:44] do if you don't want to do garbage
+[00:06:45] collection, you get this thing called
+[00:06:46] time travel queries. And that basically
+[00:06:49] means it allows you to sort of to say
+[00:06:51] write queries like select star from
+[00:06:53] table fu at timestamp xyz.
+[00:06:57] And assuming you have all the history of
+[00:06:59] all the previous versions you've
+[00:07:00] created, if your data system supports
+[00:07:02] multi- versioning, then you can go back
+[00:07:04] in time and say, you know, run on the
+[00:07:05] state of the database as it existed at
+[00:07:07] at the time stamp that you want. Right?
+[00:07:09] By default, right, I run a select query,
+[00:07:10] I always get the latest version, right?
+[00:07:12] But if I want, sometimes you want to go
+[00:07:13] back in time and try to find previous
+[00:07:14] versions. This mostly shows up in
+[00:07:17] financial systems like if you're going
+[00:07:18] to get audited, you want to be able to
+[00:07:19] say here's the state of the database at
+[00:07:21] this time when I made this trade, right?
+[00:07:22] And the time travel queries give you
+[00:07:24] that.
+[00:07:26] The question is, is that commercial
+[00:07:27] system to do this? Yes. And they'll
+[00:07:28] they'll pay extra for it. Post had this
+[00:07:30] originally in the 1980s, right?
+[00:07:33] >> The question the question is why did
+[00:07:34] they kill it? Well, because in 1990s
+[00:07:37] they realized, oh, we don't really need
+[00:07:39] time travel queries for what we want to
+[00:07:41] do. And the database is just getting
+[00:07:43] bigger and bigger and bigger and running
+[00:07:44] out of space. We need a way to clean it
+[00:07:46] up. Then they added the vacuum or the
+[00:07:48] garbage collector in like I think like
+[00:07:51] SQL server like how do you say this?
+[00:07:55] It's more than just saying I'm not going
+[00:07:56] to do I'm not going to do garbage
+[00:07:57] collection but it's basically end of the
+[00:07:59] day that's what it is like I'm just just
+[00:08:00] don't run the garbage collector
+[00:08:01] collection and then I need to have
+[00:08:03] ability in my query and say select star
+[00:08:05] from table food at this time stamp but
+[00:08:07] like that's basically it and then SQL
+[00:08:09] server charge you you know an extra
+[00:08:11] $100,000 for that feature
+[00:08:14] >> for not running the garbage collector
+[00:08:15] yes right you also got to pay for the
+[00:08:16] storage space extra you know extra
+[00:08:18] storage space you're storing right um
+[00:08:20] [snorts]
+[00:08:21] all right so there's going to be two
+[00:08:22] important uh properties properties we're
+[00:08:24] now going to have in multi- version
+[00:08:25] incurren control that we didn't
+[00:08:27] necessarily have certainly not with 2PO
+[00:08:29] and some of these we get with OCC but
+[00:08:31] not others. So the first is that writers
+[00:08:34] are not going to block the readers. So
+[00:08:36] readers can always read whatever version
+[00:08:38] that's going to be visible to them even
+[00:08:39] if another transaction is is creating a
+[00:08:41] new physical version of that logical
+[00:08:43] record they're reading the the and the
+[00:08:45] reader transaction or either reading
+[00:08:47] query can go read a previous version.
+[00:08:49] And likewise, when a transaction reads
+[00:08:52] uh an object, that's not going to
+[00:08:54] interfere with any writing transaction
+[00:08:56] trying to update it. Right? Again, going
+[00:08:59] back to distinct 2PL in that pessimistic
+[00:09:01] protocol, in order for me to read an
+[00:09:03] object, I got to get a shared lock on
+[00:09:04] it. And in order for me to write an
+[00:09:06] object, I got to get an exclusive lock
+[00:09:07] on it. And those locks are not
+[00:09:09] compatible. So if a reader got a shared
+[00:09:11] lock on on an object, the writer can't
+[00:09:13] get the exclusive lock. Likewise, if if
+[00:09:14] I had exclusive lock, nobody else can
+[00:09:15] get the reader lock. We're not going to
+[00:09:17] have that problem in in uh sort of
+[00:09:20] vanilla uh multi version control.
+[00:09:25] The
+[00:09:25] >> question is how how do interaction
+[00:09:27] interaction with indexes work? Well,
+[00:09:28] give me like and the lecture. Yes, it
+[00:09:30] makes it harder. Absolutely.
+[00:09:34] So, NBCC is an old idea goes back to
+[00:09:37] 1978. But what what is considered the
+[00:09:39] first description of it wasn't
+[00:09:41] necessarily in databases. It was more
+[00:09:42] like an OS or file system paper. uh
+[00:09:45] there's a PhD dissertation in 1978 at
+[00:09:47] MIT. Uh but in the early 1980s it was
+[00:09:50] when the data people realized oh this is
+[00:09:51] actually useful for what we want to do
+[00:09:53] in our database system for transactions.
+[00:09:55] Um and the what is considered the first
+[00:09:58] two implementations of MCC is an early
+[00:10:01] relational data system called RDB VMS.
+[00:10:03] Uh this is this is written by at Deck.
+[00:10:07] Um you probably never heard of Deck.
+[00:10:08] Deck was like the Google of the 80s. It
+[00:10:10] was the hot technology company. They if
+[00:10:12] you've ever heard of vax that came from
+[00:10:14] deck so they they were they were
+[00:10:16] building database system for the vax
+[00:10:17] machines. uh they got deck got acquired
+[00:10:20] by compact and then compact got acquired
+[00:10:22] by HP and you know that it's pretty much
+[00:10:25] been gutted at this point but then
+[00:10:26] there's another system called interbase
+[00:10:28] and that was more lightweight than RDB
+[00:10:29] uh but I and I think that also ran on
+[00:10:31] Vax as well and there both were written
+[00:10:34] by this one guy Jim Starky who was a
+[00:10:35] co-founder of newb and did a bunch of
+[00:10:37] other stuff uh and did this for several
+[00:10:39] years right so interbase and RDB are VMS
+[00:10:44] are still around so interbase has been
+[00:10:47] uh forked off the commercial code. You
+[00:10:49] still can get the commercial version of
+[00:10:50] Interbase, but there's a open source
+[00:10:51] version called Firebird uh that that is
+[00:10:55] available now. And there's I think
+[00:10:56] there's a fork of Firebird out of Russia
+[00:10:58] called Red Database or Red DB, something
+[00:11:00] like that. Um if everyone know why
+[00:11:03] Firefox is called Firefox, it's because
+[00:11:05] when it was originally Netscape and then
+[00:11:07] Netscape, the company went under and
+[00:11:09] then they they wanted to turn the the
+[00:11:11] source code over to make it an open
+[00:11:12] source browser. They wanted to call it
+[00:11:15] phoenix first because this be like a you
+[00:11:17] know the phoenix of the netcape rising
+[00:11:18] out of the ashes but there was other
+[00:11:20] piece of software called that so they
+[00:11:21] couldn't call it that then they were
+[00:11:22] going to call it firebird and then
+[00:11:24] because this database system exists they
+[00:11:26] couldn't call it that so then they
+[00:11:27] became became firefox
+[00:11:30] rdbms uh even though deck got bought by
+[00:11:33] compact compact by HP Oracle bought it
+[00:11:36] Oracle buys a lot of databases all right
+[00:11:38] and so it still exists today you
+[00:11:40] wouldn't you know this is basically
+[00:11:41] maintenance mode you wouldn't build
+[00:11:42] wouldn't build a new startup based based
+[00:11:44] on it. But they have a product called
+[00:11:45] Oracle RDB. And it's confusing because
+[00:11:47] there's Oracle the company and there's
+[00:11:49] Oracle the database which is a
+[00:11:50] relational database and then there's
+[00:11:52] also now Oracle RDB which is a
+[00:11:54] relational database but it came from
+[00:11:55] deck. But when people say Oracle they
+[00:11:57] don't mean this one they they mean the
+[00:11:59] the big behemoth one that he makes a lot
+[00:12:01] of money on. [snorts]
+[00:12:03] All right. So let's look at an example
+[00:12:04] of MVCC in action. So first thing I want
+[00:12:07] to point out is now all my diagrams are
+[00:12:09] going to have this these columns here
+[00:12:11] that are going to show the the version
+[00:12:12] ids. In actuality you don't store
+[00:12:15] explicitly like I'm version one version
+[00:12:16] two like in this way. I'm just doing
+[00:12:19] this for illustrated purposes in power.
+[00:12:21] So I'm going to be a z b b b b b b b b b
+[00:12:23] b b b b b b b b b b b z like have
+[00:12:24] subscripts for the versions but we're
+[00:12:25] not actually storing that. What we're
+[00:12:27] instead going to store are timestamps.
+[00:12:29] So we saw this in OC. We had this right
+[00:12:31] time stamp for every single object or
+[00:12:33] every single tube in the database.
+[00:12:34] Anytime you updated something, you
+[00:12:35] updated this right time stamp. Now,
+[00:12:37] we're going to include a begin and an
+[00:12:38] end time stamp. And this is going to
+[00:12:41] represent the range of in in our
+[00:12:45] transactional time time domain of when
+[00:12:47] this object is considered visible.
+[00:12:51] And now the logic is going to be when
+[00:12:52] transaction is run, they're going to be
+[00:12:54] assigned timestamps when they start like
+[00:12:56] at at begin. And then they're going to
+[00:12:58] use that time stamp to determine whether
+[00:13:00] the object that they're looking at is
+[00:13:02] visible to them based on these begin and
+[00:13:03] end time stamps. So in my example here,
+[00:13:06] I only have one tuple. It's a, right?
+[00:13:08] And so I have a begin time stamp of zero
+[00:13:10] because there was some transaction that
+[00:13:12] that modified this and they had time
+[00:13:13] stamp zero. And then for the end time
+[00:13:15] stamp, it's going to be null or
+[00:13:17] infinity. And this just means that this
+[00:13:20] is the latest version, the newest
+[00:13:21] version, newest committed version of
+[00:13:24] this transaction at this actually I
+[00:13:26] don't want to say committed. It's the
+[00:13:27] It's the newest version of this
+[00:13:28] transaction or sorry, newest version of
+[00:13:30] this record in my database right now
+[00:13:33] because there's no end time stamp.
+[00:13:37] All right. So, we're transactions T1
+[00:13:38] starts. It's going to get time stamp
+[00:13:39] one, right? And the first thing it wants
+[00:13:41] to do is a read on A. So, now we're
+[00:13:43] going to go look in our database
+[00:13:45] ignoring how we got to A. Usually an
+[00:13:47] index, but we'll cover that in a second.
+[00:13:48] So, now I say, all right, my time stamp
+[00:13:50] is one. I'm looking for object the
+[00:13:52] latest version of object A. In this case
+[00:13:55] here, the begin time stamp is zero. The
+[00:13:57] end time stamp is infinity. Time stamp
+[00:14:00] one follows in that range and therefore
+[00:14:02] uh this transaction will will read
+[00:14:04] object A. So version A Z. Now we have a
+[00:14:09] context switch. T2 starts get T2 gets
+[00:14:11] time stamp 2. It's now going to do a
+[00:14:14] write on A. in this case here because
+[00:14:17] now we're not taking locks in the same
+[00:14:19] way we did with 2PL.
+[00:14:21] Even though uh transaction one read A
+[00:14:24] and another 2 TPL if there's a single
+[00:14:26] version you get a shared lock and and
+[00:14:27] then you wouldn't be able to write it.
+[00:14:29] T1 sorry T2 is allowed to create a new
+[00:14:31] version A and it's going to go install
+[00:14:33] that. It's not going to modify the A Z.
+[00:14:35] It's going to create a new one A1. It's
+[00:14:37] going to set its begin timestamp to what
+[00:14:39] its time stamp is two. But then it's
+[00:14:42] also going to go back now to a Z0 and
+[00:14:44] it'll update its end time stamp to now
+[00:14:46] be two.
+[00:14:48] Right? Because this is saying that the A
+[00:14:51] Z is only visible from zero inclusive to
+[00:14:54] two exclusive.
+[00:14:58] >> Why do you need the end time stamp?
+[00:15:04] >> The question is why do we need the end
+[00:15:05] time stamp? You just look at the what?
+[00:15:06] Sorry.
+[00:15:12] >> The question is why do I need the end
+[00:15:13] time stamp, right?
+[00:15:17] >> Right. Because he's saying because now I
+[00:15:19] had to install the update in A1, right?
+[00:15:22] And then I have to also go update A Z,
+[00:15:25] right? So now if I if I have another
+[00:15:28] test shows up now they're T3.
+[00:15:30] What version should they see?
+[00:15:34] >> You said A1. All right. So what about
+[00:15:36] sorry what if instead of T2 if this it
+[00:15:40] gets time stamp three and now I have
+[00:15:41] another T2. So T3 installs A1 and sets
+[00:15:45] the begin time stamp three.
+[00:15:48] What time stamp should should I be
+[00:15:49] seeing now right for for my other
+[00:15:52] transaction shows up. I need to know
+[00:15:53] what the boundary is for certain things.
+[00:15:55] I'm also going to use this to determine
+[00:15:56] that this is how I'm al going to
+[00:15:58] determine that these tuples are no
+[00:15:59] longer visible in any transaction and
+[00:16:02] therefore I want to go clean them up.
+[00:16:05] But he brings up another point and that
+[00:16:07] is all right well if I'm destroying
+[00:16:10] begin end time stamp at this point in
+[00:16:13] time t1 and t2 are active
+[00:16:16] so if I show up what version should I
+[00:16:18] see
+[00:16:21] there's not enough information just
+[00:16:22] begin end time stamp to give me that
+[00:16:23] information to tell me whether the
+[00:16:24] transaction that made this change
+[00:16:26] actually committed or not it just tells
+[00:16:28] me when the the version was visible
+[00:16:31] so the other thing I'm going to add now
+[00:16:32] is a is a separate transaction status
+[00:16:34] table. It's a thing a global data
+[00:16:37] structure like a hash table that's going
+[00:16:38] to keep track of here's all the
+[00:16:40] transactions that are running my system
+[00:16:41] at this given time. So now in in in
+[00:16:44] there I have T1 they're considered
+[00:16:45] active and I take T2 when considered
+[00:16:47] active and now I also know their time
+[00:16:49] stamps.
+[00:16:52] So then now when
+[00:16:54] T context switch back to T1 T1's going
+[00:16:57] to read A and at this point again it's
+[00:16:59] going to be able to go back and read the
+[00:17:01] same version that it saw before. So it
+[00:17:02] guarantees that it has a repeatable read
+[00:17:04] here,
+[00:17:06] right? And then now when
+[00:17:11] uh when the transaction uh commits
+[00:17:14] at some later point uh for T1 and T2, I
+[00:17:17] know that there's never going to be
+[00:17:18] another transaction that comes along
+[00:17:20] that's going to be uh that can see
+[00:17:22] version a z. So I want to go ahead and
+[00:17:24] clean that up.
+[00:17:26] So the beginning end time stamp give me
+[00:17:28] give me that bound to say and I can look
+[00:17:30] now in this transaction transaction
+[00:17:31] status table and say well I have a
+[00:17:33] transaction that is time stamp three can
+[00:17:37] never see a z because three is greater
+[00:17:40] than two so it's safe for me to go ahead
+[00:17:42] and clean up uh a z.
+[00:17:49] All right let's look at another table.
+[00:17:52] Same thing. So now T1's going to do a
+[00:17:54] read on A, write on A, read on A. And
+[00:17:55] now T2 is going to do a read on A and
+[00:17:58] write on A. So again, we start like
+[00:18:00] before. We read A, we read version A Z.
+[00:18:02] That's fine. Then we do a write on A. We
+[00:18:04] create a new version A1. That's fine,
+[00:18:07] right? Go update the the end time stamp
+[00:18:09] for A Z to be our transaction time stamp
+[00:18:12] T1. Now we contact switch over here. T2
+[00:18:15] can read A. That's fine. Uh, it's not
+[00:18:18] going to be the newer version. And then
+[00:18:20] now it's going to write on a here. And
+[00:18:23] so in a sort of naive scheme like this,
+[00:18:26] but I'm not taking locks, right? The
+[00:18:31] T2 could detect that if I go try to
+[00:18:33] write now a new version like an A2, I
+[00:18:37] would see that there's an A1 there that
+[00:18:39] has no end timestamp. Therefore, it's
+[00:18:42] this is the latest version. So then now
+[00:18:44] I can consult the transaction table and
+[00:18:47] say for the for the transaction that
+[00:18:49] created version A1 I know what it is
+[00:18:51] because begin time stamp tells me that.
+[00:18:53] So I'll go find the transaction T1 that
+[00:18:54] has time stamp one. This transaction is
+[00:18:57] still active. This transaction is not
+[00:18:59] committed yet. So therefore I can't
+[00:19:02] write a new version because then that
+[00:19:05] would be a write conflict
+[00:19:08] and I have to go ahead and and abort T2.
+[00:19:11] So now in my transaction table I would
+[00:19:13] say it's and now status is aborted and
+[00:19:14] at some later point this will get
+[00:19:16] cleaned up when we know we don't care
+[00:19:17] about T2 anymore.
+[00:19:19] >> Yes.
+[00:19:24] >> The question is how does T2 need to know
+[00:19:26] that it needs to read A Z not A1. So
+[00:19:28] again knowing how I got to these
+[00:19:30] versions right assume I just read all of
+[00:19:33] them but in actuality it'll be a link
+[00:19:35] list but we'll get there in a second. So
+[00:19:37] I scan through and I see all right
+[00:19:38] here's all the versions of A that I
+[00:19:39] could possibly read. is a Z to A1. A Z
+[00:19:42] is is is
+[00:19:45] uh is the oldest older version that
+[00:19:47] should not be visible to me because my
+[00:19:49] time stamp is two. The end time stamp of
+[00:19:51] A Z is one. Therefore, I need I can't
+[00:19:53] read that. It's not visible to me. But
+[00:19:55] then now I I should be able to go now
+[00:19:57] see A1. But A1 was modified by is a new
+[00:20:01] version created by a transaction that
+[00:20:02] has not committed yet. Therefore, I
+[00:20:04] can't create a new version after that.
+[00:20:08] >> Okay. So it doesn't get
+[00:20:11] >> it physically would read it. Logically
+[00:20:13] it does not. Physically it has to see
+[00:20:16] it. Oh like
+[00:20:17] >> yes
+[00:20:18] >> assuming we're just scanning through
+[00:20:19] everything. There's other ways to get
+[00:20:20] around that. Logically should only see
+[00:20:22] A1 and know that okay I want to create a
+[00:20:24] new version A2. But because the
+[00:20:26] transaction that made Aid has not
+[00:20:28] committed yet I can't do over can't
+[00:20:30] overwrite it.
+[00:20:33] >> That would it would be a right conflict.
+[00:20:35] It would be a lost update in this
+[00:20:36] example here. I mean yeah but what if
+[00:20:39] you don't write to
+[00:20:42] that you end up
+[00:20:48] >> uh yeah so the point is yes you would
+[00:20:51] end up reading something that would not
+[00:20:52] you would not that has not committed yet
+[00:20:54] in this case here like we're jumping
+[00:20:57] ahead but in this case here you would
+[00:20:59] say
+[00:21:01] I if I'm having consistent snapshot on
+[00:21:04] snapshot isolation then I would actually
+[00:21:06] see a zero not a1 because a1 is not
+[00:21:09] committed yet. So I would see a z but
+[00:21:11] then if I try to write to a a make a2
+[00:21:14] then I have a problem. But you're you're
+[00:21:15] getting you're getting to the you're
+[00:21:16] getting to the problem. Yes.
+[00:21:21] >> Yeah. Next slide. Yes.
+[00:21:23] >> Yes.
+[00:21:34] >> Yeah. So, so back here when it when it
+[00:21:36] reads A, it would it reads A Z because
+[00:21:38] the transaction that modified and made
+[00:21:40] the latest version A1, which is T1, has
+[00:21:43] not committed yet. So, it would not see
+[00:21:44] that. But then when it tries to install
+[00:21:46] and create a new version, it's not
+[00:21:47] allowed to do that.
+[00:21:53] >> So, maybe maybe misspoke. It it does it
+[00:21:56] reads reads a Z here, but it when it's
+[00:21:58] when it's when it's trying to figure out
+[00:22:00] what to then write to, it has to keep
+[00:22:02] going to A1. Assuming we're we have to
+[00:22:05] create a new version after that.
+[00:22:13] >> The question is why why is it allowed to
+[00:22:15] read a Z?
+[00:22:19] >> Next slide. Hold up.
+[00:22:22] All right. So the
+[00:22:25] the behavior we're seeing here is what
+[00:22:27] is called snaps to isolation. And
+[00:22:28] there's another isolation level consider
+[00:22:30] similar to like serializable read
+[00:22:32] committed repeat read things we talked
+[00:22:34] last class. And so the guarantee on a
+[00:22:36] snapshot isolation is that it will see a
+[00:22:38] consistent snapshot of the database that
+[00:22:41] existed when the transaction started.
+[00:22:42] And a consistent means that it only
+[00:22:45] contains updates from transactions that
+[00:22:47] have committed
+[00:22:49] that committed before the transaction
+[00:22:51] started.
+[00:22:54] And so that means you're not gonna see
+[00:22:56] any torn rights from actual
+[00:22:57] transactions. You won't see like if if
+[00:22:58] T1 updated A and updated B transaction
+[00:23:02] T2 can't see the see the update on A and
+[00:23:05] not see the update on B. It has to see
+[00:23:07] the state of the database as existed
+[00:23:08] from only committed transactions. So in
+[00:23:10] that case it is like repeatable reads or
+[00:23:13] sorry read committed but it has this
+[00:23:15] additional uh additional anomaly we'll
+[00:23:18] talk about next that that we have to
+[00:23:19] handle.
+[00:23:20] And in the simplest case, you basically
+[00:23:22] if you have two transactions um
+[00:23:26] try to update the same object that be
+[00:23:28] first writer then the first writer wins
+[00:23:30] not the last. Sorry, let me just fix
+[00:23:32] that now immediately.
+[00:23:39] That's important. Okay. Yes, first
+[00:23:41] writer wins. And then we saw that in my
+[00:23:44] example there, right? The transaction T2
+[00:23:46] would try to to over create a new
+[00:23:48] version on A, but because T1 wrote a new
+[00:23:52] version A, T1's the first writer. A is
+[00:23:54] going to win and T2 has to abort.
+[00:23:58] That's the basic version of of give you
+[00:24:01] that. But it is susceptible to a
+[00:24:04] different phenomena, a different anomaly
+[00:24:06] that two-phase locking and OCC is not
+[00:24:08] going to hit. And that's the thing
+[00:24:09] called the right skew.
+[00:24:12] And the the basic idea of the right skew
+[00:24:14] is that you're allowed to read things uh
+[00:24:17] as a consistent snapshot and you may
+[00:24:19] make decisions about that consistent
+[00:24:21] snapshot view. You saw where you end up
+[00:24:23] writing things uh in a certain way and
+[00:24:26] the right behavior could not occur in
+[00:24:30] that manner if you're actually truly
+[00:24:31] running in serial order.
+[00:24:35] So me standing here and saying words and
+[00:24:37] being headway doesn't make any sense.
+[00:24:38] Let's look at a sort of a a simplified
+[00:24:41] example. So this comes from Jim Gray.
+[00:24:43] Again, he won the touring award in
+[00:24:44] databases in the in the the 1990s. Um he
+[00:24:48] invented two ways locking and a bunch of
+[00:24:49] other stuff at SMR. So this is sort of
+[00:24:51] like a a metaphor he likes to use to
+[00:24:52] explain this. So say I have a database
+[00:24:54] containing marbles and I have four
+[00:24:56] marble marbles and they're two colors.
+[00:24:59] They're either black or white. And so
+[00:25:01] I'm going to have one transaction come
+[00:25:02] along and change all the white marbles
+[00:25:04] to black. And then another transactions
+[00:25:06] going to come along and they change all
+[00:25:08] the black marbles to white. So same
+[00:25:10] these two transactions are going to run
+[00:25:11] at exactly the same time right in in
+[00:25:13] separate workers. So when they start
+[00:25:16] they're again under snapshot isolation
+[00:25:17] they have a consistent view uh
+[00:25:19] consistent snapshot of the database
+[00:25:21] right they see two black marbles and two
+[00:25:22] white marbles for both of them. So then
+[00:25:24] now they're then going to say all right
+[00:25:26] my job is to flip all the black marbles
+[00:25:27] to white and the bottom the top one to
+[00:25:29] flip all the white marbles to black. So
+[00:25:30] they go ahead and do that
+[00:25:33] right. So what I have in the red box is
+[00:25:36] that's the right set of those
+[00:25:37] transactions. That's the new version
+[00:25:39] that they're going to create. So then
+[00:25:41] now when I stall in the database, I end
+[00:25:44] up like this,
+[00:25:46] right? Two white marbles, two black
+[00:25:48] marbles.
+[00:25:49] So that that issue right there is the
+[00:25:51] right skew where you're allowed to
+[00:25:52] you're updating things in a certain way
+[00:25:54] that if you're running a serial order
+[00:25:56] could not happen, right? Because I have
+[00:25:58] two whites, two whites, and two blacks.
+[00:26:00] And if I was running true serial order
+[00:26:02] then I would say I run transaction one
+[00:26:04] T1 first changes all the white marbles
+[00:26:06] to black then I run transaction T2 first
+[00:26:08] and I change all the black marbles the
+[00:26:10] white. So under a true ser ordering they
+[00:26:12] the be all one color but under snapsa
+[00:26:15] isolation that schedule I show before is
+[00:26:17] allowed to happen and you end up with uh
+[00:26:20] you know two two sets of color two
+[00:26:22] colors.
+[00:26:26] So two-phase locking wouldn't have
+[00:26:27] wouldn't have this problem, right? Going
+[00:26:28] back here, because when I do the read at
+[00:26:32] this first step, I would take share
+[00:26:34] locks on everything that I want to read
+[00:26:36] and the other transaction wouldn't be
+[00:26:37] able to take an exclusive lock and write
+[00:26:39] it. But snap to isolation because I'm
+[00:26:42] I'm creating these new versions uh and
+[00:26:46] my readers don't end up blocking the
+[00:26:47] writers
+[00:26:49] that you know this anomaly can happen.
+[00:26:53] So the original specification of
+[00:26:55] two-based locking or sorry of of the the
+[00:26:57] the the SQL standard isolation levels
+[00:27:01] that came out in like 1992
+[00:27:04] didn't account for this problem and they
+[00:27:06] only considered isolation levels in the
+[00:27:08] context of of two-phase locking systems
+[00:27:12] and then this was done uh a lot of
+[00:27:13] people working this were at Microsoft at
+[00:27:15] the time in the early 90s and then they
+[00:27:17] realized that they made a mistake and
+[00:27:18] forgot this this particular issue and
+[00:27:21] then there's a subsequent paper that
+[00:27:22] came after the the standard came out and
+[00:27:23] said, "Oh, yeah, by the way, here's this
+[00:27:24] other phenomenon that can occur if
+[00:27:26] you're doing if you have subset
+[00:27:28] isolation under multi version control."
+[00:27:30] And one of the guys that wrote the paper
+[00:27:31] sent me an email once saying, uh, the
+[00:27:34] mistake was because the other person
+[00:27:36] that was supposed to check his his the
+[00:27:38] spec was like not paying attention, was
+[00:27:40] writing code at the time. He's like,
+[00:27:41] "Yeah, whatever. That seems okay." And
+[00:27:42] only after the fact they realized uh
+[00:27:44] this was a mistake and then they had to
+[00:27:46] follow up on it. Again, Jim Gray is very
+[00:27:48] famous again for winning the Turner
+[00:27:49] Award, but he like he he was very good
+[00:27:52] at simplifying really complex database
+[00:27:54] concepts into easy things to understand.
+[00:27:56] So, if you ever heard of things like the
+[00:27:58] five-minute rule, like how long should
+[00:27:59] you keep data in memory before evicting
+[00:28:02] it to your cache? That comes from Jim
+[00:28:04] Gray. If you ever heard of like 59s or
+[00:28:06] 69's latency, that's from Jim Gray as
+[00:28:09] well, right? So, he, you know, very
+[00:28:10] famous and very prolific in databases.
+[00:28:15] >> What's that? weaker.
+[00:28:18] >> It's the question is is it weaker than
+[00:28:19] read committed? No. So remember last
+[00:28:21] class I sort of showed sort of parallel
+[00:28:23] tracks. There was like one side was
+[00:28:25] going uh read committed repeatable read
+[00:28:28] up to serializability. Another one is
+[00:28:29] like snap isolation. So they're like
+[00:28:31] orthogonal. Yeah.
+[00:28:34] All right. So multi version control is
+[00:28:36] more than just again that I'm creating
+[00:28:39] multiple versions. If you're going to
+[00:28:40] build a database system as you know that
+[00:28:42] you know like we do in this class we
+[00:28:44] care about then choosing to do multi
+[00:28:46] version control is going to have a bunch
+[00:28:47] of other design decisions you have to
+[00:28:48] make how to support multi- versioning
+[00:28:50] that's going to affect the the entire
+[00:28:52] system for pretty much every all the
+[00:28:54] lectures we talked about so far if you
+[00:28:55] now do multi-verging you have to
+[00:28:57] consider that in in all of that
+[00:29:00] and again pretty much every modern data
+[00:29:02] system that's around today is doing some
+[00:29:04] variation of multi versioning
+[00:29:06] >> the question is what's that for that's a
+[00:29:08] special project we'll call that
+[00:29:10] All right.
+[00:29:11] All right. So what are these design
+[00:29:12] decisions? So the first is like what is
+[00:29:14] the current protocol we're going to use?
+[00:29:15] Because as I said it's called multi
+[00:29:16] version control and I showed sort of a
+[00:29:19] naive implementation of it where you you
+[00:29:22] have that you know two guys try to write
+[00:29:24] and and you prevent that. But you can
+[00:29:28] still do two-phase locking or OC on top
+[00:29:31] of multi-verion control having a multi-
+[00:29:33] versioning system. So we'll discuss what
+[00:29:35] that looks like. Uh then we'll talk
+[00:29:36] about how how we're going to store these
+[00:29:38] different versions, how we're going to
+[00:29:39] do garbage collection, how to handle
+[00:29:40] indexes, and then how to handle deletes.
+[00:29:43] Okay.
+[00:29:46] All right. So the first one is C
+[00:29:47] program. As I said, there's a bunch of
+[00:29:49] different you you take all the the the
+[00:29:51] protocols we talked last two classes uh
+[00:29:53] and you can apply that to uh you apply
+[00:29:56] that into a multi-verion environment. Um
+[00:29:58] so the the one I showed before is the
+[00:30:01] beginning was basic version of time
+[00:30:02] stamp ordering. uh you're just assigning
+[00:30:04] time steps and using that to determine
+[00:30:05] the serial ordering, but you still can
+[00:30:07] do OCC and you still can do two-phase
+[00:30:09] locking in the context of multi-
+[00:30:11] versioning.
+[00:30:12] So let's look see what this looked like
+[00:30:14] with 2PL and then we'll open up
+[00:30:16] Postgress and see what they do. Right?
+[00:30:18] Again, so this is the same setup I had
+[00:30:19] before. I'm going to do begin uh for T1
+[00:30:23] do a read on a write on a and read on A.
+[00:30:25] And then T2 is going to do read on A and
+[00:30:26] write on A. So we start off I can read
+[00:30:29] sorry T1 can read a zero. That's fine.
+[00:30:32] T1's going to write A to A. Creates a
+[00:30:34] new version A1. Goes back and updates
+[00:30:36] the end time stamp for uh A Z. That's
+[00:30:40] fine. Now I context switch over here.
+[00:30:43] And now I'm going to get a try to read a
+[00:30:45] A. In this case here, I can read A Z uh
+[00:30:48] because T1 is not committed yet. But
+[00:30:51] then now when I go to try to write a
+[00:30:54] under the scheme I showed before, basic
+[00:30:55] timestamp ordering, this right is going
+[00:30:57] to be denied and the transaction has to
+[00:31:00] abort. But if I'm doing two-phase
+[00:31:02] locking, then it's going to try to get
+[00:31:04] the the exclusive lock on A, the logical
+[00:31:07] A, not not the physical version. It's
+[00:31:09] always the logical version. I'm get the
+[00:31:11] try to get the exclusive lock on A, but
+[00:31:13] that's going to get stalled by the lock
+[00:31:16] manager because T1 already has the
+[00:31:18] exclusive lock on A. So, it has to wait.
+[00:31:22] Then T1 can do the read on A, sees the
+[00:31:24] same version that had before. That's
+[00:31:26] fine. Then now t uh the lock gets
+[00:31:30] released for
+[00:31:32] uh after we commit because we update
+[00:31:34] it's now committed. Then the lock gets
+[00:31:35] released over here and t2 can then now
+[00:31:38] create the new version and it updates
+[00:31:40] the the end time stamp just like it did
+[00:31:42] before.
+[00:31:46] Why? Because because when t1 committed
+[00:31:49] t2 that releases the exclusive lock t2
+[00:31:52] can then acquire the exclusive lock and
+[00:31:53] do the right
+[00:32:00] The question is why is this useful?
+[00:32:02] Because I T2 was able to read A
+[00:32:06] without even though T1 had exclusive
+[00:32:08] lock on it. You can't do that on a GPL.
+[00:32:16] >> No, because I'm reading the older
+[00:32:17] version of it.
+[00:32:25] Well, you can only allow one writer
+[00:32:27] anyway. Like only one transaction can
+[00:32:29] install a new new version. So the
+[00:32:31] exclusive lock is like preventing any
+[00:32:34] other transactions from doing from doing
+[00:32:35] that.
+[00:32:36] >> Okay.
+[00:32:41] >> The there is no there are no share
+[00:32:44] locks.
+[00:32:45] >> Yes. All right. So let's talk Postgress
+[00:32:48] and hopefully uh this will
+[00:32:51] more clear. Okay. So we all say that.
+[00:32:55] All right. Um, so I have a simple table
+[00:32:59] in Postgress
+[00:33:03] that has two tupils, right? Has an ID
+[00:33:06] and and a value. Okay.
+[00:33:08] And now you see I have um I have two
+[00:33:11] terminals at the same time. So I can do
+[00:33:13] the same thing. Select star from
+[00:33:14] transaction demo, right? Because I'm
+[00:33:16] gonna I want to run two transactions at
+[00:33:18] the same time and see what happens. All
+[00:33:20] right. So
+[00:33:23] we're going to run this now in the
+[00:33:25] default isolation which I
+[00:33:28] so maybe I got to come back and quit out
+[00:33:31] and come back make sure I get the
+[00:33:32] default. Okay. So we're going to run in
+[00:33:35] Postgress and I'm going to set the the
+[00:33:36] deadlock timeout for Postgress to be 30
+[00:33:40] seconds, right? Because otherwise I
+[00:33:41] think the default is maybe a minute or
+[00:33:44] something like that. So I'm going to
+[00:33:46] start a transaction up here.
+[00:33:49] start a transaction down below,
+[00:33:52] right? And then now I'm gonna go read a
+[00:33:55] single tuple. So select star from
+[00:33:57] transaction demo. Actually, let me just
+[00:33:58] do it this way. Um,
+[00:34:05] yeah. So I can go read that single tuple
+[00:34:08] there. That's fine. Now I go down below
+[00:34:11] and I can go read the same tupil, right?
+[00:34:13] That's fine. But now the top guy is
+[00:34:16] going to then update it.
+[00:34:19] Right, we're just incrementing the
+[00:34:21] counter increment by one. So now if I go
+[00:34:22] read it,
+[00:34:24] right now I see the value is 101. It was
+[00:34:26] 100. So I added one to it. We're good
+[00:34:28] there. Now down below, if I read it,
+[00:34:30] what should I see?
+[00:34:32] 100. Correct? Because the one up above
+[00:34:35] has not committed yet. But now what's
+[00:34:37] going to happen if I try to also update
+[00:34:40] the object uh that same record down
+[00:34:43] below in transaction T1? What should
+[00:34:45] happen?
+[00:34:48] stalls,
+[00:34:49] right? Because the transaction at the
+[00:34:51] top has the exclusive lock on on the on
+[00:34:53] the the logical object where id equals
+[00:34:55] one logical tupil. Therefore, it has to
+[00:34:58] wait and then now if I go up here now I
+[00:35:00] commit
+[00:35:02] what's going to happen
+[00:35:04] lock gets released the by the top
+[00:35:07] transaction the the bottom transaction
+[00:35:09] then can then acquire it. Now here's the
+[00:35:12] question. So it was started off 100 the
+[00:35:14] transaction at the top made at 101.
+[00:35:19] What what is the what is the what is the
+[00:35:20] what is going to be the value down below
+[00:35:21] now?
+[00:35:23] He they say 101.
+[00:35:27] Wait a second. Say again
+[00:35:29] raise your hand if you saying 100.
+[00:35:32] Nobody. Good. Raise your hand if you say
+[00:35:33] 101
+[00:35:35] and a half. Raise your hand say 102.
+[00:35:40] 102.
+[00:35:42] Right? Because we're still in the
+[00:35:44] transaction down below. This is still an
+[00:35:46] active transaction. The one at the top
+[00:35:47] is committed. The one one down below is
+[00:35:50] still active.
+[00:35:52] So
+[00:35:53] it it was then now when it when it does
+[00:35:55] the right, it then gets the latest
+[00:35:58] version and then can actually update it
+[00:36:02] because the default in Postgress is read
+[00:36:05] committed
+[00:36:07] not repeatable read. So when I do my
+[00:36:10] update, what do you have? How do you do
+[00:36:12] an update? You got to go update it first
+[00:36:13] or so you got to go read it, find the
+[00:36:15] thing you want to update, then update
+[00:36:16] it. So it's in this case here because
+[00:36:19] the transaction at the top committed
+[00:36:22] under recommitted the bottom transaction
+[00:36:25] is allowed to now read that version
+[00:36:28] and then go updated and incre increment
+[00:36:29] the counter.
+[00:36:34] So we we can prove that again. So watch.
+[00:36:37] So I'll start a transaction at the top.
+[00:36:40] And we see now it's it's 101. Start a
+[00:36:42] transaction at the bottom. Read it. Now
+[00:36:45] it's 101 as expected. Now I do my update
+[00:36:48] up here down below. I can't see it
+[00:36:51] because the transaction at the bottom
+[00:36:52] has not sorry the transaction at the top
+[00:36:54] has not committed yet. But now when I go
+[00:36:56] to commit,
+[00:37:00] right, I can see the change,
+[00:37:04] right?
+[00:37:06] All
+[00:37:08] right, let's try my SQL.
+[00:37:12] Same thing. I have a simple table with
+[00:37:16] two
+[00:37:18] two records. So, um,
+[00:37:23] make sure I'm not serializable.
+[00:37:34] All right. So, I'll start. that I'll
+[00:37:36] start a transaction at the top.
+[00:37:41] Start a transaction at the bottom.
+[00:37:45] Do the same thing. I'm going to read
+[00:37:46] that one record.
+[00:37:48] [snorts] Where am I?
+[00:37:57] Let's copy and paste. Sorry.
+[00:38:04] surprised
+[00:38:06] it let me be in a in a transaction for
+[00:38:08] that. Okay,
+[00:38:12] actually
+[00:38:14] my SQL I think let you do transactions
+[00:38:16] across databases. Postgress does not. Um
+[00:38:24] okay,
+[00:38:26] let's try this again. So now I'll start
+[00:38:27] a transaction.
+[00:38:29] I see 100.
+[00:38:32] Start a transaction.
+[00:38:34] I see 100. And then now I'm going to do
+[00:38:37] that same update for one.
+[00:38:42] What should I see at the bottom?
+[00:38:48] >> 100. Correct. Yes.
+[00:38:51] Right. Under snaps isolation or under
+[00:38:53] with multi versioning, you're not going
+[00:38:54] to see the changes for uncommitted
+[00:38:56] transaction.
+[00:38:57] But then now if I commit this
+[00:38:59] transaction
+[00:39:01] at the top and of course if I go read it
+[00:39:03] from the top
+[00:39:06] I see 101 for for ID equals 1. Now at
+[00:39:11] the bottom still in this transaction if
+[00:39:13] I run this query what will I see 100 or
+[00:39:14] 101?
+[00:39:17] 100 because by default my SQL runs with
+[00:39:20] uh repeatable reads. So even though the
+[00:39:22] transaction at the top has committed,
+[00:39:25] the the one at the bottom wants to see
+[00:39:27] what it saw before. So it's not going to
+[00:39:28] see that.
+[00:39:30] But then let's try this now. Let's try
+[00:39:35] new transaction at the top. Let me kill
+[00:39:36] this one at the bottom.
+[00:39:40] Start new transaction here. Right. We
+[00:39:43] see 10 101 200. Now I'm going to update
+[00:39:46] it. I haven't read it at the bottom yet.
+[00:39:49] What should I see? 102 or 101?
+[00:39:56] 101.
+[00:39:59] Right? In this case here, even though is
+[00:40:01] repeatable read because with multi
+[00:40:04] versioning it hasn't the the top
+[00:40:05] transaction has not committed yet it
+[00:40:07] can't see it.
+[00:40:11] So
+[00:40:13] if I now commit
+[00:40:17] should be just like before, right? Okay,
+[00:40:19] I don't I don't see it.
+[00:40:22] So,
+[00:40:25] how can we how can we see what's
+[00:40:26] actually going on? So, in Postgress, we
+[00:40:30] didn't do this before. Um, we I don't
+[00:40:32] think I gave a demo of the how it's
+[00:40:34] actually storing
+[00:40:36] um
+[00:40:40] am I might be in a transaction that's
+[00:40:43] why. Yep, there it was. Okay. Um,
+[00:40:46] so now all right. So I I haven't talked
+[00:40:47] this before in Postgress but of how it's
+[00:40:50] actually storing records and what it's
+[00:40:51] actually storing in the metadata. But in
+[00:40:54] Postgress
+[00:40:56] it's going to store the
+[00:40:59] the time stamps physically in the in the
+[00:41:02] tupil
+[00:41:04] with a xmin and xmaxx.
+[00:41:07] So now for my table here you see that
+[00:41:09] now I have Xmin there's some time stamp
+[00:41:12] 1396 it's going to respond to whatever
+[00:41:14] transaction that created it and then the
+[00:41:16] Xmax zero just means it's it's the
+[00:41:18] latest version and then that CT ID thing
+[00:41:21] that one I don't think I talked about
+[00:41:22] but that's basically the record ID
+[00:41:24] that's the page number and the slot
+[00:41:25] number for for any any tupil. So every
+[00:41:29] that's not actually physically stored
+[00:41:30] the same way the time stamps are. It's
+[00:41:32] it is a it's derived from the from the
+[00:41:36] the from just as it's scanning the data
+[00:41:38] I know I'm reading this page and this
+[00:41:40] offset number and in case of Postgress
+[00:41:42] you can actually um do lookups like this
+[00:41:44] you can physically address it like
+[00:41:46] transaction or transaction demo where CT
+[00:41:50] ID equals and then you can pass in this
+[00:41:55] right and you can actually read tuples
+[00:41:57] that way you don't want to do that way
+[00:41:58] because again if when I create new
+[00:41:59] versions it's going to it's going to get
+[00:42:01] moved now but let me now do this with
+[00:42:04] serializable isolation
+[00:42:09] I don't think I'm going to transaction
+[00:42:10] let me see
+[00:42:12] yeah okay so in Postgress you when you
+[00:42:15] call begin you can set what isolation
+[00:42:17] level you want so now I'm going to I'm
+[00:42:18] going say I want to be serializable
+[00:42:21] [clears throat]
+[00:42:22] so now I'm going to read the
+[00:42:26] in the top transaction I'm going to read
+[00:42:28] the the data and again now I see the CT
+[00:42:31] ID And I see the the the minmax
+[00:42:34] timestamps for this transaction. So now
+[00:42:36] on the bottom transaction,
+[00:42:39] I'm going to update it. And so now what
+[00:42:41] I'm doing here, I'm adding this
+[00:42:42] returning clause here. This is this is
+[00:42:44] saying run this update query and and
+[00:42:46] return back something for me. In this
+[00:42:48] case here, I like think of like the
+[00:42:50] projection output of a select statement.
+[00:42:52] This I wanted to call this function
+[00:42:53] transaction ID current. And this gives
+[00:42:55] you in postgress what's the ID of my
+[00:42:57] transaction.
+[00:42:59] So now it calls my update. And now I see
+[00:43:00] I get transaction ID 1397.
+[00:43:05] So now
+[00:43:11] if I go back to
+[00:43:13] the top terminal
+[00:43:16] and I run this query, what should I see?
+[00:43:28] Still see the the previous version. I
+[00:43:30] saw before but now you can see where
+[00:43:32] before the the Xmaxx was zero or null
+[00:43:36] now it's 1397 which is the transaction
+[00:43:38] ID of my transaction at the bottom. So
+[00:43:41] this is like proving that like this is
+[00:43:42] actually updating things in the way that
+[00:43:44] that we discussed like Postgress is like
+[00:43:46] a textbook definition of of a of a
+[00:43:48] datab.
+[00:43:51] But you also see now too if I run this
+[00:43:54] query, the same query down here,
+[00:43:58] right? The the one at the top sees the
+[00:44:01] the latest version. And if you look at
+[00:44:02] the let me bring it down a little bit.
+[00:44:04] Sorry.
+[00:44:10] Right. So the the one at the top when I
+[00:44:13] run select starve on the table, you see
+[00:44:15] that look at the CT ID. I'm seeing the
+[00:44:17] the the the tupil at page zero offset
+[00:44:21] slot one and page zero off slot two down
+[00:44:24] below since this is the transaction that
+[00:44:26] modified the table I'm seeing the first
+[00:44:28] version of the second tupil at 02 but
+[00:44:30] I'm also now seeing my new version 03 so
+[00:44:34] postgress is actually storing the new
+[00:44:36] version in another slot inside the page
+[00:44:40] which is a terrible way to do it but
+[00:44:41] we'll cover that in a second
+[00:44:44] all right let me roll these
+[00:44:50] And we can prove that Postgress is doing
+[00:44:52] um
+[00:44:54] is doing deadlock detection because if I
+[00:44:57] run transactions and have a deadlock,
+[00:44:59] it'll kill it. So what I'm going to do
+[00:45:00] now is tell Postgress if check for a
+[00:45:02] deadlock in in 10 seconds to kill
+[00:45:06] something.
+[00:45:08] So I'll have my transaction at the top
+[00:45:11] starts transaction at the bottom starts.
+[00:45:13] We're good there. The transaction at the
+[00:45:16] top is going to modify
+[00:45:18] uh where ID equals 1, right? I'm allowed
+[00:45:22] to do that. I get the exclusive lock
+[00:45:24] one. Transaction at the bottom is going
+[00:45:25] to update ID equals 2.
+[00:45:28] That's allowed to happen. That's fine.
+[00:45:29] But now the one at the top is now going
+[00:45:31] to try to update
+[00:45:34] uh ID equals 2. It has to stall because
+[00:45:37] it can't get the exclusive lock on that.
+[00:45:39] The one at the bottom is going to try to
+[00:45:40] update one. It's going to stall too
+[00:45:41] because the top guy has exclusive lock
+[00:45:43] on that. And then within 10 seconds, the
+[00:45:45] deadlock detector is going to run and
+[00:45:46] it's gonna kill one of them. And there
+[00:45:47] you see it is the one at the top got
+[00:45:49] killed. See deadlock report, right? Kill
+[00:45:51] the one at the top. And then my my one
+[00:45:54] at the bottom. As soon as the the one at
+[00:45:56] the top got killed, the bottom one was
+[00:45:58] allowed to run immediately because the
+[00:46:00] lock gets released.
+[00:46:04] All right, one more thing.
+[00:46:07] So that was that was with
+[00:46:08] serializability
+[00:46:11] or serializable isolation level.
+[00:46:15] Let's now run this at a lower isolation
+[00:46:18] level. Let's do read uncommitted.
+[00:46:24] Right? Both transactions are running
+[00:46:25] with that isolation level. And now again
+[00:46:28] I can
+[00:46:31] I can run my query at the bottom the top
+[00:46:33] I see the two versions I expect to see.
+[00:46:37] I see the one at the bottom as well. Uh
+[00:46:41] I point out the Xmaxx the the max time
+[00:46:44] stamp the end time stamp got updated
+[00:46:45] with 1399.
+[00:46:47] This is where I'm not showing this.
+[00:46:48] There's a transaction table that's going
+[00:46:49] to tell you whether the the transaction
+[00:46:51] that last modified this whether this
+[00:46:53] actually has committed or not. In this
+[00:46:55] case here 1399 did not commit. It's
+[00:46:57] something I rolled back. So when they go
+[00:46:59] read a version, they would say, "I know
+[00:47:01] this one has a X-Maxx, but it's in the
+[00:47:03] range of I'm going down to the C, but
+[00:47:04] this is actually the latest version.
+[00:47:06] There isn't anything else after that I
+[00:47:07] want to look at." But that's that's a
+[00:47:09] minor detail. All right. So now we're
+[00:47:12] going to have the one at the top.
+[00:47:14] They're going to update
+[00:47:17] update the record,
+[00:47:20] right? Just, you know, add a new value
+[00:47:22] return my my transaction ID is is 1400.
+[00:47:25] Now, at the bottom, if I run this query,
+[00:47:27] what should I see?
+[00:47:29] Should I see the the version at the that
+[00:47:32] the top created, or should I see
+[00:47:34] whatever the latest version that I saw
+[00:47:35] when I ran it the first time?
+[00:47:37] And again, I'm running on a read
+[00:47:39] uncommitted. The top transaction is
+[00:47:40] uncommitted.
+[00:47:44] Should the bottom transaction see the
+[00:47:45] top transactions change? Yes. What's
+[00:47:48] that?
+[00:47:50] >> Could
+[00:47:52] Right. does not.
+[00:47:56] So Postgress is lying to you but in a
+[00:47:59] good way. So you tell Postgress I want
+[00:48:01] to run read uncommitted. It doesn't
+[00:48:03] actually give you that. It'll still give
+[00:48:04] you recommitted
+[00:48:06] because it's more work and more
+[00:48:08] engineering to go add support for read
+[00:48:11] uncommitted to make you go let you go
+[00:48:13] read things that haven't committed yet.
+[00:48:14] So they didn't just they didn't
+[00:48:15] implement it. So by default it's just
+[00:48:17] recommitted even even if you ask for
+[00:48:19] something lower. Oracle is the opposite.
+[00:48:20] Oracle says you say I want something
+[00:48:22] higher they'll lie to you and say yeah
+[00:48:24] you got it but it's actually something
+[00:48:25] lower right so it's better to lie I
+[00:48:29] guess better to overperform uh rather
+[00:48:33] than underperform when people ask for
+[00:48:35] certain things but it's debatable
+[00:48:36] whether how much read uncommitted would
+[00:48:38] you know could actually help performance
+[00:48:39] in this case here since I can always
+[00:48:41] read a consistent snapshot that's
+[00:48:43] probably okay
+[00:48:53] Their statement is under NBCC is read
+[00:48:56] uncommitted not going to give you
+[00:48:56] anything meaningful. No, I'm saying the
+[00:48:58] post implementation of NBC is not going
+[00:49:01] to do that for you.
+[00:49:04] running.
+[00:49:14] SCire
+[00:49:17] not
+[00:49:19] >> the question is uh in my examples I was
+[00:49:22] I was reading the table when I was
+[00:49:23] getting the shared lock or what what you
+[00:49:24] saying
+[00:49:28] >> and the child will be
+[00:49:31] >> uh
+[00:49:34] For this for this one it would be ID was
+[00:49:36] the primary key. So
+[00:49:39] >> okay
+[00:49:43] >> sure okay
+[00:49:44] >> it exe
+[00:49:48] >> would it execute the read?
+[00:49:49] >> Yeah like the sequences can block at the
+[00:49:52] update or block at the lowest level as
+[00:49:55] well.
+[00:49:56] >> Ah okay. So like
+[00:49:59] again the locks are the locks are on
+[00:50:01] like on on logical objects. So I can
+[00:50:05] physically read all the versions. So if
+[00:50:07] I had to screen scan everything, I'm
+[00:50:08] going to physically read all the
+[00:50:09] version. I'm allowed to do that because
+[00:50:10] I have to go check to see whether time
+[00:50:11] stamps are actually uh visible to me. Uh
+[00:50:15] and I know that because I'm not
+[00:50:16] overwriting anything, it's not like
+[00:50:17] something's gonna get swapped out when
+[00:50:18] I'm trying to read stuff. Um so then
+[00:50:21] it's only when I go then try to say I
+[00:50:23] want to update stuff then I go try like
+[00:50:25] the then I would acquire the lock on the
+[00:50:29] the logical object I want to modify.
+[00:50:32] >> So we acquired the sh we acquired the
+[00:50:34] right upgrade to write a step doing
+[00:50:36] update and the update exeutor.
+[00:50:40] Yes, whether or not it happens on the
+[00:50:42] update executor or not beforehand, I it
+[00:50:45] depends on implementation, but you would
+[00:50:47] know
+[00:50:48] again depends on how your lock manager
+[00:50:50] how you're organizing the keeping track
+[00:50:52] of locks. Do I keep track of them at on
+[00:50:54] the record ID level? No, because those
+[00:50:57] record IDs could get moved around. Uh so
+[00:51:00] you maybe you typically do it on like
+[00:51:01] the primary key level. So in that case I
+[00:51:04] don't if I have the primary key I can
+[00:51:06] lock it before I get to the update
+[00:51:07] exeutor because I know what it is.
+[00:51:10] Yes.
+[00:51:15] >> Question is do I do I do I need a multi
+[00:51:17] version indexes? Yes. Let's keep going.
+[00:51:19] We'll get to that.
+[00:51:21] We only have 30 minutes left. There's
+[00:51:22] still a lot to cover. Okay. Um all
+[00:51:25] right. So version storage. This is the
+[00:51:27] most important thing is like how we're
+[00:51:28] actually going to be storing these
+[00:51:29] different versions. Uh, and the idea is
+[00:51:32] that we're not going to have these all
+[00:51:35] the the tupils just randomly in in our
+[00:51:38] in our in our table. Uh, oh, they could
+[00:51:40] be still random, but like I don't have
+[00:51:42] to scan and try to find what versions
+[00:51:44] are visible visible me every time you
+[00:51:45] run. Instead, we're going to maintain
+[00:51:47] basically a link list using the header
+[00:51:50] of every every tupil to keep track of
+[00:51:52] what's the next version in the version
+[00:51:55] chain for a logical tupil. What's the
+[00:51:57] next physical version I should be
+[00:51:58] looking at, right?
+[00:52:00] So indexes are always going to point to
+[00:52:01] the head of the chain. Uh and then the
+[00:52:05] the different storage schemes we'll talk
+[00:52:07] about will will vary in whether it's
+[00:52:10] going to be what is at the head of the
+[00:52:12] version chain and what is inside the
+[00:52:14] actual version chain itself.
+[00:52:17] So the three approaches are to do
+[00:52:19] appendon, time travel and delta storage.
+[00:52:21] Append only is the basic idea of what
+[00:52:23] I've been showing so far where it's like
+[00:52:25] anytime I want to update a tupil, I make
+[00:52:27] a complete copy of that that that tupil
+[00:52:29] and write my changes into that copy,
+[00:52:32] right? And I'm just appending that into
+[00:52:33] the same same storage space I would have
+[00:52:36] for for my my all my tupils.
+[00:52:39] Time travel storage is similar to append
+[00:52:41] only but the instead of instead of
+[00:52:44] making storing the different versions in
+[00:52:46] the same table space as your regular
+[00:52:48] tupils I'm actually have sort of have a
+[00:52:50] separate virtual table that's tied to
+[00:52:52] the main table where I'm just going to
+[00:52:54] put all my versions inside of that.
+[00:52:57] So I still make a copy of the tupil but
+[00:53:00] instead of making a new copy like in the
+[00:53:02] same page where where the tupil
+[00:53:03] originally was existing I'm going to put
+[00:53:05] it into some other storage space.
+[00:53:07] [snorts]
+[00:53:08] The last approach, which is the the the
+[00:53:10] best approach, is to do what's called
+[00:53:12] delta storage, where I don't actually
+[00:53:14] make a complete copy of the tupil
+[00:53:17] anytime I'm going to modify it. I only
+[00:53:19] create a delta record, like a diff that
+[00:53:22] keeps track of here's the ch here's the
+[00:53:24] changes of the columns that were
+[00:53:25] modified.
+[00:53:27] And so you just you just copy what the
+[00:53:29] old values are of the things that you
+[00:53:30] modified, and you overwrite the the the
+[00:53:33] main table tupil with the latest
+[00:53:35] version.
+[00:53:37] So delta storage is the most common one.
+[00:53:40] This is what this how pretty much
+[00:53:41] everyone built a modern multi-verging
+[00:53:42] system today.
+[00:53:44] The append only one is less common but
+[00:53:47] it's what Postgress does. So pretty much
+[00:53:50] anybody that forks Postgress is going to
+[00:53:52] be doing this. Yes.
+[00:54:00] >> The question is for for
+[00:54:02] uh for time travel storage. Am I storing
+[00:54:04] the last version or all versions? all
+[00:54:06] older versions.
+[00:54:09] SAP HANA put the newest version for
+[00:54:11] whatever reason in the in the time
+[00:54:12] travel store then they flipped it. They
+[00:54:14] got rid of that. But
+[00:54:16] in general, yeah, you like I saw the
+[00:54:18] main table. I'll go through examples. I
+[00:54:20] before I overwrite the one in the main
+[00:54:22] table, I make a copy of the old version,
+[00:54:24] put that in the time travel storage.
+[00:54:26] It's at a high level, it's the same as
+[00:54:29] the first approach. It's just because
+[00:54:31] you're copying the entire table, but the
+[00:54:32] the way you're storing it is separate
+[00:54:34] and has some benefits. All right. So,
+[00:54:36] the second one is is rare. Uh the first
+[00:54:40] one, again, it's easy to do because you
+[00:54:42] just can just make a copy of the tool
+[00:54:43] and update things, but it's actually
+[00:54:45] terrible. Uh and so my my takeaway for
+[00:54:48] this, don't do this. Even though
+[00:54:49] Postgress does this, don't do this.
+[00:54:52] Right? Postgress for for you know, as
+[00:54:54] great as it is as a database system,
+[00:54:57] this is actually the worst part of its
+[00:54:58] implementation. It's got a terrible
+[00:55:00] backend. Uh I've said this publicly. I
+[00:55:02] have a blog article says the part of
+[00:55:03] Postgress we hate the most. It's this.
+[00:55:05] It's what I'm talking about right now.
+[00:55:07] And they did it in the 80s, but nobody
+[00:55:09] would do this now today, right? My SQL
+[00:55:12] and Oracle do the last approach, the
+[00:55:14] delta storage, and that's the right way
+[00:55:15] to do it. Let's see why. All right. So,
+[00:55:18] append only storage again, it just means
+[00:55:20] that anytime I'm going to modify a
+[00:55:22] tupil, I uh append a new version uh of
+[00:55:25] the of that of that tupil into my into
+[00:55:28] my uh my regular table space. So, say
+[00:55:30] I'm going to update object A. I'll first
+[00:55:33] copy the the that the current version
+[00:55:36] for all its values in my in some kind of
+[00:55:38] memory buffer and then I'll install the
+[00:55:41] change into the into the page with the
+[00:55:44] latest version. But then now I got to go
+[00:55:45] update the pointer in the in the tupil.
+[00:55:49] I'm showing at the end for because it's
+[00:55:51] PowerPoint, but it's it's in the header
+[00:55:53] of of of the tupil to now reflect that I
+[00:55:56] have a new version here. And then I
+[00:55:58] update things in my version chain.
+[00:56:02] But in my example here, the way I'm
+[00:56:04] ordering the versions is by oldest to
+[00:56:05] newest. So the oldest version is a z.
+[00:56:08] The indexes would point to a z. So now
+[00:56:10] if I want to find the newest version, I
+[00:56:12] got to scan along, look at the different
+[00:56:14] versions, follow the pointer until I
+[00:56:15] find the one that that that's visible to
+[00:56:16] me based on the begin and end
+[00:56:18] timestamps.
+[00:56:20] So the version chain ordering can go a
+[00:56:21] bunch of different ways. So what I show
+[00:56:22] for is the oldest and newest, right? The
+[00:56:25] basic idea is that anytime I want to
+[00:56:26] make a new version, right, I just append
+[00:56:28] it to the end. But now of course now
+[00:56:30] with most your transactions, most
+[00:56:33] transactions want the the latest
+[00:56:34] version. I don't care about the oldest
+[00:56:36] version usually. So that means that when
+[00:56:39] I want to find the latest version of
+[00:56:40] this object A, I got to follow into the
+[00:56:43] the head of the version chain through an
+[00:56:45] index or however I got there like with a
+[00:56:46] record ID and then I scan along until I
+[00:56:49] find the end or find the version that's
+[00:56:50] actually visible to me.
+[00:56:52] So if your version chain is really
+[00:56:54] really long, then this is going to suck
+[00:56:56] and be slow.
+[00:56:58] But it does have some some other
+[00:56:59] benefits we'll talk about in a second.
+[00:57:02] The alternative is to do newest to
+[00:57:03] oldest where this just says now the the
+[00:57:05] version chain is ordered by so where the
+[00:57:08] head is the newest version. So if I want
+[00:57:10] to create now a a new version for this
+[00:57:12] object then I slide everybody over put
+[00:57:15] something at the head of version chain
+[00:57:16] and just update my pointer that way. But
+[00:57:18] I also have to update now whatever the
+[00:57:20] record ID is that corresponds to this
+[00:57:22] logical tupil in an index or index is
+[00:57:25] plural because now the head is not
+[00:57:27] wherever A3 was. Head is wherever A4 is.
+[00:57:30] Again, I'm creating a new new version.
+[00:57:32] I'm appending that into my table space.
+[00:57:35] So now I got to go update all of all
+[00:57:36] those indexes to reflect this.
+[00:57:42] Of course, now if my if my transactions
+[00:57:44] only need the latest version, then
+[00:57:45] that's super easy to do because I just
+[00:57:47] pop to the the head and I'm done.
+[00:57:53] All right, time travel storage. Again,
+[00:57:55] the idea is that instead of making a
+[00:57:57] copy of a tupil and appending it to the
+[00:57:59] regular table space, I'll first make a
+[00:58:01] copy of it into the old version into
+[00:58:03] this separate table space. It just looks
+[00:58:05] like a regular table, just internally
+[00:58:07] you treat it differently, right?
+[00:58:10] And then I update my my version pointers
+[00:58:12] to all to point all these things now.
+[00:58:13] And then I can overwrite now what the
+[00:58:15] master version, the main version in the
+[00:58:16] main table. And I just have to update
+[00:58:18] the pointer to point to the the latest
+[00:58:21] version of version chain. In this case
+[00:58:22] here, we're going uh newest to oldest.
+[00:58:27] Right? This is what SQL server does. SCP
+[00:58:30] HANA was doing oldest and newest and
+[00:58:31] then then they flipped and got rid of
+[00:58:32] that.
+[00:58:35] So this again this seems like a trivial
+[00:58:37] thing. Why would I just store it in a
+[00:58:39] separate table inside of the main table?
+[00:58:40] But now because I know that this table
+[00:58:43] over here is going to contain only old
+[00:58:46] versions, assuming I'm going newest to
+[00:58:47] oldest, then when I want to start doing
+[00:58:50] garbage collection, I can just look at
+[00:58:53] the time travel table and not interfere
+[00:58:55] with the main table.
+[00:58:58] In the case of Postgress when the when
+[00:58:59] when the vacuum runs the degar collector
+[00:59:01] runs they got to touch the main table
+[00:59:02] where all your other you know where all
+[00:59:04] your other transactions are are
+[00:59:06] executing and you potentially interfere
+[00:59:08] with them.
+[00:59:11] But as I said the best way to do this
+[00:59:13] the pre preferable way to do this is do
+[00:59:14] delta storage. Again the idea is here is
+[00:59:16] that anytime I'm going to update a
+[00:59:17] record I first copy the the the the
+[00:59:21] columns that going to get modified into
+[00:59:23] this separate space over here are called
+[00:59:24] the delta storage. uh I think Oracle and
+[00:59:27] my SQL column roll back segments because
+[00:59:29] basically this is where I'm going to
+[00:59:30] store all my discs. So I'm going to put
+[00:59:31] all the old versions of of the tupils
+[00:59:34] for just the columns that I modified the
+[00:59:36] attributes that I modified all that goes
+[00:59:38] over there. Once that now now installed
+[00:59:40] then I can do my my I can overwrite
+[00:59:42] whatever the latest version is in the
+[00:59:44] main table and then now update the
+[00:59:45] pointer to point to this this version.
+[00:59:50] So then now again if I create a bunch
+[00:59:51] more versions right I update this this
+[00:59:53] record again I I just update the the
+[00:59:56] pointer to the to the sort of the head
+[00:59:58] of the the or the next the head of the
+[01:00:00] of the the roll back segment for this
+[01:00:03] version and I just update my pointers in
+[01:00:05] my to keep maintain the version chain so
+[01:00:06] I can go back and find the oldest
+[01:00:08] versions
+[01:00:09] and again just like before when I do
+[01:00:11] garbage collection which I talk about in
+[01:00:12] a second this is trivial to do or not
+[01:00:14] it's easier to do now because I can just
+[01:00:16] in some cases if I if I keep track of
+[01:00:17] the watermarks of what versions are
+[01:00:19] visible to me and I know that some big
+[01:00:21] chunk of my rollback segment or delta
+[01:00:23] storage is not visible to me at all. I
+[01:00:25] just blow it away and I don't have to do
+[01:00:27] any any mucking around on the main
+[01:00:29] table.
+[01:00:33] So now if I want to go re find an older
+[01:00:35] version, it's just like like playing a
+[01:00:37] diff or a patch. If I need to get
+[01:00:40] version A2, then I would start by
+[01:00:43] materializing in memory. Here's the
+[01:00:45] here's my for my my buffer space for my
+[01:00:47] transaction, my query. here's A3 and go
+[01:00:50] apply now the changes in in this order
+[01:00:53] and that puts me back to the version I
+[01:00:55] had before. In my example here, I'm only
+[01:00:57] showing, you know, tupless with one one
+[01:00:59] one attribute. Um, and if you have a
+[01:01:01] thousand attributes and you only update
+[01:01:02] one of them, this is way more efficient.
+[01:01:08] All right, so how how are we actually do
+[01:01:09] this garbage collection piece? So the
+[01:01:11] idea is that we're going to use those
+[01:01:13] timestamps, the beginning and end time
+[01:01:14] stamps and the transaction status table
+[01:01:16] to determine what transactions uh what
+[01:01:19] what what versions cannot be seen by any
+[01:01:22] actual transaction running right now.
+[01:01:24] Right? And again remember snapsa
+[01:01:26] isolation it says that
+[01:01:28] transactions have a consistent view of
+[01:01:30] the database. It means they can only see
+[01:01:32] the uh versions that that that were
+[01:01:35] committed before that transaction
+[01:01:37] started. So if I have a newer version of
+[01:01:39] an object from a committed transaction,
+[01:01:42] then any other previous version uh could
+[01:01:45] could potentially be thrown away and
+[01:01:46] deleted and removed because no other
+[01:01:49] transaction be able to see it because
+[01:01:50] only see that latest committed version.
+[01:01:53] So now the challenge is going to be how
+[01:01:54] do we find transactions? How do we find
+[01:01:57] these expired versions? And then how do
+[01:01:58] we decide when it's re safe to go ahead
+[01:02:00] and reclaim them?
+[01:02:02] I say also too, it's not just versions
+[01:02:04] that were created by committed
+[01:02:06] transactions. If my transaction makes a
+[01:02:08] bunch of changes and then the then it
+[01:02:09] aborts,
+[01:02:11] I I got to go ahead and clean those
+[01:02:14] those versions up as well because I know
+[01:02:16] definitely no no one could ever see them
+[01:02:17] because the transaction didn't finish.
+[01:02:20] So the basic idea we we do this in in
+[01:02:22] the transaction status table, you keep
+[01:02:23] track of like a a watermark, a
+[01:02:26] threshold, and says here's the the
+[01:02:27] global minimum transaction ID that could
+[01:02:30] still see some versions of of of of
+[01:02:33] tupils or objects. And once I know that
+[01:02:36] that thing is always moving forward in
+[01:02:37] time, assuming I don't have transactions
+[01:02:39] set around for days, then at some point
+[01:02:41] I can say, all right, I know there's no
+[01:02:42] no transactions active that could see
+[01:02:44] this versions and I go ahead and remove
+[01:02:46] them. So let's see how we want to go
+[01:02:48] ahead and reclaim them. So the first is
+[01:02:50] be tupal level garbage collection and
+[01:02:53] this is where we just going to just scan
+[01:02:55] the data and try to find versions that
+[01:02:57] aren't visible to us and we go ahead and
+[01:02:59] throw them away. And we can either do
+[01:03:01] this by separate dedicated workers
+[01:03:03] running in the background uh or we can
+[01:03:06] run this do this while transactions are
+[01:03:08] actually running. If they encounter
+[01:03:10] versions that are that aren't visible
+[01:03:11] any transaction then they will actually
+[01:03:13] go ahead and remove things.
+[01:03:15] And the last one would be keep just
+[01:03:17] keeping track of the rewrite set or
+[01:03:19] sorry the right set of transactions
+[01:03:20] while they run so that when they go
+[01:03:23] ahead and commit we know which versions
+[01:03:25] they've invalidated and we go ahead and
+[01:03:27] remove them.
+[01:03:31] All right. So the first one is tuple
+[01:03:32] level garbage collection. Again there's
+[01:03:33] two approaches. There's vacuum
+[01:03:34] vacuuming. There's dedicated workers and
+[01:03:36] then there's cooperative uh vacuuming.
+[01:03:38] So say I have two transactions that are
+[01:03:40] actively running T1 T2. T1 has time
+[01:03:43] stamp 12. T2 has time stamps 25. So now
+[01:03:47] the this information what time stamps
+[01:03:49] are still active will be sent to the
+[01:03:50] vacuum. It's now just going to do a
+[01:03:53] sequential scan on the table and look at
+[01:03:56] the beginning end time stamps and
+[01:03:57] identify which versions are not visible
+[01:03:59] by any active transaction. So in this
+[01:04:01] case here I have A100 B 100. They have
+[01:04:04] begin timestamps between one and nine.
+[01:04:06] The smallest time stamp I have is 12. 12
+[01:04:09] can't view either of those versions. So
+[01:04:11] I know it's safe for me to go ahead and
+[01:04:13] remove them.
+[01:04:15] >> What's that?
+[01:04:18] Uh the question is 12 can read those
+[01:04:20] version. Uh well assuming there's
+[01:04:23] another a there's some there's another a
+[01:04:25] somewhere. Yeah.
+[01:04:28] And you would know that based on how
+[01:04:29] like you would know the system would
+[01:04:31] know I'm doing oldest newest newest
+[01:04:33] oldest. It would know something about
+[01:04:34] what the pointer like am I at the am I
+[01:04:36] in the middle or the end or whatever
+[01:04:38] right? But I'm you correct yes that
+[01:04:41] there should be another version a make
+[01:04:42] this more clear.
+[01:04:45] So sequential scanning sucks because
+[01:04:47] just to do you know auto do this
+[01:04:49] vacuuming because what if there's a
+[01:04:51] bunch of pages that haven't been
+[01:04:52] modified since the last time I run
+[01:04:54] vacuuming I don't want to fetch them in
+[01:04:55] from disk bring them in memory pollute
+[01:04:56] my buffer pool and evict maybe useful
+[01:04:58] data right
+[01:05:01] so the way postgress handles that is
+[01:05:03] they maintain a bit map of what blocks
+[01:05:05] or pages have been modified since the
+[01:05:07] last time the the vacuum ran. So now it
+[01:05:12] says when it runs, right, it just looks
+[01:05:14] at this says scans all this and figures
+[01:05:16] out here's all the the the page IDs that
+[01:05:18] that have been modified since the last
+[01:05:19] time I run and those are the only ones I
+[01:05:21] need to bring in and go clean up.
+[01:05:23] Doesn't know how they were modified.
+[01:05:24] Just knows that they they were modified
+[01:05:25] in some way.
+[01:05:27] And this reduces unnecessarily bring in
+[01:05:29] pages that you don't need to clean.
+[01:05:33] Cooperative cleaning is is is the basic
+[01:05:35] idea is that when transactions run,
+[01:05:37] they're responsible for cleaning things
+[01:05:38] up of any older versions they find. So
+[01:05:41] say T1 starts and does a lookup to get
+[01:05:44] object A from and it follows the index
+[01:05:46] and say the index here we're doing
+[01:05:48] oldest and newest. So when it lands to
+[01:05:51] the head of the version chain, it's the
+[01:05:52] oldest version. And now it's going to
+[01:05:54] know from that the the the the global
+[01:05:57] transaction status table what's the
+[01:05:59] smallest time stamp of any actual
+[01:06:01] transaction. And therefore as it scans
+[01:06:03] along it may encounter versions that are
+[01:06:05] not visible by any actual transaction.
+[01:06:07] Therefore it's this transaction's
+[01:06:09] responsibility to go ahead and clean
+[01:06:11] them up as you scan scan along.
+[01:06:20] >> Sorry that's why
+[01:06:24] The state is this is why oldest and
+[01:06:26] newest advantage in some cases. Yes,
+[01:06:27] because I could if I'm doing this quer
+[01:06:29] cleaning I can handle that. But of
+[01:06:31] course now this makes read queries and
+[01:06:33] being doing writes
+[01:06:35] because I'm I'm doing rights here. I
+[01:06:37] have to update versions information
+[01:06:39] right because now I got to go update the
+[01:06:40] index to now point to the new head of
+[01:06:42] the version chain. So what what was a
+[01:06:45] select query should have been read only
+[01:06:47] is now actually doing update. Now
+[01:06:49] logically it's not updating the
+[01:06:50] database. Physically it is but so so
+[01:06:53] it's not taking lo not taking logical
+[01:06:54] locks on a but it is taking physical
+[01:06:58] latches on the data structure to update
+[01:06:59] things
+[01:07:04] all right transaction level GC is the
+[01:07:07] basic idea is that when transactions are
+[01:07:09] updating records updating objects they
+[01:07:11] just keep track of what things they've
+[01:07:13] invalidated
+[01:07:14] so I don't have to go hunt and peck and
+[01:07:16] try to find where these older versions
+[01:07:17] are now when my my back wants to
+[01:07:20] I know exactly where they where they
+[01:07:22] would be. Actually, going back here for
+[01:07:24] for the cooperative cleaning, I just
+[01:07:25] also mentioned too that like B 0 has
+[01:07:28] maybe a bunch of old versions too that
+[01:07:30] need to be cleaned up, but if nobody
+[01:07:31] ever reads them, then they never get
+[01:07:33] reclaimed. So, Microsoft calls these
+[01:07:36] dusty corners. So, you still actually
+[01:07:37] need both if you want to do these
+[01:07:38] because periodically, every so often,
+[01:07:40] you're going to run the the back vacuum
+[01:07:42] and clean up the things that nobody's
+[01:07:43] ever read because eventually you want
+[01:07:45] you want to clean up everything.
+[01:07:49] All right. So track transaction level GC
+[01:07:51] the idea is that as transactions make
+[01:07:53] changes they keep track of the versions
+[01:07:55] that they invalidate. So in this case
+[01:07:56] here I I I create a new version of A
+[01:07:59] make A3 but I know therefore that I've
+[01:08:01] invalidated A2 assuming my transaction
+[01:08:04] is going to commit that that this thing
+[01:08:07] should not be should be eventually be
+[01:08:09] reclaimed once I know it's not visible.
+[01:08:13] So then now uh if I update other things
+[01:08:15] same thing B6 put that in my my version
+[01:08:17] my full version set. So now when the
+[01:08:20] transaction commits
+[01:08:22] it's the the vacuum says okay these are
+[01:08:24] the versions that have been modified. I
+[01:08:26] know there's not you know the the end
+[01:08:28] time stamp for these is going to be less
+[01:08:30] than 10. Uh so therefore any if there's
+[01:08:33] any transactions that are still there
+[01:08:34] are no transactions that could
+[01:08:36] potentially view these view these
+[01:08:37] versions I know go ahead I want to clean
+[01:08:39] them up.
+[01:08:42] Right. So again, instead of having a
+[01:08:45] sort of decentralized approach to doing
+[01:08:47] the vacuuming, this is like putting
+[01:08:49] everything in a centralized data
+[01:08:50] structure.
+[01:08:55] All right. So now we get to the point
+[01:08:56] that people keep asking about how do we
+[01:08:57] actually manage indexes? So primary key
+[01:09:00] indexes are going to be super easy or
+[01:09:02] easyish because it's always the primary
+[01:09:04] key index is always going to be
+[01:09:05] responsible for pointing to the head of
+[01:09:06] the virgin chain. In the case of like
+[01:09:09] index organized storage like my SQL the
+[01:09:12] the tupil itself is going to be in the
+[01:09:14] leaf pages but that you you still can
+[01:09:16] consider that as the the logical head of
+[01:09:18] the version chain and then they have the
+[01:09:19] separate roll back segment where they
+[01:09:20] restore all the previous versions
+[01:09:23] right so then now the challenge is going
+[01:09:26] to be how do we handle secondary indexes
+[01:09:29] uh in the case of primary key indexes
+[01:09:31] too if you if you modify the attributes
+[01:09:35] that is the primary key of of the tupil
+[01:09:37] then you just treat that as a delete
+[01:09:39] followed by an insert.
+[01:09:41] You still have to handle the case where
+[01:09:42] like someone deletes something the
+[01:09:45] primary key and then you commit and then
+[01:09:48] you need to now insert that primary key
+[01:09:51] again. We'll see that in a second. You
+[01:09:53] got to handle that. That that's a corner
+[01:09:54] case. But in general, you just treat it
+[01:09:56] as two distinct tuples. I delete it and
+[01:09:57] then I insert it if I update. It's the
+[01:10:00] secondary indexes that are going to be
+[01:10:01] problematic. And again, now you see why
+[01:10:04] I was trying to say at the beginning
+[01:10:05] like all the the ways we decide how
+[01:10:07] we're going to store versions and and
+[01:10:09] you know whether it's oldest to newest,
+[01:10:10] newest to oldest, whether it's pend only
+[01:10:11] or delta storage, that's going to affect
+[01:10:14] all parts of our system because now we
+[01:10:15] need to account for that in our
+[01:10:16] secondary indexes. What are they
+[01:10:18] actually going to be pointing to?
+[01:10:19] Because if I'm moving things around
+[01:10:20] ahead of chain, uh I may have to go
+[01:10:23] update that thing if I'm pointing to,
+[01:10:25] you know, the newest version.
+[01:10:35] The question is why I treat an update
+[01:10:37] why why do I treat an update as a delete
+[01:10:40] file insert
+[01:10:43] >> uh rather
+[01:10:47] >> they're proposing optimization where
+[01:10:50] my primary key is ID I have ID equals 1
+[01:10:53] I then update the two board say ID
+[01:10:54] equals 2 and what I'm saying is you
+[01:10:57] first delete ID equals one from the
+[01:10:58] index then you insert it. You're
+[01:11:00] proposing that you insert it first to
+[01:11:02] see whether it would conflict. That's an
+[01:11:04] optimization you could do. Yes, I
+[01:11:05] suppose. But it's it's the same.
+[01:11:10] [snorts]
+[01:11:11] All right. So again to show you again
+[01:11:13] why this why thinking about you know
+[01:11:16] multi-verging throughout the entire
+[01:11:17] system matters is because depending on
+[01:11:19] your environment depending on your
+[01:11:20] workload depending on your hardware
+[01:11:22] these different design choices for how
+[01:11:24] you're going to implement multiver
+[01:11:26] can have pretty significant difference
+[01:11:27] in performance and behaviors and so
+[01:11:29] there's a great blog article which is
+[01:11:30] over 10 years old now from Uber um about
+[01:11:34] their journey from going from from
+[01:11:35] Postgress to my SQL the reason why they
+[01:11:37] had to switch from Postgress to my SQL
+[01:11:39] is because the the way postgress was
+[01:11:42] doing multiverging in particular and how
+[01:11:43] they handle secondary indexes was
+[01:11:46] actually less efficient in Postgress
+[01:11:47] than it was in my SQL. The real name of
+[01:11:50] this blog article should be actually be
+[01:11:52] why why Uber went from my SQL to
+[01:11:54] Postgress back to my SQL because they
+[01:11:56] started the MySQL they hired some guy
+[01:11:58] says let's go to Postgress and they
+[01:11:59] switched they realized that was a
+[01:12:00] mistake they had to go back to my SQL
+[01:12:02] I'm sure they paid millions and millions
+[01:12:04] of dollars to do this they could have
+[01:12:05] paid us to tell them not to do it for
+[01:12:07] less um but let's see what's going on
+[01:12:10] all right so the challenge again with
+[01:12:11] secondary indexes is that I got to point
+[01:12:14] to something as my value portion of my
+[01:12:16] index
+[01:12:18] uh you know of my my my of my record.
+[01:12:21] But if I'm starting to change what it
+[01:12:23] means to be the head of the version
+[01:12:25] change based on the the ordering I'm
+[01:12:27] doing, then I potentially have to go
+[01:12:29] update all my uh my all my secondary
+[01:12:32] indexes. So, one way to get around
+[01:12:34] having to update everything is to use a
+[01:12:36] logical pointer where it's like a proxy
+[01:12:39] to represent
+[01:12:40] a sort of sort of almost like a key that
+[01:12:43] allows you to then find what the true
+[01:12:45] head of the virgin chain is. what what
+[01:12:46] is the true current record ID for this
+[01:12:48] given tubor. The challenge though is
+[01:12:50] going to be basically an additional
+[01:12:52] indirection layer because when I do my
+[01:12:55] lookup my secondary index I now have
+[01:12:57] this this logical pointer and I got to
+[01:13:00] go figure out how to get get the
+[01:13:01] physical pointer where the actual
+[01:13:02] tupolis actually is. So I do look up on
+[01:13:04] another index.
+[01:13:07] The other approach to do update physical
+[01:13:08] pointers like what is actually the true
+[01:13:10] head of the version chain. Let's see a
+[01:13:13] basic example. So this is um this is
+[01:13:16] doing a pend only uh storage with newest
+[01:13:20] to oldest. So not postgress is oldest to
+[01:13:21] newest but newest to oldest. So if I do
+[01:13:24] a look with the primary key right the
+[01:13:26] primary key is always going to have the
+[01:13:28] record ID as the value and that's going
+[01:13:29] to always be the head of the version
+[01:13:31] chain. So that's fastish like I can
+[01:13:33] always go exactly to where I want right
+[01:13:36] and depending on whether my transaction
+[01:13:37] needs the newest version or the oldest
+[01:13:38] version I still have to maybe scan along
+[01:13:40] the version chain but the index part is
+[01:13:42] is straightforward.
+[01:13:44] But now the problem's going to be when I
+[01:13:45] do a lookup on the secondary indexes,
+[01:13:47] right? If I store the record ID, the
+[01:13:51] same idea for the primary key, then in
+[01:13:53] this example here, every single time I
+[01:13:55] update the the version chain, the
+[01:13:58] version, and now I append a new, you
+[01:14:01] know, version at the beginning of the
+[01:14:02] version chain, I have to now update any
+[01:14:04] index that's pointing to it. So yeah, I
+[01:14:06] update the primary key index, but then I
+[01:14:08] have to also update all my secondary key
+[01:14:10] indexes as well. So for one index maybe
+[01:14:12] that's not that big of a deal but if I
+[01:14:14] have a lot of them then to do one update
+[01:14:18] on the tupil for for not even for the
+[01:14:21] for the keys that this thing might be
+[01:14:22] indexed on not if I update an attribute
+[01:14:24] that not I don't even have an index on
+[01:14:26] because now I'm storing the physical ID
+[01:14:28] the the location of the head of the
+[01:14:29] version version chain I have to update
+[01:14:31] all these indexes means I have to do
+[01:14:33] latch grabbing you know or whatever data
+[01:14:35] structure I'm using and do all that
+[01:14:38] an alternative is to use the logical ID
+[01:14:41] as a way to represent you know an
+[01:14:44] additional indirection layer to take
+[01:14:46] some logical value and get to that verd
+[01:14:48] chain. So now when I update the head of
+[01:14:51] the virgin chain I don't have to update
+[01:14:52] all my secondary indexes.
+[01:14:55] So this is what my SQL does. So my SQL
+[01:14:58] actually stores the primary key of your
+[01:15:00] of your tupil as the value of any
+[01:15:03] secondary index. So when I do my lookup
+[01:15:06] on my secondary index, you know, you
+[01:15:09] know, from from one key, I get out the
+[01:15:12] primary key and then I do another lookup
+[01:15:14] in the primary key index to then get to
+[01:15:16] the head of the version chain
+[01:15:19] in the case of my SQL because it's
+[01:15:20] indexed on organized storage. Once I get
+[01:15:22] to the leap node, uh I get my tupil
+[01:15:24] anyway, right? So it's not that big of a
+[01:15:27] deal.
+[01:15:28] But now if I have to update multiple uh
+[01:15:32] if I have many secondary indexes,
+[01:15:35] I don't have to do any I don't have to
+[01:15:37] update all of them whenever the the
+[01:15:39] whenever whenever I update my tupil head
+[01:15:41] in my version chain because they're
+[01:15:42] still always going to point to the
+[01:15:43] primary key index.
+[01:15:45] And if I do that trick I said before
+[01:15:47] where anytime I up I change or modify
+[01:15:49] the primary key of a tupil I treat that
+[01:15:51] followed by delete by an insert then
+[01:15:53] again I I update all my update all my
+[01:15:56] secondary indexes that way as well.
+[01:16:00] So most data systems that do multi
+[01:16:02] versioning are not going to store
+[01:16:03] version information in the index itself
+[01:16:06] and if it's index or storage implicitly
+[01:16:09] it's down in there but typically they
+[01:16:11] don't do this. Postgress is going to do
+[01:16:13] this because since they're doing oldest
+[01:16:16] and newest and since the version chain
+[01:16:18] may span multiple pages to go look at
+[01:16:21] one tupole I may have to go read
+[01:16:22] multiple pages to avoid having to skin
+[01:16:24] entire version chain they'll have
+[01:16:26] multiple entries in the index for
+[01:16:28] different versions that allow you to
+[01:16:29] jump to different offsets within the
+[01:16:30] version chain. Of course now when I
+[01:16:33] clean things up I got to go delete those
+[01:16:34] those old version uh uh references but
+[01:16:38] it's
+[01:16:40] they decided it would be faster to do
+[01:16:41] that. uh it it it makes the scans faster
+[01:16:45] but deletes slower.
+[01:16:48] The challenge also going to be now our
+[01:16:49] index still has to support uh duplicate
+[01:16:52] keys from different snapshots. So we
+[01:16:54] talked about how we would handle uh
+[01:16:59] in secondary indexes if we want to make
+[01:17:01] if if we make the data structure in a BB
+[01:17:02] bus tree handle only unique new keys
+[01:17:06] then if we just append the record ID
+[01:17:08] into the the the key itself that
+[01:17:10] guarantees that every every key I store
+[01:17:12] is unique but the basic same idea
+[01:17:14] applies here that like if I store the
+[01:17:17] record ID and some additional metadata
+[01:17:19] in my key that I'm storing then now I
+[01:17:21] could I could potentially have two keys
+[01:17:23] get inserted into index that would
+[01:17:25] normally conflict logically but
+[01:17:27] physically they don't conflict because
+[01:17:29] the the bytes I'm actually storing will
+[01:17:31] will will not match.
+[01:17:34] Right? And the reason you need to do
+[01:17:35] this is because
+[01:17:37] the garbage collector may not have come
+[01:17:39] through and cleaned things up. So in the
+[01:17:40] same way I got to go clean up the
+[01:17:41] version chains, I got to go clean up the
+[01:17:43] indexes as well to make sure they're not
+[01:17:44] pointing to things in my version chain
+[01:17:46] that don't exist anymore.
+[01:17:48] So say a transaction T1 starts, it does
+[01:17:50] a read on A, transaction T T2 starts and
+[01:17:54] they're going to update A, right? And
+[01:17:57] that's going to create a new version
+[01:17:58] like this. But then it's going to delete
+[01:18:00] A.
+[01:18:02] So now the say this transaction goes
+[01:18:05] ahead and commits. The garbage collector
+[01:18:06] hasn't run yet. So my index still has a
+[01:18:09] pointer for for object A, right? On key
+[01:18:12] A still points to the head of my version
+[01:18:15] chain down here.
+[01:18:18] But then another transaction comes along
+[01:18:21] right after the second one is committed
+[01:18:24] and it creates an does insert on a.
+[01:18:28] So now I need to be able to again also
+[01:18:30] update that pointer here.
+[01:18:32] Right? And again logically that's
+[01:18:35] allowed to happen because t2 is already
+[01:18:36] committed even though physically I'm
+[01:18:38] storing a multiple versions of a and the
+[01:18:40] keys technically conflict. Logically
+[01:18:42] they don't conflict because t1 is t2 is
+[01:18:44] gone. T3 is allowed to go ahead and do
+[01:18:48] do the update because T1 is still
+[01:18:51] running at the top. So now when it when
+[01:18:53] it reads A, you need to be guaranteed
+[01:18:55] that it goes sees the version A1 and not
+[01:18:57] the the newer uncommitted version A3.
+[01:19:00] Even if if A3 the bottom one commits,
+[01:19:02] right? It still needs to be able to see
+[01:19:04] A1.
+[01:19:07] So the way we would handle this is that
+[01:19:09] we just we we we
+[01:19:11] need to be since we need to now support
+[01:19:14] non-unique keys, we can store some basic
+[01:19:16] versioning information in the in the
+[01:19:18] keys itself that guarantee the the
+[01:19:20] uniqueness
+[01:19:22] and that allows us to find the version
+[01:19:24] that we actually actually want. Right?
+[01:19:26] Because going back here, the virgin
+[01:19:28] chain is not connected because because
+[01:19:29] logically the the insert A in T3 is not
+[01:19:34] the same tupil, same logical tupil that
+[01:19:36] the other two transactions are
+[01:19:38] modifying. They're logically distinct
+[01:19:39] even though the keys are the same and
+[01:19:41] physically I'm storing them together in
+[01:19:42] the in the in the index.
+[01:19:44] So we need to be able to guarantee that
+[01:19:46] the other transactions can still find
+[01:19:48] the older transactions still find the
+[01:19:49] older versions.
+[01:19:53] All right. And the last one thing I want
+[01:19:54] to cover quick we go is how do we handle
+[01:19:56] deletes. So again like we're going to be
+[01:20:00] we're the garbage is going to be
+[01:20:01] physically deleting old versions but at
+[01:20:03] some point we got to be able to
+[01:20:04] logically delete them and remove the
+[01:20:05] entire version chain right and so we
+[01:20:08] just need a way to keep track of that
+[01:20:10] that a tuple has been has been deleted.
+[01:20:13] And the easiest way to do this would be
+[01:20:15] you just store a or one way to do this
+[01:20:18] is store in the the header uh a little
+[01:20:22] flag and say this is this is the latest
+[01:20:25] version of this transaction sorry latest
+[01:20:27] version of this logical tool has been
+[01:20:28] deleted. So as I'm scanning along my
+[01:20:31] version chain if I come across that flag
+[01:20:32] I know that okay this thing has been
+[01:20:34] logically deleted even though physically
+[01:20:35] I can still see it. And then you can
+[01:20:36] determine the transaction the data
+[01:20:38] system can determine whether a
+[01:20:39] transaction is allowed to see that or
+[01:20:40] not. The other approach is actually make
+[01:20:42] a special tombstone tupil that's the end
+[01:20:44] of your version chain so that if you
+[01:20:45] come along you just see that and you
+[01:20:47] know you've been deleted.
+[01:20:49] All right. So here's a quick summary of
+[01:20:51] a bunch of systems that are out there
+[01:20:53] and various ways that they're
+[01:20:54] implementing uh multi version control.
+[01:20:56] As you can see Postgress is there as a
+[01:20:58] pendon only uh heaton which is a
+[01:21:01] inmemory advance system for for SQL
+[01:21:03] server like a for transactions. They're
+[01:21:05] the only ones that are still still kind
+[01:21:07] of doing appendon. Now any any modern
+[01:21:09] system is be doing the delta storage
+[01:21:11] approach because it's just way more
+[01:21:13] efficient and way more the engineering
+[01:21:15] is is engineering complexity to get good
+[01:21:17] performance is much lower than it is
+[01:21:18] with a depend
+[01:21:20] like in postgress when you run the
+[01:21:22] vacuum and it deletes old versions it
+[01:21:24] doesn't actually recan the me memory
+[01:21:27] it's only when you run vacuum full or
+[01:21:28] run pg repack does that actually clean
+[01:21:30] things up so I can insert uh a billion
+[01:21:32] tupils commit that transaction then
+[01:21:35] delete a billion tupils and delete that
+[01:21:36] and commit that transaction and poke us
+[01:21:38] won't actually reclaim the storage
+[01:21:39] space. It just hasn't much empty space
+[01:21:41] where we can store things.
+[01:21:43] All right. So again, MVC is the most
+[01:21:46] widely used storage scheme for for
+[01:21:47] mending transactions and and data in a
+[01:21:50] data system. But we kind of need to
+[01:21:51] cover all the basics throughout the
+[01:21:53] inspector before we can get to
+[01:21:54] everything we're talking about here
+[01:21:55] today. So now you understand what
+[01:21:56] secondary indexes are doing. Now you can
+[01:21:57] understand what you know what the scan
+[01:21:59] operators are doing when it goes tries
+[01:22:00] to read things. And even even database
+[01:22:03] systems that do not support
+[01:22:05] multi-statement transactions like I can
+[01:22:07] call update update update and commit
+[01:22:08] atomically even those systems are going
+[01:22:10] to still do some variation of multi-
+[01:22:12] versioning
+[01:22:14] they just don't support more complex
+[01:22:15] transactions.
+[01:22:16] All right, next class we we'll be
+[01:22:19] switching over to talk about logging
+[01:22:21] recovery. And then so next week will be
+[01:22:23] the last two lectures you need to
+[01:22:24] actually build a safe reliable database
+[01:22:27] system. Like even though we're not near
+[01:22:29] the end of semester, like the last two
+[01:22:30] pieces are what you need to make sure
+[01:22:32] you don't lose data. And then once we
+[01:22:34] finish next week, then we'll talk about
+[01:22:35] what what happens when we go distributed
+[01:22:37] because that just makes everything
+[01:22:38] harder. Okay,
+[01:22:40] hit it.
+[01:22:42] [music]
+[01:22:44] Aquat
+[01:22:48] [music]
+[01:22:53] [music]
+[01:23:03] [music]
+[01:23:04] the fortune fame maintain
+[01:23:08] flow with the brain.
+[01:23:10] >> [music]
+[01:23:17] [music]

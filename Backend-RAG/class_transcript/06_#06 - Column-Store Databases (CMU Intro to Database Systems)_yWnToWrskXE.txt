@@ -1,0 +1,2262 @@
+[00:00:00] [Music]
+[00:00:06] I'm still
+[00:00:08] associ.
+[00:00:11] [Music]
+[00:00:25] Round of applause for DJ Cash. Uh,
+[00:00:30] >> glad you make it a little late.
+[00:00:32] >> Yeah, I was busy getting money.
+[00:00:36] >> Again, like yes, you're among I
+[00:00:38] understand you want money a lot, but
+[00:00:39] like focus on databases, focus on your
+[00:00:41] DJ skills, not just like trying to raise
+[00:00:43] money. All right. Uh, we have a lot to
+[00:00:44] cover, so I want to get through
+[00:00:45] everything. Um so today again before we
+[00:00:49] or jump into course material again
+[00:00:51] reminder that homework two and uh
+[00:00:53] project one are out and they're both
+[00:00:55] going to be due uh in the coming weeks.
+[00:00:58] So homework two will be due this
+[00:01:00] upcoming Sunday. Let me turn on the
+[00:01:01] lights. Sorry. Um
+[00:01:05] yeah homework two will be due uh the
+[00:01:08] Sunday coming up and then project one
+[00:01:10] will be due uh the following week. Um
+[00:01:14] those days don't match up. 21st, 29th,
+[00:01:16] whatever whatever the Sundays are, go by
+[00:01:18] the Sundays. Um the recitation for
+[00:01:22] project uh one will be tomorrow night
+[00:01:25] over Zoom. Go check on Piaza. And again,
+[00:01:27] this will be a recorded session over
+[00:01:29] Zoom, but if you have questions, you
+[00:01:30] want live answers. Uh we encourage you
+[00:01:33] to join and ask them. And again, this is
+[00:01:35] not like you're you shouldn't ask basic
+[00:01:37] things like you know, how do I compile
+[00:01:39] my C++ code? It should be like I've
+[00:01:41] started the project and uh I want to
+[00:01:44] understand a bit more about what this
+[00:01:45] component means or what this file means,
+[00:01:46] what does this class means. Okay. So
+[00:01:48] again, don't treat this as like like
+[00:01:51] teaching you here's how to start the
+[00:01:52] very beginning of the project. More like
+[00:01:54] we we'll give you some uh some high
+[00:01:57] level overview of what the arc algorithm
+[00:01:58] is. We'll go over that more detail than
+[00:01:59] I did in class and some other parts of
+[00:02:01] the system. But then if you have more
+[00:02:02] detailed questions about the
+[00:02:03] implementation, this is the opportunity
+[00:02:05] to do that. Okay. It'll be recorded and
+[00:02:08] we'll post it on uh the slides on on box
+[00:02:11] later later uh later that evening. Okay,
+[00:02:15] that's again that's tomorrow night over
+[00:02:16] zoom not anywhere in person for the
+[00:02:20] upcoming database talks as I said last
+[00:02:23] class today and to today and tomorrow
+[00:02:25] are our visit day from all our industry
+[00:02:27] friends. So we have uh two sessions or
+[00:02:30] sorry three sessions in the morning
+[00:02:31] tomorrow starting at 9:30 everything
+[00:02:33] will be in the gates gates building. So
+[00:02:36] you can see here again I know we asked
+[00:02:37] you to select what companies you wanted
+[00:02:39] to go visit. That wasn't like a
+[00:02:40] contract. You're saying I'm going to
+[00:02:41] meet this company at this time. It was
+[00:02:43] more like we want to know what your
+[00:02:44] preferences and availability were was.
+[00:02:46] So then we ran this through a stable
+[00:02:48] marriage algorithm optimizer algorithm
+[00:02:49] and it generated the optimal schedule
+[00:02:51] that tries to meet the most people's uh
+[00:02:53] requests and demands. Okay.
+[00:02:56] There was one big announcement last
+[00:02:58] Wednesday when we had class. Actually
+[00:02:59] while we were presenting in class uh one
+[00:03:02] of these companies got acquired. Anybody
+[00:03:04] know which one it was?
+[00:03:07] >> What's that?
+[00:03:08] >> Pink cap. No.
+[00:03:12] The guy actually speaking, Joyo from
+[00:03:14] Single Store. While he was talking, his
+[00:03:16] company got acquired uh by Vector
+[00:03:18] Capital. Uh so as he said, Single Store
+[00:03:21] has been around for a while. It was
+[00:03:22] originally called Mems SQL. Uh that's
+[00:03:24] first how I met these guys in like 2012
+[00:03:29] 2011. Um we can talk a little offline
+[00:03:32] what the initial incarnation of MSQL
+[00:03:34] looked like. Um they had one very very
+[00:03:36] famous investor who turned out to do you
+[00:03:39] know who uh did pretty well last week's
+[00:03:42] announcement and that is Ashton Kutcher.
+[00:03:46] Believe it or not Ashton Kutcher was a
+[00:03:48] early investor in memsql or now now
+[00:03:50] single store. I don't know how they met
+[00:03:52] him. I don't know how he got Ashton
+[00:03:54] Coocher even knows anything about
+[00:03:54] databases. Uh, but this this tweet is
+[00:03:57] real from from 10 years ago, right? So,
+[00:04:01] yeah, congrats to those guys, although
+[00:04:03] none of them were there anymore, right?
+[00:04:04] Eric Finkele left. Nikita, I mentioned
+[00:04:07] he left Single Store and went to Neon
+[00:04:10] that got bought by data bricks for a
+[00:04:12] billion. Uh, so whatever, they're fine.
+[00:04:15] All right. So last class we talked about
+[00:04:18] an alternative to the uh the the tuple
+[00:04:23] oriented storage we saw before with
+[00:04:24] slotted pages and we said like it isn't
+[00:04:27] the only way you have to store store
+[00:04:28] data right store tuples in in pages and
+[00:04:31] we looked at the mostly the log
+[00:04:33] structure storage scheme where instead
+[00:04:35] of actually storing maybe the entire
+[00:04:37] tupil uh and every time it gets updated
+[00:04:40] overwriting existing tupil we're just
+[00:04:42] appending to these log files that got
+[00:04:43] written out to disk and then the
+[00:04:46] background there's some compaction
+[00:04:47] mechanism we talked about level
+[00:04:49] compaction or universal compaction to
+[00:04:51] combine them together to reduce
+[00:04:52] redundant information uh and and and
+[00:04:55] compress the sizes index organized
+[00:04:57] storage the idea was it looks basically
+[00:05:00] like the slide of page approach but
+[00:05:03] instead of having this heap file where
+[00:05:04] I'm jumping to unordered uh pages to
+[00:05:07] find the data I'm looking for I'm
+[00:05:09] actually going to use the a treebased
+[00:05:11] data structure like a B+ tree which
+[00:05:13] we'll discuss in a few weeks and
+[00:05:15] traverse down to the tree to find the
+[00:05:16] data I'm looking for and then in the
+[00:05:18] leaf nodes rather than being a pointer
+[00:05:19] to where the data exists in a in a heap
+[00:05:21] page it's actually the data itself right
+[00:05:24] my SQL entity does this SQLite does this
+[00:05:26] right and has again each of these
+[00:05:28] approaches have pros and cons uh but
+[00:05:30] ideally we saw that they were they were
+[00:05:32] better for doing update heavy or write
+[00:05:34] heavy workloads where you're ingesting a
+[00:05:37] lot of new information from the outside
+[00:05:38] world right
+[00:05:41] most of the queries that exist in the
+[00:05:43] real world though are not going to be
+[00:05:44] write queries. Most of the queries are
+[00:05:46] going to be read queries or select
+[00:05:48] queries. And in fact, for read certain
+[00:05:50] read queries that are maybe looking at a
+[00:05:52] lot of data or trying to do more complex
+[00:05:54] things, these approaches actually going
+[00:05:56] to be terrible, right? Even the heap
+[00:05:58] file uh sorry the the tuple oriented
+[00:06:00] storage we talked before a lot of pages
+[00:06:02] that's going to be terrible for
+[00:06:03] analytical queries. And the single store
+[00:06:05] talk that he gave last class is actually
+[00:06:08] the introduction for this class this
+[00:06:09] today's lecture because a lot of things
+[00:06:10] he was saying maybe didn't make any
+[00:06:12] sense on why you want to use a column
+[00:06:13] store. That's what we're going to talk
+[00:06:14] about today. So, I'm going to briefly go
+[00:06:17] over again what the single store guy
+[00:06:19] talked about last class and talk about
+[00:06:21] the different different types of
+[00:06:22] workloads that are out there for
+[00:06:23] databases and what we uh you know and
+[00:06:26] how we again see how we can design our
+[00:06:29] database system to account for these uh
+[00:06:32] design decision these workloads and come
+[00:06:34] up with more optimal schemes. And then
+[00:06:36] the beauty of SQL and the relational
+[00:06:38] model with the separation between the
+[00:06:40] logical layer and the physical layer is
+[00:06:41] that I can still expose a relational
+[00:06:43] table interface to the application like
+[00:06:45] I'll call create table and I'll write my
+[00:06:46] SQL queries on that. But underneath the
+[00:06:49] covers we can use one of these
+[00:06:50] alternative storage models uh to come up
+[00:06:52] with a more optimized uh scheme for for
+[00:06:55] our data to make queries run faster and
+[00:06:58] not just a little bit faster. I mean
+[00:06:59] like orders of magnitude faster.
+[00:07:01] I mean, think of going like uh in the
+[00:07:04] early days of column stores, I had a
+[00:07:06] friend who worked at one of the ones
+[00:07:07] called Vertica. He told me that there
+[00:07:09] was some Australian telephone company,
+[00:07:10] they had queries that would take days
+[00:07:12] and then when they switched over to a
+[00:07:14] column store system, which we'll talk
+[00:07:15] about today, it went to like minutes.
+[00:07:17] Their minds were blown and we'll see why
+[00:07:20] that's the case here. So, we go talk
+[00:07:21] about different storage models and then
+[00:07:22] we'll talk about techniques to actually
+[00:07:23] make this even run even faster by
+[00:07:25] compressing the data.
+[00:07:29] So this is a bit of a repeat of what
+[00:07:30] again the single store guy talked about
+[00:07:32] again but I put I want to put in my own
+[00:07:33] words. There's roughly three categories
+[00:07:36] of database workloads. Uh there's OLTP,
+[00:07:39] OLAP and last one is HAP hybrid
+[00:07:42] transaction processing. OLTP is what
+[00:07:44] people typically start with. They
+[00:07:46] building a brand new application like if
+[00:07:47] you're a brand new startup you don't
+[00:07:49] have any data. You're going to build
+[00:07:50] some kind of app that people can connect
+[00:07:52] to interact with and then you'll be
+[00:07:54] ingesting new data from updates from the
+[00:07:55] outside world. That's an OTP
+[00:07:57] application, right? You're you're doing
+[00:08:00] uh you're you're taking new data from
+[00:08:02] again from the outside world, but the
+[00:08:04] amount of data that you're taking for
+[00:08:05] every single operation, for every single
+[00:08:07] query is going to be small. Like think
+[00:08:10] of like posting a message on Reddit, a
+[00:08:12] comment on Reddit, like you typing in a
+[00:08:14] box and hitting send. The amount of data
+[00:08:16] they're storing for that one comment
+[00:08:18] request is actually not that big. Like
+[00:08:20] your username, a time stamp, and then
+[00:08:22] the text field.
+[00:08:24] Or think like, you know, buying
+[00:08:26] something on Amazon. You put something
+[00:08:27] in your cart that updates the database.
+[00:08:28] It's like your your your user account
+[00:08:30] information, a time stamp, the item you
+[00:08:33] want to buy, and then the quantity. It's
+[00:08:35] not that much data. But we're going to
+[00:08:37] do a lot of this, and we want to try
+[00:08:38] this very very quickly.
+[00:08:41] OLAP is once you have a lot of data,
+[00:08:43] existing data, then you want to run
+[00:08:44] analytical operations on them. Basically
+[00:08:46] asking questions about that data to
+[00:08:48] extract new knowledge based on the
+[00:08:51] aggregate data that you have.
+[00:08:53] So going back to the Amazon example, OTP
+[00:08:57] would be like again someone buying make
+[00:08:59] buying one item, right? For every person
+[00:09:01] buying one item, that's the small amount
+[00:09:02] of data per person, but the total amount
+[00:09:04] of data that they're generating across
+[00:09:06] all the orders, across all people using
+[00:09:08] Amazon is actually quite a lot. So then
+[00:09:11] now when you want to run analytical
+[00:09:12] queries, they ask you can answer
+[00:09:14] questions like what's the number one
+[00:09:15] item bought in the city of Pittsburgh on
+[00:09:17] a on a day this day in September when
+[00:09:20] the temperature was above this this
+[00:09:21] degree or that degree. so forth, right?
+[00:09:24] That's an analytical query because
+[00:09:25] you're asking a question about looking
+[00:09:26] across uh multiple entities or multiple
+[00:09:29] entries in in the database or in the
+[00:09:31] tables.
+[00:09:33] And so these queries are going to be
+[00:09:34] more complex than we do in OLTP, right?
+[00:09:36] Be joining multiple tables, doing window
+[00:09:38] functions, aggregations, all the kind of
+[00:09:39] stuff you did in homework one. You
+[00:09:41] typically see them in the in the OLAP
+[00:09:44] workloads.
+[00:09:47] HTAP or hybrid transaction analytical
+[00:09:48] processing. This is like the holy grail
+[00:09:51] for systems, but it always doesn't
+[00:09:52] always pan out where you want to be able
+[00:09:55] to do uh fast transactions or do fast OP
+[00:09:58] operations. You can just new data very
+[00:10:00] quickly, but then you also want to ask
+[00:10:01] questions about that data where it
+[00:10:03] exists in that database without slowing
+[00:10:05] down the the rest of the workload.
+[00:10:08] Single store uh is trying to push this.
+[00:10:10] Uh pin cap tidb is another one do this.
+[00:10:13] This one is can be a bit hit or miss
+[00:10:14] because oftentimes it's it isn't the
+[00:10:17] best OTB system and it isn't the best
+[00:10:19] OLAP system and if you're like in a big
+[00:10:21] company the people that care about OTV
+[00:10:23] they want the best ones they'll pick
+[00:10:24] something else and the people that want
+[00:10:25] the best OLAP system they'll pick
+[00:10:26] something else. Um right so but this is
+[00:10:29] a market segment that does exist
+[00:10:32] AI is kind of separate this from this
+[00:10:34] and it's kind of it's kind of what comes
+[00:10:37] after OLAP so ALOP will ask you you can
+[00:10:39] ask questions about what was this what
+[00:10:41] was that based on the data you have the
+[00:10:44] AI stuff that's sort starting to come
+[00:10:46] out is starting to ask questions about
+[00:10:47] why things were a certain way like why
+[00:10:49] was this item was the number one bought
+[00:10:51] item in in Pittsburgh at this date in
+[00:10:53] time right and what aspects of that make
+[00:10:56] it interesting for people in a certain
+[00:10:58] de demographic and so forth. Those are
+[00:11:00] the kind of things AI uh uh cares about
+[00:11:03] and we'll see how we handle that later
+[00:11:05] on in uh we talk about vector indexes
+[00:11:08] but it it smells enough like OLAP that
+[00:11:10] we don't have to show it as a separate
+[00:11:11] category here.
+[00:11:13] So a really simple quad chart to
+[00:11:15] understand the distinction between these
+[00:11:16] two sort of categories of workloads is
+[00:11:19] looking at whether the workload is right
+[00:11:20] heavy versus read heavy and whether the
+[00:11:22] operation or the query that you're
+[00:11:23] trying to execute in the database system
+[00:11:25] is it going to be simple or complex and
+[00:11:27] complexity is not really a a scientific
+[00:11:30] term or something we can measure a query
+[00:11:32] in uh based on it's usually something
+[00:11:34] like how many tables does it join does
+[00:11:35] it do aggregations how many group eyes
+[00:11:37] how many how many nested queries right
+[00:11:40] in OTB queries they're pretty simple
+[00:11:42] like select star from table where from
+[00:11:44] table users where username equals Andy
+[00:11:47] you're going to get like one thing doing
+[00:11:48] doing a lookup on an index
+[00:11:51] so you can roughly divide the the
+[00:11:53] workloads like this so on one end on the
+[00:11:56] bottom corner you have OTP these
+[00:11:57] workloads are considerably more
+[00:11:59] writeheavy than OLAP because again
+[00:12:01] you're ingesting new data from the
+[00:12:02] outside world although most of the times
+[00:12:04] even in OTP system most of the
+[00:12:06] operations are read queries and then the
+[00:12:08] queries you're actually running are
+[00:12:09] pretty simple like go select Andy's
+[00:12:10] record uh bank account information go
+[00:12:12] get you know Andy's orders from the last
+[00:12:15] year. OLAP is the other end up here. Uh
+[00:12:18] and the workloads are considered they're
+[00:12:20] typically almost always read more read
+[00:12:21] heavy and the queries are more complex.
+[00:12:24] So OLAP is is OLB is an older term. It
+[00:12:27] goes back to like the 80s. OLAP came out
+[00:12:29] of the 90s. It was actually invented by
+[00:12:31] uh this very famous database researcher
+[00:12:33] called Jim Gray. He won the touring
+[00:12:35] award for databases in the 1990s. He
+[00:12:37] invented a lot of stuff we're going to
+[00:12:38] talk about in this class. uh like like
+[00:12:41] two-phase locking and other techniques
+[00:12:43] as we go along. Um he famously got lost
+[00:12:46] at sea in 2006 when he was sailing his
+[00:12:49] boat in the San Francisco Bay and he was
+[00:12:50] so famous they actually moved satellites
+[00:12:52] to to go back over the the San Francisco
+[00:12:54] Bay to actually look for his his body or
+[00:12:56] his ship and they never found him. So
+[00:12:57] he's considered lost at sea. Truth is
+[00:13:00] though when he invented this OLAP term
+[00:13:01] he was actually doing it on the behest
+[00:13:03] of another company uh that was trying to
+[00:13:05] sell a new product and say hey look
+[00:13:07] here's this brand new category of
+[00:13:08] systems called the OLAP. Uh so he wrote
+[00:13:09] a paper like, "Hey, look, there's this
+[00:13:10] thing called OLAP. This is why it
+[00:13:12] matters. Uh and then when people found
+[00:13:14] out he got paid to write the article, he
+[00:13:15] got retracted. Uh other than that, other
+[00:13:18] than that little snafu, uh I never met
+[00:13:20] him. He was he was considered a good guy
+[00:13:22] though. All right. And then age chat
+[00:13:24] would be somewhere here in the middle,
+[00:13:25] right? Again, this is not a scientific
+[00:13:27] chart. This is trying to say like again
+[00:13:28] how to roughly think about the different
+[00:13:29] workloads.
+[00:13:32] So for today's class, we're going to use
+[00:13:33] an example actually from Wikipedia. So
+[00:13:34] this is actually based on the Wikipedia
+[00:13:36] schema. It's open source. It's written
+[00:13:37] in PHP. They run off MySQL. It's one of
+[00:13:40] the largest MySQL clusters I think
+[00:13:41] around. Actually, they might have
+[00:13:42] switched to Mariab by now um when Oracle
+[00:13:45] bought them. But this is roughly what
+[00:13:46] the schema looks like. So, we're going
+[00:13:48] to have a user account table. Again,
+[00:13:50] that's that's your login information.
+[00:13:51] We'll have articles or pages for that
+[00:13:54] define like, you know, here's an article
+[00:13:56] in Star Wars or whatever. And then we'll
+[00:13:58] have a revisions table where we're going
+[00:14:00] to put all the the new versions of the
+[00:14:02] pages that come come along, right? Or
+[00:14:04] new versions of of an article, right?
+[00:14:07] And what I'm showing here is actually
+[00:14:08] the content is is in is inside of this
+[00:14:11] table here revisions and actually the
+[00:14:12] real schema they put it as a separate
+[00:14:14] table right because they don't want to
+[00:14:15] have a giant blob in in the in the uh in
+[00:14:18] the page itself but we can we can ignore
+[00:14:20] that but you can see here there's
+[00:14:21] foreign key references all around.
+[00:14:24] Wikipedia is a sore subject for me uh
+[00:14:27] because a few years ago somebody
+[00:14:29] actually wrote a Wikipedia article about
+[00:14:30] me um but then they put this line in
+[00:14:33] that I used to have my bio somewhere.
+[00:14:35] and said, "Well, I was born and raised
+[00:14:36] in the streets of Baltimore," which is
+[00:14:37] true. I was born in Baltimore, uh, but
+[00:14:39] obviously not in the streets. Um, and
+[00:14:42] then Wikipedia got they flagged that and
+[00:14:44] says in the streets, uh, it's not
+[00:14:46] scientific or encyclopedic enough. And
+[00:14:48] then it got flagged or it got taken
+[00:14:50] down. And then whatever. And then since
+[00:14:52] then, I get emails basically every three
+[00:14:54] months from like these scammers saying
+[00:14:56] like, "Hey, give us money. We'll we'll
+[00:14:57] write your article for you." Right. Um,
+[00:15:00] all right. So, if anybody's watching
+[00:15:01] this, was I born in Baltimore? Yes. Was
+[00:15:02] I born in the streets of Baltimore? No.
+[00:15:04] Right. Uh that that should should go
+[00:15:07] without saying. Okay.
+[00:15:10] >> Yes.
+[00:15:19] >> The question is why are we separating
+[00:15:21] why are we making a distinction right
+[00:15:22] now between OLAP and OTP? At this point
+[00:15:25] I'm only contrasting the workloads and
+[00:15:28] then we'll see how we'll design a system
+[00:15:30] for those different workloads. And then
+[00:15:32] at the end of the class, we'll finish up
+[00:15:33] and say, okay, well, do I have separate
+[00:15:36] systems and if how do I get data from
+[00:15:38] one to the other or can I have a single
+[00:15:40] system handle both? So, we'll cover
+[00:15:41] that. I think that'll answer your
+[00:15:42] question.
+[00:15:44] Other questions
+[00:15:46] about me other than me being from
+[00:15:48] Baltimore.
+[00:15:50] Okay. So, again, I said this at the
+[00:15:53] beginning, the relational model is
+[00:15:54] beautiful because it says, hey, this is
+[00:15:56] what the data should should look like,
+[00:15:58] how to represent at at a high level.
+[00:15:59] doesn't say anything about how we
+[00:16:01] actually store and represent that data
+[00:16:03] as physical bits or bytes we're going to
+[00:16:06] store on the on the underlying storage u
+[00:16:09] uh medium. Right? So there's nothing
+[00:16:11] about the relational model that says
+[00:16:13] just because you declare a table and a
+[00:16:15] table has these attributes that those
+[00:16:17] attributes have to be stored
+[00:16:18] continuously in on a on a disk page or
+[00:16:22] in memory. In fact, we already saw that
+[00:16:24] we could break that before break that
+[00:16:25] notion when we had the oversized uh
+[00:16:28] values, right? We talked about like the
+[00:16:29] toast table or the the external storage
+[00:16:31] for uh like in postgress if I have a
+[00:16:34] really large text field I don't store
+[00:16:35] that in my in my slotted page I have a
+[00:16:37] separate page where I store that and
+[00:16:38] then store a pointer to it and then now
+[00:16:40] when I run queries on it underneath the
+[00:16:42] covers the data center is going to
+[00:16:44] stitch that that back together by
+[00:16:45] following the pointer but use the
+[00:16:46] application you don't know that things
+[00:16:48] have been separated
+[00:16:50] so it turns out for some workloads
+[00:16:52] particularly OLAP workloads storing
+[00:16:54] things continuously is actually going to
+[00:16:55] be not the best way to do
+[00:16:58] So for OTP as I said the queries are
+[00:17:00] simple and they're accessing a small
+[00:17:02] amount of data and this again this is
+[00:17:04] what people normally build when they
+[00:17:05] first build a a new application like get
+[00:17:07] if you're a new startup or whatever new
+[00:17:08] project this is what you end up
+[00:17:10] building. So here's some three sort of
+[00:17:11] simple uh examples of OTP queries in the
+[00:17:14] Wikipedia. So one is go and get the the
+[00:17:17] latest revision for a given page by
+[00:17:18] looking about the page ID. So there'll
+[00:17:20] be an index on page ID because it's if
+[00:17:22] it's the primary key, right? There'll be
+[00:17:24] an index on that and we can do a lookup.
+[00:17:26] Uh another one is someone actually logs
+[00:17:29] logs in. So we'll update the um the the
+[00:17:33] log last login uh time stamp with the
+[00:17:35] current time stamp whatever host name
+[00:17:36] they use to login in and again we'll do
+[00:17:38] a lookup based on the user ID. So again
+[00:17:39] that'll be another index lookup that's
+[00:17:41] very fast. And the last one is like
+[00:17:43] inserting a new entry into the revisions
+[00:17:44] table. Right?
+[00:17:47] So if we store things continuously
+[00:17:50] continuously for for a single tupil well
+[00:17:52] most of these queries all these queries
+[00:17:53] here are touching you know uh well the
+[00:17:58] bottom two are touching one tupil the
+[00:17:59] top one can touch at two tupils because
+[00:18:01] whatever the current page is or for a
+[00:18:03] given page and then whatever the latest
+[00:18:04] revision is an OLAP query looks
+[00:18:08] something like this where I'm trying to
+[00:18:09] get the uh count the number of times
+[00:18:12] someone has logged in for a uh for to,
+[00:18:17] you know, logged into the service where
+[00:18:19] their host name ended with the.gov
+[00:18:23] um uh IP address or or name space,
+[00:18:27] right? This is actually example from a
+[00:18:28] real scandal 15 years ago where a bunch
+[00:18:31] of uh Congress people were having their
+[00:18:33] staff who are on government, you know,
+[00:18:35] salaries log into Wikipedia and update
+[00:18:37] their the entry for the congress person
+[00:18:39] saying like, "Look how great they are.
+[00:18:40] Here's them doing, you know, charity
+[00:18:42] work, right?" Right? So you're basically
+[00:18:43] paying government employees to go put
+[00:18:45] out propaganda on Wikipedia. So you
+[00:18:46] could use this query. This this is the
+[00:18:48] basically roughly the query they they
+[00:18:49] did to find it. So in this example here
+[00:18:52] again now we're not looking at a single
+[00:18:54] record. We're not looking at one person
+[00:18:56] logging in. We're looking at all the
+[00:18:57] entries of login to try to find a match
+[00:19:00] here.
+[00:19:01] Right?
+[00:19:04] So a bunch there's a bunch of people got
+[00:19:05] busted for this. Joe Biden did this. Uh
+[00:19:07] Mike Pence got busted for this. Right?
+[00:19:10] uh basically all of them are doing it.
+[00:19:14] So
+[00:19:16] the thing we haven't talked about yet is
+[00:19:17] the storage model which again is a way
+[00:19:19] we're going to physically represent data
+[00:19:22] uh that that's in our database in
+[00:19:24] tables. And it's basically going to tell
+[00:19:26] us how we're going to organize things
+[00:19:27] either in memory or on disk. And as I
+[00:19:31] said that based on the workload the
+[00:19:34] different way we could or different
+[00:19:35] storage models we could use it's going
+[00:19:36] to have wildly different performance
+[00:19:38] because it's going to depend on what the
+[00:19:39] data is actually needed and how it's
+[00:19:41] going to be used by by the query.
+[00:19:44] So there's two basic approaches. The N
+[00:19:47] area storage model or the row storage.
+[00:19:49] This is probably what we're most
+[00:19:50] familiar with and this is what we've
+[00:19:50] been seeing in our examples. And then
+[00:19:52] the column store one is the one we've
+[00:19:54] been uh alluding to where actually we're
+[00:19:56] going to store things instead of a row
+[00:19:57] based store it as a column based. We'll
+[00:19:59] see why that matters. And then the last
+[00:20:02] one, this hybrid storage model or also
+[00:20:03] known as packs.
+[00:20:05] This is the way most systems actually
+[00:20:07] implement their column stores. So if a
+[00:20:08] systems comes out and says, "Yeah, we're
+[00:20:10] a column store." They don't actually
+[00:20:11] mean the second one. They're going to
+[00:20:12] mean this third one here. And I so I'll
+[00:20:14] explain what that looks like, what the
+[00:20:15] difference is.
+[00:20:18] So the Nary storage model or NSM, this
+[00:20:21] the academic term, but if you say I have
+[00:20:22] a row store, this is what they mean.
+[00:20:24] Everyone will understand what you're
+[00:20:25] talking about. This basically says that
+[00:20:28] for a given tupil in our database and in
+[00:20:30] a table we're going to store all its
+[00:20:33] attributes continuously within a page
+[00:20:35] assuming they fit right we have to spill
+[00:20:38] to an overflow page or oversized page
+[00:20:39] that's a separate issue. The idea is
+[00:20:41] that all the data for given tupil are we
+[00:20:43] stored right next to each other within
+[00:20:45] that page
+[00:20:47] and that the next tupil that we're
+[00:20:49] showing the page doesn't start until we
+[00:20:51] finish whatever the tupil we're writing
+[00:20:53] out the data for. Right? And this is
+[00:20:56] going to be great for OTP workloads
+[00:20:58] because
+[00:21:00] the kind of queries we're going to run
+[00:21:01] are either update queries where we need
+[00:21:03] to have the whole tuple updated anyway
+[00:21:05] or insert but it's inserting the tupil
+[00:21:06] in its entirety or our select queries
+[00:21:09] are going to be only accessing one tupil
+[00:21:12] and often times they need all the data
+[00:21:14] within that within that tupole. So you
+[00:21:16] want all the attributes.
+[00:21:20] So I'm gonna skip this uh go through
+[00:21:22] quickly but this is basically the slide
+[00:21:23] of page that we store before. I just
+[00:21:24] gonna I'll I'm showing this so we see a
+[00:21:26] distinction later on when we talk about
+[00:21:27] the column store. So within our database
+[00:21:30] page, we have our header. Then we have
+[00:21:31] the slot array at the top. And again,
+[00:21:33] now as we scan through down through our
+[00:21:35] our the data we want to store up above,
+[00:21:38] right, we're just going to write it from
+[00:21:39] the from the end uh to the beginning and
+[00:21:42] add pointers and offsets for the the the
+[00:21:45] different locations of the tupils. And
+[00:21:46] we keep going as as we scan scan down
+[00:21:49] over and over again. Right.
+[00:21:52] Right. So this this is just you know
+[00:21:54] rehashing from the things we talked
+[00:21:55] about right until you fill it up and
+[00:21:56] then you run out of space.
+[00:21:59] So let's go back to one of these queries
+[00:22:00] on the Wikipedia. So say here I'm I'm
+[00:22:03] trying to get the user information for
+[00:22:05] one account. So this is somebody logging
+[00:22:07] in. So I'm going to pass in the uh the
+[00:22:10] username and then like a hash pack
+[00:22:12] password, right? I don't want to store
+[00:22:14] when you ever see data breaches and they
+[00:22:15] always say like your password got leaked
+[00:22:16] because they store raw passwords
+[00:22:18] unencrypted in the database. Don't do
+[00:22:20] that. Do that. all that encryption stuff
+[00:22:22] outside in the application and then the
+[00:22:24] database just stores the encrypted data,
+[00:22:26] right? But this is basically the query
+[00:22:28] you would run. So now for this username,
+[00:22:31] I'm gonna have some kind of index that
+[00:22:33] I'm going to use to help me find the the
+[00:22:35] the record ID that I want. Now I'm not
+[00:22:37] going to explain what this index is.
+[00:22:39] That's in that's in two weeks uh when we
+[00:22:42] start talking about indexes. But this
+[00:22:43] thing think of like a hashmap or a B+
+[00:22:45] tree or some data structure says for a
+[00:22:46] given username here's the record ID
+[00:22:48] where to go find it. And then now I'm
+[00:22:51] gonna I'm gonna my database system is
+[00:22:52] going to go look in its page directory
+[00:22:54] and says, "Okay, well, you want you want
+[00:22:56] record one, two, three, four. That's on
+[00:22:57] page five. That's where that's location
+[00:23:01] in my my database file." I bring that
+[00:23:04] into memory and I know how to then use a
+[00:23:05] slot array to jump to the offset that I
+[00:23:07] want. And lo and behold, there's the
+[00:23:08] tupil that I that I was looking for,
+[00:23:10] right?
+[00:23:13] And I'm happy. And then now if I want to
+[00:23:15] do an insert and same thing I I use some
+[00:23:18] I I have some free spacemap that says
+[00:23:20] okay here's a page that has free data.
+[00:23:22] All I need to do is go make sure that
+[00:23:24] page is in memory jump to some offset
+[00:23:25] and just write it out from beginning
+[00:23:27] again.
+[00:23:30] But now let's do that OLAP query before
+[00:23:32] where we say give me all the uh count
+[00:23:35] the number of times people have logged
+[00:23:36] in per month from a uh.gov uh host name.
+[00:23:41] So in this case here, there isn't a
+[00:23:43] lookup on any any single single
+[00:23:45] predicate I want to uh single primary
+[00:23:47] key or uh discriminating key. I got to
+[00:23:50] look at all the pages because I don't
+[00:23:53] know where any.gov host names are going
+[00:23:55] to be. So I'm going to scan all all the
+[00:23:57] pages and I'm each I'm going to bring
+[00:23:58] them in one by one. Again, now again
+[00:24:00] this is a row store. So the first thing
+[00:24:02] I got to do is run my wear clause where
+[00:24:04] I say find me all the host names where
+[00:24:06] the that end with.gov, right? Right. So
+[00:24:08] I got to look at all these values in
+[00:24:10] here and then once I find matches then I
+[00:24:13] got to run my uh extract clause to
+[00:24:16] convert the last login into uh the host
+[00:24:18] name sorry the the month number month
+[00:24:20] name. So then I can then compute my
+[00:24:22] aggregations. So then I got to look at
+[00:24:26] the you know this data over here.
+[00:24:31] So what's the problem with this data
+[00:24:34] these the other three attributes?
+[00:24:36] Did this query need it? No. Do we have
+[00:24:40] to read it from disk and put it into
+[00:24:41] memory? Yes.
+[00:24:44] So because this is a row store, whatever
+[00:24:47] whatever is attached to the query,
+[00:24:49] whatever columns attributes a query h or
+[00:24:50] sorry tupil has, they come along from
+[00:24:53] the ride because they're in the page
+[00:24:54] with all the other data that I do need.
+[00:24:57] Right? So in this case here I'm not
+[00:25:00] showing the size of the data but like
+[00:25:02] you roughly say about over 50% of the
+[00:25:04] data that we needed uh sorry 50% of of
+[00:25:09] the data for a tupole was actually not
+[00:25:10] needed for this query at all but I still
+[00:25:12] had to go to go to disk and go read it.
+[00:25:17] So this is why row stores aren't going
+[00:25:18] to be great for doing analytical queries
+[00:25:20] because most time analytical queries I
+[00:25:22] don't need all the attributes. You don't
+[00:25:24] see select star queries in analy
+[00:25:26] analytical queries very often.
+[00:25:29] or analytical workloads, right?
+[00:25:30] Shouldn't you shouldn't run select star
+[00:25:32] anyway, but in general, you don't really
+[00:25:33] see that unless someone's trying to do a
+[00:25:34] bulk export and even then there's faster
+[00:25:36] ways to do that than select star. So for
+[00:25:40] the row stores, it can be great for fast
+[00:25:42] inserts, updates, and deletes. It's
+[00:25:43] great for queries that need the entire
+[00:25:45] tupil. I need all the attributes for for
+[00:25:47] a small number of tupless. And I can do
+[00:25:49] a bunch of tricks like the index
+[00:25:50] ordinary storage, all the clustering
+[00:25:52] techniques we'll cover later on to make
+[00:25:53] this go really really fast that I'm only
+[00:25:56] reading the exact single page I need to
+[00:25:59] go get the the data that I want. There's
+[00:26:02] other tricks you can put a bunch of data
+[00:26:03] in the index as well. Uh so maybe I I
+[00:26:05] only need to traverse the index even if
+[00:26:07] I'm not using index organized storage
+[00:26:08] and all my data is in the index. I don't
+[00:26:10] even need to touch the tupless. We'll
+[00:26:12] cover that later.
+[00:26:13] This is going to be bad for analytical
+[00:26:15] queries because we'll have a lot more
+[00:26:16] pressure in our buffer pool because now
+[00:26:17] we're copying in pages with data that we
+[00:26:20] don't even need for this particular
+[00:26:21] query.
+[00:26:25] So the alternative is the decomposition
+[00:26:27] storage model. Think of like two
+[00:26:28] opposite ends of the of the the
+[00:26:30] spectrum. So the the n area or the the
+[00:26:32] row storage like putting all the data
+[00:26:34] for a tuple contiguous each other in a
+[00:26:38] decomposition storage model is the
+[00:26:40] academic name or the the column store.
+[00:26:42] We're actually going to split up all the
+[00:26:43] data for each tupil and store their
+[00:26:46] attributes separately. But now we're
+[00:26:49] within our pages, we're just going to
+[00:26:50] have the data for one attribute within
+[00:26:52] the table. All those are going to be
+[00:26:53] contiguous
+[00:26:55] across multiple tupils.
+[00:26:58] So this is going to be better for
+[00:26:59] analytical queries because the
+[00:27:03] if I'm only going to access a small
+[00:27:04] number of the of the attributes for a
+[00:27:06] given uh given tupil, I don't bring in
+[00:27:09] pages that have data that I don't need.
+[00:27:10] I only get exactly the data that that I
+[00:27:13] do need.
+[00:27:14] Of course, now what's the challenge of
+[00:27:16] this? What's the problem? Faster reads,
+[00:27:18] slow for what? Writes. Because what do I
+[00:27:20] need to do? If I insert a tupole, I have
+[00:27:22] a thousand columns and I got to break it
+[00:27:24] up to a thousand different pieces and
+[00:27:26] write out to write a thousand different
+[00:27:28] pages.
+[00:27:30] And again, he was sort of asking about
+[00:27:32] this. Uh we'll see how to handle that
+[00:27:34] later in the uh in today's lecture.
+[00:27:38] So let's go back to our table here
+[00:27:39] before. So we're going to store the
+[00:27:42] essentially the the all the data within
+[00:27:45] each column are going to be fixed length
+[00:27:47] uh fixed length values stored in
+[00:27:50] basically simple arrays. So I'm going to
+[00:27:53] take this first column A. I'll have my
+[00:27:55] first page. There'll be some header that
+[00:27:56] says what's in the page. Uh and then
+[00:27:59] I'll have a null bit map that's going to
+[00:28:01] correspond to all the data within my uh
+[00:28:04] with within this column for all the
+[00:28:06] tupils. Right? Remember in the the the
+[00:28:08] row storage model every tupil had its
+[00:28:10] own header inside that own header it had
+[00:28:12] its own little bit map to say whether
+[00:28:14] you know the the values where certain
+[00:28:15] values are null or not. So now I don't
+[00:28:17] need to store a header per tupil. I just
+[00:28:20] have a header for the single column and
+[00:28:21] that's enough to account for all the
+[00:28:22] data within this.
+[00:28:25] And I'll do the same thing for the next
+[00:28:26] column and then the same thing for the
+[00:28:28] the next column. Right?
+[00:28:33] So we go back now to our example before.
+[00:28:35] So we take our Wikipedia data we had
+[00:28:37] right for the the the login information
+[00:28:39] the user information and again instead
+[00:28:42] of storing as a row store where all the
+[00:28:44] data is contiguously contiguous across
+[00:28:46] the tupil we're now going to split it up
+[00:28:48] so that all the host name data will be
+[00:28:50] in one page all the the login
+[00:28:52] information will be another page all the
+[00:28:53] password information will be another
+[00:28:54] page right but now they're all se
+[00:28:56] separate pages
+[00:28:58] so now if I run that query before where
+[00:29:00] again I'm trying to find all people
+[00:29:01] logging in with the government host name
+[00:29:03] so the first thing we need to is like,
+[00:29:05] okay, I got to run this wear clause here
+[00:29:07] and I need to look up on the the host
+[00:29:09] name attribute. So, I just go get the
+[00:29:11] one page or the the set of pages that
+[00:29:13] have that host name information, go
+[00:29:16] bring that in into memory in my buffer
+[00:29:18] pool, and then rip through that and find
+[00:29:20] all my matches.
+[00:29:23] Again, I'm not jumping over data that I
+[00:29:25] don't need. I'm not jumping over uh
+[00:29:27] username information or the user ID. The
+[00:29:30] pages I'm bringing in only have the host
+[00:29:31] name. So I can do that very efficiently
+[00:29:33] and rip through that very fast. So then
+[00:29:36] I collect what tupils match uh my my
+[00:29:40] predicate and say okay well the next
+[00:29:42] thing I need to do is run the uh
+[00:29:44] aggregation commit the aggregation and
+[00:29:45] run the extract function that's on the
+[00:29:47] last login uh attribute. So I go fetch
+[00:29:50] that that page that has that information
+[00:29:52] and then now I know I know how to then
+[00:29:54] jump into these different offsets. I'll
+[00:29:56] explain how to do this in a second to
+[00:29:58] find the data that I know match my ho my
+[00:30:00] host name from the the wear clause and
+[00:30:03] then here's all the tubles that I
+[00:30:04] wanted.
+[00:30:07] >> Yes.
+[00:30:08] >> Does this mean that size of this can be
+[00:30:13] different sizes?
+[00:30:15] >> The question is does this mean the page
+[00:30:16] sizes in this scheme or the storage
+[00:30:18] model will be different different per
+[00:30:21] attribute different per uh page itself
+[00:30:24] or what do you mean?
+[00:30:29] show each column. Mhm.
+[00:30:51] >> He's asking basically he's asking
+[00:30:54] would it be the case that the the
+[00:30:56] database page size for an attribute
+[00:30:58] within a table will be different across
+[00:30:59] attributes? No.
+[00:31:01] It it always needs some fixed size
+[00:31:03] because it has to be because we want to
+[00:31:05] put that in our buffer pool. If a
+[00:31:06] bufferable pool has, you know, 8
+[00:31:07] kilobyte frames actually in the OLAP
+[00:31:09] world, you want to go bigger. So like 32
+[00:31:11] megabytes frames. I don't want to have
+[00:31:14] to start figuring out how to pack things
+[00:31:16] in from different page sizes. So in
+[00:31:17] general, these will all be the same page
+[00:31:19] size. Now that means of course some some
+[00:31:22] attributes will have more pages and
+[00:31:24] that's fine. Yeah.
+[00:31:32] So how do I do this magic of going back
+[00:31:34] here? How do I how do I figure out what
+[00:31:35] tupils actually are matching uh based on
+[00:31:38] the predicate?
+[00:31:40] Well, there's two basic ways to do this.
+[00:31:42] One is use fixed length offsets
+[00:31:45] uh where you you know that like if I'm
+[00:31:48] scanning through the data and I find
+[00:31:50] matches my for my wear clause, I I keep
+[00:31:52] track of where my offset is in in the
+[00:31:54] array. So I'm at offset two, offset
+[00:31:56] five, offset six. So then now when I go
+[00:31:58] look at another
+[00:32:00] uh another attribute I look at its pages
+[00:32:03] again it's just an array all the values
+[00:32:06] of fixed lengths I know how to do simple
+[00:32:07] arithmetic to jump to the offset that I
+[00:32:10] want to find to have the corresponding
+[00:32:12] tupil that matched uh whatever the other
+[00:32:14] whether whatever the previous operation
+[00:32:16] was.
+[00:32:18] The other approach is you actually embed
+[00:32:20] tupil ids in uh in the columns
+[00:32:24] themselves. So think of like for every
+[00:32:26] single value I have like a little 8 bit
+[00:32:28] or maybe 16 bit uh tupil ID so that then
+[00:32:33] I have some kind of other index allows
+[00:32:34] me to jump to find the data that I'm
+[00:32:36] looking for. So these could be variable
+[00:32:37] length if they want to do but these
+[00:32:38] things always be uh I would have an
+[00:32:40] index to map it to this.
+[00:32:44] I'm only showing the second one here
+[00:32:46] just as to say like you could do this.
+[00:32:48] Some people somebody did try to do this.
+[00:32:51] Don't do this. Um, this is what Data
+[00:32:54] Algro did. They basically took Ingress
+[00:32:57] uh in the this is a 2000s, kind of
+[00:33:00] hacked it up, make it look like a column
+[00:33:01] store, but but because it was a roster,
+[00:33:03] not a true column store, they had to
+[00:33:04] play this game to make it actually work.
+[00:33:06] And then Microsoft bought them for like
+[00:33:08] $200 million. And then within three
+[00:33:10] months, they realized that was a huge
+[00:33:12] waste of money and threw all the code
+[00:33:13] away and started building uh the
+[00:33:16] parallel data warehouse as a real column
+[00:33:18] store. Actually, that was Jignesh Patel,
+[00:33:20] the other data professor. was his
+[00:33:21] adviser, Dave Dit. Microsoft hired him
+[00:33:24] to go take the guys that were doing this
+[00:33:26] and make it actually be production
+[00:33:27] ready. And he's like, "This is total
+[00:33:29] crap." And he he told me he told him,
+[00:33:30] "You're wasting your money." And they
+[00:33:31] threw it all away, right? So don't do
+[00:33:33] this. I'm just showing you could do
+[00:33:35] this. We want to do this one over here.
+[00:33:39] But now the question is going to be,
+[00:33:40] okay, well it only works if things are
+[00:33:42] fixed length. For integers, that's fine.
+[00:33:44] Flows fixed length. Fine.
+[00:33:47] >> Why is it so bad to have? The question
+[00:33:49] is why is this a bad embedded ids?
+[00:33:51] Because now I have to store an extra
+[00:33:52] number for every single value that I'm
+[00:33:54] actually storing. Then I need to
+[00:33:56] maintain a separate index in my file
+[00:33:58] that says here's how to jump to, you
+[00:34:00] know, offset three because these things
+[00:34:02] can be whatever arbitrary length that
+[00:34:03] they want to be.
+[00:34:06] >> Sorry to know where to jump. I need to
+[00:34:09] write
+[00:34:11] >> because because because if I'm doing a
+[00:34:13] match, if I'm scanning through say
+[00:34:14] column D and I find a match, I'm
+[00:34:16] scanning through the column, I find a
+[00:34:17] match here, I need to know, okay, well,
+[00:34:19] this is three so that when I jump over
+[00:34:21] to column A, I know how to get to the
+[00:34:23] three
+[00:34:25] is allow me to stitch the tupless back
+[00:34:27] together.
+[00:34:28] Don't do this.
+[00:34:30] All right. So again, if if we require
+[00:34:33] all the values in our column to be fixed
+[00:34:34] length, how does this work? We have
+[00:34:36] strings.
+[00:34:37] Well, we'll cover more about this in in
+[00:34:39] a few more slides, but the basically the
+[00:34:41] trick is we're going to compress the
+[00:34:43] data convert anything that is variable
+[00:34:45] length to fixed length. So, we don't
+[00:34:47] have this problem. So, that means any
+[00:34:50] string is going to be converted to a to
+[00:34:52] a fixed length number and then we'll
+[00:34:54] have a basically a dictionary lookup to
+[00:34:56] say, okay, for this government this
+[00:34:57] number, what's the original value? So,
+[00:34:59] we can store that as an auxiliary data
+[00:35:00] structure on the side, but then as we
+[00:35:02] rip through our columns, uh we're only
+[00:35:04] looking at integers and that's be way
+[00:35:06] way faster. The alternative is you could
+[00:35:08] just pad out the the strings like if if
+[00:35:11] it's a 32 32 character varchchar just
+[00:35:14] always put a bunch of extra spaces at
+[00:35:15] the end if it's not 3 32 characters so
+[00:35:17] it always fits but that's going to be
+[00:35:20] wasteful as well instead the answer is
+[00:35:22] going to be dictionary compression again
+[00:35:23] we'll cover more about that in a few
+[00:35:25] more slides
+[00:35:28] so to round out the DSM to summarize it
+[00:35:30] all right the benefit we're going to get
+[00:35:32] is that we're going to avoid wasted IO
+[00:35:34] because we're only going to get the the
+[00:35:36] bare minimum in data we actually need to
+[00:35:37] process the query. We're going to bring
+[00:35:39] that in and not bring in any other
+[00:35:42] attributes that we don't care about.
+[00:35:45] The queries themselves are actually
+[00:35:47] execute faster because now as we're
+[00:35:48] ripping through the the columns,
+[00:35:52] we're kind of just looking at contiguous
+[00:35:54] data like as as strides in memory. And
+[00:35:57] that's be great for modern CPUs. I know
+[00:35:58] we said we we're going to talk about
+[00:35:59] CPUs too much, but like
+[00:36:02] Intel CPUs or modern supercaler CPUs,
+[00:36:05] they don't want any branches. They don't
+[00:36:06] want any jumps. So if I can avoid if
+[00:36:08] clauses, if I have to jump over things,
+[00:36:10] my CPU is going to be way faster because
+[00:36:12] I'm not going to have stalls in my
+[00:36:14] pipeline. So if all my data now is all
+[00:36:17] contiguous and it's all in the same
+[00:36:18] value domain, like I'm just looking at
+[00:36:20] like looking at integers, then I I can
+[00:36:23] rip through that very very quickly and
+[00:36:24] we'll see how we handle that uh in
+[00:36:26] lecture 14.
+[00:36:28] Furthermore, I can actually compress the
+[00:36:30] data much better than I can in a row
+[00:36:31] store because now all the data within a
+[00:36:34] page are going to be in the same domain.
+[00:36:36] Right? It's going to be like think think
+[00:36:37] of like the the if I'm recording the
+[00:36:40] temperature for this room if I just have
+[00:36:42] my data pages just record temperatures.
+[00:36:44] They're a bunch of integers. I can
+[00:36:45] compress the hell out of that way better
+[00:36:46] than I could if like it had integers and
+[00:36:48] strings and floats and a bunch bunch of
+[00:36:50] random stuff. Like it's thinking like
+[00:36:52] trying to compress a JPEG doesn't if you
+[00:36:54] try to run JPEG a JPEG through like gzip
+[00:36:56] or whatever doesn't do a very good job
+[00:36:58] because it's kind of a bunch of random
+[00:36:59] data that's already been compressed. But
+[00:37:01] if you open a text file and put a bunch
+[00:37:02] of zeros in it and run that through
+[00:37:04] gzip, it's going to compress the hell
+[00:37:05] out of it. That's basically what we're
+[00:37:07] going to get with our column store.
+[00:37:09] Of course, nothing come nothing
+[00:37:10] nothing's for free. It's be slow for
+[00:37:12] point queries doing single uh single
+[00:37:14] tupal lookups because now I got to
+[00:37:15] stitch all the data back together from
+[00:37:16] multiple pages. Insert up deletes are
+[00:37:18] going to have the same problem, right?
+[00:37:20] Because you basically have to be do this
+[00:37:22] stitching and and splitting over and
+[00:37:23] over again.
+[00:37:26] Okay,
+[00:37:29] any questions about column stores?
+[00:37:35] So
+[00:37:38] this is going to be great for uh again
+[00:37:42] if we have queries on tables that are
+[00:37:44] very wide meaning have a lot of columns
+[00:37:46] and I'm only need to touch a bare
+[00:37:49] minimum number of two of of attributes
+[00:37:50] within uh within that table. Best case
+[00:37:53] scenario is an OLAP query that touches
+[00:37:55] one column, right? But truth be told,
+[00:37:57] they're not that those kind of queries
+[00:37:59] are not that common. And so at some
+[00:38:02] point, I'm going to have to stitch my
+[00:38:04] pupil back together. And so if my data
+[00:38:08] is completely broken apart across
+[00:38:10] multiple pages, if I break everything up
+[00:38:12] as columns, then even though I may
+[00:38:16] filter out a lot of data at the during
+[00:38:18] the queries, I have a billion tuples,
+[00:38:19] but I end up only needing a thousand
+[00:38:21] tupils. I may have to go get all those
+[00:38:24] thousand for each tuple a thousand
+[00:38:25] different pages to put that tupil back
+[00:38:27] together again. That's if I break
+[00:38:28] everything up as completely as the
+[00:38:30] column store.
+[00:38:32] So what we really want is something that
+[00:38:35] kind of smells like a column store. We
+[00:38:37] get that benefit of not bringing in
+[00:38:39] pages that we don't need or looking at
+[00:38:41] data that we don't need. And the data
+[00:38:42] that is in the same same column or same
+[00:38:44] attribute is close to each other. So we
+[00:38:46] get great compression. But if I have to
+[00:38:48] go get data from the other attributes
+[00:38:50] for that tupole, they're close by,
+[00:38:52] relatively close by where I can go I
+[00:38:55] either already fetch them in memory uh
+[00:38:57] or it's not a big leap for me to go get
+[00:39:00] go get them.
+[00:39:03] So this is what the hybrid storage
+[00:39:04] approach storage model called PAX
+[00:39:06] supports. So PAX stands for P partition
+[00:39:09] attributes across. Uh this was actually
+[00:39:12] there's a paper came out I think 200
+[00:39:15] 2001 um the sec the first author is
+[00:39:18] Natasa Alamaki she was the database
+[00:39:20] professor here at CMU before I started
+[00:39:23] uh and then she left for Switzerland uh
+[00:39:25] she's brilliant she left for Switzerland
+[00:39:26] in 2007 and then I was hired to replace
+[00:39:29] her um so this claims it was the paper
+[00:39:31] looks like it was came from CMU uh but
+[00:39:34] this actually wasn't the last chapter of
+[00:39:35] her thesis she did at the University of
+[00:39:37] Wisconsin with with Dave Dit the guy who
+[00:39:40] said, I just told you that told
+[00:39:41] Microsoft they wasted $200 million
+[00:39:43] buying that company. Uh so she he was
+[00:39:45] her adviser. Uh he's brilliant. Anyway,
+[00:39:48] so this approach basically is the idea
+[00:39:50] is that it's it's going to look like a
+[00:39:52] column store. Uh but the data that uh
+[00:39:56] the data for a single tupole is going to
+[00:39:57] be close enough to to the to each other
+[00:40:01] so that I don't have to make a very long
+[00:40:03] uh I may have may have already have
+[00:40:06] brought that data into memory even
+[00:40:07] though I I may not need it all of it.
+[00:40:11] So again, so most systems when they say
+[00:40:13] they're going to use a column store,
+[00:40:14] almost 99% of the time they're they're
+[00:40:18] doing this. This I can only think of one
+[00:40:20] or two systems that that that don't do
+[00:40:22] this, but everyone else is doing this.
+[00:40:24] And then these open source file formats
+[00:40:25] like Parquet and Orc uh that you might
+[00:40:28] be familiar with. And now there's modern
+[00:40:30] versions of these like Nimble from
+[00:40:31] Facebook or Vortex from Spyro DB guys um
+[00:40:35] where these these are all essentially
+[00:40:37] doing doing this.
+[00:40:39] So if we go back to our uh our diagram
+[00:40:42] here again so what we're now going to do
+[00:40:44] we're going to going to horizontally
+[00:40:46] partition or horizontally split up the
+[00:40:49] data based on some some uh some criteria
+[00:40:53] like the number of tupils or the size of
+[00:40:56] the data, right? there's some way to say
+[00:40:58] okay here's here's gonna be some some
+[00:40:59] some chunk of data or sorry some some
+[00:41:02] region of data
+[00:41:04] and then now we're going to then write
+[00:41:06] them out in is within that region to be
+[00:41:08] a single column store sorry in in a
+[00:41:11] columnar format but again within that
+[00:41:13] sort of region all the data for a single
+[00:41:15] tubal will be will be located close to
+[00:41:17] each other so when you create this pax
+[00:41:19] file uh you end up writing the the
+[00:41:22] header at the end uh and we're going to
+[00:41:24] do this because think of like we're
+[00:41:26] trying to generate uh you know one
+[00:41:28] gigabyte file so I don't actually know
+[00:41:30] what all the data is going to be in
+[00:41:32] before I actually scan it. So I'll keep
+[00:41:34] track of things in memory and then when
+[00:41:35] I'm finished I write out the footer that
+[00:41:37] has all this metadata. Right? So I'm
+[00:41:38] showing it showing it appearing first.
+[00:41:41] This is actually the last thing you
+[00:41:42] would write when you create one of these
+[00:41:43] files.
+[00:41:45] So the first thing again I'll I'll break
+[00:41:47] up the say the first three tuples I'll
+[00:41:49] put in some some chunk. I don't want to
+[00:41:51] call it a block of data. uh trying to
+[00:41:54] use generic terms in or in in parquet
+[00:41:57] they call them a row group that's
+[00:41:58] considered the the canonical term
+[00:42:00] basically it's again it's just some some
+[00:42:02] set of tupils I'm going to put together
+[00:42:03] in in a single uh I don't again I don't
+[00:42:05] want to use the word cluster in a single
+[00:42:07] region within the file again in parquet
+[00:42:09] it's like I think it's like one million
+[00:42:11] tupils in orc it's like by default like
+[00:42:14] 100 megs of data there's different
+[00:42:15] criteria to decide how you how you
+[00:42:17] partition these things up so again
+[00:42:19] within now my row group I'll I'll have
+[00:42:21] this another header that says here's all
+[00:42:22] the data within it and then within the
+[00:42:25] inside of it you'll see I put all the
+[00:42:26] data for attribute the column A together
+[00:42:29] all the data for column B together and
+[00:42:30] all the data from column C
+[00:42:33] right and I'll call these sort of these
+[00:42:35] these column pieces within the row group
+[00:42:37] we call these they're called column
+[00:42:39] chunks
+[00:42:41] and I'll do the same thing for the next
+[00:42:42] one right and each row group is going to
+[00:42:45] have their own again metadata keeps
+[00:42:46] track of like I'm compressing this way
+[00:42:48] or here's the here's the dictionary you
+[00:42:49] can use to decompress this data Right?
+[00:42:53] So if you go look at like any
+[00:42:54] presentation from data bricks or
+[00:42:56] snowflake or other companies, right?
+[00:42:58] When they talk about park organization,
+[00:42:59] it's roughly going to look like this.
+[00:43:01] And they're talking about packs,
+[00:43:06] right? Is this clear?
+[00:43:08] So again, don't think of these as in in
+[00:43:11] like in the world when we talked about
+[00:43:13] like the the page sizes, it was always
+[00:43:15] some multiple four like 4 kiloby, 8
+[00:43:17] kiloby, 16 kilobyte pages. In the OLAP
+[00:43:19] world, I'm reading large amounts of
+[00:43:21] data. So, it's usually these things are
+[00:43:23] like organized in the size of like S3
+[00:43:25] buckets, like 8 megabytes or larger. I'm
+[00:43:27] trying to get get a lot of data all at
+[00:43:29] once. And so, even though I'm saying
+[00:43:32] this row group here might be kind of
+[00:43:33] big, much larger than 48 kilobytes
+[00:43:36] um and maybe I'm bringing in data that I
+[00:43:38] don't actually need, it's still going to
+[00:43:40] be a big win if I have to stitch things
+[00:43:42] together.
+[00:43:43] deciding the number of number of rows in
+[00:43:46] a column.
+[00:43:47] >> The question is what goes into deciding
+[00:43:48] what the number of rows in a column
+[00:43:49] chunk. Uh maybe it's number of rows in a
+[00:43:52] row group. I said like the default and
+[00:43:54] paret is like either parquet is like 1
+[00:43:57] million and it's just whatever they
+[00:43:58] picked it and then I think or goes by
+[00:44:00] like data size. So as I'm writing it out
+[00:44:02] if I wrote out like 100 megs say okay
+[00:44:03] that's it make a new row group. But you
+[00:44:06] you can tweak those.
+[00:44:15] >> Yes.
+[00:44:18] >> Yes.
+[00:44:22] [Music]
+[00:44:24] >> Your statement is um your statement is
+[00:44:26] like the row metadata is wasteful.
+[00:44:28] >> Yeah.
+[00:44:36] The statement is that the the the
+[00:44:38] metadata across row groups could could
+[00:44:39] be uh repetitive and then we have a lot
+[00:44:42] of wasted data
+[00:44:44] you for dictionaries. Yes. Um
+[00:44:48] but the metadata is is not that big
+[00:44:50] compared to the rest of the data. Like
+[00:44:52] if it's a kilobyte and your data is like
+[00:44:54] 100 megabytes it's nothing.
+[00:44:59] >> Yes.
+[00:45:06] Yeah. Yeah. Good. Good. Okay. So, the
+[00:45:08] statement is and he's correct. This is
+[00:45:09] my fault. So, I'm saying this is a PAX
+[00:45:11] file organization. It is not page
+[00:45:13] organization. Uh yeah. So, so you could
+[00:45:17] think of like here's here's like a
+[00:45:19] here's a file and then within that I
+[00:45:21] have different pages and those pages
+[00:45:23] will all be sort of fixed length, right?
+[00:45:25] Within within the row group. the
+[00:45:27] metadata stuff at the bottom is usually
+[00:45:28] it's whatever the size is, but you might
+[00:45:30] still organize that in four kilobyte
+[00:45:31] pages. Uh but yeah, you you think of
+[00:45:34] like I'm not defining what the size of
+[00:45:37] the pages are within a column chunk
+[00:45:39] within a row group, but the end of the
+[00:45:42] day when it lands on disk, it's still
+[00:45:43] going to be four kilobytes, but the
+[00:45:44] database might might perceive it as I
+[00:45:46] think what eight megabytes or one
+[00:45:48] megabytes or something like that like a
+[00:45:49] larger size.
+[00:45:51] >> It's still everything is you always have
+[00:45:52] splitting pages.
+[00:45:53] >> Yes. But the way typically in a paret
+[00:45:56] file systems address it, it would be at
+[00:46:00] the at the at the row group level. So
+[00:46:03] then you you have to re read the row
+[00:46:04] group header because that's going to
+[00:46:06] tell you what the offsets are for the
+[00:46:07] column chunks. So you can do things like
+[00:46:10] if I only need uh column A from this row
+[00:46:14] group, I could go use look read this
+[00:46:16] that tells me where the starting point
+[00:46:18] is for each row group. And then I could
+[00:46:20] jump to get the the the header for that
+[00:46:22] row group. And within that I can then
+[00:46:24] get the offset to the column chunk that
+[00:46:26] I want. You could store that down here
+[00:46:29] but then that makes this thing kind of
+[00:46:30] bigger. Now we're getting implementation
+[00:46:33] details but in the case like parquet
+[00:46:34] this is implemented as protobuff and
+[00:46:36] protobuff you can't deserize
+[00:46:37] incrementally. You have to decilize the
+[00:46:39] whole thing. So if I have all my
+[00:46:41] metadata inside this and this thing's
+[00:46:42] like 10 megabytes I got to decompress 10
+[00:46:44] megs even though I only need like 10
+[00:46:45] bytes out of it. That's that's in the
+[00:46:48] weeds.
+[00:46:52] Yes, the newer file formats replace
+[00:46:54] protobuff with flat buffers from Google.
+[00:46:56] That that's the right way to do it.
+[00:46:58] Okay.
+[00:47:00] All right. So, let's try to plow through
+[00:47:02] compression real quickly. So,
+[00:47:04] the end of the day, the IO bottleneck
+[00:47:06] for this class here, what we're talking
+[00:47:08] about in this semester, the IO
+[00:47:10] bottleneck is always be the the so the
+[00:47:12] IO cost is always the main bottleneck
+[00:47:13] when we actually want to run queries. In
+[00:47:15] the advanced class, we'll start worry
+[00:47:16] about cache lines and and other things,
+[00:47:19] but for this class, we'll assume it's
+[00:47:21] always disk, right? And especially if if
+[00:47:24] you're running in the cloud and the disk
+[00:47:25] is like some some some box running on
+[00:47:27] over the network, that can get slow. And
+[00:47:30] again, that's going to be a problem. So
+[00:47:32] what we want to be able to do is that we
+[00:47:33] want to compress our pages when we write
+[00:47:36] them out to disk so that when we read
+[00:47:39] them back in in compressed form the
+[00:47:41] amount of useful data we're getting for
+[00:47:43] one IO increases. So if like a page is
+[00:47:46] uncompressed and I can put 10 tupils in
+[00:47:48] it but if I can compress it I can put a
+[00:47:50] 100 tupils in it. Now for the same IO
+[00:47:53] with compressed data I can get 100
+[00:47:55] tupils and bring them to memory. Now I
+[00:47:56] can have I have the space for it for
+[00:47:58] memory to deal with it. some cases you
+[00:48:00] actually don't need to decompress it.
+[00:48:02] We'll see how to handle that. Um, but
+[00:48:04] the main trade-off we're going to face
+[00:48:05] here is sort of classic computer science
+[00:48:07] where it be, you know, uh, speed versus
+[00:48:10] or compute versus storage. So, I can pay
+[00:48:12] more CPU cost to compress my data and
+[00:48:14] decompress it when I need need to access
+[00:48:16] it in exchange for having a lower
+[00:48:19] storage overhead and lower IIO cost uh,
+[00:48:21] to get get data in and out.
+[00:48:25] So the things we're going to want in our
+[00:48:27] in our compression scheme in our data
+[00:48:28] system is number one we have to make
+[00:48:30] sure that our values or sorry our
+[00:48:31] compression scheme is always going to
+[00:48:33] produce fixed length values because we
+[00:48:35] need that in order for the the the
+[00:48:37] offset mechanism to work to address
+[00:48:40] tupils in within a column because if now
+[00:48:43] if I'm taking like 32-bit editors and I
+[00:48:44] compress them and now they're like some
+[00:48:46] are 16 bits some are 24 bits I have no
+[00:48:48] way to know how to jump to offset one
+[00:48:50] two three to find the data that I'm
+[00:48:52] looking for. I got to then use an index
+[00:48:54] and I don't want to have to do that. So
+[00:48:56] all our data needs needs to be fixed
+[00:48:58] length. Variable length data we're going
+[00:49:00] to store as a separate uh separate pages
+[00:49:02] or separate storage pool and that we can
+[00:49:04] run whatever compression scheme you want
+[00:49:06] on that uh and let that be veren. We
+[00:49:10] don't care about that. Not entirely true
+[00:49:12] but for our class yes. Another thing we
+[00:49:14] want to be able to do is
+[00:49:17] postpone the how postpone when we
+[00:49:20] actually have to decompress data in
+[00:49:22] order to be able to use it or give it
+[00:49:24] back to the user as a part of the respon
+[00:49:26] result of the query. So that means that
+[00:49:29] we want to be able to run queries
+[00:49:31] directly on compressed data
+[00:49:35] and then not have to decompress it to
+[00:49:36] figure out what's actually inside that
+[00:49:37] compressed data.
+[00:49:39] And the last one should be sort of
+[00:49:41] obvious, but that we want to make sure
+[00:49:42] that our whatever compression scheme
+[00:49:43] we're using is considered lossless.
+[00:49:46] What does that mean?
+[00:49:48] >> Like lossy versus lossless. Yes.
+[00:49:52] >> You said, yeah, basically if you if you
+[00:49:54] compress data and then you decompress
+[00:49:56] it, I get the exact same data back. I
+[00:49:58] get exact same bits. That's considered a
+[00:50:00] loss loss lossless scheme. A lossy
+[00:50:03] scheme would be something like MP4, MP3,
+[00:50:06] right? I can take a video file or a
+[00:50:07] sound file and compress that in such a
+[00:50:09] way that it's not perceptible as humans
+[00:50:12] either through our eyes or through our
+[00:50:14] ears because we can't detect whatever
+[00:50:15] you know things that are throwing away,
+[00:50:17] but it's not an exact copy of the data
+[00:50:19] we have before. So, we don't want to do
+[00:50:21] any any uh lossy compression. We only do
+[00:50:24] lossless. You can do lossy compression
+[00:50:28] on data systems, but this is something a
+[00:50:29] human has to tell us to do. So the
+[00:50:32] example I always like to use is say I'm
+[00:50:33] recording the temperature in this room
+[00:50:34] at 1 second granularity for an entire
+[00:50:36] year. But maybe a year from now I don't
+[00:50:39] need to have know exactly what is the
+[00:50:41] temperature at this time you know this
+[00:50:43] exact moment this given second. I maybe
+[00:50:46] can bucket the data within you know
+[00:50:48] 10-minute aggregations.
+[00:50:50] So if I do that and delete the one
+[00:50:51] second data that's a lossy scheme
+[00:50:53] because now I'm throwing away the
+[00:50:54] original data but for my use case that
+[00:50:57] might be good enough.
+[00:50:59] So data business will do lossy
+[00:51:00] compression for you but you have to tell
+[00:51:02] it you want to do that. There's even
+[00:51:04] other techniques where you can actually
+[00:51:06] keep the data uh in its original form
+[00:51:08] but then run lossy algorithms on them to
+[00:51:11] compute queries called approximate query
+[00:51:13] execution. You get estimates of things
+[00:51:14] that sometimes they give you bounds but
+[00:51:16] again we'll worry about that later. For
+[00:51:18] this class, this lecture today we we
+[00:51:20] can't lose data.
+[00:51:23] So there's four different choices we
+[00:51:25] have to compress things. The first is
+[00:51:26] the block level and the page level,
+[00:51:28] right? We're basically taking a a a page
+[00:51:30] of data and we're going to compress it.
+[00:51:32] The tupil level, we're going to take the
+[00:51:33] entire tupil itself and compress that.
+[00:51:35] And you can only really do this in a
+[00:51:36] column store. The attribute would take a
+[00:51:39] single value within a single column for
+[00:51:41] a single tupil. We'll compress that
+[00:51:43] individually. We saw that before with uh
+[00:51:46] the the the overflow pages for like
+[00:51:48] large large v charts and text fields
+[00:51:50] like postgress will store in this thing
+[00:51:52] called the toast. It's separate pages
+[00:51:54] but then runs like gzip on that and
+[00:51:56] compresses that but let's only do that
+[00:51:57] for a single attribute
+[00:51:59] and the last one is going to be col
+[00:52:01] columnar compression and then we'll
+[00:52:02] spend most of our time on that but that
+[00:52:04] you know that will get the biggest win
+[00:52:06] if we're using DSM or packs so pretty
+[00:52:09] much every system today that it's using
+[00:52:11] a column store is going to give you is
+[00:52:12] use this bottom one the some systems
+[00:52:15] will give you the the third one the
+[00:52:18] second one is pretty rare I know like
+[00:52:20] one system uh out of China called Terrar
+[00:52:23] They got bought by Bite Dance and the
+[00:52:26] guy was unhappy with having it at Bite
+[00:52:27] Dance and he has a new startup. I forget
+[00:52:29] what it's called. Uh but they they do
+[00:52:30] tuble level compression. His website has
+[00:52:32] him complaining about a parking ticket
+[00:52:33] or something. I it's in Chinese. I can't
+[00:52:34] read it but I can place it on PIA. Um
+[00:52:37] and then block level we'll talk about
+[00:52:38] real quickly. Uh this is rare but this
+[00:52:41] to me this is interesting too.
+[00:52:43] So for this we're going to use what I'll
+[00:52:45] call a naive compression scheme or
+[00:52:47] general purpose where it's pick your
+[00:52:50] offtheshelf favorite algorithm gzip
+[00:52:52] zstandard uh LZ4 snappy whatever just
+[00:52:56] take your block of data run it through
+[00:52:58] the correction scheme and you get a
+[00:52:59] compressed block out and it's going be
+[00:53:01] variable length uh we'll have to account
+[00:53:02] for that in a second but the in general
+[00:53:06] this is going to be just take whatever
+[00:53:07] data you want and throw at it right um
+[00:53:10] Oracle of course has their own
+[00:53:11] compression scheme that's patented So
+[00:53:12] nobody else can use it called Ozip. Um
+[00:53:15] but again the trade-off's going to be as
+[00:53:17] any compression scheme is how fast we
+[00:53:19] can encode and decode and how good our
+[00:53:21] compression schemes is going to be. So
+[00:53:24] let me show you what my SQL does with
+[00:53:25] NB. So my with my SQL you have
+[00:53:27] compressed pages on disk and these are
+[00:53:30] going to be at at some multiple the size
+[00:53:33] of these pages be some multiple of
+[00:53:34] eight. So by default inbs is 16 kilobyte
+[00:53:37] page sizes but if you compress them
+[00:53:39] it'll be within one of these ranges. So
+[00:53:41] if it's like if you compress your page
+[00:53:43] and it's like 900 uh 900 bytes, they'll
+[00:53:46] just padd it up and round it up to be 1
+[00:53:47] kilobyte, right? Pick whatever the
+[00:53:49] greatest size is. And then on top of
+[00:53:51] every page and the header, there's this
+[00:53:53] thing called the mod log where they it's
+[00:53:55] like the write ahead log where you're
+[00:53:57] going to record any changes that you
+[00:53:58] make to the page but that you haven't
+[00:54:00] applied to because you wanted to keep
+[00:54:02] the data compressed.
+[00:54:04] So now if I go need to access a page I
+[00:54:07] just like before I my buffer pool goes
+[00:54:09] out or use the discer goes out and gets
+[00:54:11] it from disk brings it into memory and
+[00:54:13] it starts off in compressed form. So now
+[00:54:16] if I have a a write operation that wants
+[00:54:19] to make a change to the tupil that's in
+[00:54:22] this compressed page, assuming I have an
+[00:54:23] index to tell me how to how to get
+[00:54:24] there, then in some cases I don't
+[00:54:27] actually have to decompress the data.
+[00:54:29] Like if I'm updating the login field for
+[00:54:31] someone logging in on Wikipedia, I don't
+[00:54:34] need to know what the what the old value
+[00:54:35] was in order to make that make make that
+[00:54:37] right. I just overwrite whatever the old
+[00:54:38] one was. So I can put a log record in
+[00:54:40] the mod the mod portion says hey for
+[00:54:42] this tupil update it with this new value
+[00:54:45] for this attribute I can do much my
+[00:54:46] rights my mod log at some point the mod
+[00:54:48] log gets full and I'll have to
+[00:54:50] decompress it and apply the changes but
+[00:54:52] for some some change for some updates I
+[00:54:54] don't have to
+[00:54:56] but now if I want to do a read if the
+[00:54:58] sorry yes
+[00:55:01] >> it's the it's the write ahead log or so
+[00:55:03] it's the remember how in the LSM we just
+[00:55:06] had these little like records said
+[00:55:07] update this put that right Same thing
+[00:55:10] right ahead log is we'll cover this
+[00:55:12] later that yeah it's it's basically the
+[00:55:14] operations that get the the operations
+[00:55:17] that change the data.
+[00:55:18] >> Yes.
+[00:55:18] >> Sorry. So does the mod only exist when
+[00:55:21] you have a log storage or could you also
+[00:55:23] have a mod?
+[00:55:26] >> The question is does a mod log exist
+[00:55:27] only if you have log storage? No. NB is
+[00:55:30] not log log storage but it has it here.
+[00:55:32] It's and we'll say this again when we
+[00:55:34] talk about uh like a delta store like
+[00:55:37] it's a common approach where you have uh
+[00:55:41] you have like an area we can put fast
+[00:55:43] inserts of changes that actually may be
+[00:55:45] applying to them to the data because
+[00:55:47] that's really fast to do that and then
+[00:55:48] you have some background process fix it
+[00:55:50] up that's a common approach in systems
+[00:55:53] >> yes
+[00:55:54] >> so the model cannot exceed
+[00:55:58] level
+[00:56:01] I
+[00:56:03] you said the word level. I don't don't
+[00:56:05] think of log structure storage. Just
+[00:56:06] think of like every page has its own mod
+[00:56:08] log and I could put changes in there and
+[00:56:10] then some point if the mod log is full I
+[00:56:12] have to decompress and apply it and
+[00:56:13] clear out the mod log.
+[00:56:15] >> It's just a way to absorb updates to a
+[00:56:17] page if I can without having to
+[00:56:19] decompress it.
+[00:56:28] The question is will this stall writes
+[00:56:29] if I have to write the mod log to to
+[00:56:31] apply the mod log? Absolutely. Yes. No
+[00:56:33] free launch. Yeah.
+[00:56:36] >> All right. Yes.
+[00:56:41] >> Yes. Question is is the modlock store
+[00:56:43] disc? Yes. I want to keep this data
+[00:56:45] compressed as long as I can. So if if I
+[00:56:48] had if I'm going to flush it out, write
+[00:56:49] it out to disk without applying the
+[00:56:51] changes, I'll go ahead and do that,
+[00:56:54] right? Why not?
+[00:56:57] Okay, so now if I have to do a read, if
+[00:57:00] the read is like go get me for this
+[00:57:02] tuple, like my example, I I was updating
+[00:57:04] that login field where I just do a blind
+[00:57:06] write without actually reading the data.
+[00:57:07] If the read can be serviced by the mod
+[00:57:10] log, fantastic. I just I just access
+[00:57:11] there. But if if I have to actually look
+[00:57:13] what the values are inside the tupil,
+[00:57:15] then I decompress it, apply whatever
+[00:57:18] changes I have in my mod log. And when I
+[00:57:20] decompress it, it's always going to end
+[00:57:20] up being 16 kilobytes because that's the
+[00:57:22] default size inb. Apply my changes to my
+[00:57:24] mod log. Still keep the compressed
+[00:57:26] version around. Uh because if I didn't
+[00:57:30] make any changes, maybe I I I don't want
+[00:57:31] to like if if there was no mod log
+[00:57:33] updates to apply, then why uh then I can
+[00:57:37] just always throw it away if I need to
+[00:57:38] free a page. But the idea is again if I
+[00:57:41] had to know something was inside of it
+[00:57:42] then I decomp uncompress it. Yes.
+[00:57:58] This question is
+[00:58:00] is there a way to have the compressed
+[00:58:03] page
+[00:58:05] only compress the data that that you
+[00:58:07] need. So in this scheme of my SQL, no.
+[00:58:10] That would be choice number two. The
+[00:58:11] tupal level compression. Like I said,
+[00:58:13] there's only one system that does that.
+[00:58:15] It's a you basically want to have you
+[00:58:17] want to be able to do incremental
+[00:58:19] decompression.
+[00:58:21] GZIP, Snappy, all those guys can't do
+[00:58:23] that. Like you have to you have to sort
+[00:58:25] of decompress the whole stream to jump
+[00:58:28] to send anyone offset. There are
+[00:58:30] algorithms to do that. The tupal level
+[00:58:32] one that Terra one is the only one that
+[00:58:34] I know that actually did that. I don't
+[00:58:36] think everybody else does.
+[00:58:38] I hold up hold up. Uh SQL server can do
+[00:58:41] it too, but I forget how they do it. And
+[00:58:43] I don't know why they give them by
+[00:58:44] default. I don't think they say how they
+[00:58:45] do it. SQL server in this in this this
+[00:58:48] fork of Rox DB called Terra. I can
+[00:58:50] follow on patia with links to that. All
+[00:58:52] right, I don't want to spend too much
+[00:58:53] time on this because it's my SQL and
+[00:58:54] they they're the ones that do it. I just
+[00:58:56] say like if you want to run snappy gzip
+[00:58:59] this is how roughly you could do it and
+[00:59:00] actually I actually think this is a good
+[00:59:02] idea. Postgress can't do this, right?
+[00:59:05] Postgress can't do any any any
+[00:59:06] compression except for those toast
+[00:59:08] tables those separate overflow
+[00:59:09] attributes, right?
+[00:59:13] All right. So the big thing to point out
+[00:59:14] is in this case here the compression
+[00:59:16] algorithm we're using whether it's gzip
+[00:59:18] or snappy or or dstandard right it's
+[00:59:22] it's considered an opaque box to the
+[00:59:23] database system meaning I have a bunch
+[00:59:26] of compressed bytes I the data system
+[00:59:28] doesn't know anything about what those
+[00:59:29] bytes actually mean the only way it can
+[00:59:31] get back to the original data is if it
+[00:59:33] runs the decoder runs the decompression
+[00:59:35] algorithm to put it back into its
+[00:59:38] original form
+[00:59:41] All right.
+[00:59:43] The compression schemes also don't
+[00:59:44] understand the high level meaning or
+[00:59:46] semantics of the data. So it doesn't
+[00:59:47] know like it should put maybe pack
+[00:59:49] certain pages together and compress them
+[00:59:51] because they're going to be related to
+[00:59:52] each other. It said it just says here's
+[00:59:53] the data you want to compress. Go for it
+[00:59:55] and here's the output. Right?
+[00:59:58] So what we really want to be able to do
+[01:00:01] is have our data be able to operate on
+[01:00:03] compressed data without decompressing
+[01:00:05] it. So this is a high level example.
+[01:00:09] I'll show you how we'll do in a second.
+[01:00:10] But the basic idea is this. Say I have a
+[01:00:12] simple table with names and salaries. I
+[01:00:14] want to run some compression algorithm
+[01:00:16] and convert this data into compressed
+[01:00:18] form. I'm showing this with two tupils
+[01:00:20] because it's because it fits in
+[01:00:21] PowerPoint. Always think in extreme. So
+[01:00:23] what if I have a trillion tupils, right?
+[01:00:25] I can store this now this in much much
+[01:00:28] less space than I would if it was
+[01:00:29] uncompressed. And then now if my query
+[01:00:31] shows up select star from users where
+[01:00:33] name equals Andy. I'm not saying gonna
+[01:00:35] say how I I'm going to do this yet, but
+[01:00:37] what I want to be able to do is convert
+[01:00:39] whatever constant I'm doing a lookup on
+[01:00:41] for a given tupil like name equals Andy,
+[01:00:44] somehow convert that into its compressed
+[01:00:45] form.
+[01:00:47] So now when I do my comparison, instead
+[01:00:51] of comparing two strings, does Andy
+[01:00:52] equal Andy does Andy equal mesh, I'm
+[01:00:54] taking whatever this xxx thing, assuming
+[01:00:56] it's a it's like an integer or
+[01:00:58] something, and now I'm doing a faster
+[01:00:59] comparison on those,
+[01:01:02] right? And if I'm doing integer
+[01:01:03] comparisons, there's instructions on
+[01:01:04] CPUs to do that really really fast
+[01:01:06] versus like having to jump over bytes to
+[01:01:08] do string string matching.
+[01:01:11] So this is the goal. This is what we
+[01:01:12] want to be able to do. And because we're
+[01:01:14] the database system, we can control
+[01:01:16] everything. We can do this. Whereas like
+[01:01:18] an off-the-shelf compression scheme
+[01:01:19] can't do that. Even though they're
+[01:01:22] actually going to be doing a lot of the
+[01:01:23] same techniques that I'm going to talk
+[01:01:24] about here in in a second like gzip and
+[01:01:26] snappy, they're basically doing the same
+[01:01:28] thing. They don't expose any of that to
+[01:01:30] you on the outside. So they're doing
+[01:01:32] dictionary encoding but they don't
+[01:01:33] expose the dictionary to you so that you
+[01:01:35] can then do more fine grain lookups.
+[01:01:39] So going back here we're going to be
+[01:01:40] doing this again for in the column store
+[01:01:42] because now that our data within a
+[01:01:45] single attribute is all contiguous to
+[01:01:47] each other they're all with mean the
+[01:01:48] same value domain mean we're going to
+[01:01:50] see a lot of repeated values a lot of
+[01:01:52] values that are very close to each other
+[01:01:53] and we can exploit that in our
+[01:01:55] algorithms.
+[01:01:58] So here's a rough smattering of the the
+[01:02:00] main compression schemes and I'll go
+[01:02:01] through these one by one. Um the you
+[01:02:04] know obviously the the usefulness of
+[01:02:06] these depends on the data set depends on
+[01:02:08] the workload. In general the dictionary
+[01:02:10] encoding one is going to be the most
+[01:02:11] common. um like I think orc they
+[01:02:14] dictionary code everything uh in in
+[01:02:17] their files and obviously for for var
+[01:02:20] length you need these but a lot of these
+[01:02:21] other ones if if they can fit the the
+[01:02:23] domain you're trying to work in you can
+[01:02:24] get a big win much better than you can
+[01:02:26] with dictionary coding
+[01:02:29] so run length coding rle is when you
+[01:02:31] have repeated values um within a column
+[01:02:35] so instead of storing that value over
+[01:02:37] and over again and repeating it we're
+[01:02:39] just going to store hey I have this
+[01:02:40] value I'm at this offset within my
+[01:02:43] column and then here's how many times
+[01:02:45] it's been repeated and I'll just store
+[01:02:47] that triplet in succession rather than
+[01:02:50] the the original values over and over
+[01:02:52] again. So obviously to make this work
+[01:02:54] you got to sort your data in such a way
+[01:02:56] that you can exploit this uh because
+[01:02:59] otherwise you may end up ballooning the
+[01:03:00] the the size of the compressed data. So
+[01:03:03] let's say I have a really simple table
+[01:03:05] that has uh some people information
+[01:03:07] where I have some ID of the person and
+[01:03:09] then a flag to say whether they're dead
+[01:03:10] or not like a boolean flag yes or no. So
+[01:03:13] as you can see in this boolean flag here
+[01:03:16] is dead I'm having a lot of repeated
+[01:03:18] values. So what I can do is in now
+[01:03:21] instead of storing the original value
+[01:03:23] over and over again, I'll just store the
+[01:03:26] some value what offset I'm in because
+[01:03:28] that's going to help me jump around if I
+[01:03:29] need to find uh you know for a match at
+[01:03:32] a given offset and then the the length
+[01:03:35] of of the run,
+[01:03:37] right? So if I have queries like this,
+[01:03:39] select uh select select the number of
+[01:03:42] people that are dead and the number of
+[01:03:43] people that are alive, right? I can just
+[01:03:46] operate directly on the uh I can just
+[01:03:48] operate directly on this is dead part
+[01:03:50] here in compressed form and compute that
+[01:03:52] very very efficiently
+[01:03:55] course now the challenge is going to be
+[01:03:56] I have alternating uh values so here we
+[01:03:59] have no followed by yes followed by no
+[01:04:01] so that's the worst case scenario for us
+[01:04:02] because because now that the size of the
+[01:04:04] run is one for those three three tupils
+[01:04:07] or three three values and the size of
+[01:04:10] the compressed data is actually larger
+[01:04:11] than the original data. So if I sort the
+[01:04:15] the the table based on the the column I
+[01:04:18] want to compress and I got to update all
+[01:04:21] the other columns because I make sure my
+[01:04:22] offsets match now going across
+[01:04:24] horizontally.
+[01:04:26] Now you see I I have all the yeses
+[01:04:27] followed by all the nos and now I can
+[01:04:29] store this this column as a single or
+[01:04:31] just just two values.
+[01:04:36] All right.
+[01:04:38] So, so this this again I'm only showing
+[01:04:40] what nine tupils here thinking in
+[01:04:42] trillions or billions. This will be a
+[01:04:45] huge huge win
+[01:04:48] and we'll see in a second we can we can
+[01:04:50] combine rle with other compression
+[01:04:52] schemes like these things are actually
+[01:04:53] multiplicative. I I can compress in one
+[01:04:54] form and compress it again on another
+[01:04:55] form. Yes,
+[01:05:02] >> the statement is uh doesn't this mess up
+[01:05:04] I don't have my tupal ID. This is
+[01:05:06] actually this is not an internal ID.
+[01:05:07] This is like the the this is like the
+[01:05:10] the the applications. I have this column
+[01:05:12] called ID. This is like the social
+[01:05:14] security number, email address. I'm just
+[01:05:16] showing ID as a simple number.
+[01:05:19] >> All the other columns should be sorted
+[01:05:20] based on whatever this this the columns
+[01:05:22] you're sorting on.
+[01:05:26] >> Correct. And he's right. This might be
+[01:05:27] good for one of the columns but suck for
+[01:05:29] the other ones. Absolutely. Yes. So, how
+[01:05:31] do you pick what the best sorting scheme
+[01:05:32] is? MP hard.
+[01:05:40] All right, next one is bit packing.
+[01:05:42] So again in SQL you you call create
+[01:05:45] table you say this these are the columns
+[01:05:46] I have you have to define the data type
+[01:05:48] for them right and oftent times people
+[01:05:51] declare things to be much larger than
+[01:05:53] they actually need like I have like an
+[01:05:54] age column right I'll define that as a
+[01:05:58] integer that's a 32-bit integer or four
+[01:06:01] by integer in in SQL but if most my
+[01:06:05] values aren't going to be hitting up the
+[01:06:07] max size of a 3-2 integer I got a bunch
+[01:06:09] of wasted space storing a bunch of zeros
+[01:06:11] that don't mean anything for the tuples,
+[01:06:13] but because they declare it to be 32
+[01:06:14] bits, I'm going to store 32 bits. So, if
+[01:06:17] the database system can recognize that
+[01:06:19] you've over subscribed or overallocated
+[01:06:21] the size of the the amount of storage
+[01:06:23] space for your your data, it can
+[01:06:25] actually throw things away. So, if I'm
+[01:06:28] storing all these values here as again
+[01:06:30] as 32 bit integers, you see we have
+[01:06:32] these the visual side 256 bits, but the
+[01:06:35] only data that matters is this side over
+[01:06:37] here. Everything on this side is all
+[01:06:39] wasted space with a bunch of zeros.
+[01:06:42] So with bit packing, you basically say,
+[01:06:44] uh, I'm going to store this in a
+[01:06:46] compressed form. Throw away those other
+[01:06:48] 24 bits and only store the eight bits
+[01:06:50] that actually matter.
+[01:06:53] And now we get this down for this
+[01:06:54] example here. We go from 26 bits to 64
+[01:06:57] bits with no loss of precision. And
+[01:07:00] they're all fixed length because they're
+[01:07:02] all eight bit integers. So now I can
+[01:07:03] easily jump to whatever the offset is I
+[01:07:05] need for a given tupole.
+[01:07:09] What's the challenge with this?
+[01:07:13] What if someone comes along and inserts
+[01:07:15] a value now that isn't just eight bits,
+[01:07:19] something larger?
+[01:07:21] So, this is called patching. Uh or if if
+[01:07:24] you're using Amazon Redshift, they call
+[01:07:25] this mostly encoding. And the idea here
+[01:07:27] is that most of the values are going to
+[01:07:29] be stored uh I can bit pack into a
+[01:07:31] smaller form. But for the outliers that
+[01:07:33] are maybe too big, I just have a little
+[01:07:35] special marker to say, "All right, this
+[01:07:37] value is actually not in line here with
+[01:07:39] the rest of the values. Go jump to some
+[01:07:41] uh patch table that will tell you what
+[01:07:43] the real value should be." So if I add
+[01:07:46] this large number 999999,
+[01:07:48] uh it doesn't fit within eight bits.
+[01:07:50] I'll store everything else as 8 bits.
+[01:07:51] And then again in in Red Shift, you call
+[01:07:53] this mostly eight. And then I have this
+[01:07:55] patch table here that says if you scan
+[01:07:58] along and find this this bit sequence
+[01:08:00] xxx like think think of all the bits or
+[01:08:02] set true or one then I know that that
+[01:08:05] offset I go look up in this table and I
+[01:08:07] find what the original value is. So in
+[01:08:10] this case here instead of storing this
+[01:08:11] as 26 bits I store all my values as
+[01:08:15] eight bits but then I have that lookup
+[01:08:16] table which I can get down to maybe just
+[01:08:19] uh 48 bits to store that.
+[01:08:22] Yes.
+[01:08:30] >> This question is how do I differentiate
+[01:08:31] between a value that's a sentinel to say
+[01:08:32] go look at the patch table versus the
+[01:08:34] original value. So for that one you just
+[01:08:35] if you set all the bits to one then you
+[01:08:38] can't let anything be that value. You
+[01:08:42] have that be special cased
+[01:08:50] >> correct his statement is and he's
+[01:08:51] correct. If you had a value that was
+[01:08:52] actually that special case, then you
+[01:08:54] have to store that in the patch table.
+[01:08:55] Yes.
+[01:08:59] But a trick you can also do is like
+[01:09:02] and here I'm showing offset 399, but if
+[01:09:05] you have that repeated value that's the
+[01:09:06] sentinel value over and over again, you
+[01:09:08] actually don't you only need to store
+[01:09:09] that once in the patch table. You reuse
+[01:09:10] the entry. So it's not like you need
+[01:09:13] store that repeatedly.
+[01:09:16] >> How do you store the offsets? Just a
+[01:09:18] fixed length array.
+[01:09:24] Okay. Uh, bit map encoding. Uh, for this
+[01:09:27] one, instead of storing the actual value
+[01:09:29] themselves, we're going to store for
+[01:09:31] every unique value you have in your
+[01:09:33] domain, we're going to maintain a bit
+[01:09:34] map for it. And then you just have a one
+[01:09:36] set within that bit map at an offset
+[01:09:38] whether the value at the tuple of that
+[01:09:41] offset is that value within your bit
+[01:09:43] map. I'm going these kind of quickly. We
+[01:09:45] only have 10 minutes left. Um this would
+[01:09:48] be fantastic if the cardality of the
+[01:09:50] value is low meaning the number of
+[01:09:52] unique values it's going to have for a
+[01:09:53] given attribute is low uh like my one
+[01:09:56] example is dead yes no like anybody's
+[01:09:59] either dead or not dead right there's
+[01:10:00] only two possible choices and this is
+[01:10:03] going to work really great for that so
+[01:10:05] we go back to this right is dead yes no
+[01:10:08] so I'll I'll maintain one bit map for my
+[01:10:10] yeses one bit map for nos and as you see
+[01:10:13] at the different offsets it's all going
+[01:10:15] to be one or zero in in either one,
+[01:10:18] right?
+[01:10:20] And then now if I uh if I you know run
+[01:10:24] my queries, I can just rip through uh
+[01:10:26] you know find me all the matches where
+[01:10:28] the the somebody's dead. I only need to
+[01:10:30] scan through the is dead yes column and
+[01:10:33] I don't need to look at look at the
+[01:10:34] other bit map.
+[01:10:36] So the original size of this was 64
+[01:10:38] bits. Assuming I can store these instead
+[01:10:40] of yes no as as single bits. I can get
+[01:10:42] that get this down to 16 bits. Yes.
+[01:10:44] >> Where would you ever do that?
+[01:10:46] Like isn't it better to do just for one
+[01:10:49] bit that say zero or one?
+[01:10:51] >> The question is why would you ever want
+[01:10:52] to do this? Is it better to store is
+[01:10:54] dead in this example? Yes.
+[01:10:56] >> Even if there's more values better with
+[01:11:00] one number rather than a bunch of
+[01:11:04] >> this question is uh
+[01:11:06] >> if there's four unique values then you
+[01:11:08] just need
+[01:11:12] basically should should you do like
+[01:11:13] something like RLish Like you saying do
+[01:11:16] rle or this basically store like if I
+[01:11:19] have yeah the statement is could you
+[01:11:21] just represent the bit sequence as just
+[01:11:23] a number store the number yes I for two
+[01:11:26] columns does I'm trying to show an
+[01:11:27] example example yes
+[01:11:28] >> but but I just don't understand why this
+[01:11:30] ever be a good idea
+[01:11:33] >> so I said why would this ever be a good
+[01:11:34] idea uh well if if the thing you're
+[01:11:38] storing isn't isn't binary
+[01:11:41] >> well because you're busy keep
+[01:11:44] Yeah. Yes.
+[01:11:45] >> So like isn't it always smaller to just
+[01:11:49] have like one small integer where like
+[01:11:53] zero means a value one value
+[01:11:56] this directly instead of having the
+[01:11:59] sparse?
+[01:12:00] >> His question is is it better to
+[01:12:03] isn't it better to have a small number
+[01:12:04] represent
+[01:12:06] uh a value within my my colonic compress
+[01:12:09] rather than do one hot encoding? Uh well
+[01:12:12] no because I can do I can rip through
+[01:12:13] bit maps very very quickly much faster
+[01:12:16] than I can rip through integers
+[01:12:18] >> right find me all the act find me all
+[01:12:20] the simple example here find me all the
+[01:12:23] this is not good because I could store
+[01:12:26] is dead as as a as a in a bitmap column
+[01:12:30] >> right so you're saying it's easier to
+[01:12:32] compare one bit like say like
+[01:12:36] >> correct yes because there's a bunch of
+[01:12:37] bit shifting tricks I can do that in
+[01:12:39] modern CPUs that I can take in a whole
+[01:12:42] vector of bits and then a single
+[01:12:44] instruction and find all the matches
+[01:12:46] versus like integer it would would take
+[01:12:47] a lot more.
+[01:12:56] >> Your statement is bitmat would be
+[01:12:57] faster. Yeah, for aggregation. Yes.
+[01:12:59] Okay. My example here, yes. No, it's
+[01:13:01] binary. So you could just store just
+[01:13:04] this array here would or this array here
+[01:13:07] would be the same thing as storing is
+[01:13:09] dead. show you two examples because if
+[01:13:11] it's on PowerPoint, but if you have more
+[01:13:13] uh it it would not be a good idea. All
+[01:13:16] right. Um
+[01:13:19] let me quickly show why it's a bad idea.
+[01:13:20] So if you have a a lot of columns,
+[01:13:22] sorry, a lot of unique values like
+[01:13:24] number of zip codes, then the storage
+[01:13:26] space you just do the naive scheme would
+[01:13:28] be terrible. All right, so you don't
+[01:13:30] want to bit map encode everything. Uh
+[01:13:32] there are tricks to compress this
+[01:13:34] further using called roaring bit maps.
+[01:13:36] We don't have time to cover that because
+[01:13:37] think like compressed bit maps for It's
+[01:13:39] a way to compress sparse bit maps. So I
+[01:13:42] have a bunch of zeros roaring bit maps
+[01:13:44] the right way to do that and a bunch of
+[01:13:45] systems use that. All right, let me get
+[01:13:48] through the last two compression
+[01:13:49] schemes. Delta encoding and um and
+[01:13:52] dictionary compression. So delta coding
+[01:13:54] the idea is that if I'm storing values
+[01:13:56] that are very close to each other uh
+[01:13:58] repeatedly then I don't need to store
+[01:14:00] the actually the actual absolute value
+[01:14:02] uh for each of those measurements or
+[01:14:04] whatever I'm trying to record. I just
+[01:14:05] store a diff or delta from either the
+[01:14:09] previous value or some global value at
+[01:14:11] the top of of beginning of of the page
+[01:14:13] and then now the delta I'm storing is be
+[01:14:15] much less than storing the full value.
+[01:14:17] So again, if I'm storing the temperature
+[01:14:18] in this room uh at a one minute
+[01:14:21] granularity uh and or hopefully not this
+[01:14:25] room 99 be a lot, but like if I'm
+[01:14:27] recording over and again the same
+[01:14:28] temperature over again, the there aren't
+[01:14:30] going to be wild fluctuations in the
+[01:14:32] temperature uh from one measurement to
+[01:14:34] the next. So instead, what I can do is
+[01:14:37] just or same with the time. The time is
+[01:14:39] always incrementing uh by one one
+[01:14:40] minute. So instead, I'll just store at
+[01:14:42] the top of the the column the some base
+[01:14:45] value and then I'll store the delta from
+[01:14:49] the the previous value. So now as I'm
+[01:14:51] scanning along, I know how to apply
+[01:14:54] those changes to get back what get
+[01:14:56] whatever value it is that I wanted,
+[01:14:58] right?
+[01:15:00] So we can compress this further because
+[01:15:02] if you notice in this case here, the
+[01:15:03] time column, what do we have? A bunch of
+[01:15:06] plus ones. So we don't we don't need to
+[01:15:09] store one one all over again. We can r
+[01:15:11] that again and now we get the multip
+[01:15:14] multiplicative compression where I
+[01:15:15] restore we have plus one repeated four
+[01:15:17] times. Right? Some of these compression
+[01:15:20] schemes are are are composable.
+[01:15:23] So the the benefit we're going to get is
+[01:15:24] the original data in this example here
+[01:15:26] is 320 bits. If I just do delta encoding
+[01:15:28] I get 128 bits. But if I do rle plus
+[01:15:30] delta encoding I can get it down to 96
+[01:15:32] bits. Again we're talking bits here.
+[01:15:34] Always think in larger scales. This will
+[01:15:36] matter when you when you get the
+[01:15:37] gigabyte and pedabyte scale.
+[01:15:40] In this example here with delt encoding
+[01:15:41] I have at the beginning of the page
+[01:15:43] that's the base value I'm going to use
+[01:15:45] as this the the offset when I compute
+[01:15:47] these things. There's another approach
+[01:15:48] called frame of reference and basically
+[01:15:50] you have a global min value that these
+[01:15:53] you use across multiple pages but the
+[01:15:55] basic idea is the same thing.
+[01:15:59] All right, the last one I want to get
+[01:16:00] through is dictionary coding. And the
+[01:16:02] idea here is that we're going to replace
+[01:16:03] frequent values that we see in our in
+[01:16:06] our data set within a column with some
+[01:16:08] kind of small fixed fixed length integer
+[01:16:11] code. And then we'll store those integer
+[01:16:14] codes uh continuously in memory. And
+[01:16:17] then we'll have a separate data
+[01:16:18] structure called the dictionary which is
+[01:16:20] oftentimes just a you know fixed length
+[01:16:23] array sorry an array that with we jump
+[01:16:25] to offsets um that if I ever need go
+[01:16:29] back to the original value I can use
+[01:16:30] that dictionary to do that conversion.
+[01:16:33] So typically in most implementations are
+[01:16:35] going to have one code dictionary code
+[01:16:37] per value. So, if I have like a one
+[01:16:39] megabyte block of text, I can convert
+[01:16:42] that down to a a single 32-bit integer
+[01:16:45] um and then I have a dictionary to store
+[01:16:47] that entire block of text later. You you
+[01:16:49] could start doing like more fine grain
+[01:16:50] things like Huffen coding. Uh but as far
+[01:16:52] as I know, no system does that in
+[01:16:54] production.
+[01:16:56] This is also basically this again this
+[01:16:57] is what LZ4 and Z standard and all those
+[01:16:59] other questions are doing underneath the
+[01:17:00] covers. They just don't expose the
+[01:17:01] dictionary to you. So this would be
+[01:17:04] great for uh both doing point queries
+[01:17:07] and and range queries because I can rely
+[01:17:10] on that dictionary to do fast uh
+[01:17:12] comparisons on the data in compressed
+[01:17:14] form without having to go decompress it.
+[01:17:18] So look at a simple example like this.
+[01:17:20] So here's my original data, right? I
+[01:17:22] have a bunch of integer strings. They're
+[01:17:23] all different lengths. So I'll then when
+[01:17:26] I compress it, I I convert the name
+[01:17:28] column into these compressed integers.
+[01:17:30] Then I have this dictionary size
+[01:17:32] structure over here that for any given
+[01:17:34] value here's the code corresponding code
+[01:17:37] for it and I have a way to actually go
+[01:17:38] both directions of my dictionary. So for
+[01:17:40] a given code give me the original value
+[01:17:42] and for original value give give me the
+[01:17:44] code. So I need to support both
+[01:17:45] operations and this dictionary is
+[01:17:48] actually be sorted based on the the
+[01:17:50] values that we're compressing
+[01:17:52] because now we can still apply certain
+[01:17:55] uh comparison operators when we run
+[01:17:57] queries on the compressed data and still
+[01:17:58] get all the order preserving guarantees
+[01:18:00] we want because the the data has
+[01:18:02] actually been sorted. So now I can use
+[01:18:04] some tricks like this. If I have uh
+[01:18:06] final users where the the name ends or
+[01:18:08] starts with the prefix a and d, I can
+[01:18:11] take my query, extract out the constant
+[01:18:14] I'm doing lookup on, convert that into
+[01:18:17] uh or basically apply that like clause
+[01:18:19] to my dictionary which is be way smaller
+[01:18:22] than the the original data
+[01:18:25] convert now my boundaries into uh to the
+[01:18:29] the to you know to dictionary codes in
+[01:18:31] this case 10 and 20. Now I in my my
+[01:18:34] rewritten query I can rip through the
+[01:18:35] name column with that between clause and
+[01:18:38] now just do comparisons on integers
+[01:18:40] which is way faster to find all my
+[01:18:42] matches. So I still had to do some some
+[01:18:44] string lookups but I did that on the
+[01:18:46] dictionary and if I have a lot of
+[01:18:47] repeated values and this is fantastic
+[01:18:49] because I'm not going to have to look at
+[01:18:50] all the data and then I can rip through
+[01:18:52] the the original data uh very
+[01:18:54] efficiently.
+[01:18:56] So this is what the order preserving
+[01:18:57] guarantees of of maintaining the the
+[01:18:59] dictionaries and sort of the order gives
+[01:19:01] us. So if I have a query like this uh
+[01:19:05] like select name from users for name
+[01:19:07] equals like a and d right I'm still have
+[01:19:09] to do a scan on the original table
+[01:19:10] because I got to get back uh I I still
+[01:19:13] have to get back the the original value
+[01:19:16] uh for the for the tuples that match the
+[01:19:19] in this case here if I have only get the
+[01:19:22] distinct name that one I only have to go
+[01:19:24] look up in the dictionary because I need
+[01:19:25] to find whatever that one match that I
+[01:19:27] have and and then I'm done.
+[01:19:29] >> Yes.
+[01:19:31] delete.
+[01:19:36] >> The question is how do I handle how do I
+[01:19:38] handle deletes? Do I have to handle how
+[01:19:39] do I delete from the value from the
+[01:19:40] dictionary? Deletes are easy because you
+[01:19:42] could just delete the value from the
+[01:19:43] dictionary and it doesn't have any gaps.
+[01:19:45] Inserting is more tricky because if I
+[01:19:46] have to insert something between a like
+[01:19:49] a 10 and 11 and I don't have a value in
+[01:19:51] between, I got to recompress things. The
+[01:19:53] great thing about OLAP is that the the
+[01:19:55] the data is mostly immutable so it's not
+[01:19:57] really an issue.
+[01:20:00] If you see the phrase dictionary
+[01:20:01] compression, does it mean order
+[01:20:03] preserving by definition or are there
+[01:20:05] dictionary compressions that are not
+[01:20:07] order? The
+[01:20:07] >> question is if I someone says you're
+[01:20:09] using dictionary compression, does that
+[01:20:11] mean by default they're using order
+[01:20:12] preserving? Typically yes. Are there
+[01:20:14] compression schemes that are not order
+[01:20:15] preserving? Yes. But most of them are. I
+[01:20:18] sort of highlight that benefit we get.
+[01:20:20] Okay, we're out of time here. Um, so
+[01:20:23] I'll pick up where we pick up on the
+[01:20:26] pick up on how we handle OTB and OLAP
+[01:20:28] together next class and then we'll have
+[01:20:29] the guest speaker from Yugabte and then
+[01:20:32] again the recitations tomorrow night and
+[01:20:34] then all the database uh company talks
+[01:20:37] are all tomorrow morning as I post a
+[01:20:38] piaza. Okay, hit it
+[01:20:44] acrobats over tracksicks
+[01:20:50] over tracks.
+[01:20:52] [Music]
+[01:20:55] over
+[01:21:00] [Music]
+[01:21:03] the fortune. Get the fortune
+[01:21:05] Maintain flow with the
+[01:21:09] grain. Get the fortune
+[01:21:12] Maintain flow with the grain.

@@ -1,0 +1,2310 @@
+[00:00:00] [Music]
+[00:00:06] I'm still
+[00:00:08] associ.
+[00:00:11] [Music]
+[00:00:26] Awesome.
+[00:00:29] Again, I apologize for being out of town
+[00:00:31] last week. I was in London. Uh if you
+[00:00:33] watched the class video, it was bizarre.
+[00:00:36] Uh your friend, so cash is his old
+[00:00:39] friend. Fat Fat Face Rick that owes you
+[00:00:40] money. I was supposed to get your money.
+[00:00:42] Uh
+[00:00:42] >> did you not
+[00:00:43] >> I did not get your money. Uh like he
+[00:00:46] like whatever took some drugs and then
+[00:00:48] walked walking around like the bad parts
+[00:00:50] of London and like got beat up by
+[00:00:51] 12-year-olds. So we had
+[00:00:53] >> 12-y old kids. It was super bizarre.
+[00:00:56] >> He was up. What am I supposed to
+[00:00:57] do? Anyway, sorry. Um, yeah. So, I
+[00:00:59] apologize for not being around. Um,
+[00:01:02] that was a weird one. That's a new one
+[00:01:03] for me. Okay. Um, so let's let's open
+[00:01:06] this. So, the again, project zero and
+[00:01:09] homework one were due last night. Uh,
+[00:01:11] everyone should have completed project
+[00:01:12] zero. We're going to go over the grades
+[00:01:15] um to later today with the TAs. And
+[00:01:17] again, you have to get 100% on this by
+[00:01:19] last night in order to be allowed to
+[00:01:20] take the class. Um, project one we hope
+[00:01:22] to release later today and that'll be
+[00:01:24] due at the end of the month. And that's
+[00:01:26] going to be related to what uh today's
+[00:01:28] class will be about. Okay, the source
+[00:01:30] code is not pushed yet. Uh so everyone
+[00:01:32] will have to sort of do uh a get pull
+[00:01:34] and merge in the latest version of from
+[00:01:36] the main branch into uh your local code.
+[00:01:38] Okay.
+[00:01:41] The other thing coming up uh next week
+[00:01:43] on Monday and Tuesday is that we're
+[00:01:44] having our visit day for all our friends
+[00:01:47] in the database industry. So there's two
+[00:01:49] days, Monday, Tuesday. Obviously the
+[00:01:50] class is on Monday, but we'll we'll duck
+[00:01:52] out and teach that and then we can
+[00:01:54] always go back. Um so the first day we
+[00:01:56] sort of research talks and some intro
+[00:01:58] talks from the companies and then on the
+[00:02:00] Tuesday in the morning that'll be these
+[00:02:02] info sessions where each company will
+[00:02:04] present for about an hour talk about
+[00:02:06] what their system is what they're
+[00:02:07] building uh and they talk a little about
+[00:02:09] internships and full-time positions as
+[00:02:10] well. So that's why I posted on piaza
+[00:02:12] over the weekend or Friday whatever that
+[00:02:15] was. Um so if you want to go uh come to
+[00:02:17] these sessions since we're having um
+[00:02:20] since you know we only have so many time
+[00:02:22] slots there will be some overlap between
+[00:02:24] two companies giving the same talk or
+[00:02:25] giving different talks at the same time
+[00:02:27] different rooms. So just put down what
+[00:02:29] your preference is and then we just run
+[00:02:30] whatever stable marriage algorithm to
+[00:02:33] generate chat GBT to figure out the best
+[00:02:35] schedule for everyone. And then if you
+[00:02:37] want to uh as I posted else as well if
+[00:02:40] you want to get a database job either
+[00:02:41] internship or full-time position uh go
+[00:02:43] to that PA post there and then there's a
+[00:02:45] spreadsheet just add yourself what
+[00:02:46] you're looking for when you're available
+[00:02:48] and then we send that out to uh all our
+[00:02:50] database friends including the companies
+[00:02:52] that are coming next week. So we want to
+[00:02:53] get this out to them before they show
+[00:02:54] up. And then we have other database
+[00:02:56] friends as well. while we send it to
+[00:02:57] everyone else. And again, this doesn't
+[00:02:58] go to recruiters except for some rare
+[00:03:00] cases. This goes to people that like
+[00:03:02] co-founders or like VP engineerings, the
+[00:03:04] hiring managers for the companies. So,
+[00:03:05] it's not like if you go to Microsoft's
+[00:03:06] website, you know, you fill it for an
+[00:03:09] internship. That's just going in the
+[00:03:10] pool with everyone else. We try to skip
+[00:03:12] all that and go directly to the people
+[00:03:13] that care about databases. They know
+[00:03:14] what this course is.
+[00:03:16] >> Yes.
+[00:03:18] >> The statement is we haven't learned that
+[00:03:19] much databases yet. Don't say that.
+[00:03:21] Actually, here's the weird I've ever
+[00:03:23] heard. Uh, so I know that a bunch of
+[00:03:25] database companies use this class for
+[00:03:26] onboarding new employees. I had somebody
+[00:03:29] tell me last week in London that they
+[00:03:31] were not a database person. A company
+[00:03:33] wanted to interview them for a database
+[00:03:34] job. And he's like, he told him straight
+[00:03:36] up, I don't know anything about
+[00:03:37] databases. They sent him this class to
+[00:03:39] prep for the job interview.
+[00:03:42] I didn't know you could do that. Uh, and
+[00:03:44] he got the job.
+[00:03:49] >> This Yes.
+[00:03:52] Um yeah, for the advanced class, one of
+[00:03:54] our projects used to be B like uh
+[00:03:57] another Davis company basically took it
+[00:03:58] and that was like the um like the what
+[00:04:02] the hacker challenge for like to hire
+[00:04:04] you. They would like make you implement
+[00:04:05] something that we were having you do in
+[00:04:06] the class. So if you do the class, this
+[00:04:08] is 721. You can show up and get hired
+[00:04:10] easily. Anyway, uh so any questions
+[00:04:12] about this post on piaza and then uh
+[00:04:14] please join us next week. Okay.
+[00:04:17] All right. So last class again it was
+[00:04:19] awkward because I was had to teach it in
+[00:04:21] in in the emergency room. Um but we
+[00:04:23] spent time talking about what databases
+[00:04:26] look like at the lowest level on disk.
+[00:04:28] Again at the end of the day a database
+[00:04:29] system just a files on disk. There's
+[00:04:31] nothing really special about them at
+[00:04:32] least from the OS's perspective right
+[00:04:35] just as if you open up VM or Emacs
+[00:04:37] whatever your favorite editor is and
+[00:04:38] created the file start writing data into
+[00:04:39] it. That's basically what the database
+[00:04:41] system is doing. Um, and of course how
+[00:04:43] we layered the the the different
+[00:04:45] concepts on top of each other that sort
+[00:04:47] of makes it so we can be do more
+[00:04:49] sophisticated things uh as we as we get
+[00:04:52] further along in the semester. So
+[00:04:54] today's class is now to jump ahead and
+[00:04:57] say okay well I have a bunch of files on
+[00:04:59] disk uh I in order for me to do anything
+[00:05:01] with those files I got to bring them
+[00:05:03] into memory right the classic vonomian
+[00:05:05] architecture I got to bring the memory
+[00:05:07] and then I I can manipulate them serve
+[00:05:09] queries do whatever I want um and so
+[00:05:11] today's class is really about the the
+[00:05:12] management or the movement of data from
+[00:05:14] disk into memory and then back to disk
+[00:05:17] as again we'll talk a little bit about
+[00:05:19] how we handle dirty rights later in the
+[00:05:21] semester sorry in in this class we'll go
+[00:05:23] more detail know how we make sure we do
+[00:05:24] things safely to write back to disk
+[00:05:26] later after the midterm. But for now,
+[00:05:28] we're just trying to say, can we copy
+[00:05:30] things in and then how do we serve them
+[00:05:31] up, right? And then next week, today's
+[00:05:35] Monday. So, starting Wednesday, we
+[00:05:36] actually go back back down. So, back to
+[00:05:38] problem number one and talk about
+[00:05:40] alternative approaches to storing data
+[00:05:42] as files on disks. But the the buffer
+[00:05:44] pool stuff, the memory management stuff
+[00:05:45] we're talking about today will still be
+[00:05:47] relevant for uh those other other uh
+[00:05:50] design schemes.
+[00:05:53] All right. So in in databases we care
+[00:05:55] about or data systems we care about
+[00:05:57] basically two ideas or two there's two
+[00:05:59] two concepts we need to be mindful of
+[00:06:01] when we decide how we want to organize
+[00:06:03] things on disk how we want to bring
+[00:06:04] things into memory what algorithms we
+[00:06:06] may want to use to process data or write
+[00:06:09] to data write data to disk and so forth.
+[00:06:11] So the first idea is the notion of
+[00:06:12] spatial control and that's the idea of
+[00:06:15] keeping track of being mindful about
+[00:06:17] where we're going to write our data on
+[00:06:19] disk so that when we have to read things
+[00:06:21] again uh we can do so we can try to
+[00:06:24] maximize the amount of sequential access
+[00:06:25] that we have and I said last class that
+[00:06:28] random IO is much more expensive than
+[00:06:30] sequential IO it's a little less of an
+[00:06:32] issue in modern SSDs but if you have any
+[00:06:34] kind of rotating device like a spinning
+[00:06:36] disc hard drive that is you know there's
+[00:06:39] a huge difference in the the access
+[00:06:41] times for sequential IO versus random
+[00:06:42] IO, right? So that means that when we
+[00:06:45] start having to write data at the disk,
+[00:06:47] we want to put things that are going to
+[00:06:49] be used with each other very often close
+[00:06:51] to each other.
+[00:06:54] The other idea is uh this notion of
+[00:06:56] temporal control and it's the idea here
+[00:06:59] is that when we bring something into
+[00:07:01] memory from disk since that's a very
+[00:07:03] expensive operation the thing we're
+[00:07:05] trying to minimize or avoid as much as
+[00:07:06] possible when we bring something into
+[00:07:09] memory we want to do as much work as we
+[00:07:11] can on that data that we brought into
+[00:07:13] memory before we give it up before we
+[00:07:16] release the memory or write some some
+[00:07:18] changes back to the disk right because
+[00:07:20] the worst thing to do is like if I got
+[00:07:22] to read three blocks
+[00:07:23] uh or say I read two blocks and I can
+[00:07:25] read the first one twice and the second
+[00:07:26] one once. I don't want to read the first
+[00:07:28] one, do some work on it, throw it away,
+[00:07:30] read the second one, do some work on it,
+[00:07:31] throw it away, then go back and get the
+[00:07:33] first one again, right? I want to
+[00:07:35] maximize the amount of work I can do for
+[00:07:36] every single page I'm bringing in from
+[00:07:39] uh from disk. And we'll see alternative
+[00:07:41] storage models next week on Monday, next
+[00:07:43] week, how you can go to town on this and
+[00:07:45] avoid reading things you don't even need
+[00:07:46] for queries. For today's class, we're
+[00:07:49] we're going to mostly ignore that.
+[00:07:52] So going back to that architecture I
+[00:07:54] showed last class, right? At the lowest
+[00:07:56] level, you have the disk and uh again
+[00:07:58] this is the the nonvolatile storage.
+[00:08:00] This is considered the permanent uh
+[00:08:01] location of the database, the the
+[00:08:03] resting point of it. And then we have
+[00:08:05] some kind of database file that's going
+[00:08:07] to be broken up into pages. And then we
+[00:08:09] said that at the beginning of of the the
+[00:08:12] database file or at some location that's
+[00:08:14] special, we we know where to find these
+[00:08:16] things. We have a page directory. This
+[00:08:19] is just a sort of a a database of the
+[00:08:21] database pages that I have. So keeping
+[00:08:23] track of like I want this page for this
+[00:08:25] data or sorry for this database or this
+[00:08:27] table for some file. Here's where to go
+[00:08:29] find the offset where I need it. In this
+[00:08:32] diagram here I'm showing the database is
+[00:08:33] comprised of one file. That's what
+[00:08:35] SQLite does. Duct DB does it could be
+[00:08:38] multiple files across multiple
+[00:08:39] directories or even across multiple uh
+[00:08:41] machines. But for now we don't care
+[00:08:43] about that.
+[00:08:45] And then above up above the disk we have
+[00:08:47] the volatile storage. We said this is
+[00:08:49] just memory. And in in this now we're
+[00:08:52] going to have we're going to talk about
+[00:08:53] today is the buffer pool. And this is
+[00:08:55] going to be some allocate somebody some
+[00:08:57] region of memory that's been allocated
+[00:08:59] that's in the address space of our
+[00:09:00] database system that we can use to put
+[00:09:02] pages that we fetch from disk into
+[00:09:04] memory so that we can hand them off to
+[00:09:05] other parts of the system.
+[00:09:07] So in the in memory we have our buffer
+[00:09:10] pool. We're gonna say that the
+[00:09:12] placeholders, the locations where we can
+[00:09:13] store pages from disk into memory, we're
+[00:09:16] gonna call these frames,
+[00:09:19] right? And that's just going to say
+[00:09:21] that's going to distant by buffer and we
+[00:09:23] have some offset said that's where a
+[00:09:25] frame starts and we can put a page
+[00:09:26] directly in there because all the pages
+[00:09:28] within a single file are going to be the
+[00:09:31] same size, right? These frames can be
+[00:09:33] reused and we know how to easily jump to
+[00:09:34] different offsets. They're called frames
+[00:09:36] because we're running out of words. We
+[00:09:38] already have pages. Sometimes it's
+[00:09:39] called blocks, right? We don't call them
+[00:09:42] a buffer because the whole thing is
+[00:09:43] called a buffer or cache, right? So
+[00:09:45] we're we're calling them frames because
+[00:09:47] that's all we got. So then we have an
+[00:09:49] execution engine and again so this thing
+[00:09:51] is where actually execute queries and as
+[00:09:54] it's running somehow it says I want to
+[00:09:56] read some some data and it's in page
+[00:09:58] two. Doesn't know where page two is but
+[00:10:00] it knows to talk to the buffer pool
+[00:10:01] manager and exposes an API that allows
+[00:10:04] you to go get page two. So in order to
+[00:10:06] figure out what page two is, we got to
+[00:10:08] bring the the page directory in. I'm
+[00:10:10] showing you this as a sort of separate
+[00:10:11] step. In actuality, when the system
+[00:10:12] boots up, you usually load that in the
+[00:10:15] very first thing you do because we need
+[00:10:16] to know what's in there. But for now,
+[00:10:18] it's fine. We're just showing it as a
+[00:10:19] separate step. Then now we consult the
+[00:10:21] page directory and then that tells us
+[00:10:23] where we want to find page two. We find
+[00:10:25] a free frame in our buffer pool where we
+[00:10:27] just copy that page from disk into
+[00:10:29] memory. And then now we hand back the
+[00:10:32] execution engine a pointer to to that
+[00:10:34] page in that frame.
+[00:10:37] And the guarantee that that the
+[00:10:39] bufferable manager is going to provide
+[00:10:40] for the rest of of our system is that if
+[00:10:43] we go tell this this execution engine
+[00:10:45] here's the pointer to the page that you
+[00:10:46] wanted that pointer will be valid until
+[00:10:49] that execution engine or whatever it
+[00:10:50] asks for that page comes back and says
+[00:10:52] I'm done with it.
+[00:10:54] We'll talk about how we do that in a
+[00:10:55] second.
+[00:10:57] Now the cool thing about the buffer
+[00:10:58] manager is that we can actually reorder
+[00:11:00] and change the location of a page
+[00:11:03] uh anyway that we want if we have to
+[00:11:05] bring it in multiple times. So let's say
+[00:11:07] now we we run some kind of eviction
+[00:11:09] policy. We decide that we want to throw
+[00:11:10] away page two to free memory. Realize we
+[00:11:12] have a free space. We would have kept it
+[00:11:13] but we could ignore that. So then now if
+[00:11:16] the execution engine comes back and says
+[00:11:17] hey I want page two again. The
+[00:11:19] bufferable manager would recognize it
+[00:11:20] doesn't have that page in in memory.
+[00:11:22] It's got to go back to disk and get it.
+[00:11:23] But now it's going to copy into to this
+[00:11:25] frame and it hands back that pointer to
+[00:11:27] the database system to the execution
+[00:11:29] engine. And that's perfectly fine,
+[00:11:32] right? It's just an address in memory
+[00:11:34] telling you here's where to go find the
+[00:11:34] thing that that you wanted.
+[00:11:38] >> What's that?
+[00:11:40] >> The question is what about the previous
+[00:11:41] pointer going back here? So at some
+[00:11:44] point when we hand off this pointer the
+[00:11:46] the the the contract is I'm giving you
+[00:11:49] this memory. You got to tell me when
+[00:11:50] you're done with it. So at some point
+[00:11:52] the executioner says I'm done with it.
+[00:11:55] That's why we were allowed to then evict
+[00:11:56] it.
+[00:11:58] >> What's that?
+[00:12:00] >> The statement is something like
+[00:12:01] reference counting. Yes, but we'll get
+[00:12:03] there in a second. But there's more.
+[00:12:05] Yeah,
+[00:12:08] >> the question is what if the execution
+[00:12:10] engine asks for more frames that are in
+[00:12:11] memory?
+[00:12:13] We got to throw things away. We'll
+[00:12:14] handle that. Right. The whole point of
+[00:12:16] like we said at the beginning, we want
+[00:12:17] to give the illusion that we have more
+[00:12:18] memory than we actually do. So we'll
+[00:12:20] have we'll have to handle that
+[00:12:20] ourselves.
+[00:12:23] Other questions?
+[00:12:25] >> Yes.
+[00:12:30] >> Uh the question is is it random how the
+[00:12:31] frames are being selected by the
+[00:12:33] execution engine or or for eviction?
+[00:12:35] >> No.
+[00:12:40] >> How do we decide how do we decide to do
+[00:12:41] the frame? We'll cover that in a second,
+[00:12:46] >> but
+[00:12:50] But you want to write the the rest of
+[00:12:51] the system, the execution engine, so
+[00:12:52] that we don't actually care. It could be
+[00:12:54] random. Who cares? You ask me for this
+[00:12:56] page. Here's the memory for it. Go for
+[00:12:58] it.
+[00:13:00] >> Yes.
+[00:13:04] >> The question is, is the size ratio from
+[00:13:05] a page to frame one to one? Yes, it has
+[00:13:07] to be. Um
+[00:13:10] and well we'll talk about like there are
+[00:13:12] some advanced systems like IBM DB2 where
+[00:13:15] you can actually have a buffer pool that
+[00:13:16] has different page sizes uh per table
+[00:13:19] per index right uh and you can even
+[00:13:23] specify what the replacement policy
+[00:13:25] should be per per buffer pool instance
+[00:13:27] but in general like if it has to be like
+[00:13:29] if I'm reading from this I know I'm
+[00:13:31] reading from this database file on disk
+[00:13:33] it's organized in these database page
+[00:13:35] sizes my bufferable has to have frames
+[00:13:37] of those sizes.
+[00:13:41] Okay, so I'm showing this example here
+[00:13:44] that we're using the buffer pool to read
+[00:13:46] disk pages or the data pages for for a
+[00:13:48] database. But in actuality, you're going
+[00:13:50] to be using these buffer pools for all
+[00:13:52] the different parts of the database
+[00:13:53] system. Basically, when when the system
+[00:13:55] boots up, when data system boots up, you
+[00:13:57] want to call Malo, get all the memory
+[00:13:58] you're going to ever need to run
+[00:14:00] queries, and then you're done. Never
+[00:14:02] want to go back to OS and get more
+[00:14:04] memory. Not every system does that. Uh,
+[00:14:08] but in general, that's what you want.
+[00:14:09] That's that's the ideal case because the
+[00:14:11] worst thing for me to do is start trying
+[00:14:12] to out do a maloc and get some memory I
+[00:14:14] need for like a temp buffer and then the
+[00:14:16] OS says I'm out, right? You want to know
+[00:14:18] that sooner rather than later.
+[00:14:20] So, in general, anytime you're going to
+[00:14:22] allocate memory, um, not from the stack,
+[00:14:25] but anything from the heap for your for
+[00:14:26] your application or your data system,
+[00:14:28] you want that to come from one of these
+[00:14:30] buffer pools. Some of them will be
+[00:14:32] backed by disk meaning like if I as you
+[00:14:36] saying if I have if I'm trying to
+[00:14:37] allocate more memory than I actually
+[00:14:37] have available to me it can spill to
+[00:14:39] disk.
+[00:14:41] Other times you don't want to do that
+[00:14:43] like if it's you just say if I'm out of
+[00:14:44] memory then I I'll just kill the query
+[00:14:46] right
+[00:14:49] so again we're we won't really talk
+[00:14:51] about these right now we talk when we
+[00:14:52] talk about join algorithms and sorting
+[00:14:54] algorithms make more sense log buffers
+[00:14:55] as well just be aware that there's
+[00:14:58] memory being used for other things other
+[00:14:59] than just tupils or indexes but the main
+[00:15:03] one we want to focus on is those things
+[00:15:06] all right so today we're going to talk
+[00:15:07] about the basics of what a buffer hole
+[00:15:08] manager is I think the textbook calls
+[00:15:10] them a buffer cache, a buffer cache
+[00:15:12] manager. Sometimes it's called a a
+[00:15:13] buffer manager. They're all they're all
+[00:15:15] basically the same thing. It's managing
+[00:15:16] the memory that the data system is going
+[00:15:18] to use to to run queries.
+[00:15:20] Then we'll talk about um my my pet uh my
+[00:15:26] pet topic of why you don't want to use
+[00:15:27] the operating system for any of this
+[00:15:28] because it's going to ruin your life. Um
+[00:15:30] and then we'll talk about replacement
+[00:15:31] policies, how to decide when we want to
+[00:15:33] evict things, uh how to write things out
+[00:15:35] to disk, and then do some additional
+[00:15:36] optimizations. Okay.
+[00:15:40] All right. So the buffer pool as I said
+[00:15:42] it's just a bunch of memory that we've
+[00:15:44] allocated in our data system that we're
+[00:15:46] going to use to put in fixed size pages
+[00:15:49] and those locations within that that
+[00:15:51] giant array is going to be uh each
+[00:15:53] location where we could put could put a
+[00:15:55] page in we'll call that a frame. So
+[00:15:57] again when now the data system other
+[00:15:59] parts of the data system will says I
+[00:16:00] want to get this page it ask the buffer
+[00:16:02] pool manager for it. If it's available
+[00:16:05] it's already in memory then the buffer
+[00:16:07] pool manager just hands back the pointer
+[00:16:08] for it. If it's not available, then it
+[00:16:10] has to decide what what frame to put it
+[00:16:12] in. And if there's not a free frame,
+[00:16:14] we'll have to handle that. And the page
+[00:16:16] you're putting into memory that you're
+[00:16:18] going to hand off to the other parts of
+[00:16:19] the system, it'll be an exact copy of
+[00:16:22] what is given what what is uh what is
+[00:16:25] being read into the from disk, right?
+[00:16:28] There isn't like
+[00:16:30] uh make sure this is true. If the like
+[00:16:34] the low level like the say you're using
+[00:16:36] like a a storage appliance, it might do
+[00:16:38] its own compression down below actually
+[00:16:40] the hardware level, but when you
+[00:16:41] actually do a read against that file,
+[00:16:43] you're going to get back the
+[00:16:44] uncompressed bytes and that's what the
+[00:16:46] data center is going to hand back to uh
+[00:16:48] to the exchange engine. Now within that
+[00:16:50] page, it actually may be compressed and
+[00:16:52] the data center knows how to interpret
+[00:16:53] that compression. We'll see how we do
+[00:16:55] that next week, but in general, it's a
+[00:16:56] one to one copy for whatever's on disk
+[00:16:58] goes goes into memory. So we look at an
+[00:17:01] example like this. We have four pages on
+[00:17:03] disk. We want to read page one. The buff
+[00:17:05] manager is going to say, "All right, I
+[00:17:06] got to put this somewhere." It picks the
+[00:17:08] first frame, makes a copy into it in
+[00:17:10] there. All right. Now, once we read page
+[00:17:13] three, same thing. Make a copy and go in
+[00:17:14] there. So, the buffer pool is actually
+[00:17:17] the memory location where we actually
+[00:17:18] store this. There's an additional data
+[00:17:20] structure called the page table that's
+[00:17:22] going to sit in front of this memory,
+[00:17:24] which is actually the entry point for
+[00:17:26] how you find pages that are in memory or
+[00:17:28] not or check whether they're in memory
+[00:17:29] or not. I think this is just another
+[00:17:31] hash table where I do a look up on the
+[00:17:33] page ID and then within that slot within
+[00:17:36] that hash table it's going to tell me
+[00:17:37] whether the the the entry exists or not
+[00:17:39] and where to go find it.
+[00:17:42] So there's some additional metadata in
+[00:17:43] here uh sort of what what they brought
+[00:17:45] about like reference counting. I'm also
+[00:17:47] going to keep track of like how many how
+[00:17:49] many times have I handed out this uh
+[00:17:52] this page to other parts of the system.
+[00:17:54] It's called a pin counter. Reference
+[00:17:56] counter same idea. And so you would say
+[00:17:58] a page is pinned in memory means that
+[00:18:00] some other part of the system currently
+[00:18:02] has a pointer to that memory and
+[00:18:04] therefore I don't want to free that
+[00:18:05] frame up and throw away whatever's in
+[00:18:06] there because I don't want somebody some
+[00:18:08] other part of the system start reading
+[00:18:09] what's interpreting what's inside the
+[00:18:11] page and then I replace it with another
+[00:18:13] page and now it starts getting garbage
+[00:18:14] data or incorrect data. So the pin
+[00:18:16] counter is how we're going to avoid that
+[00:18:18] problem.
+[00:18:20] We also can uh maintain a uh a latch
+[00:18:23] inside our data structure to ensure that
+[00:18:25] while we're doing a lookup in the page
+[00:18:27] table to say does this yes question yes
+[00:18:32] >> the question is what sorry
+[00:18:35] question is wouldn't what are the page
+[00:18:36] table entry sizes uh
+[00:18:40] less than a kilobyte right because the
+[00:18:42] big part is the is the actual frames the
+[00:18:44] actual memory the hash tables hash table
+[00:18:46] could be can be large in terms to have a
+[00:18:48] lot of entries but Each entry itself is
+[00:18:50] not that big, right? Like so there'll be
+[00:18:52] like a dirty flag whether it's been
+[00:18:53] modified that's that's one bite. The
+[00:18:56] reference counter probably a single
+[00:18:58] bite. Access tracking information that
+[00:19:00] would be like um
+[00:19:03] what transaction is actually is is
+[00:19:06] accessing this for me like who's
+[00:19:07] actually what is the thread or the
+[00:19:09] worker ID that's actually holds the pin
+[00:19:11] for this. Again it's it's not that big.
+[00:19:16] All right. All right. So, I need a latch
+[00:19:17] within my uh my page table as well. So,
+[00:19:19] that like if I say, "All right, well, I
+[00:19:21] need to go get page two. I have a free
+[00:19:24] uh location in my page table. Let me
+[00:19:26] protect this while I go then do the disk
+[00:19:28] read to go put that into a frame to
+[00:19:30] ensure that nobody else comes along and
+[00:19:32] tries to put something in my page table
+[00:19:33] that that same slot, that same location,
+[00:19:38] right? And then once I'm done, I can
+[00:19:40] release the latch and and throw away the
+[00:19:42] pin."
+[00:19:45] Does anybody know what a latch is?
+[00:19:49] Go for it.
+[00:19:51] >> UTEx. Perfect. Yes. So, if you're coming
+[00:19:54] from the OS world, what we call latches,
+[00:19:57] they'll call locks.
+[00:19:59] And the end of the day, it's it's a
+[00:20:01] mutx. You could use the OS's mutex or
+[00:20:04] the Pthread mutx.
+[00:20:06] You shouldn't, but you could. Uh, we can
+[00:20:08] always do better in the data system. But
+[00:20:10] the reason why we have this between
+[00:20:11] locks and latches is that locks in the
+[00:20:13] database world is a separate concept
+[00:20:15] that is about protecting higher level
+[00:20:17] logical entities like I can lock a page,
+[00:20:20] I can lock a a tupil, I can lock lock an
+[00:20:22] index,
+[00:20:24] right? And a latch is going to be what
+[00:20:26] you protect a internal critical section
+[00:20:28] of any kind of data structure inside
+[00:20:30] your database system uh from like
+[00:20:32] multiple threads or multiple workers
+[00:20:33] accessing it at the same time. And the
+[00:20:36] reason why we have to make this
+[00:20:37] distinction is that in the lock case we
+[00:20:41] have to deal with stupid people on the
+[00:20:42] outside of the database system like
+[00:20:44] someone starts a transaction and then
+[00:20:46] decides to go out you know for a cup of
+[00:20:48] coffee and the transaction still open.
+[00:20:50] So we as a data system have to deal with
+[00:20:52] somebody you know walking away from from
+[00:20:53] the computer and and be able to rectify
+[00:20:56] any issues like deadlocks or live locks
+[00:20:58] and so forth. a latch since that's
+[00:21:01] protecting internal data structure.
+[00:21:02] That's us like who actually building the
+[00:21:04] data system. We're paid a lot of money
+[00:21:05] to do it and therefore we won't be
+[00:21:07] stupid in theory. Uh and therefore it's
+[00:21:09] up for us to make sure that we don't
+[00:21:11] have deadlocks or other problems like
+[00:21:12] because there isn't going to be this
+[00:21:14] lock manager thing above that's going to
+[00:21:16] kill us if we have deadlocks. So it's up
+[00:21:18] for us to make sure we we do this
+[00:21:19] correctly. So this would be a low-level
+[00:21:21] mutex. You could use the again P3 mutex
+[00:21:24] the Apple one called the parking mutx
+[00:21:25] one or parking locks. That's better. Um
+[00:21:28] but we we'll cover that in a few more
+[00:21:30] weeks. But the main main idea here is
+[00:21:31] that it's g again to protect the
+[00:21:33] internal data structure of the system,
+[00:21:35] right? And there isn't going to be
+[00:21:36] anybody that can make sure that we don't
+[00:21:38] have problems. And there's not going to
+[00:21:39] be any way to roll back changes unless
+[00:21:41] we do it ourselves. In the case of a
+[00:21:43] lock, if I open a transaction through
+[00:21:45] SQL and then I make some changes and
+[00:21:47] then my transaction gets killed, the
+[00:21:48] database system will clean clean up the
+[00:21:50] mess afterwards for me. It won't do that
+[00:21:52] for for a latch.
+[00:21:56] Again, just also as a reminder between
+[00:21:58] the page table and the page directory.
+[00:21:59] Page directory is that thing I said in
+[00:22:01] the beginning where I use that to find
+[00:22:02] the pages I want on disk uh given an ID
+[00:22:05] and the page table is this infeal
+[00:22:07] internal data structure that keeps track
+[00:22:09] of here's the location within frames of
+[00:22:12] all the pages that I brought in from
+[00:22:14] disk and where they reside in memory.
+[00:22:17] Again, you don't have to store that on
+[00:22:19] on disk. If you crash, you know, you
+[00:22:20] lose whatever is in memory anyway, so
+[00:22:22] who cares? There are some systems
+[00:22:24] actually can will write out what the
+[00:22:25] contents of the page table is so that if
+[00:22:27] I crash and come back rather than sort
+[00:22:29] of organically populating the the page
+[00:22:33] table through whoever access whoever
+[00:22:34] accesses what I can actually preload or
+[00:22:37] prefetch all the uh all the pages that I
+[00:22:40] had in memory before after the crash and
+[00:22:41] bring that back in. You see this in
+[00:22:43] serverless systems again we'll cover
+[00:22:45] this later but just in general the page
+[00:22:47] table does not does not need to be
+[00:22:48] durable does not need to be stored on
+[00:22:50] disk.
+[00:22:52] All right. So, what does this sound
+[00:22:53] like? What I've been talking about so
+[00:22:54] far. He sort of brought up the point
+[00:22:56] before where what happens if I have, you
+[00:22:58] know, my database is large amount of
+[00:22:59] memory that I have. We're basically
+[00:23:01] again trying to provide the illusion
+[00:23:03] that our system has more memory than it
+[00:23:05] actually physically has. What does that
+[00:23:07] sound like?
+[00:23:09] Say swapping, but like what is the
+[00:23:11] higher level concept of that?
+[00:23:12] >> Virtual memory. Yes. All right. Well,
+[00:23:14] yeah, if you take an OS class, this is
+[00:23:16] what this is what the OS wants to do for
+[00:23:19] you uh through virtual memory. And it
+[00:23:21] has a a a mechanism called memory map
+[00:23:24] files that allows you to take a file
+[00:23:26] that resides on disk and you call mm
+[00:23:30] mapap open on it and it basically maps
+[00:23:33] the contents of that file into the the
+[00:23:35] address space of your process
+[00:23:39] right it obviously doesn't do this
+[00:23:40] eagerly it does this lazily so I call
+[00:23:42] call the open on the file and it then
+[00:23:44] gives me a starting point of of the
+[00:23:46] memory address and anytime I jump to an
+[00:23:48] offset within that starting memory
+[00:23:49] address it will correspond to some off
+[00:23:51] some offset within the pages of the file
+[00:23:54] that I mapped in. So the OS was going to
+[00:23:57] be trying to do this uh basically trying
+[00:24:00] to do the same thing we're doing talk
+[00:24:00] about today, but it's going to do a
+[00:24:03] terrible job at it. Um I guess I'm sort
+[00:24:05] of poisoning the well already, but trust
+[00:24:07] me, you don't want to do this. All
+[00:24:08] right, so here's that file we had on
+[00:24:09] disc before and we have virtual memory.
+[00:24:12] So again I I call m map on it and then
+[00:24:14] in my address base my process it's going
+[00:24:15] to say all right well here's the four
+[00:24:17] pages starting at some offset uh for the
+[00:24:20] file that you mapped in. So then now
+[00:24:22] when any kind of any thread or process
+[00:24:24] accesses one of these pages right you
+[00:24:27] try to again just read a memory address
+[00:24:29] uh at one of these offsets the OS says
+[00:24:32] oh the thing you want isn't actually in
+[00:24:34] memory it's a major page fault so it
+[00:24:36] pauses your uh pauses your thread go
+[00:24:40] then fetches whatever the the page you
+[00:24:42] wanted puts it into physical memory and
+[00:24:44] then wires up the virtual memory table
+[00:24:45] to now point to that physical memory and
+[00:24:47] then your your process gets gets gets
+[00:24:49] control back again and you can do
+[00:24:51] whatever you with it, right? Do another
+[00:24:54] read another page. Same thing, right?
+[00:24:55] It's not in memory. We get a major page
+[00:24:57] fault. We block fetches it in. We we
+[00:25:00] wire it up and then our process can run
+[00:25:01] again.
+[00:25:03] So now the challenge is going to be what
+[00:25:05] happens when we try to access something
+[00:25:06] again for this file. But now we're out
+[00:25:09] of physical memory, right? What's going
+[00:25:12] to happen?
+[00:25:15] I've already said, right? It's going to
+[00:25:16] block your process. Then it's going to
+[00:25:19] go decide now which page in physical
+[00:25:21] memory to evict.
+[00:25:24] You know if it's if it's not dirty it
+[00:25:26] just throws it away. If it is dirty
+[00:25:27] meaning it's in modified since you've
+[00:25:28] read it in it'll write it back out to
+[00:25:30] disk. Then copy whatever the pages that
+[00:25:33] you want it in once it's put put in the
+[00:25:35] physical memory and then hand you back
+[00:25:36] control.
+[00:25:38] So again, this seems like exactly what
+[00:25:40] we want in our uh in our database
+[00:25:43] system, but because the operating system
+[00:25:45] is doing it for us, it doesn't know
+[00:25:47] anything about SQL, doesn't know
+[00:25:49] anything about queries or transactions
+[00:25:50] or whatever we're trying to do, doesn't
+[00:25:51] know anything about what actually is in
+[00:25:52] these files, and therefore it's not in a
+[00:25:55] good position to make decisions about
+[00:25:56] what the right thing to evict is.
+[00:25:59] So what are the problems?
+[00:26:02] So the first thing is that the OS can
+[00:26:04] decide to swap out a dirty page anytime
+[00:26:07] that it wants.
+[00:26:08] Right? This background writer can go
+[00:26:10] through and says, "All right, you've
+[00:26:11] you've modified this page. So, let me go
+[00:26:13] ahead and preemptively write it out for
+[00:26:14] you so that at some point if I need to
+[00:26:17] evict it, I don't have and since I'm
+[00:26:19] installing your your process, I don't
+[00:26:20] have to block you for a longer long time
+[00:26:22] while I write it out, I can do this in
+[00:26:24] the background. And that way when you
+[00:26:25] want to go evict this, you just can
+[00:26:27] throw it away because it's now been
+[00:26:28] marked clean."
+[00:26:30] But the problem is we have no control.
+[00:26:33] we in the database system have no
+[00:26:34] control what it's going to write out and
+[00:26:37] when it's going to write it out because
+[00:26:39] again it doesn't know what's in these
+[00:26:40] files doesn't know how how the upper
+[00:26:42] level part of the transaction is
+[00:26:43] actually modifying them so there may be
+[00:26:44] a case where there's a dependency
+[00:26:47] between uh multiple pages where I can't
+[00:26:49] write out this dirty page till this
+[00:26:51] other dirty page has been written now
+[00:26:54] okay we'll see this when we talk about
+[00:26:55] transactions later on but like you
+[00:26:57] basically if I modify a page in the data
+[00:26:59] system I want to make sure I write a log
+[00:27:00] record that says here's the change I
+[00:27:01] made to this page before I write out
+[00:27:03] that change. But the OS doesn't know
+[00:27:06] that. It doesn't know that there's a
+[00:27:07] write ahead log or this other thing over
+[00:27:08] here. It says, "All right, I got some
+[00:27:09] ready pages. Let me go ahead and write
+[00:27:10] them out." You can prevent them from
+[00:27:13] being evicted using MLOCK, which
+[00:27:16] basically the same thing as a PIN for
+[00:27:18] the pages, but that doesn't prevent it
+[00:27:20] from from running it out, right? So that
+[00:27:22] that's a problem for us. Then we have
+[00:27:25] these this stalling issue where the data
+[00:27:27] system doesn't know what pages are in
+[00:27:28] memory. it tries to go then access
+[00:27:30] something and if it's not memory then my
+[00:27:33] worker either a thread or process will
+[00:27:35] have to stall while the the OS decides
+[00:27:38] to go fetch it uh fetch it in. So that
+[00:27:40] means that my worker is not actually
+[00:27:41] doing any useful uh you know any useful
+[00:27:44] work that it could be doing while the
+[00:27:46] while it's going fetching something from
+[00:27:48] the disk in the background because it's
+[00:27:50] it got blocked.
+[00:27:52] Now, you could start, you know, doing a
+[00:27:53] little play play a little game where you
+[00:27:55] have a separate thread on the side that
+[00:27:58] can go touch a page uh that you you
+[00:28:00] think you're going to need. And that
+[00:28:01] way, if it it gets blocked, uh the the
+[00:28:03] worker that's running the query can
+[00:28:05] still do other stuff, but then you're
+[00:28:06] actually you're adding more complexity
+[00:28:08] to your system when what the OS is
+[00:28:11] trying to do, you know, trying to make
+[00:28:12] it simp, you know, trying to do
+[00:28:13] something simple for you, but now you're
+[00:28:14] actually adding a bunch of stuff in
+[00:28:16] order to deal with the OS doing stupid
+[00:28:18] things for you.
+[00:28:20] Another problem that's actually more
+[00:28:21] nuance and
+[00:28:23] not really obvious until you start
+[00:28:25] building real systems is that error
+[00:28:27] handling becomes more more challenging
+[00:28:29] now with the OS uh with MAPAP because a
+[00:28:33] failure can occur at any time anywhere
+[00:28:35] in your in your application in your
+[00:28:36] system.
+[00:28:38] That means that at any time I'm touch
+[00:28:40] that memory, it might have got evicted
+[00:28:42] or might been there might be a problem
+[00:28:44] in in the actual underlying hardware and
+[00:28:47] I'm I'm not not going to get an
+[00:28:49] exception. I'm going to get a
+[00:28:51] interruption or interrupt. So now I got
+[00:28:53] to have interrupt handler code all
+[00:28:54] throughout my system. Whereas if I was
+[00:28:56] managing disk and memory myself in my
+[00:28:58] database system, at the time I try to go
+[00:29:00] do read it, if I can't read it and I get
+[00:29:01] an error, that's the only location where
+[00:29:03] I need to handle that. But if you use
+[00:29:05] MAP because it's again trying to be
+[00:29:07] transparent to you, it's all over in
+[00:29:09] your system.
+[00:29:11] >> Yes.
+[00:29:16] >> Because I would think if there's a page
+[00:29:18] just because the page is not
+[00:29:22] for you, right?
+[00:29:23] >> So it's not a page fault. It'd be like
+[00:29:26] an interrupt like the disc is broken or
+[00:29:28] something.
+[00:29:28] >> Yeah.
+[00:29:30] So you try to read something and the
+[00:29:32] someone ripped the file out. It's gone.
+[00:29:34] What do you do or lip lip rip the
+[00:29:37] hardware out?
+[00:29:38] >> You get interrupt.
+[00:29:43] >> Uh the question is
+[00:29:45] statement is and they're correct. Uh
+[00:29:46] that like if if someone screws around
+[00:29:48] the system uh and starts breaking your
+[00:29:51] files. Uh, but the point I'm trying to
+[00:29:53] make is like
+[00:29:56] if I say so I read something from disk,
+[00:29:58] I put it into memory and then I rip rip
+[00:30:01] the hard drive out,
+[00:30:02] >> then in theory the system can still run
+[00:30:05] because it has it in memory, right? And
+[00:30:07] so so if I then try to read that page
+[00:30:09] again since the file is gone, I'll get a
+[00:30:11] failure at that at that moment and I can
+[00:30:13] handle it right there. Whereas with
+[00:30:14] MAPAP, if I if some other part system
+[00:30:16] tried to read it again and since it's
+[00:30:18] trying to be transparent to me, I just
+[00:30:19] do a memory access.
+[00:30:23] non-tremistic. Yes. Yes. And it's a
+[00:30:25] bunch of more engineering work you have
+[00:30:26] to do. And the last one, I wouldn't
+[00:30:28] belabor this too much, but uh just sort
+[00:30:30] of take my word on this. Uh it's going
+[00:30:33] to be slower than doing everything
+[00:30:34] ourselves because what is the how the OS
+[00:30:38] tracking virtual memory? It's the same
+[00:30:40] thing as the page table that we had
+[00:30:41] before. So, it's going to have its own
+[00:30:42] internal data structures with its own
+[00:30:44] latches it used to protect protect those
+[00:30:46] things.
+[00:30:48] And we in the data system world, we can
+[00:30:50] always do a better job.
+[00:30:53] So again, I don't want to go through
+[00:30:54] this too much, but saying like you can
+[00:30:56] start tricking around the the the OS to
+[00:30:59] make it look more like what we actually
+[00:31:01] want to build in our database system,
+[00:31:02] but it's it's just as much work, and in
+[00:31:04] the end, you're you're relinquishing
+[00:31:06] control to what's being brought to
+[00:31:08] memory and and when when it's being
+[00:31:09] written out, at what time, and when.
+[00:31:10] like all that is uh you're giving up to
+[00:31:13] to to the OS and you're just better off
+[00:31:16] just writing everything yourself which
+[00:31:18] is what this class is about.
+[00:31:21] So there's a bunch of systems that have
+[00:31:23] been uh tried to use MAPAP over the
+[00:31:25] years. Uh probably the one that you're
+[00:31:27] most familiar with is is MongoDB, right?
+[00:31:30] When MongoDB first started, they didn't
+[00:31:32] have their own buffer pool we're talking
+[00:31:33] about today. They relied on MAPAP,
+[00:31:35] right? But since then all these systems
+[00:31:37] have have gotten rid of it because they
+[00:31:39] basically realized all the mistakes that
+[00:31:41] I'm I'm telling you here. Uh you know
+[00:31:44] they realized that over the years like
+[00:31:45] this thing is just not maintainable that
+[00:31:47] you want to be doing everything yourself
+[00:31:48] in in your data system.
+[00:31:51] I like to point out because
+[00:31:53] went IPO in what 2018 they had a ton of
+[00:31:55] money. You had a ton of top engineers
+[00:31:57] and if they couldn't make mat work be
+[00:31:59] functional uh then you know what what
+[00:32:02] what uh hope does everyone else have? So
+[00:32:04] instead what what MongoDB did was they
+[00:32:06] bought Wire Tiger. Wire Tiger only uses
+[00:32:08] MAPAP for one very small use case but
+[00:32:11] the whole regular system is still based
+[00:32:13] off uh uh you know buffer pools that
+[00:32:16] we're talking here today. SQL light has
+[00:32:18] MAPAP. It's for portability reasons and
+[00:32:19] by default you don't get MAPAP. You have
+[00:32:21] to tell it you want MAP. By default you
+[00:32:23] get the buff stuff that we're talking
+[00:32:24] about today.
+[00:32:26] So this will be an over overarching
+[00:32:29] theme throughout the entire semester is
+[00:32:30] that the database system meaning us
+[00:32:33] actually building the system. We're
+[00:32:35] always going to be in a better position
+[00:32:36] to make decisions about anything and
+[00:32:38] everything, right? Because we know what
+[00:32:39] the queries are. We know what the query
+[00:32:42] we know what things we've executed in
+[00:32:43] the past or what we think we're
+[00:32:44] executing in the future. We know what
+[00:32:45] our data looks like, what the
+[00:32:46] dependencies are between them.
+[00:32:48] Therefore, we're always going to make
+[00:32:49] better decisions than the OS. And we'll
+[00:32:52] talk about these tricks later on, but
+[00:32:53] like we'll have better prefetching than
+[00:32:54] the OS. We'll have better replacement
+[00:32:56] policy in the OS. We can schedule things
+[00:32:57] differently. The end of the day, we
+[00:32:59] don't want to talk to the OS because
+[00:33:01] it's not going to be our friend. It's
+[00:33:02] always going to try to screw us over. If
+[00:33:04] you don't believe me, go look up
+[00:33:05] Lionus's post on the mailing list about
+[00:33:07] what he thinks about database people,
+[00:33:08] right? He's always going to try to ruin
+[00:33:10] our lives. So, we never wanted to talk
+[00:33:12] to it as much as possible. So, we
+[00:33:13] actually ended up writing a paper a few
+[00:33:15] years ago explicitly on this exact
+[00:33:17] topic. So, why saying it's my pet pet uh
+[00:33:19] pet project? Because all these companies
+[00:33:21] would come give talks at CMU and talk
+[00:33:23] about how they're using MAPAP. And I was
+[00:33:24] like, "That seems like a bad idea."
+[00:33:25] Like, "Oh, what are you talking about?
+[00:33:26] It's great." And then like two years
+[00:33:27] later, they were like, "Oh, yeah, you
+[00:33:28] were right. That was terrible." So we
+[00:33:30] then we wrote a paper paper about it. Uh
+[00:33:32] you go to that link there, there's a
+[00:33:33] video that can sort of summarize the key
+[00:33:36] things I'm talking about today. Um as
+[00:33:38] well. And then uh just a few weeks ago,
+[00:33:41] yeah, a few weeks ago, somebody posted
+[00:33:43] on Hacker News saying like, "Hey, I
+[00:33:45] started building a data system using
+[00:33:46] MAPAP uh because I thought I could
+[00:33:48] figure it out." Nope. They were wrong.
+[00:33:50] And then they were like, "Oh, I" because
+[00:33:51] he knew about the paper that we wrote
+[00:33:53] before, then he realized, "Oh, yeah, I
+[00:33:55] guess I have to do what Andy said." Uh,
+[00:33:57] so again,
+[00:34:00] the rest of your life,
+[00:34:02] never use MAP in your data system. Okay.
+[00:34:05] So, if now we're responsible for memory
+[00:34:08] and we're responsible for deciding what
+[00:34:10] comes in and out, we have to decide what
+[00:34:13] to evict when we run out of memory. Yes.
+[00:34:15] >> But I don't get by. Isn't the database
+[00:34:23] the statement is um uh how do we bypass
+[00:34:26] virtual memory? I mean, yes. So, so
+[00:34:31] when you call Malo, yes, you get you get
+[00:34:33] anonymous MAPAP. The thing I care about
+[00:34:35] is I don't want the OS to decide how to
+[00:34:38] how to flush pages out. So, it could
+[00:34:40] start thrashing for us because we do
+[00:34:42] anonymous MPAP, you get a bunch of
+[00:34:44] memory that when you call maloc and then
+[00:34:45] it starts running memory, it starts
+[00:34:46] paging things out. But in general, like
+[00:34:49] I was saying, when you when the system
+[00:34:50] boots up, you want to allocate all the
+[00:34:52] memory you you need ever at that moment.
+[00:34:55] And therefore, you have to tell it use
+[00:34:56] exactly the amount of memory that's
+[00:34:57] physically available. So if you're if
+[00:34:59] your if your your system you're running
+[00:35:01] on has 100 gigs, you would tell your
+[00:35:02] data system, hey, you have 80 gigs, do
+[00:35:04] whatever you want with it, and it
+[00:35:05] mallets whatever it wants, and that'll
+[00:35:06] never get thrashed.
+[00:35:08] >> But that's not true. Like another user
+[00:35:10] program,
+[00:35:12] then
+[00:35:14] >> the statement is that's not true. If the
+[00:35:16] if another if another system running on
+[00:35:19] the same box allocates a bunch of memory
+[00:35:22] too, could could you start thrashing?
+[00:35:24] Yes. Don't do that.
+[00:35:26] That's like what else would like you
+[00:35:29] never want to run another process or
+[00:35:31] another system on your data system. Same
+[00:35:33] machine. That's considered better, you
+[00:35:35] know, general the right way to do
+[00:35:37] things. If it's like a word WordPress
+[00:35:39] website, who cares, right? It's
+[00:35:41] something real simple. But if it's like
+[00:35:43] any mission anything mission critical,
+[00:35:44] you don't run you don't run like a
+[00:35:46] Bitcoin miner in the same box as your
+[00:35:47] your data system.
+[00:35:49] >> But then why would the OS
+[00:35:52] >> why would the OS want to page you out?
+[00:35:56] >> Why would you?
+[00:36:00] >> So um the statement is why would the OS
+[00:36:02] page you out if you're if you're saying
+[00:36:03] that I'm running on a box that only has
+[00:36:06] the memory that I need for the only
+[00:36:08] thing running is my data system and has
+[00:36:09] all the memory I could ever want. You're
+[00:36:11] correct. it won't page you out, but it
+[00:36:13] could write out the dirty pages and that
+[00:36:15] that you're screwed on
+[00:36:18] as well as all the other other stuff.
+[00:36:19] There's other reporting issues, too,
+[00:36:21] like you want to say, all right, how
+[00:36:23] much database, how much memory is my
+[00:36:24] data center using? Well, now I got to
+[00:36:26] like go look in whatever is in the the
+[00:36:28] talk about the page cast in a second.
+[00:36:30] Like you can't just say that you can't
+[00:36:31] just go to the OS and say, how much
+[00:36:33] memory is this process using because
+[00:36:35] it's like that plus the page cast or
+[00:36:36] whatever math stuff. It becomes more
+[00:36:38] complicated for reporting.
+[00:36:44] Okay. All right. So, go back here.
+[00:36:45] Sorry. Um,
+[00:36:47] so we we have some fixed amount of
+[00:36:50] memory that we can use to store data uh
+[00:36:52] for the pages we bring in memory. But
+[00:36:53] then again, at some point we're going to
+[00:36:55] run out of memory, run out of free
+[00:36:56] frames. We have to decide how to make up
+[00:36:59] make space. And this is called the
+[00:37:01] buffer replacement policy. And the idea
+[00:37:04] is that we're going to run some
+[00:37:06] algorithm that can choose which which
+[00:37:08] page we think we're we're least likely
+[00:37:11] going to need in the future in the ideal
+[00:37:13] scenario and we're going to go ahead and
+[00:37:15] invict it, free that frame up and then
+[00:37:17] now bring the the requested new
+[00:37:18] requested page into memory and reuse
+[00:37:20] that frame. So there's a you know this
+[00:37:23] is an old problem in in in just
+[00:37:25] computing computer science in general
+[00:37:27] like it's basically caching, right?
+[00:37:30] because we have to deal with that memory
+[00:37:31] hierarchy where the things that are have
+[00:37:33] more space are going to be slower and
+[00:37:34] farther away, but the fast stuff like
+[00:37:36] DRAM is going to be much more limited in
+[00:37:38] size. So now when we run our replacement
+[00:37:41] policy algorithm, we obviously want to
+[00:37:43] be correct to the extent we can because
+[00:37:45] we want to make sure that we throw
+[00:37:46] things away that we're least likely
+[00:37:47] going to need in the future. Uh, and we
+[00:37:50] want this to be as fast as possible
+[00:37:52] because again, if if the the cost of a
+[00:37:54] dis IO is like 1 millisecond, but if a
+[00:37:56] replacement algorithm takes 10
+[00:37:57] milliseconds to run, we're just better
+[00:37:59] off just reading things from disk
+[00:38:00] because that's always be faster, right?
+[00:38:03] And the amount of memor memory we're
+[00:38:05] going to use to store the whatever
+[00:38:06] metadata we have about what's in our
+[00:38:08] buffer pool, we want that to be as small
+[00:38:10] as possible because if we're spending,
+[00:38:12] you know, megabytes to store uh again
+[00:38:15] metadata about what's within the the
+[00:38:17] memory, then that's memory we can't be
+[00:38:20] using to store more data.
+[00:38:24] So I said this is an old problem. Uh one
+[00:38:27] of those common solutions uh in in
+[00:38:29] systems goes back to 1965. LRU least
+[00:38:32] recently used. And the basic idea is
+[00:38:34] that you just keep track of a time stamp
+[00:38:36] for all the pages you have in memory
+[00:38:39] based on when when they were last
+[00:38:40] accessed. And then when it comes time to
+[00:38:42] evict something, you just pick whatever
+[00:38:44] one that was accessed the the longest
+[00:38:46] ago. And anytime you access something
+[00:38:48] again, you just update that time stamp.
+[00:38:51] All right? So say I have a simple a
+[00:38:52] database has three pages and my prefer
+[00:38:54] pool has three pages. And so again, I
+[00:38:56] can just maintain this this link list
+[00:38:58] here. It's one way to do So it could do
+[00:38:59] a table where the order in which they
+[00:39:02] exist in the link list corresponds to
+[00:39:04] the order in which they were last
+[00:39:06] accessed.
+[00:39:07] >> Yes.
+[00:39:14] >> Question is is where would these
+[00:39:15] timestamps being stored? Yeah. Metadata
+[00:39:17] page tables.
+[00:39:19] access and then
+[00:39:23] you
+[00:39:25] >> the statement is uh
+[00:39:28] let me walk through this and I think
+[00:39:29] it'll make sense but yeah when when you
+[00:39:31] go try to get a page I want to get page
+[00:39:32] one I go look my buffer pool I see that
+[00:39:35] it exists there so I'm I don't go to dis
+[00:39:37] and get it but then I go find whatever
+[00:39:39] it is in the in the the LRU list or
+[00:39:41] could be a table doesn't matter and I
+[00:39:42] just move it to the to the front and
+[00:39:45] then then I hand back the pointer to
+[00:39:47] whoever wanted
+[00:39:49] Yes,
+[00:39:52] >> you save it as if you have a list. Why
+[00:39:54] do you need the time stamp?
+[00:39:56] >> You could sort the time you sort of as a
+[00:39:57] list, but then you got to like search
+[00:39:58] list every time you or you have a table
+[00:40:00] and just store the time stamp in the
+[00:40:01] table
+[00:40:03] effectively the same way. This is just
+[00:40:05] two representations. I'll show when I
+[00:40:06] show l I'll show a table.
+[00:40:12] All right. So then now when I want to
+[00:40:14] fetch something I don't memory in,
+[00:40:16] right? I just I pick whatever's on the
+[00:40:17] last page at the end of the list and I
+[00:40:19] go ahead and pick that and then uh free
+[00:40:21] up space for the data that I want.
+[00:40:23] Right?
+[00:40:24] So again, this will give you the exact
+[00:40:26] order in which uh the table is being
+[00:40:28] accessed. But maybe you actually don't
+[00:40:30] need the exact order. You can do a more
+[00:40:32] simplified version called clock which
+[00:40:33] came out in 1969.
+[00:40:36] And it's basically an approximate LRU.
+[00:40:38] And the idea is now instead of having a
+[00:40:40] time stamp uh or a link list to keep
+[00:40:42] track of like when things are accessed,
+[00:40:44] I just have a simple reference counter
+[00:40:45] that's a single bit for every single
+[00:40:48] page. And then now all I need to do is
+[00:40:51] check to see has this bit been set
+[00:40:54] meaning has this has this page been
+[00:40:55] accessed since the last time I checked
+[00:40:57] it.
+[00:40:59] Right? So at the very beginning I I
+[00:41:01] would look at at this one here the if I
+[00:41:04] access page one I'll set its reference
+[00:41:06] count now to uh to to one and then now
+[00:41:10] there's this thing called the clock
+[00:41:11] hand. I'm showing this in sort of
+[00:41:13] circular pattern but obviously we store
+[00:41:15] this in in a list and it's just a cursor
+[00:41:16] that goes through anytime I want to
+[00:41:18] evict something to try try a free frame
+[00:41:21] I just go through and check to see
+[00:41:22] whether the reference count is set to
+[00:41:23] one. If it is, then I'd put it back to
+[00:41:25] zero. And I keep scanning along till I
+[00:41:27] find one where the reference count is
+[00:41:29] zero. Meaning since the last time this
+[00:41:31] algorithm ran, this page was an access.
+[00:41:34] So therefore, it's safe for me to go
+[00:41:35] ahead and and evict it.
+[00:41:38] >> Yes,
+[00:41:38] >> you're using the word page, but here are
+[00:41:40] you frames?
+[00:41:43] >> So yes, the statement is um
+[00:41:46] I'm I'm using the word page, but do I
+[00:41:49] mean frames? So these are the pages that
+[00:41:51] are in frames. So these are the pages
+[00:41:53] that are in memory.
+[00:41:55] >> A frame is like a memory location where
+[00:41:56] I can put a page in.
+[00:41:58] >> So you memor
+[00:42:02] statement is do you am I iterating over
+[00:42:04] the frame locations and not the page ids
+[00:42:08] for these are it's a powerpoint diagram.
+[00:42:10] It doesn't matter but in general like
+[00:42:12] you you would just you would have the
+[00:42:14] the page table would be the separate
+[00:42:15] thing you iterate over that that's
+[00:42:17] separate from the frames.
+[00:42:22] Sorry. Yes. Here. So in the page table,
+[00:42:24] you have all the possible page ID
+[00:42:27] insert.
+[00:42:28] >> No, the page table is going to have what
+[00:42:29] are pages that are in frames right now
+[00:42:31] in memory.
+[00:42:33] >> It's not a mapping of page ID.
+[00:42:34] >> That's the page directory. The page
+[00:42:36] directory is like here's all the frames
+[00:42:37] that exist. The page table says here's
+[00:42:39] the mapping from a page ID to a frame.
+[00:42:42] >> Right? So it has all the page IDs
+[00:42:45] >> that are in memory.
+[00:42:48] >> The list of keys changes.
+[00:42:49] >> Yes. Because I because I if I evict
+[00:42:51] something that I hash
+[00:42:53] >> yeah it's a hashmap but if I if I evict
+[00:42:54] something
+[00:42:56] I I have to evict going back here I
+[00:42:58] evict page two right in my page table I
+[00:43:02] have an entry for page two that's going
+[00:43:03] to point to a frame where page two
+[00:43:05] exists. So now when I want to go to
+[00:43:07] evict it I would say assuming this this
+[00:43:09] algorithm runs said all right I'm going
+[00:43:11] to evict page two I remove it from the
+[00:43:13] page table. So if anybody comes now
+[00:43:14] looking for page two they're not going
+[00:43:16] to see it and they're they know they
+[00:43:17] have a cache miss. So what's in the
+[00:43:19] buffer pool? Sorry, what's in the page
+[00:43:20] table is whatever's in the memory right
+[00:43:22] now.
+[00:43:25] >> We'll talk about ghost pages in a
+[00:43:27] second. There you could keep track of
+[00:43:29] all the pages. That's not this though.
+[00:43:30] That's later. I don't want to copy
+[00:43:32] anything.
+[00:43:34] Other questions? Yes.
+[00:43:39] >> Statement is this is not a reference
+[00:43:40] counter. It's just a bit. It's it's a
+[00:43:43] reference counter that goes up to one.
+[00:43:46] Just one. That's it. I It's not a
+[00:43:50] reference counter in terms of like who
+[00:43:51] has Yes. who has who's holding this page
+[00:43:54] right now. It's just a saying this thing
+[00:43:56] has this thing referenced accessed.
+[00:43:59] Yes. The terminology maybe it's hard to
+[00:44:03] they reuse a lot of these terms. It's
+[00:44:05] called call it a reference bit, but it's
+[00:44:07] really a an access bit. Was this thing
+[00:44:10] accessed since the last time I checked?
+[00:44:14] All right. Again, just looping through
+[00:44:15] set. bring in page five, set this
+[00:44:17] reference count to zero, and I keep you
+[00:44:19] say these other pages are accessed. So,
+[00:44:20] as I scan along, I change their
+[00:44:22] reference bit to back to zero. I come
+[00:44:25] back up here. This guy's set to zero
+[00:44:27] again. So, I go ahead, I can go ahead
+[00:44:28] and invict it.
+[00:44:31] This is what basically Linux does in its
+[00:44:33] own internal page table. Uh, it's a it's
+[00:44:36] a multi-hand clock. Um, the high level
+[00:44:38] idea is basically the same.
+[00:44:40] >> And again, for some things, this is
+[00:44:42] okay. Again, we're not having exact
+[00:44:43] listing, but this is probably good
+[00:44:44] enough. Yes. For each iteration of this
+[00:44:46] does the cursor
+[00:44:49] or does it start?
+[00:44:51] >> Yes. So he said in does this algorithm
+[00:44:55] resume from the beginning or where it
+[00:44:56] left off last? That's where we left off
+[00:44:58] last.
+[00:44:59] >> Yes.
+[00:45:00] >> This only runs when we need to.
+[00:45:03] >> Yes. The statement is and it's correct.
+[00:45:05] This algorithm only runs when you need
+[00:45:06] to evict something. So everything we're
+[00:45:07] talking about today is like how do you
+[00:45:08] decide what to evict when I when I need
+[00:45:10] a frame?
+[00:45:11] >> But the clock's like motion. Does it
+[00:45:14] only
+[00:45:15] saying we're accessing
+[00:45:18] page five
+[00:45:22] and z
+[00:45:26] question like when does the clock
+[00:45:27] actually run so if I access a page I set
+[00:45:30] the bit to one I have to right the the
+[00:45:33] clock sweep only occurs when someone
+[00:45:35] says I need a frame I don't have any
+[00:45:37] free ones then it kicks in and runs and
+[00:45:39] it starts setting them back to zero
+[00:45:43] >> why is this
+[00:45:45] Question is why is this faster than LU?
+[00:45:47] Because the amount of metadata I have to
+[00:45:48] record for this is like super simple.
+[00:45:49] It's a bit
+[00:45:57] >> then is does this take longer? Like is
+[00:45:59] the computational complexity less than
+[00:46:01] LRU?
+[00:46:02] >> Uh again it depends on how you
+[00:46:10] Sure.
+[00:46:16] But when I act statement is like it's 01
+[00:46:18] to pop something off the end of list,
+[00:46:20] but when I have to update it, I got to
+[00:46:22] go find it and then put it put it to the
+[00:46:24] front again.
+[00:46:26] >> Yeah, that's
+[00:46:29] >> Yeah, but this is this is like this is
+[00:46:31] nothing.
+[00:46:34] >> We all right.
+[00:46:36] I don't got this point yet. They they
+[00:46:37] bring up a very good point. This is not
+[00:46:39] your algorithms class where like, oh, if
+[00:46:41] it's constant time, they're all the
+[00:46:42] same. No, constants matter a lot, right?
+[00:46:45] Like the difference between 1
+[00:46:46] millisecond and 10 millconds is a lot.
+[00:46:48] It's an order of magnitude. So, this
+[00:46:50] isn't this isn't who teaches I don't
+[00:46:51] teaches algorithms. This isn't
+[00:46:53] algorithms. We care about this, right?
+[00:46:55] So, like it is constant, but like you
+[00:46:58] know computation it's the wall clock
+[00:47:00] time is significant. Yes.
+[00:47:02] >> Does the clock start at the same point
+[00:47:04] every time?
+[00:47:05] >> No. The question is when where does the
+[00:47:06] clock start at the same point every
+[00:47:07] time? No. Because in that case, you'd be
+[00:47:08] hammering whatever the first one is.
+[00:47:09] It's where you left off, right? So going
+[00:47:12] back here,
+[00:47:14] right? So I flip this guy, right? Say
+[00:47:16] now the the clock runs again. So these
+[00:47:19] guys get access down below, right? Set
+[00:47:21] to one. Then I got to evict something.
+[00:47:23] It when it starts where it left off.
+[00:47:28] All right. I don't spend too much time
+[00:47:29] on clock. Not does this. Uh it's just an
+[00:47:33] approximation of of LU. LRU is actually
+[00:47:35] common but not in the simplified form
+[00:47:38] that I showed before and that's because
+[00:47:40] both LU and clock are susceptible to a
+[00:47:43] problem called sequential flooding which
+[00:47:46] basically means that if I have a query
+[00:47:48] that comes along and does a sequential
+[00:47:49] scan which means I'm going to read the
+[00:47:51] table from beginning to end then that's
+[00:47:53] going to blow away any uh uh recency
+[00:47:58] information that I' that I've been
+[00:47:59] maintaining in my database system these
+[00:48:00] pages because this is going to go
+[00:48:02] through and rip out throw away things
+[00:48:04] and put a bunch of pages into my buffer
+[00:48:06] pool that maybe I actually don't want to
+[00:48:08] be in there because I only need it for
+[00:48:10] that that that sequential scan. So I
+[00:48:12] lose all sort of the information that I
+[00:48:14] have about again the recency information
+[00:48:16] because you're basically polluting the
+[00:48:17] buffer pool. And in some workloads like
+[00:48:20] OLAP for analytics, we'll talk about
+[00:48:21] that next week where you're not really
+[00:48:24] doing single lookups on single keys.
+[00:48:26] You're actually doing these scans over
+[00:48:27] and over again and you don't actually
+[00:48:29] want least re uh least recency recently
+[00:48:32] used. you actually most recently used
+[00:48:35] because then you start playing games of
+[00:48:36] like oh I I have to do I do much more
+[00:48:38] scans so I'll scan from beginning to the
+[00:48:39] end next query shows up maybe I want to
+[00:48:41] scan from from the end to the beginning
+[00:48:43] because the pages that I just read are
+[00:48:44] going to be in the buff in the buffer
+[00:48:46] pool
+[00:48:49] right so what looks like this so say I
+[00:48:52] have a query at the top I'm doing a it's
+[00:48:54] called a point query I'm trying to find
+[00:48:56] a single record where ID equals one
+[00:48:58] assuming ID is the primary key so
+[00:49:01] somehow I figured out that ID equals one
+[00:49:02] is in page zero. So I go ahead and put
+[00:49:04] that by my buffer pool. Then now a a
+[00:49:07] scan query comes along. I want to
+[00:49:09] compute the average from some column in
+[00:49:10] the table and that's going to go from
+[00:49:12] beginning to end. And at some point it's
+[00:49:14] going to it's going to run uh when it
+[00:49:15] gets to this last page here, page three.
+[00:49:17] Doesn't have any more free space in the
+[00:49:18] buffer pool. So then it's got to run the
+[00:49:21] the you know the the LU algorithm decide
+[00:49:23] what to kick out. Well, page zero was
+[00:49:25] the last thing that it read the one
+[00:49:28] least recently read. and I'm going to go
+[00:49:30] ahead and invict that and put it in page
+[00:49:31] three. But let's say this query at the
+[00:49:33] top where I'm doing these ID lookups,
+[00:49:35] that's actually super common and I'm
+[00:49:38] doing I'm doing a bunch of lookups on
+[00:49:39] this ID equals one. Like a workloads are
+[00:49:42] very skewed where people always trying
+[00:49:43] to read the same thing or write the same
+[00:49:44] thing over and over. Taking like you
+[00:49:46] know Taylor Swift, she's on Instagram
+[00:49:48] whatever her Instagram account versus
+[00:49:50] like some random guy's cat's Instagram
+[00:49:52] account. There's more people reading
+[00:49:54] Taylor Swift's thing rather than the the
+[00:49:55] cat guys thing. So, we want to keep the
+[00:49:58] Taylor Swift thing in memory. But if we
+[00:50:00] have if we're just using LRU, we
+[00:50:02] wouldn't be able to do that because we
+[00:50:03] would not know that Taylor Swift is
+[00:50:05] popular and we would end up evicting her
+[00:50:07] page if we used that that basic LRU
+[00:50:09] algorithm,
+[00:50:12] right?
+[00:50:14] So, you say, all right, well, what if I
+[00:50:16] do something like keep track of uh how
+[00:50:18] often these pages are being used and
+[00:50:20] there when I want to run my eviction
+[00:50:22] algorithm, I want to do the one that has
+[00:50:23] been the least frequently accessed,
+[00:50:25] right? just maintain a counter for every
+[00:50:26] single page of how often they're being
+[00:50:29] accessed in when they're in memory. And
+[00:50:31] then now when I want to evict something,
+[00:50:32] I just pick whatever one that has the
+[00:50:33] smallest count, right? Seems reasonable.
+[00:50:37] Of course, there's a paper on this from
+[00:50:38] 1971, two years after uh clock.
+[00:50:43] Well, this causes more problems because
+[00:50:45] now to his point about the complexity,
+[00:50:48] now it's logarithmic complexity
+[00:50:49] maintaining this information. All right,
+[00:50:51] because for all the the table. And then
+[00:50:53] furthermore,
+[00:50:55] if I have someone that does something
+[00:50:57] weird like go look up the cat guy's uh
+[00:50:59] Instagram account in the middle of the
+[00:51:01] night a billion times and then at no
+[00:51:03] point does did everyone go back and look
+[00:51:06] at that that cat guy's account, his
+[00:51:09] counter is be super high and I'm never
+[00:51:10] going to end up being evicting it even
+[00:51:11] though it's not useful anymore anymore
+[00:51:13] at all because there's no information
+[00:51:15] about time in this count. It's just like
+[00:51:17] how many times would it was it accessed
+[00:51:19] now? how how long ago was it accessed?
+[00:51:23] So the solution to this is a simple
+[00:51:25] enhancement that came uh out in the
+[00:51:27] early 90s uh called LRUK and there's a
+[00:51:30] great paper that that talks about this
+[00:51:31] and this is actually what's used in SQL
+[00:51:33] server. This is actually what Postgress
+[00:51:34] implemented first in the the late 90s uh
+[00:51:37] written by this guy Tom Lane who's he
+[00:51:40] did his PhD here at CMU. Um, and the
+[00:51:43] basic idea is that we're going to
+[00:51:44] maintain multiple LRU lists and then
+[00:51:47] when it comes time comes time to evict
+[00:51:49] something, we're going to uh calculate
+[00:51:53] the the the length of time from when it
+[00:51:55] was last accessed or the the oldest
+[00:51:57] access and the current time. And then
+[00:52:00] that way we can decide who who has been
+[00:52:03] accessed the longest ago. And since now
+[00:52:05] we're gonna have these multiple uh LU
+[00:52:08] lists, we would know whether someone
+[00:52:09] just accessed something once and never
+[00:52:11] accessed it again. And so therefore, we
+[00:52:12] don't have that that blowout before
+[00:52:14] where someone has a high count that
+[00:52:15] never comes back.
+[00:52:19] So the
+[00:52:23] in order to make sure that if we evict
+[00:52:25] something and then bring it back in, we
+[00:52:27] don't have to learn from scratch all
+[00:52:29] over again that this thing is a hot page
+[00:52:31] or not. We can actually also maintain
+[00:52:32] what are called ghost caches. a ghost
+[00:52:34] list where we can keep track of even
+[00:52:37] though something got evicted, we'll
+[00:52:38] still keep in memory its access
+[00:52:41] timestamps so that when we go fetch it
+[00:52:43] back in the second time around that we
+[00:52:45] can prepopulate our LU lists or time
+[00:52:47] stamps with what it was before it got
+[00:52:49] written out to disk.
+[00:52:51] So again, this now provides more uh
+[00:52:54] persistence into our algorithm so that
+[00:52:56] if we write things out again, we're not
+[00:52:57] just learning from scratch all over
+[00:52:59] again.
+[00:53:00] So let's look at a simple example. So
+[00:53:02] now instead of using a uh an LU or sorry
+[00:53:06] a link list to keep track of the
+[00:53:07] ordering I'm going to maintain this
+[00:53:08] separate table right and you can think
+[00:53:10] of this as like the page table uh where
+[00:53:12] and I'm just maintaining time stamps of
+[00:53:14] things.
+[00:53:16] So say that uh in the past I've accessed
+[00:53:19] pages 0 one and two and that's what's in
+[00:53:21] in my buffer pool and assume the time
+[00:53:24] stamp is just a monotonically increasing
+[00:53:26] counter like a 32-bit integer right 1 2
+[00:53:28] 3 4 5 six so forth. So the query starts
+[00:53:31] off here uh I have it my my I have an in
+[00:53:34] clause where I'm going to access three
+[00:53:36] different values on three sorry four
+[00:53:37] different values on four different
+[00:53:38] pages. Now I'm going to show this in
+[00:53:40] sort of the order that it gets that
+[00:53:41] they're specified in the in clause. But
+[00:53:44] again, SQL is unordered. So in
+[00:53:47] actuality, you would actually want the
+[00:53:48] system to to figure out what pages these
+[00:53:50] these these records are on like 1 131 11
+[00:53:52] and 41 and then do them in sequential
+[00:53:54] order. But in for simplicity or sorry to
+[00:53:58] show the the how this the page history
+[00:54:00] works, I'm going to I'm going to have
+[00:54:02] them jump around randomly. So when I my
+[00:54:05] query starts off, I I want to read ID
+[00:54:07] equals one. that's in page zero. So now
+[00:54:10] because I already have this entry in my
+[00:54:11] buffer pool, I'm gonna have so the the
+[00:54:13] two columns, one is be the last access
+[00:54:15] uh the most recent one and then the
+[00:54:17] second access since we're doing k equals
+[00:54:19] 2 here, I'll have a second list and
+[00:54:21] keeps track of like the um the the
+[00:54:24] oldest time stamp for this. So at the
+[00:54:26] very beginning if I access it once
+[00:54:28] there's nothing in that sort of second
+[00:54:29] column. And again I'm showing k equals
+[00:54:30] 2. You can go up to k equals 6. Uh some
+[00:54:33] systems can do that. All right. So in
+[00:54:35] this case here because now I'm going to
+[00:54:37] access at time stamp four. Uh one gets
+[00:54:39] slid over to the other column and then
+[00:54:41] I'm put time stamp four here. Then now I
+[00:54:43] jump down to access page three.
+[00:54:47] All right. So now this is not in memory
+[00:54:49] uh in our page table. So we got to
+[00:54:51] decide what we want to evict to to free
+[00:54:53] up space to put put it in memory. So the
+[00:54:56] eviction policy is going to take
+[00:54:58] whatever the current time stamp is for
+[00:54:59] us. Again that's just a counter
+[00:55:00] increasing. And then we look at the the
+[00:55:03] oldest last access time stamp, right,
+[00:55:06] with the kith one. So in this case, k
+[00:55:07] equals two. We'll look at the the last
+[00:55:09] access number two column. And we'll just
+[00:55:11] subtract that to figure out what the
+[00:55:13] distances between those the two axises
+[00:55:16] and then choose whatever one is the is
+[00:55:18] is the largest, meaning it's it's been
+[00:55:21] the longest since it was last access
+[00:55:22] before. If you don't have an entry in
+[00:55:24] the second column, you just use
+[00:55:26] infinity,
+[00:55:27] right? And if you have ties, you just
+[00:55:29] pick whatever one has the the oldest
+[00:55:30] time stamp. So again, we're going to
+[00:55:32] look at the second column here. You just
+[00:55:33] go through take the current take the
+[00:55:35] current time stamp five subtract it by
+[00:55:36] whatever is in in the uh in the second
+[00:55:39] column in this case here because it's
+[00:55:41] time five subtracted by one you get
+[00:55:43] four. But then the other two guys don't
+[00:55:45] have entries there. So it's infinity. So
+[00:55:47] then now I would say all right well both
+[00:55:48] of these are infinity. I'm going to pick
+[00:55:50] whatever has the the the smallest time
+[00:55:52] stamp the oldest time stamp in the first
+[00:55:54] column. This case here it'll be page
+[00:55:56] one. We go ahead and pick that and put
+[00:55:57] that in and then we update it to page
+[00:55:59] five.
+[00:56:03] do it again. So now if I access page
+[00:56:05] one, that's the thing I just evicted. So
+[00:56:07] it's not in memory. Uh so I got to do
+[00:56:10] that same algorithm that before where I
+[00:56:11] just subtract whatever the time stamp is
+[00:56:13] with the the last access one. In this
+[00:56:16] case here, the the two bottom ones are
+[00:56:17] still infinity. I pick page two because
+[00:56:19] this time stamp is three is less than
+[00:56:20] five. So that's where I'm going to go
+[00:56:22] ahead and evict it. So that's where I'll
+[00:56:23] put page one. But now again remember I
+[00:56:25] can say I have that ghost list or ghost
+[00:56:27] cache where I keep track of the
+[00:56:29] timestamps of pages I just evicted. So I
+[00:56:32] just evicted page one uh before. So I
+[00:56:35] can go ahead if I have the ghost cache I
+[00:56:37] can put time stamp two in there. And
+[00:56:40] that way when if the eviction policy
+[00:56:41] runs again this doesn't end up getting
+[00:56:43] thrown out immediately all over again.
+[00:56:47] I access the last page, page four again.
+[00:56:49] Run the same algorithm, run the same
+[00:56:51] calculation. Now I get this middle guy
+[00:56:53] here because he hasn't been accessed
+[00:56:54] twice. I'm going to go ahead and pick
+[00:56:56] evict page three and put put page four
+[00:56:59] in there. Yes.
+[00:57:04] [Music]
+[00:57:11] >> The question is is the ghost hash part
+[00:57:13] of the page table or is that a separate
+[00:57:15] data structure? It's usually a separate
+[00:57:16] data shell.
+[00:57:18] It's not it's not that big. So it's not
+[00:57:19] that big a deal.
+[00:57:22] Yes.
+[00:57:31] >> Question is, is this time stamp is this
+[00:57:35] I'm showing this as a it's a logical
+[00:57:36] counter. Would you do that in a real
+[00:57:38] system or would you use like hardware
+[00:57:39] clocks like the the wall clock time?
+[00:57:43] You would do you typically would use a
+[00:57:44] logical one because the wall clock time
+[00:57:47] can change when there's like um
+[00:57:51] like if you like daylight savings and
+[00:57:53] things like that, you know, time can go
+[00:57:55] backwards.
+[00:57:56] That's going to be a bigger problem when
+[00:57:57] we talk about transactions later on. How
+[00:57:59] to deal with that. Yeah. Oh, time is
+[00:58:02] terrible. Yeah.
+[00:58:04] Other questions.
+[00:58:07] Okay. Okay, so let me show a sort of
+[00:58:10] simplified version that my SQL uses
+[00:58:12] called approximate L ruk. The basic idea
+[00:58:14] is that they're still going to have one
+[00:58:15] linked list. Uh and again could be a
+[00:58:18] table, be link list, doesn't matter. But
+[00:58:20] they're going to partition it into young
+[00:58:22] and old regions and you're going to have
+[00:58:24] two entry points into these into the
+[00:58:27] link list that allow you to find the
+[00:58:29] beginning of the of the old region and
+[00:58:30] the beginning of the of the the new
+[00:58:32] region of the young region. So now when
+[00:58:34] I access a page, say accessing page one
+[00:58:36] here, I got to evict something because
+[00:58:39] it's not my buffer pool. So I'll pick
+[00:58:42] whatever is uh I'll go into the old
+[00:58:44] list,
+[00:58:46] slide everything over by one. So I'm
+[00:58:48] going to get rid of page eight. These
+[00:58:49] guys slide over and that's where I'm
+[00:58:50] going to put page one in.
+[00:58:53] And the reason I'm going to put it in
+[00:58:54] the old list rather beginning all the
+[00:58:56] way at the beginning there is because if
+[00:58:58] I never access this page one again, then
+[00:59:01] that it'll just get sloughed off at the
+[00:59:03] end, right? No big deal. But if I do now
+[00:59:05] access page one again, then what I want
+[00:59:08] to do is now put it at the beginning of
+[00:59:09] the young list because I'm saying, oh,
+[00:59:10] this clearly is important because it
+[00:59:12] keeps getting access again. So, let me
+[00:59:14] go improve its chance not to get evicted
+[00:59:17] very soon by putting it to the front of
+[00:59:19] the young list.
+[00:59:22] Right.
+[00:59:25] Again, it's approximate. It's not
+[00:59:26] exactly the way LRUK did it, but it kind
+[00:59:29] of gives you the the roughly the same
+[00:59:31] benefit.
+[00:59:35] All right. I want to talk short on time,
+[00:59:37] but I do want to talk about this arc one
+[00:59:39] because this is what you have to
+[00:59:40] implement in um in project one. Uh and
+[00:59:43] as I said, the projects this year are
+[00:59:45] harder than the previous years because
+[00:59:46] you can by all means use use LLMs to
+[00:59:49] help you code. So this is called the
+[00:59:50] adapter replacement uh cache. It was
+[00:59:53] invented by IBM research actually for
+[00:59:54] their disc storage systems but I think
+[00:59:56] it went into IBM DB2. Um it's in ZFS as
+[01:00:00] well and actually was in Postgress
+[01:00:03] uh was added in Postgress 2004 or five.
+[01:00:07] Um but IBM patented this and the
+[01:00:10] Postgress people were kind of worried
+[01:00:12] about that. So they made some little
+[01:00:13] tweaks to the algorithm to make it look
+[01:00:16] less like the patent although IBM hasn't
+[01:00:17] enforced it. And actually I think it
+[01:00:19] expires next year. Uh but this is this
+[01:00:24] is roughly considered this the
+[01:00:27] this kind of policy or the kind of
+[01:00:28] algorithm is roughly considered the
+[01:00:29] state-of-the-art for buffer replacement
+[01:00:32] uh algorithm. But the basic idea is that
+[01:00:36] we want to get all the benefit of
+[01:00:38] something like least recently used as
+[01:00:40] well as the benefit of least frequently
+[01:00:41] used. Um, but instead of having to
+[01:00:44] maintain sort of separate lists or
+[01:00:47] sorry, instead of having to balance how
+[01:00:50] much we're going to depend on one list
+[01:00:51] versus the other and you have to
+[01:00:53] manually tune that, we instead want to
+[01:00:55] have this sort of built-in policy that
+[01:00:56] decides how to size up the different uh
+[01:00:59] lists based on the access patterns of
+[01:01:01] the of of the query. And then of course
+[01:01:05] we're going to maintain a ghost list to
+[01:01:06] keep track of what things evicted uh
+[01:01:08] recently so that if we go fetch them
+[01:01:10] back in we can we can uh we can record
+[01:01:12] that history and rely on that.
+[01:01:16] So
+[01:01:17] in the sick of time I mean I know we
+[01:01:19] need this for the project but um we can
+[01:01:21] follow up online to do recitation
+[01:01:22] separately but main basically there's
+[01:01:24] there's these multiple lists we're going
+[01:01:25] to maintain. there's this parameter P
+[01:01:27] where we keep track of how much we're
+[01:01:28] going to favor uh putting things in the
+[01:01:30] least recently used list, the recent
+[01:01:32] list or the frequent list. And so we
+[01:01:35] find ourselves accessing the same things
+[01:01:37] over and over again. Then we'll allow
+[01:01:39] the size of the the the pages we're
+[01:01:42] tracking in the frequent list to grow
+[01:01:44] and correspondingly shrink the recent
+[01:01:46] list. So you sort of automatically get
+[01:01:48] the best of both worlds of both leastly
+[01:01:50] used and least frequently used. and it
+[01:01:53] can eventually narrow in exactly how the
+[01:01:55] what the workload actually wants. And
+[01:01:57] because it's dynamic, if the workload
+[01:01:58] changes over time and the access pattern
+[01:02:00] changes over time, this thing can handle
+[01:02:02] it.
+[01:02:04] So again, uh we can we'll we'll follow
+[01:02:07] into a separate recitation on the
+[01:02:08] algorithm because you'll need it for the
+[01:02:09] project. Um and there's there's a lot of
+[01:02:11] videos online that discuss how this
+[01:02:13] works. Um but it's basically the same
+[01:02:16] concepts we had before again except you
+[01:02:18] have this P parameter that changes where
+[01:02:19] you where things are going to go. Okay.
+[01:02:24] All right. Other tricks you can do to
+[01:02:25] make things go fetter is to have
+[01:02:27] information about uh
+[01:02:31] how the page is actually going to be
+[01:02:32] used. Like if I know that I'm doing a
+[01:02:35] query scanning a table for special scan
+[01:02:38] and it's unlikely that this table is
+[01:02:40] going to be used by other queries, then
+[01:02:42] I don't want to be put it into my my
+[01:02:43] global buffer pool. I want to have a
+[01:02:45] little separate side cache or separate
+[01:02:47] portion of the buffer pool that's
+[01:02:48] dedicated just for my one query that's
+[01:02:50] running. So then now as I'm scanning
+[01:02:52] through, I'm not putting things in the
+[01:02:54] global buffer pool uh and having that
+[01:02:56] run its own effiction policy. I'm
+[01:02:58] putting this in my own little buffer
+[01:02:59] pool on the side, but it's really just a
+[01:03:00] a a partition piece of the total me
+[01:03:03] amount of memory that's available for
+[01:03:04] the system. So Postgress does this. They
+[01:03:07] basically maintain a circular ring
+[01:03:08] buffer for some portion of the buffer
+[01:03:10] pool so that every time I ask for a new
+[01:03:12] page, I'm just appending to the end and
+[01:03:13] then eventually it'll wrap back around.
+[01:03:15] So it's really cheap to actually
+[01:03:16] implement. Um and again you you minimize
+[01:03:20] the effect of sequential scans or squal
+[01:03:22] flooding on the rest of the system.
+[01:03:25] Another trick you can do is maintain
+[01:03:27] priority hints to uh about how the query
+[01:03:30] is going to act or how the execution
+[01:03:31] engine is using these these this data
+[01:03:33] and what where it's actually in the
+[01:03:35] pages so that when the buffer pool
+[01:03:36] replacement algorithm runs it knows to
+[01:03:38] avoid pages that it somehow thinks are
+[01:03:41] more important than other pages.
+[01:03:43] So think of something like I have an
+[01:03:45] index. We haven't talked about B plus
+[01:03:46] trees yet, but assuming it's it's a tree
+[01:03:47] data structure. And so I would have
+[01:03:49] priority hints for my pages and say the
+[01:03:51] top of the index, the first page, that's
+[01:03:54] super important because that's where
+[01:03:55] everyone has to go to in order to get
+[01:03:56] inside the data structure and figure out
+[01:03:58] where where they need to go, right? So
+[01:04:00] we think of like this is not this is not
+[01:04:02] valid SQL, but assume I'm inserting
+[01:04:04] values where I'm just incrementing some
+[01:04:05] counter by one over and over again,
+[01:04:07] right? Well, if I'm sorted along from
+[01:04:10] min value to max value along the bottom
+[01:04:12] on like my leaf nodes, then anytime I
+[01:04:14] want to insert something, I always got
+[01:04:15] to go to the root and I'm always going
+[01:04:17] to go down on this side of the tree. So
+[01:04:20] therefore, I should tell my data system,
+[01:04:22] hey, that the index page zero. That's
+[01:04:24] super important. Yes, I would see that
+[01:04:27] it's being accessed all the time as part
+[01:04:28] of my frequency information, but maybe I
+[01:04:31] want to just make sure that the data sim
+[01:04:32] no matter what never never pages it out
+[01:04:36] because the first thing I'm always going
+[01:04:36] to do if I want to access the index is
+[01:04:38] going to to that route. And same thing
+[01:04:40] if if I want to do a lookup.
+[01:04:44] There's other tricks you can do about
+[01:04:45] priorities. Like if I know that a if a
+[01:04:50] there's a transaction that's running
+[01:04:51] multiple queries and the first thing it
+[01:04:53] does is read some record and then
+[01:04:54] immediately update that record. I don't
+[01:04:56] want to have look like I don't want the
+[01:04:59] that to look like two separate unique
+[01:05:01] accesses to my buffer pool manager. I
+[01:05:04] want to tell it oh by the way this is
+[01:05:06] part of the same transaction. Therefore,
+[01:05:07] it only updates like the access counter
+[01:05:09] once because it isn't it didn't become
+[01:05:11] more popular because you know everyone's
+[01:05:14] trying to access it. It's just one
+[01:05:15] transaction trying to access it multiple
+[01:05:16] times. So SQL server can do stuff like
+[01:05:19] that again. So there's a bunch of hints
+[01:05:20] and a bunch of information we can
+[01:05:22] provide to the buffer manager based on
+[01:05:24] how we know queries are accessing this
+[01:05:26] data.
+[01:05:27] And I didn't say this beginning but I'll
+[01:05:29] I'll say it. I'll say this multi
+[01:05:31] throughout the semester. This is one of
+[01:05:32] the things that's going to separate the
+[01:05:34] expensive enterprise systems like the
+[01:05:36] oracles, DB2s, the terod datas from the
+[01:05:39] open source systems like Postgress, my
+[01:05:41] SQL, SQLite like they're going to have
+[01:05:43] spent a lot more time and more money to
+[01:05:46] make those these buffer replacement
+[01:05:48] algorithms as sophisticated as possible.
+[01:05:50] like the ARC thing is is in IBM and that
+[01:05:53] paper came out and and um the post has
+[01:05:56] implemented but I
+[01:05:58] it's not public but there there's a
+[01:05:59] bunch more things they've added it since
+[01:06:01] then in the the DB2 version.
+[01:06:06] All right. So what happens now if we
+[01:06:08] want to evict a page uh and we we
+[01:06:12] identified this one we want to remove
+[01:06:13] but it's been marked dirty meaning some
+[01:06:16] part of the system has modified the
+[01:06:17] changes since it was brought into memory
+[01:06:19] and therefore we can't just throw it
+[01:06:20] away. We have to go write it back out to
+[01:06:22] disk before we can reuse the frame.
+[01:06:25] So if the page has not been modified
+[01:06:27] then it's super easy for us because
+[01:06:29] again we just drop the memory no big
+[01:06:30] deal. If it is been has been modified
+[01:06:33] then in order for us to use that frame
+[01:06:35] we have to wait until we write that data
+[01:06:37] out to disk. It gets flushed. In some
+[01:06:39] cases we have to write out the another
+[01:06:41] log another record or another page that
+[01:06:43] tells us about what was modified in that
+[01:06:45] page like a log record. We have to flush
+[01:06:46] that page. Then we flush the other page
+[01:06:49] before we can free that frame up. And
+[01:06:52] that's obviously going to be be slow for
+[01:06:53] us.
+[01:06:54] So what we want ideally is when our buff
+[01:06:57] replacement algorithm runs we we only
+[01:06:59] want to consider uh you know free pages
+[01:07:03] and so the more free sorry clean pages
+[01:07:05] the more clean pages that we have the
+[01:07:06] better chance we have of finding one
+[01:07:08] that that will be um you know le least
+[01:07:12] likely to be used in the future.
+[01:07:15] So, similar to how the OS can do that
+[01:07:17] preemptive background writing for pages
+[01:07:19] in MAPAP, the data system can do the
+[01:07:21] same thing. Again, this is just you're
+[01:07:23] just walking through the page table,
+[01:07:24] finding all any pages that that are
+[01:07:26] marked as dirty and going ahead and
+[01:07:28] writing them out in a background thread.
+[01:07:30] So then the idea again, by the time
+[01:07:31] someone wants to go free that frame, the
+[01:07:33] dirty data has been written out and we
+[01:07:34] don't have to block and wait for
+[01:07:35] ourselves. This is sometimes called page
+[01:07:38] cleaning or buffer flushing, the basic
+[01:07:40] idea is the same thing, right? And then
+[01:07:43] once we've written out the dirty page,
+[01:07:44] we can go flip flip the the dirty bit
+[01:07:46] and then it can be evicted easily. Of
+[01:07:49] course, now the challenge is going to be
+[01:07:50] if we spend all our time doing
+[01:07:52] background writing, that's going to slow
+[01:07:54] our system down because now all our I/IO
+[01:07:56] is flushing out dirty pages uh when we
+[01:07:58] could be using it for other running
+[01:08:00] other queries. So again, the the
+[01:08:01] high-end enterprise systems have all
+[01:08:03] sorts of thresholds and other backup
+[01:08:05] mechanisms you can put in place to say
+[01:08:06] how aggressive you want to be on
+[01:08:08] background writing. um where other
+[01:08:10] systems might just you know run on a on
+[01:08:12] a on a periodically on a schedule or if
+[01:08:16] so many pages been modified uh like I
+[01:08:19] think post it'll do background writing
+[01:08:20] of 30 pages in memory have been modified
+[01:08:22] then then it kicks in there's simple
+[01:08:24] things you can do like that but the the
+[01:08:25] commercial systems are more
+[01:08:26] sophisticated
+[01:08:30] all right so let me try to get through
+[01:08:33] uh disio quickly and then we'll we can
+[01:08:37] we can pick back up on um uh the
+[01:08:40] optimizations you can have in your
+[01:08:41] buffer pool uh next class.
+[01:08:44] So the
+[01:08:48] you know when we have to write pages out
+[01:08:49] to read pages from disk we want to do it
+[01:08:51] in such a way that we can
+[01:08:53] maximize the throughput or the bandwidth
+[01:08:55] of of of the hardware so that again that
+[01:08:58] that we can you know for for a certain
+[01:09:00] amount of fetches and certain amount of
+[01:09:01] time we can get as much data as we can
+[01:09:03] from disk into memory. discs have gotten
+[01:09:06] a lot faster in recent years. Uh but it
+[01:09:08] still is is a pretty significant
+[01:09:09] bottleneck.
+[01:09:11] So the way the operating system in
+[01:09:14] Harvard is going to try to do this on
+[01:09:15] modern systems like NVMe drives is they
+[01:09:17] want to maximize amount of parallelism.
+[01:09:18] They try to be clever about reordering
+[01:09:20] IO requests to to make sure things are
+[01:09:24] done in in the in sort of maximize
+[01:09:26] amount of sequential ordering, right?
+[01:09:28] But the challenge is that it doesn't
+[01:09:30] know which of these requests have a
+[01:09:32] higher priority than other requests
+[01:09:34] because it just it doesn't see that
+[01:09:36] information.
+[01:09:37] Right? So you can set the IO priority
+[01:09:39] for doing uh for doing disk reads and
+[01:09:42] disc rights, but you can only do it at
+[01:09:44] the process level in Linux. So for a
+[01:09:47] single database system has two threads
+[01:09:48] that want to read data. One is for a
+[01:09:50] mission critical query and one's for
+[01:09:51] like a background thing. Who cares if
+[01:09:53] it's if it's slow? Linux doesn't know
+[01:09:56] anything about those two requests. So
+[01:09:58] this again why we want to do all the the
+[01:10:00] scheduling in our own system and in a
+[01:10:03] lot of the lot of the system they'll
+[01:10:04] just tell you turn off the any kind of
+[01:10:05] sophistication sophisticated uh
+[01:10:07] scheduling information or scheduling
+[01:10:09] policies in Linux go do the most
+[01:10:11] simplest thing because we're going to do
+[01:10:12] everything better ourselves inside of
+[01:10:14] our database system
+[01:10:16] right
+[01:10:18] and the basically the way this works is
+[01:10:19] that the data system maintains its own
+[01:10:21] internal queue of the IO requests that
+[01:10:24] that are coming from up above from the
+[01:10:26] from the buffer pool manager
+[01:10:27] Uh and then it can reorder things based
+[01:10:30] on how those queries are accessing the
+[01:10:33] data based on what it knows is the
+[01:10:35] important things to consider. Like again
+[01:10:37] most simple thing with squalential IO
+[01:10:38] versus random IO. If I have a bunch of
+[01:10:40] requests for random random uh from
+[01:10:42] random pages from multiple workers or
+[01:10:44] multiple threads then I can just look at
+[01:10:47] all the requests sort them by the page
+[01:10:49] ID or the location on disk. And that way
+[01:10:52] I can do a bunch turn all these random
+[01:10:53] IO's into a sequential IO.
+[01:10:56] If again if it's a part of a query and
+[01:10:58] or a transaction that's important I want
+[01:11:02] to prioritize those versus r random
+[01:11:04] background tasks. If I know I'm writing
+[01:11:06] out log data that's really important to
+[01:11:09] write that out first and make sure
+[01:11:10] things are durable before I write out
+[01:11:11] maybe like other random dirty pages.
+[01:11:13] There's a whole bunch of things we can
+[01:11:14] consider that the data system simply is
+[01:11:16] not going to or sorry the OS is not
+[01:11:17] going to know about because it doesn't
+[01:11:18] know what's inside of our application or
+[01:11:20] system that's actually running. I keep
+[01:11:22] saying application because from the OS
+[01:11:24] perspective, the data system is just
+[01:11:25] another application. So I don't mean
+[01:11:26] like your your Node.js application over
+[01:11:29] there, but from the from the OS
+[01:11:31] perspective, the data is another
+[01:11:32] application. So that's what I mean by
+[01:11:33] that. But I really mean our system we're
+[01:11:35] actually building. The OS doesn't know
+[01:11:37] any of this and it's just going to make
+[01:11:38] things harder for us. And so we want to
+[01:11:40] try to avoid that as much as possible.
+[01:11:42] Another
+[01:11:44] thing we got to be be mindful about is
+[01:11:45] the OS page cast. So when I call fre or
+[01:11:49] read using a lipy poss call that's going
+[01:11:53] to go into the kernel into the file
+[01:11:55] system that's running in the kernel and
+[01:11:57] then it's going to consult its internal
+[01:11:59] page cache in the OS. And if it's not in
+[01:12:02] the page cache, then it goes down the
+[01:12:04] disk, copies into the page cache, and
+[01:12:06] then it then copies that again to a to a
+[01:12:08] user space buffer that goes up to our
+[01:12:10] our data system up above. Right? But
+[01:12:14] now, if I'm maintaining my own buffer
+[01:12:15] pool manager, that's another copy of
+[01:12:17] pages that that are out on disk. So
+[01:12:19] that's actually two copies now that are
+[01:12:21] in memory in in our OS or in our system.
+[01:12:24] So you have one copy of a page in the OS
+[01:12:26] page cache, another copy up in user
+[01:12:28] space in our database system.
+[01:12:31] That's super wasteful. We don't want
+[01:12:32] that. So instead, you can use what's
+[01:12:34] called direct IO where you basically buy
+[01:12:37] tell the the the file system, don't put
+[01:12:39] it in your page cache. Bypass all that.
+[01:12:42] Go directly to the hardware, get what
+[01:12:43] you want, and then hand me back the the
+[01:12:45] the memory buffer for it.
+[01:12:48] And that avoids that additional copy.
+[01:12:50] Things are much much faster. There's
+[01:12:52] actually other optimizations you can do
+[01:12:53] called uh using DBDK, data plane uh data
+[01:12:57] plane data kit. We'll cover this in
+[01:12:59] advance class. you can basically have
+[01:13:00] the data system talk directly to the
+[01:13:02] hardware and not go through the file
+[01:13:04] system at all and get get data out.
+[01:13:08] So most data systems one with direct IO.
+[01:13:11] There's one system that's widely used
+[01:13:13] that doesn't use direct IO. Anyone know
+[01:13:15] which one it is?
+[01:13:18] >> SQLite. Uh
+[01:13:21] now I think you can run those guys. I
+[01:13:24] don't it might be on by default too.
+[01:13:28] It's Postgress, right? Postgress
+[01:13:31] famously because it's like some relic of
+[01:13:33] the 1980s relies on the OS page cache.
+[01:13:35] Every other data system out there tells
+[01:13:37] you As I said before like if you have
+[01:13:39] 100 gigs use 80% of the memory for the
+[01:13:41] buffer pool in your database system.
+[01:13:43] Postgress says use 25%. Because they
+[01:13:45] want the other remaining memory to be
+[01:13:47] used for the OS but then this has all
+[01:13:50] sorts of problems all sorts of
+[01:13:51] performance issues um because again
+[01:13:53] you're maintaining multiple copies of
+[01:13:54] data uh and and it's wasteful. So
+[01:13:57] postgress has been trying to get off uh
+[01:14:00] OS page cach and switch to direto for
+[01:14:01] many many years. So this is a LinkedIn
+[01:14:04] post from last year talking about how
+[01:14:06] they they have a patches for this and
+[01:14:08] then coming out in two weeks is
+[01:14:09] postcrist 18. This I don't think has
+[01:14:12] direct IO on by default but it's going
+[01:14:14] to have it's now going to have
+[01:14:15] asynchronous IO. So now I can have back
+[01:14:17] again back separate background threads
+[01:14:19] in Postgress or processes in Postgress.
+[01:14:21] Go retrieve data from disk. Uh, it's
+[01:14:24] still going to use the OS page cache,
+[01:14:26] but I don't have to block the rest of
+[01:14:27] the system while I'm doing that because
+[01:14:28] you need to have asynchronous IO before
+[01:14:30] you can do direct IO because because
+[01:14:32] direct IO is going to be slower because
+[01:14:33] you're never going to really hit the OS
+[01:14:34] page cache. Yes,
+[01:14:42] >> the question is do you have to make
+[01:14:43] changes in the kernel to do what? Direct
+[01:14:45] IO.
+[01:14:46] >> No, no, direct. IO is like a is a pix
+[01:14:48] command. Like when you call fop, you
+[01:14:50] just say you pass in O direct, right?
+[01:14:52] Okay. By default, that's not that. Yeah.
+[01:14:55] You don't make any changes to the
+[01:14:56] kernel.
+[01:14:58] All right. Bottom line is this is coming
+[01:15:00] in Postgress.
+[01:15:02] They're going to get off of uh uh OS
+[01:15:04] page cache very soon. Uh and because
+[01:15:08] there's again the OS is always going to
+[01:15:10] cause problems for us. All right, I'm
+[01:15:12] going to finish up this last last
+[01:15:14] example here. Again, just I know I sound
+[01:15:16] crazy up here saying the OS is our
+[01:15:17] enemy. We don't want to talk to it.
+[01:15:20] Let me show why.
+[01:15:22] All right. So, say I have a dirty page
+[01:15:25] in my buffer pool. I got to write it out
+[01:15:27] to disk. I call fright.
+[01:15:30] What happens?
+[01:15:38] >> What's that?
+[01:15:39] >> I heard I heard it. Was it Say it again.
+[01:15:43] >> Say it again.
+[01:15:45] >> What are you saying? Sorry.
+[01:15:47] >> Say it again. Sorry.
+[01:15:49] >> A rest file. Sorry. Okay. Um, I thought
+[01:15:51] you said get arrested by five. All
+[01:15:52] right. Sorry. Uh,
+[01:15:55] >> rest of the file, but like
+[01:15:58] where
+[01:16:01] >> they say on the disc
+[01:16:04] or not?
+[01:16:04] >> Depends on when you flush. We're not
+[01:16:05] We're not flushing yet.
+[01:16:08] So, it sits on it sits on a colonel
+[01:16:09] buffer, right? So, his point, if I
+[01:16:12] really want to get it to the hardware, I
+[01:16:14] got to call F-Sync. That's another
+[01:16:15] positive command. It's a blocking call
+[01:16:17] where you tell the OS make sure this
+[01:16:19] thing is actually written to the
+[01:16:20] hardware. Now the hardware can play
+[01:16:22] games and lie to you too, right? Because
+[01:16:23] the hardware can have its own battery
+[01:16:24] down there where it you do you do fsync
+[01:16:27] it writes to the battery back RAM or
+[01:16:30] storage and then it's not really on the
+[01:16:32] actual storage medium yet. But you know
+[01:16:34] in a rare case you lose power then the
+[01:16:36] battery can then do the final write. But
+[01:16:39] when I call f-sync I block until I get
+[01:16:41] get a notification saying my uh my flush
+[01:16:44] has succeeded.
+[01:16:46] But if that thing fails, what happens?
+[01:16:54] Well, Linux would in the old days would
+[01:16:57] mark the dirty pages as clean because a
+[01:16:59] bunch of dirty pages are modified with
+[01:17:00] fright.
+[01:17:02] I always keep track of them. I call
+[01:17:04] f-sync. It wants to write the dirty
+[01:17:05] pages and want to mark them as clean and
+[01:17:06] it marks them clean then notifies you
+[01:17:08] that sync is completed. But if F-Sync
+[01:17:11] fails for whatever reason because the
+[01:17:12] hardware fails are flipped out or
+[01:17:13] something, it comes back and you get a
+[01:17:16] failure notification. You get a uh a
+[01:17:18] failure um error number, but then the OS
+[01:17:22] marks those pages 30 pages is now clean.
+[01:17:27] So the problem was a bunch of database
+[01:17:28] systems would do fsync in a while loop.
+[01:17:31] While f-sync fails, try again. So the
+[01:17:34] first time you call f-sync, it would
+[01:17:36] fail. It would loop back around then try
+[01:17:38] it again. But since the OS Linux would
+[01:17:40] mark the page was clean, the last time
+[01:17:42] you called F-Sync, even though it didn't
+[01:17:43] work, when you call F-Sync the second
+[01:17:45] time, says, "Oh, yeah, you're good.
+[01:17:46] Done." And it looked like it would
+[01:17:48] succeed.
+[01:17:51] So, so why would it do this? Why why
+[01:17:54] would Linux do again? They fixed this,
+[01:17:56] but why did they used to do this?
+[01:17:59] Because Linux wasn't worried about the
+[01:18:00] database system, even though it's the
+[01:18:01] most important thing in the world. They
+[01:18:02] were worried about some with a thumb
+[01:18:04] drive pulling out the thumb drive and
+[01:18:06] then now you have a bunch of uh page in
+[01:18:08] your page table from a thumb drive
+[01:18:10] that's never going to come back. So they
+[01:18:11] would mark it as clean so that they can
+[01:18:13] clean it up later on.
+[01:18:15] Right? But it was lying to us in the
+[01:18:18] database system that our our page was
+[01:18:20] actually written even though it actually
+[01:18:21] wasn't. So some guy on the Postgress
+[01:18:23] mailing list posted this like 2018 uh or
+[01:18:26] 2017 like hey look I think Postgress
+[01:18:27] lost some data for me and I didn't have
+[01:18:29] a colonel panic. I didn't have a disc
+[01:18:30] crash. It was a silent error. Some guy
+[01:18:33] went started rooting through the code in
+[01:18:34] in both Postgress and Linux. And turns
+[01:18:36] out, you know, Linux was lying to us for
+[01:18:40] 20 years. And it wasn't just Postgress.
+[01:18:42] MySQL had this problem. I think MongoDB
+[01:18:44] or Wire Tiger had the same problem. So,
+[01:18:47] I'm going to put this up for most time
+[01:18:48] semester. Don't do this, right? Don't
+[01:18:49] call F-Sync again. Assume everything's
+[01:18:51] going to be okay because the OS is going
+[01:18:52] to lie to you. So, this was a big
+[01:18:54] scandal was called F-Sync gate. uh this
+[01:18:56] has six been since been fixed in Linux
+[01:18:59] uh and also fixed in postgress uh and my
+[01:19:02] SQL and MongoDB but this is a good
+[01:19:04] example the OS is going to make you know
+[01:19:06] read the documentation it's going to say
+[01:19:07] one thing is actually to do something
+[01:19:09] different so therefore we have to be
+[01:19:10] super protective and make sure that we
+[01:19:12] don't put anything that anything that
+[01:19:14] could fail will fail and we have to do
+[01:19:16] extra stuff in our data system to make
+[01:19:17] sure that we don't lose data okay all
+[01:19:20] right we're over time apologize we'll
+[01:19:22] pick up on this ne next class and then
+[01:19:24] uh Uh post everything on post on patza
+[01:19:28] and we'll post project one there today.
+[01:19:30] Hit it
+[01:19:34] flips acrobats over
+[01:19:40] [Music]
+[01:19:54] the fortune the fortune
+[01:19:57] maintain flow with the brain.
+[01:20:00] It's a fortune Maintain my
+[01:20:03] straight flow with the gra.

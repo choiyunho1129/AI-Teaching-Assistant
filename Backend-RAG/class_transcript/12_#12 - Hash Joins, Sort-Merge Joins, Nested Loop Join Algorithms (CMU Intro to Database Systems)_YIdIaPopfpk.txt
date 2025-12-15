@@ -1,0 +1,2100 @@
+[00:00:00] [music]
+[00:00:06] [music] I'm still
+[00:00:08] associate
+[00:00:12] [music]
+[00:00:17] [music]
+[00:00:25] today. Again, round of applause. We need
+[00:00:27] your cash. Um,
+[00:00:30] I should have asked you before. How's
+[00:00:31] your money situation?
+[00:00:33] >> Uh, it's getting better. It's getting
+[00:00:34] better.
+[00:00:35] >> It's getting better. Okay. Uh, I mean,
+[00:00:38] again, we pay you here. I know your your
+[00:00:41] your radio show doesn't pay you, but
+[00:00:43] still do you still do gigs, but private
+[00:00:45] party stuff?
+[00:00:47] >> Here and there.
+[00:00:48] >> So, um,
+[00:00:50] why do you want money so bad?
+[00:00:53] >> Yeah. Um, so I had, uh, I had some
+[00:00:56] crypto scheme going on.
+[00:00:58] >> Okay. That's super.
+[00:01:01] >> Yeah.
+[00:01:01] >> Yeah.
+[00:01:02] >> Do you lose all your money on that?
+[00:01:04] >> Just recouping.
+[00:01:05] >> All right. That's all right. Blockchain
+[00:01:08] and crypto is a scam. Blockchain is a
+[00:01:10] terrible implementation of our database.
+[00:01:11] We'll see that after uh the fall break
+[00:01:14] when we talk about transactions. Uh
+[00:01:17] don't do that. Oh, that's his problem.
+[00:01:19] Whatever. All right. Um for you guys in
+[00:01:21] the class again, next class, this room,
+[00:01:24] same time, we'll be having the the
+[00:01:26] midterm exam. The again the study guide
+[00:01:29] is online the materials online on piaza
+[00:01:32] I everything all the notes are posted
+[00:01:34] homework three solutions went out um
+[00:01:36] this morning uh so you can check that as
+[00:01:38] well uh you need to bring your simu ID
+[00:01:40] if you want to do log rhythms you can't
+[00:01:42] do in your head bring a simple
+[00:01:43] calculator your phone is fine uh and
+[00:01:46] then a single page double-sided
+[00:01:48] handwritten notes again the idea here is
+[00:01:50] again forcing you to like look through
+[00:01:51] the material and write down what you
+[00:01:53] think is important rather than just
+[00:01:54] trying to like
+[00:01:56] take every single slide and make it a
+[00:01:58] micro fish and try to shrink it down as
+[00:02:00] small as possible. Yes. In the back.
+[00:02:03] >> Yeah. If you use a basic calculator
+[00:02:04] phone, that's fine. Yes. Because most
+[00:02:06] people don't have a regular calculator
+[00:02:07] these days. Um and then because my
+[00:02:09] office hours are after class on
+[00:02:11] Wednesday. Plus, I I I got to go travel.
+[00:02:14] Uh I moved my office hours to be
+[00:02:15] tomorrow uh in in the afternoon at 4:15.
+[00:02:18] I'll post those in PSO as well. Okay.
+[00:02:20] So, at least you want to talk to me, you
+[00:02:22] talk to me before the midterm. Any
+[00:02:24] questions about the midterm? Again,
+[00:02:27] it's chapters or the lectures 1 to 11
+[00:02:30] inclusive. So today's lecture and joins
+[00:02:32] is obviously not going to be on on the
+[00:02:33] exam.
+[00:02:35] All right. And then project two is out.
+[00:02:37] The recitation for that will be also
+[00:02:39] Wednesday after the midterm because I
+[00:02:41] assume no one's going to look at it
+[00:02:42] until uh till till after midterm. So
+[00:02:45] that'll be 8 o'clock this Wednesday on
+[00:02:46] Zoom. Uh and then we'll we'll post
+[00:02:49] materials afterwards on Pata. Yes.
+[00:02:56] The question is is is the is the real
+[00:02:59] exam going to be like the practice exam
+[00:03:00] where the questions are all what sorry
+[00:03:03] >> yes roughly multiple choice but some of
+[00:03:05] them you you could if if the some of
+[00:03:07] them will be if the multiple choice
+[00:03:08] question isn't there you can then fill
+[00:03:09] in something else be it'll look like
+[00:03:12] that okay
+[00:03:16] all right again if you can't get up
+[00:03:17] about databases uh if you're addicted
+[00:03:19] like I am uh can we have much more
+[00:03:21] database talks coming up today's talk
+[00:03:23] will be uh at 4:30 p.m. on Zoom. That'll
+[00:03:26] be from the the co-founder of Motherdoc.
+[00:03:28] Guy also was a engineering director at
+[00:03:30] single store and prior to that he was
+[00:03:32] also engineering director or lead d
+[00:03:35] developer at uh Google working on
+[00:03:37] bigquery. uh and sort of the story of
+[00:03:40] mother doc conductbs
+[00:03:42] from this guy's perspective which I
+[00:03:43] agree with in some ways that instead of
+[00:03:45] building this massively distributed uh
+[00:03:48] database system you can if you make the
+[00:03:50] single node be as efficient as possible
+[00:03:51] then that that can take you pretty far
+[00:03:53] so mother dog is sort of pushing that
+[00:03:55] story then next week we'll have the the
+[00:03:57] spyrob guys give a talk about vortex
+[00:03:59] vortex is a replacement for parquet um
+[00:04:02] and then after that will be the guys
+[00:04:04] from columnar these are people that used
+[00:04:06] to work on uh or do work on Apache arrow
+[00:04:09] which is something we'll we'll talk
+[00:04:11] about when we talk about distributed
+[00:04:12] systems but it's basically it's an
+[00:04:13] in-memory representation of data sort of
+[00:04:15] like parquets for for files on disk
+[00:04:17] arrow [snorts] is for in-memory stuff so
+[00:04:19] you want to pass data between different
+[00:04:20] systems they speak arrow they're
+[00:04:22] compatible and so columnar is a
+[00:04:23] commercial uh sort of expansion of the
+[00:04:26] project okay
+[00:04:29] all right so today's lecture is awesome
+[00:04:30] because because it's about joins and
+[00:04:32] this is going to be for single node
+[00:04:33] systems like duckb this is where most of
+[00:04:35] the time is going to be spent running
+[00:04:37] your queries when you go distributed
+[00:04:39] mean the shuffle operator which we'll
+[00:04:41] cover that later uh but on single node
+[00:04:44] systems joins is the most expensive
+[00:04:45] thing so we want to see what we can do
+[00:04:46] to speed that up so last class we talked
+[00:04:50] about how to handle sorting and we again
+[00:04:52] we made this emphasis on that if the
+[00:04:54] database can't the data doesn't fit in
+[00:04:56] memory the data you want to sort doesn't
+[00:04:57] fit in memory then you would use a
+[00:04:59] technique like external merge sort to
+[00:05:01] allow you to write sequential files out
+[00:05:03] the disk read squunch files back in and
+[00:05:05] still uh perform the the sort operation
+[00:05:08] and the highle design pattern that we're
+[00:05:10] going to that we took took advantage of
+[00:05:13] in sorting and we'll take advantage of
+[00:05:14] today again in joins is this divide and
+[00:05:18] conquer approach taking a large problem
+[00:05:21] breaking up to smaller sub problems
+[00:05:23] solving those each individually as
+[00:05:24] efficiently as possible and then putting
+[00:05:26] result back together right and the way
+[00:05:29] that the two-level strategies we're
+[00:05:31] going to use for both sorting and
+[00:05:32] hashing and aggregations that we saw at
+[00:05:34] the end of last class as well is is is
+[00:05:37] either sorting or hashing. The nest loop
+[00:05:39] join would be like the dumbest thing you
+[00:05:40] could do because it's just for loops.
+[00:05:42] But with sorting and hashing again these
+[00:05:43] these are a bit more sophisticated uh
+[00:05:45] and under the right conditions can do
+[00:05:47] much better than you know bunch of
+[00:05:49] nested for loops.
+[00:05:52] All right so sort of goes without saying
+[00:05:53] because you did homework one uh about
+[00:05:55] why we would need need to join. This
+[00:05:58] will be the one slide that I pretty much
+[00:06:00] only mention normal forms this entire
+[00:06:02] class entire semester. Um we used to
+[00:06:06] teach it in in the older versions of
+[00:06:07] this course the normal forms and
+[00:06:08] Armstrong's axioms and all this stuff
+[00:06:10] but like in the real world nobody uses
+[00:06:12] them uh and if you just use like uh you
+[00:06:15] know you write something in Ruben rails
+[00:06:16] or Django or pick your favorite uh
+[00:06:18] object relational map or OM you
+[00:06:20] basically end up on third normal form
+[00:06:22] and that's good enough. I just I just
+[00:06:24] want to mention this that these normal
+[00:06:25] form things exist. You don't need to
+[00:06:27] worry about them. uh and then if you
+[00:06:29] only end up building a query optimizer
+[00:06:31] or do other more sophisticated things
+[00:06:32] you may have to care about in the real
+[00:06:33] world you don't need to know that it's
+[00:06:34] basically just saying that it's a way to
+[00:06:36] break up your your tables into smaller
+[00:06:38] tables or combine them based on some
+[00:06:40] properties you may care about so first
+[00:06:42] normal form would be like if I take my
+[00:06:44] database of all my students enrolled in
+[00:06:46] classes and their grades I can put that
+[00:06:48] in one giant table with all the columns
+[00:06:50] put together that's called first normal
+[00:06:52] form and obviously that's be very
+[00:06:54] inefficient because it's duplicating a
+[00:06:55] lot of data so you start breaking them
+[00:06:57] out to like the students table, the
+[00:06:58] enrolled table and the course table,
+[00:07:00] right? That ends up being in in a higher
+[00:07:04] normal form. And it sort of it's a
+[00:07:06] naturally way to represent data. So the
+[00:07:08] reason why we need to do join is that if
+[00:07:10] you start breaking your tables up from
+[00:07:12] the first normal form with just one
+[00:07:13] giant universal table into these
+[00:07:14] separate tables, then I want to put them
+[00:07:16] back together to get back the original
+[00:07:18] data. That's what the joins are going to
+[00:07:21] do for us. And so we want to have a
+[00:07:22] joint operator in our system that can
+[00:07:24] reconstruct us back to the the original
+[00:07:26] data that we want without losing
+[00:07:28] anything. Seems sort of obvious, but
+[00:07:30] that that's that's what we care about.
+[00:07:33] So the join algorithms we're going to
+[00:07:35] focus on in this class today and this
+[00:07:37] semester are going to be doing what are
+[00:07:39] called equins or inner joins. uh and
+[00:07:42] we're going to do do this on doing
+[00:07:44] binary operators meaning taking two
+[00:07:46] tables and joining them together because
+[00:07:48] this is going to be the most common join
+[00:07:51] uh operator that'll be executed or used
+[00:07:53] in a database system right taking two
+[00:07:55] tables just joining them together based
+[00:07:57] on something equals something from
+[00:07:58] something in the first table equals
+[00:08:00] something in the second table that's the
+[00:08:02] most common thing and that's what we
+[00:08:03] want to focus on right and then we can
+[00:08:05] tweak these the basic algorithms we'll
+[00:08:08] talk about today to handle other things
+[00:08:09] like left outer joins or full outer
+[00:08:11] joins or uh uh uh doing like anti- joins
+[00:08:17] or like I want to see something doesn't
+[00:08:18] equal something something is not in the
+[00:08:20] table join those together. So all the
+[00:08:21] algorithms we'll talk today can be used
+[00:08:23] for handling these other type of joins.
+[00:08:26] They're called like theta joins but
+[00:08:27] again we don't we don't need to worry
+[00:08:28] about that. There are algorithms to do
+[00:08:31] what are called multi-way joins. So if I
+[00:08:34] have more than two tables in my query
+[00:08:36] that I want to join together. There are
+[00:08:37] some algorithms that can try to join
+[00:08:39] them all at once. Uh but typically this
+[00:08:42] is very hard to do. Microsoft had this
+[00:08:44] in SQL Server in 1998, but then they
+[00:08:46] took it out three years later in 2001
+[00:08:48] because the performance was was not that
+[00:08:51] great. Sometimes be really fast and
+[00:08:52] sometimes it'd be actually worse than
+[00:08:54] doing a simple binary join. So most data
+[00:08:57] systems you know about Postgress,
+[00:08:58] Oracle, my SQL, pick your favorite,
+[00:09:00] they're going to be doing binary joins,
+[00:09:02] taking two tables and joining them
+[00:09:03] together. There's another class of
+[00:09:05] algorithms or modern variants of these
+[00:09:06] multi-way joins called worst case
+[00:09:08] optimal joins. We're not going to cover
+[00:09:10] that this semester. You don't need
+[00:09:12] enough of this class, but these are
+[00:09:13] algorithms that can do like three-way
+[00:09:15] joins very efficiently. And this is
+[00:09:18] useful when you're like doing graph
+[00:09:19] traversals in a relational database
+[00:09:21] because when you join two tables, the
+[00:09:24] size of the output of the join is be
+[00:09:26] much much larger than the original
+[00:09:27] inputs and then you do another join to
+[00:09:30] reduce it down further. Uh think like
+[00:09:32] doing a bunch of self joins. So we'll
+[00:09:34] cover worst case optimal joins in the
+[00:09:35] advanced class. Um most systems don't
+[00:09:38] actually support this. the relational AI
+[00:09:39] guys that uh came a few weeks ago.
+[00:09:41] They're one of the systems that support
+[00:09:42] this. The Germans support this, but most
+[00:09:45] of the pretty much all the commercial
+[00:09:46] systems don't do this. So, we don't need
+[00:09:48] to worry about that.
+[00:09:50] All right. So, in general, the rule of
+[00:09:53] thumb we're going to have in all our
+[00:09:54] join algorithms that we talk about today
+[00:09:56] is that we're going to have we're going
+[00:09:58] to have two tables, right? We'll have
+[00:09:59] the left table and the right table, the
+[00:10:01] inner table and the outer table. And
+[00:10:03] we're always going to want the the
+[00:10:05] smaller table of the of the two tables
+[00:10:07] we want to join. We want to put put that
+[00:10:08] as part of the outer table in our query
+[00:10:10] plan. And we're not about query
+[00:10:12] optimization just yet. We'll talk about
+[00:10:13] this after the the fall break. But it's
+[00:10:16] the database systems query optimizer to
+[00:10:18] figure out which of the two tables are
+[00:10:19] smaller and make sure we put these
+[00:10:21] things in the right order.
+[00:10:24] And again, these algorithms today again
+[00:10:25] are binary join algorithms. So taking
+[00:10:27] two tables, join together. If I have
+[00:10:29] more than two tables I want to join in
+[00:10:31] my my query plan or my query, then the
+[00:10:33] optimizer also can try to figure out
+[00:10:35] what the order I I want to do the join.
+[00:10:36] So I join A and B first followed by C or
+[00:10:39] B and C first followed by A. And the way
+[00:10:42] it's going to try to figure this out is
+[00:10:43] based on some statistics that it's going
+[00:10:45] to collect about the database system
+[00:10:47] about about these tables to try to make
+[00:10:49] you know uh educated guesses on on the
+[00:10:51] right way to execute things. But again
+[00:10:53] for for this class today we don't need
+[00:10:54] to worry about we're we're really
+[00:10:55] focused on what's the hour we're going
+[00:10:57] to use to join the tables together.
+[00:11:01] All right. So we saw this query plan
+[00:11:02] last time, right? And we said that the
+[00:11:06] the representation of a query plan is
+[00:11:08] basically going to be either tree or a
+[00:11:09] DAG. And a tree is is a is a subset of a
+[00:11:12] DAG. But the idea is that we have data
+[00:11:14] at the bottom from our our our source in
+[00:11:17] uh source data for like tables or files
+[00:11:20] or whatever it is. We're going to be
+[00:11:21] feeding that up into the query planner
+[00:11:23] to other for other operators to do
+[00:11:26] whatever it is the computation they want
+[00:11:27] to do and then produce a final output
+[00:11:29] that's in the route that we then send
+[00:11:30] out to whoever's requested it either a
+[00:11:33] client or writing it to another table
+[00:11:35] whatever you want right
+[00:11:38] and so the again the we'll discuss after
+[00:11:41] the fall break we'll discuss how to you
+[00:11:44] know what this data is going to look
+[00:11:45] like you know is it is it going to be a
+[00:11:47] single tub or batch of tubles and so
+[00:11:48] forth and again we'll worry about that
+[00:11:49] later but for today's for for today's
+[00:11:52] discussion we need to talk about what
+[00:11:55] the output of these joint operator is
+[00:11:57] going to look like and then how we're
+[00:11:59] going to determine whether one algorithm
+[00:12:00] is going to be better than another right
+[00:12:02] how's the data set going to say I want
+[00:12:03] to use a sort merge join over over a
+[00:12:05] hash join and again that's going to then
+[00:12:07] feed into the optimizer when it's try it
+[00:12:09] you know try to then figure out oh I
+[00:12:10] want to join table RNS I want to use
+[00:12:12] this algorithm I use that algorithm but
+[00:12:15] for us today we're not worried about
+[00:12:17] that decision yet we just want to know
+[00:12:19] is how to determine detine whether one
+[00:12:20] algorithm is going to be better than
+[00:12:22] another.
+[00:12:24] So for the first one the output the
+[00:12:27] again when we do a join the the the
+[00:12:29] basic idea is they're taking a table
+[00:12:30] from taking from from one table and
+[00:12:33] tuple from the other table that are
+[00:12:34] getting matched on some join key and I
+[00:12:36] want to then mash them together into a
+[00:12:40] uh into a single new output tupil right
+[00:12:43] and so what this output's going to look
+[00:12:46] like is going to depend on a bunch of
+[00:12:47] different factors of how we're actually
+[00:12:48] implement our system but we already saw
+[00:12:50] a little bit of this last class when we
+[00:12:52] talked about the difference
+[00:12:53] early materialization and late
+[00:12:54] materialization.
+[00:12:56] And now again we talk about sorting but
+[00:12:58] now in the context of joins this is
+[00:13:00] going to matter because because now
+[00:13:01] we're going to assume the data that's
+[00:13:02] coming out of our join operator is going
+[00:13:04] to be used by another operator in our
+[00:13:05] query plan or produces the final output.
+[00:13:07] So we need to decide what this should
+[00:13:09] look like and how do we pass data along
+[00:13:10] or whether to pass data along or not. So
+[00:13:13] again early materialization is that the
+[00:13:14] idea is that the all the data we're
+[00:13:16] going to need to do the join or anything
+[00:13:19] else in in the query plan is going to be
+[00:13:22] given to us or fed up to us from from
+[00:13:23] the bottom in in the leaf nodes. Right?
+[00:13:26] So now if I'm joining table tupils from
+[00:13:28] RNS the the output tupil again is going
+[00:13:31] to be concatenation of all the tupils
+[00:13:33] from R sorry all the attributes from R
+[00:13:35] all the attributes from S and then we'll
+[00:13:37] just mash them together and stitch them
+[00:13:38] together like this. Right? So that's
+[00:13:41] what that's what'll get passed up uh as
+[00:13:44] we do this after we do this join. So I'm
+[00:13:46] feeding tubles up from R, feeding tubles
+[00:13:48] up from S. Then I do a filter, but then
+[00:13:50] I if I match them on the join key where
+[00:13:52] R ID equals SID, the output result is
+[00:13:54] going to be again all the columns R for
+[00:13:56] all the columns S stitched together.
+[00:14:00] And so the advantage of getting
+[00:14:01] earlyization is that we never have to go
+[00:14:03] back to our base tables RNS to go get
+[00:14:06] more data because everything's being
+[00:14:08] passed up to us from from the leaves.
+[00:14:13] [clears throat] And then recall that
+[00:14:14] late materialization is that instead of
+[00:14:15] passing up data, we're actually just
+[00:14:17] going to pass up the record ID. And then
+[00:14:19] the bare minimum we need to actually do
+[00:14:20] to do the joint. Maybe it's the columns
+[00:14:22] that are being used in in the join uh
+[00:14:24] the join predicate join expression. So
+[00:14:26] in this case here, I have the RD and
+[00:14:29] then the SID because that's what I'm
+[00:14:30] trying to uh join on in my my on clause
+[00:14:33] in my query. And then instead of having
+[00:14:35] all the extra attributes for both these
+[00:14:37] two tupils or for these two tables, I'm
+[00:14:39] just gonna have the record ID. and then
+[00:14:42] I do my join mash these two guys
+[00:14:44] together and then that's what gets
+[00:14:45] passed up and then now with late
+[00:14:47] materialization uh the problem is or the
+[00:14:49] challenge is going to be that at some
+[00:14:51] later point in my query plan I need
+[00:14:53] another attribute from table s and
+[00:14:55] that's not going to be passed along in
+[00:14:57] the tupil that's coming as part of my
+[00:14:58] output of my join I got to again go down
+[00:15:01] make a call down to whatever this base
+[00:15:03] table is and go get that get that data
+[00:15:06] right
+[00:15:08] so the advantage of this in the context
+[00:15:10] of column stores where joins are are uh
+[00:15:13] not saying they're they're they're not
+[00:15:14] that it's not that they're more common
+[00:15:16] than OLAP queries, but sorry in the OTP
+[00:15:19] workloads, but in OLAP queries, you you
+[00:15:21] usually end up joining more tables than
+[00:15:22] you would in an OOLTP system.
+[00:15:26] So again, in the column store system, I
+[00:15:28] didn't have to go read the the data from
+[00:15:30] the other columns that I didn't need for
+[00:15:32] to do my join. And furthermore, if I my
+[00:15:34] join is very uh selective, meaning I'm
+[00:15:37] throwing away a lot of tupils because
+[00:15:38] they're not matching my join clause,
+[00:15:41] then I'm going to have a win because the
+[00:15:42] number of tuples I'm going be passing up
+[00:15:44] is quite small. Then who cares if I have
+[00:15:46] to go then fetch the remaining data that
+[00:15:48] I need from the columns that I didn't
+[00:15:49] pass up because, you know, the these
+[00:15:52] guys down here could have been a billion
+[00:15:53] tupils, but I ended up with two after
+[00:15:56] the join. And so therefore, it's not not
+[00:15:59] a lot of data I have to go read to go go
+[00:16:01] complete the query. Again,
+[00:16:04] the main thing to understand from the
+[00:16:06] join algorithm is that we're going to
+[00:16:07] take attributes from the from the from
+[00:16:09] one table, attributes from the other
+[00:16:11] table, and they'll get mashed together.
+[00:16:13] And you'll have to pass along the join
+[00:16:14] key in order that to compute that join.
+[00:16:16] But the whether or not you pass along
+[00:16:17] the other attributes depends on the the
+[00:16:20] system whether you're implementing late
+[00:16:21] materialization or or early
+[00:16:23] materialization.
+[00:16:26] All right. The other thing we need to do
+[00:16:27] again to determine whether one algorithm
+[00:16:29] is better than another is is the cost.
+[00:16:32] So unlike in uh I guess your algorithms
+[00:16:36] class it's usually like you know uh
+[00:16:38] complexity defined in terms of like the
+[00:16:39] number of times I have to do a certain
+[00:16:40] operation um you know in the actual
+[00:16:43] computation itself. For us when we do
+[00:16:45] joins in this class we're going to focus
+[00:16:47] on the amount of IO I have to use for
+[00:16:50] both reading and writing data. If I had
+[00:16:51] to spill things at disk and write it
+[00:16:53] back out I got to keep track of those
+[00:16:55] costs. And if I got to read it back in I
+[00:16:57] got to keep those costs as well. Right?
+[00:16:58] And we saw this again with the sort
+[00:16:59] merge algorithm from last class. So for
+[00:17:02] today's lecture, we're going to assume
+[00:17:03] that we're going to be joining tables RN
+[00:17:04] and S. And we'll say that for table R,
+[00:17:07] it's going to have big M pages in the
+[00:17:09] table and a total of little M tupils in
+[00:17:12] in the table. And then we'll have the
+[00:17:14] same thing for S with big N for the
+[00:17:16] number number of pages and little N for
+[00:17:18] the uh the number of tupils. Right? For
+[00:17:21] this class here, again, we're only
+[00:17:23] focusing on disio because that's going
+[00:17:24] to be the slowest thing for us.
+[00:17:27] Therefore, we're going to ignore the
+[00:17:28] cost of actually doing the actual join
+[00:17:30] itself. Like if you build a hash table,
+[00:17:32] we're ignoring that cost. We have to
+[00:17:33] probe the hash table. We ignore that
+[00:17:35] cost. We last class we talked about
+[00:17:37] comparing keys in the sort algorithm.
+[00:17:39] We'll ignore that cost as well because
+[00:17:40] the dis IO is going to be super
+[00:17:42] expensive. We're also going to assume
+[00:17:44] that everything's going to fit on a
+[00:17:45] single machine and therefore we are not
+[00:17:47] worried about sending data over the
+[00:17:48] network. when we talk about distributed
+[00:17:49] databases then that all comes back the
+[00:17:51] network cost come become a big part of
+[00:17:54] it the cost right because now you may be
+[00:17:56] sending things across the world and
+[00:17:57] that's super expensive uh again for for
+[00:17:59] this class here we're just going to
+[00:18:00] focus on on dis IO's
+[00:18:04] so the for all these documents as well
+[00:18:06] we're also going to ignore the the cost
+[00:18:08] of the output of the operators because
+[00:18:11] they're going to be the same for for one
+[00:18:13] algorithm to the next right because I
+[00:18:16] have my say my hash join algorithm and
+[00:18:18] and S loop joint algorithm they're all
+[00:18:19] going to produce the same logically the
+[00:18:22] same logical result might be sorted in a
+[00:18:24] different order but again relational
+[00:18:26] model is unsorted so that's okay but the
+[00:18:27] number of tupils going to be passing up
+[00:18:29] is going to the same so we we ignore
+[00:18:31] that cost as well
+[00:18:36] all right so the I sort of already said
+[00:18:38] this but obvious as well like again the
+[00:18:40] the the inner join is the most the most
+[00:18:43] common thing we want to do uh common
+[00:18:45] join operator we want to do in our
+[00:18:46] database systems so we're going to spend
+[00:18:47] a lot of time to make that as efficient
+[00:18:49] as possible. And that's what this class
+[00:18:50] is all about. Sometimes you see some
+[00:18:53] systems also support cross joins.
+[00:18:55] There's not really much you can do to
+[00:18:56] make these things work efficiently
+[00:18:57] because it's just two stupid for loops.
+[00:18:59] You're just taking all the tuples from
+[00:19:00] one table and mashing together with all
+[00:19:03] the tubs from the other table. Building
+[00:19:04] a hash table or sorting things ahead of
+[00:19:06] time doesn't doesn't help you in any
+[00:19:08] way. You obviously can can batch things
+[00:19:11] to reduce number of times you got to go
+[00:19:13] back and fetch data, but in the end of
+[00:19:15] the day, there really isn't anything you
+[00:19:16] can make that work really efficiently.
+[00:19:18] So again, we're we're just going to
+[00:19:19] focus on doing the the inner joins
+[00:19:21] because that's that's again that's the
+[00:19:23] most common thing and that there we can
+[00:19:25] do some techniques and some tricks to
+[00:19:27] make things run faster.
+[00:19:29] All right, so here's the menu for today.
+[00:19:31] We're going to go through the most basic
+[00:19:32] alged loop join. This is what most
+[00:19:35] people build first when you build a
+[00:19:36] database system that needs to support
+[00:19:38] joins. We'll talk about three different
+[00:19:40] variants of this. Then we'll spend a
+[00:19:41] little time talking about the sort merge
+[00:19:42] join. Uh but then we'll spend most of
+[00:19:44] our time talking about how to do hash
+[00:19:46] joins because hash joins are going to be
+[00:19:47] the most important joint operator you
+[00:19:49] can have in your system. Um and this
+[00:19:51] will be what you if you want your joins
+[00:19:54] to run fast, you'd want to build this
+[00:19:55] first before server join,
+[00:19:59] right?
+[00:20:01] All right. So let's look at what I'll
+[00:20:03] call a naive nestloop join. Uh and this
+[00:20:07] is sort of a way of like this is a straw
+[00:20:09] man to say why you know here's here's a
+[00:20:11] a bad way to do a join and then we'll
+[00:20:13] see how to we'll see how to build upon
+[00:20:15] this and make this run faster. Right? So
+[00:20:18] we're going to join table RNS. It's
+[00:20:20] called nested loop join because the
+[00:20:22] actual implementation of this algorithm
+[00:20:24] is just a bunch of nested for loops.
+[00:20:27] Right? So for every single tupil in the
+[00:20:30] in in R going to go get every single
+[00:20:32] tupil in S check to see whether our join
+[00:20:34] keys match. If yes then emit it as part
+[00:20:37] of our output.
+[00:20:39] So the parlance we'll use or sorry the
+[00:20:41] vernacular we'll use for uh when we talk
+[00:20:44] about joins is the inner table and outer
+[00:20:46] tables and this comes from this these
+[00:20:48] nested nested uh for loops right so
+[00:20:50] we'll say the the outermost for loop is
+[00:20:52] called the outer table and the inner one
+[00:20:54] the one in the middle is called the
+[00:20:55] inner table. So even though people um
+[00:20:59] even for like a hash joint algorithm
+[00:21:01] sometimes you know it's not going to be
+[00:21:03] doing nest of for loops but people still
+[00:21:05] maybe refer to these things as the outer
+[00:21:06] table and the inner table and in most
+[00:21:10] most diagrams of query plans the outer's
+[00:21:12] on the left the inner's on the right
+[00:21:14] some systems I think snowflake reverses
+[00:21:16] it right just it's it's there's not like
+[00:21:19] a specific term like specific uh way say
+[00:21:21] like within a diagram this is definitely
+[00:21:23] going to be the inner versus the outer
+[00:21:24] you different systems for whatever and
+[00:21:26] do different things in their in their uh
+[00:21:29] in their um visualizations of query
+[00:21:31] plans. So again, I've already said
+[00:21:34] before I I already said this just now
+[00:21:36] like this is bad. Don't do this. Why is
+[00:21:39] it bad? Why is it stupid?
+[00:21:43] >> What's that?
+[00:21:45] >> It says it's quadratic. Yes.
+[00:21:50] >> The IO. Absolutely. Yes. So this is like
+[00:21:52] stupidly naive, right? This is just
+[00:21:54] saying for every single tup in R just
+[00:21:56] scan S in its entirety.
+[00:21:59] uh get get all you know go get every
+[00:22:01] single tupil in every single page read
+[00:22:02] it again and then get the next tupil in
+[00:22:05] the outer table in R and do the exact
+[00:22:08] same scan all over again right it's
+[00:22:11] naively stupid and it's super expensive
+[00:22:13] so in this case here would be the cost
+[00:22:16] me big M plus so the big M is for the
+[00:22:19] the scanning the all the pages in the
+[00:22:21] outer table and then for all the tupils
+[00:22:23] in the outer table I got to scan all the
+[00:22:25] pages of the inner table so little m is
+[00:22:28] all the tupils in the outer table and
+[00:22:30] then big n is all the pages in the inner
+[00:22:32] table. Right?
+[00:22:34] So if you just put some numbers to this,
+[00:22:37] you'll see how terrible this actually
+[00:22:39] is. Again, this is like the dumbest
+[00:22:40] thing you could ever actually do. Right?
+[00:22:42] So if our table is kind of small, right?
+[00:22:44] It has uh a thousand pages in R with
+[00:22:48] 100,000 tupils and 500 pages in S with
+[00:22:51] 40,000 tupils. If we didn't plug and
+[00:22:54] chug our numbers in, uh, we end up with
+[00:22:57] us having to do 50 million IO's. And if
+[00:23:00] we actually put a wall clock time to say
+[00:23:01] how much is the cost for a given, you
+[00:23:03] know, for one IO, right? This is running
+[00:23:05] on SSD in a local box, it's, you know,
+[00:23:08] uh, 100 milliseconds is is reasonable.
+[00:23:10] It's slow, but it's, you know, it's it's
+[00:23:12] a ballpark number, right? Just joining
+[00:23:14] these two tables. If you just go fetch
+[00:23:16] every single page and ignoring like
+[00:23:19] hardware caching or OS caching, anything
+[00:23:20] just if I have to go pay the cost of
+[00:23:22] going every fetch every single page for
+[00:23:24] the outer table, sorry, the inner table
+[00:23:26] for every single tuple in the outer
+[00:23:27] table, it'll take 1.3 hours.
+[00:23:31] All right.
+[00:23:33] So remember I said before that in in
+[00:23:35] general we always want to put the
+[00:23:37] smaller table as the outer table. So in
+[00:23:40] this case here the smaller table is is
+[00:23:42] S. has fewer fewer pages and fewer
+[00:23:45] tupils. So if I just switch the order of
+[00:23:47] them, right, and now plug and chug, I
+[00:23:50] got the time down to 1.1 hours. So, you
+[00:23:54] know, I saved what, 20 minutes, but it's
+[00:23:56] still not that great.
+[00:23:59] So in my example here, the table is
+[00:24:01] these two tables are ridiculously small.
+[00:24:03] Assuming I'm doing 4 kilobyte pages,
+[00:24:05] then the size of this this one example
+[00:24:08] here is 6 megabytes.
+[00:24:11] like that'll sit in easily in your L3
+[00:24:14] cache. You don't have to go to disk,
+[00:24:16] right? You could easily do this join
+[00:24:17] entirely in CPU cache land and that's
+[00:24:20] going be really fast. But if I have to
+[00:24:21] go pay that disio cost if I'm naively
+[00:24:24] going getting every page in of the inner
+[00:24:27] table for every tuple in the outer
+[00:24:28] table, it's going to be horribly
+[00:24:30] horribly slow.
+[00:24:32] So this is like the dumbest thing you
+[00:24:33] can do. Uh but let's see how we can
+[00:24:35] actually make this a little bit better.
+[00:24:38] So one simple thing is to do what's
+[00:24:40] called a block of loop join. And this is
+[00:24:42] again because we know our our tupils are
+[00:24:44] not just sitting by themselves on disk.
+[00:24:47] They're in pages with other tupils that
+[00:24:49] they're friends with. Then when we go
+[00:24:52] fetch a page, we want to do as much
+[00:24:54] processing with all the tupils in that
+[00:24:55] page before we move on to the next page.
+[00:24:59] So we just change now our two nested for
+[00:25:01] loops to be four nested for loops. uh
+[00:25:03] where for every single block in the
+[00:25:05] outer table, go get a block on the inner
+[00:25:07] table and then every single tupole in a
+[00:25:09] block on the outer table do the join
+[00:25:11] against all the tupils in the inner
+[00:25:12] table. Uh then we can do a little bit
+[00:25:15] better here, right?
+[00:25:18] So now our cost is going to be m plus
+[00:25:21] big m times little n. Again, big m is
+[00:25:25] the cost of scanning all the the pages
+[00:25:26] in the outer table. But now for every
+[00:25:28] single page for every single one of
+[00:25:30] those pages in the outer table now we're
+[00:25:31] doing a scan of all the pages on the
+[00:25:33] inner table rather than doing it on a
+[00:25:35] per tupal basis now our cost can be uh
+[00:25:38] reduced quite significantly right
+[00:25:41] so again this question yes
+[00:25:49] >> this question is for every single big m
+[00:25:52] pages in the outer table scan all the
+[00:25:56] pages in the inner table. Yes.
+[00:25:59] >> Yes.
+[00:26:00] >> So it's not as
+[00:26:04] >> the statement is and they're correct
+[00:26:06] that it's not asmtoically better. It's
+[00:26:08] just in practice the constants are
+[00:26:10] better. Yes, I said this earlier
+[00:26:12] constants matter in database world.
+[00:26:17] So again, we want the smaller table to
+[00:26:19] be always on the outer table. And we
+[00:26:21] would determine whether which one's
+[00:26:23] smaller than the other. Not based on the
+[00:26:24] number of tupils, but rather based on
+[00:26:27] the number of pages because that's the
+[00:26:28] main cost for us of going going to disk.
+[00:26:32] It's going fetching pages, not going
+[00:26:33] fetching individual tupils.
+[00:26:36] [cough]
+[00:26:37] [clears throat]
+[00:26:38] And obviously in this scenario here, I'm
+[00:26:40] assuming I have only two buffer pages,
+[00:26:42] bufferable pages to store data. In a
+[00:26:44] real system, you would have a lot more,
+[00:26:46] right? So in this case here, you want to
+[00:26:49] try to store in a sort of in a in a
+[00:26:51] block nest loop join where you have
+[00:26:53] multiple pages you can use to store the
+[00:26:55] data as you scan it. You want to put as
+[00:26:58] many buffers from the outer table in in
+[00:27:01] memory as possible and then just leave
+[00:27:04] one page for the input uh for the inner
+[00:27:07] table to bring one page in and then
+[00:27:09] another page to write the output after
+[00:27:11] you do the join, right?
+[00:27:14] So it basically looks like this. Now for
+[00:27:15] every single for B minus two pages, B is
+[00:27:18] the total number of bufferable pages I
+[00:27:20] have. Scan all the data I can from R and
+[00:27:23] then go fetch each indiv page from S and
+[00:27:27] then just do that again do that scan of
+[00:27:28] the the joint of the tupils uh in the
+[00:27:31] two inner for loops. Yes.
+[00:27:39] >> The statement is I could emit also uh B
+[00:27:42] minus two uh
+[00:27:44] >> pages of data
+[00:27:45] >> pages of data but like I can only in
+[00:27:48] this sort of simplistic example I'm
+[00:27:50] going to fill up one
+[00:27:52] page write that out then fill the next
+[00:27:55] one up.
+[00:27:56] >> Yeah.
+[00:27:58] Yeah. You do asynchronous IO and
+[00:28:00] therefore you need more P. Yeah. Keep it
+[00:28:02] simple. Yes.
+[00:28:06] All right. So we go back now to our our
+[00:28:09] formula. Assuming we have B minus two
+[00:28:11] pages for scanning the the outer table.
+[00:28:15] Now our cost is going to be big M which
+[00:28:17] is again scanning the outer table at
+[00:28:18] least once. Um, and then I can get for
+[00:28:22] every single for every m divided by b
+[00:28:25] minus 2 and take the the ceiling of that
+[00:28:28] for all those sort of batches of of
+[00:28:31] pages on the outer table. I got to scan
+[00:28:33] all the pages on on the inner table
+[00:28:36] and then plugging chugging now with our
+[00:28:38] with our simple formulas we had before.
+[00:28:40] uh assuming that you know we have uh you
+[00:28:44] know if everything can fit in memory we
+[00:28:46] can get this down now to do to our uh
+[00:28:50] the join of RNS from our simple example
+[00:28:52] before down to 05
+[00:28:55] seconds so 150 milliseconds.
+[00:28:58] So just by batching things up and having
+[00:29:01] taking advantage of the memory that's
+[00:29:02] available to us in the buffer pool, we
+[00:29:05] went from 1.1 hours to less than a
+[00:29:08] second.
+[00:29:12] >> Why is it n plus n? Sorry.
+[00:29:17] Um well because everything fit fits in
+[00:29:19] memory then I I read it all once
+[00:29:22] everything fits in memory and then I
+[00:29:24] join it.
+[00:29:27] Why is it not the constant above?
+[00:29:29] Because the the ceiling m divided by b
+[00:29:32] minus two that's if like if I'm sort of
+[00:29:34] have a batch where I'm reading things in
+[00:29:36] and then for that batch of the outer
+[00:29:38] table scan the inner table. If I can fit
+[00:29:41] all the if all the pages from the outer
+[00:29:42] table and the inner table fit memory
+[00:29:44] just scan it all. That's the m and the n
+[00:29:46] add it together and then do the join on
+[00:29:48] that.
+[00:29:50] So what I'm trying to point out here is
+[00:29:51] even though the um
+[00:29:54] the the nested loop join seems kind of
+[00:29:57] brain dead and stupid uh if everything
+[00:30:00] fits in memory and maybe everything's
+[00:30:02] already is in memory this is actually
+[00:30:04] pretty fast
+[00:30:08] right
+[00:30:10] and we'll see when we talk about hash
+[00:30:12] joins there maybe cases where you do
+[00:30:16] some of some of the join will be done
+[00:30:18] using the hash with it building a hash
+[00:30:20] table, but the other other a small
+[00:30:22] portion of it could be used using this
+[00:30:24] sort of inmemory nested loop join
+[00:30:27] because you can rip through it pretty
+[00:30:28] fast.
+[00:30:31] So now if I only have B minus or B
+[00:30:33] equals 102, uh then I can get this down
+[00:30:37] to um 6,000 IO's. Uh so about 600 600
+[00:30:42] milliseconds. Uh, but then if I again
+[00:30:45] switch the outer, the inner one, make
+[00:30:46] sure the the outer table is is the big
+[00:30:48] is the smaller one, then I can get it
+[00:30:50] down to 5,500.
+[00:30:52] Yes.
+[00:31:03] It's not
+[00:31:06] just that whether you get to use your
+[00:31:11] >> Yeah. Their statement is and they're
+[00:31:12] correct that
+[00:31:14] if everything fits in memory, is it just
+[00:31:16] the naivveness of loop join? Yes.
+[00:31:19] And if everything's to memory, that's
+[00:31:21] fine.
+[00:31:22] Uh and so
+[00:31:25] when we talk about the hash joint, the
+[00:31:28] one of the approaches will be will be to
+[00:31:29] one of the approaches will divide and
+[00:31:31] conquer. We'll split things up such a
+[00:31:33] way that we can maybe try to keep
+[00:31:35] everything in memory and then the naive
+[00:31:37] nest nested loop join will be will work
+[00:31:39] the best. If I have to go to disk, it's
+[00:31:42] terrible. If everything's in memory,
+[00:31:43] then I'm great.
+[00:31:49] All right. So, why is this so bad?
+[00:31:51] Because we already said this again. If I
+[00:31:52] had to go from disk, then I'm basically
+[00:31:54] doing scruncher scan over and over again
+[00:31:56] on the inner table to try to match
+[00:31:58] things from from the outer table.
+[00:32:01] So you may say all right well sequential
+[00:32:02] scans are not great I we we spend a time
+[00:32:05] bunch of time learning about indexes if
+[00:32:06] I have an index can can I take advantage
+[00:32:08] of that to make my so that inner for
+[00:32:11] loop on the on the inner table make that
+[00:32:12] go faster the answer is yes we can do
+[00:32:14] this some systems like server we talked
+[00:32:16] about before will if you're doing a join
+[00:32:19] or any kind of operation on a table and
+[00:32:21] if it the optimizer realizes hey it'd be
+[00:32:23] really nice if I had an index for this
+[00:32:26] uh for this table make my queries run
+[00:32:28] make my query go faster it'll build that
+[00:32:30] index for you do whatever it is the
+[00:32:33] operation you want to do in your query
+[00:32:34] and then immediately just throw it away
+[00:32:35] and then also give you back warnings and
+[00:32:37] say hey look I keep building this index
+[00:32:38] or this table for your queries be really
+[00:32:40] nice if you tell me I can have it you
+[00:32:43] know for good and keep it around and
+[00:32:44] then the human has to decide whether to
+[00:32:46] do that or not
+[00:32:48] all right so if you have an existing
+[00:32:50] index then you you can modify the the
+[00:32:53] nested loop join algorithm to do what's
+[00:32:55] called an index nestl loop join
+[00:32:56] algorithm right and it basically is now
+[00:32:59] the the the the the outer table you're
+[00:33:02] still scanning through all the tupils.
+[00:33:04] Then for the inner table, I'm going to
+[00:33:06] take a key that I extract from the outer
+[00:33:09] outer table tupil and then do a probe
+[00:33:11] into whatever the index it is that I
+[00:33:13] have available to me and then see
+[00:33:15] whether I have a match
+[00:33:17] and that's essentially doing you know
+[00:33:19] doing the join for you.
+[00:33:22] So the cost for this is hard to define
+[00:33:24] because it's obviously going to depend
+[00:33:25] on what your index is what data
+[00:33:27] structure it actually is and the size of
+[00:33:29] it. So in general though we would say
+[00:33:32] the cost now is going to be big M
+[00:33:34] because again we always have to scan all
+[00:33:35] the pages in the outer table and then
+[00:33:37] for every single tupil in the inner
+[00:33:38] table sorry every single tupil in the
+[00:33:40] outer table we'll do some kind of probe
+[00:33:42] into this index uh to to again find a
+[00:33:46] match and again we can't define this C
+[00:33:48] easily because you know in this class
+[00:33:50] here because it's going to depend on a
+[00:33:52] bunch of different factors that can vary
+[00:33:53] from one index to the next right whether
+[00:33:55] it's a B+ tree or skip list or try or
+[00:33:57] hashable right
+[00:33:59] but this basically what the hash join is
+[00:34:02] going to do
+[00:34:04] right so in this case here assuming I
+[00:34:06] have a a B+ tree I can I could probe in
+[00:34:08] that and use that make a nested loop for
+[00:34:10] nested loop join index nested loop join
+[00:34:12] the hash join basically says I don't
+[00:34:14] have an index so let me build a hash
+[00:34:15] table now and then do the same kind of
+[00:34:18] probe like this and then throw it away
+[00:34:19] when when the quer is done the same way
+[00:34:21] that SQL server does
+[00:34:25] okay
+[00:34:29] all right so the The main takeaways for
+[00:34:31] the uh the nest loop join if
+[00:34:34] everything's in memory it's going be
+[00:34:35] super fast and that's going to be
+[00:34:36] actually preferable in many cases. Uh
+[00:34:39] but in general if you have to go we know
+[00:34:40] we have to go read from disk then I'm
+[00:34:42] going to want to make sure the smaller
+[00:34:44] table is always going to be the outside.
+[00:34:45] Try to batch as much as I can on that
+[00:34:47] outer table uh as as I can in my buffer
+[00:34:49] pool because that'll make things go up
+[00:34:51] make things run faster.
+[00:34:57] Okay,
+[00:35:00] so the the next algorithm we're going to
+[00:35:02] talk about is again sort merge join and
+[00:35:04] this is going to be built upon the
+[00:35:05] external merge sort or that sorting
+[00:35:06] stuff we tal talked about last class and
+[00:35:08] as I said before the for since the 1970s
+[00:35:11] it was this back and forth between
+[00:35:14] uh in the in the research literature
+[00:35:16] about whether sorting algorithms were
+[00:35:18] better than uh hashbased algorithms and
+[00:35:21] originally sorting was faster because
+[00:35:23] the computers are really slow and
+[00:35:25] hashing was really expensive.
+[00:35:26] And then hashing algorithms got better,
+[00:35:28] but then the hardware got better and
+[00:35:29] sorting got better. It keeps going back
+[00:35:30] and forth. Then in general, the the hash
+[00:35:32] join is be preferable over the sort
+[00:35:34] merge join, but you'd want to still want
+[00:35:36] to have a sort merge join. Uh because if
+[00:35:39] your query is the data is already sorted
+[00:35:41] on your join key or there's an order by
+[00:35:44] clause where you need to sort the data,
+[00:35:46] you can you can kill two birds with one
+[00:35:48] stone by doing this algorithm and
+[00:35:50] producing results that are that are
+[00:35:51] sorted for you.
+[00:35:54] All right. So sort merge join has two
+[00:35:56] phases and again the confusing thing
+[00:35:58] about this is that last time we tal we
+[00:36:00] talked about the external merge sort
+[00:36:01] algorithm
+[00:36:03] uh and we're going to use that external
+[00:36:05] merge sort in our we can use external
+[00:36:07] merge sort for our sort merge joint
+[00:36:09] algorithm and we use external merge sort
+[00:36:11] as the sort phase in our join algorithm
+[00:36:15] and then the merge phase in the sort al
+[00:36:17] the join algorithm is different than the
+[00:36:18] merge phase in the sort algorithm
+[00:36:21] right I'm I'm not I'm not trying to
+[00:36:24] confuse I'm trying to say like we can
+[00:36:25] still use this external merge sort which
+[00:36:27] has its own two phases in our join
+[00:36:29] algorithm which is going to have its own
+[00:36:30] other two phases right
+[00:36:33] all right so the basic idea is that we
+[00:36:35] have our two tables that we want to join
+[00:36:36] and we're going to sort them based on
+[00:36:37] our join keys and then we're going to
+[00:36:39] have and that's what you do in the first
+[00:36:42] phase then the second phase you have
+[00:36:45] these cursors that going to walk through
+[00:36:46] your sorted tables and start comparing
+[00:36:49] across to see whether you have a match
+[00:36:51] and if you do then you you you emit them
+[00:36:54] as part of the join output and then you
+[00:36:56] just keep moving the cursors forward uh
+[00:36:59] marching through uh and producing
+[00:37:02] results and the advantage because the
+[00:37:04] data is being sorted at least in the
+[00:37:07] outer table you know you won't have to
+[00:37:08] sorry yeah the outer table you won't
+[00:37:10] have to backtrack up in the sort in the
+[00:37:12] sort of results to look at tupils over
+[00:37:14] and over again in the inner table you
+[00:37:16] may still have to do that but again it's
+[00:37:18] simple trick to keep keep uh track of
+[00:37:20] these things but the sorting allows us
+[00:37:22] to identify that we know there isn't
+[00:37:23] going to be any match at some prior
+[00:37:26] point in the in the table. Once we reach
+[00:37:29] uh a certain certain certain point in
+[00:37:31] with our cursor because the data sort of
+[00:37:33] we we can't see magically a value that
+[00:37:36] that you know should appear up above
+[00:37:38] down below us
+[00:37:41] >> in the back. Yes.
+[00:37:45] >> The question is can I play an example
+[00:37:46] where we have to backtrack? Yes. Let me
+[00:37:48] give a demonstration. Yes.
+[00:37:50] All right. Let me just skip this. This
+[00:37:51] is the algorithm. Again, I don't like to
+[00:37:53] show code in class, but basically
+[00:37:55] there's two cursors. You scan through
+[00:37:57] till you reach the end. And then there's
+[00:37:58] logic to say whether you uh whether you
+[00:38:01] whether one increments versus the other
+[00:38:03] and whether you need to backtrack. Let's
+[00:38:04] go through an actual example. So here
+[00:38:07] here we have our two tables. We want to
+[00:38:08] join the RNS.
+[00:38:10] And so the first phase of the sort merge
+[00:38:12] join algorithm is to just sort them. So
+[00:38:14] we want to join on the ID column. So in
+[00:38:17] both these tables, we're just going to
+[00:38:18] go ahead and sort them.
+[00:38:21] Then now when we enter the second phase
+[00:38:22] to do our merge, we're gonna have these
+[00:38:24] two cursors that start at the beginning
+[00:38:26] of the two sorted tables and start again
+[00:38:28] start comparing with each other on the
+[00:38:30] join key to set see whether we have a
+[00:38:32] match. And to handle backtracking, we're
+[00:38:35] also going to keep track of this last
+[00:38:36] value that says here's the last value I
+[00:38:39] saw when uh you know as my cursor on the
+[00:38:44] inner table moves down. So that way if
+[00:38:46] we then see a uh if we then see a join
+[00:38:51] key on the outer table that could have
+[00:38:53] matched something up above in our inner
+[00:38:55] table, we know how to go back and go and
+[00:38:57] start the scan on that again.
+[00:39:01] All right. So we start at the very
+[00:39:02] beginning both two cursors are pointing
+[00:39:04] to the first tupil. The join key is
+[00:39:06] based on ID. So in this case here 100
+[00:39:09] equals 100. So this is a match. And we
+[00:39:11] just produce our output like that by
+[00:39:12] just again matching the two tupils. uh
+[00:39:15] the attributes in the two tables
+[00:39:16] together. Now in this case here because
+[00:39:18] we have now a match we're going to just
+[00:39:20] move the inner tables cursor down by one
+[00:39:24] and we leave the outer tables cursor
+[00:39:26] where it is. Then now we do a comparison
+[00:39:28] 100 equals 100. We have another match
+[00:39:31] and we produce that as an output. And
+[00:39:33] then now we're going to move down
+[00:39:34] forward again uh in the inner table. But
+[00:39:37] now this point here the value we're
+[00:39:39] looking at is different than the last
+[00:39:40] value we just saw. So we got to record
+[00:39:43] that this is the last value that we saw.
+[00:39:45] So we saw 100 before 200. So we keep
+[00:39:47] track that we have 100.
+[00:39:50] All right. So now at this point here 200
+[00:39:53] is greater than 100. So we know that we
+[00:39:55] need to move down the outer table's
+[00:39:57] cursor by one because at this point here
+[00:40:00] we there isn't going to be another value
+[00:40:02] uh on the inner table that that can
+[00:40:04] match with 100 where the outer table is
+[00:40:06] pointing at. So we move the outer
+[00:40:08] table's cursor and not the inner table's
+[00:40:10] cursor. So that comes down here. We have
+[00:40:12] gets 200 again. 200 equals 200. So we
+[00:40:15] have match. We produce our output again.
+[00:40:17] And then we now we move the inner table
+[00:40:19] down. Record that the last value that we
+[00:40:21] saw was 200 because now we're seeing
+[00:40:23] 400.
+[00:40:25] And again 400 is now greater than on the
+[00:40:27] on the inner table. 400 is greater than
+[00:40:29] 200 on the outer table. So we're going
+[00:40:31] to then move down the outer table's
+[00:40:34] cursor down by one. Now we see 200
+[00:40:37] again.
+[00:40:39] and we check our last value, we see
+[00:40:41] that, oh, we just saw 200 before we got
+[00:40:44] to 400. So now we know we need to
+[00:40:46] backtrack and move the inner uh the
+[00:40:49] inner table's cursor back up to where
+[00:40:51] 200 was so that we can essentially
+[00:40:53] restart this this process of scanning
+[00:40:55] the data inner table for the new tupil
+[00:40:57] on the outer table.
+[00:40:59] So then now again we have another match
+[00:41:01] on 200. We move the inner table down by
+[00:41:03] one. Now we get 400. This get scans down
+[00:41:06] we get 300. 300 is less than 400. So, we
+[00:41:09] know we want to move down the outer
+[00:41:10] table cursor because there isn't there
+[00:41:12] isn't something we can match here on the
+[00:41:14] inner table because we're already at 400
+[00:41:17] because things are sorted. We know that
+[00:41:18] that you we're not magically going to
+[00:41:20] see a 300 later on because it would have
+[00:41:22] appeared before we saw 400 which we
+[00:41:24] didn't we didn't see that.
+[00:41:27] So, we move the outer table down by one.
+[00:41:29] Now, we have match on 400. That's good.
+[00:41:31] Inner table moves down by one. Now, we
+[00:41:33] have 500. Keep our last value as 400.
+[00:41:37] four five. We're pointing at 500 though.
+[00:41:39] 500 is less than is greater than 400. So
+[00:41:42] the outer table moves down. Now we have
+[00:41:44] 500 again. That's a match. And now the
+[00:41:46] the inner table's cursor reaches the
+[00:41:49] bottom. We still got to keep track of
+[00:41:50] the last value for ourselves. Right?
+[00:41:53] Even though we reached the bottom
+[00:41:54] because we don't know what we're going
+[00:41:55] to see. We we might have another match
+[00:41:56] on the on the on the outer table again.
+[00:42:00] But now we get 600. 600 is less than
+[00:42:03] sorry 600 is greater than 500. So we
+[00:42:05] know at this point we can short circuit
+[00:42:06] because there isn't anything that that
+[00:42:08] we'll ever see that will match between
+[00:42:09] these these two joins. So we just scan
+[00:42:11] through and just say we're done. Just
+[00:42:13] finish up
+[00:42:16] >> questions. Yes.
+[00:42:26] the second table.
+[00:42:29] >> Yes. And the statement he made and he's
+[00:42:30] correct is that the reason why I'm
+[00:42:32] keeping this last value is because the
+[00:42:34] there may be multiple tupils on the
+[00:42:36] inner table matching with a tupil on the
+[00:42:38] outer table. Yes. Now you can be smart
+[00:42:40] about it and say oh if I'm doing a join
+[00:42:42] on uh columns where they're they're
+[00:42:45] they're unique column or primary key
+[00:42:47] then I know that I won't have duplicates
+[00:42:50] on the inner table for any match on the
+[00:42:52] outer table. So in that case here you
+[00:42:53] don't need to do any backtracking at
+[00:42:54] all. Right? But in general you may not
+[00:42:56] know be able to know that. Therefore you
+[00:42:58] have to maintain this
+[00:43:05] >> the question. What if there was two
+[00:43:06] 100s?
+[00:43:07] >> So back going back up here. Oh what like
+[00:43:11] yeah. So in that case here you'd have to
+[00:43:12] keep track of like
+[00:43:15] no. So if you had two so you see first
+[00:43:17] one 100 here. So you do this you would
+[00:43:20] scan through you match that. That's
+[00:43:22] fine. And then now you the the inner
+[00:43:26] table would come down. You have two you
+[00:43:27] would keep track your last value as 100.
+[00:43:29] The outer table moves down. It would see
+[00:43:31] 200. Sorry it would see 100 again. At
+[00:43:34] this point it says oh okay well that was
+[00:43:36] my last value. So let me backtrack the
+[00:43:37] inner table. I don't have to backtrack
+[00:43:39] on the outer table ever for this.
+[00:43:45] >> David is in the correct like when it
+[00:43:47] backtracks it backtracks to the first
+[00:43:49] 100 where this was. I'm not recording
+[00:43:52] the pointer, but like it would keep
+[00:43:53] track of that. And again, if the worst
+[00:43:55] case scenario, if I only have one value
+[00:43:57] in this column when I'm joining, then
+[00:43:59] I'm backtracking to the very beginning.
+[00:44:01] But again, there's there's there's no
+[00:44:02] algorithm to make that work work. Great.
+[00:44:05] >> Yes.
+[00:44:11] >> Right. I was trying to avoid that. So
+[00:44:12] David is and he's correct. Uh well, this
+[00:44:14] is an equality predicate like equin.
+[00:44:16] What if it's not that? Then you have to
+[00:44:18] have additional logic to keep track of
+[00:44:20] like uh could I see something based on
+[00:44:23] my join predicate is something going to
+[00:44:25] be above a below me. It's more
+[00:44:27] complicated but yes you'd have to do
+[00:44:28] that
+[00:44:30] >> you like figure out something
+[00:44:34] >> uh the statement of the question is
+[00:44:35] could you figure out something in all
+[00:44:36] cases? What do you mean figure it out?
+[00:44:36] What do you mean
+[00:44:37] >> figure out some way
+[00:44:40] for all sorts of
+[00:44:43] >> uh the question is could you figure out
+[00:44:45] a way to do sort merge join for all
+[00:44:46] joint condition? Yeah. No, you can do it
+[00:44:47] for all of them. I'm saying the the
+[00:44:49] logic of backtracking is just way more
+[00:44:53] complicated, right?
+[00:44:58] Other questions?
+[00:45:02] That's a nice way to end it. That's
+[00:45:03] nice. Yeah. Good.
+[00:45:06] Okay.
+[00:45:08] So,
+[00:45:10] all right. So, what is our cost for
+[00:45:12] this? Well, again, we have two phases.
+[00:45:13] The sort phase and the merge phase. the
+[00:45:15] sort phase cost is whatever our sort
+[00:45:16] algorithm is going to be for the both
+[00:45:18] both the two tables. So if I'm again if
+[00:45:20] I'm doing uh like the sort merge join
+[00:45:23] from the last class then it's the 2M
+[00:45:26] times uh everything else there because
+[00:45:28] again b minus one buffer pages. So I
+[00:45:31] have whatever my cost is for sorting
+[00:45:33] those this those two the the two input
+[00:45:35] tables and then now the merge cost
+[00:45:38] without any backtracking is just reading
+[00:45:40] all the pages uh for both the inner
+[00:45:43] table and the outer table once.
+[00:45:45] Backtracking complicates things because
+[00:45:47] then you but like you'd have to know the
+[00:45:50] distribution of the keys and how many
+[00:45:51] duplicates you're going to have per key.
+[00:45:53] So we we can't obviously put that in our
+[00:45:54] formula here.
+[00:45:57] And those be one of the reoccurring
+[00:45:58] themes when we talk about query
+[00:45:59] optimization. They make a bunch of
+[00:46:00] assumptions what your data looks like
+[00:46:02] because it simplifies simplifies these
+[00:46:03] formulas
+[00:46:05] because otherwise h how could you know?
+[00:46:10] So if I go back to with real numbers
+[00:46:12] again sorting these two tables here
+[00:46:13] assuming I have 100 buffer pool pages
+[00:46:15] then the sort cost for table R is 4,000
+[00:46:18] IO's the sort cost for for table S is
+[00:46:21] 2,000 IO's right but then the merge cost
+[00:46:24] is just again scanning of the pages that
+[00:46:26] are sorted once that's down to 1500 IO.
+[00:46:29] So in comp so the total comp cost is now
+[00:46:31] to 7500 IO's.
+[00:46:37] So in the case of the everything's in
+[00:46:40] memory that was 150 milliseconds. Now
+[00:46:42] we're down to 7 we're at 750
+[00:46:44] milliseconds
+[00:46:46] and then we can still spill to disk if
+[00:46:48] necessary.
+[00:46:50] This is starting to look pretty good.
+[00:46:54] I've already mentioned this now, but the
+[00:46:55] worst case scenario for us or pretty
+[00:46:57] much all the join algorithms is that
+[00:46:59] there like you have the two tables
+[00:47:02] you're trying to join on, they have one
+[00:47:03] value for all the tupils. In that case,
+[00:47:07] there's there's nothing you can do to
+[00:47:08] make that work well. It's like, you
+[00:47:10] know, the worst case scenario. But in
+[00:47:12] general, data doesn't usually look like
+[00:47:13] that. Now you wouldn't have a billion
+[00:47:15] tubles that everyone you know everyone
+[00:47:17] has a you know the same birthday and you
+[00:47:22] want to join these two tables like that
+[00:47:24] doesn't happen that often
+[00:47:27] at the at the scale where this you know
+[00:47:30] this would be a huge issue
+[00:47:33] so as I already said join is going to be
+[00:47:36] good for us when the the data is already
+[00:47:39] sorted on the join key that we want or
+[00:47:42] the output of the the the query the
+[00:47:45] final output is has you know there's an
+[00:47:48] order by clause that's also in our join
+[00:47:50] key because again we can just do the
+[00:47:52] sorting uh for either both the join and
+[00:47:54] the final output and uh we don't have to
+[00:47:57] do as a separate step
+[00:48:00] right
+[00:48:04] >> yes
+[00:48:10] >> yes the question the statement is and
+[00:48:11] they're correct the merge costs come
+[00:48:13] back
+[00:48:14] of uh of n plus n is the best case
+[00:48:17] scenario. Yes, with no backtracking.
+[00:48:25] All right, so let's jump into the good
+[00:48:27] one, the hash join. So the the basic
+[00:48:30] idea is again we have a tupil in in R,
+[00:48:32] we have a tuple in S. We want to join
+[00:48:33] them together. Um,
+[00:48:36] and the idea is that we're going to use
+[00:48:38] the hashing mechanism, the hash function
+[00:48:40] as a way for us to find that we what you
+[00:48:44] know the the matching pupil from one
+[00:48:45] side versus the other, right? And we can
+[00:48:49] base it on this nice property, the hash
+[00:48:50] functions, is that given the same key,
+[00:48:53] it'll it'll produce the same output, the
+[00:48:56] same hash value. So if my join key is
+[00:48:59] the same as your join key, we want to
+[00:49:00] join together, then we'll end up hashing
+[00:49:02] to the same location in either a hash
+[00:49:06] table or a partition, right? And in the
+[00:49:09] same way when we talk about hash tables
+[00:49:10] of like a way to take a hash, you're
+[00:49:12] sort of randomly jumping into a you know
+[00:49:14] a linear array of of slots where we may
+[00:49:18] have to look around to find the data we
+[00:49:19] want because it we have to sort of scan
+[00:49:20] through until we find the slot that has
+[00:49:21] the data we want or an empty slot. Uh
+[00:49:24] the idea is the same is that with
+[00:49:26] hashing we'll land in a location where
+[00:49:28] the data that we could have a match if
+[00:49:30] it exists will be nearby and therefore
+[00:49:33] we're not have to do a complete linear
+[00:49:34] scan of all the data or squ scan of all
+[00:49:37] the data as we did in nest for loops.
+[00:49:41] So a basic hash join algorithm on a on a
+[00:49:44] single node has two phases. First phase
+[00:49:46] we're going to take all the do a
+[00:49:48] sequential scan on the outer table and
+[00:49:50] then build a hash table using some hash
+[00:49:52] function and then uh then the second
+[00:49:55] phase we're going to scan the inner t
+[00:49:57] inner table use that same hash function
+[00:49:59] look up the hash table to see whether we
+[00:50:01] have a match on our join key. So we can
+[00:50:04] use whatever our favorite hash table we
+[00:50:06] we want that we discussed earlier in the
+[00:50:08] semester. In practice, most systems are
+[00:50:10] going to use linear probe hash table
+[00:50:11] because they're so simple and and so
+[00:50:13] fast. Um, even on a distributed system,
+[00:50:16] uh, it's it's going to work work pretty
+[00:50:18] well. And then inside the hash table,
+[00:50:20] we'll have to at least include the where
+[00:50:23] we at least have to include the join key
+[00:50:25] because again, we may hash to some
+[00:50:27] location that may have an an entry, you
+[00:50:31] know, in in that slot, but we because
+[00:50:34] the hash functions are guaranteed are
+[00:50:35] not guaranteed to have collisions. We
+[00:50:37] have to then do still do a comparison on
+[00:50:39] the join key to say whether we have what
+[00:50:40] match or not.
+[00:50:43] So the basic basic joint algorithm looks
+[00:50:44] like this. We have two for loops still
+[00:50:47] but they're not nested anymore. They're
+[00:50:48] just separate and ex executed uh in
+[00:50:51] serial order. So the first thing I'm
+[00:50:53] going to do is build you know allocate
+[00:50:55] some memory for some kind of hash table.
+[00:50:57] Scan through the the outer table or what
+[00:51:00] we call the build side of the join. Use
+[00:51:02] a hash function. Populate the hash
+[00:51:04] table. Then do a scrunchial scan on the
+[00:51:06] on the inner table also called the probe
+[00:51:08] side of the join. Scan through probe
+[00:51:11] inside the hash table. See whether we
+[00:51:12] have a match or not. Right?
+[00:51:17] Pretty basic but works really really
+[00:51:20] well because again it's basically divide
+[00:51:22] and conquer. I'm taking a what otherwise
+[00:51:25] it would have been the sequential scan
+[00:51:26] and narrowing down the the scope amount
+[00:51:29] of data I have to look at because I'll
+[00:51:30] land on my hash table and find the thing
+[00:51:31] that I want. Now, obviously, I want to
+[00:51:32] make sure my hash table is appropriately
+[00:51:33] sized so that I'm not doing the worst
+[00:51:36] case complete sequential scan of all the
+[00:51:38] keys if my hash table's too full. But in
+[00:51:41] general, this this this is going to work
+[00:51:42] really well. Yes.
+[00:51:48] >> The question is uh what is the
+[00:51:50] difference between this and index
+[00:51:51] nestloop join? Uh nothing at a high
+[00:51:55] level. Index loop join has an existing
+[00:51:57] index and I use that. This is I'm
+[00:51:59] building the hash table just to do the
+[00:52:00] join. Most indexes in real systems
+[00:52:03] aren't going to be hash tables though.
+[00:52:05] Most like if you call create index by
+[00:52:06] default most systems nearly all systems
+[00:52:08] you'll get a you get like a tree a bless
+[00:52:10] tree. And so the bless tree is great.
+[00:52:12] It's probably my probably is or not is
+[00:52:15] probably it is the most important data
+[00:52:16] structure in the world but it's not
+[00:52:18] going to be the best thing for joins for
+[00:52:20] doing a lot of joins
+[00:52:22] because if I if my hash table is large
+[00:52:24] enough and I don't have a lot of
+[00:52:26] collisions then I'm doing 01 lookups and
+[00:52:30] for a billion tupils that's a big deal
+[00:52:32] right that's going to be a huge
+[00:52:33] difference performance versus the login
+[00:52:36] traversal in a in a B+ tree
+[00:52:41] so one easy optimization we can do to
+[00:52:43] make our hash joins go faster is
+[00:52:46] to actually build a bloom filter as
+[00:52:48] we're populating the hash table and then
+[00:52:51] now when I want to do my uh my probe I
+[00:52:55] check the bloom filter first if there's
+[00:52:57] a match then I then probe the hash table
+[00:53:00] otherwise I don't probe the hash table
+[00:53:04] right so this is sometimes called
+[00:53:06] sideways information passing some
+[00:53:08] systems will call these bloom joins all
+[00:53:10] right the basic idea is all the name
+[00:53:12] even though it has different names. So
+[00:53:14] say that now I'm I'm going to build my
+[00:53:16] hash table on R, right? This will be the
+[00:53:19] build side. So as I'm scanning through
+[00:53:21] R, I'm populating the hash table, but
+[00:53:22] then I'm also going to be building bloom
+[00:53:24] filter.
+[00:53:26] And then now once the hash table's done
+[00:53:27] and now I'm going to start scanning S to
+[00:53:29] do the probe into the hash table. I'm
+[00:53:32] basically going to pass along the bloom
+[00:53:33] filter over to this guy and say, "Hey,
+[00:53:34] before you check the hash table, go
+[00:53:36] check the bloom filter."
+[00:53:39] Right? because the idea is that I still
+[00:53:40] have to hash anyway to to probe into the
+[00:53:43] hash table. Um, but then landing the
+[00:53:46] hash table and then doing the the scan
+[00:53:48] and doing the key comparisons that could
+[00:53:50] be, you know, that can be rather
+[00:53:52] expensive
+[00:53:54] versus doing the bloom filter lookup.
+[00:53:56] That's way faster.
+[00:53:59] So this is great when my
+[00:54:02] my join predicate or my join keys are
+[00:54:04] very selective meaning most of the
+[00:54:05] tuples I'm examining aren't going to
+[00:54:07] match on the join and I'm throwing most
+[00:54:09] of them away then this is going to be a
+[00:54:11] huge win for us because the you know
+[00:54:13] doing a lookup in the bloom filter is
+[00:54:14] super cheap relative to the hash table.
+[00:54:18] So this is a weird thing for like kind
+[00:54:19] of violates the notion of like in our
+[00:54:21] query plan where we have we're sending
+[00:54:23] data up from one oper because we're
+[00:54:25] taking information that we collect on R
+[00:54:27] and having this side channel thing we
+[00:54:29] pass over to S. But again the win is um
+[00:54:34] is be quite significant like in some in
+[00:54:36] really selective joins this can be like
+[00:54:37] a 2x performance improvement for just
+[00:54:39] building this bloom filter.
+[00:54:44] All right. So, the example I showed
+[00:54:46] before for the simple hash join was kind
+[00:54:48] of like the naive nest loop joint where
+[00:54:50] like you assume everything's in memory
+[00:54:51] and you and kind of rip through it. But
+[00:54:54] if everything's not in memory, then we
+[00:54:55] need to be able to to still be able to
+[00:54:57] handle that. and we don't want to maybe
+[00:55:00] build a giant hash table for our for for
+[00:55:04] to do our join because the hash table is
+[00:55:06] not going to fit in memory and now we're
+[00:55:08] doing random IO to different locations
+[00:55:10] or different slots in that hash table
+[00:55:11] and that's going to be terrible for us
+[00:55:13] for performance.
+[00:55:15] So we're going to rely on and again that
+[00:55:16] same divide and conquer approach where
+[00:55:18] we're going to split the the data set we
+[00:55:20] want to join up into smaller subsets and
+[00:55:23] potentially build hash tables for those
+[00:55:24] smaller subsets that do fit in memory
+[00:55:26] and then rip through that uh very
+[00:55:28] efficiently.
+[00:55:32] So this idea goes back to the 1980s. Uh
+[00:55:35] I think the textbook calls these
+[00:55:36] partition hash joins. The sometimes
+[00:55:38] you'll see in the literature they're
+[00:55:39] called grace hash joins. Um, and this is
+[00:55:42] named after a uh seminal work in the
+[00:55:44] 1980s out of uh out of Japan building
+[00:55:48] this database machine called Grace. And
+[00:55:51] they had a paper saying, "Hey, look, we
+[00:55:52] have this this great database machine
+[00:55:53] called Grace, and here's the hash join
+[00:55:55] we're using." And so the Grace database
+[00:55:57] machine obviously no longer exists, but
+[00:56:00] it's the legacy is this hash join that
+[00:56:02] pretty much everybody uses today.
+[00:56:05] So the like the other algorithms we
+[00:56:07] talked about is have two phases. Have
+[00:56:08] the partition phase. We're going to go
+[00:56:10] through both tables hash the join keys
+[00:56:12] and then divide it up into uh partitions
+[00:56:15] and buckets. And then in the second
+[00:56:16] phase for each partition level we're
+[00:56:19] going to again scan through the data and
+[00:56:21] just do the simple hash join that
+[00:56:23] resides in memory that we saw before.
+[00:56:26] Who here has heard of the term database
+[00:56:28] machine before? Probably nobody,
+[00:56:31] right? It's basically specialized
+[00:56:33] hardware that people built for for
+[00:56:34] specifically to run database systems.
+[00:56:36] This is why database systems are the
+[00:56:37] most important pieces of software. Think
+[00:56:38] of like other you know crypto stuff he
+[00:56:42] was doing like other than people
+[00:56:43] building specialized hardware for crypto
+[00:56:45] or maybe like you know graphics and
+[00:56:46] things like that or machine learning
+[00:56:48] people have been building specialized
+[00:56:49] hardware for databases for a long time.
+[00:56:51] So this this is one of the earliest ones
+[00:56:53] from uh one of the early days called
+[00:56:55] IDM. Uh I just like this picture because
+[00:56:57] the guy's like in a suit working on a
+[00:56:59] database. This is what the the future
+[00:57:00] was going to look like. Um, but they
+[00:57:03] were building specialized hardware to do
+[00:57:04] sorting uh in network
+[00:57:07] uh as well. And this again this was
+[00:57:09] 1980s. That company is obviously no
+[00:57:11] longer there. But there's a bunch of
+[00:57:12] companies around today that'll sell you
+[00:57:15] database appliances instead of calling D
+[00:57:17] called appliances that I don't know
+[00:57:19] customized hardware or tuned hardware to
+[00:57:22] run database uh you know database
+[00:57:24] workloads. Most famous of these is
+[00:57:26] probably going to be Oracle Exodata. Uh
+[00:57:28] and then the the terod data stuff,
+[00:57:31] right? I think of like massive data
+[00:57:33] warehouses. Each of these one each one
+[00:57:34] of these racks is like $5 million,
+[00:57:36] right? And then maybe double that now,
+[00:57:39] but then you pay a million dollars a
+[00:57:40] year for support for this. Like this is
+[00:57:41] what you would run like for high-end
+[00:57:43] workloads. And inside this on like you
+[00:57:45] know Oracle controls all the hardware
+[00:57:47] and the OS, they'll have like I think
+[00:57:49] FPJs and things like that inside this
+[00:57:51] make run faster, right? Uh one of the
+[00:57:54] companies that be giving a talk with us
+[00:57:55] in a few weeks is called Yellow Brick.
+[00:57:57] They start off selling a database
+[00:57:58] appliance. Again, think like specialized
+[00:58:00] hardware customized for uh for running a
+[00:58:03] database workload. Um and this is you
+[00:58:06] know they still make a lot of money
+[00:58:08] doing this right
+[00:58:10] like just goes to show people trying to
+[00:58:12] do specialized hardware for data for a
+[00:58:13] long time now. The current trend is see
+[00:58:15] how we can leverage GPUs. Uh there's a
+[00:58:17] bunch of companies that have been doing
+[00:58:19] this for
+[00:58:21] about 10 years now. Uh we had a seminar
+[00:58:23] series in 2018 where a bunch of the
+[00:58:24] database GPU database vendors came and
+[00:58:26] gave a talk. Um we have obviously
+[00:58:29] they're competing against getting GPUs
+[00:58:31] from the the ML AI people but there's a
+[00:58:33] lot of like you know one generation
+[00:58:36] older GPUs that people don't don't want
+[00:58:38] to use for training anymore for ML stuff
+[00:58:40] that you can still use in databases and
+[00:58:41] run efficiently. We're not going to GPU
+[00:58:43] we're not going to talk about GPU
+[00:58:44] databases in this class. That'll be the
+[00:58:45] advanced class. Uh let's just say that
+[00:58:48] it's people have been trying to do this
+[00:58:49] for a while but it doesn't always pan
+[00:58:51] out. Part of the reason why the database
+[00:58:52] machines in the 1980s didn't really pan
+[00:58:54] out either is because in the early days
+[00:58:56] of computing like by the time it took
+[00:58:58] you to design specialized hardware fab
+[00:59:01] it and then ship it to customers you
+[00:59:03] know Intel or Motorola or whoever was
+[00:59:05] putting out new CPUs uh there were you
+[00:59:07] know pretty significant jumps in
+[00:59:09] performance because of uh Moore's law
+[00:59:11] and the performance benefit you get from
+[00:59:13] specialized hardware uh just was negated
+[00:59:16] pretty quickly. Nowadays, unless you can
+[00:59:18] get on Amazon or in the cloud, people
+[00:59:20] don't don't really care about, you know,
+[00:59:22] running specialized hardware because it
+[00:59:23] just you want everything to be uh sort
+[00:59:26] of commoditized.
+[00:59:28] Anyway, it's Grace Hash joining was an
+[00:59:30] early days machine and there's a lot of
+[00:59:31] work done in the space. Um it's the
+[00:59:33] whole it's the it's the whole databases
+[00:59:36] like if I have specialized hardware to
+[00:59:37] run my database system run faster that
+[00:59:38] would be fantastic. No one really has
+[00:59:40] seem to sort of crack that nut yet.
+[00:59:44] Okay. So the way partition hashing is
+[00:59:46] going to work is sort of like that
+[00:59:49] partitioning phase we saw when we talk
+[00:59:50] about aggregations last class. So, I'm
+[00:59:53] going to scan through all the table, my
+[00:59:55] my my out my outer table, use a hash
+[00:59:58] function, put everything into buckets,
+[01:00:00] right? Scan everything on the inner
+[01:00:02] table. Same thing, put everything in
+[01:00:03] buckets. And then now I'm going to be
+[01:00:05] able to spill these out to disk if my
+[01:00:08] buckets get get too big. But then now
+[01:00:11] when I want to do the sort of the second
+[01:00:14] phase of do the join, I only need to
+[01:00:17] examine the data within one buckets and
+[01:00:20] do the comparison across the two tables
+[01:00:21] with within one level at a partition
+[01:00:23] because I know that there isn't going to
+[01:00:25] be a key that got hashed into partition
+[01:00:28] zero at the top for R that's going to
+[01:00:30] get hashed into this bottom bucket down
+[01:00:32] here because the hash function doesn't
+[01:00:34] work that way because it's the same hash
+[01:00:35] function, the same value. They'll end up
+[01:00:36] in in the same level.
+[01:00:39] So then now when I want to do my my my
+[01:00:41] my
+[01:00:43] probe to do the join I'm going to do one
+[01:00:45] level at a time bring those pages into
+[01:00:48] memory build a hashable for that then at
+[01:00:52] the same level read all those uh buckets
+[01:00:54] from the outer table s and then do a
+[01:00:57] hashing into this hash table just again
+[01:00:59] now everything's in memory find my match
+[01:01:01] produce my output and then once I'm done
+[01:01:04] probing on on the s side I throw the
+[01:01:07] hash table away because I don't need it
+[01:01:08] anymore because there's never going to
+[01:01:10] be another match at any other level. And
+[01:01:11] I just do the same thing all over again.
+[01:01:18] >> Yes.
+[01:01:31] So the question is how do I choose the
+[01:01:32] number of bucks I have and how do I are
+[01:01:35] they just pages they're just pages I'm
+[01:01:38] just appending to them right and then
+[01:01:40] the size is determined by the the
+[01:01:42] database system either through a
+[01:01:44] parameter that you can control as a
+[01:01:46] human like the operator the
+[01:01:47] administrator so you you can tell like
+[01:01:49] Postgress like you're allowed to use one
+[01:01:51] megabyte of memory to do hash joints or
+[01:01:53] something like that right so so someone
+[01:01:55] is someone is telling you how many pages
+[01:01:56] you get to do this Right. And the and
+[01:02:01] then if if if the system decides that's
+[01:02:03] not going to be enough, you do recursive
+[01:02:05] partitioning. We'll see that next.
+[01:02:11] Right. Memory is finite. So I just can't
+[01:02:13] say I'm going to use all my memory.
+[01:02:14] Something up above is determining how
+[01:02:16] how much resources you have.
+[01:02:18] >> Yes.
+[01:02:23] You could actually
+[01:02:32] buckets.
+[01:02:33] >> The question is how's this producing a
+[01:02:35] correct join? Not not a cle correct join
+[01:02:38] because your statement is because you
+[01:02:39] could have rows that would that in one
+[01:02:41] one level partition.
+[01:02:44] You're saying match to another level.
+[01:02:46] That can never happen, right? Because if
+[01:02:49] the join key on table R and table S if
+[01:02:52] they're the same values when I hash them
+[01:02:54] same input to the same hash function
+[01:02:56] because it's deterministic will produce
+[01:02:57] the same output. I mod that by the
+[01:03:00] number of or whatever K K K K K K K K K
+[01:03:01] K K K K K K K K K K K K K K K K K K K K
+[01:03:01] K K K K K K K K K K K K K K K K K K K K
+[01:03:02] K K K K K K K K K K K K K K K K K K K K
+[01:03:02] K K K K K K K K K K K K here H here,
+[01:03:02] tell me how many how many levels my
+[01:03:04] partitions I have. They're going to end
+[01:03:05] at the same level always. If they don't,
+[01:03:08] then something's wrong with the hardware
+[01:03:09] and you know the data system can't
+[01:03:12] handle that, right?
+[01:03:14] But like I don't it's like it's like the
+[01:03:16] sort merge stuff where like because I've
+[01:03:18] sorted the data I can't I know I can't
+[01:03:19] see something that I should have seen
+[01:03:21] earlier down below because it's been
+[01:03:23] sorted. If my sort algorithm is wrong
+[01:03:24] then I have a bunch of other problems
+[01:03:26] right? So if my hash function is acting
+[01:03:28] all weird then that's that's
+[01:03:30] you're in trouble. But in general the
+[01:03:32] algorithm will work.
+[01:03:35] >> Yes.
+[01:03:45] So you're asking what if I have I think
+[01:03:47] saying what if all the what if these
+[01:03:49] buckets get too full? Yes. Next slide.
+[01:03:53] Okay.
+[01:03:56] So if the partitions don't fit in memory
+[01:03:58] which they were asking about then I just
+[01:04:02] recursively partitions again and I keep
+[01:04:05] and again if everything still doesn't
+[01:04:06] fit in all memory I partition again. Now
+[01:04:09] again in the degenerative case if all
+[01:04:11] the values are the same across all my
+[01:04:12] keys or all my my tupils then
+[01:04:15] recursively partitioning doesn't do
+[01:04:16] anything for us but again don't do that
+[01:04:19] there's but there's there's end of the
+[01:04:20] day there's nothing you can do there's
+[01:04:22] no algorithm magic to make make that go
+[01:04:23] away so eventually I'm just going to
+[01:04:25] keep subpartitioning my partitions until
+[01:04:28] they fit in memory and then do and then
+[01:04:31] do my joint. In practice, you only have
+[01:04:33] to do uh one extra level of recursive
+[01:04:37] partitioning in real systems. Uh again,
+[01:04:40] if it's the generative case, there's
+[01:04:41] nothing you can do. Uh but then if you
+[01:04:44] identify that the
+[01:04:46] that you're going to have a lot of keys
+[01:04:48] that that are going to be uh that
+[01:04:52] values of the keys are going to be the
+[01:04:53] same, then you just fall back to do the
+[01:04:55] block block nested loop join. Or if my
+[01:04:57] partitions are actually going to be
+[01:04:58] small enough, I don't maybe want to
+[01:05:00] build the hash table. we'll see in a
+[01:05:01] second. I'll just do the uh I'll just do
+[01:05:06] the in-memory nested loop join because
+[01:05:07] that's going be really fast to do as
+[01:05:08] well.
+[01:05:10] So let's say we we this is the table we
+[01:05:12] want to partition, right? We we have a
+[01:05:15] bunch of buckets k minus one and then
+[01:05:17] say for whatever reason the a bunch of
+[01:05:19] the the keys are going to are hashing
+[01:05:20] into this this uh the bucket in level
+[01:05:23] one. So I'm think of this like just
+[01:05:25] every single time the the the page gets
+[01:05:27] full, I read out the disc, I make
+[01:05:28] another page. So I'm keeping track of
+[01:05:29] the metadata of how many pages I have at
+[01:05:31] each level. So there's some threshold to
+[01:05:34] say, okay, this thing is getting too
+[01:05:35] full. Everything is is too skewed. So
+[01:05:38] then now I'm going to do another hash
+[01:05:40] round of hashing. Pick another hash
+[01:05:42] function or take another seed for the
+[01:05:44] hash function I'm using and just uh
+[01:05:46] partition the data at that level all
+[01:05:48] over again into a bunch of more pages or
+[01:05:52] bunch more buckets. And then for the
+[01:05:55] ones that didn't that weren't too full,
+[01:05:57] I just carry them along at the next
+[01:05:59] phase because I don't need to
+[01:06:00] repartition them. I don't I don't care
+[01:06:02] about them.
+[01:06:04] So then now as I do my scan uh the same
+[01:06:07] scan on the outer table, sorry, the
+[01:06:09] inner table, if they hash to the the two
+[01:06:12] bottom ones, that's fine. I don't think
+[01:06:14] anything special there. And then now I
+[01:06:16] just do my inmemory hash join as I did
+[01:06:18] before. But if I recognize that if I'm
+[01:06:21] hashing to one of these ones that that
+[01:06:23] got overflowed, then I know that I need
+[01:06:25] to call the second hash function to hash
+[01:06:28] them again. And then now they'll land up
+[01:06:29] and align with the the keys coming from
+[01:06:32] the outer table.
+[01:06:37] So
+[01:06:39] just like the index probe cost in index
+[01:06:42] loop join is hard to quantify, recursive
+[01:06:44] partitioning is also hard to quantify
+[01:06:46] because it depends on the key
+[01:06:47] distribution. Right? So in general,
+[01:06:49] we're just going to say to estimate the
+[01:06:51] cost of hash joins is going to be this
+[01:06:54] formula here. So three times n plusn,
+[01:06:57] right? Because it's one scan in uh for n
+[01:07:01] plusn
+[01:07:02] uh write it out and then one scan back
+[01:07:05] back in to take the partitioned uh
+[01:07:08] buckets and then do the hash joint and
+[01:07:10] everything's in memory at that point.
+[01:07:14] So using real numbers now we can get the
+[01:07:17] our example table before down to 450
+[01:07:21] milliseconds.
+[01:07:23] So sort merge join was 750 milliseconds.
+[01:07:25] Inmemory nested loop join was 150
+[01:07:28] milliseconds. Um but if I had to spill
+[01:07:30] the disc in this case here I can get it
+[01:07:32] down to 450. So that's pretty good.
+[01:07:40] So one
+[01:07:42] semieas but not always not always easy
+[01:07:44] easy to implement difficult to get right
+[01:07:46] optimization is use what is called a
+[01:07:47] hybrid hash join and this was something
+[01:07:49] that was invented early 1980s as an
+[01:07:51] extension to the grace hash join stuff
+[01:07:53] and this was invented by the other data
+[01:07:55] professor Janesh Patel's his PG advisor
+[01:07:58] invented this uh I think with Jim Gray
+[01:08:00] one of the touring award winners in
+[01:08:02] databases you know back in the day and
+[01:08:04] so basically what happens is if you
+[01:08:06] recognize that a bunch of the data. Uh
+[01:08:09] if your your data is skewed and a bunch
+[01:08:11] of the um a bunch bunch of the the
+[01:08:15] tupils are all going to the same
+[01:08:16] partition, you'll just keep that
+[01:08:18] partition in memory, spill all the other
+[01:08:21] ones out to disk and then uh just do an
+[01:08:25] Mory hash join or Mory nested loop join
+[01:08:27] for that hot partition and then just do
+[01:08:29] the regular grace hash join uh algorithm
+[01:08:32] for the other other partitions. Right?
+[01:08:35] Right. So again, assume we have for
+[01:08:36] whatever reason all the keys are hashing
+[01:08:38] this one here. Right?
+[01:08:41] So I would recognize, okay, this thing's
+[01:08:42] to be hot. So I don't want to maybe
+[01:08:44] spill the disc. If it's not that big and
+[01:08:46] I can keep it in memory, let me go ahead
+[01:08:48] and and just do that. So I would keep
+[01:08:51] this level in memory. Take all the other
+[01:08:53] ones, spill those out to disk. And then
+[01:08:55] I just take now while this is already in
+[01:08:57] memory, build the hash table for this.
+[01:09:00] Maybe not even do the the bucketing
+[01:09:02] right phase. I switch it directly to the
+[01:09:03] hash table. and then now populate it as
+[01:09:06] I'm scanning along and then this guy can
+[01:09:09] then do the join directly against it.
+[01:09:13] Right? I think it's called hybrid
+[01:09:15] because again instead of doing the hash
+[01:09:17] table part at the top level here, you
+[01:09:19] could just do the nested loop nested
+[01:09:20] loop join because it's already in
+[01:09:21] memory. So you're kind of doing both
+[01:09:22] algorithms together.
+[01:09:24] This is challenge to get right because
+[01:09:26] like again, how do you know whether
+[01:09:28] something's going to be the hot
+[01:09:29] partition or not? All right. uh are you
+[01:09:32] is it are you just better off using the
+[01:09:34] extra memory to keep these things uh
+[01:09:36] keep more of these pages in memory
+[01:09:37] rather than building this hash table
+[01:09:39] thing. So Postgress does this. A bunch
+[01:09:42] of different commercial systems do this.
+[01:09:44] The language is confusing because
+[01:09:46] sometimes they'll call this the hybrid
+[01:09:47] join. So the hybrid hash join. Um so
+[01:09:50] finding out who actually does this is is
+[01:09:52] not not always clear.
+[01:09:54] And like I said, sometimes just better
+[01:09:56] using the buff pages for uh for the for
+[01:10:00] the partitions you're building rather
+[01:10:01] than, you know, specializing one of them
+[01:10:03] to be the hot one.
+[01:10:07] All right. So finish up. So the for our
+[01:10:10] hash joints the probe table can be sort
+[01:10:12] of really any size but in general we
+[01:10:14] want we want it to fit in memory because
+[01:10:16] again we don't want have to do a bunch
+[01:10:17] of random IO on disk that's going to be
+[01:10:19] the death to us right if everything fits
+[01:10:22] in memory then
+[01:10:24] the the probe can be really fast you
+[01:10:27] just sort of scan it through once and
+[01:10:29] don't do any partitioning. Uh if you
+[01:10:32] don't know what the size of the table
+[01:10:34] could be, then you maybe want to use the
+[01:10:35] extendable hashing or the linear hash
+[01:10:37] table that we talked about uh a couple
+[01:10:39] classes ago. Most systems don't do that
+[01:10:42] because again those data structures are
+[01:10:46] are less efficient [clears throat]
+[01:10:47] because there's more machinery to them
+[01:10:49] than like a linear pro hash table. So
+[01:10:51] when we talk about query optimization,
+[01:10:53] as I said a couple times already that
+[01:10:54] like they're going to try to estimate
+[01:10:56] how much data or how many tupils you're
+[01:10:58] going to have to put into your hash
+[01:11:00] table so that you can sort of size it
+[01:11:01] correctly and not have to, you know,
+[01:11:03] spill or resize it uh later on. But
+[01:11:06] getting that correct is be super hard to
+[01:11:08] do. Uh it's hard enough to do it for for
+[01:11:11] base tables themselves like I'm reading
+[01:11:13] the tables, but then try to do estimates
+[01:11:15] of the size of data after I do multiple
+[01:11:17] joins. Everyone gets that wrong. and
+[01:11:20] horribly wrong. So, you know, it's
+[01:11:25] the only way to sort of to handle it is
+[01:11:26] should be very uh uh you overallocate
+[01:11:31] the memory for your hash table to avoid
+[01:11:32] that problem. Of course, that makes you
+[01:11:34] less efficient because now you're using
+[01:11:35] memory that you're allocating memory you
+[01:11:37] may actually need for your for your hash
+[01:11:39] join. Could be used for other things,
+[01:11:41] but again, it's it's you're just trying
+[01:11:44] to avoid having to spill to disk.
+[01:11:47] All right. So, here's a summary slide of
+[01:11:49] the of the different algorithms we
+[01:11:51] talked about. Again, in general, the
+[01:11:53] hash join is going to be preferable,
+[01:11:55] right? If you don't already have an
+[01:11:57] index and you don't think the the data
+[01:12:00] you're trying to join it will fit in
+[01:12:01] disk.
+[01:12:02] >> Yes.
+[01:12:11] >> Yes.
+[01:12:17] Yes.
+[01:12:30] >> So the question is um I I mentioned a
+[01:12:32] different diff I mentioned a different a
+[01:12:34] bunch of different scenarios where one
+[01:12:36] Jordan argument will be better than
+[01:12:37] another. And so the first question is,
+[01:12:40] do database systems implement different
+[01:12:42] join algorithms? Yes. Do data systems
+[01:12:44] then try to figure out which of these
+[01:12:46] joint algorithms they should use at
+[01:12:48] runtime when your query shows up? Yes.
+[01:12:50] So that'll be query optimization.
+[01:12:52] That'll be after the the fall break.
+[01:12:54] Roughly the formulas they're going to
+[01:12:56] use to try to figure this out looks like
+[01:12:58] this.
+[01:13:00] Right now
+[01:13:04] >> what are the ones that are there?
+[01:13:15] So the question is of this menu here uh
+[01:13:17] which ones are going to have the good
+[01:13:19] ones have all of them. Postgress has all
+[01:13:21] these, right? Oracle has all of these.
+[01:13:24] DB2, duct DB, they have you have to have
+[01:13:27] all of them. My SQL didn't have a hash
+[01:13:30] joins until like I 30 25 years later.
+[01:13:33] Like they didn't add it until 2019. And
+[01:13:34] I don't think they have s they don't
+[01:13:35] have server merge joins still, right?
+[01:13:38] But that's okay because they were
+[01:13:39] focusing on like not analytical
+[01:13:41] workloads. It's it's an OOLTP system,
+[01:13:44] right? So
+[01:13:47] I was just trying to say like the the
+[01:13:48] the
+[01:13:51] if you're building a data system from
+[01:13:52] scratch when you have to implement your
+[01:13:54] join the first thing you're going to
+[01:13:55] implement is basically block nested loop
+[01:13:56] join because it's the easiest thing to
+[01:13:57] do and then after that you're probably
+[01:13:59] going to want to implement the hash join
+[01:14:01] because it's going to be way more
+[01:14:02] efficient and there's a bunch of
+[01:14:04] different operations and tweaks you can
+[01:14:05] do for all these like there's there's a
+[01:14:07] bunch of variations of these things you
+[01:14:09] can have different hash tables you know
+[01:14:11] based on the data you're you're going to
+[01:14:12] join together like click house has 20
+[01:14:14] hash implementations like there's within
+[01:14:17] these general categories algorithms
+[01:14:19] there's a bunch of different
+[01:14:19] optimizations you can do and that's what
+[01:14:22] that's going to be what distinguishes
+[01:14:23] the enterprise expensive systems from
+[01:14:25] the uh from like you know the the the
+[01:14:28] open source ones now with that said
+[01:14:30] ductb and postgress have a lot of these
+[01:14:32] things that they're pretty good ductb is
+[01:14:34] probably pretty state-of-the-art right
+[01:14:37] um but the the challenge is always going
+[01:14:40] to be in the query optimizer to figure
+[01:14:42] out which of these one of these ones you
+[01:14:45] should use and in in practice again I
+[01:14:48] said the estimations are always be
+[01:14:49] really bad so the hash join is usually
+[01:14:52] the fallback
+[01:14:59] >> yes
+[01:15:01] >> the question is what's the C index loop
+[01:15:03] joint that's the constant cost of
+[01:15:05] probing the index
+[01:15:08] undefined because it depends on what the
+[01:15:09] index is and what the data looks like
+[01:15:11] right it also depends on like what the
+[01:15:13] the join is if echo join you know in the
+[01:15:15] case of a B+ tree it's low again to go
+[01:15:17] to the bottom but if it's like they were
+[01:15:20] asking well actually and if the the key
+[01:15:22] is not unique in that index I may
+[01:15:24] traverse the bottom and then scan along
+[01:15:26] leaf nodes how many do you have to scan
+[01:15:28] it depends on what the data is what the
+[01:15:30] query is so that we just say see
+[01:15:35] but when we talk about optimization
+[01:15:36] it'll know at that point you'll know
+[01:15:39] what the query is you know what you want
+[01:15:40] to do you know what the data roughly
+[01:15:42] looks like you know data structure
+[01:15:44] you're hitting up so that query
+[01:15:46] optimization time we take a SQL query
+[01:15:47] and convert it to the actual plan you
+[01:15:48] execute that's when you fill in C
+[01:15:54] all right again so the main take away
+[01:15:55] from from right here it should be
+[01:15:57] hashing is almost always be preferable
+[01:15:58] to sorting unless the data needs to be
+[01:16:00] sorted as part of the output then you
+[01:16:02] you can just piggy back off that even
+[01:16:04] then some cases sorting that you know
+[01:16:06] doing the hash join then sorting it
+[01:16:08] still might be even better uh again
+[01:16:10] depends on the hardware depends on the
+[01:16:11] query depends on the data So and you
+[01:16:14] know related to his question the good
+[01:16:16] systems good in quotes uh will will have
+[01:16:21] pretty much all of these techniques and
+[01:16:22] a bunch of other optimizations but these
+[01:16:24] are the these are the general three
+[01:16:26] algorithms you can do. You can either
+[01:16:28] have nest of for loops hash things or
+[01:16:29] sort things. There isn't there isn't
+[01:16:31] anything else.
+[01:16:33] Okay.
+[01:16:35] All right. What's next class?
+[01:16:38] Yeah. Midterm. Okay. So again, make sure
+[01:16:41] you have your notes, your CMU ID. Don't
+[01:16:44] do any weird things like one year, one
+[01:16:46] kid brought his wet laundry. Don't do
+[01:16:47] that, right? Uh I won't be here, but my
+[01:16:50] PhD students will be uh will be managing
+[01:16:53] for us. Okay. All right, man. Hit it.
+[01:16:59] [music]
+[01:16:59] clips across
+[01:17:04] [music]
+[01:17:09] [music]
+[01:17:14] [music]
+[01:17:23] [music]
+[01:17:24] flow with the drain. Get the fortune
+[01:17:26] maintain flow with Great.
+[01:17:32] [music]

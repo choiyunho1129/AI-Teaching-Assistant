@@ -1,0 +1,2304 @@
+[00:00:00] [music]
+[00:00:06] [music] I'm still
+[00:00:08] associ.
+[00:00:12] [music]
+[00:00:17] [music]
+[00:00:28] >> Okay. Again the recitation is available
+[00:00:30] with the video. Please watch the slides
+[00:00:32] and then post on pata if you have
+[00:00:33] questions. All right for in terms of
+[00:00:35] database talks today after this class we
+[00:00:37] will have um CMUDB alumni Ryan Johnson.
+[00:00:41] He did his PhD here in I think 2010 and
+[00:00:44] he won the Jim Gray best ditation award
+[00:00:46] in databases uh for Sigmod. So uh he's
+[00:00:49] now data bricks uh working on Delta
+[00:00:51] Lake. Delta Lake is going to smell a lot
+[00:00:52] like the hoodie stuff and the iceberg
+[00:00:54] stuff and the duck lake stuff. So it's
+[00:00:56] sort of in in that sort of same space.
+[00:00:58] It was data bricks version of iceberg.
+[00:01:00] Uh it didn't get the quite the adoption
+[00:01:02] that iceberg had. Uh so they paid a
+[00:01:04] billion dollars for iceberg like as one
+[00:01:07] does. Uh if you're data bricks tomorrow
+[00:01:09] at noon in in the gates building we're
+[00:01:12] having uh somebody give a talk from Uber
+[00:01:15] uh talking about the the Apache Penino
+[00:01:17] project that they use internally. Um and
+[00:01:19] sort of talk about the various things
+[00:01:20] they tried throughout the the years and
+[00:01:22] why Pino is is was the right choice for
+[00:01:24] the problems that they were trying to
+[00:01:25] solve. And that one will be food and
+[00:01:27] that one's uh own gates. And then a week
+[00:01:29] from now we're having the the other
+[00:01:31] database startup that data brought
+[00:01:33] bought this year called moon cake. And
+[00:01:35] this is iceberg is using ductb
+[00:01:39] to connect to iceberg inside of
+[00:01:41] postgress. Um and again all these are
+[00:01:43] optional.
+[00:01:45] All right. So at this point in the
+[00:01:47] semester where we're at is that the
+[00:01:49] we've we've kind of we've gone up the
+[00:01:51] entire stack right like we started off
+[00:01:53] talking how to how to read and write
+[00:01:54] things at disk in your buffer manager
+[00:01:56] talks about how to manage memory. Above
+[00:01:57] that we talked about how to actually
+[00:01:58] access access tables that we're storing
+[00:01:59] in our buffer pool and that are based on
+[00:02:02] in our disk manager. Then we talked
+[00:02:03] about how to uh build the query engine
+[00:02:05] to actually execute queries. And then
+[00:02:08] the last two lectures was about how do
+[00:02:09] we take a SQL query from the application
+[00:02:11] convert that into an optical plan that
+[00:02:13] we can actually run and execute inside
+[00:02:15] of our system. Right? So at this point
+[00:02:17] in the semester you know how to build
+[00:02:19] sort of a first pass uh first
+[00:02:22] implementation of a endto-end database
+[00:02:25] system taking SQL queries all the way
+[00:02:26] down to data on disk. But [snorts]
+[00:02:29] obviously we're not done yet because we
+[00:02:31] still have two more weeks left in the
+[00:02:32] semester. Right? What we've built so far
+[00:02:34] is a nice database system, but it's not
+[00:02:36] suitable for production because it's not
+[00:02:39] safe, right? We haven't talked about how
+[00:02:41] do you if you crash, how do you make
+[00:02:43] sure you come back and you don't lose
+[00:02:44] data. We haven't talked about if you
+[00:02:45] have two queries trying to update the
+[00:02:47] same thing at the same time, right? How
+[00:02:49] do you make sure that's safe and and
+[00:02:51] reliable? So, that's where we're going
+[00:02:52] on this point of the semester for the
+[00:02:54] next three weeks. And and we're going to
+[00:02:56] talk about concurrent protocols and
+[00:02:57] recovery management, right? And the
+[00:03:00] reason why we don't really show that in
+[00:03:02] this sort of the the stack hierarchy
+[00:03:03] that I was showing before at the
+[00:03:04] beginning of the semester is because
+[00:03:05] these concepts and these components are
+[00:03:08] going to overlap and and be intertwined
+[00:03:10] with all the parts of of the system. So
+[00:03:13] the bufferable manager you build for
+[00:03:15] project one had no notion of
+[00:03:17] transactions, no notion of of whether it
+[00:03:20] was read safe to write data out to disk.
+[00:03:22] Like when when your when your eviction
+[00:03:24] policy algorithm ran, you just said,
+[00:03:25] "All right, this page is not dirty. I
+[00:03:26] can, you know, I can throw it away or
+[00:03:28] this page is dirty. I'll write it out to
+[00:03:29] disk. But we'll see as we as we go
+[00:03:32] along. There's actually another notion
+[00:03:34] of of safety we have to be aware of to
+[00:03:36] know when there's actually safe to
+[00:03:37] actually write that data. So if we end
+[00:03:39] up crashing, we don't come back with an
+[00:03:41] invalid database state. We don't come
+[00:03:42] back with corrupted data,
+[00:03:45] right? What again? What if a tupol
+[00:03:46] touches two pages right for a single
+[00:03:48] update and only write one of them and
+[00:03:50] not the other one? How do I make sure
+[00:03:51] that you know I don't come back and see
+[00:03:53] a torn right? So that's where we're
+[00:03:55] going next. And so we'll start off
+[00:03:56] concurrency protocol. That'll be today's
+[00:03:58] class uh all this week and a little bit
+[00:04:00] next week and then next week we'll pick
+[00:04:02] up on I should take it back curt is so
+[00:04:05] important. It's the next two weeks and
+[00:04:06] then after that we'll do a week of
+[00:04:08] recovery management like how again how
+[00:04:09] do you crash make sure you come back and
+[00:04:10] everything's still there. I'm just
+[00:04:12] trying to emphasize it like again these
+[00:04:13] these these things we're going to start
+[00:04:16] talk about next are all throughout the
+[00:04:17] rest the rest of the system sort of go
+[00:04:19] back and revisit some of the things that
+[00:04:20] we've talked about already and say how
+[00:04:22] we then infuse the notion of
+[00:04:24] transactions and correctness inside of
+[00:04:26] them. Okay. [snorts]
+[00:04:29] All right. So, what do we talk about
+[00:04:31] now? Right. So, we we've been sort of
+[00:04:32] been talking about these SQL queries so
+[00:04:34] far in this store and we really sort of
+[00:04:36] focusing on doing sort of not so much
+[00:04:39] simple things, but the the scope of the
+[00:04:41] data that they're accessing or modifying
+[00:04:44] is is sort of limited to like one query.
+[00:04:47] like yeah I can do joins or subqueries
+[00:04:49] in a single query but really when it
+[00:04:50] comes time to like updating things and
+[00:04:51] modifying things we've been focusing on
+[00:04:53] sort of really simple operations like
+[00:04:55] one one operation at a time. So now we
+[00:04:57] need to expand our discussion and our
+[00:05:00] vernacular to understand what it means
+[00:05:01] to start doing more complex things
+[00:05:02] inside of our database system. So here's
+[00:05:04] a typical uh sort of application
+[00:05:07] somebody might want to build for like a
+[00:05:08] bank right where I keep track of like
+[00:05:10] how much money somebody has in their
+[00:05:12] account. And so on the on the other side
+[00:05:14] here where I'm showing this is the this
+[00:05:16] is the the application code that someone
+[00:05:17] would write to build a bank application
+[00:05:19] against a database right whether it's in
+[00:05:22] Python, PHP, Java, Rust, it doesn't
+[00:05:24] matter like the high level concepts what
+[00:05:26] we care about. So say I want to do a
+[00:05:29] bank transfer,
+[00:05:30] right? And so object I'm going to access
+[00:05:32] object A. Read object A. Say that's
+[00:05:33] somebody somebody's bank account and I'm
+[00:05:36] first going to read how much money I
+[00:05:37] have in that account. So the application
+[00:05:39] will get back now uh the balance of
+[00:05:42] $100. Then I'm if I'm going to transfer
+[00:05:44] $25, I got to make sure that this
+[00:05:46] account has sufficient funds to do that
+[00:05:47] transfer. So I'll have a client side
+[00:05:49] check that says, you know, does this
+[00:05:50] account have $25?
+[00:05:53] If yes, then I'll go ahead and do the
+[00:05:55] payment to some other account like think
+[00:05:57] VMO, Cash App, whatever, doesn't matter,
+[00:06:00] right? I'm going to pay $25 to somebody
+[00:06:02] to somebody other account, but then now
+[00:06:03] I need to deduct $25 from account A,
+[00:06:07] right? To take the $25 out. And then now
+[00:06:09] I have this new balance of $75. I want
+[00:06:11] to I want to write this back now to the
+[00:06:14] database system to now reflect that I've
+[00:06:15] transferred $25 out of this account and
+[00:06:17] send it to somebody else. Right? Pretty
+[00:06:20] straightforward.
+[00:06:21] So the question we're try to deal with
+[00:06:23] today is what happens if the database
+[00:06:25] system crashes before I update the
+[00:06:29] balance. So I've sent the $25 put in
+[00:06:31] another account and then now I crash
+[00:06:34] when I come back. What should what
+[00:06:36] should be in the bank account? Right? my
+[00:06:38] account and then also whoever I paid,
+[00:06:40] how much should be in their account,
+[00:06:43] right?
+[00:06:44] Another example is say run the same same
+[00:06:47] sort of application code again, but this
+[00:06:49] time for whatever reason you and your
+[00:06:50] best friend or your roommate share bank
+[00:06:52] accounts and you both want to pay
+[00:06:53] somebody $25 at exact same time. So on
+[00:06:56] the website on the on the system uh in
+[00:06:59] the application side, you're going to
+[00:07:00] run the exact same code, but it's going
+[00:07:02] to run ex at exactly the same time. So
+[00:07:03] we're going to have sort of two threads
+[00:07:05] or two two two instances of this
+[00:07:08] application logic running at the same
+[00:07:11] time either on the same machine,
+[00:07:12] different machine, it doesn't matter,
+[00:07:13] right? Because the the the database is
+[00:07:15] keeping track of how much money is
+[00:07:16] there. So they're going to do all the
+[00:07:17] same steps. Go get the current balance.
+[00:07:19] We have $100. Check to see that at least
+[00:07:21] we have $25 to send it. Yes, we do. Then
+[00:07:23] go ahead and pay that $25.
+[00:07:26] Now update the the bank account with the
+[00:07:28] new balance, $75. and then now try to
+[00:07:31] write this new balance back to the data
+[00:07:33] system. And obviously this would be bad
+[00:07:36] because if if we allow this to happen,
+[00:07:38] whatever, you know, they're both trying
+[00:07:39] to update with $75, but they both sent
+[00:07:41] out $25. So the real account balance
+[00:07:45] should be $50. But if I let them
+[00:07:48] overwrite each other, then I'm ending up
+[00:07:50] with uh incorrect state of of the
+[00:07:52] database.
+[00:07:54] Right? This this is this is talking
+[00:07:56] about concurrent access. There's there
+[00:07:57] are two main issues we care about. if we
+[00:07:59] crash and and come back, how do we make
+[00:08:01] sure that the the state of the Davis is
+[00:08:03] what we expect to see? Uh and then how
+[00:08:06] do we handle two transactions, two or
+[00:08:08] more transactions trying to update the
+[00:08:10] same thing at the same time. And so this
+[00:08:12] is what we'll we focus on today when we
+[00:08:14] talk about protocols. It's the
+[00:08:15] mechanisms the data system is going to
+[00:08:16] implement to prevent all these problems
+[00:08:19] from occurring.
+[00:08:22] All right, so let's think of a really
+[00:08:23] easy system we could use to solve this,
+[00:08:26] right?
+[00:08:28] Say that we have in our database system
+[00:08:30] we only have one worker that can only
+[00:08:32] execute one query or one transaction at
+[00:08:35] a time. Let's say one transaction. So
+[00:08:37] that means that when the application
+[00:08:39] sends requests uh we even though there
+[00:08:43] may be multiple multiple requests it's
+[00:08:45] only going to execute one of them at a
+[00:08:46] time. Think think of a single queue.
+[00:08:49] And then now when a transaction begins
+[00:08:51] start begins to start updating the
+[00:08:53] database
+[00:08:54] instead of overwriting existing data
+[00:08:56] that we have in our pages we're instead
+[00:08:59] going to make copy of those pages. Think
+[00:09:01] of again slotted page architecture.
+[00:09:02] We're making a copy of those pages and
+[00:09:04] then we're going to apply all our
+[00:09:05] updates to those pages and then when it
+[00:09:08] comes time to commit we just we then
+[00:09:11] just flip some internal mechanism like a
+[00:09:13] the page directory to say here's the new
+[00:09:16] version the latest information about
+[00:09:17] those two.
+[00:09:20] If the transaction fails or we crash
+[00:09:22] then when we come back and those pages
+[00:09:25] they were from the uncommitted
+[00:09:26] transaction we just ignore them and
+[00:09:27] clean them up.
+[00:09:31] So, is this proposal correct? Will this
+[00:09:34] guarantee that I don't have the two
+[00:09:35] problems I had before where if I crash
+[00:09:36] halfway through the transaction, I end
+[00:09:38] up with invalid database state. And does
+[00:09:40] this also prevent me from having two
+[00:09:41] transactions, two or more transactions
+[00:09:43] updating the same record at the same
+[00:09:45] time?
+[00:09:47] >> Yes. What? Yes, it is correct.
+[00:09:49] >> Is it safe?
+[00:09:51] Except for like when you write little
+[00:09:53] part when you write this
+[00:09:56] like
+[00:09:58] you're happy with your copy and you go
+[00:10:00] >> a statement is uh when a transaction
+[00:10:02] commits that's the happy part. When
+[00:10:04] you're happy that you're you made your
+[00:10:05] changes and you go ahead and commit.
+[00:10:06] You're saying there's a there's a small
+[00:10:09] uh sort of small window where you may
+[00:10:12] not be able to flip over that and say
+[00:10:14] you've successfully completed the
+[00:10:15] transaction. Well, like if you're
+[00:10:17] currently writing to dis and then now it
+[00:10:19] breaks like you're writ when you're
+[00:10:21] currently writing to disc we made a copy
+[00:10:23] of it, right? So we we're updating the
+[00:10:25] copy, not the original.
+[00:10:26] >> Yeah, but you have to save your copy
+[00:10:29] back.
+[00:10:30] >> The statement is you have to save the
+[00:10:31] copy on the back of the original. What
+[00:10:32] if we instead just update a single page
+[00:10:34] that says here's the latest version of
+[00:10:36] those pages
+[00:10:37] >> and we can do that atomically.
+[00:10:40] >> Okay, it works meaning it's safe and
+[00:10:41] correct.
+[00:10:43] >> Who agrees with that? It's safe.
+[00:10:46] Okay. Who agrees that it's correct?
+[00:10:49] All right. For those who don't think
+[00:10:51] it's safe or correct, do you think it's
+[00:10:53] not safe or correct or you just don't
+[00:10:54] know? It's okay to not know. Who here
+[00:10:56] says this is a terrible? Sorry. Who says
+[00:10:58] here this is not correct and or not
+[00:11:00] safe?
+[00:11:03] Okay. Well, you're all you're all
+[00:11:05] correct. This is this is this is correct
+[00:11:06] and safe. Do we think it's performant?
+[00:11:10] No. Why?
+[00:11:13] copy everything.
+[00:11:15] >> Well, yeah. So, so in this case here,
+[00:11:17] yes, we're copying the entire database.
+[00:11:18] You could be more fine grain. Say if I
+[00:11:20] update two pages, I update those two
+[00:11:21] pages, right? You can do that.
+[00:11:25] >> You said you don't have concurrency.
+[00:11:27] Correct. Yes. That in this in this
+[00:11:29] world, you can only up allow one
+[00:11:30] transaction to update the database at a
+[00:11:32] time because you because there's that
+[00:11:34] little piece at the end where you flip
+[00:11:35] and say, here's the new pages that need
+[00:11:37] to be done atomically, and it can only
+[00:11:39] allow one transaction to do that at a
+[00:11:40] time. So, yes. So this technique here is
+[00:11:43] called shadow paging and we'll cover it
+[00:11:45] in more detail. This is basically what
+[00:11:46] IBM did or not basically it is what IBM
+[00:11:48] invented in the 1970s when they invented
+[00:11:52] the so the early concept of transactions
+[00:11:55] like Jim Gray the guy we we talked about
+[00:11:57] before he won the touring award in the
+[00:11:58] 90s for all of this this transactional
+[00:12:00] stuff that we'll talk about here. This
+[00:12:02] is what they did in the 70s. They
+[00:12:04] abandoned it later on because of its
+[00:12:06] performance reasons which we'll we'll
+[00:12:07] cover uh more detail in the next two
+[00:12:09] classes or so. But this would work. This
+[00:12:12] is kind of what SQL light does to if you
+[00:12:14] switch on they have a special mode you
+[00:12:16] can switch to shadow paging. They'll
+[00:12:17] basically do this, right? But as we said
+[00:12:21] like if you only allow one transaction
+[00:12:23] run at the same time then you're you're
+[00:12:24] sort of not getting the full parallelism
+[00:12:26] you you want to have in your database
+[00:12:28] system.
+[00:12:29] So what we really want to do and what
+[00:12:31] the next couple lectures are trying to
+[00:12:33] solve is how do we allow for multiple
+[00:12:35] transactions to run at the same time
+[00:12:37] simultaneously and interact with the
+[00:12:39] database either reading or writing with
+[00:12:40] it at the same time. I mean it's sort of
+[00:12:44] obvious why you want to do this right.
+[00:12:45] We want to take advantage of all the
+[00:12:46] additional parallelism we have in modern
+[00:12:48] hardware like more CPU cores but we'll
+[00:12:51] eventually we're talking about single
+[00:12:52] node systems now but we'll talk about
+[00:12:53] distributed bases in a second. Same idea
+[00:12:55] applies. If I want to go multiple go
+[00:12:57] across multiple nodes, I that that'll
+[00:12:59] give me better parallels and better
+[00:13:00] scalability and it'll appear to the end
+[00:13:03] users that the data system is more
+[00:13:04] responsive because I'm not submitting a
+[00:13:06] transaction then waiting, you know, some
+[00:13:08] maybe a second for whatever transaction
+[00:13:10] that was queued up in front of me to
+[00:13:11] finish. I may have to still do that in
+[00:13:13] some cases and I may end up aborting if
+[00:13:15] if I try to write something that
+[00:13:17] somebody else has already wrote to. But
+[00:13:18] we we'll cover what that means in a
+[00:13:19] second. But in general, this this allows
+[00:13:22] to route allows to get the better
+[00:13:23] performance. uh for for for in our
+[00:13:26] system because we're taking more
+[00:13:27] advantage of the of the um
+[00:13:31] of of the hardware that's available to
+[00:13:32] us. But as I was sort of saying before,
+[00:13:34] we we it's great to be fast, but we also
+[00:13:36] want to be correct. And actually in
+[00:13:38] database systems, usually you want to
+[00:13:40] care about correctness first and then
+[00:13:42] performance later because it's often
+[00:13:44] times very hard to build a fast system
+[00:13:47] and then go try to graft make it correct
+[00:13:49] later on. You're better off building a
+[00:13:51] correct system first and then figuring
+[00:13:53] out how to optimize it without relaxing
+[00:13:54] those correctness guarantees. And this
+[00:13:56] is super hard. There was a bug found in
+[00:13:57] Postgress's implementation of this
+[00:13:59] probably two or three years ago.
+[00:14:00] Postgress has been around since the 80s
+[00:14:03] since before most you guys were born and
+[00:14:05] they're still finding you know errors in
+[00:14:07] in in these protocols is super hard to
+[00:14:09] do. Fairness. We'll talk about a little
+[00:14:11] bit in we talk about two-phase locking
+[00:14:13] uh next class. But this is giving the
+[00:14:15] you know making sure that no one
+[00:14:16] transaction or no one application is
+[00:14:18] starved out indefinitely if you're
+[00:14:19] trying to get access to your your to the
+[00:14:21] data. But again we'll cover that when
+[00:14:23] when we talk about how to break
+[00:14:24] deadlocks. Uh next class.
+[00:14:27] All right. So what we're trying to do
+[00:14:28] here is we're trying to allow for an
+[00:14:30] arbitrary interle of operations against
+[00:14:32] the database. So read and write
+[00:14:34] operations. Um but during this process
+[00:14:36] while a transaction is running there may
+[00:14:38] be moments in time where the the
+[00:14:41] database is actually inconsistent means
+[00:14:44] that the data is actually incorrect
+[00:14:46] because you kind of have to be can make
+[00:14:48] apply some changes right but that's okay
+[00:14:52] as long as those uh inconsistencies
+[00:14:54] don't persist after a transaction
+[00:14:57] commits or after a transaction is
+[00:14:58] aborted because of restart right those
+[00:15:00] things are bad that's what we're trying
+[00:15:01] to avoid but during transaction
+[00:15:03] execution like going Back to my example
+[00:15:05] here, right? When I took $25 out of this
+[00:15:09] bank account, ignoring the the running
+[00:15:11] in parallel, and then before I I sent
+[00:15:14] $25 to somebody else and then I before I
+[00:15:17] took out the $25 in my account, there's
+[00:15:20] technically an extra $25 floating around
+[00:15:22] in the system, right? We're talking
+[00:15:24] nanconds here potentially. But in that
+[00:15:27] case here, it's technically it's
+[00:15:28] incorrect because there's $25 more than
+[00:15:30] it actually should be. But that's okay,
+[00:15:32] right? because we have to do that
+[00:15:33] because we can't just do magically, you
+[00:15:35] know, apply changes atomically in one
+[00:15:36] instruction at the level we're talking
+[00:15:38] about here. So that's what I mean by the
+[00:15:40] temporary stuff that it's it's it's
+[00:15:43] okay, but we have to make sure we don't
+[00:15:45] let things uh persist forever. [snorts]
+[00:15:48] The other important thing to understand
+[00:15:49] too when we talk about transactions here
+[00:15:50] is that we only care about we being the
+[00:15:52] data system, we only care about what's
+[00:15:55] in our purview of control in our data
+[00:15:57] system. So what I mean by that is we can
+[00:15:59] only handle the read and write
+[00:16:00] operations on data that we manage that
+[00:16:02] we have control over. If the application
+[00:16:05] does other stuff like send a
+[00:16:07] confirmation email or like launch a
+[00:16:10] missile in the middle of a transaction
+[00:16:12] and then our transaction aborts needs to
+[00:16:14] roll back. We can't roll back that email
+[00:16:16] roll back that missile right because the
+[00:16:17] data system not yet at least doesn't
+[00:16:19] control uh everything in the world. So
+[00:16:22] anything outside the scope of a
+[00:16:23] transaction the readwrite operations
+[00:16:24] we're talking about in the data set we
+[00:16:26] manage right we we can't revert those
+[00:16:29] things. So there may be inconsistencies
+[00:16:31] in the real world but the data doesn't
+[00:16:33] know about it doesn't care about it.
+[00:16:35] Okay.
+[00:16:38] All right. So in order to understand we
+[00:16:39] got to start defining what we mean by
+[00:16:41] you know database and objects and what
+[00:16:43] these transactions are actually doing.
+[00:16:45] So for today's class, we're going to
+[00:16:46] simplify the problem and not talk about
+[00:16:48] tupils or pages or indexes or rows,
+[00:16:51] anything like that. We're only going to
+[00:16:52] deal with abstract objects. We'll give
+[00:16:54] names ABCD. It could be a tupole, could
+[00:16:57] be a table, could be a database. It
+[00:16:58] doesn't matter. All the protocol stuff
+[00:17:00] we'll talk about here today and and
+[00:17:01] going forward will still work in this,
+[00:17:03] you know, with this sort of uh in, you
+[00:17:06] know, this sort of abstract notation.
+[00:17:08] >> [snorts]
+[00:17:08] >> The other third important thing to
+[00:17:10] understand is that we're going to assume
+[00:17:11] for this class today's lecture that the
+[00:17:14] database is going to be fixed size.
+[00:17:16] Meaning all the objects that we care
+[00:17:17] about ABCD whatever they're going to
+[00:17:20] exist before transaction starts and
+[00:17:21] they're still going to exist after the
+[00:17:22] transaction starts. We're not worried
+[00:17:24] about inserts. We're not worried about
+[00:17:25] deletes. Those complicate things and we
+[00:17:28] we'll have to handle that next class.
+[00:17:30] Today's class we're not worried which
+[00:17:31] assume that these objects are always
+[00:17:32] there. We can update them. We can read
+[00:17:34] them but we can't delete or insert new
+[00:17:36] ones.
+[00:17:38] So now we're going to define
+[00:17:39] transactions as a sequence of read and
+[00:17:41] write operations on these database
+[00:17:43] objects. So I can read a or I can write
+[00:17:45] a. And
+[00:17:48] we'll define that when a transaction
+[00:17:49] starts when it invokes begin,
+[00:17:53] right? That's in the SQL syntax. I think
+[00:17:54] sometimes some systems might support
+[00:17:56] start. Um but begin usually what people
+[00:17:59] use. And then we'll say that a
+[00:18:00] transaction finishes either when they
+[00:18:03] call commit or roll back or abort.
+[00:18:07] Right? Roll back and abort are the same
+[00:18:09] thing that I know you you can do in SQL
+[00:18:11] for either one. Commit means like I save
+[00:18:12] all my changes, apply them to the
+[00:18:14] database. And roll back says undo
+[00:18:16] anything any rights that I've done and
+[00:18:18] make it as if I I didn't do anything.
+[00:18:21] Okay.
+[00:18:23] So the the notion of correctness we're
+[00:18:26] going to have for our for our
+[00:18:27] transactions are defined by the acronym
+[00:18:29] ACID. Who here here has heard acid
+[00:18:32] before? All right, almost half. Perfect.
+[00:18:35] So now we're going to go more detail
+[00:18:36] what each of these are. So ACID stands
+[00:18:38] for atomicity, consistency, isolation,
+[00:18:40] durability, right? And in full
+[00:18:42] disclosure, atomicity and isolation and
+[00:18:44] durability. These will be easy for us to
+[00:18:46] understand today. We're going to focus
+[00:18:47] mostly on isolation. Consistency is kind
+[00:18:50] of a a weird one. um it'll make more
+[00:18:52] sense when we talk about distributed
+[00:18:53] systems um but we we'll cover it as we
+[00:18:57] go along. So atity just means that for a
+[00:19:00] given transaction all the operations
+[00:19:02] that that that that a transaction
+[00:19:04] invokes or executes either they're all
+[00:19:07] going to occur or none of them are going
+[00:19:08] to occur. So I can't have any any
+[00:19:11] partial transactions, right? So you can
+[00:19:13] think of this as like simp simplified.
+[00:19:15] It's all or nothing. [snorts]
+[00:19:17] Consistency means that
+[00:19:20] it has to do with like correctness. So
+[00:19:21] like if the database is currently
+[00:19:23] consistent or correct and my transaction
+[00:19:26] only does consistent things, then when a
+[00:19:28] transaction commits, my database is
+[00:19:30] guaranteed to be consistent.
+[00:19:34] That doesn't mean anything like probably
+[00:19:35] doesn't mean anything to you guys
+[00:19:36] either, right? Um again in in when it's
+[00:19:40] a single node system it's it's kind of
+[00:19:42] hard to to discuss but like with
+[00:19:45] distributed system another way I think
+[00:19:46] about this is if I write to a data
+[00:19:49] object a on this node here and I go to
+[00:19:51] commit I can immediately reflect those
+[00:19:54] changes on all other copies of the data
+[00:19:56] on other nodes
+[00:20:00] >> immediately
+[00:20:06] they say it's physically impossible.
+[00:20:07] Now, depends on who's tracking. Again,
+[00:20:10] we'll cover that later. All right.
+[00:20:12] Isolation is the idea that a
+[00:20:17] that a transaction is going to execute
+[00:20:19] as if it has the complete access or uh
+[00:20:22] is the only transaction executing at
+[00:20:23] that given time on the database system.
+[00:20:26] Meaning it can't see reason can't see
+[00:20:27] rights from other transactions at the
+[00:20:29] same time because you wouldn't see that
+[00:20:31] if you were truly isolated.
+[00:20:33] And the last one, durability just means
+[00:20:34] that if my transaction commits, then I'm
+[00:20:37] guaranteed that my changes will survive
+[00:20:40] no matter no matter whether like the
+[00:20:42] machine catches on fire or another, you
+[00:20:44] know, the system crashes, the OS
+[00:20:47] crashes, right? Obviously, the machine
+[00:20:49] catches on fire and your disc melt like
+[00:20:51] then you potentially don't get anything.
+[00:20:53] But the way you handle that is through
+[00:20:54] replication. Now you're talking about
+[00:20:55] distributed systems. And then again,
+[00:20:56] we'll cover that later, right? I me and
+[00:20:59] Harry hand trying to like do baby steps
+[00:21:00] into this to understand how we're
+[00:21:02] actually going to do this on a single
+[00:21:03] node and then we'll expand upon expand
+[00:21:05] on on a on a multi-node system. So
+[00:21:09] again, admissacy isolation durability
+[00:21:11] pretty easy to understand. The German
+[00:21:12] guy in the 1980s that that sort of
+[00:21:14] coined this moniker acid, right? He kind
+[00:21:16] of shoehorned consistency in there
+[00:21:18] because like he was trying to just make
+[00:21:20] it sound nice like acid rather than aid.
+[00:21:23] Um and then he was trying to like make a
+[00:21:25] joke against his wife. This is the story
+[00:21:27] goes I've never met the guy so I don't
+[00:21:29] know that his wife didn't like sugar and
+[00:21:31] sweets so he called her an acid woman.
+[00:21:33] So that's why he got he had to get the C
+[00:21:34] in there to make it all work right. Uh
+[00:21:38] but again this again we won't talk about
+[00:21:41] much today's class or when we talk about
+[00:21:43] the current protocols but it'll make
+[00:21:44] more sense when we talk about
+[00:21:45] distributed systems. [snorts]
+[00:21:47] All right so today's class we're going
+[00:21:48] to go through each of these concepts one
+[00:21:49] by one and again we'll focus mostly on
+[00:21:51] isolation because that's going to be the
+[00:21:53] most important concept in all this.
+[00:21:55] [snorts]
+[00:21:56] All right so for the case ad
+[00:21:59] transactions as I said before we don't
+[00:22:00] want to allow partial partial
+[00:22:02] transactions. So there's only two
+[00:22:03] possible outcomes when a when an
+[00:22:05] application starts a transaction in our
+[00:22:07] database system. It's either going to
+[00:22:09] commit and have all its changes apply to
+[00:22:12] the database or it's going to abort and
+[00:22:14] rolled back uh and have all its changes
+[00:22:17] reversed. So as as if it didn't even
+[00:22:18] execute at all. And one important
+[00:22:21] concept that we'll focus more on in next
+[00:22:22] class is the the this roll back process
+[00:22:26] could either be initiated by the
+[00:22:27] application itself like the application
+[00:22:30] say I don't like what I'm doing. abort
+[00:22:31] my transaction or the database system
+[00:22:34] can say I don't like what you're doing
+[00:22:35] I'm going to make you stop and abort
+[00:22:37] your transaction and roll you back and
+[00:22:39] in your application code which is again
+[00:22:41] outside the database system your
+[00:22:42] application code has to be able to
+[00:22:43] handle that so if you start a
+[00:22:44] transaction in your application you have
+[00:22:46] to be you know catch the exception that
+[00:22:47] you may get aborted and it's up to you
+[00:22:49] for you to decide whether you want to
+[00:22:50] retry it or not
+[00:22:54] >> the question is can a single query abort
+[00:22:56] sure why not
+[00:22:58] >> okay
+[00:22:59] >> yeah let me think about that's true or
+[00:23:01] not. Yeah, you could you could say uh
+[00:23:04] [snorts]
+[00:23:06] uh oh, now I'm getting the weeds. So, it
+[00:23:08] depends on CO protocol. Uh you could
+[00:23:11] have it like try to update something
+[00:23:12] that another transaction tries to update
+[00:23:13] at the same time. Uh and then therefore
+[00:23:16] you block and wait and then you might
+[00:23:18] time out and get aborted,
+[00:23:21] right? Well, we we'll do we do examples
+[00:23:24] of that and then it depends on the
+[00:23:25] isolation level. We'll cover that next
+[00:23:27] class. Right? It gets complicated
+[00:23:29] [snorts] but in general yeah it could a
+[00:23:31] single statement transaction is still a
+[00:23:32] transaction.
+[00:23:34] >> So implicitly
+[00:23:37] >> the statement is uh the statement is
+[00:23:38] implicitly every query is a transaction.
+[00:23:40] Yes. So when you open up Postgress today
+[00:23:42] and you write a query uh it's going to
+[00:23:44] run it's going to technically runs begin
+[00:23:47] commit around it even though it runs
+[00:23:48] that one query. Yes. [snorts]
+[00:23:51] It's called autocommit. You can turn
+[00:23:53] that off. So you can do update update
+[00:23:54] update and without calling begin and it
+[00:23:56] creates a new transaction but you have
+[00:23:57] to call commit or roll back at the end.
+[00:24:01] I admit I love transactions. They're
+[00:24:03] like super awesome. They're super hard.
+[00:24:05] Uh so I get excited. That's why I'm like
+[00:24:07] riffing on everything he's asking about
+[00:24:09] because like we can give demos and give
+[00:24:10] we it's all awesome. It's great and it's
+[00:24:12] really hard too. Um even though it's
+[00:24:14] it's an old topic. [snorts] Okay. So
+[00:24:18] again, so I said it's the data system
+[00:24:20] guarantees to the application server
+[00:24:22] that your transactions will be atomic.
+[00:24:24] So either everything's going to execute
+[00:24:25] or nothing's going to execute. So
+[00:24:27] there's two highle ways we're going to
+[00:24:29] be able to provide this this guarantee.
+[00:24:32] The first is going to be through logging
+[00:24:34] and this is the most common approach
+[00:24:35] that most systems use. And it's
+[00:24:37] challenging because the term log has a
+[00:24:39] bunch of different technical name or
+[00:24:40] usage in in data systems, right?
+[00:24:43] uh you you think of like a debug log,
+[00:24:45] you know, just printing out printf
+[00:24:47] statements. Uh we saw this before with
+[00:24:50] the log structure merge tree. It's kind
+[00:24:52] of the same idea, but it's basically
+[00:24:54] just a record in a ledger of the ordered
+[00:24:57] sort of an ordering of here's all the
+[00:24:59] operations that a data that a
+[00:25:00] transactions made applied to the
+[00:25:02] database system. And we can either store
+[00:25:05] this as the as in a separate file like a
+[00:25:08] redhead log file which we'll cover in a
+[00:25:09] few weeks. Uh or we could actually just
+[00:25:11] have the database itself be like the log
+[00:25:13] merry like that have that be the log
+[00:25:15] we're using to figure out what
+[00:25:16] transactions actually did. So in this
+[00:25:18] log we can keep track of all the the
+[00:25:20] actions that that occurred and also redo
+[00:25:23] information and undo information. So
+[00:25:25] undo information would be like how to
+[00:25:27] reverse the change that they applied and
+[00:25:28] the redo would be how to reapply reapply
+[00:25:31] the change and we're actually going to
+[00:25:33] going to end up needing both of them and
+[00:25:35] we'll have to maintain this undo log in
+[00:25:37] memory as transactions are making
+[00:25:39] changes and then we'll see this in a few
+[00:25:41] weeks but in our bufferable manager we
+[00:25:44] we're going to have to make sure that
+[00:25:45] when we flush out a dirty page that's
+[00:25:47] been modified by transaction we got to
+[00:25:49] make sure the log record that
+[00:25:50] corresponds to what whatever made that
+[00:25:52] page dirty that's got to be get get
+[00:25:54] written to disk first before the page
+[00:25:56] that got modified gets written to disk.
+[00:25:59] And that that simple ordering is going
+[00:26:01] to guarantee that we can crash and and
+[00:26:02] and come back and restore the state of
+[00:26:04] the database correctly.
+[00:26:06] Right? There's those flight recorders or
+[00:26:07] black boxes in in in airplanes that
+[00:26:10] keeps track of like here's all the
+[00:26:11] things that were occurring in my system
+[00:26:12] right before the crash. They've
+[00:26:13] recovered that and figure out why the
+[00:26:14] plane failed. Same thing in our database
+[00:26:16] system. It's the blackbox recorder that
+[00:26:18] keeps track of here's all the changes
+[00:26:19] that that occurring. Some of them have
+[00:26:20] been written a disk. Some might be in
+[00:26:21] memory but at least when we crash come
+[00:26:23] back we can look inside that and figure
+[00:26:24] out what was going on to put the
+[00:26:26] database back in in the correct state.
+[00:26:28] >> Yes.
+[00:26:35] >> The question is question is what are we
+[00:26:37] logging?
+[00:26:38] >> Yeah.
+[00:26:38] >> And the choices are am I recording like
+[00:26:42] a snapshot of the record like the tupal
+[00:26:44] itself or am I recording like what was
+[00:26:47] the change?
+[00:26:48] It depends on what how you implement it.
+[00:26:51] >> The answer is both. You can do both.
+[00:26:54] operations like
+[00:26:57] the
+[00:26:58] only
+[00:27:02] >> so his question is um if I'm recording
+[00:27:06] the aggregation
+[00:27:07] like as an update query or um
+[00:27:16] >> the same as if if I say I do a select
+[00:27:18] query get an aggregation and then I
+[00:27:21] update some other record with the
+[00:27:23] corresponding aggregation. So the log
+[00:27:25] will be ordered such that when you
+[00:27:27] recover it, you can go back to the
+[00:27:29] previous state of the database and
+[00:27:30] replay that transaction. And I actually
+[00:27:32] don't care about the essentially I don't
+[00:27:34] care about the aggregation. I only care
+[00:27:35] about what's the final computation that
+[00:27:36] I put in the database. As long as that
+[00:27:38] occurs in the same order the first time
+[00:27:40] it ran, then I'm okay. So that's getting
+[00:27:44] that's called physiological logging
+[00:27:45] where I'm recording the actual changes
+[00:27:47] like the bite level changes like a diff
+[00:27:48] and git. You can do logical logging
+[00:27:51] where it's actually the the query itself
+[00:27:53] gets logged and then you reexecute the
+[00:27:55] query. So the qu the qu the query took
+[00:27:57] you know an hour to run the first time
+[00:27:59] when you recover the log it takes an
+[00:28:00] hour to run again. But sometimes that's
+[00:28:02] okay because if I'm doing real fast
+[00:28:04] things it's actually faster for me. So
+[00:28:06] like we'll get to that in like three
+[00:28:08] weeks but like the answer is yes. This
+[00:28:10] thing is being ordered and with all the
+[00:28:12] changes that are getting getting made so
+[00:28:14] that if I crash and come back I just
+[00:28:15] replay the exact same order and I am
+[00:28:16] guaranteed to get back in the correct
+[00:28:17] database state.
+[00:28:21] All right. So, we want to do this for
+[00:28:22] obviously for for efficiency reasons in
+[00:28:25] some cases because it'll be it'll be
+[00:28:26] faster for us to write a sequential log
+[00:28:28] out to disk rather than random IO for
+[00:28:30] pages. That's the same argument we saw
+[00:28:32] with the the the the log structure merge
+[00:28:36] tree architecture versus like the heap
+[00:28:38] files or the slotted pages. But again,
+[00:28:41] sometimes people also keep track of keep
+[00:28:43] these these logs around forever or at
+[00:28:45] least seven years. Like if you're a
+[00:28:47] financial firm, you got to keep track of
+[00:28:48] every transaction that everyone's ever
+[00:28:49] made for seven years if you ever get uh
+[00:28:51] audited by the regulators. And so this
+[00:28:53] this log information can use for that as
+[00:28:55] well.
+[00:29:06] What am I recording my log? Is it the
+[00:29:08] actual operations I did or like the bite
+[00:29:12] level changes? It depends.
+[00:29:15] >> For undo, undo, you'd have to you'd have
+[00:29:17] to record what the previous value was
+[00:29:19] because, you know, if it's like a um if
+[00:29:23] you're recording like update
+[00:29:25] update value plus one, I have to know
+[00:29:28] what the previous value was. Again, like
+[00:29:30] depending on how you're you're you're
+[00:29:32] replaying the log, you may need that
+[00:29:35] previous value. may may not
+[00:29:38] we're getting way ahead ourselves but
+[00:29:39] snapshots is the way to handle your
+[00:29:40] problem if you don't have the undo just
+[00:29:42] go back to the previous version and
+[00:29:43] replay in the same order again getting
+[00:29:45] way ahead of ourselves but you guys are
+[00:29:47] again you're understanding like this
+[00:29:48] thing can be replayed so we can put the
+[00:29:50] days back in the same state the other
+[00:29:52] technique is what we already talked
+[00:29:53] about at the beginning the the shadow
+[00:29:55] paging again this is where you make
+[00:29:57] copies of pages uh to allow the
+[00:29:59] transactions to make those make you know
+[00:30:01] update those these those copies instead
+[00:30:03] of the original versions and then when
+[00:30:05] go commit. You just flip pointers and
+[00:30:08] say here's now the the latest version of
+[00:30:10] the pages.
+[00:30:12] Yes. In the back.
+[00:30:23] >> Yes.
+[00:30:27] >> That the the front head would be
+[00:30:29] expensive. Is that all right? So her
+[00:30:31] statement is uh can I briefly discuss
+[00:30:35] like what's the run what's the
+[00:30:37] performance of these two approaches and
+[00:30:38] there's two notions of performance there
+[00:30:40] is normal operations where I'm running
+[00:30:42] transactions and then there's if I crash
+[00:30:44] and recover how long does that take most
+[00:30:47] people most most places care about the
+[00:30:49] the normal operations you say oh my
+[00:30:52] database is not going to crash that
+[00:30:53] often so I want to run as fast as I can
+[00:30:54] and then yeah if I crash then I'll I'll
+[00:30:56] I'll pay that penalty. So the the write
+[00:31:00] ahead log approach is actually faster at
+[00:31:02] runtime for normal operations because I
+[00:31:04] can just append to a log and write that
+[00:31:06] out sequentially. Right now when I crash
+[00:31:09] come back depending on how I what I'm
+[00:31:11] storing my log I got to replay it and
+[00:31:12] that could take hours potentially worst
+[00:31:16] case scenario days right where in the
+[00:31:20] case of shadow paging it's going to be
+[00:31:22] slower at runtime because I got to make
+[00:31:24] a copy of the page and and then apply my
+[00:31:26] changes and then somehow you know update
+[00:31:27] some some pointer to point to the new
+[00:31:29] pages but when I crash come back it's
+[00:31:32] super fast because I just ignore all my
+[00:31:33] shadow pages because those transactions
+[00:31:35] didn't commit and I come back and my
+[00:31:36] database is instantly in the correct
+[00:31:38] state.
+[00:31:41] So again, most most systems are going to
+[00:31:44] care about the their normal operations
+[00:31:47] and choose a red head log approach.
+[00:31:50] There's one system in the 1970s, I
+[00:31:51] forget the name of it. Um it was
+[00:31:54] actually built uh by the Puerto Rican
+[00:31:55] power company and it was like I don't
+[00:31:57] know the 70s in Puerto Rico. They they
+[00:32:00] the infrastructure was not that great.
+[00:32:01] Although it's not much better now, but
+[00:32:03] still. Um so they had a database system.
+[00:32:05] they were sort of keeping track of like
+[00:32:06] the you know the the usage of various
+[00:32:09] customers and because they were having
+[00:32:11] all these power outages that they chose
+[00:32:14] a shadow paging approach because you
+[00:32:16] know three times of the day that this
+[00:32:17] the power would go out the data would
+[00:32:18] crash and you don't want to spend you
+[00:32:20] know an hour waiting for the system to
+[00:32:22] come back online the data system come
+[00:32:23] back online uh after a power outage
+[00:32:26] because it might crash again so they
+[00:32:28] chose shadow paging because when they
+[00:32:30] would crash which is unpredictable when
+[00:32:32] they came back they could have instantly
+[00:32:34] available So they were choosing slower
+[00:32:36] runtime performance in exchange for
+[00:32:38] faster recovery. But most most people
+[00:32:40] are going to choose the opposite.
+[00:32:42] So the very few systems do this today.
+[00:32:44] Again system IBM did this on system R
+[00:32:46] 1970s but when they built DB2 uh they
+[00:32:48] switched to redhead log the the previous
+[00:32:50] slide. Uh probably one of the most
+[00:32:53] famous ones doing this is LMDB. Uh and
+[00:32:56] this is he's the opposite of me like he
+[00:32:58] loves MAP and he loves shadow paging and
+[00:33:00] that's what he uses. Uh I think CouchB
+[00:33:03] still does this. There was an early key
+[00:33:04] value store called Tokyo Cabinet from I
+[00:33:07] don't know 10 years ago that was doing
+[00:33:09] this but in general like I guess we said
+[00:33:12] many times you don't want to do this
+[00:33:14] right head logging is always going to be
+[00:33:16] superior choice uh and there's tricks to
+[00:33:18] make the recovery actually go faster
+[00:33:20] depends on how how much you want to take
+[00:33:22] snapshots and so forth like in general
+[00:33:24] the right head logging is going to be
+[00:33:25] the superior approach
+[00:33:31] >> yes and yes I'm I'm I'm leaking
+[00:33:34] I'm leaking ideas coming ahead. Yes. Um
+[00:33:37] I should just say logging but in
+[00:33:39] actuality we call this write ahead log.
+[00:33:40] So the idea is you're writing the
+[00:33:42] changes you make to the days to the log
+[00:33:44] first then you update the actual data
+[00:33:46] base itself. That's the right loging.
+[00:33:48] Yes.
+[00:33:48] >> What happens when you log?
+[00:33:53] The question is what happens if you
+[00:33:55] write to the log that gets written to
+[00:33:57] disk and then before the the changes to
+[00:34:00] the the actual data gets get well if you
+[00:34:02] crash and come back you replay the log
+[00:34:03] and you come back and you you want to
+[00:34:06] roll back and then
+[00:34:07] >> you can't roll back if you say commit
+[00:34:10] all right so this is another question
+[00:34:11] too we got to understand so if my
+[00:34:13] application tells my data I want to go
+[00:34:15] commit
+[00:34:16] >> I may crash before I get the
+[00:34:19] acknowledgement that my transaction
+[00:34:20] committed and that's Okay, so meaning
+[00:34:23] like I you tell me to commit, I commit
+[00:34:26] your transaction and then now I'm about
+[00:34:27] to send you a message. Hey, I got it.
+[00:34:29] Good job. Right, but then I crash before
+[00:34:30] you get that message. That transaction
+[00:34:32] is still committed
+[00:34:33] >> and it's your job to go figure out
+[00:34:35] whether actually committed or not. We
+[00:34:37] can't we can't you know we the the data
+[00:34:39] system
+[00:34:40] >> and that's still correct,
+[00:34:42] >> right?
+[00:34:43] >> So So it only writes starts writing the
+[00:34:46] log after you tell it.
+[00:34:48] >> Uh we're getting ahead of ourselves. Uh
+[00:34:50] some systems will keep everything in
+[00:34:51] memory. Some systems will actually write
+[00:34:54] things along. You want to write things
+[00:34:55] sorry write write the log out to disk.
+[00:34:57] You want to write it out to disk because
+[00:34:58] that that means if like if I have if I
+[00:35:01] need to update a billion pages but I I
+[00:35:03] only keep a 100 in memory then the write
+[00:35:06] ahead log is how I'm going to be able to
+[00:35:07] handle that.
+[00:35:09] If I have to keep everything in memory
+[00:35:10] then I can't do can't keep everything in
+[00:35:12] memory. So it's okay for me to write the
+[00:35:13] log out to disk before I finish or
+[00:35:16] commits. But as soon as I I'm told
+[00:35:18] commit as soon as on on disk it lands a
+[00:35:20] commit message in the log that
+[00:35:22] transaction is committed.
+[00:35:24] >> Okay. But then it's possible that like
+[00:35:26] in the middle
+[00:35:29] logs. Yes.
+[00:35:31] >> Yes.
+[00:35:33] the changes to the data.
+[00:35:34] >> Yeah.
+[00:35:41] >> No. So the statement is it may be the
+[00:35:43] case where my transaction is updating
+[00:35:45] the database and I'm writing to this log
+[00:35:47] and some of those log records are
+[00:35:49] getting written to disk and you haven't
+[00:35:50] told me to commit yet, right? So I
+[00:35:52] haven't the the application hasn't told
+[00:35:54] me to commit and then I crash.
+[00:35:57] >> Correct. The log will log can help us do
+[00:36:00] that.
+[00:36:01] >> The log has data that you didn't
+[00:36:03] actually write,
+[00:36:04] >> right? So there's the log and then
+[00:36:05] there's the data.
+[00:36:07] >> The log tells me what I what I was
+[00:36:08] trying to do to the data. So when I
+[00:36:10] crash and come back, I go look in the
+[00:36:12] data and say, did I actually make those
+[00:36:13] changes? Yes or no? And if I did and
+[00:36:15] they shouldn't be there, I have to roll
+[00:36:16] them back.
+[00:36:19] >> Yeah. This gets very hard. It's very
+[00:36:21] complicated. The answer is yes. We'll
+[00:36:23] spend whole one whole lecture exactly
+[00:36:24] that problem.
+[00:36:26] >> Yes. Because then you got to worry about
+[00:36:27] like my log grows forever, right? I
+[00:36:30] don't want to I don't want to run my
+[00:36:31] data for five years and then crash and
+[00:36:33] have to replay the log for five years.
+[00:36:35] So what do you do? You take checkpoints
+[00:36:37] or snapshots so I can truncate how far
+[00:36:39] back in the log I got to go. But what
+[00:36:41] happens if I have a transaction started,
+[00:36:43] I take a checkpoint and then the
+[00:36:45] transaction finishes and now it spans
+[00:36:46] checkpoints. How do I handle that?
+[00:36:53] How long? The statement is again we're
+[00:36:54] getting ahead of our statement is and I
+[00:36:57] like this statement is well just don't
+[00:36:58] take checkpoints while transactions are
+[00:37:00] running. My checkpoint takes say half an
+[00:37:02] hour. Do you want my website to be down
+[00:37:04] for half an hour? No.
+[00:37:06] Right. And in the financial world those
+[00:37:09] guys are paranoid. They take checkpoints
+[00:37:10] every five minutes.
+[00:37:13] So we'll talk about how do you allow
+[00:37:15] transactions to keep running while I'm
+[00:37:16] taking checkpoints. are called fuzzy
+[00:37:17] checkpoints.
+[00:37:19] It's hard. It's awesome. Yeah. Uh
+[00:37:23] and there's there's there's this book or
+[00:37:25] sorry, not a book. There's a this
+[00:37:26] there's this the [snorts] spent a whole
+[00:37:29] class on the the algorithm is called
+[00:37:30] Aries. Uh it's developed by IBM in the
+[00:37:34] early 90s. It's 75 pages. It's it's like
+[00:37:37] that's the bible on how to make sure
+[00:37:38] your database is is fail safe on a
+[00:37:41] single node. Again, if the machine
+[00:37:42] catches on fire, you you're screwed
+[00:37:45] there. Then you use Paxos as a raft
+[00:37:47] whatever to span things out across
+[00:37:48] multiple nodes. We'll get there. We'll
+[00:37:49] get there. Okay. Don't do the shadow
+[00:37:52] bing. All right. [snorts]
+[00:37:53] Consistency this thing. Right. So again
+[00:37:56] we're trying to say our database is
+[00:37:57] trying to model the real world. So we
+[00:37:59] want to make sure that we don't allow
+[00:38:01] for for transa we don't allow
+[00:38:02] transactions to make changes that would
+[00:38:04] violate
+[00:38:06] you know parameters or aspects of the
+[00:38:08] real world. So for example, if I have a
+[00:38:09] database of of keeping track of
+[00:38:11] everyone's age like as a single integer,
+[00:38:14] I don't want nobody can be a negative
+[00:38:15] age, right? So I want my data system to
+[00:38:18] to not allow [clears throat] that. And
+[00:38:20] therefore, if a transaction tries to
+[00:38:21] update the you know someone's age record
+[00:38:24] to say now they're negative 100 years
+[00:38:26] old, the data system would not should
+[00:38:28] not allow that because that would be an
+[00:38:29] inconsistent state of the database.
+[00:38:31] Right? So this is not something the data
+[00:38:33] system can do do for you automatically.
+[00:38:35] doesn't know what it means for for
+[00:38:37] someone to be a negative age or it's
+[00:38:39] just storing integers. So these
+[00:38:41] constraints are things that the the
+[00:38:42] application has to tell us either
+[00:38:45] through like the add constraints or like
+[00:38:48] when you create the table you can call
+[00:38:49] it check not null is another obvious one
+[00:38:51] right so these are all the it has to be
+[00:38:55] told these constraints ahead of time and
+[00:38:57] the data system if it wants to be
+[00:38:58] consistent has to enforce them to make
+[00:39:01] sure that no transaction actually can
+[00:39:02] update the database in an invalid way
+[00:39:04] right
+[00:39:07] so you may have heard the term eventual
+[00:39:09] consistency
+[00:39:11] Right? This is when we're getting ahead
+[00:39:12] of ourselves a little bit, but this is
+[00:39:13] when we start talking about multiple
+[00:39:15] nodes like distributed systems. So vual
+[00:39:17] consistency means that if I have a copy
+[00:39:19] of a data that's replicated on say two
+[00:39:22] machines and so when my transaction
+[00:39:25] modifies something on one machine and I
+[00:39:27] commit that change should be immediately
+[00:39:29] reflected on the the the other machine
+[00:39:33] if I want to have you know consistency
+[00:39:35] guarantees. So that means if I commit
+[00:39:38] here and I immediately try to read that
+[00:39:39] same record on another machine, I should
+[00:39:41] see my own right.
+[00:39:44] Eventual consistency basically says well
+[00:39:47] well this is hard to do. So we'll have
+[00:39:49] two copies of the data on two machines
+[00:39:51] and when I update the one machine here
+[00:39:55] I'll eventually update the other one. So
+[00:39:57] there's a window a small window where I
+[00:39:59] may do a commit on this node then go try
+[00:40:01] to read that same record on another node
+[00:40:03] and my change hasn't been propagated
+[00:40:05] yet. So therefore, I see the older
+[00:40:07] version,
+[00:40:08] right?
+[00:40:10] This is what people did in the uh this
+[00:40:14] was the hot thing out of Google in the
+[00:40:16] 2000s. Um but we'll talk about this end
+[00:40:19] in the class. Like they basically said,
+[00:40:20] "Oh, that was actually a mistake." Uh
+[00:40:22] because now you have a bunch of
+[00:40:25] JavaScript programmers trying to reason
+[00:40:26] about inconsistent incorrect data and
+[00:40:29] that's never that's never good, right?
+[00:40:31] So most of the modern transactional
+[00:40:34] systems don't do this. Uh we'll cover
+[00:40:36] this briefly and see how to not do it uh
+[00:40:39] later in in the semester in lecture 23.
+[00:40:41] [snorts]
+[00:40:43] What is what
+[00:40:45] >> uh integrity constraint sorry
+[00:40:49] right like not null is an integrity
+[00:40:50] constraint. Check that no age is is
+[00:40:52] greater no age is less than zero. Right?
+[00:40:55] Those are integrity constraints. Thank
+[00:40:57] you. I shed it out.
+[00:40:59] All right. All right. So, the main one I
+[00:41:00] want to talk about is isolation
+[00:41:01] transactions. And again, this this means
+[00:41:03] that when application submits queries,
+[00:41:05] sorry, submits transactions to the to
+[00:41:07] the database system, they're going to
+[00:41:09] assume that they're running by themsel.
+[00:41:10] So, they're not going to see weird
+[00:41:12] intermediate states from from from other
+[00:41:14] transactions might define the database,
+[00:41:16] right? It's going to it's going to be as
+[00:41:17] if it's running in in serial order. And
+[00:41:20] this is this is a good thing because
+[00:41:22] this is a way easier programming model
+[00:41:24] for your rando application developer to
+[00:41:26] to reason about, right? Think of like
+[00:41:29] >> [clears throat]
+[00:41:29] >> JavaScript programmers, right? Uh like
+[00:41:32] you don't want them to start thinking
+[00:41:33] about, okay, what if I update this and
+[00:41:35] another guy updates the same thing at
+[00:41:36] the same time? How do I handle this? If
+[00:41:38] you just assume they're going to run in
+[00:41:39] serial order, then you don't you it's as
+[00:41:41] if you're running on a box by yourself,
+[00:41:44] right? But as we've already said, we
+[00:41:46] want to be able to interle these these
+[00:41:48] these operations from these transactions
+[00:41:49] at the same time so that you know we get
+[00:41:52] the better parallelism and get the
+[00:41:53] better performance. But we still need to
+[00:41:55] make sure this that they're going to run
+[00:41:57] as if they were running one at a time
+[00:41:59] even though they're not.
+[00:42:02] So this is what the concern protocol is
+[00:42:03] going to provide for us in addition to
+[00:42:05] the logging and all the other stuff.
+[00:42:06] sort of the whole the whole big picture.
+[00:42:08] But this is basically the the
+[00:42:10] coordination mechanism inside of our
+[00:42:12] data system that we're going to use to
+[00:42:13] figure out what transaction can run at
+[00:42:15] what time. What data are they allowed to
+[00:42:17] read and write? And then when they go to
+[00:42:19] commit, are they allowed to do that or
+[00:42:21] not,
+[00:42:24] right? There's other things like we'll
+[00:42:25] talk about next class. How to handle
+[00:42:27] deadlocks or either block, you know,
+[00:42:29] breaking them when they occur or prevent
+[00:42:30] them from occurring. That's next class,
+[00:42:32] right?
+[00:42:33] Well, in in general, there's be
+[00:42:35] basically two approaches to this, right?
+[00:42:37] Which I I just sort of said, right?
+[00:42:38] There's be pessimistic and optimistic
+[00:42:40] concial protocols. Pessimistic says that
+[00:42:42] I think sorry, I'm assume you're going
+[00:42:44] to have conflicts with other
+[00:42:45] transactions. So, I'm going to prevent
+[00:42:47] you from doing certain things to avoid
+[00:42:49] avoid these conflicts, right? Trying to
+[00:42:51] stop you from doing something something
+[00:42:52] wrong ahead of time. Optimistic assumes
+[00:42:54] that the conflicts are rare, meaning two
+[00:42:56] guys trying to two transactions trying
+[00:42:58] to read and write to the data at the
+[00:42:59] same time. Same data at the same time.
+[00:43:00] So, I'm gonna allow you to do whatever
+[00:43:02] you want, but then when you go to
+[00:43:04] commit, I'll go figure out what you
+[00:43:05] actually did and go go to clean things
+[00:43:06] up. [snorts]
+[00:43:08] All right. So, let's look look let's
+[00:43:11] look at an example here. What of of how
+[00:43:14] can you allow this interle and what it
+[00:43:16] mean? What does it mean for things to be
+[00:43:17] correct? A correct interle. So, [snorts]
+[00:43:19] again, same we're doing same bank
+[00:43:20] account application. Uh we have two
+[00:43:23] accounts A and B and each one has has a
+[00:43:26] $1,000 in it. So transaction T1 wants to
+[00:43:29] take $100 out of A's account and put it
+[00:43:32] into B's account. And at the same time,
+[00:43:33] we have another transaction T2 that
+[00:43:35] wants to compute 6% interest on the
+[00:43:38] accounts and and you know give them a
+[00:43:40] bump in the money, right? [snorts]
+[00:43:43] So we we want to see how can we
+[00:43:44] intersections at the same time to
+[00:43:46] improve prove the performance of the
+[00:43:48] system reduce the total amount of time
+[00:43:49] it takes to execute them. So the first
+[00:43:51] thing we understand is what are the
+[00:43:52] possible outcomes we could have for
+[00:43:55] interle these these these two
+[00:43:57] transactions here right the answer is a
+[00:44:00] bunch right they're not doing that much
+[00:44:03] there's only two transactions there only
+[00:44:04] two objects so it's not you know it's
+[00:44:05] not infinite right but for this
+[00:44:08] application the thing we care about at
+[00:44:10] the end is that there's no money missing
+[00:44:14] and there's no extra money that
+[00:44:15] shouldn't be there so an easy way to
+[00:44:17] think about it is if I just take the the
+[00:44:20] the two accounts they both have $1,000.
+[00:44:22] So I end up add them together I get
+[00:44:23] $2,000 and I compute 1% interest on or
+[00:44:26] take six% interest on them. The final
+[00:44:28] state of the database the total amount
+[00:44:30] of money I should have in my database
+[00:44:32] should be 2120.
+[00:44:35] So an important thing to understand in
+[00:44:36] in this this world of database systems
+[00:44:39] at least what we're talking about here
+[00:44:40] today that it doesn't matter whether T1
+[00:44:43] is submitted first by the application
+[00:44:45] and then T2. We're allowed to execute
+[00:44:48] them in any order that we want. So the
+[00:44:51] the the order of their arrival on the
+[00:44:52] box doesn't matter. We can still order
+[00:44:55] them, you know, in any way we want to
+[00:44:57] try to get the the best performance.
+[00:44:59] There's a if you care about those
+[00:45:01] things, that's called strict consistency
+[00:45:02] or uh external consistency. Very few
+[00:45:05] systems support that. Google Spanner is
+[00:45:07] probably the most famous one that Google
+[00:45:08] Spanner will guarantee that if if the
+[00:45:10] application one application spits T1 and
+[00:45:12] then like a half a millisecond later
+[00:45:14] another application spits T2 it'll
+[00:45:16] guarantee that T1 commits before T2
+[00:45:19] simplify our problem today we're allowed
+[00:45:21] to we're not going to guarantee that we
+[00:45:23] can still reorder them [snorts]
+[00:45:25] but the outcome again we want in order
+[00:45:27] to get make sure that we have this 2120
+[00:45:29] number at the end is that whatever
+[00:45:31] interle we come up with we want to be as
+[00:45:33] if they executed in serial order,
+[00:45:36] meaning one after another.
+[00:45:39] So that means that there's only two
+[00:45:40] database states. Either I run T1 first
+[00:45:43] followed by T2 or run T2 followed by T1,
+[00:45:47] right? And I may end up with different
+[00:45:48] values for for the accounts for A and B.
+[00:45:51] But again, if I just add the total
+[00:45:53] amount for each of them after the
+[00:45:54] transactions committed, I still end up
+[00:45:56] with 2120.
+[00:46:00] So either one is correct no matter how
+[00:46:02] the transactions are submitted by the
+[00:46:03] application. That's a different notion
+[00:46:05] than maybe think about correctness if
+[00:46:06] you're running on like you know single
+[00:46:08] node parallel system like strict memory
+[00:46:10] orderings right in this case here the
+[00:46:13] data system is given freedom to reorder
+[00:46:14] this anyway it wants as long as it is
+[00:46:16] appears as if the transactions executed
+[00:46:19] one after another
+[00:46:22] right so again the two possible serial
+[00:46:24] orderings are T1 executes followed by T2
+[00:46:27] or T2 executes first followed by T1 and
+[00:46:30] again if I just look at the the final
+[00:46:31] outcome of the the state of objects A
+[00:46:34] and
+[00:46:34] When I add them together, it's always
+[00:46:36] going to be 2120.
+[00:46:40] >> The question is what? Sorry again.
+[00:46:49] >> The question is how would I determine
+[00:46:50] this algorith algorithmically so that
+[00:46:52] would be the protocol right? So today's
+[00:46:55] class we're talk about just identifying
+[00:46:56] whether the ordering is correct or not.
+[00:46:58] Next class will be how do we enforce
+[00:47:00] that? How do we make sure that doesn't
+[00:47:01] happen? So again, for for this class,
+[00:47:03] we're assuming that we're given the
+[00:47:04] queries ahead of time. Sorry, the
+[00:47:06] operations ahead of time and we know so
+[00:47:08] we have the schedule ahead of time. So
+[00:47:09] we're not worried about a transaction T3
+[00:47:11] showing up at this this example here
+[00:47:14] in the back. Yes.
+[00:47:22] >> The question is, wouldn't there exist
+[00:47:24] some kind of requirement or criteria
+[00:47:25] that would be the same across all
+[00:47:27] sequential orderings?
+[00:47:36] Yes.
+[00:47:38] So, uh, her point is that I'm showing
+[00:47:41] I'm showing this example here that I'm
+[00:47:42] saying a plus b equals 2120 and I'm
+[00:47:44] saying that's the we're using that to
+[00:47:46] determine is the ordering correct. I'm
+[00:47:48] just using that as an illustration in
+[00:47:50] this example. Right?
+[00:47:53] The things you would sort of really care
+[00:47:54] about is like the values in the objects
+[00:47:56] themselves, right? And then the we'll
+[00:47:59] see that when we look at what the
+[00:48:01] operations are actually doing inside the
+[00:48:02] data system, that's how we're going to
+[00:48:04] end up determining whether if the
+[00:48:05] ordering is correct or not. For
+[00:48:07] illustration purposes, I'm saying to
+[00:48:09] make it more intuitive, a plus b equals
+[00:48:11] 2120. And you can see for the two zero
+[00:48:13] orderings, you always end up with that,
+[00:48:16] right?
+[00:48:18] Yeah. That notion of higher the higher
+[00:48:19] level notion of correctness. No, no one
+[00:48:22] you can't assume someone's going to give
+[00:48:23] you that.
+[00:48:25] >> Yes.
+[00:48:53] to rephrase what you're saying.
+[00:48:54] Basically, what I'm trying to say is
+[00:48:57] that I want to interle these operations
+[00:48:59] in these transactions and I want the end
+[00:49:01] state of the database to be equivalent
+[00:49:03] to some serial ordering of those
+[00:49:05] transactions. But there may be multiple
+[00:49:07] serial orderings and I actually don't
+[00:49:09] care which one I end up with long as
+[00:49:12] there's at least one of them. So
+[00:49:15] what would be a system that is not
+[00:49:22] let me so let me examples uh
+[00:49:27] the question so the question is going to
+[00:49:28] be like what's an example of a system
+[00:49:30] that can't guarantee these things a lot
+[00:49:32] of them so so let me go through
+[00:49:35] serializability and then all right uh
+[00:49:38] but I'll just say straight up like like
+[00:49:40] when we talk about isolation levels you
+[00:49:42] say basically I want to guarantee For
+[00:49:43] example, my my transactions end up
+[00:49:45] equivalent to a serial ordering. Some
+[00:49:47] systems will lie to you and say, "Yeah,
+[00:49:49] I'll do that for you." When they
+[00:49:50] actually don't do it. Oracle does this.
+[00:49:52] Oracle say, "I want I want my
+[00:49:53] transaction to be serializable." You
+[00:49:55] actually get a lower level than
+[00:49:56] serializable,
+[00:49:58] right? And in Postgresses, theirs was
+[00:49:59] broken for for a few years and someone
+[00:50:01] fixed it two or three years ago. This is
+[00:50:04] super hard. All right. So, let's look at
+[00:50:06] interle a good example. So, why would an
+[00:50:08] interle occur again? So say like you
+[00:50:11] know the the transaction tries to go
+[00:50:13] fetch get data in a page and it's not in
+[00:50:15] your buffer pool. You got to stall that
+[00:50:16] transaction while you go to the disk and
+[00:50:18] go get it. And meanwhile the DS is going
+[00:50:19] to decide I'm going to let somebody
+[00:50:20] something else run. So let's say T1
+[00:50:22] starts it read does takes the $100 out
+[00:50:25] of A and then it stalls because they
+[00:50:26] have to go to disk and then T2 is
+[00:50:28] allowed to start. A computes the
+[00:50:30] interest on A but then it stalls because
+[00:50:32] it's it's waiting for something too save
+[00:50:33] the same page to get to read B. So then
+[00:50:36] T1 can start again, puts the $100 back
+[00:50:39] in B, T then commits, and then T2 starts
+[00:50:42] running and then can update uh compute
+[00:50:44] the interest on B. Right? So in this
+[00:50:46] case here, even though I'm interleing T1
+[00:50:48] and T2, it's equivalent to a serial
+[00:50:51] ordering of T1 followed by T2, right?
+[00:50:54] And the key thing to point out is like
+[00:50:55] the operations on A and B are always
+[00:50:58] happening on T1 first before T T2,
+[00:51:02] right? And again just using this as a
+[00:51:04] simple illustrator trick you end up with
+[00:51:07] the same the same state.
+[00:51:09] A bad leaving would look like this where
+[00:51:12] T1 starts it gets it gets paused or
+[00:51:15] stalled for whatever reason. T2 starts.
+[00:51:17] All right. So T1 takes $100 at A. T2
+[00:51:20] then computes the interest on A then
+[00:51:22] computes the interest on B and then
+[00:51:25] commits and then T1 goes and adds $100
+[00:51:28] back to to B. Right? So when we look at
+[00:51:32] the sum total value of the two accounts,
+[00:51:34] we're missing $6 because we computed
+[00:51:36] interest on A while this $100 in was
+[00:51:38] taken out of A but before it was putting
+[00:51:40] in B.
+[00:51:42] Right?
+[00:51:45] So this is what we're trying to avoid.
+[00:51:46] We're trying to avoid ending up with a a
+[00:51:49] state of the database for our objects
+[00:51:51] that are it's not equivalent to any any
+[00:51:53] serial ordering. And again, for two
+[00:51:55] transactions, it's either T1 T2 or T2
+[00:51:57] T1. But think of like if I have a
+[00:51:59] million transactions, how how would I
+[00:52:00] come up with bad ordering,
+[00:52:03] right?
+[00:52:06] So as humans again in examples here, I'm
+[00:52:08] just showing like a you know a equals a
+[00:52:10] minus 100, right? I'm just showing this.
+[00:52:12] It's pretty easy for us to understand
+[00:52:13] what's actually going on. This is
+[00:52:15] actually not what the database sees. The
+[00:52:16] database sees this instead. Again, we
+[00:52:17] said all we have are read and write
+[00:52:19] operations on single objects. The JSON
+[00:52:21] doesn't know again the high level
+[00:52:23] meaning of what you're trying to do. It
+[00:52:24] just knows whether you're trying to read
+[00:52:26] or write to to an object.
+[00:52:29] So again, in this example here, it's
+[00:52:31] pretty easy for us to look at and say,
+[00:52:32] "Okay, well, this is bad, right? And I
+[00:52:34] compute the sum and I see I'm off." But
+[00:52:36] how can we actually do this for real?
+[00:52:40] And so we want to determine that we have
+[00:52:43] a correct ordering or schedule for our
+[00:52:45] transactions if we can prove that it's
+[00:52:47] equivalent to one of those serial
+[00:52:50] orderings that that might exist.
+[00:52:53] All right. So what does it mean to be
+[00:52:54] equivalent? What's a serial order or
+[00:52:55] serial schedule? So the serial schedule
+[00:52:57] we've already talked about just means
+[00:52:58] that the transactions are executing one
+[00:52:59] after another, right? And then we're
+[00:53:01] going to say that two schedules of these
+[00:53:03] transactions are equivalent if they if
+[00:53:06] the end state of the database is going
+[00:53:08] to be the same as if it was the you know
+[00:53:10] as if it was exited by the other
+[00:53:11] schedule. So I can take any arbitrary
+[00:53:13] interle of a transaction uh of the
+[00:53:16] transactions and then come another
+[00:53:17] arbitrary inner leaving of the
+[00:53:18] transactions and if the end state of the
+[00:53:20] database is the same then we say those
+[00:53:21] two schedules are equivalent even though
+[00:53:23] the interle might be different.
+[00:53:28] And then now I've already said this
+[00:53:29] before
+[00:53:31] again I'm leaking terms ahead of time
+[00:53:32] but we're going to say that this notion
+[00:53:34] that a schedule is serializable
+[00:53:36] I if that it is doing an interle
+[00:53:41] but the the the outcome of the database
+[00:53:43] is equivalent to some serial ordering of
+[00:53:46] of those transactions.
+[00:53:51] Right?
+[00:53:53] So this is not as maybe again not as
+[00:53:55] intuitive maybe as you understand
+[00:53:57] computing and and and transactions and
+[00:54:00] other other areas right but the reason
+[00:54:02] why we're going to allow this this this
+[00:54:05] interle to occur and we only care about
+[00:54:07] is it equivalent to any possible
+[00:54:08] ordering or serial ordering is that it
+[00:54:12] gives the data more freedom to identify
+[00:54:14] better more opportunities for
+[00:54:15] parallelism to get better performance.
+[00:54:17] If I can only execute transactions in
+[00:54:19] the exactly the same order that you
+[00:54:20] submit them without interleing things,
+[00:54:22] then I'm just ending up with a single
+[00:54:24] threaded queue that we said before,
+[00:54:27] right? But if I can interle them and
+[00:54:30] have different notions of correctness,
+[00:54:33] then that's okay. Then that that makes
+[00:54:35] our lives a lot easier.
+[00:54:40] All right. So now we got to say how do
+[00:54:41] we how do we identify whether they're
+[00:54:43] actually equivalent or not? And I'll say
+[00:54:45] what we're going to talk about here is
+[00:54:48] in this world we're assuming that the
+[00:54:50] database is fixed size. We have the
+[00:54:51] objects all ahead of time. And we're
+[00:54:53] going to assume that we have all of the
+[00:54:55] operations that each transaction wants
+[00:54:56] to do ahead of time. In most systems you
+[00:55:00] don't have that, right?
+[00:55:03] Most systems you don't you know are not
+[00:55:04] fixed size. They're not immutable. So
+[00:55:05] you can't allow insert and deletes. But
+[00:55:07] also most systems don't have all the
+[00:55:09] schedules of the transactions ahead of
+[00:55:11] time. So that's what the next class will
+[00:55:14] be. How do I handle when how do I handle
+[00:55:16] the case where transactions are
+[00:55:17] submitting queries and I don't know I
+[00:55:19] don't know what the next query is going
+[00:55:20] to be for this class here. We're
+[00:55:22] assuming that we have thing ahead of
+[00:55:23] time. So we have to understand what does
+[00:55:25] it mean for transactions to have
+[00:55:27] conflicting operations in in their their
+[00:55:30] schedules.
+[00:55:31] So we're going to find a conflict to
+[00:55:33] occur is if there's two operations that
+[00:55:36] are that are in both two separate
+[00:55:37] transactions and they're either trying
+[00:55:40] to they're trying to do something on the
+[00:55:41] same object and at least one of them is
+[00:55:43] going to be a right operation.
+[00:55:46] So the thing we're trying to avoid are
+[00:55:48] now called anomalies. These problem
+[00:55:50] these are the problems that can occur if
+[00:55:52] you're not executing things in serial
+[00:55:54] ordering. So we want to identify the
+[00:55:55] anomalies that can can occur so that
+[00:55:57] when we start interleing transactions we
+[00:55:59] avoid these problems because if we we
+[00:56:01] have one of these problems then we know
+[00:56:02] that it's actually not going to be
+[00:56:04] equivalent to a serial ordering and
+[00:56:06] therefore our schedule is not
+[00:56:06] serializable.
+[00:56:08] So we're going to go through the three
+[00:56:09] basic ones today. Uh write read or sorry
+[00:56:13] read write read and write right. Why no
+[00:56:16] read conflicts?
+[00:56:20] Yeah, because who cares if whether if
+[00:56:21] you and I read the same thing, who
+[00:56:22] cares, right?
+[00:56:24] There's actually two other anomalies
+[00:56:26] that we're not going to talk about
+[00:56:27] today, but we'll cover in uh in upcoming
+[00:56:30] weeks called phantom reads and write
+[00:56:33] skew. Phantom reads of when they do
+[00:56:34] scans. If I scan a range of data and
+[00:56:37] then someone inserts something or
+[00:56:39] deletes something within that range and
+[00:56:41] I do that scan again and now the thing I
+[00:56:42] saw before is gone and now I get in, you
+[00:56:45] know, in incorrect aggregation or
+[00:56:46] whatever I'm trying to compute. That's
+[00:56:48] called a phantom.
+[00:56:50] Again, we'll cover that next next next
+[00:56:52] class how to handle that. And there's
+[00:56:53] another anomaly called right skew. This
+[00:56:55] one a bit more complicated. This one we
+[00:56:57] do multi- versioning. Uh this is if
+[00:57:00] actions are trying to update the same
+[00:57:01] database at the same time and they want
+[00:57:02] to read what's in there and then update
+[00:57:05] again like a like an aggregation or
+[00:57:06] something else. Uh they may end up
+[00:57:09] reading the the same database state but
+[00:57:11] then end up have conflicting rights.
+[00:57:13] It's not exactly the same as right skew.
+[00:57:15] Again, it's a bit more nuanced. We'll
+[00:57:16] cover this when we talk about
+[00:57:17] multi-verging in a few more lectures.
+[00:57:19] But as I'm pointing out, there's there's
+[00:57:20] more stuff here other than these three
+[00:57:21] here.
+[00:57:24] [snorts] All right. First one is is
+[00:57:25] rewrite conflicts. We also call it unre
+[00:57:27] repeatable reads. The basic idea here is
+[00:57:29] that I'm trying to read something from
+[00:57:30] the database in my transaction and then
+[00:57:33] when I try to read it again in that same
+[00:57:34] transaction, I get a different result.
+[00:57:37] So transaction T1 starts, it reads reads
+[00:57:40] $10 from object A. Then now T2 starts,
+[00:57:42] it reads $10 from A, but then it writes
+[00:57:45] back $19.
+[00:57:47] Then it goes commits. And then now T1
+[00:57:49] starts again. And when it reads A, it
+[00:57:51] gets back $19.
+[00:57:54] Right? If I was exiting these
+[00:57:56] transactions in serial ordering, this
+[00:57:57] could not occur. If I the first
+[00:57:59] transaction would read $10 from A, when
+[00:58:01] it reads A again, if it was running all
+[00:58:03] by itself in serial order, then it
+[00:58:06] should see $10 again, not 19.
+[00:58:09] So, so we have to make sure we don't
+[00:58:11] have this conflict.
+[00:58:13] The next one is write read conflicts are
+[00:58:15] also called dirty reads, right? So, T1
+[00:58:18] starts, does a read on A, then it writes
+[00:58:20] A back as $12, but then now T2 reads A
+[00:58:25] and gets the update from that T1 made.
+[00:58:27] So, sees the $12 that that that T1 put
+[00:58:30] in. So, then it writes back, I don't
+[00:58:32] know, $14, right? But then T1 aborts and
+[00:58:36] rolls back.
+[00:58:38] But T2 has already committed. Again,
+[00:58:41] when we when you go commit, you're
+[00:58:42] telling the outside world all the
+[00:58:44] changes you made, they've all been
+[00:58:45] applied.
+[00:58:48] But again, if we were executing serial
+[00:58:49] order, this couldn't occur because T2
+[00:58:52] should not see the update, should not be
+[00:58:54] able to read the the the update that T1
+[00:58:56] made because T1 has not committed yet,
+[00:59:01] right? So this we have to avoid this
+[00:59:03] kind of conflict.
+[00:59:08] >> So the question is why is this a
+[00:59:09] conflict or what's what's the issue?
+[00:59:21] is like if there's higher level
+[00:59:23] semantics about what the read and writes
+[00:59:24] actually are could this avoid this
+[00:59:26] problem few more slides we'll get there
+[00:59:28] yes but in this assume there's like
+[00:59:30] again the all the know is read and
+[00:59:32] rights so read a and say on the
+[00:59:35] application code there says if my if my
+[00:59:37] uh if my balance is more than more than
+[00:59:41] $10 then go put $2 in or something like
+[00:59:44] that right so like it read something
+[00:59:47] from a transaction that had not
+[00:59:48] committed yet and if you're executing
+[00:59:49] serial order it should not be able to
+[00:59:50] see that
+[00:59:51] That's what we care about. [snorts]
+[00:59:54] >> Yes.
+[01:00:03] >> First transaction.
+[01:00:05] >> Say it is. Am I claiming that a
+[01:00:07] transaction should not be able to read a
+[01:00:09] an object from the database with a with
+[01:00:12] an updated change if unless the
+[01:00:15] transaction that made that change has
+[01:00:16] committed? Yes. If they were executing
+[01:00:18] serial ordering. Yes.
+[01:00:23] Yes.
+[01:00:28] >> The question is what if a transaction
+[01:00:30] committed in the middle of another
+[01:00:31] transaction?
+[01:00:38] >> Yeah,
+[01:00:41] >> we just covered that. That's this
+[01:00:44] >> that's the first one. Oh, sorry. That's
+[01:00:45] the readr conflict. So I that's exactly
+[01:00:49] what you said. I read a, I get $10. This
+[01:00:51] guy puts $19 in it. I read it again, I
+[01:00:53] get 19. I shouldn't see that.
+[01:00:58] All right, last one is write write
+[01:01:00] conflicts. This is also called loss
+[01:01:01] updates. So I have two objects now, A
+[01:01:04] and B, that I care about. T1's going to
+[01:01:07] write A, put $10 in. T2 is going to
+[01:01:10] start. Doesn't care about what's in A
+[01:01:11] now, right? It's not reading it, just
+[01:01:14] writes it. So this is called a blind
+[01:01:15] write. So I'm writing into A, putting
+[01:01:17] $19 in. Then now I'm gonna write B and
+[01:01:20] put Bob in. But then T1 comes along and
+[01:01:23] it puts Alice into B.
+[01:01:26] So my end state of the database in this
+[01:01:28] example here is going to have $19 in A
+[01:01:31] and Alice in B. And that's invalid,
+[01:01:34] right? That's not if it was true serial
+[01:01:36] ordering, it would be either $10 in
+[01:01:37] Alice or $19 and Bob,
+[01:01:41] right?
+[01:01:43] So you know, we want to avoid this
+[01:01:44] problem. [snorts]
+[01:01:46] All right. So this gets a little heavy
+[01:01:48] here. Uh but let's we'll go through it.
+[01:01:50] I think figuring out conflict setibility
+[01:01:52] is is pretty straightforward.
+[01:01:54] Viewability is is a bit more nuanced. Um
+[01:01:56] so basically we want to say all right so
+[01:01:58] now we have these schedules. We know
+[01:01:59] what these conflicts are that can occur
+[01:02:01] right ignoring phantoms andoring
+[01:02:02] ignoring right skew. So how can we check
+[01:02:04] whether a arbitrary schedule is not
+[01:02:08] going to have any of these things other
+[01:02:09] than just us looking at them trying to
+[01:02:10] trying to manually figure them out
+[01:02:12] because that would be laborious to do
+[01:02:14] and and it's not scalable.
+[01:02:16] So there's now going to be two different
+[01:02:18] notions of serializability. Remember
+[01:02:19] serializable schedule means that it's
+[01:02:21] equivalent to a some serial ordering
+[01:02:23] transactions. But now there's other
+[01:02:26] notions of correctness to say
+[01:02:28] something's actually serializable. The
+[01:02:29] first one is the most common one called
+[01:02:31] called conflict serializability and
+[01:02:33] that's just figuring out where where you
+[01:02:34] have conflicts between these
+[01:02:35] transactions. There's another notion
+[01:02:36] called view serializability which is if
+[01:02:39] you understand the high level semantics
+[01:02:40] of what the application actually wants
+[01:02:42] to do with the data sort of what he was
+[01:02:44] proposing where and maybe okay that you
+[01:02:46] have conflicts because in the end it
+[01:02:48] doesn't matter.
+[01:02:51] So
+[01:02:53] any system that's going to do
+[01:02:54] transactions is going to give you
+[01:02:55] conflicts and support serializable
+[01:02:57] transactions or serializable ordering is
+[01:02:58] going to do conflict serializability
+[01:03:00] even though they don't call it that
+[01:03:01] that's implicitly what they mean. View
+[01:03:03] serializability is a is a more
+[01:03:05] complicated notion because you need you
+[01:03:06] need to actually look in the application
+[01:03:07] code or maybe even talk to the human
+[01:03:09] which is the worst thing to do to ask
+[01:03:10] them like what does it mean for things
+[01:03:12] to be correct. There's even other
+[01:03:13] notions of correctness and
+[01:03:14] serializability we're not going to cover
+[01:03:16] in this class and there's a whole sort
+[01:03:17] of a ven diagram we'll cover um but
+[01:03:21] these these like conflictizability is
+[01:03:24] the main one I'll show briefly because
+[01:03:26] again you'll see how to sort of handle
+[01:03:28] the one case that he brought up.
+[01:03:30] [snorts]
+[01:03:31] All right. So now we're going to say
+[01:03:32] that two schedules are conflict
+[01:03:33] equivalent if and only if they going to
+[01:03:35] be involve the same operations on the
+[01:03:37] same transactions, right? And we're
+[01:03:40] going to be able to identify that the
+[01:03:42] ordering of those operations on those
+[01:03:44] objects will be occur in the same way.
+[01:03:48] So now we're going to say that a
+[01:03:49] schedule is conflict serializable
+[01:03:52] if it's conflict equivalent to some
+[01:03:55] serious schedule that puts the Davis in
+[01:03:57] the same state.
+[01:04:00] So me sitting up here and looking at
+[01:04:01] text and being hand wavy doesn't help.
+[01:04:03] So let's look how we actually comput
+[01:04:05] this in the real world. So we're going
+[01:04:06] to comput what's called a dependency
+[01:04:08] graph. I think Wikipedia might call them
+[01:04:09] precedence graph. They're all the same
+[01:04:11] thing where now we're basically going to
+[01:04:13] have a node in this graph for every
+[01:04:14] single transaction that we have running
+[01:04:16] in a schedule. And then we'll have an
+[01:04:18] edge between those two nodes. If there's
+[01:04:20] an operation that is in one transaction
+[01:04:23] that that conflicts with another
+[01:04:25] operation on another transaction and the
+[01:04:27] other operation occurs later in the
+[01:04:29] schedule.
+[01:04:32] So the thing we care about if we end up
+[01:04:33] with a graph that has no cycles then we
+[01:04:36] know that our graph is is conflict
+[01:04:38] serializable and therefore it's
+[01:04:39] equivalent to some serial ordering. If
+[01:04:41] we have a cycle then we know that that
+[01:04:43] it's not serializable.
+[01:04:45] So we go to example here. So T1 is going
+[01:04:47] to read A, write A, read B and write B.
+[01:04:49] And T2 is going to do the exact same
+[01:04:51] thing. So in the first case here, we we
+[01:04:53] see have a write on A that occurs before
+[01:04:56] a read the read on A in T2. Therefore,
+[01:04:58] I'll have an edge from T1 to T2 that
+[01:05:01] corresponds to this conflict here.
+[01:05:04] Right? Likewise, I would have a right on
+[01:05:06] B followed by a read on B. Right? So
+[01:05:10] therefore, I have an edge going the
+[01:05:11] other direction. So now I know I have a
+[01:05:12] cycle in my dependency graph and
+[01:05:14] therefore I know I have this thing's not
+[01:05:16] conflict centralizable.
+[01:05:18] I'm not showing there's a right on A and
+[01:05:19] a right on A. That would be another
+[01:05:20] conflict. That would just be a redundant
+[01:05:22] edge uh between T1 and T2. And same for
+[01:05:25] the right on B and the right the two
+[01:05:27] rightes on B's.
+[01:05:29] So again, the issue here is that the the
+[01:05:32] cycle in the graph basically is telling
+[01:05:34] us there's a dependency between
+[01:05:36] modifications that are being made by one
+[01:05:38] transaction and the read write read or
+[01:05:40] write uh operations in another
+[01:05:43] transaction and that they shouldn't be
+[01:05:45] able to see those changes um or all the
+[01:05:48] changes should go in one direction and
+[01:05:50] not have cycles going back to the other
+[01:05:51] direction.
+[01:05:54] We can expand this out now for three
+[01:05:56] transactions. So same thing we're doing
+[01:05:58] reads on A and writes on A across T1,
+[01:05:59] T2, T3. So we start off with a read on A
+[01:06:02] that has a conflict with the right on A.
+[01:06:04] Read on A and T1 has a conflict the
+[01:06:06] right on A and T3. So an edge from T1 to
+[01:06:08] T3. Then we have this right on A to a
+[01:06:11] read on A between T1 and T3 again. So we
+[01:06:13] just have another edge there. Then the
+[01:06:15] right on A and the right on A for
+[01:06:16] between T1 T23. Again, another edge. Now
+[01:06:20] we have this right on B to a read on B
+[01:06:22] between T2 and T3. So we have edge in
+[01:06:24] this direction. And then we have again
+[01:06:26] the right on B and the read on B. The
+[01:06:28] right on B and the right on B between T1
+[01:06:29] T T T T T T T T T T T T T T T T T T T T
+[01:06:30] T2 and T3 T T T T T T T T T T T T T T T
+[01:06:31] T T T T T2 and T1. So we have same edge.
+[01:06:34] So in this case here because we have no
+[01:06:35] cycles, we can say that this is conflict
+[01:06:38] uh uh this is equivalent to a zero and
+[01:06:40] execution of executing T2 followed by T1
+[01:06:43] followed by T3. Even though T1 called
+[01:06:46] begin first before T2,
+[01:06:49] right? The end state of the database
+[01:06:50] will be equivalent to T2 actually
+[01:06:52] running first followed by T1 followed by
+[01:06:53] T3.
+[01:06:55] And that's okay,
+[01:06:57] right? T3 actually even commits before
+[01:06:59] T1 does, right? But we're saying that T3
+[01:07:02] occurs in this logical view of of the
+[01:07:05] ordering transactions occurs after T1
+[01:07:08] commits, even though physically it did
+[01:07:10] not.
+[01:07:13] And that's okay.
+[01:07:18] Does it make sense?
+[01:07:21] Pretty cool, huh? [snorts] All right. So
+[01:07:23] let's look at another one. So now we're
+[01:07:25] we're we're have T1 doing the the the
+[01:07:29] read on A, write on A, read on B, and
+[01:07:31] write on B. And now I'm including the
+[01:07:33] application logic. Instead of having A
+[01:07:35] automatically update the database, I'm
+[01:07:36] having the procedural code you would
+[01:07:37] have in your application to like take A,
+[01:07:39] take $10 out, and then transfer the $10
+[01:07:42] into B's account, right? And obviously
+[01:07:43] you have to read the account in order to
+[01:07:45] know what the value to put into it. And
+[01:07:47] then now you see also in T2 I'm
+[01:07:49] computing some kind of sum which is
+[01:07:51] adding up all the money that's that's in
+[01:07:53] accounts A and B. And then I had this
+[01:07:55] little return sum thing here. This is
+[01:07:57] actually not valid SQL. I'm just trying
+[01:07:58] to show you that after the transaction
+[01:08:00] commits you you would report back
+[01:08:02] whatever the sum is to to whoever sort.
+[01:08:05] [snorts]
+[01:08:07] So in this case here T1 does a write on
+[01:08:09] A. That's going to have a conflict with
+[01:08:10] the the read on A in T2. So therefore we
+[01:08:13] have an edge from T1 to T2. But then
+[01:08:15] later on I have a read on B followed by
+[01:08:16] the right on B. So T2 to T1. So then I
+[01:08:19] have another edge going the other
+[01:08:20] direction. So in this point here we know
+[01:08:22] that it's again it's not conflictizable
+[01:08:25] because we have a we have a cycle.
+[01:08:29] But can we modify the application logic
+[01:08:31] in T2 where we don't actually care about
+[01:08:35] what the values actually are and then
+[01:08:38] still produce the same correct result
+[01:08:40] even though we have a conflict or have a
+[01:08:42] cycle in our graph.
+[01:08:45] So, if I change from just getting the
+[01:08:47] total amount that I have in my bank
+[01:08:49] accounts to just counting the counting
+[01:08:51] the number of bank accounts that have
+[01:08:54] have zero dollars or more and the only
+[01:08:57] thing I care about is reporting that
+[01:08:58] count actually than the actual total
+[01:09:00] amount that's in in the in the uh bank
+[01:09:03] accounts.
+[01:09:04] Then this is actually would be correct
+[01:09:06] if I if I order them in this way.
+[01:09:11] Right? So again, this is going back to
+[01:09:13] that same point. If you understand what
+[01:09:14] the application actually cares about
+[01:09:17] some higher level semantics where for
+[01:09:18] this application or this transaction, I
+[01:09:20] don't care about the total amount. I
+[01:09:21] just care about counting the number of
+[01:09:22] of accounts.
+[01:09:25] Then if you have an interle like this,
+[01:09:27] it's still considered correct.
+[01:09:30] So this is what view serializability is.
+[01:09:33] It's a broader more relaxed notion of
+[01:09:35] correctness than conflict
+[01:09:36] serializability, but it requires you to
+[01:09:39] understand what the hell the application
+[01:09:40] actually wants.
+[01:09:43] And again, if you if you you either have
+[01:09:45] to examine application code, which is
+[01:09:47] that's a nightmare, or you got to talk
+[01:09:48] to a human and ask them what they
+[01:09:49] actually mean, and that's that's the
+[01:09:50] worst the worst, right? Because people
+[01:09:52] don't know what the hell they're talking
+[01:09:52] about. Uh so that's why no system can
+[01:09:56] actually do this again. So rather than
+[01:09:57] going through the the more formal
+[01:09:59] semantics, let's look at an example,
+[01:10:00] another example. So here I have two
+[01:10:02] transactions, T2, T3, T2, T1, T2, T3. So
+[01:10:06] T1's going to read on A and then write
+[01:10:08] on A. And then T2 and T3 are just doing
+[01:10:10] again blind writes on A. It doesn't read
+[01:10:12] with the values, just overwrites
+[01:10:13] whatever is in there. So if I go through
+[01:10:15] and generate my dependency graph using
+[01:10:17] what we talked about before, right? You
+[01:10:19] end up seeing that it sort of looks like
+[01:10:21] this. And we clearly we have a cycle
+[01:10:22] between T1 and T2. So in this case here,
+[01:10:25] this is not conflict serializable
+[01:10:27] because again there's a dependency
+[01:10:28] between uh T2, right? T1 is is reading
+[01:10:32] A, T2 is in writing it and then T1 is
+[01:10:35] overwriting it as again.
+[01:10:39] But if you look at the transaction,
+[01:10:41] who cares actually what happens at the,
+[01:10:43] you know, in in in the while the
+[01:10:46] transactions are running in this
+[01:10:47] schedule here, the only thing I care
+[01:10:48] about is that T3 writes whatever was in
+[01:10:52] a last
+[01:10:54] and does that blind write. So in this
+[01:10:56] example here, this ordering is not
+[01:10:59] conflict serializable, but is actually
+[01:11:00] view serializable because it's
+[01:11:02] equivalent to a serial ordering like
+[01:11:04] this,
+[01:11:05] right? I don't care that that you know
+[01:11:08] that that T2 did overwrote something on
+[01:11:11] on on A and then T1 overwrote that that
+[01:11:13] you know that wouldn't have happened in
+[01:11:15] in if I was doing serial ordering but if
+[01:11:17] my end state of the database is the only
+[01:11:18] thing I care about is that A is written
+[01:11:19] last by uh T3 and that's all that's all
+[01:11:23] I care about.
+[01:11:27] [snorts] So the main take away from all
+[01:11:29] this is that view serializability is
+[01:11:31] going to allow for slightly more
+[01:11:32] schedules than you would have a conflict
+[01:11:34] serializability but because you have to
+[01:11:36] understand what the application actually
+[01:11:38] wants to do with the data and what does
+[01:11:40] it mean for things to be correct or
+[01:11:41] consistent then you can't you can't do
+[01:11:43] this. So that means that if we're going
+[01:11:45] to use conflict serializability as the
+[01:11:48] the sort of the standard in which we
+[01:11:50] determine whether a ordering is correct
+[01:11:52] or not, there may be some cases where
+[01:11:56] we could have more parallel interleings
+[01:11:58] of our transactions, but we can't
+[01:11:59] because we just don't know what is
+[01:12:01] actually going on up above in the
+[01:12:03] application stack.
+[01:12:10] >> [snorts]
+[01:12:14] >> The question is why can't I go why can't
+[01:12:15] I expand context in my implementation of
+[01:12:18] the data system to allow for this
+[01:12:20] because in most systems you don't have
+[01:12:21] the transactions ahead of time. So you
+[01:12:23] you would it would be sort of like this.
+[01:12:25] It would be I would see like T1 would
+[01:12:29] start and then T2 arrives wants to start
+[01:12:31] something and then T3 later arrives
+[01:12:32] wants to start something right and I
+[01:12:35] don't know in the case of like T3 is it
+[01:12:37] going to now do more things after that
+[01:12:38] right on it. Some systems you can do
+[01:12:41] that
+[01:12:42] right uh and so in the case of the blind
+[01:12:45] right one some you could get away with
+[01:12:47] this but the my example of like if I'm
+[01:12:49] just summing things up rather sorry
+[01:12:51] counting things rather than summing them
+[01:12:52] I may not be able to do that so we're
+[01:12:55] getting ahead of ourselves so Amazon
+[01:12:57] Amazon DB there was a system called
+[01:12:58] Fauna that went went bankrupt this year
+[01:13:01] uh
+[01:13:02] there there's there's some systems that
+[01:13:04] do what that do called deterministic
+[01:13:06] scheduling where in the case of Amazon
+[01:13:08] DB you you your application starts a
+[01:13:11] transaction, it does a bunch of reads
+[01:13:12] and writes, but it doesn't actually
+[01:13:13] apply any of the changes to the
+[01:13:14] database. And then when you go commit,
+[01:13:16] then it actually goes back and replays
+[01:13:18] the transaction and sees whether it gets
+[01:13:20] the same results as it as it as it did
+[01:13:22] when it sort of ran in, you know,
+[01:13:24] pretend mode. And if it doesn't, then
+[01:13:26] it's going to allow commit. And now if
+[01:13:27] you have you have your schedule, now you
+[01:13:28] can reorder things and and do stuff like
+[01:13:30] this.
+[01:13:35] >> The same is is it like a copy and write
+[01:13:37] approach? Uh
+[01:13:39] not even that just like I run it but
+[01:13:42] don't apply any changes without making a
+[01:13:43] copy and then just run it again and see
+[01:13:45] whether I get the same result. If no if
+[01:13:47] yes then I know I didn't have any
+[01:13:48] conflicts.
+[01:13:52] >> The question is can you have rulebased
+[01:13:54] serializability? What do you mean by
+[01:13:55] rule
+[01:13:55] >> based?
+[01:14:08] >> [snorts]
+[01:14:14] >> So even though you don't have
+[01:14:19] [snorts]
+[01:14:26] >> Yeah, transactions are what? So the
+[01:14:28] statement is could I programmatically
+[01:14:31] tell the data system it's okay for me
+[01:14:32] for me to have certain interleings?
+[01:14:35] Yes.
+[01:14:38] No system actually supports that as far
+[01:14:39] as I know. You do this at a high level
+[01:14:42] at the application level. So you would
+[01:14:43] do this. Let me give an example. So uh
+[01:14:49] there's high level notions of
+[01:14:50] transactions. One would be like say I'm
+[01:14:53] trying to sell tickets to uh Taylor
+[01:14:56] Swift concert. actually the Taylor Swift
+[01:14:57] concert was it last year whatever this
+[01:14:59] tour the database crashed because they
+[01:15:01] didn't do any of this right but the way
+[01:15:03] because everyone's trying to update the
+[01:15:04] same database and try to buy seats at
+[01:15:05] the same time so it crashed so the way
+[01:15:07] to handle this would be if I know I have
+[01:15:10] like east coast people and west coast
+[01:15:11] people and I don't want have to
+[01:15:12] communicate between each one because
+[01:15:13] that's like I got to go across the
+[01:15:15] country and that's slow how do I make
+[01:15:16] how do I allow them to update things at
+[01:15:18] the same time you can do what's called
+[01:15:20] called escro transactions you can say
+[01:15:22] all right say I'm trying to sell you
+[01:15:24] know sell items like I'm trying to sell
+[01:15:26] Taylor Swift Taylor Swift tickets and
+[01:15:29] ignore seats because that's hard, right?
+[01:15:31] But say I'm just I have a fixed number
+[01:15:32] of seats. How do I make sure that I
+[01:15:34] don't sell more than I actually do have?
+[01:15:36] So you just basically do what's called
+[01:15:37] escort transactions. You say, "All
+[01:15:38] right, East Coast you get you get 50
+[01:15:40] seats. West Coast gets 50 seats and only
+[01:15:43] coordinate when you run out and need to
+[01:15:45] get the next 50 seats." So there's high
+[01:15:47] level things you can do to to handle all
+[01:15:49] these these cases. But no system
+[01:15:51] supports that natively. If you start
+[01:15:53] doing store procedures where where where
+[01:15:55] I have procedural code like a function
+[01:15:57] that has all the transaction log
+[01:15:59] directly inside the database system then
+[01:16:01] you can start doing some of these tricks
+[01:16:02] but no no data system as far as I know
+[01:16:04] looks inside the program logic within
+[01:16:06] the store procedure to figure out what
+[01:16:08] the interl should be. All right. All
+[01:16:11] right. Let me just show before we go. I
+[01:16:13] know we're over time. So the way to
+[01:16:15] think about the scheduling stuff is
+[01:16:16] these think of like there's this giant
+[01:16:18] universe of all the possible schedules
+[01:16:20] you could have for a set of transactions
+[01:16:22] and there's a very small region in the
+[01:16:24] middle that corresponds to the serial
+[01:16:25] orderings right which executing the
+[01:16:28] transactions one after another and then
+[01:16:30] around that there's a slightly larger
+[01:16:31] region a conflict serializable schedules
+[01:16:33] you do allow interleings again they're
+[01:16:35] and then they're equivalent to a serial
+[01:16:36] ordering and around that it's going to
+[01:16:38] be view serializable that because any
+[01:16:41] anything that's view serializable uh
+[01:16:43] sorry anything That's that's a serial
+[01:16:44] ordering is by definition has to be view
+[01:16:47] serializable. So around that you have a
+[01:16:49] a a a larger region and it's hard to
+[01:16:52] figure out what that large how to get
+[01:16:53] into that larger region and we'll see
+[01:16:55] next class there's other regions that
+[01:16:56] span in other directions that can you
+[01:16:58] know can be you know all all schedules
+[01:17:00] and some may be serializable some may
+[01:17:01] not be right this is awesome stuff and
+[01:17:04] we'll cover more of this in the next
+[01:17:06] couple classes. All right, let me just
+[01:17:08] finish up and say durability. We've
+[01:17:09] talked about this already before. How to
+[01:17:10] make sure that we if we crash and we
+[01:17:12] come back and we see all our changes or
+[01:17:14] roll back any changes and logging and
+[01:17:15] shadow paging is how we're going to do
+[01:17:16] that, right? All right. So, to finish
+[01:17:19] up,
+[01:17:21] this stuff is awesome. I hopefully uh
+[01:17:23] I'm not getting like, you know, too
+[01:17:25] excited, but uh like this is super hard
+[01:17:28] to do. This is why all those NoSQL
+[01:17:30] systems that came out 2010s like the
+[01:17:32] Mongos and the Cassandra, all those
+[01:17:35] people didn't do transactions. They told
+[01:17:36] you transactions told everyone
+[01:17:37] transactions were a bad idea because
+[01:17:39] it's really hard to do and really hard
+[01:17:40] to get correct.
+[01:17:42] And now people realize oh transactions
+[01:17:45] are a really important idea really good
+[01:17:46] because you don't want your JavaScript
+[01:17:47] programmer writing random and and in you
+[01:17:50] know coming up with in invalid state
+[01:17:53] right
+[01:17:54] we'll talk about vector clocks like if
+[01:17:56] you have if you have to have people
+[01:17:57] reason about vector clocks that's
+[01:17:59] terrible that's like they can't do that.
+[01:18:01] So basically
+[01:18:03] there was this big movement in the in
+[01:18:05] the 2000s. Everyone was saying, "Oh,
+[01:18:06] transactions are a great idea. We should
+[01:18:07] do that. Sorry, transactions are a bad
+[01:18:09] idea. We're not going to do that. We're
+[01:18:10] not going to support SQL. We're not
+[01:18:11] going to support the rational model."
+[01:18:12] And then they've all come back around
+[01:18:13] basically and now support all these
+[01:18:15] things. Can anybody name the one company
+[01:18:17] that was sort of inadvertently pushing
+[01:18:19] this idea that transactions are a bad
+[01:18:21] idea? There was one company that was at
+[01:18:22] the forefront of all this in the 2000s.
+[01:18:26] Starts with a G. Google.
+[01:18:29] Google had this system called Bigtable.
+[01:18:30] In the paper they said, "We're not doing
+[01:18:32] transactions. We're not doing SQL
+[01:18:33] relational model." Everybody saw that
+[01:18:35] and said, "Oh, Google's making a ton of
+[01:18:36] money. They must know what's going on.
+[01:18:37] Let's do the same thing. Let's not do
+[01:18:38] transactions." And then they've all come
+[01:18:41] back around and said, "Oh, yeah,
+[01:18:42] transactions are are a good idea." Now,
+[01:18:44] Google figured this out too with
+[01:18:46] Spanner. So, this is the Spanner paper
+[01:18:47] came in 2012. So, meanwhile, like while
+[01:18:49] everyone was saying, "We're not going to
+[01:18:50] do transactions." Internally, Google's
+[01:18:51] like, "Oh, we need transactions." And
+[01:18:53] they eventually added it. And if you go
+[01:18:54] read this paper, there's this great
+[01:18:55] little uh this great little blur, right?
+[01:18:59] Oh, it's disappointing. Ah, all right.
+[01:19:02] This great little blurb. Let me just
+[01:19:04] show it without the animations where
+[01:19:06] they basically admit, oh, yeah, not
+[01:19:08] having transactions was a bad idea
+[01:19:10] because you're better off having your
+[01:19:12] random programmers, aka JavaScript
+[01:19:13] programmers, uh,
+[01:19:16] not worry about correctness issues. It's
+[01:19:19] this blurb here, right? They have this
+[01:19:20] great line. We believe it is better to
+[01:19:21] have application programmers, JavaScript
+[01:19:23] programmers, deal with performance
+[01:19:24] problems due to overuse of transactions
+[01:19:26] as a bottlenecks arise rather than
+[01:19:28] coding around the lack of transactions.
+[01:19:30] They're basically saying get like Jeff
+[01:19:31] Dean and really smart people uh and you
+[01:19:34] pay them a lot of money. Make your
+[01:19:36] transactional data system work really
+[01:19:37] really well and that way the unwashed
+[01:19:39] masses can take advantage of them and
+[01:19:41] not spend the time reasoning about
+[01:19:42] eventual consistency and other
+[01:19:44] correctness issues. Okay.
+[01:19:47] All right. Next class we'll talk about
+[01:19:49] how we actually do this at runtime with
+[01:19:50] using two-based locking. And we'll talk
+[01:19:52] about these sort of more relaxed notions
+[01:19:54] of serializability. Actually, not even
+[01:19:55] call that relaxed notion of correctness
+[01:19:57] with isolation levels. Uh and then we'll
+[01:20:00] see do some demos and see where things
+[01:20:02] go wrong. Okay. I don't know if it's
+[01:20:04] going to work, but go for it. Try it.
+[01:20:06] [music]
+[01:20:11] [music]
+[01:20:14] clips over
+[01:20:18] [music]
+[01:20:23] [music]
+[01:20:28] the [music] fortune. Get the
+[01:20:30] maintain flow with the
+[01:20:33] grain. [music]
+[01:20:41] >> [music]
