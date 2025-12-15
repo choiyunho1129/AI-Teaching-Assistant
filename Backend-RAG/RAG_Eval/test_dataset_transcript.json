@@ -1,0 +1,288 @@
+{
+    "metadata": {
+      "version": "4.0",
+      "description": "Evaluation dataset generated from CMU Database Systems Lecture Transcripts (Units 01-25)",
+      "course": "Database Systems (15-445/645)",
+      "total_questions": 30,
+      "categories": {
+        "transaction_management": 8,
+        "recovery": 4,
+        "distributed_systems": 4,
+        "query_execution": 7,
+        "storage_indexing": 5,
+        "relational_model": 2
+        }
+    },
+    "test_cases": [
+      {
+        "id": "Q001",
+        "category": "transaction_management",
+        "question": "What is the difference between Conflict Serializability and View Serializability?",
+        "question_ko": "Conflict Serializability와 View Serializability의 차이점은 무엇인가요?",
+        "ground_truth": "Conflict Serializability requires that a schedule is conflict-equivalent to a serial schedule (no cycles in the precedence graph). View Serializability is a looser condition that allows more schedules (including those with blind writes) but is NP-Complete to test. Therefore, DBMSs typically enforce Conflict Serializability.",
+        "relevant_units": ["17"],
+        "keywords": ["conflict serializability", "view serializability", "precedence graph", "blind writes", "NP-complete"]
+      },
+      {
+        "id": "Q002",
+        "category": "transaction_management",
+        "question": "What is the 'Phantom Problem' in database concurrency?",
+        "question_ko": "데이터베이스 동시성에서 'Phantom Problem'(유령 문제)이란 무엇인가요?",
+        "ground_truth": "The Phantom Problem occurs when a transaction retrieves a set of rows satisfying a condition, but another transaction inserts or deletes a row that satisfies that same condition. The first transaction might see a different set of rows if it re-executes the query, violating isolation.",
+        "relevant_units": ["18", "19"],
+        "keywords": ["phantom problem", "range query", "isolation", "insertion", "consistency"]
+      },
+      {
+        "id": "Q003",
+        "category": "transaction_management",
+        "question": "Explain the difference between Two-Phase Locking (2PL) and Strict 2PL.",
+        "question_ko": "Two-Phase Locking (2PL)과 Strict 2PL의 차이점을 설명해주세요.",
+        "ground_truth": "In standard 2PL, a transaction can release locks during the shrinking phase before it commits. In Strict 2PL, a transaction must hold all its exclusive locks until the transaction commits or aborts. Strict 2PL prevents cascading aborts and ensures recovering easier.",
+        "relevant_units": ["18"],
+        "keywords": ["2PL", "strict 2PL", "cascading aborts", "shrinking phase", "commit"]
+      },
+      {
+        "id": "Q004",
+        "category": "transaction_management",
+        "question": "What are the Wait-Die and Wound-Wait schemes for deadlock prevention?",
+        "question_ko": "데드락 예방을 위한 Wait-Die와 Wound-Wait 기법은 무엇인가요?",
+        "ground_truth": "Both are timestamp-based schemes. In Wait-Die (non-preemptive), if an older transaction needs a lock held by a younger one, it waits; if a younger needs an older's lock, it aborts (dies). In Wound-Wait (preemptive), if an older needs a younger's lock, it forces the younger to abort (wounds); if a younger needs an older's, it waits.",
+        "relevant_units": ["18"],
+        "keywords": ["deadlock prevention", "wait-die", "wound-wait", "timestamp", "preemption"]
+      },
+      {
+        "id": "Q005",
+        "category": "recovery",
+        "question": "What does the 'Steal / No-Force' policy mean in buffer pool management?",
+        "question_ko": "버퍼 풀 관리에서 'Steal / No-Force' 정책은 무엇을 의미하나요?",
+        "ground_truth": "STEAL means the DBMS can write an uncommitted transaction's dirty pages to disk (requires Undo logging). NO-FORCE means the DBMS is not required to write a transaction's dirty pages to disk before committing (requires Redo logging). This is the most common policy for performance.",
+        "relevant_units": ["21"],
+        "keywords": ["steal", "no-force", "buffer pool", "logging", "write-ahead logging"]
+      },
+      {
+        "id": "Q006",
+        "category": "transaction_management",
+        "question": "What are the three phases of Optimistic Concurrency Control (OCC)?",
+        "question_ko": "낙관적 동시성 제어(OCC)의 세 가지 단계는 무엇인가요?",
+        "ground_truth": "The three phases are: 1) Read Phase (transaction executes on a private workspace), 2) Validation Phase (DBMS checks for conflicts with other transactions), and 3) Write Phase (if validation succeeds, changes are applied to the database).",
+        "relevant_units": ["19"],
+        "keywords": ["OCC", "read phase", "validation phase", "write phase", "private workspace"]
+      },
+      {
+        "id": "Q007",
+        "category": "transaction_management",
+        "question": "What is the main benefit of Multi-Version Concurrency Control (MVCC)?",
+        "question_ko": "MVCC(Multi-Version Concurrency Control)의 가장 큰 장점은 무엇인가요?",
+        "ground_truth": "The main benefit of MVCC is that 'writers do not block readers' and 'readers do not block writers'. Read-only queries can access older versions of data consistent with their snapshot without waiting for locks held by writing transactions.",
+        "relevant_units": ["20"],
+        "keywords": ["MVCC", "writers don't block readers", "snapshot isolation", "versions"]
+      },
+      {
+        "id": "Q008",
+        "category": "recovery",
+        "question": "What is the Write-Ahead Logging (WAL) protocol?",
+        "question_ko": "Write-Ahead Logging (WAL) 프로토콜이란 무엇인가요?",
+        "ground_truth": "WAL ensures that any modification to the database page must be written to the log file on stable storage before the modified page itself is written to disk. This guarantees atomicity and durability.",
+        "relevant_units": ["21"],
+        "keywords": ["WAL", "write-ahead logging", "atomicity", "durability", "log"]
+      },
+      {
+        "id": "Q009",
+        "category": "transaction_management",
+        "question": "What are Intention Locks (IS, IX) and why are they used?",
+        "question_ko": "Intention Lock (IS, IX)이란 무엇이며 왜 사용되나요?",
+        "ground_truth": "Intention locks are used in multiple-granularity locking to indicate that a transaction plans to lock lower-level items (like rows) within a higher-level item (like a table). This allows the DBMS to check for conflicts at the table level without traversing every single row lock.",
+        "relevant_units": ["18"],
+        "keywords": ["intention lock", "lock granularity", "IS", "IX", "hierarchy"]
+      },
+      {
+        "id": "Q010",
+        "category": "query_execution",
+        "question": "How does the System R optimizer typically perform join enumeration?",
+        "question_ko": "System R 옵티마이저는 일반적으로 조인 열거(Join Enumeration)를 어떻게 수행하나요?",
+        "ground_truth": "System R uses a dynamic programming approach to find the best join order. It typically considers only 'left-deep' trees (where the right operand of a join is always a base table) to reduce the search space, building plans bottom-up.",
+        "relevant_units": ["15", "16"],
+        "keywords": ["system R", "dynamic programming", "left-deep tree", "join enumeration"]
+      },
+      {
+        "id": "Q011",
+        "category": "query_execution",
+        "question": "What is the difference between Left-Deep Trees and Bushy Trees in query plans?",
+        "question_ko": "쿼리 플랜에서 Left-Deep Tree와 Bushy Tree의 차이점은 무엇인가요?",
+        "ground_truth": "In a Left-Deep Tree, the right child of every join is a base table, creating a linear processing pipeline. A Bushy Tree allows the results of two joins to be joined together, which can potentially enable more parallelism but increases the optimizer's search space.",
+        "relevant_units": ["16"],
+        "keywords": ["left-deep tree", "bushy tree", "query plan", "search space", "parallelism"]
+      },
+      {
+        "id": "Q012",
+        "category": "query_execution",
+        "question": "What is Predicate Pushdown?",
+        "question_ko": "Predicate Pushdown이란 무엇인가요?",
+        "ground_truth": "Predicate Pushdown is an optimization rule where filter expressions (predicates) are moved as far down the query plan as possible (closer to data access). This reduces the volume of data processed by subsequent operators like joins.",
+        "relevant_units": ["15"],
+        "keywords": ["predicate pushdown", "optimization", "filter", "early filtering"]
+      },
+      {
+        "id": "Q013",
+        "category": "query_execution",
+        "question": "Why is Vectorized Execution generally better for OLAP than the Volcano Model?",
+        "question_ko": "왜 OLAP 환경에서는 Vectorized Execution이 Volcano 모델보다 일반적으로 더 나은가요?",
+        "ground_truth": "Vectorized Execution processes data in batches (vectors) rather than one tuple at a time. This amortizes the overhead of virtual function calls (`Next()`) and allows the CPU to use SIMD instructions, which is highly efficient for scanning large datasets in OLAP.",
+        "relevant_units": ["13"],
+        "keywords": ["vectorization", "SIMD", "batch processing", "OLAP", "overhead"]
+      },
+      {
+        "id": "Q014",
+        "category": "query_execution",
+        "question": "Compare Hash Join vs. Sort-Merge Join.",
+        "question_ko": "Hash Join과 Sort-Merge Join을 비교해주세요.",
+        "ground_truth": "Hash Join builds a hash table on one relation and probes it; it is typically faster for unsorted data. Sort-Merge Join sorts both inputs first; it is advantageous if data is already sorted (e.g., by index) or if the output needs to be sorted.",
+        "relevant_units": ["12"],
+        "keywords": ["hash join", "sort-merge join", "probe", "build phase", "sorted output"]
+      },
+      {
+        "id": "Q015",
+        "category": "recovery",
+        "question": "What are the three phases of ARIES recovery?",
+        "question_ko": "ARIES 회복(Recovery) 알고리즘의 세 가지 단계는 무엇인가요?",
+        "ground_truth": "The three phases are: 1) Analysis (identifies dirty pages and the range of logs to scan), 2) Redo (repeats history to restore the database state to the moment of the crash), and 3) Undo (reverses the changes of uncommitted transactions).",
+        "relevant_units": ["22"],
+        "keywords": ["ARIES", "analysis", "redo", "undo", "crash recovery"]
+      },
+      {
+        "id": "Q016",
+        "category": "storage_indexing",
+        "question": "What is the primary difference between a Lock and a Latch?",
+        "question_ko": "Lock과 Latch의 주된 차이점은 무엇인가요?",
+        "ground_truth": "Locks protect logical database contents (tuples, tables) for the duration of a transaction and support rollback. Latches protect internal physical data structures (like B+ tree pages) for a short critical section and do not support rollback.",
+        "relevant_units": ["10"],
+        "keywords": ["lock", "latch", "transaction", "critical section"]
+      },
+      {
+        "id": "Q017",
+        "category": "storage_indexing",
+        "question": "Explain 'Latch Crabbing' in B+ Trees.",
+        "question_ko": "B+ 트리에서의 'Latch Crabbing'을 설명해주세요.",
+        "ground_truth": "Latch Crabbing is a traversal protocol where a thread acquires a latch on a child node before releasing the latch on the parent node. This ensures the path remains valid and prevents other threads from modifying the structure while traversing.",
+        "relevant_units": ["10"],
+        "keywords": ["latch crabbing", "coupling", "B+ tree", "concurrency"]
+      },
+      {
+        "id": "Q018",
+        "category": "storage_indexing",
+        "question": "What is a Bloom Filter?",
+        "question_ko": "블룸 필터(Bloom Filter)란 무엇인가요?",
+        "ground_truth": "A Bloom Filter is a probabilistic data structure that tests for set membership. It can return false positives but never false negatives. It is space-efficient and often used to reduce disk I/O or network traffic during joins.",
+        "relevant_units": ["09"],
+        "keywords": ["bloom filter", "probabilistic", "false positive", "membership"]
+      },
+      {
+        "id": "Q019",
+        "category": "storage_indexing",
+        "question": "Why are B+ Trees preferred over B-Trees in DBMS?",
+        "question_ko": "왜 DBMS에서 B-Tree보다 B+ 트리가 선호되나요?",
+        "ground_truth": "B+ Trees store data only in leaf nodes, allowing internal nodes to store more keys (higher fan-out), which reduces tree height. Also, leaf nodes are linked, enabling efficient sequential range scans suitable for disk-based storage.",
+        "relevant_units": ["08"],
+        "keywords": ["B+ Tree", "fan-out", "range scan", "leaf node"]
+      },
+      {
+        "id": "Q020",
+        "category": "storage_indexing",
+        "question": "What is an LSM Tree (Log-Structured Merge Tree)?",
+        "question_ko": "LSM 트리(Log-Structured Merge Tree)란 무엇인가요?",
+        "ground_truth": "An LSM Tree buffers writes in memory (MemTable) and flushes them to disk as immutable sorted files (SSTables). It optimizes for write-heavy workloads by turning random writes into sequential writes, at the cost of background compaction.",
+        "relevant_units": ["05"],
+        "keywords": ["LSM Tree", "write-heavy", "SSTable", "compaction"]
+      },
+      {
+        "id": "Q021",
+        "category": "distributed_systems",
+        "question": "What is the difference between Shared-Nothing and Shared-Disk architectures?",
+        "question_ko": "Shared-Nothing 아키텍처와 Shared-Disk 아키텍처의 차이점은 무엇인가요?",
+        "ground_truth": "In Shared-Disk, all processors can access a common disk layer but have private memory. In Shared-Nothing, each node has its own private memory and disk; nodes communicate solely via network messages. Shared-Nothing is typically more scalable.",
+        "relevant_units": ["23"],
+        "keywords": ["shared-nothing", "shared-disk", "architecture", "scalability", "distributed database"]
+      },
+      {
+        "id": "Q022",
+        "category": "distributed_systems",
+        "question": "Describe the Two-Phase Commit (2PC) protocol.",
+        "question_ko": "Two-Phase Commit (2PC) 프로토콜에 대해 설명해주세요.",
+        "ground_truth": "2PC is a protocol to ensure atomicity in distributed transactions. Phase 1 (Prepare): The coordinator asks all participants if they can commit. Phase 2 (Commit/Abort): If all vote yes, the coordinator sends a commit message; otherwise, it sends an abort message.",
+        "relevant_units": ["24"],
+        "keywords": ["2PC", "two-phase commit", "distributed transaction", "atomicity", "coordinator"]
+      },
+      {
+        "id": "Q023",
+        "category": "distributed_systems",
+        "question": "What is the CAP Theorem?",
+        "question_ko": "CAP 정리(CAP Theorem)란 무엇인가요?",
+        "ground_truth": "The CAP Theorem states that a distributed system can support only two of the following three guarantees simultaneously: Consistency, Availability, and Partition Tolerance. In the presence of a network partition (P), a system must choose between Consistency (CP) and Availability (AP).",
+        "relevant_units": ["24"],
+        "keywords": ["CAP theorem", "consistency", "availability", "partition tolerance", "trade-off"]
+      },
+      {
+        "id": "Q024",
+        "category": "relational_model",
+        "question": "What is Logical Data Independence?",
+        "question_ko": "논리적 데이터 독립성(Logical Data Independence)이란 무엇인가요?",
+        "ground_truth": "It is the ability to change the logical schema (e.g., add columns) without changing the external views or applications that rely on the data. This abstracts the application from schema evolution.",
+        "relevant_units": ["01"],
+        "keywords": ["logical data independence", "schema", "abstraction", "view"]
+      },
+      {
+        "id": "Q025",
+        "category": "recovery",
+        "question": "What is the purpose of the Compensation Log Record (CLR)?",
+        "question_ko": "Recovery 과정에서 Compensation Log Record (CLR)의 목적은 무엇인가요?",
+        "ground_truth": "A CLR records the actions performed during the Undo phase of recovery. It ensures that if the system crashes again during recovery, the system does not re-undo changes that were already undone, preventing infinite loops.",
+        "relevant_units": ["22"],
+        "keywords": ["CLR", "compensation log record", "undo", "ARIES", "recovery"]
+      },
+      {
+        "id": "Q026",
+        "category": "distributed_systems",
+        "question": "What is the difference between Active-Active and Active-Passive replication?",
+        "question_ko": "Active-Active와 Active-Passive 복제 방식의 차이점은 무엇인가요?",
+        "ground_truth": "In Active-Active replication, requests can be processed by any node, and updates are propagated to others. In Active-Passive, requests are handled by a primary node and then replicated to backup nodes (which may serve read-only queries or stay idle).",
+        "relevant_units": ["23"],
+        "keywords": ["replication", "active-active", "active-passive", "primary-replica", "consistency"]
+      },
+      {
+        "id": "Q027",
+        "category": "query_execution",
+        "question": "What is External Merge Sort?",
+        "question_ko": "External Merge Sort란 무엇인가요?",
+        "ground_truth": "It is a sorting algorithm for datasets larger than memory. It divides data into runs, sorts them in memory, writes them to disk, and then recursively merges the sorted runs into a final sorted output.",
+        "relevant_units": ["11"],
+        "keywords": ["external merge sort", "spill to disk", "runs", "buffer pool"]
+      },
+      {
+        "id": "Q028",
+        "category": "transaction_management",
+        "question": "Explain the difference between Append-Only Storage and Delta Storage in MVCC.",
+        "question_ko": "MVCC에서 Append-Only Storage와 Delta Storage의 차이점은 무엇인가요?",
+        "ground_truth": "In Append-Only Storage, new versions of a tuple are stored as complete tuples in the same table space. In Delta Storage, only the changes (deltas) are stored in a separate storage (like a rollback segment), while the main table stores the latest version.",
+        "relevant_units": ["20"],
+        "keywords": ["MVCC", "version storage", "append-only", "delta storage", "rollback segment"]
+      },
+      {
+        "id": "Q029",
+        "category": "transaction_management",
+        "question": "What is ACID?",
+        "question_ko": "ACID란 무엇인가요?",
+        "ground_truth": "ACID stands for Atomicity (all or nothing), Consistency (valid state transitions), Isolation (transaction independence), and Durability (persistence after commit). It defines the properties of reliable database transactions.",
+        "relevant_units": ["17"],
+        "keywords": ["ACID", "atomicity", "consistency", "isolation", "durability"]
+      },
+      {
+        "id": "Q030",
+        "category": "storage_indexing",
+        "question": "What is the Buffer Pool and how does the Clock replacement policy work?",
+        "question_ko": "버퍼 풀이란 무엇이며 Clock 교체 정책은 어떻게 작동하나요?",
+        "ground_truth": "The Buffer Pool caches disk pages in memory. The Clock policy approximates LRU using a circular buffer and a reference bit. It iterates through pages; if the bit is 1, it sets it to 0 and moves on. If 0, it evicts the page. This avoids the overhead of exact LRU timestamps.",
+        "relevant_units": ["04"],
+        "keywords": ["buffer pool", "clock policy", "LRU approximation", "eviction"]
+       }
+    ]
+}

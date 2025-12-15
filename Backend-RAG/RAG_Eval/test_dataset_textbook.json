@@ -1,0 +1,286 @@
+{
+    "metadata": {
+        "version": "2.0",
+        "description": "Golden Dataset for DBMS Course (15-445/645) - Refined 30 Questions",
+        "total_questions": 30,
+        "categories": {
+        "concept": 10,
+        "comparison": 5,
+        "procedure": 5,
+        "unit_specific": 5,
+        "out_of_scope": 5
+        }
+    },
+    "test_cases": [
+        {
+        "id": "Q001",
+        "category": "concept",
+        "question": "What is a B+ tree and why is it preferred over a B-tree for DBMS indexes?",
+        "question_ko": "B+ 트리가 무엇이며, DBMS 인덱스에서 B-트리보다 선호되는 이유는 무엇인가요?",
+        "ground_truth": "A B+ tree is a self-balancing tree where all data entries reside in leaf nodes, and internal nodes only store keys. It is preferred because leaf nodes are linked, enabling efficient sequential access and range queries, and the smaller internal nodes allow simpler fan-out and reduced I/O operations.",
+        "relevant_units": ["08", "09"],
+        "keywords": ["B+ tree", "leaf node", "range query", "sequential access"]
+        },
+        {
+        "id": "Q002",
+        "category": "concept",
+        "question": "Explain the ACID properties in database transactions.",
+        "question_ko": "데이터베이스 트랜잭션의 ACID 속성을 설명해주세요.",
+        "ground_truth": "ACID stands for Atomicity (all or nothing), Consistency (database moves from one valid state to another), Isolation (transactions execute independently), and Durability (committed changes are permanent even after failure).",
+        "relevant_units": ["17"],
+        "keywords": ["Atomicity", "Consistency", "Isolation", "Durability", "transaction"]
+        },
+        {
+        "id": "Q003",
+        "category": "concept",
+        "question": "What is Write-Ahead Logging (WAL) and why is it important?",
+        "question_ko": "Write-Ahead Logging (WAL)이란 무엇이며 왜 중요한가요?",
+        "ground_truth": "WAL is a protocol ensuring that modifications are written to a log file on stable storage before they are applied to the database pages on disk. It guarantees atomicity and durability, allowing the DBMS to recover from crashes by replaying the log.",
+        "relevant_units": ["21"],
+        "keywords": ["WAL", "log", "durability", "atomicity", "stable storage"]
+        },
+        {
+        "id": "Q004",
+        "category": "concept",
+        "question": "Describe the four transaction isolation levels defined in the SQL standard.",
+        "question_ko": "SQL 표준에 정의된 4가지 트랜잭션 격리 수준(Isolation Levels)을 설명해주세요.",
+        "ground_truth": "1. Read Uncommitted: Allows dirty reads. 2. Read Committed: Prevents dirty reads but allows unrepeatable reads. 3. Repeatable Read: Prevents dirty and unrepeatable reads but allows phantoms. 4. Serializable: Strict execution equivalent to serial order, preventing all anomalies.",
+        "relevant_units": ["17", "19"],
+        "keywords": ["Read Uncommitted", "Read Committed", "Repeatable Read", "Serializable"]
+        },
+        {
+        "id": "Q005",
+        "category": "concept",
+        "question": "What is Multi-Version Concurrency Control (MVCC)?",
+        "question_ko": "다중 버전 동시성 제어(MVCC)란 무엇인가요?",
+        "ground_truth": "MVCC is a concurrency control method where the DBMS maintains multiple physical versions of a single logical object. Writers create new versions while readers access the version consistent with their timestamp (snapshot), allowing readers and writers to proceed without blocking each other.",
+        "relevant_units": ["20"],
+        "keywords": ["MVCC", "versioning", "snapshot", "writers", "readers"]
+        },
+        {
+        "id": "Q006",
+        "category": "concept",
+        "question": "Explain Two-Phase Locking (2PL) and its two phases.",
+        "question_ko": "2단계 잠금(2PL)과 그 두 가지 단계에 대해 설명해주세요.",
+        "ground_truth": "2PL is a pessimistic concurrency control protocol that ensures serializability. Phase 1 (Growing): The transaction acquires locks but cannot release any. Phase 2 (Shrinking): The transaction releases locks but cannot acquire new ones.",
+        "relevant_units": ["18"],
+        "keywords": ["2PL", "growing phase", "shrinking phase", "serializability", "locks"]
+        },
+        {
+        "id": "Q007",
+        "category": "concept",
+        "question": "What is the Buffer Pool Manager and what is its replacement policy?",
+        "question_ko": "버퍼 풀 매니저(Buffer Pool Manager)란 무엇이며 교체 정책은 무엇인가요?",
+        "ground_truth": "The Buffer Pool Manager manages the movement of data pages between disk and main memory (frames). When the pool is full, a replacement policy (like LRU or Clock) decides which page to evict to make space for a new page.",
+        "relevant_units": ["05"],
+        "keywords": ["Buffer Pool", "LRU", "Clock", "eviction", "page", "frame"]
+        },
+        {
+        "id": "Q008",
+        "category": "concept",
+        "question": "How does a Query Optimizer estimate the cost of a query plan?",
+        "question_ko": "쿼리 최적화기(Query Optimizer)는 쿼리 계획의 비용을 어떻게 추정하나요?",
+        "ground_truth": "The optimizer uses statistics (like tuple count, distinct values, histograms) to estimate selectivity and cardinality. It then applies a cost model (considering I/O, CPU, and network costs) to estimate the execution time of different plan alternatives.",
+        "relevant_units": ["16"],
+        "keywords": ["cost model", "selectivity", "cardinality", "statistics", "histogram"]
+        },
+        {
+        "id": "Q009",
+        "category": "concept",
+        "question": "What is the difference between Horizontal and Vertical Partitioning in Distributed Databases?",
+        "question_ko": "분산 데이터베이스에서 수평 분할(Horizontal Partitioning)과 수직 분할(Vertical Partitioning)의 차이는 무엇인가요?",
+        "ground_truth": "Horizontal Partitioning (Sharding) splits a table by rows based on a partitioning key (e.g., ID range). Vertical Partitioning splits a table by columns, storing different attributes on different nodes (often used in column stores).",
+        "relevant_units": ["23"],
+        "keywords": ["sharding", "horizontal partitioning", "vertical partitioning", "rows", "columns"]
+        },
+        {
+        "id": "Q010",
+        "category": "concept",
+        "question": "Explain the concept of Normalization in database design.",
+        "question_ko": "데이터베이스 설계에서 정규화(Normalization)의 개념을 설명해주세요.",
+        "ground_truth": "Normalization is the process of organizing data to reduce redundancy and improve data integrity. It involves decomposing tables to satisfy normal forms (1NF, 2NF, 3NF, BCNF) to prevent update, insertion, and deletion anomalies.",
+        "relevant_units": ["15"],
+        "keywords": ["normalization", "redundancy", "integrity", "normal forms", "anomalies"]
+        },
+        {
+        "id": "Q011",
+        "category": "comparison",
+        "question": "Compare Clustered Indexes and Unclustered (Secondary) Indexes.",
+        "question_ko": "클러스터드 인덱스(Clustered Index)와 넌클러스터드(Unclustered) 인덱스를 비교해주세요.",
+        "ground_truth": "A Clustered Index dictates the physical order of data on the disk; a table can have only one. An Unclustered Index stores a separate sorted key structure with pointers to the actual data; a table can have multiple unclustered indexes.",
+        "relevant_units": ["08"],
+        "keywords": ["clustered index", "unclustered index", "physical order", "pointers"]
+        },
+        {
+        "id": "Q012",
+        "category": "comparison",
+        "question": "What is the difference between Optimistic and Pessimistic Concurrency Control?",
+        "question_ko": "낙관적(Optimistic) 동시성 제어와 비관적(Pessimistic) 동시성 제어의 차이점은 무엇인가요?",
+        "ground_truth": "Pessimistic control (e.g., 2PL) assumes conflicts are likely and acquires locks before accessing data. Optimistic control (e.g., OCC) assumes conflicts are rare; it allows transactions to proceed without locks and validates them at commit time to check for conflicts.",
+        "relevant_units": ["19"],
+        "keywords": ["optimistic", "pessimistic", "locks", "validation", "conflicts"]
+        },
+        {
+        "id": "Q013",
+        "category": "comparison",
+        "question": "Compare Hash Join and Sort-Merge Join algorithms.",
+        "question_ko": "해시 조인(Hash Join)과 소트-머지 조인(Sort-Merge Join) 알고리즘을 비교해주세요.",
+        "ground_truth": "Hash Join builds a hash table on the smaller relation and probes it with the larger one; it is generally faster for unsorted data. Sort-Merge Join sorts both relations first and then merges them; it is preferred if inputs are already sorted or if the output needs to be sorted.",
+        "relevant_units": ["11"],
+        "keywords": ["hash join", "sort-merge join", "probing", "sorting", "unsorted data"]
+        },
+        {
+        "id": "Q014",
+        "category": "comparison",
+        "question": "What is the difference between Shuffle Join and Broadcast Join in distributed databases?",
+        "question_ko": "분산 데이터베이스에서 셔플 조인(Shuffle Join)과 브로드캐스트 조인(Broadcast Join)의 차이점을 설명해주세요.",
+        "ground_truth": "In a Broadcast Join, the smaller table is sent to all nodes where the larger table resides. In a Shuffle Join, both tables are re-partitioned (shuffled) across nodes based on the join key. Broadcast is better for small-to-large joins, while Shuffle is used when both tables are large.",
+        "relevant_units": ["24"],
+        "keywords": ["shuffle join", "broadcast join", "network cost", "partitioning"]
+        },
+        {
+        "id": "Q015",
+        "category": "comparison",
+        "question": "What is the difference between Blocking Checkpoints and Fuzzy Checkpoints?",
+        "question_ko": "블로킹 체크포인트(Blocking Checkpoint)와 퍼지 체크포인트(Fuzzy Checkpoint)의 차이점은 무엇인가요?",
+        "ground_truth": "Blocking Checkpoints pause all transactions and flush dirty pages to disk, ensuring consistency but hurting performance. Fuzzy Checkpoints (used in ARIES) allow transactions to continue running while recording the status, requiring log analysis during recovery.",
+        "relevant_units": ["21", "22"],
+        "keywords": ["blocking checkpoint", "fuzzy checkpoint", "flush", "performance"]
+        },
+        {
+        "id": "Q016",
+        "category": "procedure",
+        "question": "Describe the three phases of the ARIES recovery algorithm.",
+        "question_ko": "ARIES 복구 알고리즘의 3단계를 설명해주세요.",
+        "ground_truth": "1. Analysis: Reads log forward from the checkpoint to identify dirty pages and active transactions. 2. Redo: Replays all log records (Repeating History) to return the DB to the crash state. 3. Undo: Scans log backward to rollback uncommitted transactions, writing CLRs (Compensation Log Records) to prevent repeated undo work.",
+        "relevant_units": ["22"],
+        "keywords": ["Analysis", "Redo", "Undo", "Repeating History", "CLR"]
+        },
+        {
+        "id": "Q017",
+        "category": "procedure",
+        "question": "Explain the Two-Phase Commit (2PC) protocol.",
+        "question_ko": "2단계 커밋(2PC) 프로토콜에 대해 설명해주세요.",
+        "ground_truth": "2PC ensures atomic commits in distributed systems. Phase 1 (Prepare): Coordinator asks all participants if they can commit. Phase 2 (Commit/Abort): If all vote yes, Coordinator sends Commit; otherwise, it sends Abort. It is a blocking protocol if the coordinator fails.",
+        "relevant_units": ["24"],
+        "keywords": ["2PC", "prepare", "commit", "coordinator", "blocking"]
+        },
+        {
+        "id": "Q018",
+        "category": "procedure",
+        "question": "How does External Merge Sort handle data larger than memory?",
+        "question_ko": "External Merge Sort는 메모리보다 큰 데이터를 어떻게 처리하나요?",
+        "ground_truth": "It divides the data into small chunks that fit in memory, sorts each chunk, and writes them to disk as 'runs'. Then, it recursively merges these sorted runs into larger runs until a single sorted result is produced.",
+        "relevant_units": ["10"],
+        "keywords": ["external merge sort", "runs", "chunks", "merge"]
+        },
+        {
+        "id": "Q019",
+        "category": "procedure",
+        "question": "Describe how Deadlock Detection works in a DBMS.",
+        "question_ko": "DBMS에서 교착 상태(Deadlock) 탐지가 어떻게 작동하는지 설명해주세요.",
+        "ground_truth": "The DBMS maintains a Wait-for Graph where nodes are transactions and edges represent waiting for a lock. A background thread periodically checks for cycles in this graph. If a cycle is found, the system selects a victim transaction to abort to break the deadlock.",
+        "relevant_units": ["18"],
+        "keywords": ["deadlock", "wait-for graph", "cycle", "victim"]
+        },
+        {
+        "id": "Q020",
+        "category": "procedure",
+        "question": "How does Extendible Hashing handle directory overflow?",
+        "question_ko": "확장 해싱(Extendible Hashing)은 디렉토리 오버플로우를 어떻게 처리하나요?",
+        "ground_truth": "When a bucket overflows, if the local depth equals the global depth, the directory size is doubled (global depth increments), and pointers are updated. The overflowing bucket is split, and its keys are redistributed based on the new bit mask.",
+        "relevant_units": ["06"],
+        "keywords": ["extendible hashing", "global depth", "local depth", "directory doubling"]
+        },
+        {
+        "id": "Q021",
+        "category": "unit_specific",
+        "question": "What is a Bloom Filter and how is it used in joins?",
+        "question_ko": "블룸 필터(Bloom Filter)란 무엇이며 조인에서 어떻게 사용되나요?",
+        "ground_truth": "A Bloom Filter is a probabilistic data structure that tests set membership. In joins, it is built on the build-side keys and sent to the probe side to filter out tuples that definitely do not match, reducing network/disk I/O.",
+        "relevant_units": ["11", "24"],
+        "keywords": ["bloom filter", "probabilistic", "false positive", "join optimization"]
+        },
+        {
+        "id": "Q022",
+        "category": "unit_specific",
+        "question": "What is the 'Halloween Problem' in SQL updates?",
+        "question_ko": "SQL 업데이트에서의 '할로윈 문제(Halloween Problem)'는 무엇인가요?",
+        "ground_truth": "The Halloween Problem occurs when an update operation changes the physical location of a tuple (e.g., in an index) such that the same scan operator visits and updates the tuple multiple times during the same query.",
+        "relevant_units": ["13"],
+        "keywords": ["Halloween problem", "update", "scan", "index"]
+        },
+        {
+        "id": "Q023",
+        "category": "unit_specific",
+        "question": "What is a Phantom Read anomaly?",
+        "question_ko": "유령 읽기(Phantom Read) 이상 현상은 무엇인가요?",
+        "ground_truth": "A Phantom Read occurs when a transaction executes a range query twice and gets a different set of rows because another transaction inserted or deleted a row in that range in between.",
+        "relevant_units": ["17", "19"],
+        "keywords": ["phantom read", "range query", "insertion", "anomaly"]
+        },
+        {
+        "id": "Q024",
+        "category": "unit_specific",
+        "question": "What is the function of the Log Sequence Number (LSN) in ARIES?",
+        "question_ko": "ARIES에서 로그 시퀀스 번호(LSN)의 기능은 무엇인가요?",
+        "ground_truth": "LSNs act as unique identifiers for log records, enforcing order. They are used to track the state of pages (pageLSN) and the flushed log (flushedLSN) to ensure the Write-Ahead Logging protocol is strictly followed.",
+        "relevant_units": ["22"],
+        "keywords": ["LSN", "pageLSN", "ordering", "recovery"]
+        },
+        {
+        "id": "Q025",
+        "category": "unit_specific",
+        "question": "How do Tombstone Tuples work in MVCC deletes?",
+        "question_ko": "MVCC 삭제 작업에서 툼스톤(Tombstone) 튜플은 어떻게 작동하나요?",
+        "ground_truth": "In MVCC, instead of immediately removing a deleted tuple, a special 'tombstone' version is created to mark it as deleted. This ensures visibility rules are maintained for running transactions. The physical space is reclaimed later by garbage collection.",
+        "relevant_units": ["20"],
+        "keywords": ["tombstone", "logical delete", "garbage collection", "visibility"]
+        },
+        {
+        "id": "Q026",
+        "category": "out_of_scope",
+        "question": "How do you install the Pandas library in Python?",
+        "question_ko": "파이썬에서 Pandas 라이브러리를 어떻게 설치하나요?",
+        "ground_truth": "This is out of scope for the Database Systems course. Please refer to Python documentation (typically 'pip install pandas').",
+        "relevant_units": [],
+        "keywords": ["pandas", "python", "pip", "out of scope"]
+        },
+        {
+        "id": "Q027",
+        "category": "out_of_scope",
+        "question": "Explain the difference between TCP and UDP protocols.",
+        "question_ko": "TCP와 UDP 프로토콜의 차이점을 설명해주세요.",
+        "ground_truth": "This topic relates to Computer Networking, not Database Systems. Generally, TCP is connection-oriented and reliable, while UDP is connectionless and faster but unreliable.",
+        "relevant_units": [],
+        "keywords": ["TCP", "UDP", "networking", "out of scope"]
+        },
+        {
+        "id": "Q028",
+        "category": "out_of_scope",
+        "question": "What are React Hooks in web development?",
+        "question_ko": "웹 개발에서 React Hooks란 무엇인가요?",
+        "ground_truth": "This question is about Frontend Web Development and is unrelated to Database Systems architecture.",
+        "relevant_units": [],
+        "keywords": ["React", "Hooks", "frontend", "out of scope"]
+        },
+        {
+        "id": "Q029",
+        "category": "out_of_scope",
+        "question": "How does the Gradient Descent algorithm work in Machine Learning?",
+        "question_ko": "머신러닝에서 경사 하강법(Gradient Descent)은 어떻게 작동하나요?",
+        "ground_truth": "This is a Machine Learning topic. It is an optimization algorithm used to minimize a cost function, not directly part of DBMS internal implementation.",
+        "relevant_units": [],
+        "keywords": ["machine learning", "gradient descent", "optimization", "out of scope"]
+        },
+        {
+        "id": "Q030",
+        "category": "out_of_scope",
+        "question": "What is the purpose of Docker containers?",
+        "question_ko": "Docker 컨테이너의 목적은 무엇인가요?",
+        "ground_truth": "This relates to DevOps and virtualization. While databases can run in containers, the concept of containerization itself is outside the course scope.",
+        "relevant_units": [],
+        "keywords": ["docker", "container", "devops", "out of scope"]
+        }
+    ]
+}
