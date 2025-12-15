@@ -907,7 +907,7 @@ def main():
     parser.add_argument(
         "--dataset",
         type=str,
-        default="test_dataset.json",
+        default="test_dataset_textbook.json",
         help="Path to test dataset JSON"
     )
     parser.add_argument(

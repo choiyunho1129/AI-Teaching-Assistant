@@ -187,7 +187,7 @@ nvidia-nvtx-cu12==12.8.90
 oauthlib==3.3.1
 omegaconf==2.3.0
 onnx==1.17.0
-onnxruntime==1.23.2
+onnxruntime==1.15.1
 openai==2.11.0
 openai-harmony==0.0.8
 openapi-schema-pydantic==1.2.4

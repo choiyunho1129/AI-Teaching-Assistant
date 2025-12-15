@@ -24,6 +24,14 @@ from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass, asdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+import sys
+from pathlib import Path
+
+# 상위 디렉토리(Backend-RAG)를 path에 추가
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
+from utils import get_embeddings  # get_embeddings는 utils.py에 있음
+
 # LLM-as-Judge API (외부 API 사용)
 try:
     from openai import OpenAI

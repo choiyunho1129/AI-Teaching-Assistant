@@ -667,8 +667,8 @@ def make_quiz_chunks(documents: List[Document]) -> List[Document]:
         ["cpu","cuda","mps","xpu","hip","hpu","mtia","meta","mkldnn","opencl","vulkan","xla","lazy","ort","ipu","fpga","ve","opengl","ideep"]
     ),
 )
-@click.option("--source_documents_dir", default="/data1/home/yunhochoi/AI-Teaching-Assistant/Backend-RAG/SOURCE_DOCUMENTS", show_default=True, help="Slides/PDF/docs directory")
-@click.option("--class_transcript_dir", default="/data1/home/yunhochoi/AI-Teaching-Assistant/Backend-RAG/class_transcript", show_default=True, help="YouTube transcript directory")
+@click.option("--source_documents_dir", default="./Backend-RAG/SOURCE_DOCUMENTS", show_default=True, help="Slides/PDF/docs directory")
+@click.option("--class_transcript_dir", default="./Backend-RAG/class_transcript", show_default=True, help="YouTube transcript directory")
 @click.option("--persist_answer_dir", default="answer_DB", show_default=True)
 @click.option("--persist_hint_dir", default="hint_DB", show_default=True)
 @click.option("--persist_quiz_dir", default="quiz_DB", show_default=True)
