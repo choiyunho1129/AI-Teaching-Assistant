@@ -167,3 +167,9 @@ cython_debug/
 #MacOS
 .DS_Store
 SOURCE_DOCUMENTS/.DS_Store
+
+
+# High Volume Files
+/hint_DB
+/quiz_DB
+/answer_DB
