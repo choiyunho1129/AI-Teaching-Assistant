@@ -52,6 +52,6 @@ DOCUMENT_MAP = {
     ".doc": Docx2txtLoader,
 }
 
-EMBEDDING_MODEL_NAME = "Qwen/Qwen3-Embedding-0.6B" # Uses 0.2 GB of VRAM (Less accurate but fastest - only requires 150mb of vram)
+EMBEDDING_MODEL_NAME = "Qwen/Qwen3-Embedding-8B" # Uses 0.2 GB of VRAM (Less accurate but fastest - only requires 150mb of vram)
 MODEL_ID = "Qwen/Qwen2.5-32B-Instruct"
 MODEL_BASENAME = None

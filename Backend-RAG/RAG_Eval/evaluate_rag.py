@@ -419,7 +419,12 @@ class RAGEvaluator:
             
             # Retrieve documents
             try:
-                docs = retriever.get_relevant_documents(search_query)[:self.k]
+                if hasattr(retriever, 'invoke'):
+                    docs = retriever.invoke(search_query)[:self.k]
+                elif hasattr(retriever, 'get_relevant_documents'):
+                    docs = retriever.get_relevant_documents(search_query)[:self.k]
+                elif hasattr(retriever, '_get_relevant_documents'):
+                    docs = retriever._get_relevant_documents(search_query)[:self.k]
             except Exception as e:
                 logger.warning(f"Retrieval failed for {case['id']}: {e}")
                 docs = []
