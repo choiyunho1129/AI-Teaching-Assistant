@@ -1,0 +1,149 @@
+{
+  "experiment_type": "splitter_type",
+  "timestamp": "2025-12-15T17:32:10.299702",
+  "num_documents": 10,
+  "num_test_cases": 30,
+  "results": [
+    {
+      "config_name": "recursive_default",
+      "config": {
+        "name": "recursive_default",
+        "chunk_size": 1000,
+        "chunk_overlap": 200,
+        "splitter_type": "recursive",
+        "separators": [
+          "\n\n",
+          "\n",
+          " ",
+          ""
+        ],
+        "description": "Default RecursiveCharacterTextSplitter"
+      },
+      "chunk_stats": {
+        "total_chunks": 10,
+        "avg_chunk_size": 741.0,
+        "min_chunk_size": 666,
+        "max_chunk_size": 801,
+        "std_chunk_size": 40.44996909763962,
+        "chunks_per_document": 1.0
+      },
+      "retrieval_metrics": {
+        "precision_at_k": 0.4,
+        "hit_rate": 0.7,
+        "mrr": 0.5666666666666667,
+        "avg_relevance_score": 0.08478387179875245
+      },
+      "build_time_seconds": 0.39728879928588867,
+      "index_size_mb": 0.4298439025878906
+    },
+    {
+      "config_name": "recursive_sentence",
+      "config": {
+        "name": "recursive_sentence",
+        "chunk_size": 1000,
+        "chunk_overlap": 200,
+        "splitter_type": "recursive",
+        "separators": [
+          "\n\n",
+          "\n",
+          ". ",
+          "? ",
+          "! ",
+          "; ",
+          ", ",
+          " ",
+          ""
+        ],
+        "description": "Sentence-aware splitting"
+      },
+      "chunk_stats": {
+        "total_chunks": 10,
+        "avg_chunk_size": 741.0,
+        "min_chunk_size": 666,
+        "max_chunk_size": 801,
+        "std_chunk_size": 40.44996909763962,
+        "chunks_per_document": 1.0
+      },
+      "retrieval_metrics": {
+        "precision_at_k": 0.4,
+        "hit_rate": 0.7,
+        "mrr": 0.5666666666666667,
+        "avg_relevance_score": 0.08478387179875245
+      },
+      "build_time_seconds": 0.10260868072509766,
+      "index_size_mb": 0.4298439025878906
+    },
+    {
+      "config_name": "token_based",
+      "config": {
+        "name": "token_based",
+        "chunk_size": 256,
+        "chunk_overlap": 50,
+        "splitter_type": "token",
+        "separators": [
+          "\n\n",
+          "\n",
+          ". ",
+          " ",
+          ""
+        ],
+        "description": "Token-based splitting (256 tokens)"
+      },
+      "chunk_stats": {
+        "total_chunks": 16,
+        "avg_chunk_size": 509.8125,
+        "min_chunk_size": 173,
+        "max_chunk_size": 801,
+        "std_chunk_size": 215.60357683431414,
+        "chunks_per_document": 1.6
+      },
+      "retrieval_metrics": {
+        "precision_at_k": 0.38333333333333336,
+        "hit_rate": 0.6,
+        "mrr": 0.5166666666666667,
+        "avg_relevance_score": 0.11437182627358443
+      },
+      "build_time_seconds": 0.3916351795196533,
+      "index_size_mb": 0.5079689025878906
+    },
+    {
+      "config_name": "recursive_paragraph",
+      "config": {
+        "name": "recursive_paragraph",
+        "chunk_size": 1000,
+        "chunk_overlap": 200,
+        "splitter_type": "recursive",
+        "separators": [
+          "\n\n\n",
+          "\n\n",
+          "\n",
+          " ",
+          ""
+        ],
+        "description": "Paragraph-first splitting"
+      },
+      "chunk_stats": {
+        "total_chunks": 10,
+        "avg_chunk_size": 741.0,
+        "min_chunk_size": 666,
+        "max_chunk_size": 801,
+        "std_chunk_size": 40.44996909763962,
+        "chunks_per_document": 1.0
+      },
+      "retrieval_metrics": {
+        "precision_at_k": 0.4,
+        "hit_rate": 0.7,
+        "mrr": 0.5666666666666667,
+        "avg_relevance_score": 0.08478387179875245
+      },
+      "build_time_seconds": 0.09604358673095703,
+      "index_size_mb": 0.4298439025878906
+    }
+  ],
+  "summary": {
+    "best_by_precision": "recursive_default",
+    "best_precision_score": 0.4,
+    "best_by_hit_rate": "recursive_default",
+    "best_hit_rate_score": 0.7
+  }
+}

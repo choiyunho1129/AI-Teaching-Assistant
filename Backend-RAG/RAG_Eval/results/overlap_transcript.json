@@ -1,0 +1,146 @@
+{
+  "experiment_type": "overlap",
+  "timestamp": "2025-12-15T17:31:33.979975",
+  "num_documents": 10,
+  "num_test_cases": 30,
+  "results": [
+    {
+      "config_name": "overlap_0",
+      "config": {
+        "name": "overlap_0",
+        "chunk_size": 1000,
+        "chunk_overlap": 0,
+        "splitter_type": "recursive",
+        "separators": [
+          "\n\n",
+          "\n",
+          ". ",
+          " ",
+          ""
+        ],
+        "description": "No overlap - risk of cutting context"
+      },
+      "chunk_stats": {
+        "total_chunks": 10,
+        "avg_chunk_size": 741.0,
+        "min_chunk_size": 666,
+        "max_chunk_size": 801,
+        "std_chunk_size": 40.44996909763962,
+        "chunks_per_document": 1.0
+      },
+      "retrieval_metrics": {
+        "precision_at_k": 0.4,
+        "hit_rate": 0.7,
+        "mrr": 0.5666666666666667,
+        "avg_relevance_score": 0.08478387179875245
+      },
+      "build_time_seconds": 0.3788628578186035,
+      "index_size_mb": 0.4298439025878906
+    },
+    {
+      "config_name": "overlap_100",
+      "config": {
+        "name": "overlap_100",
+        "chunk_size": 1000,
+        "chunk_overlap": 100,
+        "splitter_type": "recursive",
+        "separators": [
+          "\n\n",
+          "\n",
+          ". ",
+          " ",
+          ""
+        ],
+        "description": "Minimal overlap"
+      },
+      "chunk_stats": {
+        "total_chunks": 10,
+        "avg_chunk_size": 741.0,
+        "min_chunk_size": 666,
+        "max_chunk_size": 801,
+        "std_chunk_size": 40.44996909763962,
+        "chunks_per_document": 1.0
+      },
+      "retrieval_metrics": {
+        "precision_at_k": 0.4,
+        "hit_rate": 0.7,
+        "mrr": 0.5666666666666667,
+        "avg_relevance_score": 0.08478387179875245
+      },
+      "build_time_seconds": 0.10754966735839844,
+      "index_size_mb": 0.4298439025878906
+    },
+    {
+      "config_name": "overlap_200_baseline",
+      "config": {
+        "name": "overlap_200_baseline",
+        "chunk_size": 1000,
+        "chunk_overlap": 200,
+        "splitter_type": "recursive",
+        "separators": [
+          "\n\n",
+          "\n",
+          ". ",
+          " ",
+          ""
+        ],
+        "description": "Current baseline"
+      },
+      "chunk_stats": {
+        "total_chunks": 10,
+        "avg_chunk_size": 741.0,
+        "min_chunk_size": 666,
+        "max_chunk_size": 801,
+        "std_chunk_size": 40.44996909763962,
+        "chunks_per_document": 1.0
+      },
+      "retrieval_metrics": {
+        "precision_at_k": 0.4,
+        "hit_rate": 0.7,
+        "mrr": 0.5666666666666667,
+        "avg_relevance_score": 0.08478387179875245
+      },
+      "build_time_seconds": 0.09964466094970703,
+      "index_size_mb": 0.4298439025878906
+    },
+    {
+      "config_name": "overlap_300",
+      "config": {
+        "name": "overlap_300",
+        "chunk_size": 1000,
+        "chunk_overlap": 300,
+        "splitter_type": "recursive",
+        "separators": [
+          "\n\n",
+          "\n",
+          ". ",
+          " ",
+          ""
+        ],
+        "description": "Higher overlap - more redundancy"
+      },
+      "chunk_stats": {
+        "total_chunks": 10,
+        "avg_chunk_size": 741.0,
+        "min_chunk_size": 666,
+        "max_chunk_size": 801,
+        "std_chunk_size": 40.44996909763962,
+        "chunks_per_document": 1.0
+      },
+      "retrieval_metrics": {
+        "precision_at_k": 0.4,
+        "hit_rate": 0.7,
+        "mrr": 0.5666666666666667,
+        "avg_relevance_score": 0.08478387179875245
+      },
+      "build_time_seconds": 0.12194585800170898,
+      "index_size_mb": 0.4298439025878906
+    }
+  ],
+  "summary": {
+    "best_by_precision": "overlap_0",
+    "best_precision_score": 0.4,
+    "best_by_hit_rate": "overlap_0",
+    "best_hit_rate_score": 0.7
+  }
+}

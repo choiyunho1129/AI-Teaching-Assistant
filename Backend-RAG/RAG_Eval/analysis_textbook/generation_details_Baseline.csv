@@ -1,0 +1,559 @@
+question_id,correctness,relevance,faithfulness,completeness,reasoning,generated_answer,ground_truth
+Q001,5,5,5,5,"The system-generated answer accurately describes the B+ tree and its advantages over B-trees, aligning well with the ground truth. It covers the key aspects such as data storage in leaf nodes, efficiency in range queries, space utilization, and concurrency control, all of which are mentioned in the ground truth. Additionally, the answer is grounded in the retrieved context, providing a comprehensive and relevant response to the question.","B+ 트리는 자동 균형 유지가 가능한 순서를 유지하는 트리 데이터 구조입니다. 이 구조는 검색, 연속 접근, 삽입 및 삭제 작업을 O(log(n)) 시간 복잡도로 수행할 수 있게 합니다. 특히 디스크 기반의 데이터베이스 관리 시스템(DBMS)에 최적화되어 있습니다. 이러한 시스템은 큰 블록의 데이터를 읽고 쓰기 때문에 임의 I/O를 순차적인 I/O로 변환하여 성능을 향상시킵니다.
+
+DBMS 인덱스에서 B+ 트리를 B-트리보다 선호하는 이유는 다음과 같습니다:
+
+1. **데이터 분산**: B+ 트리는 모든 데이터를 리프 노드에 저장합니다.这意味着所有数据都存储在叶节点中。这使得范围查询更加高效，因为它们可以顺序访问相关记录。
+
+2. **空间利用率**：B+树的内部节点只包含键和指向其他节点的指针，不存储实际的数据值。这种设计提高了磁盘块的空间利用效率，从而减少了I/O操作次数并加快了查找速度。
+
+3. **并发控制**：由于所有的数据都在叶子结点上，因此更新时只需锁定相关的叶子结点，而不是整个路径上的结点，这样就降低了锁冲突的可能性，并且支持高效的多用户并发访问。
+
+综上所述，在数据库管理系统（DBMS）索引实现方面，B+树因其优越的时间复杂度、更高的空间使用率以及良好的并发性能而被广泛采用和偏好于传统的B树结构。
+   
+请注意原文是用英文写的上下文信息，我将其转换成中文来解释这个问题的答案以方便理解。如果需要更具体的细节或有进一步的问题，请随时告知！","A B+ tree is a self-balancing tree where all data entries reside in leaf nodes, and internal nodes only store keys. It is preferred because leaf nodes are linked, enabling efficient sequential access and range queries, and the smaller internal nodes allow simpler fan-out and reduced I/O operations."
+Q002,5,5,5,5,"The system-generated answer accurately explains the ACID properties of database transactions, aligning perfectly with the ground truth. It provides detailed definitions for each property (Atomicity, Consistency, Isolation, Durability) and includes relevant examples, ensuring it is both correct and complete. Additionally, the answer is directly relevant to the question asked.","데이터베이스 시스템에서 트랜잭션이 올바르게 처리되도록 보장하기 위해 사용되는 기준은 ACID라는 약자로 표현됩니다. 이는 Atomicity(원자성), Consistency(일관성), Isolation(격리성), Durability(영속성)를 의미합니다.
+
+1. **원자성 (.Atomicity)**:
+   - 원자성이란 하나의 트랜잭션 내에 있는 모든 작업들이 완전히 수행되어야 하거나 모두 취소되어야 한다는 것을 말합니다. 즉, ""모든 것 또는 아무것도 없다""라는 개념입니다.
+   - 예를 들어, 금융 거래에서는 돈을 한 계좌에서 다른 계좌로 전송하는 경우, 출금과 입금 두 가지 작업이 모두 성공해야만 합니다. 만약 어떤 이유로든 출금은 되었지만 입금이 실패했다면, 전체 트랜잭션은 취소되어 다시 초기 상태로 돌아갑니다.
+
+2. **일관성 (Consistency)**:
+   - 일관성은 각각의 트랜잭션이 시작할 때 데이터베이스가 일관적이고, 그리고 그 트랜잭션이 종료될 때까지 일관된 상태를 유지한다는 것을 의미합니다.
+   - 이는 데이터베이스의 정합성을 유지하려는 것입니다. 예를 들어, 특정 필드에는 값이 항상 양수여야 하는 규칙이 있다면, 해당 트랜잭션이 실행되고 난 후에도 이러한 규칙이 지켜져야 합니다.
+
+3. **격리성 (Isolation)**:
+   - 격리성은 여러 트랜잭션이 동시에 진행 중이라도 각 트랜잭션이 마치 자신만 존재하는 듯한 환경에서 동작하도록 보장하는 특징입니다.
+   - 이를 통해 동시 트랜잭션간의 간섭이나 오류를 방지하고, 순차적으로 실행되었을 때와 같은 결과를 얻을 수 있습니다. 예를 들어, A와 B 두 트랜잭션이 동시에 동일한 레코드를 수정하더라도, 격리성이 잘 적용되면 각 트랜잭션이 자신의 변경 사항을 독립적으로 처리하게 됩니다.
+
+4. **영속성 (Durability)**:
+   - 영속성은 트랜잭션이 커밋(commit)되었다면 그 효과가 영구적이어야 함을 의미합니다. 즉, ""나의 변화들은 생존한다""라는 개념입니다.
+   - 예를 들어, 컴퓨터가 파워 아웃이나 운영 체제 크래시 등의 문제로 강제로 재부팅되더라도 이미 커밋된 트랜잭션의 결과는 잃어버리지 않고 남아 있어야 합니다.
+
+이러한 ACID 속성들을 만족시키기 위해서는 DBMS(Database Management System)가 적절한 방법으로 트랜잭션을 관리하고 제어해야 합니다.","ACID stands for Atomicity (all or nothing), Consistency (database moves from one valid state to another), Isolation (transactions execute independently), and Durability (committed changes are permanent even after failure)."
+Q003,5,5,5,5,"The system-generated answer accurately describes Write-Ahead Logging (WAL) and its importance, aligning closely with the ground truth. It covers the key aspects of WAL, including its function, significance for data consistency, performance improvements, and implementation details, all of which are supported by the retrieved context.","Write-Ahead Logging (WAL)은 데이터베이스 관리 시스템(DBMS)에서 사용하는 기술로, 모든 데이터베이스 변경 사항을 디스크 페이지에 적용하기 전에 로그 파일에 먼저 기록합니다. 이 로그는 안정적인 저장장치(stable storage)에 작성되며, 데이터베이스 복구를 위해 필요한 정보를 포함하고 있습니다. 
+
+### 중요성:
+
+#### 1. **데이터 일관성 유지**:
+   - WAL의 주된 목적 중 하나는 트랜잭션이 커밋되기 전까지 모든 변경사항이 로그에 먼저 기록되는 것입니다. 이렇게 하면 만약 시스템 크래시가 발생하더라도, 롤백 또는 재실행(UNDO와 REDO 작업)을 통해 데이터베이스 상태를 원상복귀하거나 최신 상태로 업데이트할 수 있습니다.
+
+#### 2. **성능 개선**:
+   - **STEAL 정책**: 메모리를 효율적으로 활용하기 위해 ""DIRTY PAGE"" (변경된 페이지)를 미리 디스크에 쓰고 나중에 커밋하도록 허용합니다.
+   - **NO-FORCE 정책**: 각 트랜잭션의 커밋 시점마다 모든 변경사항을 디스크에 강제로 쓰지 않아도 되므로 성능이 크게 향상됩니다.
+
+#### 3. **순차적 쓰기**:
+   - WAL은 랜덤한 비연속적인 페이지 쓰기를 수행하는 그림 페이지(shadow paging) 대신 순차적 쓰기를 이용하여 더 빠른 처리 속도를 제공합니다. 대부분의 현대적인 DBMS들은 WAL을 사용하며, 이를 통해 런타임 성능을 극대화하면서도 데이터 일관성을 보장할 수 있게 됩니다.
+
+### 구현 방법:
+- 트랜잭션이 시작되면, 해당 트랜잭션의 시작점을 표시하는 `<BEGIN>` 레코드를 로그에 기록합니다.
+- 트랜잭션이 종료되면, `<COMMIT>` 레코드를 추가하고 모든 로그 레코드가 안전하게 디스크에 플러싱되었음을 확인한 후 애플리케이션에게 결과를 반환합니다.
+
+따라서, Write-Ahead Logging(WAL)은 데이터베이스의 안정성과 성능을 동시에 확보하는데 핵심적인 역할을 하는 기술입니다.","WAL is a protocol ensuring that modifications are written to a log file on stable storage before they are applied to the database pages on disk. It guarantees atomicity and durability, allowing the DBMS to recover from crashes by replaying the log."
+Q004,3,5,3,3,"The system-generated answer provides a mostly accurate description of the four isolation levels, but it contains some inaccuracies, particularly in the descriptions of 'Repeatable Read' and 'Serializable'. It correctly addresses the question and is relevant, but it does not fully align with the ground truth in terms of detail and accuracy. The grounding in the retrieved context is moderate, as it does not directly reference specific details from the sources.","SQL 표준에서 정의한 4개의 주요 트랜잭션 격리 수준은 다음과 같습니다:
+
+1. **시리얼라이즈 가능(Serializable)**:
+   - 이는 가장 엄격한 격리 수준입니다.
+   - 모든 비현실적인 읽기(read), 중복되는 읽기(repeatable read), 그리고 지렁이 데이터(phantom data)를 방지합니다.
+   - 이 격리는 모든 트랜잭션이 순차적으로 실행되어 다른 트랜잭션과 충돌하지 않는 것을 보장합니다.
+
+2. **반복 가능한 읽기(Repeatable Read)**:
+   - 이 격리는 동일한 조회 쿼리를 여러 번 실행하더라도 같은 결과만 반환하도록 합니다.
+   - 그러나 새로운 레코드 생성(phantom reads)은 허용됩니다.
+   - 즉, 이미 읽은 데이터는 변경되지 않지만 새로 삽입된 데이터는 볼 수 있습니다.
+
+3. **커밋된 읽기(Read Committed)**:
+   - 이 격리는 아직 커밋되지 않은 다른 트랜잭션의 수정사항을 읽지 못하게 합니다.
+   - 하지만 같은 트랜잭션 내에서 반복해서 같은 쿼리를 실행할 때마다 다른 결과를 얻을 수 있습니다 (즉, 중복 불가능).
+
+4. **미결정된 읽기(Read Uncommitted)**:
+   - 이는 최소한의 격리 수준으로, 미완료(trx commit 전)인 트랜잭션의 변경 사항도 읽어들일 수 있습니다.
+   - 이 격리는 더러운 읽기(dirty reads), 중복 불가능(non-repeatable reads), 및 지렁이 데이터(phantom reads)를 모두 허용합니다.
+
+각 격리 수준은 트랜잭션의 안전성과 성능 사이의 균형을 조절하는 역할을 하며, 시스템 요구사항에 따라 적절히 선택해야 합니다.","1. Read Uncommitted: Allows dirty reads. 2. Read Committed: Prevents dirty reads but allows unrepeatable reads. 3. Repeatable Read: Prevents dirty and unrepeatable reads but allows phantoms. 4. Serializable: Strict execution equivalent to serial order, preventing all anomalies."
+Q005,5,5,5,5,"The system-generated answer accurately describes MVCC, covering all key aspects such as the maintenance of multiple physical versions, the non-blocking behavior of readers and writers, and the concept of consistent snapshots. It aligns well with the ground truth and is fully supported by the retrieved context.","다중 버전 동시성 제어(Multi-Version Concurrency Control, MVCC)는 데이터베이스 시스템에서 사용하는 중요한 개념입니다. 이에 대해 한국어로 설명해 드리겠습니다.
+
+MVCC는 단순히 동시성 제어 프로토콜을 넘어서서 데이터베이스 관리 시스템(DBMS)의 설계와 구현 전반에 걸친 큰 개념입니다. 현재 대부분의 새로운 DBMS에서는 MVCC를 채택하고 있으며, 심지어 여러 문장 트랜잭션 지원을 하지 않는 일부 시스템(예: NoSQL)에서도 이를 활용합니다.
+
+MVCC의 핵심은 다음과 같습니다:
+
+1. 물리적 복제: 하나의 논리적인 객체에 대한 여러 개의 물리적 버전을 유지합니다. 즉, 어떤 트랜잭션이 객체에 쓰기 작업을 수행하면 DBMS는 그 객체의 새 버전을 생성합니다.
+
+2. 읽기 동작: 트랜잭션이 객체를 읽으면, 해당 트랜잭션이 시작되었을 때 존재하던 가장 최신 버전을 읽습니다.
+
+3. 비차단 효과: 작성자(writer)가 독립적으로 읽는 것을 차단하지 않고, 독립자(reader)도 작성자를 차단하지 않습니다. 따라서 한 트랜잭션이 객체를 수정할 수 있고 다른 트랜잭션들은 오래된 버전들을 읽을 수 있습니다. 하지만 같은 객체를 동시에 수정하려고 하는 두 작성자는 서로를 차단하게 됩니다.
+
+4. 일관된 스냅샷: 읽기만 하는 트랜잭션들은 잠금 없이 데이터베이스의 일관된 스냅샷을 읽을 수 있어, 자연스럽게 스냅샷 격리를 제공합니다.
+
+5. 시간 여행 쿼리: 쓰레기 수집(garbage collection)이 없는 경우, 특정 시점의 데이터베이스 상태에 기반한 쿼리를 실행할 수 있는 '시간 여행' 쿼리를 지원합니다.
+
+따라서 MVCC는 동시성 문제 해결뿐만 아니라 데이터베이스의 효율性和一致性方面提供了许多优势。希望这个解释对你有帮助！如果你有任何其他问题，请随时提问。","MVCC is a concurrency control method where the DBMS maintains multiple physical versions of a single logical object. Writers create new versions while readers access the version consistent with their timestamp (snapshot), allowing readers and writers to proceed without blocking each other."
+Q006,5,5,5,5,"The system-generated answer accurately describes the Two-Phase Locking (2PL) protocol, including the growing and shrinking phases, and it aligns well with the ground truth. It also mentions the issue of cascading aborts, which is relevant and adds depth to the explanation. The answer is directly relevant to the question and is fully supported by the retrieved context.","물론입니다! 이 내용은 한국어로 번역하면 다음과 같습니다:
+
+두 단계 잠금(2PL - Two Phase Locking)은 데이터베이스 시스템에서 여러 트랜잭션이 동시에 실행될 때 발생할 수 있는 충돌을 방지하기 위해 사용되는 보수적인 동시성 제어 프로토콜입니다. 이 프로토콜은 각각의 트랜잭션들이 필요한 자원에 대한 잠금(lock)을 요청하고 이를 관리하는 데 이용됩니다.
+
+2PL은 두 개의 주요 단계를 거칩니다:
+1. 성장 단계(Growing Phase): 이 단계에서는 각 트랜잭션이 필요로 하는 모든 잠금을 DBMS의 잠금 매니저로부터 요청합니다. 이때, 잠금 매니저는 해당 요청을 승인하거나 거절하게 됩니다.
+   
+2. 위축 단계(Shrinking Phase): 첫 번째 잠금을 해제한 순간부터 트랜잭션들은 위축 단계에 진입하며, 이 단계에서는 새로운 잠금을 획득하는 것이 금지되고 이미 획득한 잠금들만 해제할 수 있습니다.
+
+이러한 방법으로 2PL은 충돌 없이 직렬화 가능한 스케줄링(serializable schedule)을 생성하여 데이터 일관성을 유지하는데 도움이 됩니다. 하지만, 이 프로토콜도 'CASCADE ABORT'라는 문제점이 있어, 하나의 트랜잭션이 중간에 실패함으로써 다른 관련된 트랜잭션들도 함께 실패하는 등의 부작용이 있을 수 있다는 점을 기억해야 합니다. 
+
+이 정보가 유익하셨기를 바랍니다. 더 궁금하신 사항이 있으시면 언제든지 알려주시기 바랍니다.",2PL is a pessimistic concurrency control protocol that ensures serializability. Phase 1 (Growing): The transaction acquires locks but cannot release any. Phase 2 (Shrinking): The transaction releases locks but cannot acquire new ones.
+Q007,5,5,5,5,"The system-generated answer accurately describes the Buffer Pool Manager and its functions, including the management of data pages between memory and disk, and it correctly identifies the replacement policies. It aligns well with the ground truth and provides additional relevant details without deviating from the main topic.","버퍼 풀 매니저는 데이터베이스 시스템에서 메모리와 디스크 사이의 페이지를 관리하는 핵심 컴포넌트입니다. 이 매니저는 다음과 같은 역할을 수행합니다.
+
+### 버퍼 풀 매니저의 주요 기능:
+- **메모리 캐시**: 버퍼 풀은 메모리에 있는 큰 영역으로서 페이지를 임시로 저장합니다. 이는 배열 형태의 고정 크기 프레임으로 구성됩니다.
+- **페이지 검색 및 로드**: DBMS가 페이지를 요청하면, 버퍼 풀 매니저는 해당 페이지가 이미 메모리에 있는지 확인하고, 없으면 디스크로부터 읽어들여 메모리에 적재합니다.
+- **쓰기 지연 캐싱**: 버퍼 풀 매니저는 변경된 페이지( Грязные страницы )를 즉시 디스크에 쓰지 않고 일시적으로 유지합니다. 이것은 모든 변경 사항을 즉시 디스크에 전파하는 써스루 캐시(write-through cache)와 대조적입니다.
+
+### 교체 정책(Remplacement Policy):
+
+DBMS는 새로운 페이지를 위한 공간을 확보하기 위해 가끔씩 프레임을 해제해야 합니다. 이때 어떤 페이지를 제거할 것인지 결정해야 하는데 이를 '교체 정책'이라고 부릅니다. 
+
+#### 목표:
+- **정확성(Correctness)**: 항상 올바른 페이지를 선택하여 제거해야 함.
+- **속도(Speed)**: 빠르게 결정해야 하며, 성능 저하 없이 작동해야 함.
+- **메타데이터 오버헤드(Meta-data Overhead)**: 최소화되어야 함.
+
+교체 정책에는 여러 가지 방식이 있으며, 일반적인 예로 LRU(Last Recently Used), LFU(Least Frequently Used), FIFO(First In First Out) 등이 있습니다. 각각의 정책은 특정 상황에 따라 다른 효율성을 보일 수 있습니다.
+
+이러한 버퍼 풀 매니저와 교체 정책을 통해 DBMS는 사용자에게 전체 데이터베이스가 메모리상에 존재하는 듯한 환상을 제공하며 실제로는 더 많은 공간을 차지하는 데이터베이스를 효과적으로 처리할 수 있게 됩니다.","The Buffer Pool Manager manages the movement of data pages between disk and main memory (frames). When the pool is full, a replacement policy (like LRU or Clock) decides which page to evict to make space for a new page."
+Q008,4,5,4,4,"The system-generated answer is mostly correct and aligns well with the ground truth, discussing the use of a cost model and statistics for estimating query plan costs. However, it introduces the concept of 'magic constants' which, while relevant, is not explicitly mentioned in the ground truth. The answer is directly relevant to the question and is grounded in the retrieved context, though it slightly extrapolates on the concept of cost models.","쿼리 최적화기는 주로 내부적인 비용 모델(cost model)를 사용하여 쿼리 계획(query plan)의 비용을 추정합니다. 이 과정은 다음과 같이 이루어집니다:
+
+1. **통계 데이터 활용**: 카탈로그에서 수집한 통계 정보를 기반으로 합니다. 예를 들어 테이블의 크기, 인덱스의 존재 여부 등 다양한 요소들이 고려됩니다.
+
+2. **매직 상수(magic constant)**: 특정 조건 하에 스캔(scan), 스펙트럼 스캔(spectral scan), 인덱스 스캔(index scan) 등의 방법 중 어느 것이 더 효율적인지 판단하는 데 필요한 매개변수가 포함되어 있습니다.
+
+3. **비교 및 평가**: 여러 가능한 쿼리 계획들을 비교하고 각각의 비용을 계산합니다. 이를 통해 어떤 실행 계획이 가장 적합한지를 결정하게 됩니다.
+
+4. **최적의 물리적 계획 선택**: 비용이 낮다고 판단되는 물리적 실행 계획(physical plan)을 선택합니다. 이렇게 선별된 계획은 이후 쿼리 엔진(query engine)에 전달되어 실제로 수행되게 됩니다.
+
+비용모델은 시스템마다 다르며, 예를 들면 디스크 입출력(I/O) 횟수 등을 기본적으로 고려할 수 있지만, 메모리 처리 시간이나 함수 계산 시간과 같은 복잡한 요인들도 추가로 고려될 수 있습니다.
+
+MongoDB와 같은 일부 시스템에서는 실제 쿼리를 실행해 결과를 확인함으로써 비용을 직접 측정하기도 하지만, 대부분의 경우엔 비용 모델을 이용하여 사전에 비용을 추정합니다. 이러한 방식은 모든 가능성을 실제로 실행해보는 것보다 효율적이지만 정확성 면에서는 약간 제한적일 수 있습니다.","The optimizer uses statistics (like tuple count, distinct values, histograms) to estimate selectivity and cardinality. It then applies a cost model (considering I/O, CPU, and network costs) to estimate the execution time of different plan alternatives."
+Q009,5,5,4,5,"The system-generated answer accurately describes the differences between horizontal and vertical partitioning, including definitions, purposes, and methods, which align well with the ground truth. It is highly relevant to the question asked. However, while it is mostly grounded in the retrieved context, it includes additional details that are not explicitly mentioned in the sources, which slightly affects the faithfulness score.","분산 데이터베이스 환경에서 수평 분할(Horizontal Partitioning)과 수직 분할(Vertical Partitioning)은 각각 다른 방식으로 테이블을 나누는 기술입니다.
+
+수평 분할(Horizontal Partitioning):
+- **정의**: 수평 분할은 테이블의 행(row)들을 특정 파티션 키(partitioning key)를 기준으로 여러 부분집합(subset)으로 나눕니다.
+- **목적**: 데이터를 균등하게 분배하여 부하 균형(load balancing), 성능 최적화 등을 달성합니다.
+- **사용 사례**: 고객 정보를 국가별로 나누거나, 시간 범위에 따라 로그 데이터를 나눌 때 사용됩니다.
+- **방법**:
+  - **Hash Partitioning**: 주어진 열(column) 값을 해시 함수(hash function)에 통과시키고 결과값을 이용해 데이터를 분할합니다.
+  - **Range Partitioning**: 열 값의 연속된 범위(range)를 정해 그 범위 내의 데이터를 하나의 파티션에 할당합니다.
+  - **Predicate Partitioning**: 특정 조건(where clause)을 만족하는 행들만 해당 파티션에 배치합니다.
+  
+수직 분할(Vertical Partitioning):
+- **정의**: 수직 분할은 테이블의 속성(attributes 또는 열(columns))들을 별도의 파티션들로 나눕니다.
+- **목적**: 특정 컬럼들의 액세스 패턴(access pattern)이나 보안 요구사항(security requirements) 등에 따라 효율적인 데이터 관리와 접근성을 높이기 위해 사용됩니다.
+- **사용 사례**: 민감한 개인정보를 따로 저장하거나, 자주 참조되는 속성들과 그렇지 않은 속성들을 구분해서 관리할 때 사용됩니다.
+- **주의사항**: 원래의 튜플(tuples) 정보를 재구성하기 위해서 각 파티션이 필요한 모든 튜플 정보를 포함해야 합니다.
+
+결론적으로, 수평 분할은 같은 스키마(schema)를 유지하면서 데이터를 행 단위로 나누며, 반면에 수직 분할은 데이터를 열 단위로 나누면서 스키마 자체를 변경합니다. 이러한 방법들은 각각 다른 상황에서 유용하며, 적절히 선택하고 적용하면 시스템의 성능 및 확장성을 개선하는데 큰 도움이 됩니다.","Horizontal Partitioning (Sharding) splits a table by rows based on a partitioning key (e.g., ID range). Vertical Partitioning splits a table by columns, storing different attributes on different nodes (often used in column stores)."
+Q010,5,5,4,4,"The system-generated answer accurately explains the concept of normalization, including the avoidance of redundancy and the organization of data. It provides a detailed breakdown of the normalization process, including the first normal form and the importance of table separation and joins. However, it does not explicitly mention all normal forms (2NF, 3NF, BCNF) as in the ground truth, which is a minor omission. The answer is relevant and grounded in the context of database design, but it could be more complete by mentioning all normal forms.","데이터베이스 설계에서 정규화는 불필요한 정보 반복을 피하고 데이터를 효율적으로 관리하기 위해 사용되는 중요한 원칙입니다. 이 컨텍스트에서는 학생들의 수강과 성적에 대한 데이터베이스를 예로 들고 있습니다.
+
+정규화 과정은 주로 다음과 같이 진행됩니다:
+
+1. **첫 번째 정규형(1NF)**:
+   - 모든 열(column)이 원자적(atomic), 즉 분할될 수 없는 단일 값으로 구성되어 있어야 합니다.
+   - 예를 들어, 한 학생의 이름, 수강 과목, 그리고 그 과목의 성적이 모두 하나의 큰 테이블에 저장된다면, 이것은 매우 비효율적이고 중복된 데이터가 많습니다.
+
+2. **테이블 분리**:
+   - 정규화를 통해, 우리는 이러한 큰 테이블을 여러 개의 작은 테이블로 나눕니다. 이를 통해 각각의 엔티티(entity)와 그것들 간의 관계를 명확하게 표현합니다.
+   - 예를 들어, 학생 테이블, 수강 테이블, 그리고 과목 테이블로 나눌 수 있습니다.
+
+3. **조인(Joins)**:
+   - 이렇게 나눈 여러 개의 테이블들을 다시 결합하여 원래의 데이터 구조를 재구성하는 것이 조인입니다.
+   - 이 과정은 필요하다는 이유는, 데이터베이스의 효율성을 높이는 동시에 필요한 정보를 추출하거나 특정 조건에 맞게 필터링하는데 유용하기 때문입니다.
+
+따라서, 정규화는 데이터베이스의 디자인을 최적화하고, 데이터의 무결성(integrity)을 유지하며, 쿼리를 수행하는 효율성을 극대화하는 데 도움이 됩니다.","Normalization is the process of organizing data to reduce redundancy and improve data integrity. It involves decomposing tables to satisfy normal forms (1NF, 2NF, 3NF, BCNF) to prevent update, insertion, and deletion anomalies."
+Q011,5,5,4,5,"The system-generated answer accurately describes the characteristics of clustered and non-clustered indexes, aligning well with the ground truth. It covers the physical data storage, performance implications, and examples of usage, which are all relevant to the question. However, while it is mostly grounded in the retrieved context, there are minor extrapolations that are not directly cited from the sources.","클러스터드 인덱스와 넌클러스터드 인덱스는 데이터베이스 시스템에서 테이블의 레코드에 액세스하는 방법을 다르게 적용합니다.
+
+### 클러스터드 인덱스 (Clustered Index)
+
+1. **데이터 정렬**: 클러스터드 인덱스는 테이블 내부의 모든 행을 특정 열(주로 기본키) 기준으로 정렬하여 저장합니다. 이 때문에 테이블 자체가 주어진 순서대로 정렬되어 있습니다.
+   
+2. **저장 방식**: 클러스터드 인덱스 사용 시, 실제 데이터도 해당 인덱스 구조 내에 포함됩니다. 즉, 인덱스 트리의 리프 노드에 실제로 데이터가 저장되는 것입니다.
+
+3. **성능**: 클러스터드 인덱스는 특정 범위의 데이터나 여러 조건을 가진 쿼리를 수행할 때 특히 유용하며, 연속된 페이지들에 대한 접근은 매우 효율적입니다. 하지만, 각각의 레코드 위치를 항상 알고 있어야 하므로 삽입 및 삭제 작업에서는 성능 저하가 있을 수 있습니다.
+
+4. **사용 예시**: MySQL과 PostgreSQL 같은 RDBMS들은 일반적으로 클러스터드 인덱스를 기본적으로 지원하고, 만약 기본키가 없다면 자동으로 숨겨진 기본키를 생성해서 사용하기도 합니다.
+
+
+### 넌클러스터드 인덱스 (Non-clustered / Unclustered Index)
+
+1. **데이터 정렬**: 넌클러스터드 인덱스는 별개의 구조로 유지되며, 원본 데이터는 그대로 무작위로 저장됩니다. 인덱스만 정렬된 상태로 존재하게 됩니다.
+
+2. **저장 방식**: 넌클러스터드 인덱스는 별도의 공간에 저장되고, 각 인덱스 항목은 참조하는 실제 데이터의 위치를 가지고 있습니다.
+
+3. **성능**: 넌클러스터드 인덱스는 단일 값이나 작은 범위의 검색에는 효과적이지만, 전체적인 데이터 스캔이나 큰 범위의 데이터 요청 시에는 클러스터드 인덱스보다 덜 효율적일 수 있습니다.这是因为非聚簇索引需要额外的磁盘读取来访问实际数据记录，而不仅仅是通过索引来定位它们。
+
+4. **使用示例**：许多数据库管理系统允许为表创建多个非聚集索引以优化特定类型的查询。但是，每个附加的非聚集索引都会增加存储开销和维护成本（如插入、更新或删除时必须同时修改索引）。
+
+总之，在选择是否使用聚集索引还是非聚集索引时，应根据具体的应用场景和性能需求进行权衡。如果经常执行范围查询或者需要高效地按顺序扫描大量数据，则聚集索引可能更合适；而对于单值查找较多的情况，非聚集索引可能会提供更好的性能。",A Clustered Index dictates the physical order of data on the disk; a table can have only one. An Unclustered Index stores a separate sorted key structure with pointers to the actual data; a table can have multiple unclustered indexes.
+Q012,5,5,5,5,"The system-generated answer accurately describes the differences between optimistic and pessimistic concurrency control, aligning well with the ground truth. It correctly explains the assumptions and mechanisms of both approaches, providing relevant examples and a summary that encapsulates the key points.","낙관적(Optimistic) 동시성 제어와 비관적(Pessimistic) 동시성 제어는 데이터베이스 시스템에서 여러 트랜잭션이 동시에 작업을 수행할 때 발생하는 충돌(conflict)를 관리하기 위한 두 가지 접근 방식입니다.
+
+### 비관적(Pessimistic) 동시성 제어:
+
+비관적인 동시성 제어는 트랜잭션 간에 충돌이 일어날 것이라고 가정하고 시작합니다. 따라서, 이 방법에서는 미리 문제를 예방하려고 합니다. 주로 잠금(locking) 메커니즘을 사용하여 특정 자료(data item)에 대한 액세스(access)를 통제합니다. 
+
+예를 들어, 한 트랜잭션이 어떤 레코드(record)에 대해 읽거나 쓰기 작업을 수행하려면 해당 레코드에 대한 잠금을 먼저 획득해야 하며, 다른 트랜잭션은 그 동안 그 레코드에 접근하지 못하게 됩니다. 이렇게 함으로써 동시에 같은 데이터에 대한 변경사항이 중복되어 발생하거나 잘못된 결과를 가져오는 것을 막습니다.
+
+### 낙관적(Optimistic) 동시성 제어:
+
+반대로, 낙관적인 동시성 제어는 트랜잭션 간의 충돌이 드물다고 가정하고 시작합니다. 즉, 모든 트랜잭션들이 원하는 대로 자유롭게 작업을 진행하도록 허용하며, 문제가 생긴 경우에만 해결책을 찾으려고 합니다.
+
+트랜잭션이 데이터베이스에 변경 사항을 적용하려 할 때(즉, 커밋(commit) 시도시), 실제 변경 사항이 이미 존재하는 데이터와 충돌이 있는지 확인합니다. 만약 충돌이 발견되면, 트랜잭션은 실패(failure) 처리됩니다.
+
+OCC(Optimistic Concurrency Control)의 경우에는, 각각의 트랜잭션이 수정하고자 하는 도구(tool)나 항목(item)의 복사본을 자신의 프라이빗 워크 스페이스(private workspace)에 만들어서 거기에다가 작업을 진행합니다. 이후, 실제로 글로벌 공유 데이터베이스(shared global database)에 영향을 미치려고 할 때까지는 변경 사항을 반영하지 않습니다.
+
+이렇게 함으로써, 낙관적 동시성 제어는 성능을 개선하면서도 트랜잭션들의 독립성을 유지하려고 노력합니다.
+
+### 요약:
+
+- **비관적**: 충돌이 있을 것으로 가정하고, 이를 미연에 방지하기 위해 필요한 조치를 취함 (잠금 등).
+- **낙관적**: 충돌이 거의 없을 것으로 가정하고, 실제 충돌이 발생한 후에야 이를 해결함 (작업 완료 후 검증).
+
+두 접근법 모두 각자의 장단점을 가지고 있으며, 상황과 요구사항에 따라 적절히 선택해서 사용될 수 있습니다.","Pessimistic control (e.g., 2PL) assumes conflicts are likely and acquires locks before accessing data. Optimistic control (e.g., OCC) assumes conflicts are rare; it allows transactions to proceed without locks and validates them at commit time to check for conflicts."
+Q013,5,5,4,5,"The system-generated answer accurately describes the Hash Join and Sort-Merge Join algorithms, including their advantages and disadvantages, which aligns well with the ground truth. It also provides specific performance metrics that are relevant to the discussion. However, while it is mostly grounded in the retrieved context, some details about performance metrics are not explicitly cited from the sources, leading to a slight deduction in faithfulness.","해시 조인(Hash Join)과 소트-머지 조인(Sort-Merge Join)은 데이터베이스 시스템에서 두 개 이상의 테이블을 결합하는 데 사용되는 주요 방법입니다. 각각의 장단점을 이해하면 어떤 상황에 어느 것을 사용해야 하는지를 결정하는데 도움이 됩니다.
+
+### 해시 조인(Hash Join)
+#### 장점:
+1. **성능**: 일반적으로 하드웨어 성능이 좋아짐에 따라 해시 조인이 더 효율적일 수 있습니다. 예를 들어, 제공된 컨텍스트에서는 해시 조인이 가장 적게 걸리는 시간인 0.45초가 필요합니다.
+2. **비교 횟수 감소**: 해시 함수를 이용하여 키 값들을 분할함으로써 필요한 비교 횟수가 줄어듭니다. 이는 전체적인 처리 속도를 증가시키고 효율성을 높이는 역할을 합니다.
+3. **대용량 데이터**: 큰 규모의 데이터셋을 다룰 때 특히 효과적입니다. 
+
+#### 단점:
+1. **메모리 사용량**: 해시 테이블을 생성하고 유지하기 위해 많은 메모리를 사용하게 되므로 메모리 제한이 있는 환경에서는 문제가 될 수 있습니다.
+2. **제약 사항**: 오직 동등 조건(equi-join)만 지원하며, 모든 조인 키에 대해 적용되어야 합니다.
+
+### 소트-머지 조인(Sort-Merge Join)
+#### 장점:
+1. **데이터 정렬 상태 활용**: 만약 이미 데이터가 정렬되어 있다면, 이를 활용해서 추가적인 정렬 작업 없이 조인을 수행할 수 있어 성능상의 이점을 얻을 수 있습니다.
+2. **내부 및 외부 정렬**: 내부 메모리로 작동하거나 대규모 데이터셋을 위한 외부 합병 정렬을 통해 처리 가능합니다.
+   
+#### 단점:
+1. **정렬 비용**: 정렬 과정 자체에 많은 시간이 소요될 수 있으며, 이는 전체적인 처리 시간을 늘릴 수 있습니다.
+2. **성능**: 제공된 정보에 따르면 소트 머지 조인이 0.75초를 요구하므로 해시 조인보다 느립니다.
+
+### 종합 평가
+- **효율성 측면**에서는 해시 조인이 보통 우월하지만, 데이터가 미리 정렬되어 있거나 정렬 기반 접근법이 유리하다고 판단되는 경우에는 소트-머지 조인이 선택되곤 합니다.
+- **자원 사용** 측면에서는 메모리 리소스가 충분히 많다면 해시 조인이 선호되지만, 그렇지 않은 경우나 데이터 크기가 매우 클 때에는 소트-머지 조인이 고려됩니다.
+  
+따라서, 최종적인 선택은 실제 운영 환경, 데이터 특징, 그리고 구체적인 요구사항 등 다양한 요인에 의해 결정됩니다.",Hash Join builds a hash table on the smaller relation and probes it with the larger one; it is generally faster for unsorted data. Sort-Merge Join sorts both relations first and then merges them; it is preferred if inputs are already sorted or if the output needs to be sorted.
+Q014,5,5,4,5,"The system-generated answer accurately describes the differences between Shuffle Join and Broadcast Join, aligning well with the ground truth. It covers the key aspects of both join types, including their operational contexts and performance considerations. However, while it is mostly grounded in the retrieved context, there are minor extrapolations that are not directly supported by the sources.","분산 데이터베이스 시스템에서는 테이블을 여러 노드에 걸쳐 처리해야 하는 경우가 많습니다. 이때 사용되는 두 가지 주요한 조인 기법은 셔플 조인(Shuffle Join)과 브로드캐스트 조인(Broadcast Join)입니다.
+
+### 셔플 조인(Shuffle Join)
+
+셔플 조인은 다음과 같은 상황에서 발생합니다:
+
+1. **테이블이 조인 키에 따라 파티션되지 않은 상태**:
+   - 만약 두 개의 큰 테이블 모두 조인 키에 따라 파티션되어 있지 않다면, 각각의 테이블을 해당 키에 맞춰 다시 파티션화하거나 ""셔플"" 해야 합니다. 이렇게 하면 각 노드는 자신의 조인 작업에 필요한 모든 데이터를 갖게 됩니다.
+   
+2. **데이터 재배치**:
+   - 셔플 조인은 데이터를 각 노드 간에 적절히 배포하는 과정을 필요로 합니다. 이를 통해 각 노드는 자신에게 할당된 부분 집합만 가지고 조인 연산을 수행할 수 있습니다.
+   
+3. **결과 통합**:
+   - 각 노드에서 로컬 조인이 완료되면 결과는 중앙 노드나 특정 노드로 보내져 최종적으로 합쳐집니다.
+
+### 브로드캐스트 조인(Broadcast Join)
+
+브로드캐스트 조인은 다음과 같은 상황에서 사용됩니다:
+
+1. **작은 테이블의 복제**:
+   - 한쪽 테이블이 충분히 작아서 전체 노드에 복사될 수 있는 크기일 때, 작은 테이블은 모든 노드에 전송되며, 다른 하나는 원래 위치에서 그대로 유지됩니다.
+   
+2. **로컬 조인 수행**:
+   - 각 노드는 본인에게 할당된 큰 테이블의 일부와 작은 테이블 전체 사이에서 로컬 조인을 수행합니다.
+   
+3. **결과 통합**:
+   - 마찬가지로, 각 노드에서 생성된 결과들은 중앙 노드나 특정 노드로 보냅니다.
+
+### 차이점 요약
+
+- **데이터 처리 방식**: 셔플 조인은 대형 테이블들을 서로 일치시키도록 재조직하고, 브로드캐스트 조인은 작은 테이블을 모든 노드에 복제하여 처리합니다.
+  
+- **성능 및 자원 사용**: 셔플 조인은 네트워크 트래픽과 계산 리소스를 더 많이 요구하지만, 브로드캐스트 조인은 메모리 사용량 증가를 초래하며 작은 테이블이 너무 클 경우 성능 저하를 가져올 수 있습니다.
+  
+- **적용 범위**: 셔플 조인은 일반적인 큰 규모의 테이블들 사이의 조인에 유용하고, 브로드캐스트 조인은 작은 테이블과 함께 사용될 때 효율적이지만, 작은 테이블이 어느 정도 크기에 제한됩니다.
+
+따라서, 분산 환경에서 어떤 조인 방법을 선택할지는 실제 데이터 세트의 특징, 테이블의 크기 등 다양한 요인에 의해 결정됩니다.","In a Broadcast Join, the smaller table is sent to all nodes where the larger table resides. In a Shuffle Join, both tables are re-partitioned (shuffled) across nodes based on the join key. Broadcast is better for small-to-large joins, while Shuffle is used when both tables are large."
+Q015,5,5,5,5,"The system-generated answer accurately describes the differences between Blocking Checkpoints and Fuzzy Checkpoints, aligning well with the ground truth. It covers all key aspects, including the operational characteristics, performance implications, and logging mechanisms of both checkpoint types, and is fully supported by the retrieved context.","블로킹 체크포인트와 퍼지 체크포인트는 데이터베이스 시스템에서 사용되는 두 가지 다른 체크포인트 방법입니다. 이들 간의 주요 차이점을 다음과 같이 설명할 수 있습니다:
+
+### 블로킹 체크포인트(Blocking Checkpoint)
+
+1. **작업 일시 중단**: 모든 트랜잭션과 쿼리를 일시적으로 중단합니다.
+   - 새로운 트랜잭션을 시작하지 못하도록 합니다.
+   - 현재 활성화된 모든 트랜잭션이 완료될 때까지 기다립니다.
+
+2. **일관된 스냅샷**: 일정한 상태를 유지하기 위해 디스크에 데이터베이스의 일관된 스냅샷을 작성합니다.
+   
+3. **더티 페이지 플러싱**: 버퍼 풀에 있는 모든 수정된 페이지들을 디스크로 강제 플러싱합니다.
+
+4. **로그 플러싱**: 메모리에 남아있는 모든 Write-Ahead Logging(WAL) 레코드를 디스크로 플러싱합니다.
+
+5. **체크포인트 로그 작성**: `<CHECKPOINT>` 항목을 WAL에 작성하고 디스크로 플러싱합니다.
+
+6. **쿼리 재개**: 작업 일시 중단이 해제되고 쿼리는 다시 실행됩니다.
+
+### 퍼지 체크포인트(Fuzzy Checkpoint)
+
+1. **작업 지속**: 트랜잭션들이 계속해서 실행되도록 하여 시스템 성능 저하를 최소화합니다.
+
+2. **더티 페이지 플러싱 미적용**: 더티 페이지를 즉시 디스크로 플러싱하는 대신 필요할 경우만 플러싱합니다.
+
+3. **추가 정보 추적**: 체크포인트 동안 발생한 변경 사항을 추적하기 위한 추가적인 로그 레코드를 생성합니다.
+   - `CHECKPOINT-BEGIN`: 체크포인트 시작을 나타내며, 이 시점부터 어떤 페이지들이 더티되었는지를 추적합니다.
+   - `CHECKPOINT-END`: 체크포인트 종료를 표시하며, 체크포인트 시작 시점의 Active Transaction Table(ATT) 및 Dirty Page Table(DPT) 상태를 포함합니다.
+
+### 요약
+
+- **블로킹 체크포인트**는 일시적으로 모든 작업을 중단하여 안전하게 체크포인트를 수행합니다. 하지만 시스템 성능에는 영향을 줄 수 있습니다.
+  
+- **퍼지 체크포인트**는 작업을 일시 중단시키지 않고 진행하면서도 필요한 정보를 저장해놓음으로써 체크포인트 과정을 효율적으로 만듭니다. 따라서 시스템 성능 저하를 최소화할 수 있지만, 복잡한 로깅 메커니즘이 필요합니다.
+
+따라서 둘 사이의 가장 큰 차이는 작업 중단 여부와 그에 따른 시스템 성능 및 복구 방식입니다.","Blocking Checkpoints pause all transactions and flush dirty pages to disk, ensuring consistency but hurting performance. Fuzzy Checkpoints (used in ARIES) allow transactions to continue running while recording the status, requiring log analysis during recovery."
+Q016,5,5,5,5,"The system-generated answer accurately describes the three phases of the ARIES recovery algorithm, aligning closely with the ground truth. It correctly identifies the Analysis, Redo, and Undo phases, providing detailed explanations that match the key points from the retrieved context. The answer is relevant to the question and fully grounded in the provided documents.","ARYES(아이리스) 복구 알고리즘은 데이터베이스 시스템에서 크래시가 발생한 후 일관성 있는 상태로 돌아오기 위해 세 단계로 구성됩니다:
+
+### 1. 분석(Analysis) 단계:
+- 이 단계에서는 Write-Ahead Logging(WAL)을 앞으로 읽어나갑니다. 여기서는 Master Record부터 시작하여 버퍼 풀(buffer pool)에 있는 더티 페이지(dirty page; 아직 디스크에 기록되지 않은 변경사항이 있는 페이지들)와 크래시 당시 활동 중이던 트랜잭션들을 식별합니다.
+
+### 2. Redo 단계:
+- 이 단계에서는 로그(log)에서 적절한 위치부터 모든 작업(action)을 다시 수행합니다. 이것은 커밋(commit)되었든 아니었든 상관없이, 크래시 직전까지 진행된 모든 트랜잭션들의 작업을 재현하는 과정입니다. 이렇게 함으로써 시스템은 마지막으로 정상적으로 작동하던 순간의 상태로 되돌립니다.
+
+### 3._undo 단계:
+- 이 마지막 단계에서는 크래시 전에 완료되지 않았던 트랜잭션들의 작업을 역순으로 실행하여 취소합니다. 즉, 롤백해야 하는 트랜잭션들이 있으면 그들의 영향을 제거하여 시스템이 안전하고 일관된 상태로 유지되도록 합니다.
+
+이 세 가지 단계를 통해 ARIES는 데이터베이스 시스템이 크래시 이후에도 안전하게 복원될 수 있도록 보장하며, 특히 다른 방법들과 달리 먼저 redo 작업을 처리한 다음 undo 작업을 처리함으로써 더욱 신중하게 접근합니다. 이러한 방식은 데이터 손실 없이 최대한 빠르게 시스템을 안전한 상태로 돌려놓는데 초점을 맞춥니다.","1. Analysis: Reads log forward from the checkpoint to identify dirty pages and active transactions. 2. Redo: Replays all log records (Repeating History) to return the DB to the crash state. 3. Undo: Scans log backward to rollback uncommitted transactions, writing CLRs (Compensation Log Records) to prevent repeated undo work."
+Q017,5,5,5,5,"The system-generated answer accurately describes the 2PC protocol, including both phases and the responses from the coordinator and participants. It aligns well with the ground truth, addressing all key aspects of the protocol without any factual inaccuracies or omissions.","두 단계 커밋(2PC - Two Phase Commit) 프로토콜은 분산 트랜잭션의 원자성을 보장하기 위한 방법입니다. 이 프로토콜을 통해 여러 데이터베이스 시스템 간에 일관된 상태를 유지할 수 있습니다.
+
+### 첫 번째 단계: 준비 단계(Prepare Phase)
+1. **요청**: 클라이언트는 코디네이터(Coordinator)에게 `커밋 요청`을 보내고, 코디네이터는 각 참가 노드(Participant Nodes)에게 `준비 메시지`(Prepare Message)를 전송합니다.
+   - 이 메시지는 ""현재 트랜잭션이 커밋될 수 있는지 확인하라""라는 의미입니다.
+   
+2. **응답**: 각 참가 노드들은 자신의 상태를 검사한 후 다음과 같은 응답을 합니다:
+   - 만약 트랜잭션이 유효하다면, `OK`를 코디네이터에게 반환합니다.
+   - 그렇지 않다면, `_ABORT_`를 코디네이터에게 반환합니다.
+
+3. **결정**: 코디네이터는 모든 참가 노드들로부터 `OK`를 받았다면 두 번째 단계인 커밋 단계로 넘어갑니다. 하나라도 `_ABORT_`를 받으면 즉시 전체 트랜잭션을 중단하고 클라이언트에게 `_ABORT_`를 알립니다.
+
+### 두 번째 단계: 커밋 단계(Commit Phase)
+1. **커밋 명령**: 코디네이터는 모든 참가 노드들에게 `커밋 명령`(Commit Command)을 보냅니다. 이것은 ""트랜잭션을 이제 커밋하라""는 것을 의미합니다.
+  
+2. **응답 및 완료**: 각 참가 노드들이 해당 명령에 따라 트랜잭션을 커밋한 뒤에는 다시 코디네이터에게 `OK`를 보냅니다. 이렇게 하여 코디네이터는 모든 참가 노드들이 성공적으로 트랜잭션을 커밋하였음을 확실히 알게 됩니다.
+
+3. **클라이언트 통보**: 마지막으로 코디네이터는 클라이언트에게 트랜잭션이 성공적으로 처리되었음을 알려줍니다.
+
+### 예외 상황
+- **코디네이터 또는 참가 노드 크래시**:
+  - 코디네이터가 실패하면 참가 노드들은 안전하게 트랜잭션을 중단하거나 서로 연락하여 코디네이터 없이도 커밋할 수 있도록 노력해야 합니다.
+  - 참가 노드가 실패한 경우 코디네이터는 아직 확인되지 않은 노드에 대해서는 `_ABORT_`라고 가정합니다.
+
+### 최적화
+- **Early Prepare Voting**: 쿼리 결과와 함께 그 노드의 `prepare` 투표를 미리 리턴하는 방식으로 시간을 절약할 수 있습니다.
+- **Early Acknowledgement after Prepare**: 모든 노드가 커밋에 동의했다면 코디네이터는 커밋 단계가 완료되기 전에도 클라이언트에게 트랜잭션 성공을 알려줄 수 있습니다.
+
+따라서 2PC는 분산 환경에서 트랜잭션의 원자성과 정합성을 보장하는데 사용되는 중요한 프로토콜입니다.","2PC ensures atomic commits in distributed systems. Phase 1 (Prepare): Coordinator asks all participants if they can commit. Phase 2 (Commit/Abort): If all vote yes, Coordinator sends Commit; otherwise, it sends Abort. It is a blocking protocol if the coordinator fails."
+Q018,5,5,5,5,"The system-generated answer accurately describes the external merge sort process, including the division of data into chunks, sorting each chunk, writing them to disk, and the merging process. It aligns well with the ground truth and provides a thorough explanation without any factual inaccuracies.","External Merge Sort는 메모리보다 큰 데이터를 효과적으로 정렬하기 위해 다음과 같은 단계들을 따릅니다:
+
+### 1. 분할(Phase #1 - Sorting):
+- **데이터 조각화**: 전체 데이터셋을 메모리에 맞게 작은 조각으로 나눕니다. 각 조각은 개별적으로 메모리를 완전히 차지하는 크기로 설정됩니다.
+- **메모리 내에서의 정렬**: 각 조각은 메모리 내에서 선호하는 정렬 알고리즘(예: QuickSort)을 사용하여 정렬합니다.
+- **디스크 기록**: 정렬된 각 조각은 디스크에 저장되며, 이때 각 조각이 '런(run)'이라고 부르는 정렬된 부분집합을 형성하게 됩니다.
+
+### 2. 병합(Phase #2 - Merging):
+- **병합 준비**: 디스크에 있는 여러 런들이 읽혀들어옵니다.
+- **두 개씩 병합**: 처음에는 두 개의 런을 불러와서 하나의 더 큰 정렬된 런으로 합칩니다. 이를 반복하면서 점점 더 큰 정렬된 런을 생성해 나갑니다.
+- **반복적 병합 과정**: 위의 과정을 계속해서 진행하며 최종적으로 모든 데이터가 한 번에 정렬되어 디스크에 다시 쓰입니다.
+
+이 방법론은 데이터의 크기가 메모리 용량을 초과하더라도 효율적인 정렬을 가능케 합니다. 특히 DBMS 시스템에서는 이러한 방식을 통해 대규모 데이터베이스 테이블을 정렬하는데 활용될 수 있습니다.
+
+따라서, External Merge Sort는 데이터를 메모리의 제한 없이 큰 규모까지 확장 가능한 정렬 방법으로 작동합니다.","It divides the data into small chunks that fit in memory, sorts each chunk, and writes them to disk as 'runs'. Then, it recursively merges these sorted runs into larger runs until a single sorted result is produced."
+Q019,5,5,5,5,"The system-generated answer accurately describes the deadlock detection process in a DBMS, including the creation of the waits-for graph, the cycle detection mechanism, and the resolution of deadlocks. It aligns well with the ground truth and the retrieved context, covering all essential aspects without any inaccuracies.","DBMS에서 교착상태(Deadlock)를 탐지는 다음과 같이 진행됩니다:
+
+1. **LOCKS와 트랜잭션 관리**: DBMS는 각 트랜잭션이 어떤 자원을 잠그고 있는지, 또 어떤 자원에 대한 잠금을 기다리는지를 추적합니다.
+
+2. **WAITS-FOR 그래프 생성**:
+   - 노드(Node): 트랜잭션(Transaction).
+   - 엣지(Edge): 만약 하나의 트랜잭션이 다른 트랜잭션이 잠근 자원을 필요로 하면, 그 두 트랜잭션 사이에 방향성 엣지(Directed Edge)를 만듭니다. 예를 들어, `Tx`가 `Ty`로부터 잠금이 해제되는 것을 기다린다면, `Tx -> Ty`라는 엣지가 생깁니다.
+
+3. **사이클 검사**: 시스템은 주기적으로 이 WAITS-FOR 그래프에서 사이클(Cycle)이 존재하는지 확인합니다. 이러한 검사는 일반적으로 백그라운드 스레드로 수행되며, 락(Lock)을 위한Latch는 필요하지 않습니다. 왜냐하면 DBMS가 한 번의 패스에서 교착상을 놓치더라도 다음 패스에서는 찾게 되어 있기 때문입니다.
+
+4. **교착상태 발견 및 해결**: 만약 사이클이 발견되면, 즉 교착상태가 발생했다고 판단되면, DBMS는 특정 프로토콜이나 메커니즘을 사용하여 어느 트랜잭션을 중단할 것인지 결정하게 됩니다. 이렇게 함으로써 교착상태를 파괴하고 시스템의 정상적인 동작을 유지합니다.
+
+5. **알горит즘 단순화**: 간단한 방법으로서, 먼저 두 개의 트랜잭션 사이의 사이클만 찾아내는 알고리즘이 있을 수 있습니다. 이런 경우, 작은 사이클부터 처리함으로써 효율성을 극대화 할 수 있습니다.
+
+이렇게 DBMS는 트랜잭션간의 의존관계를 통해 교착상태를 탐지하고 이를 해결하는데 필요한 조치를 취하게 됩니다.","The DBMS maintains a Wait-for Graph where nodes are transactions and edges represent waiting for a lock. A background thread periodically checks for cycles in this graph. If a cycle is found, the system selects a victim transaction to abort to break the deadlock."
+Q020,4,5,4,4,"The system-generated answer accurately describes the process of handling directory overflow in extendible hashing, including the splitting of buckets and redistribution of keys. However, it omits the detail about incrementing the global depth when the local depth equals the global depth, which is a key aspect of the ground truth. Overall, it is mostly correct and relevant, grounded in the retrieved context with minor omissions.","확장 해싱(Extendible Hashing)에서 디렉토리 오버플로우는 다음과 같이 처리됩니다:
+
+1. **비킷의 용량 초과 시**: 비킷이 가득 차면 새로운 비킷을 생성하고 기존 비킷의 항목들을 재분배합니다.
+
+2. **글로벌 및 로컬 깊이 비교**:
+   - 만약 분할될 비킷의 로컬 깊이가 글로벌 깊이보다 작다면, 새 비킷은 현재 슬롯에 추가되며 이 과정에서는 다른 비킷들이 영향을 받지 않습니다.
+   
+3. **비킷 분할 후 재분배**:
+   - 비킷이 분할되면 그 안의 항목들은 다시 해시 함수를 통해 재분배됩니다. 이렇게 하여 데이터의 균형을 유지하며 테이블의 성능을 최적화합니다.
+
+4. **데이터 이동 제한**:
+   - 분할된 비킷 내부의 데이터만 이동되고 나머지 비킷들에는 변화가 없습니다. 따라서 전체적인 데이터베이스 리ORGаниз제이션 없이 효율적으로 관리를 할 수 있습니다.
+
+이러한 방식으로 확장 해싱은 해시 테이블의 크기를 늘릴 때마다 모든 데이터를 다시 배치하는 것보다 더 효과적으로 공간을 사용하면서도 빠른 접근성을 보장하게 됩니다.","When a bucket overflows, if the local depth equals the global depth, the directory size is doubled (global depth increments), and pointers are updated. The overflowing bucket is split, and its keys are redistributed based on the new bit mask."
+Q021,5,5,5,5,"The system-generated answer accurately describes what a Bloom Filter is, how it is used in joins, and aligns well with the ground truth. It provides a detailed explanation of the process involved in using Bloom Filters in database operations, including the steps taken during the join process, which matches the information in the retrieved context.","블룸 필터는 확률적 데이터 구조로, 주어진 키가 해시 테이블에 포함되어 있는지 여부를 판단하는 데 사용됩니다. 이 질문에 대한 답변은 ""확실하게 없음"" 또는 ""대략적으로 있음"" 중 하나입니다.
+
+데이터베이스 관리 시스템(DBMS)은 외부 테이블을 생성할 때 함께 블룸 필터를 만듭니다. 이를 통해 디스크 I/O의 양을 줄이고 매치되지 않는 결과에 대한 디스크 읽기를 방지합니다. 
+
+조인 작업에서 블룸 필터는 다음과 같이 사용됩니다:
+- 첫 번째 단계에서는 외부 테이블(R)을 스캔하면서 해시 테이블과 함께 블룸 필터를 만듭니다.
+- 두 번째 단계에서는 내부 테이블(S)을 스캔하고 각 항목에 대해 먼저 블룸 필터를 확인하여 해당 항목이 해시 테이블에 있을 가능성이 있는지 검사합니다.
+    - 만약 블룸 필터가 ""확실하게 없음""이라면, 더 이상 해시 테이블을 탐색하지 않고 다음 항목으로 넘어갑니다.
+    - 반대로 블룸 필터가 ""대략적으로 있음""이라고 한다면, 이제야 해시 테이블을 탐색하여 정확한 일치여부를 결정합니다.
+  
+이는 쿼리 계획에서 데이터를 상위 연산자로부터 전달받아 R에서 수집된 정보를 S쪽으로 전송하는 '옆으로 정보 전달'이라는 특수한 개념을 도입하며, 특히 선택적인 조인이 많고 대부분의 튜플들이 조인에 맞지 않을 경우 큰 성능 개선 효과를 가져옵니다. 이러한 방법은 때때로 '사이드웨이즈 정보 전달' 혹은 '블룸 조인'이라고도 불립니다.","A Bloom Filter is a probabilistic data structure that tests set membership. In joins, it is built on the build-side keys and sent to the probe side to filter out tuples that definitely do not match, reducing network/disk I/O."
+Q022,5,5,5,5,"The system-generated answer accurately describes the Halloween Problem, including the key aspects of how it occurs during an UPDATE operation, the implications of multiple visits to the same tuple, and the potential consequences. It aligns well with the ground truth and is fully supported by the retrieved context.","'할로윈 문제'(Halloween Problem)는 데이터베이스 시스템에서 발생하는 특정 종류의 이상 현상입니다. 이 문제는 UPDATE 쿼리 실행 중에 튜플(데이터베이스 레코드)의 물리적 위치가 변경되어 스캔 연산자가 같은 논리적인 튜플을 여러 번 방문하게 되는 상황을 말합니다.
+
+해당 문제를 좀 더 자세히 설명하면 다음과 같습니다:
+
+1. **물리적 위치 변경**: 할로윈 문제가 발생하려면 먼저 튜플의 물리적 저장 위치가 변경되어야 합니다. 예를 들어, 인덱싱된 테이블이나 클러스터링된 테이블에서는 값의 변화로 인하여 해당 튜플이 다른 물리적 위치로 옮겨질 수 있습니다.
+
+2. **중복 방문**: 튜플의 물리적 위치가 바뀌면서, 스캔 연산자는 동일한 논리적인 튜플을 여러 차례 만나게 됩니다. 즉, 한 명의 사용자 정보가 두 개나 세 개 등으로 중복해서 처리될 가능성이 생깁니다.
+
+3. **결과 영향**: 이러한 중복 처리는 원하지 않는 결과를 초래할 수 있습니다. 예를 들면, 급여를 증加工资的翻译如下：
+
+3. 结果影响：这种重复处理可能导致不希望的结果。例如，如果多次更新同一个人的工资，则会导致该人的工资被错误地增加多次。
+
+总结一下，在SQL更新中的“万圣节问题”是指在执行UPDATE查询时，由于记录（元组）的物理位置发生变化导致扫描操作符多次访问同一个逻辑上的记录的问题。这可能会引起一些意料之外的行为，如数据重复或计算结果出错等。为了解决这个问题，通常的做法是在整个查询过程中跟踪修改过的记录ID以避免重复处理相同的数据项。","The Halloween Problem occurs when an update operation changes the physical location of a tuple (e.g., in an index) such that the same scan operator visits and updates the tuple multiple times during the same query."
+Q023,5,5,4,5,"The system-generated answer accurately describes the phenomenon of Phantom Read, including its definition, an example, and potential solutions. It aligns well with the ground truth, though it introduces additional concepts like shared locks and transaction definitions, which are relevant but not explicitly mentioned in the ground truth. The answer is mostly grounded in the retrieved context, but it does not directly cite specific parts of the context.","유령 읽기(Phantom Read)는 데이터베이스 시스템에서 발생하는 일종의 동시성 이슈입니다. 이를 이해하기 위해 몇 가지 개념을 살펴보겠습니다:
+
+1. **공유 잠금(Shared Lock)**:
+   - 공유 잠금은 여러 트랜잭션이 동시에 같은 레코드를 읽을 수 있게 해줍니다.
+
+2. **트랜잭션(Transaction)**:
+   - 트랜잭션은 하나 또는 그 이상의 작업 단위로 이루어진 처리 과정이며, 이들이 원자적으로 수행되어야 합니다.
+
+### 유령 읽기의 예시와 설명
+
+- 첫 번째 트랜잭션(T1)이 범위 스캔(range scan)을 실행하여 특정 조건에 맞는 레코드들을 검색합니다. 이때, 해당 범위 내에는 어떤 레코드도 존재하지 않았습니다.
+  
+- 두 번째 트랜잭션(T2)이 새로운 레코드를 삽입하거나 기존 레코드를 삭제할 수 있습니다. 
+
+- 다시 첫 번째 트랜잭션(T1)이 동일한 범위 스캔을 실행하면, 이번에는 새롭게 추가된 레코드나 삭제되었던 레코드를 볼 수 있을 것입니다.
+
+이렇게 하여 첫 번째 트랜잭션(T1)은 처음과 다른 결과를 얻게 됩니다. 이것이 바로 ""유령 읽기""라고 불리는 이유입니다.
+
+### 해결 방안
+
+- **반복 가능한 읽기(Isolation Level Repeatable Read)**:
+  - 반복 가능 읽기는 동일한 쿼리를 여러 번 실행해도 항상 동일한 결과를 반환해야 하는 격리 수준입니다.
+  - 이런 격리 수준에서는 트랜잭션 시작 후에 삽입되거나 수정되는 레코드들은 보지 못하게 되어 유령 읽기를 방지할 수 있습니다.
+
+- **격리 수준 설정**:
+  - DBMS에서는 격리 수준(isolation level)을 설정함으로써 동시성 문제를 관리할 수 있습니다. 예를 들어 `REPEATABLE READ` 등의 격리 수준을 사용하면, 유령 읽기가 발생하지 않도록 할 수 있습니다.
+
+따라서 유령 읽기는 동시성을 고려하지 않은 상태에서 여러 트랜잭션이 서로 간섭하면서 발생하는 현상을 말하며, 적절한 격리 수준을 설정하여 이 문제를 피할 수 있습니다.",A Phantom Read occurs when a transaction executes a range query twice and gets a different set of rows because another transaction inserted or deleted a row in that range in between.
+Q024,5,5,5,5,"The system-generated answer accurately describes the function of LSNs in ARIES, including their roles in tracking the state of pages and ensuring the Write-Ahead Logging protocol is followed. It provides detailed explanations of various types of LSNs, aligning well with the ground truth and the retrieved context.","ARIES는 데이터베이스 시스템에서 사용되는 회복 메커니즘 중 하나입니다. 여기서 Log Sequence Numbers (LSN)는 트랜잭션이 데이터베이스에 변경을 가하는 순서를 나타내는 데 사용됩니다. 주어진 컨텍스트에서는 WAL (Write-Ahead Logging)과 관련하여 LSN들이 어떻게 작동하는지 설명하고 있습니다.
+
+다음은 각각의 LSN들에 대한 역할입니다:
+
+- **FlushedLSN**: 이 값은 현재까지 디스크로 플러시된 가장 최신의 LSN을 나타냅니다. 즉, 이것은 모든 페이지와 관련된 LSN이 이 값을 넘어서면 안 된다는 것을 의미합니다. 이를 통해 데이터베이스는 언제 어떤 페이지들이 안전하게 디스크에 쓰여졌는지를 추적할 수 있습니다.
+
+- **pageLSN**: 각 데이터 페이지는 최근에 해당 페이지를 업데이트한 로그 레코드의 LSN을 포함합니다. 따라서 만약 페이지 x가 수정되면 그 페이지의 `pageLSN`도 업데이트되어 그 페이지가 마지막으로 수정된 시간을 나타냅니다.
+
+- **recLSN**: 이 LSN은 페이지가 마지막으로 플러시된 이후에 발생한 최초의 업데이트를 나타냅니다. 이렇게 하면 특정 페이지가 마지막으로 플러시되었을 때부터 지금까지 어떠한 변화가 있었는지 알 수 있게 됩니다.
+
+- **lastLSN**: 각 트랜잭션 T_i에 대해, 이 LSN은 트랜잭션이 작성한 최종 로그 레코드를 지칭합니다. 
+
+- **MasterRecord**: 체크포인트의 최신 LSN을 나타냅니다. 체크포인트는 데이터베이스 상태의 일정한 점이며, 복구 과정에서 중요한 역할을 합니다.
+
+따라서 이러한 다양한 종류의 LSN들은 데이터베이스 시스템 내부에서 트랜잭션들의 작업 순서 및 페이지들의 상태 변환을 추적하는데 사용되며, 특히 데이터베이스 장애 후의 정확한 복원을 보장하기 위해 중요하다고 할 수 있습니다.","LSNs act as unique identifiers for log records, enforcing order. They are used to track the state of pages (pageLSN) and the flushed log (flushedLSN) to ensure the Write-Ahead Logging protocol is strictly followed."
+Q025,5,5,5,5,"The system-generated answer accurately describes the operation of tombstone tuples in MVCC, aligning closely with the ground truth. It covers the marking of deletions, storage optimization, visibility checks, and conflict handling, all of which are essential aspects of the tombstone mechanism. Additionally, it is well-grounded in the retrieved context, providing a comprehensive and relevant response to the question.","在过渡期（Multiversion Concurrency Control，简称MVCC）删除操作中，使用“墓碑”(Tombstone)方法是一种有效的逻辑删除策略。这种方法的核心思想是创建一个空的物理版本来表示某个逻辑元组已经被删除。
+
+具体来说，“墓碑”方法的工作原理如下：
+
+1. **标记为已删除**：当需要从数据库中删除某条记录时，并不是直接将这条记录从磁盘上移除掉。而是通过生成一个新的、不包含任何实际数据的新版本来替代原来的最新版本。这个新版本被称为""墓碑""(tombstone)，它是一个没有内容或只含有一些特殊标识符的元组。
+
+2. **存储优化**: “墓碑”元组通常会存放在专门用于存放这些标记为空的数据的一个独立池子里。为了减少空间占用，在这种特殊的存储结构里，我们只需要保存指向该元组链中的特定位模式即可，而不是整个完整的元组信息。这样可以有效降低因频繁更新而导致的空间浪费问题。
+
+3. **不可见性检查与最终清理**: 数据库管理系统(DBMS)仅在所有先前存在的版本都对当前事务不可见的情况下才会真正地物理删除这个元组。也就是说，只有当没有任何活动事务能够看到此被删除元组的所有历史版本时，系统才执行真正的删除动作并回收其所占有的资源。
+   
+4. **冲突处理机制**: 在采用“墓碑”方式管理删除之后，如果尝试再次对该已被标记为删除状态的位置进行写入，则不会产生新的版本；因为根据规则规定一旦发生删除行为则后续不允许再有针对同一位置的新版提交，即遵循了所谓的'先到者优先'(first writer wins)原则以避免出现写-写冲突情况的发生。
+
+总结而言，“墓碑”方法允许我们在保持高并发性能的同时高效地实现软删除功能，同时确保即使在大量读取请求存在下也能正确识别哪些数据项已经不再处于活跃状态而可安全释放其对应内存空间。","In MVCC, instead of immediately removing a deleted tuple, a special 'tombstone' version is created to mark it as deleted. This ensures visibility rules are maintained for running transactions. The physical space is reclaimed later by garbage collection."
+Q026,5,5,2,5,"The system-generated answer provides correct information on how to install the Pandas library using pip, which aligns with the ground truth. It also acknowledges that the question is outside the scope of the Database Systems course, similar to the ground truth. However, the answer is not grounded in the retrieved context, which is focused on database systems, leading to a lower faithfulness score.","제공된 컨텍스트는 데이터베이스 시스템에 관한 것으로, Python의 Pandas 라이브러리와 관련된 정보를 포함하고 있지 않습니다. 따라서 이 질문을 정확하게 답변할 수 없습니다.
+
+그럼에도 불구하고 일반적인 방법으로 알려드릴게요:
+
+Python에서 Pandas 라이브러리는 pip라는 패키지 관리자를 사용하여 쉽게 설치할 수 있습니다. 터미널이나 명령 프롬프트 창에서 다음 명령어를 실행하면 됩니다:
+```
+pip install pandas
+```
+
+하지만 위의 내용은 제공된 컨텍스트에는 포함되어있지 않다는 점 양해 부탁드립니다.",This is out of scope for the Database Systems course. Please refer to Python documentation (typically 'pip install pandas').
+Q027,5,5,3,5,"The system-generated answer accurately describes the differences between TCP and UDP, aligning well with the ground truth. It is relevant to the question and covers all important aspects. However, while it provides detailed information, it does not directly reference the retrieved context, which limits its faithfulness score.","TCP와 UDP는 네트워크 통신에서 주로 사용되는 두 가지 전송 계층 프로토콜입니다. 이들의 가장 큰 차이점은 신뢰성과 효율성에 있습니다.
+
+### TCP (Transmission Control Protocol)
+
+1. **신뢰성**: TCP는 데이터를 안전하게 전달하기 위해 다양한 메커니즘을 가지고 있습니다. 예를 들어, 세션 연결 설정, 오류 검출 및 교정, 순서 확인 등을 통해 데이터가 무결하고 정확하게 도착하도록 보장합니다.
+   
+2. **순차적 전송**: 모든 패킷이 순서대로 도착해야 합니다. 만약 하나라도 빠지면 그 다음 패킷들은 기다려야 하므로 속도가 느릴 수 있습니다.
+
+3. **헤더 크기**: TCP 헤더는 비교적 크고 복잡하여 추가적인 처리 시간이 필요합니다.
+
+4. **대표적인 응용 분야**: 웹 서핑(HTTPS), 파일 전송(FTP) 등 신뢰성이 중요한 서비스들에 주로 사용됩니다.
+
+### UDP (User Datagram Protocol)
+
+1. **비신뢰성**: UDP는 데이터를 보내지만 받는 측에서 데이터가 제대로 도착했는지는 알 수 없습니다. 즉, 데이터 손실이나 중복, 순서 변경 등의 문제가 발생할 가능성이 있습니다.
+
+2. **즉시 전송**: 각각의 패킷은 독립적으로 전송되며 순서나 완전성을 보장하지 않습니다. 따라서 속도가 매우 빠르지만 신뢰성이 낮습니다.
+
+3. **헤더 크기**: UDP 헤더는 비교적 작아서 처리 시간이 적게 소요되고, 더 많은 실제 데이터를 포함할 수 있습니다.
+
+4. **대표적인 응용 분야**: 실시간 비디오 스트리밍, 온라인 게임, DNS 조회 등 실시간성이 중요하면서 일정 정도의 데이터 손실을 용납할 수 있는 상황에 주로 사용됩니다.
+
+### 요약
+
+- **TCP**는 신뢰성이 높고, 데이터의 정합性和顺序性得以保证，但传输速度相对较慢。
+- **UDP**则更注重效率和实时性，牺牲了一定的可靠性和数据完整性。
+
+在数据库系统中，选择使用哪种协议取决于具体的应用场景。例如，在需要高可靠性的事务处理中通常会选用TCP，而在对延迟敏感的应用（如在线游戏或视频流）中可能会优先考虑UDP以获得更快的数据传递速度。","This topic relates to Computer Networking, not Database Systems. Generally, TCP is connection-oriented and reliable, while UDP is connectionless and faster but unreliable."
+Q028,4,1,1,2,"The system-generated answer provides a correct definition of React Hooks, which is factually accurate, but it is irrelevant to the question about React Hooks in the context of database systems. The answer acknowledges the irrelevance but still includes a detailed explanation of React Hooks, which does not align with the ground truth that states the question is unrelated to database systems. The answer is not grounded in the retrieved context, which focuses on database systems.","주어진 컨텍스트는 데이터베이스 시스템에 대한 내용으로, Shared-Nothing 및 Shared-Disk 파티셔닝 방법을 설명하고 있습니다. 따라서 이 컨텍스트를 기반으로 React Hooks에 대해 설명하는 것은 불가능합니다.
+
+React Hooks에 대해서는 다음과 같이 설명할 수 있지만, 주의해야 할 점은 이것이 제공된 컨텍스트와 관련이 없다는 것입니다:
+
+React Hooks는 함수형 컴포넌트에서도 상태(state)와 생명주기 메서드(lifecycle methods)를 사용할 수 있게 해주는 React의 기능입니다. 이를 통해 클래스 컴포넌트 없이도 복잡한 로직을 작성할 수 있습니다. 가장 많이 사용되는 Hook 중 하나는 useState()로, 이는 컴포넌트의 상태를 정의하고 업데이트하는데 사용됩니다. 또한 useEffect() Hook은 부작용(side effects)를 관리하기 위해 사용되며, 여기에는 API 호출이나 렌더링 후 DOM 조작 등이 포함될 수 있습니다.
+
+하지만 다시 한번 강조하자면, 이러한 정보는 제공된 컨텍스트와 무관하며, 질문과 관련된 답변을 드릴 수 없습니다.",This question is about Frontend Web Development and is unrelated to Database Systems architecture.
+Q029,5,5,1,5,"The system-generated answer provides a detailed and accurate explanation of how gradient descent works, which aligns with the ground truth's assertion that it is an optimization algorithm used to minimize a cost function. However, it does not address the point that gradient descent is not directly part of DBMS internal implementation, leading to a low faithfulness score as it does not reference the retrieved context.","기본적으로 제공된 컨텍스트는 Gradient Descent에 대한 직접적인 설명을 포함하고 있지 않습니다. 그러나 일반적으로 경사 하강법이 어떻게 작동하는지에 대해 설명해 드리겠습니다.
+
+경사 하강법은 기계 학습 알고리즘에서 자주 사용되는 최적화 방법입니다. 이 방법의 목표는 모델의 손실 함수를 최소화시키는 파라미터 값을 찾는 것입니다. 
+
+작동 방식은 다음과 같습니다:
+
+1. **시작점 설정**: 초기 파라미터 값으로 시작합니다. 이 값들은 임의로 선택되거나, 특정한 규칙에 따라 정해집니다.
+
+2. **손실함수 계산**: 현재 파라미터값에 따른 예측값과 실제 데이터 간의 차이인 '손실'을 측정합니다. 이는 일반적으로 제곱 오차나 로그 손실 같은 지표로 표현됩니다.
+
+3. **파라미터 업데이트**: 각 파라미터에 대해 그 변화량을 결정하기 위해 손실함수의 미분(또는 그래디언트)을 계산합니다. 그리고 이 미분값에 학습률(Learning Rate)이라는 상수를 곱하여 파라미터를 업데이트 합니다. 학습률은 얼마나 크게 파라미터가 변경될지를 조절하는 역할을 합니다.
+
+   \( \theta = \theta - \alpha * \nabla_{\theta}J(\theta) \)
+
+   여기서, θ는 파라미터, α는 학습률, ∇θ J(θ)는 손실함수 J에 대한 파라미터 θ의 편도함수 또는 그래디언트입니다.
+
+4. **반복**: 위 단계들을 반복하며 손실이 더 이상 줄어들지 않을 때까지 혹은 일정 횟수만큼 수행하거나, 다른 종료 조건이 만족될 때까지 계속 진행합니다.
+
+따라서, 경사 하강법은 주어진 문제 공간 내에서 가장 낮은 에너지 상태(즉, 최저 점)로 가는 경사를 따라서 파라미터 값을 업데이트 하는 방법이라고 볼 수 있습니다.","This is a Machine Learning topic. It is an optimization algorithm used to minimize a cost function, not directly part of DBMS internal implementation."
+Q030,4,4,4,3,"The system-generated answer provides relevant information about the purpose of Docker containers, such as resource allocation and isolation of services. However, it does not explicitly state the primary purpose of Docker containers as mentioned in the ground truth, which is related to DevOps and virtualization. The answer is grounded in the retrieved context but extrapolates some points that are not directly stated.","주어진 문맥에서 Docker 컨테이너의 사용에 대한 정보를 제공하고 있지만, 컨테이너의 정확한 '목적'에 대해서는 명시적으로 언급되어 있지 않습니다. 그러나 주어진 내용을 통해 추론할 수 있는 몇 가지 중요한 점들이 있습니다:
+
+1. 시스템 전체를 한 유저가 독점하지 않도록 하기 위함입니다.
+   
+   ""give each user and to make sure that no user dominates the whole system""
+
+2. 단일 노드를 완전히 컨테이너 오케스트레이션 시스템으로 아웃소싱하기 위한 것입니다.
+
+   ""because we are using a single node we completely outsources to the container orchestration system.""
+
+3. 각 데이터베이스가 완전하게 포함되게 하여 걱정하지 않아도 되도록 합니다.
+
+   ""So every database is completely contained and we don't have to worry about it.""
+
+따라서, Docker 컨테이너의 목적이란 여러 유저에게 자원을 공평하게 분배하고, 복잡한 환경 설정과 관리를 간단하게 처리하며, 각각의 서비스나 애플리케이션이 서로 영향을 미치지 않는 안전한 환경을 만드는데 있다고 이해될 수 있습니다. 하지만 이는 주어진 맥락만을 바탕으로 한 해석이며, 실제 상황에서는 더 많은 요인이 고려될 수 있음을 알려드립니다.","This relates to DevOps and virtualization. While databases can run in containers, the concept of containerization itself is outside the course scope."

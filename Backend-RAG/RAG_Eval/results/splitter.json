@@ -1,0 +1,149 @@
+{
+  "experiment_type": "splitter_type",
+  "timestamp": "2025-12-15T17:26:49.662712",
+  "num_documents": 10,
+  "num_test_cases": 30,
+  "results": [
+    {
+      "config_name": "recursive_default",
+      "config": {
+        "name": "recursive_default",
+        "chunk_size": 1000,
+        "chunk_overlap": 200,
+        "splitter_type": "recursive",
+        "separators": [
+          "\n\n",
+          "\n",
+          " ",
+          ""
+        ],
+        "description": "Default RecursiveCharacterTextSplitter"
+      },
+      "chunk_stats": {
+        "total_chunks": 10,
+        "avg_chunk_size": 741.0,
+        "min_chunk_size": 666,
+        "max_chunk_size": 801,
+        "std_chunk_size": 40.44996909763962,
+        "chunks_per_document": 1.0
+      },
+      "retrieval_metrics": {
+        "precision_at_k": 0.2833333333333333,
+        "hit_rate": 0.5333333333333333,
+        "mrr": 0.48888888888888893,
+        "avg_relevance_score": 0.049244052120031814
+      },
+      "build_time_seconds": 0.38176703453063965,
+      "index_size_mb": 0.4298439025878906
+    },
+    {
+      "config_name": "recursive_sentence",
+      "config": {
+        "name": "recursive_sentence",
+        "chunk_size": 1000,
+        "chunk_overlap": 200,
+        "splitter_type": "recursive",
+        "separators": [
+          "\n\n",
+          "\n",
+          ". ",
+          "? ",
+          "! ",
+          "; ",
+          ", ",
+          " ",
+          ""
+        ],
+        "description": "Sentence-aware splitting"
+      },
+      "chunk_stats": {
+        "total_chunks": 10,
+        "avg_chunk_size": 741.0,
+        "min_chunk_size": 666,
+        "max_chunk_size": 801,
+        "std_chunk_size": 40.44996909763962,
+        "chunks_per_document": 1.0
+      },
+      "retrieval_metrics": {
+        "precision_at_k": 0.2833333333333333,
+        "hit_rate": 0.5333333333333333,
+        "mrr": 0.48888888888888893,
+        "avg_relevance_score": 0.049244052120031814
+      },
+      "build_time_seconds": 0.10578012466430664,
+      "index_size_mb": 0.4298439025878906
+    },
+    {
+      "config_name": "token_based",
+      "config": {
+        "name": "token_based",
+        "chunk_size": 256,
+        "chunk_overlap": 50,
+        "splitter_type": "token",
+        "separators": [
+          "\n\n",
+          "\n",
+          ". ",
+          " ",
+          ""
+        ],
+        "description": "Token-based splitting (256 tokens)"
+      },
+      "chunk_stats": {
+        "total_chunks": 16,
+        "avg_chunk_size": 509.8125,
+        "min_chunk_size": 173,
+        "max_chunk_size": 801,
+        "std_chunk_size": 215.60357683431414,
+        "chunks_per_document": 1.6
+      },
+      "retrieval_metrics": {
+        "precision_at_k": 0.3416666666666667,
+        "hit_rate": 0.5333333333333333,
+        "mrr": 0.4277777777777778,
+        "avg_relevance_score": 0.08003997215167842
+      },
+      "build_time_seconds": 7.843903541564941,
+      "index_size_mb": 0.5079689025878906
+    },
+    {
+      "config_name": "recursive_paragraph",
+      "config": {
+        "name": "recursive_paragraph",
+        "chunk_size": 1000,
+        "chunk_overlap": 200,
+        "splitter_type": "recursive",
+        "separators": [
+          "\n\n\n",
+          "\n\n",
+          "\n",
+          " ",
+          ""
+        ],
+        "description": "Paragraph-first splitting"
+      },
+      "chunk_stats": {
+        "total_chunks": 10,
+        "avg_chunk_size": 741.0,
+        "min_chunk_size": 666,
+        "max_chunk_size": 801,
+        "std_chunk_size": 40.44996909763962,
+        "chunks_per_document": 1.0
+      },
+      "retrieval_metrics": {
+        "precision_at_k": 0.2833333333333333,
+        "hit_rate": 0.5333333333333333,
+        "mrr": 0.48888888888888893,
+        "avg_relevance_score": 0.049244052120031814
+      },
+      "build_time_seconds": 0.09555411338806152,
+      "index_size_mb": 0.4298439025878906
+    }
+  ],
+  "summary": {
+    "best_by_precision": "token_based",
+    "best_precision_score": 0.3416666666666667,
+    "best_by_hit_rate": "recursive_default",
+    "best_hit_rate_score": 0.5333333333333333
+  }
+}

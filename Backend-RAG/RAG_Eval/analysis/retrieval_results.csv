@@ -1,0 +1,4 @@
+Configuration,Precision@K,Hit Rate,MRR
+Baseline,0.9666666666666667,1.0,1.0
++Rewrite,0.975,1.0,1.0
++Web,0.9666666666666667,1.0,1.0
